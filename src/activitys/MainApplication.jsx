@@ -100,8 +100,10 @@ class MainApplication extends React.Component {
       <Toolbar>
         <div className='center'>Googlers Magisk Repo</div>
         <div className='right'>
-          <ToolbarButton>
-            <Icon icon='md-menu'></Icon>
+          <ToolbarButton style={{ padding: "0px 10px" }} onClick={() => {
+            window.open("https://github.com/Fox2Code/FoxMagiskModuleManager/releases", "_blank")
+          }}>
+            <MDIcon icon="extension" isInToolbar={true} theme="white" size="24" />
           </ToolbarButton>
         </div>
       </Toolbar>
@@ -119,7 +121,7 @@ class MainApplication extends React.Component {
 
   render() {
     const modules = this.state.modulesIndex.map((item) => (
-      <ListItem id={item.id} key={item.id} onClick={() => {
+      <ListItem tappable id={item.id} key={item.id} onClick={() => {
         this.props.pushPage({
           key: `view_${item.id}`,
           page: ViewModuleActivity,

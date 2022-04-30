@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Button, Page, Toolbar, ToolbarButton, Icon, ListItem, List, SearchInput } from "react-onsenui";
+import { Page, Toolbar, ToolbarButton, BackButton } from "react-onsenui";
 import MDIcon from "../components/MDIcon";
 import axios from "axios";
 import Markdown from 'markdown-to-jsx';
@@ -20,7 +20,9 @@ class ViewModuleActivity extends React.Component {
                 })
             })
             .catch((error) => {
-                // when error
+                this.setState({
+                    notes: error.toString(),
+                })
             })
             .then(() => {
                 // always executed
@@ -30,6 +32,12 @@ class ViewModuleActivity extends React.Component {
     renderToolbar = () => {
         return (
             <Toolbar>
+                <div className="left">
+                    <BackButton
+                        // @ts-ignore
+                        onClick={() => { this.props.popPage() }}
+                    />
+                </div>
                 <div className='center'>{this.props.extra.name}</div>
                 <div className='right'>
                     <ToolbarButton style={{ padding: "0px 10px" }} onClick={() => {
