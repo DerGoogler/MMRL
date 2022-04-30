@@ -2,14 +2,16 @@ import jss from "jss"
 import preset from "jss-preset-default"
 import React from "react";
 import ReactDOM from "react-dom";
-import MainActivity from "./MainActivity";
+import MainActivity from "./activitys/MainActivity";
 import ons from "onsenui";
 import theme from "./styles/theme"
 
 // Webpack CSS import
 import "onsenui/css/onsenui-core.css";
 import "material-icons/iconfont/material-icons.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles/addtional.scss";
+import "./styles/markdown-light.scss";
 
 class Bootloader {
   mountNode = document.querySelector("app");

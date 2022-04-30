@@ -3,9 +3,10 @@ import { Button, Page, Toolbar, ToolbarButton, Icon, ListItem, List, SearchInput
 import axios from "axios";
 import TextEllipsis from "react-text-ellipsis";
 import { BrowserView, MobileView } from 'react-device-detect';
-import MDIcon from "./components/MDIcon";
+import MDIcon from "../components/MDIcon";
+import ViewModuleActivity from "./ViewModuleActivity";
 
-class MainActivity extends React.Component {
+class MainApplication extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -118,7 +119,19 @@ class MainActivity extends React.Component {
 
   render() {
     const modules = this.state.modulesIndex.map((item) => (
-      <ListItem id={item.id} key={item.id}>
+      <ListItem id={item.id} key={item.id} onClick={() => {
+        this.props.pushPage({
+          key: `view_${item.id}`,
+          page: ViewModuleActivity,
+          extra: {
+            name: item.details.name,
+            download: item.zip_url,
+            id: item.id,
+            author: item.details.author,
+            notes: item.notes_url
+          }
+        })
+      }}>
         <div class="center">
           <TextEllipsis lines={1} tag={'span'} tagClass={'list-item__title'} ellipsisChars={'...'} debounceTimeoutOnResize={200}>
             {item.details.name}
@@ -126,13 +139,6 @@ class MainActivity extends React.Component {
           <TextEllipsis lines={3} tag={'span'} tagClass={'list-item__subtitle'} ellipsisChars={'...'} debounceTimeoutOnResize={200}>
             {item.details.description}
           </TextEllipsis>
-
-        </div>
-        <div class="right">
-          <Button onClick={() => {
-
-            window.open(item.zip_url, "_parent")
-          }}>Download</Button>
         </div>
       </ListItem>
     ));
@@ -196,4 +202,4 @@ class MainActivity extends React.Component {
   }
 }
 
-export default MainActivity;
+export default MainApplication;

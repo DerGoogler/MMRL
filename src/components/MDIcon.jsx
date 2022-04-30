@@ -37,7 +37,7 @@ class MDIcon extends React.Component {
     }
 
     render() {
-        const { icon, size, disabled, isInList, ignoreDarkmode: theme, style } = this.props;
+        const { icon, size, disabled, isInList, isInToolbar, theme, style } = this.props;
         return (
             <span style={style}>
                 <span
@@ -53,7 +53,7 @@ class MDIcon extends React.Component {
                     }
                     style={{
                         textAlign: "center",
-                        height: "100%",
+                        height: this.typeIF(isInToolbar, "56px", "100%"),
                         width: "100%",
                         display: "flex",
                         flexDirection: "column",
