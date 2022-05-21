@@ -17,6 +17,8 @@
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "@js.properties/properties": "^0.5.4",
+    "@material-ui/icons": "^4.11.3",
+    "@mui/icons-material": "^5.8.0",
     "@mui/material": "^5.8.0",
     "axios": "^0.26.1",
     "bootstrap": "^5.1.3",

@@ -15,6 +15,7 @@ class MainApplication extends React.Component {
       status: "success",
       currentSerachText: "",
       search: "",
+      moduleOptions: {},
     };
   }
 
@@ -37,6 +38,12 @@ class MainApplication extends React.Component {
       .then(() => {
         // always executed
       });
+
+    axios.get(getSubPath("moduleOptions.json")).then((response) => {
+      this.setState({
+        moduleOptions: response.data,
+      });
+    });
   };
 
   componentDidCatch = () => {};
@@ -76,9 +83,19 @@ class MainApplication extends React.Component {
   };
 
   render = () => {
-    const { search } = this.state
+    const { search } = this.state;
     const modules = this.state.modulesIndex.map((item) => {
-      return <Item key={item.id} propsUrl={item.prop_url} notesUrl={item.notes_url} downloadUrl={item.zip_url} pushPage={this.props.pushPage} searchState={search} />;
+      return (
+        <Item
+          key={item.id}
+          propsUrl={item.prop_url}
+          notesUrl={item.notes_url}
+          downloadUrl={item.zip_url}
+          pushPage={this.props.pushPage}
+          searchState={search}
+          moduleOptions={this.state.moduleOptions}
+        />
+      );
     });
 
     return (

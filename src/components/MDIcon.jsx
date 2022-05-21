@@ -39,7 +39,7 @@ class MDIcon extends React.Component {
     render() {
         const { icon, size, disabled, isInList, isInToolbar, theme, style } = this.props;
         return (
-            <span style={style}>
+            <span>
                 <span
                     className={
                         "material-icons-round " +
@@ -59,6 +59,7 @@ class MDIcon extends React.Component {
                         flexDirection: "column",
                         justifyContent: "center",
                         alignItems: "center",
+                        ...style
                     }}
                 >
                     {icon}

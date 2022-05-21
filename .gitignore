@@ -3,6 +3,7 @@
 coverage/
 dist/*
 !dist/index.html
+!dist/moduleOptions.json
 node_modules/
 cdn_modules/
 *.log
