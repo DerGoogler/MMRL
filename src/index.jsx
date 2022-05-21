@@ -1,10 +1,10 @@
-import jss from "jss"
-import preset from "jss-preset-default"
+import jss from "jss";
+import preset from "jss-preset-default";
 import React from "react";
 import ReactDOM from "react-dom";
 import MainActivity from "./activitys/MainActivity";
 import ons from "onsenui";
-import theme from "./styles/theme"
+import theme from "./styles/theme";
 
 // Webpack CSS import
 import "onsenui/css/onsenui-core.css";
@@ -30,8 +30,11 @@ class Bootloader {
   }
 
   init() {
+    if (localStorage.getItem("repo") === null) {
+      localStorage.setItem("repo", "https://repo.dergoogler.com/modules.json");
+    }
     ons.platform.select("android");
-    this.loadStyle()
+    this.loadStyle();
     this.loadActivity();
   }
 }

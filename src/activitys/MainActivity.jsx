@@ -60,7 +60,7 @@ class MainActivity extends Component {
       component: props.page,
       props: {
         key: props.key,
-        extra: props.extra,
+        extra: props?.extra,
         popPage: () => this.popPage(),
         pushPage: (...args) => this.pushPage(...args),
       },
