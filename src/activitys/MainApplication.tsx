@@ -9,9 +9,30 @@ import tools from "../utils/tools";
 import Item from "../components/Item";
 import RepoIcon from "../components/icons/RepoIcon";
 import IssuesIcon from "../components/icons/IssuesIscon";
+import PreferencesManager from "../native/PreferencesManager";
+import { PushProps } from "./MainActivity";
 
-class MainApplication extends React.Component {
-  constructor(props) {
+interface Props {
+  pushPage(...arg: any): PushProps;
+}
+
+interface States {
+  modulesIndex: any[any];
+  dialogShown: boolean;
+  status: string; // whatever for what i this use
+  currentSerachText: string;
+  search: string;
+  moduleOptions: any[any];
+  loading: boolean;
+  [u: string]: any;
+}
+
+class MainApplication extends React.Component<Props, States> {
+  private clickCard: React.RefObject<unknown>;
+  private searchBar: React.LegacyRef<SearchInput> | undefined;
+  private prefManager: PreferencesManager;
+
+  constructor(props: Props | Readonly<Props>) {
     super(props);
     this.state = {
       modulesIndex: [],
@@ -23,6 +44,7 @@ class MainApplication extends React.Component {
       loading: true,
     };
     this.clickCard = React.createRef();
+    this.prefManager = new PreferencesManager();
   }
 
   componentDidMount = () => {
@@ -43,7 +65,8 @@ class MainApplication extends React.Component {
     }, 2000);
 
     axios
-      .get(localStorage.getItem("repo"))
+      // @ts-ignore stfu
+      .get(this.prefManager.getPref("repo"))
       .then((response) => {
         const modules = response.data.modules;
         this.setState({
@@ -83,7 +106,7 @@ class MainApplication extends React.Component {
     );
   };
 
-  filter = (e) => {
+  filter = (e: any) => {
     this.setState({ currentSerachText: e.target.value.toLowerCase() });
   };
 
@@ -102,7 +125,7 @@ class MainApplication extends React.Component {
 
   render = () => {
     const { search, loading } = this.state;
-    const modules = this.state.modulesIndex.map((item) => {
+    const modules = this.state.modulesIndex.map((item: any) => {
       return (
         <Item
           key={item.id}
@@ -143,6 +166,7 @@ class MainApplication extends React.Component {
               }}
             >
               <SearchInput
+                // @ts-ignore
                 placeholder={"Search modules"}
                 ref={this.searchBar}
                 style={{
@@ -184,14 +208,18 @@ class MainApplication extends React.Component {
               }
             })()}
           </div>{" "}
+          {/*
+ // @ts-ignore */}
           <Dialog visible={this.state.dialogShown} cancelable={true} onDialogCancel={this.hideDialog}>
             <List style={{ margin: "20px" }}>
               <ListItem
                 onClick={() => {
                   ons.notification.prompt("Custom Repo").then((input) => {
                     this.hideDialog();
+                    // @ts-ignore
                     if (tools.validURL(input)) {
-                      localStorage.setItem("repo", input);
+                      // @ts-ignore
+                      this.prefManager.setPref("repo", input);
                       ons.notification.alert("Repo changed, please refresh the app");
                     } else {
                       ons.notification.alert("Invalid input");
@@ -199,10 +227,10 @@ class MainApplication extends React.Component {
                   });
                 }}
               >
-                <div class="left">
+                <div className="left">
                   <RepoIcon size="24" />
                 </div>
-                <div class="center">Custom repo</div>
+                <div className="center">Custom repo</div>
               </ListItem>
               <ListItem
                 onClick={() => {
@@ -210,10 +238,10 @@ class MainApplication extends React.Component {
                   this.hideDialog();
                 }}
               >
-                <div class="left">
+                <div className="left">
                   <IssuesIcon size="24" />
                 </div>
-                <div class="center">Issues</div>
+                <div className="center">Issues</div>
               </ListItem>
             </List>
           </Dialog>

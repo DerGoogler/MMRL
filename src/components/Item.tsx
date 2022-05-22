@@ -8,9 +8,30 @@ import { Chip } from "@mui/material";
 import ons from "onsenui";
 import VerifiedIcon from "./icons/VerfifiedIcon";
 import Logger from "../utils/Logger";
+import { PushProps } from "../activitys/MainActivity";
 
-class Item extends React.Component {
-  constructor(props) {
+interface Props {
+  notesUrl?: string;
+  downloadUrl?: string;
+  pushPage?: any;
+  moduleOptions?: string;
+  stars?: int;
+  last_update?: any;
+  getId?: string;
+  searchState?: string;
+  propsUrl: string;
+}
+
+interface States {
+  props: any;
+}
+
+class Item extends React.Component<Props, States> {
+  private searchedCard: React.RefObject<HTMLDivElement>;
+  private cardName: React.RefObject<HTMLSpanElement>;
+  private log: Logger;
+
+  constructor(props: Props | Readonly<Props>) {
     super(props);
     this.state = {
       props: {},
@@ -51,18 +72,19 @@ class Item extends React.Component {
     });
   }
 
-  formatDate(date) {
+  formatDate(date: Date) {
     var hours = date.getHours();
     var minutes = date.getMinutes();
     var ampm = hours >= 12 ? "pm" : "am";
     hours = hours % 12;
     hours = hours ? hours : 12; // the hour '0' should be '12'
+    // @ts-ignore
     minutes = minutes < 10 ? "0" + minutes : minutes;
     var strTime = hours + ":" + minutes + " " + ampm;
     return date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear() + " " + strTime;
   }
 
-  openReadmeFromParam = (e) => {
+  openReadmeFromParam = (e: any) => {
     this.componentDidMount;
     const { getId } = this.props;
     try {
@@ -96,7 +118,9 @@ class Item extends React.Component {
               notes: notesUrl,
               stars: stars,
               moduleOptions: {
+                // @ts-ignore
                 verified: moduleOptions[getId]?.verified,
+                // @ts-ignore
                 low: moduleOptions[getId]?.low,
               },
               moduleProps: {
@@ -110,39 +134,51 @@ class Item extends React.Component {
           });
         }}
       >
+        {/*
+        // @ts-ignore */}
         <Card id={getId} key={getId} style={{ display: moduleOptions[getId]?.display, marginTop: "4px", marginBottom: "4px" }}>
           <div className="item-card-wrapper" ref={this.searchedCard}>
             <div className="title item-title">
-              {(() => {
-                if (moduleOptions[getId]?.low) {
-                  return (
-                    <>
-                      <Chip
-                        onClick={() => {
-                          ons.notification.alert("This module has a bad module.prop");
-                        }}
-                        variant="outlined"
-                        color="warning"
-                        size="small"
-                        label="Low-quality module"
-                      />{" "}
-                    </>
-                  );
-                }
-              })()}
+              {
+                /*
+              // @ts-ignore */
+                (() => {
+                  // @ts-ignore
+                  if (moduleOptions[getId]?.low) {
+                    return (
+                      <>
+                        <Chip
+                          onClick={() => {
+                            ons.notification.alert("This module has a bad module.prop");
+                          }}
+                          variant="outlined"
+                          color="warning"
+                          size="small"
+                          label="Low-quality module"
+                        />{" "}
+                      </>
+                    );
+                  }
+                })()
+              }
               <span ref={this.cardName}>{props.name}</span>
-              {(() => {
-                if (moduleOptions[getId]?.verified) {
-                  return (
-                    <>
-                      {" "}
-                      <VerifiedIcon color="#4a148c" />
-                    </>
-                  );
-                }
-              })()}
+              {
+                /*
+              // @ts-ignore */
+                (() => {
+                  // @ts-ignore
+                  if (moduleOptions[getId]?.verified) {
+                    return (
+                      <>
+                        {" "}
+                        <VerifiedIcon color="#4a148c" />
+                      </>
+                    );
+                  }
+                })()
+              }
             </div>
-            <div class="content">
+            <div className="content">
               <span className="item-version-author">{props.version + " / " + props.author}</span>
               <span className="item-description">{props.description}</span>
               <span className="item-last-update">Last update: {this.formatDate(new Date(last_update))}</span>

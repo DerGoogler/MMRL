@@ -1,11 +1,11 @@
 import jss from "jss";
 import preset from "jss-preset-default";
-import React from "react";
 import ReactDOM from "react-dom";
 import MainActivity from "./activitys/MainActivity";
 import ons from "onsenui";
 import theme from "./styles/theme";
 import { ToastContainer } from "react-toastify";
+import Logger from "./utils/Logger";
 
 // Webpack CSS import
 import "onsenui/css/onsenui-core.css";
@@ -14,10 +14,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
 import "./styles/addtional.scss";
 import "./styles/markdown-light.scss";
-import Logger from "./utils/Logger";
 
 class Bootloader {
-  mountNode = document.querySelector("app");
+  private mountNode: Element | null = document.querySelector("app");
+  private log: Logger;
 
   constructor() {
     this.log = new Logger(this.constructor.name);

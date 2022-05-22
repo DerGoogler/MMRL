@@ -1,4 +1,4 @@
-const theme = {
+const theme: any = {
   "@global": {
     ":root": {},
     html: {

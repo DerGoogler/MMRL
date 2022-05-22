@@ -1,17 +1,42 @@
-import React, { Component } from "react";
+import * as React from "react";
 import { Page, Toolbar, BackButton, RouterNavigator, RouterUtil } from "react-onsenui";
 import MainApplication from "./MainApplication";
 
-class MainActivity extends Component {
-  constructor(props) {
-    super(props);
+interface ModuleOptions {
+  verified?: boolean;
+  low?: boolean;
+}
 
+interface ModuleProps {
+  minMagisk?: int;
+  minApi?: int;
+  maxApi?: int;
+  needsRamdisk?: boolean;
+  changeBoot?: boolean;
+}
+
+export interface PushProps {
+  activity?: JSX.Element | any;
+  key?: any;
+  extras?: any;
+  moduleOptions?: ModuleOptions;
+  moduleProps?: ModuleProps;
+}
+
+interface States {
+  currentPage: string;
+  routeConfig: any;
+}
+
+class MainActivity extends React.Component<PushProps, States> {
+  constructor(props: PushProps | Readonly<PushProps>) {
+    super(props);
     const routeConfig = RouterUtil.init([
       {
         component: MainApplication,
         props: {
           key: "main",
-          pushPage: (...args) => this.pushPage(...args),
+          pushPage: (...args: any) => this.pushPage.apply(null, args),
         },
       },
     ]);
@@ -27,17 +52,14 @@ class MainActivity extends Component {
     window.removeEventListener("load", this.windowLoadPush);
   };
 
-  windowLoadPush = () => {
+  private windowLoadPush = () => {
     if (typeof history.pushState === "function") {
-      history.pushState("jibberish", null, null);
+      history.pushState("jibberish", "", null);
       window.onpopstate = () => {
-        history.pushState("newjibberish", null, null);
+        history.pushState("newjibberish", "", null);
         if (this.state.currentPage === "main") {
-          if ((window, navigator.userAgent === "FPL")) {
-            window.Android.close();
-          } else {
-            window.close();
-          }
+          // Will added later
+          // native.close();
         } else {
           this.popPage();
         }
@@ -47,7 +69,7 @@ class MainActivity extends Component {
       window.onhashchange = () => {
         if (!ignoreHashChange) {
           ignoreHashChange = true;
-          window.location.hash = Math.random();
+          window.location.hash = Math.random().toString();
         } else {
           ignoreHashChange = false;
         }
@@ -55,14 +77,14 @@ class MainActivity extends Component {
     }
   };
 
-  pushPage(props) {
+  pushPage(props: any) {
     const route = {
       component: props.page,
       props: {
         key: props.key,
         extra: props?.extra,
         popPage: () => this.popPage(),
-        pushPage: (...args) => this.pushPage(...args),
+        pushPage: (...args: any) => this.pushPage.apply(null, args),
       },
     };
 
@@ -105,7 +127,7 @@ class MainActivity extends Component {
     this.setState({ routeConfig });
   }
 
-  renderPage(route) {
+  renderPage(route: any) {
     const props = route.props || {};
     return <route.component {...props} />;
   }
@@ -124,7 +146,15 @@ class MainActivity extends Component {
   render() {
     return (
       <Page>
-        <RouterNavigator swipeable={true} swipePop={(options) => this.popPage(options)} routeConfig={this.state.routeConfig} renderPage={this.renderPage} onPostPush={() => this.onPostPush()} onPostPop={() => this.onPostPop()} />
+        <RouterNavigator
+          swipeable={true}
+          // @ts-ignore
+          swipePop={(options: any) => this.popPage(options)}
+          routeConfig={this.state.routeConfig}
+          renderPage={this.renderPage}
+          onPostPush={() => this.onPostPush()}
+          onPostPop={() => this.onPostPop()}
+        />
       </Page>
     );
   }
