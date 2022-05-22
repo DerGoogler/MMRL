@@ -32,6 +32,27 @@ module = {
 }
 ```
 
+## Meet the Description API (DAPI)
+
+### Create an changelog (beta)
+
+<!-- prettier-ignore -->
+```html
+<changelog version="1.0.0">
+    - Fixed somthing
+    - Better
+</changelog>
+```
+
+### Create check mark & danger mark
+
+<!-- prettier-ignore -->
+```markdown
+# About somthing
+- <dangericon color="#cf222e" size="16"/> This isn't good!
+- <checkicon color="#1a7f37" size="16"/> That's good!
+```
+
 ## FAQ
 
 ### Why does some description reports `404: Not Found`?

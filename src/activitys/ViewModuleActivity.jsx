@@ -8,6 +8,8 @@ import Alert from "react-bootstrap/Alert";
 import VerifiedIcon from "../components/icons/VerfifiedIcon";
 import WarningIcon from "../components/icons/WarningIcon";
 import Changelog from "../components/Changelog";
+import CheckIcon from "../components/icons/CheckIcon";
+import DangerIcon from "../components/icons/DangerIcon";
 
 class ViewModuleActivity extends React.Component {
   constructor(props) {
@@ -29,7 +31,7 @@ class ViewModuleActivity extends React.Component {
       .catch((error) => {
         if (error.response.status === 404) {
           this.setState({
-            notes: `# 404: Not Found\n\n The author doesn't have created or uploaded an \`README.md\`, please try again later.`,
+            notes: `# 404: Not Found\n\n The author doesn't have created or uploaded an \`README.md\`, please try again later.\n\n\n## About Readme's\n\n- <dangericon color="#cf222e" size="16"/> readme.md\n- <checkicon color="#1a7f37" size="16"/> README.md`,
           });
         }
       })
@@ -111,6 +113,12 @@ class ViewModuleActivity extends React.Component {
                 overrides: {
                   changelog: {
                     component: Changelog,
+                  },
+                  checkicon: {
+                    component: CheckIcon,
+                  },
+                  dangericon: {
+                    component: DangerIcon,
                   },
                 },
               }}
