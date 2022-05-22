@@ -60,7 +60,6 @@ class Item extends React.Component {
           ref={this.searchedCard}
           tappable
           id={props.id}
-          disabled
           key={props.id}
           onClick={() => {
             pushPage({
