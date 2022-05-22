@@ -2,6 +2,28 @@
   display: none;
 }
 
-img, svg {
+img,
+svg {
   vertical-align: top;
+}
+
+// Item card custom desgin
+.item-card-wrapper {
+  .item-tile {
+    margin-bottom: 0px;
+  }
+  .item-version-author {
+    display: block;
+    font-size: 12px;
+    margin-bottom: 8px;
+  }
+  .item-description {
+    display: block;
+    font-size: 14px;
+  }
+  .item-last-update {
+    display: block;
+    font-size: 12px;
+    margin-top: 8px;
+  }
 }

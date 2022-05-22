@@ -1658,7 +1658,7 @@ const theme = {
     ".button--material:disabled, .button--material[disabled]": {
       transition: "none",
       boxShadow: "none",
-      backgroundColor: "color-mod(#4f4f4f a(26%))",
+      backgroundColor: "#330f5e",
       color: "color-mod(black a(26%))",
       opacity: "1",
     },
@@ -4148,7 +4148,7 @@ const theme = {
         "0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12),\r\n    0 8px 10px -5px rgba(0, 0, 0, 0.4)",
     },
     ".dialog-container--material": {
-      borderRadius: "2px",
+      borderRadius: "8px",
       backgroundColor: "#ffffff",
       color: "#1f1f21",
     },
@@ -5567,7 +5567,7 @@ const theme = {
     },
     ".card--material": {
       backgroundColor: "white",
-      borderRadius: "2px",
+      borderRadius: "8px",
       boxShadow:
         "0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12),\r\n    0 3px 1px -2px rgba(0, 0, 0, 0.2)",
       fontFamily: '"Roboto", "Noto", sans-serif',

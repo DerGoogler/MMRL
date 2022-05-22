@@ -5,11 +5,13 @@ import ReactDOM from "react-dom";
 import MainActivity from "./activitys/MainActivity";
 import ons from "onsenui";
 import theme from "./styles/theme";
+import { ToastContainer } from "react-toastify";
 
 // Webpack CSS import
 import "onsenui/css/onsenui-core.css";
 import "material-icons/iconfont/material-icons.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "react-toastify/dist/ReactToastify.css";
 import "./styles/addtional.scss";
 import "./styles/markdown-light.scss";
 
@@ -26,7 +28,13 @@ class Bootloader {
   }
 
   loadActivity() {
-    ReactDOM.render(<MainActivity />, this.mountNode);
+    ReactDOM.render(
+      <>
+        <MainActivity />
+        <ToastContainer />
+      </>,
+      this.mountNode
+    );
   }
 
   init() {
