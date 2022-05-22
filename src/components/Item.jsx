@@ -2,9 +2,8 @@ import * as React from "react";
 import ViewModuleActivity from "../activitys/ViewModuleActivity";
 import axios from "axios";
 const Properties = require("@js.properties/properties");
-import { ListItem, Card } from "react-onsenui";
-import TextEllipsis from "react-text-ellipsis";
-import { ref, getUrlParam } from "./../utils";
+import { Card } from "react-onsenui";
+import tools from "../utils/tools";
 import { Chip } from "@mui/material";
 import ons from "onsenui";
 import VerifiedIcon from "./icons/VerfifiedIcon";
@@ -32,21 +31,21 @@ class Item extends React.Component {
 
   componentDidUpdate() {
     const { searchState } = this.props;
-    ref(this.cardName, (reff) => {
+    tools.ref(this.cardName, (ref) => {
       if (searchState != "") {
-        const search = reff.textContent || reff.innerText;
+        const search = ref.textContent || ref.innerText;
         if (search.toLowerCase().indexOf(searchState) > -1) {
-          ref(this.searchedCard, (reff) => {
+          tools.ref(this.searchedCard, (reff) => {
             reff.style.display = "";
           });
         } else {
-          ref(this.searchedCard, (reff) => {
-            reff.style.display = "none";
+          tools.ref(this.searchedCard, (ref) => {
+            ref.style.display = "none";
           });
         }
       } else {
-        ref(this.searchedCard, (reff) => {
-          reff.style.display = "";
+        tools.ref(this.searchedCard, (ref) => {
+          ref.style.display = "";
         });
       }
     });
@@ -67,7 +66,7 @@ class Item extends React.Component {
     this.componentDidMount;
     const { getId } = this.props;
     try {
-      const modul = getUrlParam("module");
+      const modul = tools.getUrlParam("module");
       if (modul == getId) {
         setTimeout(() => {
           this.log.info(`Module found! Open ${this.state.props.name}`);

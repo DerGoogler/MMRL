@@ -5,9 +5,8 @@ import { BrowserView, MobileView } from "react-device-detect";
 import ons from "onsenui";
 import MDIcon from "../components/MDIcon";
 import { toast } from "react-toastify";
-import { ref, getSubPath, getUrlParam, validURL } from "./../utils";
+import tools from "../utils/tools";
 import Item from "../components/Item";
-import ForkIcon from "../components/icons/ForkIcon";
 import RepoIcon from "../components/icons/RepoIcon";
 import IssuesIcon from "../components/icons/IssuesIscon";
 
@@ -27,7 +26,7 @@ class MainApplication extends React.Component {
   }
 
   componentDidMount = () => {
-    const moduels = getUrlParam("module");
+    const moduels = tools.getUrlParam("module");
     if (moduels != (null || undefined || "")) {
       toast.info("Please wait 2 seconds after the loading screen is gone", {
         position: "top-center",
@@ -62,7 +61,7 @@ class MainApplication extends React.Component {
         // always executed
       });
 
-    axios.get(getSubPath("moduleOptions.json")).then((response) => {
+    axios.get(tools.getSubPath("moduleOptions.json")).then((response) => {
       this.setState({
         moduleOptions: response.data,
       });
@@ -191,7 +190,7 @@ class MainApplication extends React.Component {
                 onClick={() => {
                   ons.notification.prompt("Custom Repo").then((input) => {
                     this.hideDialog();
-                    if (validURL(input)) {
+                    if (tools.validURL(input)) {
                       localStorage.setItem("repo", input);
                       ons.notification.alert("Repo changed, please refresh the app");
                     } else {

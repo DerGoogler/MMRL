@@ -3,23 +3,14 @@ class Logger {
         this.tag = tag
     }
 
-    log(...message) {
-        console.log("[" + this.tag + "]", ...message)
+    info(message, ...optionalParams) {
+        console.info("%c[" + this.tag + "]", "color: #0693e3", message, ...optionalParams)
     }
-
-    info(...message) {
-        console.info("[" + this.tag + "]", ...message)
+    warn(message, ...optionalParams) {
+        console.info("%c[" + this.tag + "]", "color: orange", message, ...optionalParams)
     }
-    warn(...message) {
-        console.warn("[" + this.tag + "]", ...message)
-    }
-
-    error(...message) {
-        console.error("[" + this.tag + "]", ...message)
-    }
-
-    debug(...message) {
-        console.debug("[" + this.tag + "]", ...message)
+    error(message, ...optionalParams) {
+        console.info("%c[" + this.tag + "]", "color: #d44950", message, ...optionalParams)
     }
 }
 
