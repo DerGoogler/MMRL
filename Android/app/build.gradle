@@ -1,0 +1,65 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 32
+
+    defaultConfig {
+        applicationId "com.dergoogler.fakecharger"
+        minSdk 28
+        targetSdkVersion 32
+        versionCode 10
+        versionName "1.0"
+        externalNativeBuild {
+            cmake {
+                cppFlags ""
+                arguments "-DANDROID_STL=c++_shared"
+            }
+        }
+        ndk {
+            abiFilters "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            multiDexEnabled true
+        }
+        debug {
+            jniDebuggable true
+            renderscriptDebuggable true
+            minifyEnabled false
+            multiDexEnabled false
+            applicationIdSuffix '.debug'
+        }
+    }
+    externalNativeBuild {
+        cmake {
+            path = file("src/main/cpp/CMakeLists.txt")
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    packagingOptions {
+        jniLibs {
+            keepDebugSymbols += ['*/armeabi/*.so', '*/armeabi-v7a/*.so', '*/arm64-v8a/*.so', '*/mips/*.so', '*/mips64/*.so', '*/x86/*.so', '*/x86_64/*.so']
+        }
+        resources {
+            excludes += ['META-INF/DEPENDENCIES.txt', 'META-INF/DEPENDENCIES', 'META-INF/LICENSE', 'META-INF/LICENSE.txt', 'META-INF/MANIFEST.MF', 'META-INF/NOTICE', 'META-INF/NOTICE.txt', 'META-INF/ASL2.0']
+        }
+    }
+}
+
+repositories {
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    def libsuVersion = '4.0.3'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "androidx.browser:browser:1.4.0"
+    implementation "com.github.topjohnwu.libsu:core:5.0.1"
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+}

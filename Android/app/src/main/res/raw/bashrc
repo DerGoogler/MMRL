@@ -1,0 +1,5 @@
+#!/system/bin/sh
+
+placeholder() {
+    echo "Placeholder"
+}
