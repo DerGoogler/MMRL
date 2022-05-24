@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Card, Page, Toolbar, BackButton } from "react-onsenui";
+import LinkManager from "../native/LinkManager";
 import pkg from "./../../package.json";
 
 interface Props {
@@ -47,7 +48,7 @@ class AcknowledgementsActivity extends React.Component<Props, States> {
     const libs = this.state.libs.map((item: any) => {
       // @ts-ignore
       return <Card onClick={() => {
-        window.open(`https://www.npmjs.com/package/${item}`)
+        LinkManager.open(`https://www.npmjs.com/package/${item}`)
       }} style={{ marginTop: "4px", marginBottom: "4px" }}>{item}</Card>;
     });
     return (

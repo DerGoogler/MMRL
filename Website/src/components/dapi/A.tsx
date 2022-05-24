@@ -29,9 +29,9 @@ class A extends React.Component<AInterface> {
           type={type}
           title={"Open " + href}
           onClick={() => {
-              LinkManager.open(href);
+            LinkManager.open(href);
           }}
-          style={{ cursor: "pointer" }}
+          style={{ cursor: "pointer", color: "#4a148c" }}
         >
           {children}
         </a>

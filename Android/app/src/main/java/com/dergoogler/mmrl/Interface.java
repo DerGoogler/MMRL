@@ -143,8 +143,9 @@ public class Interface {
         Uri uriUrl = Uri.parse(link);
         CustomTabsIntent.Builder intentBuilder = new CustomTabsIntent.Builder();
         CustomTabColorSchemeParams params = new CustomTabColorSchemeParams.Builder()
-                .setToolbarColor(0XFFFFFFFF)
+                .setToolbarColor(Color.parseColor("#4a148c"))
                 .build();
+        intentBuilder.setColorSchemeParams(CustomTabsIntent.COLOR_SCHEME_DARK, params);
         CustomTabsIntent customTabsIntent = intentBuilder.build();
         customTabsIntent.launchUrl(this.context, uriUrl);
     }
