@@ -13,7 +13,7 @@ interface Props {
   notesUrl?: string;
   downloadUrl?: string;
   pushPage?: any;
-  moduleOptions?: string;
+  moduleOptions?: string | undefined;
   stars?: int;
   last_update?: any;
   getId?: string;
@@ -26,7 +26,7 @@ interface States {
 }
 
 class Item extends React.Component<Props, States> {
-  private searchedCard: React.RefObject<HTMLDivElement>;
+  private searchedCard: React.RefObject<Card>;
   private cardName: React.RefObject<HTMLSpanElement>;
   private log: LoggerManager;
 
@@ -135,8 +135,14 @@ class Item extends React.Component<Props, States> {
       >
         {/*
         // @ts-ignore */}
-        <Card id={getId} key={getId} style={{ display: moduleOptions[getId]?.display, marginTop: "4px", marginBottom: "4px" }}>
-          <div className="item-card-wrapper" ref={this.searchedCard}>
+        <Card
+          id={getId}
+          ref={this.searchedCard}
+          key={getId}
+          //@ts-ignore
+          style={{ display: moduleOptions[getId]?.display, marginTop: "4px", marginBottom: "4px" }}
+        >
+          <div className="item-card-wrapper">
             <div className="title item-title">
               {
                 /*

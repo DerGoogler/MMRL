@@ -2,36 +2,32 @@ package com.dergoogler.mmrl;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.dergoogler.components.ModuleView;
 
 
 public class MainActivity extends AppCompatActivity {
-    private WebView mWebView;
+    private ModuleView view;
 
     @Override
     @SuppressLint("SetJavaScriptEnabled")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mWebView = findViewById(R.id.mmrl_view);
-        WebSettings webSettings = mWebView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setUserAgentString(Lib.getUserAgent());
-        webSettings.setDomStorageEnabled(true);
-        webSettings.setDatabaseEnabled(true);
-        mWebView.setWebViewClient(new MyWebViewClient());
-        mWebView.loadUrl(Lib.indexFile());
-        mWebView.addJavascriptInterface(new Interface(this), Lib.interfaceName());
+        view = findViewById(R.id.mmrl_view);
+        view.setJavaScriptEnabled(true);
+        view.setUserAgentString(Lib.getUserAgent());
+        view.setWebViewClient(new MyWebViewClient());
+        view.loadUrl(Lib.indexFile());
+        view.addJavascriptInterface(new Interface(this), Lib.interfaceName());
     }
 
     @Override
     public void onBackPressed() {
-        if (mWebView.canGoBack()) {
-            mWebView.goBack();
+        if (view.canGoBack()) {
+            view.goBack();
         } else {
             super.onBackPressed();
         }

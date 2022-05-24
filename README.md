@@ -74,3 +74,11 @@ The MMRL has an own hidding system. This means that bad modules can hidden from 
 ### How to get an verified module?
 
 This depends on the general module quality. (See `What are low-quality modules?`). Not all modules get an verified badge.
+
+# Credits & Thanks
+
+- [topjohnwu/libsu](https://github.com/topjohnwu/libsu)
+- [Fox2Code/FoxMagiskModuleManager](https://github.com/Fox2Code/FoxMagiskModuleManager)
+- [DerGoogler/dgm-cms](https://github.com/DerGoogler/dgm-cms)
+- [Hentai-Web/Core](https://github.com/Hentai-Web/Core)
+- [Hentai-Web/Android](https://github.com/Hentai-Web/Android)

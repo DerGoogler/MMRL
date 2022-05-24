@@ -4,7 +4,8 @@ export {};
 
 declare global {
   type int = number;
-  type Int = boolean;
+  type Int = number;
+  type Void = void;
   type Any = any;
 
   interface Function {
@@ -36,6 +37,7 @@ declare global {
   namespace JSX {
     interface IntrinsicElements {
       "module-container": HTMLAttributes<HTMLDivElement>;
+      "lib-container": HTMLAttributes<HTMLDivElement>;
     }
   }
 }

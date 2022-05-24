@@ -7,10 +7,13 @@ import Markdown from "markdown-to-jsx";
 import Alert from "react-bootstrap/Alert";
 import VerifiedIcon from "../components/icons/VerfifiedIcon";
 import WarningIcon from "../components/icons/WarningIcon";
-import Changelog from "../components/Changelog";
+import Changelog from "../components/dapi/Changelog";
 import CheckIcon from "../components/icons/CheckIcon";
 import DangerIcon from "../components/icons/DangerIcon";
 import Constants from "../native/Constants";
+import A from "../components/dapi/A";
+import Video from "../components/dapi/Video";
+import DiscordWidget from "../components/dapi/DiscordWidget";
 
 interface Props {
   extra?: any;
@@ -137,6 +140,15 @@ class ViewModuleActivity extends React.Component<Props, States> {
             <Markdown
               options={{
                 overrides: {
+                  a: {
+                    component: A,
+                  },
+                  video: {
+                    component: Video,
+                  },
+                  discordwidget: {
+                    component: DiscordWidget,
+                  },
                   changelog: {
                     component: Changelog,
                   },

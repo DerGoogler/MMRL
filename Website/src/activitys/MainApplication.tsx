@@ -11,6 +11,9 @@ import RepoIcon from "../components/icons/RepoIcon";
 import IssuesIcon from "../components/icons/IssuesIscon";
 import PreferencesManager from "../native/PreferencesManager";
 import { PushProps } from "./MainActivity";
+import AlertBuilder from "../builders/AlertBuilder";
+import AcknowledgementsActivity from "./AcknowledgementsActivity";
+import LogsIcon from "../components/icons/LogsIcon";
 
 interface Props {
   pushPage(...arg: any): PushProps;
@@ -223,17 +226,20 @@ class MainApplication extends React.Component<Props, States> {
           <List style={{ margin: "20px" }}>
             <ListItem
               onClick={() => {
-                ons.notification.prompt("Custom Repo").then((input) => {
-                  this.hideDialog();
-                  // @ts-ignore
-                  if (tools.validURL(input)) {
+                new AlertBuilder()
+                  .setMessage("Custom repo")
+                  .setPromptCallback((input: string) => {
+                    this.hideDialog();
                     // @ts-ignore
-                    this.prefManager.setPref("repo", input);
-                    ons.notification.alert("Repo changed, please refresh the app");
-                  } else {
-                    ons.notification.alert("Invalid input");
-                  }
-                });
+                    if (tools.validURL(input)) {
+                      // @ts-ignore
+                      this.prefManager.setPref("repo", input);
+                      ons.notification.alert("Repo changed, please refresh the app");
+                    } else {
+                      ons.notification.alert("Invalid input");
+                    }
+                  })
+                  .showPrompt();
               }}
             >
               <div className="left">
@@ -251,6 +257,20 @@ class MainApplication extends React.Component<Props, States> {
                 <IssuesIcon size="24" />
               </div>
               <div className="center">Issues</div>
+            </ListItem>
+            <ListItem
+              onClick={() => {
+                this.props.pushPage({
+                  key: "acknowledgements",
+                  page: AcknowledgementsActivity,
+                });
+                this.hideDialog();
+              }}
+            >
+              <div className="left">
+                <LogsIcon size="24" />
+              </div>
+              <div className="center">Acknowledgements</div>
             </ListItem>
           </List>
         </Dialog>

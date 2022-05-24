@@ -159,9 +159,30 @@ public class Interface {
         this.context.startActivity(intent);
     }
 
+    // Version sht
+
+    /**
+     * Return current app version code
+     */
     @JavascriptInterface
-    public int requireSDK() {
-        return Build.VERSION.SDK_INT;
+    public int getAppVersionCode() {
+        return BuildConfig.VERSION_CODE;
     }
 
+    /**
+     * Return current app version name
+     */
+    @JavascriptInterface
+    public String getAppVersionName() {
+        return BuildConfig.VERSION_NAME;
+    }
+
+    /**
+     * Return current android sdk-int version code, see:
+     * https://source.android.com/setup/start/build-numbers
+     */
+    @JavascriptInterface
+    public int getAndroidVersionCode() {
+        return Build.VERSION.SDK_INT;
+    }
 }
