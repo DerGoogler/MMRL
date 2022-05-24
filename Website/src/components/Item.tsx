@@ -13,12 +13,18 @@ interface Props {
   notesUrl?: string;
   downloadUrl?: string;
   pushPage?: any;
-  moduleOptions?: string | undefined;
+  moduleOptions: ModuleOptions[];
   stars?: int;
   last_update?: any;
-  getId?: string;
+  getId: any;
   searchState?: string;
   propsUrl: string;
+}
+
+interface ModuleOptions {
+  verified: boolean;
+  low: boolean;
+  display: string;
 }
 
 interface States {
@@ -102,6 +108,9 @@ class Item extends React.Component<Props, States> {
   render = () => {
     const { notesUrl, downloadUrl, pushPage, moduleOptions, stars, last_update, getId } = this.props;
     const { props } = this.state;
+    const isLQModule = moduleOptions[getId]?.low;
+    const isVerified = moduleOptions[getId]?.verified;
+    const _display = moduleOptions[getId]?.display;
     return (
       <div
         ref={this.openReadmeFromParam}
@@ -117,10 +126,8 @@ class Item extends React.Component<Props, States> {
               notes: notesUrl,
               stars: stars,
               moduleOptions: {
-                // @ts-ignore
-                verified: moduleOptions[getId]?.verified,
-                // @ts-ignore
-                low: moduleOptions[getId]?.low,
+                verified: isVerified,
+                low: isLQModule,
               },
               moduleProps: {
                 minMagisk: props.minMagisk,
@@ -140,7 +147,7 @@ class Item extends React.Component<Props, States> {
           ref={this.searchedCard}
           key={getId}
           //@ts-ignore
-          style={{ display: moduleOptions[getId]?.display, marginTop: "4px", marginBottom: "4px" }}
+          style={{ display: _display, marginTop: "4px", marginBottom: "4px" }}
         >
           <div className="item-card-wrapper">
             <div className="title item-title">
@@ -148,8 +155,7 @@ class Item extends React.Component<Props, States> {
                 /*
               // @ts-ignore */
                 (() => {
-                  // @ts-ignore
-                  if (moduleOptions[getId]?.low) {
+                  if (isLQModule) {
                     return (
                       <>
                         <Chip
@@ -166,13 +172,14 @@ class Item extends React.Component<Props, States> {
                   }
                 })()
               }
-              <span ref={this.cardName}>{props.name}</span>
+              <span className="item-module-name" ref={this.cardName}>
+                {props.name}
+              </span>
               {
                 /*
               // @ts-ignore */
                 (() => {
-                  // @ts-ignore
-                  if (moduleOptions[getId]?.verified) {
+                  if (isVerified) {
                     return (
                       <>
                         {" "}
@@ -184,7 +191,14 @@ class Item extends React.Component<Props, States> {
               }
             </div>
             <div className="content">
-              <span className="item-version-author">{props.version + " / " + props.author}</span>
+              <span
+                className="item-version-author"
+                style={{
+                  marginTop: isLQModule ? "4px" : "",
+                }}
+              >
+                {props.version + " / " + props.author}
+              </span>
               <span className="item-description">{props.description}</span>
               <span className="item-last-update">Last update: {this.formatDate(new Date(last_update))}</span>
             </div>
