@@ -18,10 +18,16 @@ interface Android {
   hasStoragePermission(): void;
   requestStoargePermission(): void;
 
+  // Version managment
+  getAppVersionCode(): int;
+  getAppVersionName(): string;
+  getAppPackageId(): string;
+  getAndroidVersionCode(): int;
+  getMagiskVersionCode(): string;
+
   // Others
   open(link: string): void;
   close(): void;
-  requireSDK(): int;
 }
 
 export default Android;

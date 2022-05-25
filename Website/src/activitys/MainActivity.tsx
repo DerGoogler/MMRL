@@ -11,7 +11,7 @@ interface ModuleProps {
   minMagisk?: int;
   minApi?: int;
   maxApi?: int;
-  needsRamdisk?: boolean;
+  needRamdisk?: boolean;
   changeBoot?: boolean;
 }
 
@@ -79,7 +79,7 @@ class MainActivity extends React.Component<PushProps, States> {
 
   pushPage = (props: any) => {
     const route = {
-      component: props.page,
+      component: props.activity,
       props: {
         key: props.key,
         extra: props?.extra,

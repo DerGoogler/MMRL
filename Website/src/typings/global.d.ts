@@ -38,6 +38,15 @@ declare global {
     interface IntrinsicElements {
       "module-container": HTMLAttributes<HTMLDivElement>;
       "lib-container": HTMLAttributes<HTMLDivElement>;
+      "settings-container": HTMLAttributes<HTMLDivElement>;
+
+      // ./components/Item.tsx
+      "item-card-wrapper": HTMLAttributes<HTMLDivElement>;
+      "item-title": HTMLAttributes<HTMLDivElement>;
+      "item-version-author": HTMLAttributes<HTMLSpanElement>;
+      "item-description": HTMLAttributes<HTMLSpanElement>;
+      "item-last-update": HTMLAttributes<HTMLSpanElement>;
+      "item-module-name": HTMLAttributes<HTMLSpanElement>;
     }
   }
 }

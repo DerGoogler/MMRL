@@ -178,6 +178,11 @@ public class Interface {
         return BuildConfig.VERSION_NAME;
     }
 
+    @JavascriptInterface
+    public String getAppPackageId() {
+        return BuildConfig.APPLICATION_ID;
+    }
+
     /**
      * Return current android sdk-int version code, see:
      * https://source.android.com/setup/start/build-numbers
@@ -185,5 +190,10 @@ public class Interface {
     @JavascriptInterface
     public int getAndroidVersionCode() {
         return Build.VERSION.SDK_INT;
+    }
+
+    @JavascriptInterface
+    public String getMagiskVersionCode() {
+        return ShellUtils.fastCmd("su -V");
     }
 }

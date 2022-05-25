@@ -24,6 +24,7 @@ class DangerIcon extends React.Component {
 
 DangerIcon.defaultProps = {
   size: "14",
+  color: "#cf222e"
 };
 
 export default DangerIcon;

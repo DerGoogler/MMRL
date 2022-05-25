@@ -99,7 +99,7 @@ class ViewModuleActivity extends React.Component<Props, States> {
   };
 
   render = () => {
-    const { minMagisk, minApi, maxApi, needsRamdisk, changeBoot, name, stars } = this.props.extra.moduleProps;
+    const { minMagisk, minApi, maxApi, needRamdisk, changeBoot, name, stars } = this.props.extra.moduleProps;
     const { verified, low } = this.props.extra.moduleOptions;
     return (
       <>
@@ -208,76 +208,66 @@ class ViewModuleActivity extends React.Component<Props, States> {
             <div style={{ margin: "20px" }} className="markdown-body-light">
               <table style={{ width: "100%" }}>
                 <th>Informations</th>
-                {
-                  /*
-            // @ts-ignore */
-                  (() => {
-                    if (minMagisk != (null || undefined)) {
-                      return (
-                        <tr>
-                          <td style={{ width: "100%" }}>Min. Magisk</td>
-                          <td>{minMagisk}</td>
-                        </tr>
-                      );
-                    }
-                  })()
-                }
-                {
-                  /*
-            // @ts-ignore */
-                  (() => {
-                    if (minApi != (null || undefined)) {
-                      return (
-                        <tr>
-                          <td style={{ width: "100%" }}>Min. Android</td>
-                          <td>{minApi}</td>
-                        </tr>
-                      );
-                    }
-                  })()
-                }
-                {
-                  /*
-            // @ts-ignore */
-                  (() => {
-                    if (maxApi != (null || undefined)) {
-                      return (
-                        <tr>
-                          <td style={{ width: "100%" }}>Max. Android</td>
-                          <td>{maxApi}</td>
-                        </tr>
-                      );
-                    }
-                  })()
-                }
-                {
-                  /*
-            // @ts-ignore */
-                  (() => {
-                    if (needsRamdisk != (null || undefined)) {
-                      return (
-                        <tr>
-                          <td style={{ width: "100%" }}>needsRamdisk</td>
-                          <td>{needsRamdisk}</td>
-                        </tr>
-                      );
-                    }
-                  })()
-                }
-                {
-                  /*
-            // @ts-ignore */
-                  (() => {
-                    if (changeBoot != (null || undefined)) {
-                      return (
-                        <tr>
-                          <td style={{ width: "100%" }}>changeBoot</td>
-                          <td>{changeBoot}</td>
-                        </tr>
-                      );
-                    }
-                  })()
-                }
+                {(() => {
+                  if (minMagisk != (null || undefined)) {
+                    return (
+                      <tr>
+                        <td style={{ width: "100%" }}>Min. Magisk</td>
+                        <td>{minMagisk}</td>
+                      </tr>
+                    );
+                  } else {
+                    return null;
+                  }
+                })()}
+                {(() => {
+                  if (minApi != (null || undefined)) {
+                    return (
+                      <tr>
+                        <td style={{ width: "100%" }}>Min. Android</td>
+                        <td>{minApi}</td>
+                      </tr>
+                    );
+                  } else {
+                    return null;
+                  }
+                })()}
+                {(() => {
+                  if (maxApi != (null || undefined)) {
+                    return (
+                      <tr>
+                        <td style={{ width: "100%" }}>Max. Android</td>
+                        <td>{maxApi}</td>
+                      </tr>
+                    );
+                  } else {
+                    return null;
+                  }
+                })()}
+                {(() => {
+                  if (needRamdisk != (null || undefined)) {
+                    return (
+                      <tr>
+                        <td style={{ width: "100%" }}>needsRamdisk</td>
+                        <td>{needRamdisk}</td>
+                      </tr>
+                    );
+                  } else {
+                    return null;
+                  }
+                })()}
+                {(() => {
+                  if (changeBoot != (null || undefined)) {
+                    return (
+                      <tr>
+                        <td style={{ width: "100%" }}>changeBoot</td>
+                        <td>{changeBoot}</td>
+                      </tr>
+                    );
+                  } else {
+                    return null;
+                  }
+                })()}
               </table>
             </div>
           </Dialog>

@@ -4,7 +4,7 @@ import tools from "../../utils/tools";
 
 interface AInterface {
   download?: any;
-  href?: string | undefined;
+  href: string;
   hrefLang?: string | undefined;
   media?: string | undefined;
   ping?: string | undefined;

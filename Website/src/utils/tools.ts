@@ -1,3 +1,5 @@
+import PreferencesManager from "../native/PreferencesManager";
+
 class tools {
   static getSubPath(url: string) {
     return window.location.href.replace(/(\?(.*?)=(.*)|\?)/gm, "") + url;
@@ -91,6 +93,22 @@ class tools {
       return __;
     } else {
       return _;
+    }
+  }
+
+  public static getSettingsSwitch(key: string): boolean {
+    if (new PreferencesManager().getPref(key) === "true") {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public static returnUndefined(value: undefined | any, theReturn: string | boolean | int): any {
+    if (value === undefined) {
+      return theReturn;
+    } else {
+      return false;
     }
   }
 }

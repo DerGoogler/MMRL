@@ -24,6 +24,7 @@ class CheckIcon extends React.Component {
 
 CheckIcon.defaultProps = {
   size: "14",
+  color: "#1a7f37"
 };
 
 export default CheckIcon;

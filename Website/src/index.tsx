@@ -16,7 +16,6 @@ import "./styles/addtional.scss";
 import "./styles/markdown-light.scss";
 import PreferencesManager from "./native/PreferencesManager";
 import Constants from "./native/Constants";
-import AlertBuilder from "./builders/AlertBuilder";
 
 class Bootloader {
   private mountNode: Element | null = document.querySelector("app");

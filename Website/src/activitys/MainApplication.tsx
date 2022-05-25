@@ -1,19 +1,14 @@
 import * as React from "react";
-import { Button, Page, Toolbar, ToolbarButton, Dialog, SearchInput, ProgressCircular, List, ListItem } from "react-onsenui";
+import { Button, Page, Toolbar, ToolbarButton, SearchInput, ProgressCircular } from "react-onsenui";
 import axios from "axios";
-import { BrowserView, MobileView } from "react-device-detect";
-import ons from "onsenui";
 import MDIcon from "../components/MDIcon";
 import { toast } from "react-toastify";
 import tools from "../utils/tools";
 import Item from "../components/Item";
-import RepoIcon from "../components/icons/RepoIcon";
-import IssuesIcon from "../components/icons/IssuesIscon";
 import PreferencesManager from "../native/PreferencesManager";
+import SettingsActivity from "./SettingsActivity";
+import SettingsIcon from "../components/icons/SettingsIcon";
 import { PushProps } from "./MainActivity";
-import AlertBuilder from "../builders/AlertBuilder";
-import AcknowledgementsActivity from "./AcknowledgementsActivity";
-import LogsIcon from "../components/icons/LogsIcon";
 
 interface Props {
   pushPage(...arg: any): PushProps;
@@ -21,8 +16,6 @@ interface Props {
 
 interface States {
   modulesIndex: any[any];
-  dialogShown: boolean;
-  status: string; // whatever for what i this use
   currentSerachText: string;
   search: string;
   moduleOptions: any[any];
@@ -31,7 +24,6 @@ interface States {
 }
 
 class MainApplication extends React.Component<Props, States> {
-  private clickCard: React.RefObject<unknown>;
   private searchBar: React.LegacyRef<SearchInput> | undefined;
   private prefManager: PreferencesManager;
 
@@ -39,14 +31,11 @@ class MainApplication extends React.Component<Props, States> {
     super(props);
     this.state = {
       modulesIndex: [],
-      dialogShown: false,
-      status: "success",
       currentSerachText: "",
       search: "",
       moduleOptions: {},
       loading: true,
     };
-    this.clickCard = React.createRef();
     this.prefManager = new PreferencesManager();
   }
 
@@ -96,6 +85,13 @@ class MainApplication extends React.Component<Props, States> {
 
   componentDidCatch = () => {};
 
+  private openSettings = () => {
+    this.props.pushPage({
+      key: "settings",
+      activity: SettingsActivity,
+    });
+  };
+
   renderToolbar = () => {
     return (
       // @ts-ignore
@@ -104,8 +100,8 @@ class MainApplication extends React.Component<Props, States> {
         <div className="right">
           {/*
           // @ts-ignore */}
-          <ToolbarButton style={{ padding: "0px 10px" }} onClick={this.showDialog}>
-            <MDIcon icon="more_vert" isInToolbar={true} theme="white" size="24" />
+          <ToolbarButton  className="back-button--material__icon" onClick={this.openSettings}>
+            <SettingsIcon size="24" />
           </ToolbarButton>
         </div>
       </Toolbar>
@@ -119,14 +115,6 @@ class MainApplication extends React.Component<Props, States> {
   triggerSearch = () => {
     const { currentSerachText } = this.state;
     this.setState({ search: currentSerachText });
-  };
-
-  showDialog = () => {
-    this.setState({ dialogShown: true });
-  };
-
-  hideDialog = () => {
-    this.setState({ dialogShown: false });
   };
 
   render = () => {
@@ -217,63 +205,7 @@ class MainApplication extends React.Component<Props, States> {
               }
             })()}
           </module-container>
-        </div>{" "}
-        {/*
- // @ts-ignore */}
-        <Dialog visible={this.state.dialogShown} cancelable={true} onDialogCancel={this.hideDialog}>
-          {/*
-          // @ts-ignore */}
-          <List style={{ margin: "20px" }}>
-            <ListItem
-              onClick={() => {
-                new AlertBuilder()
-                  .setMessage("Custom repo")
-                  .setPromptCallback((input: string) => {
-                    this.hideDialog();
-                    // @ts-ignore
-                    if (tools.validURL(input)) {
-                      // @ts-ignore
-                      this.prefManager.setPref("repo", input);
-                      ons.notification.alert("Repo changed, please refresh the app");
-                    } else {
-                      ons.notification.alert("Invalid input");
-                    }
-                  })
-                  .showPrompt();
-              }}
-            >
-              <div className="left">
-                <RepoIcon size="24" />
-              </div>
-              <div className="center">Custom repo</div>
-            </ListItem>
-            <ListItem
-              onClick={() => {
-                window.open("https://github.com/DerGoogler/DG-Repo/issues", "_blank");
-                this.hideDialog();
-              }}
-            >
-              <div className="left">
-                <IssuesIcon size="24" />
-              </div>
-              <div className="center">Issues</div>
-            </ListItem>
-            <ListItem
-              onClick={() => {
-                this.props.pushPage({
-                  key: "acknowledgements",
-                  page: AcknowledgementsActivity,
-                });
-                this.hideDialog();
-              }}
-            >
-              <div className="left">
-                <LogsIcon size="24" />
-              </div>
-              <div className="center">Acknowledgements</div>
-            </ListItem>
-          </List>
-        </Dialog>
+        </div>
       </Page>
     );
   };

@@ -8,25 +8,23 @@ svg {
 }
 
 // Item card custom desgin
-.item-card-wrapper {
-  .item-tile {
+item-card-wrapper {
+  item-title {
     margin-bottom: 0px;
   }
-  .item-version-author {
+  item-version-author {
     display: block;
     font-size: 12px;
     margin-bottom: 8px;
   }
-  .item-description {
+  item-description {
     display: block;
     font-size: 14px;
   }
-  .item-last-update {
+  item-last-update {
     display: block;
     font-size: 12px;
     margin-top: 8px;
   }
-  .item-module-name {
-    vertical-align: middle;
-  }
+  item-module-name {}
 }

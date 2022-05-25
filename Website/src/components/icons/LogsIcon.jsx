@@ -11,7 +11,7 @@ class LogsIcon extends React.Component {
         version="1.1"
         width={size}
         data-view-component="true"
-        class="octicon octicon-log"
+        class={"octicon octicon-log " + className}
       >
         <path d="M5 8.25a.75.75 0 01.75-.75h4a.75.75 0 010 1.5h-4A.75.75 0 015 8.25zM4 10.5A.75.75 0 004 12h4a.75.75 0 000-1.5H4z"></path>
         <path

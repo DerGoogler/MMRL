@@ -8,6 +8,8 @@ import { Chip } from "@mui/material";
 import ons from "onsenui";
 import VerifiedIcon from "./icons/VerfifiedIcon";
 import LoggerManager from "../native/LoggerManager";
+import Constants from "../native/Constants";
+import PreferencesManager from "../native/PreferencesManager";
 
 interface Props {
   notesUrl?: string;
@@ -28,7 +30,22 @@ interface ModuleOptions {
 }
 
 interface States {
-  props: any;
+  props: {
+    id?: string;
+    name?: string;
+    version?: string;
+    versionCode?: int;
+    author?: string;
+    description?: string;
+    minApi?: int;
+    maxApi?: int;
+    minMagisk?: int;
+    needRamdisk?: boolean;
+    support?: string;
+    donate?: string;
+    config?: string;
+    changeBoot?: boolean;
+  };
 }
 
 class Item extends React.Component<Props, States> {
@@ -111,74 +128,74 @@ class Item extends React.Component<Props, States> {
     const isLQModule = moduleOptions[getId]?.low;
     const isVerified = moduleOptions[getId]?.verified;
     const _display = moduleOptions[getId]?.display;
+    const getMagiskVersion = Constants.isAndroid ? android.getMagiskVersionCode() : 0;
+
     return (
-      <div
-        ref={this.openReadmeFromParam}
-        onClick={() => {
-          pushPage({
-            key: `view_${props.id}`,
-            page: ViewModuleActivity,
-            extra: {
-              name: props.name,
-              download: downloadUrl,
-              id: getId,
-              author: props.author,
-              notes: notesUrl,
-              stars: stars,
-              moduleOptions: {
-                verified: isVerified,
-                low: isLQModule,
+      <>
+        <div
+          ref={this.openReadmeFromParam}
+          onClick={() => {
+            pushPage({
+              key: `view_${props.id}`,
+              activity: ViewModuleActivity,
+              extra: {
+                name: props.name,
+                download: downloadUrl,
+                id: getId,
+                author: props.author,
+                notes: notesUrl,
+                stars: stars,
+                moduleOptions: {
+                  verified: isVerified,
+                  low: isLQModule,
+                },
+                moduleProps: {
+                  minMagisk: props.minMagisk,
+                  minApi: props.minApi,
+                  maxApi: props.maxApi,
+                  needRamdisk: props?.needRamdisk,
+                  changeBoot: props.changeBoot,
+                },
               },
-              moduleProps: {
-                minMagisk: props.minMagisk,
-                minApi: props.minApi,
-                maxApi: props.maxApi,
-                needsRamdisk: props.needsRamdisk,
-                changeBoot: props.changeBoot,
-              },
-            },
-          });
-        }}
-      >
-        {/*
-        // @ts-ignore */}
-        <Card
-          id={getId}
-          ref={this.searchedCard}
-          key={getId}
-          //@ts-ignore
-          style={{ display: _display, marginTop: "4px", marginBottom: "4px" }}
+            });
+          }}
         >
-          <div className="item-card-wrapper">
-            <div className="title item-title">
-              {
-                /*
-              // @ts-ignore */
-                (() => {
+          {/*
+        // @ts-ignore */}
+          <Card
+            id={getId}
+            ref={this.searchedCard}
+            key={getId}
+            //@ts-ignore
+            style={{ display: _display, marginTop: "4px", marginBottom: "4px" }}
+          >
+            <item-card-wrapper>
+              <item-title className="title">
+                {(() => {
                   if (isLQModule) {
-                    return (
-                      <>
-                        <Chip
-                          onClick={() => {
-                            ons.notification.alert("This module has a bad module.prop");
-                          }}
-                          variant="outlined"
-                          color="warning"
-                          size="small"
-                          label="Low-quality module"
-                        />{" "}
-                      </>
-                    );
+                    if (tools.getSettingsSwitch("disable_lq_modules")) {
+                      return null;
+                    } else {
+                      return (
+                        <>
+                          <Chip
+                            onClick={() => {
+                              ons.notification.alert("This module has a bad module.prop");
+                            }}
+                            variant="outlined"
+                            color="warning"
+                            size="small"
+                            label="Low-quality module"
+                          />{" "}
+                        </>
+                      );
+                    }
+                  } else {
+                    return null;
                   }
-                })()
-              }
-              <span className="item-module-name" ref={this.cardName}>
-                {props.name}
-              </span>
-              {
-                /*
-              // @ts-ignore */
-                (() => {
+                })()}
+                <item-module-name ref={this.cardName}>{props.name}</item-module-name>
+                {(() => {
                   if (isVerified) {
                     return (
                       <>
@@ -186,25 +203,26 @@ class Item extends React.Component<Props, States> {
                         <VerifiedIcon color="#4a148c" />
                       </>
                     );
+                  } else {
+                    return null;
                   }
-                })()
-              }
-            </div>
-            <div className="content">
-              <span
-                className="item-version-author"
-                style={{
-                  marginTop: isLQModule ? "4px" : "",
-                }}
-              >
-                {props.version + " / " + props.author}
-              </span>
-              <span className="item-description">{props.description}</span>
-              <span className="item-last-update">Last update: {this.formatDate(new Date(last_update))}</span>
-            </div>
-          </div>
-        </Card>
-      </div>
+                })()}
+              </item-title>
+              <div className="content">
+                <item-version-author
+                  style={{
+                    marginTop: isLQModule && !tools.getSettingsSwitch("disable_lq_modules") ? "4px" : "",
+                  }}
+                >
+                  {props.version + " / " + props.author}
+                </item-version-author>
+                <item-description>{props.description}</item-description>
+                <item-last-update>Last update: {this.formatDate(new Date(last_update))}</item-last-update>
+              </div>
+            </item-card-wrapper>
+          </Card>
+        </div>
+      </>
     );
   };
 }

@@ -8,16 +8,13 @@ class PreferencesManager {
   /** Returns the number of key/value pairs. */
   public readonly length: number | undefined;
   private webStorage: Storage;
-  private log: LoggerManager;
 
   public constructor() {
-    this.log = new LoggerManager(this.constructor.name);
     this.webStorage = localStorage;
   }
 
   /** Returns the current value associated with the given key, or null if the given key does not exist. */ // @ts-ignore
   public getPref(key: string): string | null | undefined {
-    this.log.info(`Requested ${key}`);
     if (Constants.isAndroid) {
       const get = android.getPref(key);
       if (get === undefined || get === null || get === "") {
@@ -42,8 +39,6 @@ class PreferencesManager {
    * Dispatches a storage event on Window objects holding an equivalent Storage object.
    */
   public setPref(key: string, value: string): void {
-    // Never display the preference value!
-    this.log.info(`Save preference key ${key} with an value`);
     if (Constants.isAndroid) {
       android.setPref(key, value);
     } else {
@@ -56,7 +51,6 @@ class PreferencesManager {
    * Dispatches a storage event on Window objects holding an equivalent Storage object.
    */
   public removePref(key: string): void {
-    this.log.info(`${key} was removed`);
     if (Constants.isAndroid) {
       android.removePref(key);
     } else {
@@ -70,7 +64,6 @@ class PreferencesManager {
    * Dispatches a storage event on Window objects holding an equivalent Storage object.
    */
   public clearPrefs(): void {
-    this.log.info("Preverences has been cleared");
     if (Constants.isAndroid) {
       android.clearPrefs();
     } else {
