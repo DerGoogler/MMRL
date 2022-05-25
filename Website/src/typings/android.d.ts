@@ -1,6 +1,6 @@
 interface Android {
   // Root management
-  exex(command: string): void;
+  exec(command: string): void;
   execResult(command: string): string;
   isAppGrantedRoot(): boolean;
 

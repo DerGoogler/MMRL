@@ -1,6 +1,6 @@
 import * as React from "react";
-import LinkManager from "../../native/LinkManager";
-import tools from "../../utils/tools";
+import LinkManager from "@Native/LinkManager";
+import tools from "@Utils/tools";
 
 interface AInterface {
   download?: any;

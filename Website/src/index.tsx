@@ -1,21 +1,21 @@
 import jss from "jss";
 import preset from "jss-preset-default";
 import ReactDOM from "react-dom";
-import MainActivity from "./activitys/MainActivity";
+import MainActivity from "@Activitys/MainActivity";
 import ons from "onsenui";
-import theme from "./styles/theme";
+import PreferencesManager from "@Native/PreferencesManager";
+import theme from "@Styles/theme";
+import Constants from "@Native/Constants";
 import { ToastContainer } from "react-toastify";
-import LoggerManager from "./native/LoggerManager";
+import LoggerManager from "@Native/LoggerManager";
 
 // Webpack CSS import
 import "onsenui/css/onsenui-core.css";
 import "material-icons/iconfont/material-icons.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
-import "./styles/addtional.scss";
-import "./styles/markdown-light.scss";
-import PreferencesManager from "./native/PreferencesManager";
-import Constants from "./native/Constants";
+import "@Styles/addtional.scss";
+import "@Styles/markdown-light.scss";
 
 class Bootloader {
   private mountNode: Element | null = document.querySelector("app");

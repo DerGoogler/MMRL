@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Card, Page, Toolbar, BackButton } from "react-onsenui";
-import LinkManager from "../native/LinkManager";
-import pkg from "./../../package.json";
+import LinkManager from "@Native/LinkManager";
+import pkg from "@Package"
 
 interface Props {
   popPage: any;

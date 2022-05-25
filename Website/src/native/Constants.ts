@@ -1,5 +1,3 @@
-import tools from "../utils/tools";
-
 class Constants {
   private static readonly userAgentAndroid = "MMRL";
   public static readonly userAgent = window.navigator.userAgent;

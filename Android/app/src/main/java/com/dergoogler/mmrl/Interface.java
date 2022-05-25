@@ -18,6 +18,7 @@ import androidx.annotation.Keep;
 import androidx.annotation.RequiresApi;
 import androidx.browser.customtabs.CustomTabColorSchemeParams;
 import androidx.browser.customtabs.CustomTabsIntent;
+import androidx.core.content.ContextCompat;
 
 import com.topjohnwu.superuser.Shell;
 import com.topjohnwu.superuser.ShellUtils;

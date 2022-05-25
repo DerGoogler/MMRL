@@ -1,6 +1,6 @@
 import * as React from "react";
 import { isDesktop } from "react-device-detect";
-import tools from "../../utils/tools";
+import tools from "@Utils/tools";
 
 declare type Type = `video/${string}`;
 

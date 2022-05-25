@@ -1,9 +1,8 @@
 import * as React from "react";
-import { Card, Page, Toolbar, BackButton, List } from "react-onsenui";
-import { ListViewBuilder } from "../builders/ListViewBuilder";
-import LinkManager from "../native/LinkManager";
-import settings from "../utils/settings";
-import pkg from "./../../package.json";
+import { Page, Toolbar, BackButton, List } from "react-onsenui";
+import { ListViewBuilder } from "@Builders/ListViewBuilder";
+import settings from "@Utils/settings";
+import pkg from "@Package";
 
 interface Props {
   pushPage: any;

@@ -1,15 +1,14 @@
 import * as React from "react";
-import ViewModuleActivity from "../activitys/ViewModuleActivity";
-import axios from "axios";
-const Properties = require("@js.properties/properties");
-import { Card } from "react-onsenui";
-import tools from "../utils/tools";
-import { Chip } from "@mui/material";
 import ons from "onsenui";
-import VerifiedIcon from "./icons/VerfifiedIcon";
-import LoggerManager from "../native/LoggerManager";
-import Constants from "../native/Constants";
-import PreferencesManager from "../native/PreferencesManager";
+import axios from "axios";
+import Properties from "@js.properties/properties";
+import { Card } from "react-onsenui";
+import { Chip } from "@mui/material";
+import tools from "@Utils/tools";
+import ViewModuleActivity from "@Activitys/ViewModuleActivity";
+import VerifiedIcon from "@Components/icons/VerfifiedIcon";
+import LoggerManager from "@Native/LoggerManager";
+import Constants from "@Native/Constants";
 
 interface Props {
   notesUrl?: string;

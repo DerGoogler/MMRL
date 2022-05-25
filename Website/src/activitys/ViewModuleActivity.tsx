@@ -1,19 +1,19 @@
 import * as React from "react";
 import { Page, Toolbar, ToolbarButton, BackButton, Button, Dialog } from "react-onsenui";
-import MDIcon from "../components/MDIcon";
 import ons from "onsenui";
 import axios from "axios";
 import Markdown from "markdown-to-jsx";
 import Alert from "react-bootstrap/Alert";
-import VerifiedIcon from "../components/icons/VerfifiedIcon";
-import WarningIcon from "../components/icons/WarningIcon";
-import Changelog from "../components/dapi/Changelog";
-import CheckIcon from "../components/icons/CheckIcon";
-import DangerIcon from "../components/icons/DangerIcon";
-import Constants from "../native/Constants";
-import A from "../components/dapi/A";
-import Video from "../components/dapi/Video";
-import DiscordWidget from "../components/dapi/DiscordWidget";
+import VerifiedIcon from "@Components/icons/VerfifiedIcon";
+import WarningIcon from "@Components/icons/WarningIcon";
+import MDIcon from "@Components/MDIcon";
+import Changelog from "@Components/dapi/Changelog";
+import CheckIcon from "@Components/icons/CheckIcon";
+import DangerIcon from "@Components/icons/DangerIcon";
+import Constants from "@Native/Constants";
+import A from "@Components/dapi/A";
+import Video from "@Components/dapi/Video";
+import DiscordWidget from "@Components/dapi/DiscordWidget";
 
 interface Props {
   extra?: any;

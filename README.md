@@ -53,6 +53,32 @@ module = {
 - <checkicon color="#1a7f37" size="16"/> That's good!
 ```
 
+## Dev API
+
+### Create prompt
+
+```ts
+new AlertBuilder()
+  .setMessage("Custom repo")
+  .setPromptCallback((input: string) => {
+    if (tools.validURL(input)) {
+      prefManager.setPref("repo", input);
+      ons.notification.alert("Repo changed, please refresh the app");
+    } else {
+      ons.notification.alert("Invalid input");
+    }
+  })
+  .showPrompt();
+```
+
+### Run native Android shell
+
+```ts
+import Shell from "@Builders/ShellBuilder";
+
+Shell.cmd("su -V").exec();
+```
+
 ## FAQ
 
 ### Why does some description reports `404: Not Found`?

@@ -1,5 +1,5 @@
 import * as React from "react";
-import tools from "../../utils/tools";
+import tools from "@Utils/tools";
 
 declare type Theme = "light" | "dark";
 

@@ -1,5 +1,4 @@
-import Constants from "./Constants";
-import LoggerManager from "./LoggerManager";
+import Constants from "@Native/Constants";
 
 /**
  * Simple class to manage the web local sotrage and the Android native preferences

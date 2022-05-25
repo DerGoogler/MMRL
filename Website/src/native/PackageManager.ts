@@ -1,5 +1,5 @@
-import Constants from "./Constants";
-import pkg from "./../../package.json";
+import Constants from "@Native/Constants";
+import pkg from "@Package";
 
 class PackageManager {
   public static get getAppPackageId(): string {

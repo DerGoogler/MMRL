@@ -1,14 +1,14 @@
 import * as React from "react";
 import { Button, Page, Toolbar, ToolbarButton, SearchInput, ProgressCircular } from "react-onsenui";
 import axios from "axios";
-import MDIcon from "../components/MDIcon";
+import MDIcon from "@Components/MDIcon";
 import { toast } from "react-toastify";
-import tools from "../utils/tools";
-import Item from "../components/Item";
-import PreferencesManager from "../native/PreferencesManager";
-import SettingsActivity from "./SettingsActivity";
-import SettingsIcon from "../components/icons/SettingsIcon";
-import { PushProps } from "./MainActivity";
+import tools from "@Utils/tools";
+import Item from "@Components/Item";
+import PreferencesManager from "@Native/PreferencesManager";
+import SettingsActivity from "@Activitys/SettingsActivity";
+import SettingsIcon from "@Components/icons/SettingsIcon";
+import { PushProps } from "@Activitys/MainActivity";
 
 interface Props {
   pushPage(...arg: any): PushProps;

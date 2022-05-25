@@ -1,4 +1,4 @@
-import PreferencesManager from "../native/PreferencesManager";
+import PreferencesManager from "@Native/PreferencesManager";
 
 class tools {
   /**

@@ -1,4 +1,4 @@
-import Constants from "./Constants";
+import Constants from "@Native/Constants";
 
 class LinkManager {
   public static open(link: string, target?: string): void {

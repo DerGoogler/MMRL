@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Page, Toolbar, BackButton, RouterNavigator, RouterUtil } from "react-onsenui";
-import MainApplication from "./MainApplication";
+import MainApplication from "@Activitys/MainApplication";
 
 interface ModuleOptions {
   verified?: boolean;

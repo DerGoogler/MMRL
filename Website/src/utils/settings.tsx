@@ -1,15 +1,15 @@
 import ons from "onsenui";
-import AcknowledgementsActivity from "../activitys/AcknowledgementsActivity";
-import AlertBuilder from "../builders/AlertBuilder";
-import { ListInterface } from "../builders/ListViewBuilder";
-import IssuesIcon from "../components/icons/IssuesIscon";
-import LogsIcon from "../components/icons/LogsIcon";
-import RepoIcon from "../components/icons/RepoIcon";
-import Constants from "../native/Constants";
-import LinkManager from "../native/LinkManager";
-import PackageManager from "../native/PackageManager";
-import PreferencesManager from "../native/PreferencesManager";
-import tools from "./tools";
+import AcknowledgementsActivity from "@Activitys/AcknowledgementsActivity";
+import AlertBuilder from "@Builders/AlertBuilder";
+import { ListInterface } from "@Builders/ListViewBuilder";
+import IssuesIcon from "@Components/icons/IssuesIscon";
+import LogsIcon from "@Components/icons/LogsIcon";
+import RepoIcon from "@Components/icons/RepoIcon";
+import Constants from "@Native/Constants";
+import LinkManager from "@Native/LinkManager";
+import PackageManager from "@Native/PackageManager";
+import PreferencesManager from "@Native/PreferencesManager";
+import tools from "@Utils/tools";
 
 const prefManager = new PreferencesManager();
 

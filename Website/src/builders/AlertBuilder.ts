@@ -19,7 +19,7 @@ interface AlertButton {
 }
 
 class AlertBuilder {
-  private readonly dialog: Alert;
+  private dialog: Alert;
 
   public constructor() {
     this.dialog = {

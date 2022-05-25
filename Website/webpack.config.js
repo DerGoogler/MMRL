@@ -77,6 +77,17 @@ const config = {
     },
     extensions: [".js", ".jsx", ".ts", ".tsx", ],
     modules: ["node_modules", path.join(process.env.NPM_CONFIG_PREFIX || __dirname, "lib/node_modules")],
+    alias: {
+      "@Builders": path.resolve(__dirname, "src/builders"),
+      "@Components": path.resolve(__dirname, "src/components"),
+      "@Native": path.resolve(__dirname, "src/native"),
+      "@Types": path.resolve(__dirname, "src/typings"),
+      "@Utils": path.resolve(__dirname, "src/utils"),
+      "@Bootloader": path.resolve(__dirname, "src/index.tsx"),
+      "@Package": path.resolve(__dirname, "package.json"),
+      "@Styles": path.resolve(__dirname, "src/styles"),
+      "@Activitys": path.resolve(__dirname, "src/activitys"),
+    },
   },
   resolveLoader: {
     modules: ["node_modules", path.join(process.env.NPM_CONFIG_PREFIX || __dirname, "lib/node_modules")],

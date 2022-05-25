@@ -1,11 +1,11 @@
 import * as React from "react";
 import { ListItem, ListTitle, Select, Switch } from "react-onsenui";
 import ons from "onsenui";
-import tools from "../utils/tools";
-import MDIcon from "../components/MDIcon";
-import Gesture from "../components/Gesture";
-import PreferencesManager from "../native/PreferencesManager";
-import { PushProps } from "../activitys/MainActivity";
+import tools from "@Utils/tools";
+import MDIcon from "@Components/MDIcon";
+import Gesture from "@Components/Gesture";
+import PreferencesManager from "@Native/PreferencesManager";
+import { PushProps } from "@Activitys/MainActivity";
 
 interface Props {
   data: ListInterface[];

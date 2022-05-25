@@ -1,19 +1,31 @@
 {
-    "compilerOptions": {
-      "outDir": "./../Android/app/src/main/assets",
-      "sourceMap": true,
-      "declaration": false,
-      "strict": true,
-      "noImplicitReturns": true,
-      "noImplicitAny": true,
-      "module": "es6",
-      "allowSyntheticDefaultImports": true,
-      "moduleResolution": "node",
-      "target": "es5",
-      "resolveJsonModule": true,
-      "esModuleInterop": true,
-      "allowJs": true,
-      "jsx": "react-jsx"
-    },
-    "include": ["./src/**/*"]
-  }
+  "compilerOptions": {
+    "outDir": "./../Android/app/src/main/assets",
+    "sourceMap": true,
+    "declaration": false,
+    "strict": true,
+    "noImplicitReturns": true,
+    "noImplicitAny": true,
+    "module": "es6",
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "target": "es5",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "allowJs": true,
+    "jsx": "react-jsx",
+    "baseUrl": "./src",
+    "paths": {
+      "@Native/*": ["native/*"],
+      "@Builders/*": ["builders/*"],
+      "@Components/*": ["components/*"],
+      "@Types/*": ["typings/*"],
+      "@Utils/*": ["utils/*"],
+      "@Bootloader": ["index.tsx"],
+      "@Package":["./../package.json"],
+      "@Styles/*": ["styles/*"],
+      "@Activitys/*": ["activitys/*"]
+    }
+  },
+  "include": ["./src/**/*"]
+}
