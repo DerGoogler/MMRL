@@ -1,11 +1,16 @@
 import PreferencesManager from "../native/PreferencesManager";
 
 class tools {
-  static getSubPath(url: string) {
+  /**
+   * Retuns the current page link
+   * @param url string
+   * @returns {string} string
+   */
+  public static getSubPath(url: string) {
     return window.location.href.replace(/(\?(.*?)=(.*)|\?)/gm, "") + url;
   }
 
-  static getUrlParam(param: string) {
+  public static getUrlParam(param: string) {
     param = param.replace(/([\[\](){}*?+^$.\\|])/g, "\\$1");
     var regex = new RegExp("[?&]" + param + "=([^&#]*)");
     var url = decodeURIComponent(window.location.href);
@@ -14,8 +19,8 @@ class tools {
   }
 
   /**
-   * @param id
-   * @param callback HTMLElement
+   * @param id Given element or ref
+   * @param callback HTMLElement or React.RefObject
    *
    * @description
    * Usage
@@ -27,28 +32,32 @@ class tools {
    * tools.ref(this.myRef, (ref: HTMLElement) => { ref.style.display = "none" })
    * ```
    */
-  public static ref(id: string | React.RefObject<any>, callback: (...props: any) => void) {
+  public static ref<Object = any>(id: string | React.RefObject<Object>, callback: (...props: any) => void) {
     if (typeof id == "string") {
-      var element /*: HTMLElement | null*/;
+      var element: HTMLElement | null;
       if ((element = document.getElementById(id))) {
         if (typeof callback == "function") {
           callback(element);
         }
       }
     } else {
-      var reff /*: React.RefObject<any>*/;
+      var reff: React.RefObject<Object>;
       if ((reff = id)) {
         if (reff && reff.current) {
           if (typeof callback == "function") {
-            const ref /*: typeof reff*/ = reff.current;
-            callback(ref);
+            callback(reff.current);
           }
         }
       }
     }
   }
 
-  static validURL(input: string) {
+  /**
+   * Checks if an string link is valid
+   * @param input string
+   * @returns {boolean} boolean
+   */
+  public static validURL(input: string): boolean {
     var pattern = new RegExp(
       "^(https?:\\/\\/)?" + // protocol
         "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
@@ -61,7 +70,7 @@ class tools {
     return !!pattern.test(input);
   }
 
-  static stringToBoolean(value: string) {
+  public static stringToBoolean(value: string) {
     if (typeof value == "boolean") return value;
     switch (value) {
       case "true":
@@ -80,7 +89,10 @@ class tools {
     }
   }
 
-  static typeIF(_: any, __: any, ___: any) {
+  /**
+   * @deprecated
+   */
+  public static typeIF(_: any, __: any, ___: any) {
     if (this.stringToBoolean(_)) {
       return __;
     } else {
@@ -88,7 +100,7 @@ class tools {
     }
   }
 
-  static typeCheck(_: any, __: any) {
+  public static typeCheck(_: any, __: any) {
     if (_ === undefined || _ === null || _ === "" || __ === 0 || _ === "0" || _ === false || _ === "false") {
       return __;
     } else {

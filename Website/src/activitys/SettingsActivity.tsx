@@ -48,19 +48,6 @@ class SettingsActivity extends React.Component<Props, States> {
   };
 
   public render = () => {
-    const libs = this.state.libs.map((item: any) => {
-      return (
-        // @ts-ignore
-        <Card
-          onClick={() => {
-            LinkManager.open(`https://www.npmjs.com/package/${item}`);
-          }}
-          style={{ marginTop: "4px", marginBottom: "4px" }}
-        >
-          {item}
-        </Card>
-      );
-    });
     return (
       <Page renderToolbar={this.renderToolbar}>
         <settings-container>

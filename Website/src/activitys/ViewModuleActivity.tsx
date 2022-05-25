@@ -26,7 +26,7 @@ interface States {
 }
 
 class ViewModuleActivity extends React.Component<Props, States> {
-  constructor(props: Props | Readonly<Props>) {
+  public constructor(props: Props | Readonly<Props>) {
     super(props);
     this.state = {
       notes: "",
@@ -34,7 +34,7 @@ class ViewModuleActivity extends React.Component<Props, States> {
     };
   }
 
-  componentDidMount = () => {
+  public componentDidMount = () => {
     axios
       .get(this.props.extra.notes)
       .then((response) => {
@@ -54,7 +54,7 @@ class ViewModuleActivity extends React.Component<Props, States> {
       });
   };
 
-  renderToolbar = () => {
+  private renderToolbar = () => {
     const { minMagisk, minApi, maxApi, needsRamdisk, changeBoot } = this.props.extra.moduleProps;
     return (
       // @ts-ignore
@@ -90,15 +90,15 @@ class ViewModuleActivity extends React.Component<Props, States> {
     );
   };
 
-  showDialog = () => {
+  private showDialog = () => {
     this.setState({ dialogShown: true });
   };
 
-  hideDialog = () => {
+  private hideDialog = () => {
     this.setState({ dialogShown: false });
   };
 
-  render = () => {
+  public render = () => {
     const { minMagisk, minApi, maxApi, needRamdisk, changeBoot, name, stars } = this.props.extra.moduleProps;
     const { verified, low } = this.props.extra.moduleOptions;
     return (

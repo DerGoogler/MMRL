@@ -53,7 +53,7 @@ class Item extends React.Component<Props, States> {
   private cardName: React.RefObject<HTMLSpanElement>;
   private log: LoggerManager;
 
-  constructor(props: Props | Readonly<Props>) {
+  public constructor(props: Props | Readonly<Props>) {
     super(props);
     this.state = {
       props: {},
@@ -63,7 +63,7 @@ class Item extends React.Component<Props, States> {
     this.log = new LoggerManager(this.constructor.name);
   }
 
-  componentDidMount = () => {
+  public componentDidMount = () => {
     const { propsUrl } = this.props;
     axios.get(propsUrl).then((response) => {
       this.setState({
@@ -72,14 +72,14 @@ class Item extends React.Component<Props, States> {
     });
   };
 
-  componentDidUpdate() {
+  public componentDidUpdate() {
     const { searchState } = this.props;
     tools.ref(this.cardName, (ref) => {
       if (searchState != "") {
         const search = ref.textContent || ref.innerText;
         if (search.toLowerCase().indexOf(searchState) > -1) {
-          tools.ref(this.searchedCard, (reff) => {
-            reff.style.display = "";
+          tools.ref(this.searchedCard, (ref) => {
+            ref.style.display = "";
           });
         } else {
           tools.ref(this.searchedCard, (ref) => {
@@ -94,7 +94,7 @@ class Item extends React.Component<Props, States> {
     });
   }
 
-  formatDate(date: Date) {
+  private formatDate(date: Date) {
     var hours = date.getHours();
     var minutes = date.getMinutes();
     var ampm = hours >= 12 ? "pm" : "am";
@@ -106,7 +106,7 @@ class Item extends React.Component<Props, States> {
     return date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear() + " " + strTime;
   }
 
-  openReadmeFromParam = (e: any) => {
+  private openReadmeFromParam = (e: any) => {
     this.componentDidMount;
     const { getId } = this.props;
     try {
@@ -122,7 +122,7 @@ class Item extends React.Component<Props, States> {
     }
   };
 
-  render = () => {
+  public render = () => {
     const { notesUrl, downloadUrl, pushPage, moduleOptions, stars, last_update, getId } = this.props;
     const { props } = this.state;
     const isLQModule = moduleOptions[getId]?.low;

@@ -29,7 +29,7 @@ interface States {
 }
 
 class MainActivity extends React.Component<PushProps, States> {
-  constructor(props: PushProps | Readonly<PushProps>) {
+  public constructor(props: PushProps | Readonly<PushProps>) {
     super(props);
     const routeConfig = RouterUtil.init([
       {
@@ -44,11 +44,11 @@ class MainActivity extends React.Component<PushProps, States> {
     this.state = { routeConfig, currentPage: "main" };
   }
 
-  componentDidMount = () => {
+  public componentDidMount = () => {
     window.addEventListener("load", this.windowLoadPush);
   };
 
-  componentWillUnmount = () => {
+  public componentWillUnmount = () => {
     window.removeEventListener("load", this.windowLoadPush);
   };
 
@@ -77,7 +77,7 @@ class MainActivity extends React.Component<PushProps, States> {
     }
   };
 
-  pushPage = (props: any) => {
+  private pushPage = (props: any) => {
     const route = {
       component: props.activity,
       props: {
@@ -98,7 +98,7 @@ class MainActivity extends React.Component<PushProps, States> {
     this.setState({ routeConfig, currentPage: props.key });
   };
 
-  popPage = (options = {}) => {
+  private popPage = (options = {}) => {
     let routeConfig = this.state.routeConfig;
 
     routeConfig = RouterUtil.pop({
@@ -117,22 +117,22 @@ class MainActivity extends React.Component<PushProps, States> {
     this.setState({ currentPage: "main" });
   };
 
-  onPostPush = () => {
+  private onPostPush = () => {
     const routeConfig = RouterUtil.postPush(this.state.routeConfig);
     this.setState({ routeConfig });
   };
 
-  onPostPop = () => {
+  private onPostPop = () => {
     const routeConfig = RouterUtil.postPop(this.state.routeConfig);
     this.setState({ routeConfig });
   };
 
-  renderPage = (route: any) => {
+  private renderPage = (route: any) => {
     const props = route.props || {};
     return <route.component {...props} />;
   };
 
-  renderToolbar = () => {
+  private renderToolbar = () => {
     return (
       // @ts-ignore
       <Toolbar>
@@ -144,7 +144,7 @@ class MainActivity extends React.Component<PushProps, States> {
     );
   };
 
-  render = () => {
+  public render = () => {
     return (
       <Page>
         <RouterNavigator

@@ -27,7 +27,7 @@ class MainApplication extends React.Component<Props, States> {
   private searchBar: React.LegacyRef<SearchInput> | undefined;
   private prefManager: PreferencesManager;
 
-  constructor(props: Props | Readonly<Props>) {
+  public constructor(props: Props | Readonly<Props>) {
     super(props);
     this.state = {
       modulesIndex: [],
@@ -39,7 +39,7 @@ class MainApplication extends React.Component<Props, States> {
     this.prefManager = new PreferencesManager();
   }
 
-  componentDidMount = () => {
+  public componentDidMount = () => {
     const moduels = tools.getUrlParam("module");
     if (moduels != (null || undefined || "")) {
       toast.info("Please wait 2 seconds after the loading screen is gone", {
@@ -83,7 +83,7 @@ class MainApplication extends React.Component<Props, States> {
     });
   };
 
-  componentDidCatch = () => {};
+  public componentDidCatch = () => {};
 
   private openSettings = () => {
     this.props.pushPage({
@@ -92,7 +92,7 @@ class MainApplication extends React.Component<Props, States> {
     });
   };
 
-  renderToolbar = () => {
+  private renderToolbar = () => {
     return (
       // @ts-ignore
       <Toolbar>
@@ -108,16 +108,16 @@ class MainApplication extends React.Component<Props, States> {
     );
   };
 
-  filter = (e: any) => {
+  private filter = (e: any) => {
     this.setState({ currentSerachText: e.target.value.toLowerCase() });
   };
 
-  triggerSearch = () => {
+  private triggerSearch = () => {
     const { currentSerachText } = this.state;
     this.setState({ search: currentSerachText });
   };
 
-  render = () => {
+  public render = () => {
     const { search, loading } = this.state;
     const modules = this.state.modulesIndex.map((item: any) => {
       return (

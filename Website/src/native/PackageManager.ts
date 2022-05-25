@@ -1,11 +1,12 @@
 import Constants from "./Constants";
+import pkg from "./../../package.json";
 
 class PackageManager {
   public static get getAppPackageId(): string {
     if (Constants.isAndroid) {
       return android.getAppPackageId();
     } else {
-      return "com.dergoogler.mmrl.web";
+      return pkg.name;
     }
   }
 
@@ -13,7 +14,7 @@ class PackageManager {
     if (Constants.isAndroid) {
       return android.getAppVersionName();
     } else {
-      return "1";
+      return pkg.version;
     }
   }
 
@@ -21,7 +22,7 @@ class PackageManager {
     if (Constants.isAndroid) {
       return android.getAppVersionCode();
     } else {
-      return 0;
+      return Number(pkg.version.replace(".", ""));
     }
   }
 
