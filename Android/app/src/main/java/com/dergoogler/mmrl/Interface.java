@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.widget.Toast;
@@ -70,6 +71,11 @@ public class Interface {
     @JavascriptInterface
     public void makeToast(String content, int duration) {
         Toast.makeText(this.context, content, duration).show();
+    }
+
+    @JavascriptInterface
+    public void log(String TAG, String message) {
+        Log.i(TAG, message);
     }
 
     // Native preferences

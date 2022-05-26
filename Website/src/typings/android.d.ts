@@ -42,6 +42,7 @@ interface Android {
   // Others
   close(): void;
   makeToast(content: string, duration: int): void;
+  log(TAG: string, message: string): void;
 }
 
 export default Android;
