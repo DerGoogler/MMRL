@@ -80,7 +80,12 @@ const settings: ListInterface[] = [
       },
       {
         type: "",
-        text: `${PackageManager.getAppPackageId} v${PackageManager.getAppVersionName} (${PackageManager.getAppVersionCode})`,
+        text: (
+          <span>
+            {PackageManager.getAppPackageId} v{PackageManager.getAppVersionName} ({PackageManager.getAppVersionCode})<br />
+            {Constants.isAndroid ? `${PackageManager.getMagiskVersionName} (${PackageManager.getMagiskVersionCode})` : ""}
+          </span>
+        ),
         style: {
           // display: !Constants.isAndroid ? "none" : "",
           color: "dimgray",

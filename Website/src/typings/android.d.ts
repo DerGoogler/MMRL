@@ -2,6 +2,7 @@ interface Android {
   // Root management
   exec(command: string): void;
   execResult(command: string): string;
+  cppExecResult(command: string): string;
   isAppGrantedRoot(): boolean;
 
   // Preference management
@@ -15,7 +16,7 @@ interface Android {
   setStatusbarBackgroundWhite(): void;
 
   // Storage management
-  hasStoragePermission(): void;
+  hasStoragePermission(): boolean;
   requestStoargePermission(): void;
 
   // Version managment
@@ -23,10 +24,22 @@ interface Android {
   getAppVersionName(): string;
   getAppPackageId(): string;
   getAndroidVersionCode(): int;
+  /**
+   * @deprecated
+   */
   getMagiskVersionCode(): string;
 
-  // Others
+  // Link
   open(link: string): void;
+  downloadFile(urlStr: string, output: string): void;
+
+  // Storage
+  getDataDir(): string;
+  readModules(): string;
+  readFile(path: string): string;
+  getProp(module: string, prop: string): string;
+
+  // Others
   close(): void;
 }
 

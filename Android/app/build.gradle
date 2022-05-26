@@ -61,5 +61,6 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "androidx.browser:browser:1.4.0"
     implementation "com.github.topjohnwu.libsu:core:5.0.1"
+    implementation 'com.github.topjohnwu.libsu:io:5.0.1'
     implementation 'androidx.appcompat:appcompat:1.4.1'
 }

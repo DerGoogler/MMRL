@@ -1,7 +1,8 @@
 import * as React from "react";
 import { Card, Page, Toolbar, BackButton } from "react-onsenui";
 import LinkManager from "@Native/LinkManager";
-import pkg from "@Package"
+import pkg from "@Package";
+import dep from "./../../licenseBuild/licenses.json";
 
 interface Props {
   popPage: any;
@@ -20,7 +21,7 @@ class AcknowledgementsActivity extends React.Component<Props, States> {
   }
 
   public componentDidMount = () => {
-    this.setState({ libs: Object.keys(pkg.dependencies) });
+    this.setState({ libs: Object.values(dep) });
   };
 
   private renderToolbar = () => {
@@ -46,10 +47,30 @@ class AcknowledgementsActivity extends React.Component<Props, States> {
 
   public render = () => {
     const libs = this.state.libs.map((item: any) => {
-      // @ts-ignore
-      return <Card onClick={() => {
-        LinkManager.open(`https://www.npmjs.com/package/${item}`)
-      }} style={{ marginTop: "4px", marginBottom: "4px" }}>{item}</Card>;
+      return (
+        // @ts-ignore
+        <Card
+          onClick={() => {
+            LinkManager.open(item.repository);
+          }}
+          style={{ marginTop: "4px", marginBottom: "4px" }}
+        >
+          <license-card-wrapper>
+            <license-card-title className="title">
+              <license-card-name>{item.name}</license-card-name>
+              <license-card-author>{item.publisher}</license-card-author>
+            </license-card-title>
+            <div className="content">
+              <license-card-description>{item.description}</license-card-description>
+              <hr className="license-card-diver" />
+              <license-card-infos>
+                <license-card-version>{item.version}</license-card-version>
+                <license-card-license>{item.licenses}</license-card-license>
+              </license-card-infos>
+            </div>
+          </license-card-wrapper>
+        </Card>
+      );
     });
     return (
       <>

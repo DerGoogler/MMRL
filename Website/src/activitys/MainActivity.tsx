@@ -1,18 +1,20 @@
 import * as React from "react";
 import { Page, Toolbar, BackButton, RouterNavigator, RouterUtil } from "react-onsenui";
 import MainApplication from "@Activitys/MainApplication";
+import ExploreModuleFragment from "./MainApplication";
 
 interface ModuleOptions {
   verified?: boolean;
   low?: boolean;
 }
 
-interface ModuleProps {
+export interface ModuleProps {
   minMagisk?: int;
   minApi?: int;
   maxApi?: int;
   needRamdisk?: boolean;
   changeBoot?: boolean;
+  alphaMMRLinstall?: boolean;
 }
 
 export interface PushProps {
@@ -33,6 +35,7 @@ class MainActivity extends React.Component<PushProps, States> {
     super(props);
     const routeConfig = RouterUtil.init([
       {
+        //component: MainApplication,
         component: MainApplication,
         props: {
           key: "main",

@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.dergoogler.components.ModuleView;
 
+import java.io.File;
+
 
 public class MainActivity extends AppCompatActivity {
     private ModuleView view;
@@ -19,9 +21,8 @@ public class MainActivity extends AppCompatActivity {
         view = findViewById(R.id.mmrl_view);
         view.setJavaScriptEnabled(true);
         view.setUserAgentString(Lib.getUserAgent());
-        view.setWebViewClient(new MyWebViewClient());
         view.loadUrl(Lib.indexFile());
-        view.addJavascriptInterface(new Interface(this), Lib.interfaceName());
+        view.setJavascriptInterface(new Interface(this), Lib.interfaceName());
     }
 
     @Override

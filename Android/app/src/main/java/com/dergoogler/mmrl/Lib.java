@@ -3,7 +3,7 @@ package com.dergoogler.mmrl;
 public class Lib {
 
     static {
-            System.loadLibrary("native-lib");
+        System.loadLibrary("native-lib");
     }
 
     public static native String indexFile();

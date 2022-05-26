@@ -26,5 +26,47 @@ item-card-wrapper {
     font-size: 12px;
     margin-top: 8px;
   }
-  item-module-name {}
+  item-module-name {
+  }
+}
+
+// License cards
+
+license-card-wrapper {
+  license-card-title {
+    display: flex;
+    license-card-name {
+      font-size: large;
+      width: 100%;
+      text-align: start;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    license-card-author {
+      font-size: small;
+      white-space: nowrap;
+      text-align: end;
+      padding: 4px;
+    }
+  }
+  license-card-description {
+  }
+  .license-card-diver {
+    height: 1px;
+    border: none;
+    color: #bbb;
+    background-color: #bbb;
+  }
+  license-card-infos {
+    width: 100%;
+    display: flex;
+    license-card-version {
+      width: 100%;
+    }
+    license-card-license {
+      width: 100%;
+      text-align: end;
+    }
+  }
 }

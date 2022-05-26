@@ -45,6 +45,11 @@ class Bootloader {
   }
 
   init() {
+    if (Constants.isAndroid) {
+      if (!android.hasStoragePermission()) {
+        android.requestStoargePermission();
+      }
+    }
     this.log.info("Intitialze repo");
     if (this.prefMan.getPref("repo") == Constants.undefined) {
       this.log.error("No repo was found, set https://repo.dergoogler.com/modules.json as default repo");

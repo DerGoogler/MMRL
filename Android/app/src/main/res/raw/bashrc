@@ -1,5 +1,3 @@
 #!/system/bin/sh
 
-placeholder() {
-    echo "Placeholder"
-}
+getProp() { sed -n "s|^$1=||p" ${2:-$2}; }

@@ -33,7 +33,7 @@ interface ListOptions {
    */
   helper?: Helper;
   type: "switch" | "select" | "";
-  text: string;
+  text: string | JSX.Element;
 
   /**
    * Performs an onClick event to the current list item

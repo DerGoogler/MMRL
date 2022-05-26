@@ -9,30 +9,38 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.provider.Settings;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.widget.Toast;
 
 import androidx.annotation.Keep;
-import androidx.annotation.RequiresApi;
-import androidx.browser.customtabs.CustomTabColorSchemeParams;
-import androidx.browser.customtabs.CustomTabsIntent;
-import androidx.core.content.ContextCompat;
 
+import com.dergoogler.utils.LinkManager;
 import com.topjohnwu.superuser.Shell;
 import com.topjohnwu.superuser.ShellUtils;
+import com.topjohnwu.superuser.io.SuFile;
+import com.topjohnwu.superuser.io.SuFileInputStream;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 
 @Keep
 public class Interface {
     private final Context context;
     private final SharedPreferences localstorage;
+    private final LinkManager link;
 
     public Interface(Context context) {
         this.context = context;
         this.localstorage = context.getSharedPreferences(Lib.getStorageKey(), Activity.MODE_PRIVATE);
+        this.link = new LinkManager(this.context);
     }
 
     @JavascriptInterface
@@ -44,6 +52,11 @@ public class Interface {
     @JavascriptInterface
     public String execResult(String command) {
         return ShellUtils.fastCmd(command);
+    }
+
+    @JavascriptInterface
+    public String getProp(String module, String prop) {
+        return ShellUtils.fastCmd("cat /data/adb/modules/" + module + "/module.prop | sed -n \"s|^" + prop + "=||p\"");
     }
 
     @JavascriptInterface
@@ -120,20 +133,33 @@ public class Interface {
 
     @JavascriptInterface
     public boolean hasStoragePermission() {
-        return this.context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED;
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            return Environment.isExternalStorageManager();
+        } else {
+            return this.context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED;
+        }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.R)
+    @JavascriptInterface
+    public String getDataDir() {
+        return this.link.getDataDir();
+    }
+
+    @JavascriptInterface
+    public String readModules() {
+        String[] modules = new SuFile("/data/adb/modules").list();
+        return String.join(",", modules);
+    }
+
     @JavascriptInterface
     public void requestStoargePermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
             Uri uri = Uri.fromParts("package", this.context.getPackageName(), null);
             intent.setData(uri);
             this.context.startActivity(intent);
         } else {
-            //below android 11=======
-            ((Activity) this.context).requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.MANAGE_EXTERNAL_STORAGE}, 1000);
+            ((Activity) this.context).requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1000);
         }
     }
 
@@ -141,14 +167,17 @@ public class Interface {
 
     @JavascriptInterface
     public void open(String link) {
-        Uri uriUrl = Uri.parse(link);
-        CustomTabsIntent.Builder intentBuilder = new CustomTabsIntent.Builder();
-        CustomTabColorSchemeParams params = new CustomTabColorSchemeParams.Builder()
-                .setToolbarColor(Color.parseColor("#4a148c"))
-                .build();
-        intentBuilder.setColorSchemeParams(CustomTabsIntent.COLOR_SCHEME_DARK, params);
-        CustomTabsIntent customTabsIntent = intentBuilder.build();
-        customTabsIntent.launchUrl(this.context, uriUrl);
+        this.link.openCustomTab(link);
+    }
+
+    @JavascriptInterface
+    public void downloadFile(String url, String outputFile) {
+        try {
+            this.link.downloadFile(url, outputFile);
+        } catch (Exception e) {
+            Toast.makeText(this.context, e.toString(), Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     @JavascriptInterface

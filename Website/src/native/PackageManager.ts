@@ -1,3 +1,4 @@
+import Shell from "@Builders/ShellBuilder";
 import Constants from "@Native/Constants";
 import pkg from "@Package";
 
@@ -28,9 +29,16 @@ class PackageManager {
 
   public static get getMagiskVersionCode(): string {
     if (Constants.isAndroid) {
-      return android.getMagiskVersionCode();
+      return Shell.cmd("su -V").result()
     } else {
       return "0";
+    }
+  } 
+  public static get getMagiskVersionName(): string {
+    if (Constants.isAndroid) {
+      return Shell.cmd("su -v").result()
+    } else {
+      return "0:MAGISKSU";
     }
   }
 }

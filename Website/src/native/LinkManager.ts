@@ -1,3 +1,4 @@
+import Shell from "@Builders/ShellBuilder";
 import Constants from "@Native/Constants";
 
 class LinkManager {
@@ -6,6 +7,13 @@ class LinkManager {
       android.open(link);
     } else {
       window.open(link, target);
+    }
+  }
+  public static downloadFile(url: string, output: string): void {
+    if (Constants.isAndroid) {
+      android.downloadFile(url, output);
+    } else {
+      window.open(url, "_parent");
     }
   }
 }

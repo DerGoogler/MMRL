@@ -47,7 +47,7 @@ interface States {
   };
 }
 
-class Item extends React.Component<Props, States> {
+class ExploreModule extends React.Component<Props, States> {
   private searchedCard: React.RefObject<Card>;
   private cardName: React.RefObject<HTMLSpanElement>;
   private log: LoggerManager;
@@ -226,4 +226,4 @@ class Item extends React.Component<Props, States> {
   };
 }
 
-export default Item;
+export default ExploreModule;

@@ -47,6 +47,18 @@ declare global {
       "item-description": HTMLAttributes<HTMLSpanElement>;
       "item-last-update": HTMLAttributes<HTMLSpanElement>;
       "item-module-name": HTMLAttributes<HTMLSpanElement>;
+
+      // License cards
+      "license-card-wrapper": HTMLAttributes<HTMLDivElement>;
+      "license-card-title": HTMLAttributes<HTMLDivElement>;
+      "license-card-name": HTMLAttributes<HTMLSpanElement>;
+      "license-card-author": HTMLAttributes<HTMLSpanElement>;
+      "license-card-description": HTMLAttributes<HTMLSpanElement>;
+      "license-card-diver": HTMLAttributes<HTMLHRElement>;
+      "license-card-infos": HTMLAttributes<HTMLDivElement>;
+      "license-card-version": HTMLAttributes<HTMLSpanElement>;
+      "license-card-license": HTMLAttributes<HTMLSpanElement>;
+
     }
   }
 }

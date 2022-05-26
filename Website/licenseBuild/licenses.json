@@ -1,0 +1,1299 @@
+{
+  "@ampproject/remapping@2.2.0": {
+    "licenses": "Apache-2.0",
+    "repository": "https://github.com/ampproject/remapping",
+    "publisher": "Justin Ridgewell",
+    "name": "@ampproject/remapping",
+    "version": "2.2.0",
+    "description": "Remap sequential sourcemaps through transformations to point at the original source code"
+  },
+  "@babel/code-frame@7.16.7": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/code-frame",
+    "version": "7.16.7",
+    "description": "Generate errors that contain a code frame that point to source locations."
+  },
+  "@babel/compat-data@7.17.10": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/compat-data",
+    "version": "7.17.10",
+    "description": ">"
+  },
+  "@babel/core@7.18.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/core",
+    "version": "7.18.2",
+    "description": "Babel compiler core."
+  },
+  "@babel/generator@7.18.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/generator",
+    "version": "7.18.2",
+    "description": "Turns an AST into code."
+  },
+  "@babel/helper-compilation-targets@7.18.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/helper-compilation-targets",
+    "version": "7.18.2",
+    "description": "Helper functions on Babel compilation targets"
+  },
+  "@babel/helper-environment-visitor@7.18.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/helper-environment-visitor",
+    "version": "7.18.2",
+    "description": "Helper visitor to only visit nodes in the current 'this' context"
+  },
+  "@babel/helper-function-name@7.17.9": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/helper-function-name",
+    "version": "7.17.9",
+    "description": "Helper function to change the property 'name' of every function"
+  },
+  "@babel/helper-hoist-variables@7.16.7": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/helper-hoist-variables",
+    "version": "7.16.7",
+    "description": "Helper function to hoist variables"
+  },
+  "@babel/helper-module-imports@7.16.7": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/helper-module-imports",
+    "version": "7.16.7",
+    "description": "Babel helper functions for inserting module loads"
+  },
+  "@babel/helper-module-transforms@7.18.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/helper-module-transforms",
+    "version": "7.18.0",
+    "description": "Babel helper functions for implementing ES6 module transformations"
+  },
+  "@babel/helper-plugin-utils@7.17.12": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/helper-plugin-utils",
+    "version": "7.17.12",
+    "description": "General utilities for plugins to use"
+  },
+  "@babel/helper-simple-access@7.18.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/helper-simple-access",
+    "version": "7.18.2",
+    "description": "Babel helper for ensuring that access to a given value is performed through simple accesses"
+  },
+  "@babel/helper-split-export-declaration@7.16.7": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/helper-split-export-declaration",
+    "version": "7.16.7",
+    "description": ">"
+  },
+  "@babel/helper-validator-identifier@7.16.7": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/helper-validator-identifier",
+    "version": "7.16.7",
+    "description": "Validate identifier/keywords name"
+  },
+  "@babel/helper-validator-option@7.16.7": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/helper-validator-option",
+    "version": "7.16.7",
+    "description": "Validate plugin/preset options"
+  },
+  "@babel/helpers@7.18.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/helpers",
+    "version": "7.18.2",
+    "description": "Collection of helper functions used by Babel transforms."
+  },
+  "@babel/highlight@7.17.12": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/highlight",
+    "version": "7.17.12",
+    "description": "Syntax highlight JavaScript strings for output in terminals."
+  },
+  "@babel/parser@7.18.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/parser",
+    "version": "7.18.3",
+    "description": "A JavaScript parser"
+  },
+  "@babel/plugin-syntax-jsx@7.17.12": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-syntax-jsx",
+    "version": "7.17.12",
+    "description": "Allow parsing of jsx"
+  },
+  "@babel/runtime@7.18.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/runtime",
+    "version": "7.18.3",
+    "description": "babel's modular runtime helpers"
+  },
+  "@babel/template@7.16.7": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/template",
+    "version": "7.16.7",
+    "description": "Generate an AST from a string template."
+  },
+  "@babel/traverse@7.18.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/traverse",
+    "version": "7.18.2",
+    "description": "The Babel Traverse module maintains the overall tree state, and is responsible for replacing, removing, and adding nodes"
+  },
+  "@babel/types@7.18.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/types",
+    "version": "7.18.2",
+    "description": "Babel Types is a Lodash-esque utility library for AST nodes"
+  },
+  "@emotion/babel-plugin@11.9.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/emotion-js/emotion/tree/main/packages/babel-plugin",
+    "publisher": "Kye Hohenberger",
+    "name": "@emotion/babel-plugin",
+    "version": "11.9.2",
+    "description": "A recommended babel preprocessing plugin for emotion, The Next Generation of CSS-in-JS."
+  },
+  "@emotion/cache@11.7.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/emotion-js/emotion/tree/main/packages/cache",
+    "name": "@emotion/cache",
+    "author": "",
+    "version": "11.7.1",
+    "description": "emotion's cache"
+  },
+  "@emotion/hash@0.8.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/emotion-js/emotion/tree/master/packages/hash",
+    "name": "@emotion/hash",
+    "author": "",
+    "version": "0.8.0",
+    "description": "A MurmurHash2 implementation"
+  },
+  "@emotion/is-prop-valid@1.1.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/emotion-js/emotion/tree/main/packages/is-prop-valid",
+    "name": "@emotion/is-prop-valid",
+    "author": "",
+    "version": "1.1.2",
+    "description": "A function to check whether a prop is valid for HTML and SVG elements"
+  },
+  "@emotion/memoize@0.7.5": {
+    "licenses": "MIT",
+    "repository": "https://github.com/emotion-js/emotion/tree/master/packages/memoize",
+    "name": "@emotion/memoize",
+    "author": "",
+    "version": "0.7.5",
+    "description": "emotion's memoize utility"
+  },
+  "@emotion/react@11.9.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/emotion-js/emotion/tree/main/packages/react",
+    "publisher": "Emotion Contributors",
+    "name": "@emotion/react",
+    "version": "11.9.0",
+    "description": "> Simple styling in React."
+  },
+  "@emotion/serialize@1.0.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/emotion-js/emotion/tree/main/packages/serialize",
+    "name": "@emotion/serialize",
+    "author": "",
+    "version": "1.0.3",
+    "description": "serialization utils for emotion"
+  },
+  "@emotion/sheet@1.1.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/emotion-js/emotion/tree/main/packages/sheet",
+    "name": "@emotion/sheet",
+    "author": "",
+    "version": "1.1.0",
+    "description": "emotion's stylesheet"
+  },
+  "@emotion/styled@11.8.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/emotion-js/emotion/tree/main/packages/styled",
+    "name": "@emotion/styled",
+    "author": "",
+    "version": "11.8.1",
+    "description": "styled API for emotion"
+  },
+  "@emotion/unitless@0.7.5": {
+    "licenses": "MIT",
+    "repository": "https://github.com/emotion-js/emotion/tree/master/packages/unitless",
+    "name": "@emotion/unitless",
+    "author": "",
+    "version": "0.7.5",
+    "description": "An object of css properties that don't accept values with units"
+  },
+  "@emotion/utils@1.1.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/emotion-js/emotion/tree/main/packages/utils",
+    "name": "@emotion/utils",
+    "author": "",
+    "version": "1.1.0",
+    "description": "internal utils for emotion"
+  },
+  "@emotion/weak-memoize@0.2.5": {
+    "licenses": "MIT",
+    "repository": "https://github.com/emotion-js/emotion/tree/master/packages/weak-memoize",
+    "name": "@emotion/weak-memoize",
+    "author": "",
+    "version": "0.2.5",
+    "description": "A memoization function that uses a WeakMap"
+  },
+  "@jridgewell/gen-mapping@0.1.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/jridgewell/gen-mapping",
+    "publisher": "Justin Ridgewell",
+    "name": "@jridgewell/gen-mapping",
+    "version": "0.1.1",
+    "description": "Generate source maps"
+  },
+  "@jridgewell/gen-mapping@0.3.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/jridgewell/gen-mapping",
+    "publisher": "Justin Ridgewell",
+    "name": "@jridgewell/gen-mapping",
+    "version": "0.3.1",
+    "description": "Generate source maps"
+  },
+  "@jridgewell/resolve-uri@3.0.7": {
+    "licenses": "MIT",
+    "repository": "https://github.com/jridgewell/resolve-uri",
+    "publisher": "Justin Ridgewell",
+    "name": "@jridgewell/resolve-uri",
+    "version": "3.0.7",
+    "description": "Resolve a URI relative to an optional base URI"
+  },
+  "@jridgewell/set-array@1.1.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/jridgewell/set-array",
+    "publisher": "Justin Ridgewell",
+    "name": "@jridgewell/set-array",
+    "version": "1.1.1",
+    "description": "Like a Set, but provides the index of the `key` in the backing array"
+  },
+  "@jridgewell/sourcemap-codec@1.4.13": {
+    "licenses": "MIT",
+    "repository": "https://github.com/jridgewell/sourcemap-codec",
+    "publisher": "Rich Harris",
+    "name": "@jridgewell/sourcemap-codec",
+    "version": "1.4.13",
+    "description": "Encode/decode sourcemap mappings"
+  },
+  "@jridgewell/trace-mapping@0.3.13": {
+    "licenses": "MIT",
+    "repository": "https://github.com/jridgewell/trace-mapping",
+    "publisher": "Justin Ridgewell",
+    "name": "@jridgewell/trace-mapping",
+    "version": "0.3.13",
+    "description": "Trace the original position through a source map"
+  },
+  "@js.properties/properties@0.5.4": {
+    "licenses": "MIT",
+    "repository": "https://github.com/jsproperties/properties",
+    "publisher": "pallxk",
+    "name": "@js.properties/properties",
+    "version": "0.5.4",
+    "description": "JavaScript .properties parser and stringifier"
+  },
+  "@mui/base@5.0.0-alpha.82": {
+    "licenses": "MIT",
+    "repository": "https://github.com/mui/material-ui",
+    "publisher": "MUI Team",
+    "name": "@mui/base",
+    "version": "5.0.0-alpha.82",
+    "description": "Unstyled React components and low-level hooks."
+  },
+  "@mui/icons-material@5.8.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/mui/material-ui",
+    "publisher": "MUI Team",
+    "name": "@mui/icons-material",
+    "version": "5.8.0",
+    "description": "Material Design icons distributed as SVG React components."
+  },
+  "@mui/material@5.8.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/mui/material-ui",
+    "publisher": "MUI Team",
+    "name": "@mui/material",
+    "version": "5.8.1",
+    "description": "React components that implement Google's Material Design."
+  },
+  "@mui/private-theming@5.8.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/mui/material-ui",
+    "publisher": "MUI Team",
+    "name": "@mui/private-theming",
+    "version": "5.8.0",
+    "description": "Private - The React theme context to be shared between `@mui/styles` and `@mui/material`."
+  },
+  "@mui/styled-engine@5.8.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/mui/material-ui",
+    "publisher": "MUI Team",
+    "name": "@mui/styled-engine",
+    "version": "5.8.0",
+    "description": "styled() API wrapper package for emotion."
+  },
+  "@mui/system@5.8.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/mui/material-ui",
+    "publisher": "MUI Team",
+    "name": "@mui/system",
+    "version": "5.8.1",
+    "description": "CSS utilities for rapidly laying out custom designs."
+  },
+  "@mui/types@7.1.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/mui/material-ui",
+    "publisher": "MUI Team",
+    "name": "@mui/types",
+    "version": "7.1.3",
+    "description": "Utility types for MUI."
+  },
+  "@mui/utils@5.8.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/mui/material-ui",
+    "publisher": "MUI Team",
+    "name": "@mui/utils",
+    "version": "5.8.0",
+    "description": "Utility functions for React components."
+  },
+  "@popperjs/core@2.11.5": {
+    "licenses": "MIT",
+    "repository": "https://github.com/popperjs/popper-core",
+    "publisher": "Federico Zivolo",
+    "name": "@popperjs/core",
+    "version": "2.11.5",
+    "description": "Tooltip and Popover Positioning Engine"
+  },
+  "@react-aria/ssr@3.1.2": {
+    "licenses": "Apache-2.0",
+    "repository": "https://github.com/adobe/react-spectrum",
+    "name": "@react-aria/ssr",
+    "author": "",
+    "version": "3.1.2",
+    "description": "Spectrum UI components in React"
+  },
+  "@restart/hooks@0.4.7": {
+    "licenses": "MIT",
+    "repository": "https://github.com/jquense/react-common-hooks",
+    "publisher": "Jason Quense",
+    "name": "@restart/hooks",
+    "version": "0.4.7",
+    "description": "A set of utility and general-purpose React hooks."
+  },
+  "@restart/ui@1.2.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/react-restart/ui",
+    "publisher": "Jason Quense",
+    "name": "@restart/ui",
+    "version": "1.2.0",
+    "description": "Utilities for creating robust overlay components"
+  },
+  "@types/parse-json@4.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped",
+    "name": "@types/parse-json",
+    "author": "",
+    "version": "4.0.0",
+    "description": "TypeScript definitions for parse-json"
+  },
+  "@types/prop-types@15.7.5": {
+    "licenses": "MIT",
+    "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped",
+    "name": "@types/prop-types",
+    "author": "",
+    "version": "15.7.5",
+    "description": "TypeScript definitions for prop-types"
+  },
+  "@types/react-is@17.0.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped",
+    "name": "@types/react-is",
+    "author": "",
+    "version": "17.0.3",
+    "description": "TypeScript definitions for react-is"
+  },
+  "@types/react-transition-group@4.4.4": {
+    "licenses": "MIT",
+    "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped",
+    "name": "@types/react-transition-group",
+    "author": "",
+    "version": "4.4.4",
+    "description": "TypeScript definitions for react-transition-group"
+  },
+  "@types/react@18.0.9": {
+    "licenses": "MIT",
+    "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped",
+    "name": "@types/react",
+    "author": "",
+    "version": "18.0.9",
+    "description": "TypeScript definitions for React"
+  },
+  "@types/scheduler@0.16.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped",
+    "name": "@types/scheduler",
+    "author": "",
+    "version": "0.16.2",
+    "description": "TypeScript definitions for scheduler"
+  },
+  "@types/warning@3.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped",
+    "publisher": "Chi Vinh Le",
+    "name": "@types/warning",
+    "version": "3.0.0",
+    "description": "TypeScript definitions for warning"
+  },
+  "ansi-styles@3.2.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/chalk/ansi-styles",
+    "publisher": "Sindre Sorhus",
+    "name": "ansi-styles",
+    "version": "3.2.1",
+    "description": "ANSI escape codes for styling strings in the terminal"
+  },
+  "axios@0.26.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/axios/axios",
+    "publisher": "Matt Zabriskie",
+    "name": "axios",
+    "version": "0.26.1",
+    "description": "Promise based HTTP client for the browser and node.js"
+  },
+  "babel-plugin-macros@2.8.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/kentcdodds/babel-plugin-macros",
+    "publisher": "Kent C. Dodds",
+    "name": "babel-plugin-macros",
+    "version": "2.8.0",
+    "description": "Allows you to build compile-time libraries"
+  },
+  "bootstrap@5.1.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/twbs/bootstrap",
+    "publisher": "The Bootstrap Authors",
+    "name": "bootstrap",
+    "version": "5.1.3",
+    "description": "The most popular front-end framework for developing responsive, mobile first projects on the web."
+  },
+  "browserslist@4.20.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/browserslist/browserslist",
+    "publisher": "Andrey Sitnik",
+    "name": "browserslist",
+    "version": "4.20.3",
+    "description": "Share target browsers between different front-end tools, like Autoprefixer, Stylelint and babel-env-preset"
+  },
+  "callsites@3.1.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/callsites",
+    "publisher": "Sindre Sorhus",
+    "name": "callsites",
+    "version": "3.1.0",
+    "description": "Get callsites from the V8 stack trace API"
+  },
+  "caniuse-lite@1.0.30001343": {
+    "licenses": "CC-BY-4.0",
+    "repository": "https://github.com/browserslist/caniuse-lite",
+    "publisher": "Ben Briggs",
+    "name": "caniuse-lite",
+    "version": "1.0.30001343",
+    "description": "A smaller version of caniuse-db, with only the essentials!"
+  },
+  "chalk@2.4.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/chalk/chalk",
+    "name": "chalk",
+    "author": "",
+    "version": "2.4.2",
+    "description": "Terminal string styling done right"
+  },
+  "classnames@2.3.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/JedWatson/classnames",
+    "publisher": "Jed Watson",
+    "name": "classnames",
+    "version": "2.3.1",
+    "description": "A simple utility for conditionally joining classNames together"
+  },
+  "clsx@1.1.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/lukeed/clsx",
+    "publisher": "Luke Edwards",
+    "name": "clsx",
+    "version": "1.1.1",
+    "description": "A tiny (228B) utility for constructing className strings conditionally."
+  },
+  "color-convert@1.9.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/Qix-/color-convert",
+    "publisher": "Heather Arthur",
+    "name": "color-convert",
+    "version": "1.9.3",
+    "description": "Plain color conversion functions"
+  },
+  "color-name@1.1.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/dfcreative/color-name",
+    "publisher": "DY",
+    "name": "color-name",
+    "version": "1.1.3",
+    "description": "A list of color names and its values"
+  },
+  "com.dergoogler.mmrl.web@1.3.0": {
+    "licenses": "ISC",
+    "publisher": "Der_Googler",
+    "name": "com.dergoogler.mmrl.web",
+    "version": "1.3.0",
+    "description": "",
+    "repository": true
+  },
+  "convert-source-map@1.8.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/thlorenz/convert-source-map",
+    "publisher": "Thorsten Lorenz",
+    "name": "convert-source-map",
+    "version": "1.8.0",
+    "description": "Converts a source-map from/to  different formats and allows adding/changing properties."
+  },
+  "cosmiconfig@6.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/davidtheclark/cosmiconfig",
+    "publisher": "David Clark",
+    "name": "cosmiconfig",
+    "version": "6.0.0",
+    "description": "Find and load configuration from a package.json property, rc file, or CommonJS module"
+  },
+  "css-vendor@2.0.8": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cssinjs/css-vendor",
+    "publisher": "Oleg Slobodskoi",
+    "name": "css-vendor",
+    "version": "2.0.8",
+    "description": "CSS vendor prefix detection and property feature testing."
+  },
+  "csstype@3.1.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/frenic/csstype",
+    "publisher": "Fredrik Nicol",
+    "name": "csstype",
+    "version": "3.1.0",
+    "description": "Strict TypeScript and Flow types for style based on MDN data"
+  },
+  "debug@4.3.4": {
+    "licenses": "MIT",
+    "repository": "https://github.com/debug-js/debug",
+    "publisher": "Josh Junon",
+    "name": "debug",
+    "version": "4.3.4",
+    "description": "Lightweight debugging utility for Node.js and the browser"
+  },
+  "dequal@2.0.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/lukeed/dequal",
+    "publisher": "Luke Edwards",
+    "name": "dequal",
+    "version": "2.0.2",
+    "description": "A tiny (304B to 489B) utility for check for deep equality"
+  },
+  "dom-helpers@5.2.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/react-bootstrap/dom-helpers",
+    "publisher": "Jason Quense",
+    "name": "dom-helpers",
+    "version": "5.2.1",
+    "description": "tiny modular DOM lib for ie9+"
+  },
+  "dot-properties@1.0.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/eemeli/dot-properties",
+    "publisher": "Eemeli Aro",
+    "name": "dot-properties",
+    "version": "1.0.1",
+    "description": "Parse & stringify .properties files"
+  },
+  "electron-to-chromium@1.4.139": {
+    "licenses": "ISC",
+    "repository": "https://github.com/kilian/electron-to-chromium",
+    "publisher": "Kilian Valkhof",
+    "name": "electron-to-chromium",
+    "version": "1.4.139",
+    "description": "Provides a list of electron-to-chromium version mappings"
+  },
+  "error-ex@1.3.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/qix-/node-error-ex",
+    "name": "error-ex",
+    "author": "",
+    "version": "1.3.2",
+    "description": "Easy error subclassing and stack customization"
+  },
+  "escalade@3.1.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/lukeed/escalade",
+    "publisher": "Luke Edwards",
+    "name": "escalade",
+    "version": "3.1.1",
+    "description": "A tiny (183B to 210B) and fast utility to ascend parent directories"
+  },
+  "escape-string-regexp@1.0.5": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/escape-string-regexp",
+    "publisher": "Sindre Sorhus",
+    "name": "escape-string-regexp",
+    "version": "1.0.5",
+    "description": "Escape RegExp special characters"
+  },
+  "escape-string-regexp@4.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/escape-string-regexp",
+    "publisher": "Sindre Sorhus",
+    "name": "escape-string-regexp",
+    "version": "4.0.0",
+    "description": "Escape RegExp special characters"
+  },
+  "find-root@1.1.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/js-n/find-root",
+    "publisher": "jsdnxx",
+    "name": "find-root",
+    "version": "1.1.0",
+    "description": "find the closest package.json"
+  },
+  "follow-redirects@1.15.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/follow-redirects/follow-redirects",
+    "publisher": "Ruben Verborgh",
+    "name": "follow-redirects",
+    "version": "1.15.0",
+    "description": "HTTP and HTTPS modules that follow redirects."
+  },
+  "function-bind@1.1.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/Raynos/function-bind",
+    "publisher": "Raynos",
+    "name": "function-bind",
+    "version": "1.1.1",
+    "description": "Implementation of Function.prototype.bind"
+  },
+  "gensync@1.0.0-beta.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/loganfsmyth/gensync",
+    "publisher": "Logan Smyth",
+    "name": "gensync",
+    "version": "1.0.0-beta.2",
+    "description": "Allows users to use generators in order to write common functions that can be both sync or async."
+  },
+  "globals@11.12.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/globals",
+    "publisher": "Sindre Sorhus",
+    "name": "globals",
+    "version": "11.12.0",
+    "description": "Global identifiers from different JavaScript environments"
+  },
+  "has-flag@3.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/has-flag",
+    "publisher": "Sindre Sorhus",
+    "name": "has-flag",
+    "version": "3.0.0",
+    "description": "Check if argv has a specific flag"
+  },
+  "has@1.0.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/tarruda/has",
+    "publisher": "Thiago de Arruda",
+    "name": "has",
+    "version": "1.0.3",
+    "description": "Object.prototype.hasOwnProperty.call shortcut"
+  },
+  "hoist-non-react-statics@3.3.2": {
+    "licenses": "BSD-3-Clause",
+    "repository": "https://github.com/mridgway/hoist-non-react-statics",
+    "publisher": "Michael Ridgway",
+    "name": "hoist-non-react-statics",
+    "version": "3.3.2",
+    "description": "Copies non-react specific statics from a child component to a parent component"
+  },
+  "hyphenate-style-name@1.0.4": {
+    "licenses": "BSD-3-Clause",
+    "repository": "https://github.com/rexxars/hyphenate-style-name",
+    "publisher": "Espen Hovlandsdal",
+    "name": "hyphenate-style-name",
+    "version": "1.0.4",
+    "description": "Hyphenates a camelcased CSS property name"
+  },
+  "import-fresh@3.3.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/import-fresh",
+    "publisher": "Sindre Sorhus",
+    "name": "import-fresh",
+    "version": "3.3.0",
+    "description": "Import a module while bypassing the cache"
+  },
+  "invariant@2.2.4": {
+    "licenses": "MIT",
+    "repository": "https://github.com/zertosh/invariant",
+    "publisher": "Andres Suarez",
+    "name": "invariant",
+    "version": "2.2.4",
+    "description": "invariant"
+  },
+  "is-arrayish@0.2.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/qix-/node-is-arrayish",
+    "publisher": "Qix",
+    "name": "is-arrayish",
+    "version": "0.2.1",
+    "description": "Determines if an object can be used as an array"
+  },
+  "is-core-module@2.9.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/inspect-js/is-core-module",
+    "publisher": "Jordan Harband",
+    "name": "is-core-module",
+    "version": "2.9.0",
+    "description": "Is this specifier a node.js core module?"
+  },
+  "is-in-browser@1.1.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/tuxsudo/is-in-browser",
+    "publisher": "Jared Anderson",
+    "name": "is-in-browser",
+    "version": "1.1.3",
+    "description": "Simple check to see if current app is running in browser"
+  },
+  "js-tokens@4.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/lydell/js-tokens",
+    "publisher": "Simon Lydell",
+    "name": "js-tokens",
+    "version": "4.0.0",
+    "description": "A regex that tokenizes JavaScript."
+  },
+  "jsesc@2.5.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/mathiasbynens/jsesc",
+    "publisher": "Mathias Bynens",
+    "name": "jsesc",
+    "version": "2.5.2",
+    "description": "Given some data, jsesc returns the shortest possible stringified & ASCII-safe representation of that data."
+  },
+  "json-parse-even-better-errors@2.3.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/npm/json-parse-even-better-errors",
+    "publisher": "Kat Marchán",
+    "name": "json-parse-even-better-errors",
+    "version": "2.3.1",
+    "description": "JSON.parse with context information on error"
+  },
+  "json5@2.2.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/json5/json5",
+    "publisher": "Aseem Kishore",
+    "name": "json5",
+    "version": "2.2.1",
+    "description": "JSON for humans."
+  },
+  "jss-plugin-camel-case@10.9.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cssinjs/jss",
+    "publisher": "JSS Team",
+    "name": "jss-plugin-camel-case",
+    "version": "10.9.0",
+    "description": "JSS plugin that allows to write camel cased rule properties"
+  },
+  "jss-plugin-compose@10.9.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cssinjs/jss",
+    "publisher": "JSS Team",
+    "name": "jss-plugin-compose",
+    "version": "10.9.0",
+    "description": "JSS plugin for classes composition"
+  },
+  "jss-plugin-default-unit@10.9.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cssinjs/jss",
+    "publisher": "JSS Team",
+    "name": "jss-plugin-default-unit",
+    "version": "10.9.0",
+    "description": "JSS plugin that adds default custom unit to numeric values where needed"
+  },
+  "jss-plugin-expand@10.9.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cssinjs/jss",
+    "publisher": "JSS Team",
+    "name": "jss-plugin-expand",
+    "version": "10.9.0",
+    "description": "JSS plugin that gives you a better syntax than CSS."
+  },
+  "jss-plugin-extend@10.9.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cssinjs/jss",
+    "publisher": "JSS Team",
+    "name": "jss-plugin-extend",
+    "version": "10.9.0",
+    "description": "JSS plugin that enables mixing in styles."
+  },
+  "jss-plugin-global@10.9.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cssinjs/jss",
+    "publisher": "JSS Team",
+    "name": "jss-plugin-global",
+    "version": "10.9.0",
+    "description": "Global styles for JSS"
+  },
+  "jss-plugin-nested@10.9.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cssinjs/jss",
+    "publisher": "JSS Team",
+    "name": "jss-plugin-nested",
+    "version": "10.9.0",
+    "description": "JSS plugin that enables support for nested selectors"
+  },
+  "jss-plugin-props-sort@10.9.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cssinjs/jss",
+    "publisher": "JSS Team",
+    "name": "jss-plugin-props-sort",
+    "version": "10.9.0",
+    "description": "JSS plugin that ensures style properties extend each other instead of override"
+  },
+  "jss-plugin-rule-value-function@10.9.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cssinjs/jss",
+    "publisher": "JSS Team",
+    "name": "jss-plugin-rule-value-function",
+    "version": "10.9.0",
+    "description": "JSS plugin for function value and rule syntax"
+  },
+  "jss-plugin-rule-value-observable@10.9.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cssinjs/jss",
+    "publisher": "JSS Team",
+    "name": "jss-plugin-rule-value-observable",
+    "version": "10.9.0",
+    "description": "JSS plugin for TC39 Observables support"
+  },
+  "jss-plugin-template@10.9.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cssinjs/jss",
+    "publisher": "JSS Team",
+    "name": "jss-plugin-template",
+    "version": "10.9.0",
+    "description": "JSS plugin enables string templates"
+  },
+  "jss-plugin-vendor-prefixer@10.9.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cssinjs/jss",
+    "publisher": "JSS Team",
+    "name": "jss-plugin-vendor-prefixer",
+    "version": "10.9.0",
+    "description": "JSS plugin that handles vendor prefixes in the browser"
+  },
+  "jss-preset-default@10.9.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cssinjs/jss",
+    "publisher": "JSS Team",
+    "name": "jss-preset-default",
+    "version": "10.9.0",
+    "description": "Default preset for JSS with selected plugins."
+  },
+  "jss@10.9.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cssinjs/jss",
+    "publisher": "JSS Team",
+    "name": "jss",
+    "version": "10.9.0",
+    "description": "A lib for generating Style Sheets with JavaScript."
+  },
+  "lines-and-columns@1.2.4": {
+    "licenses": "MIT",
+    "repository": "https://github.com/eventualbuddha/lines-and-columns",
+    "publisher": "Brian Donovan",
+    "name": "lines-and-columns",
+    "version": "1.2.4",
+    "description": "Maps lines and columns to character offsets and back."
+  },
+  "loose-envify@1.4.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/zertosh/loose-envify",
+    "publisher": "Andres Suarez",
+    "name": "loose-envify",
+    "version": "1.4.0",
+    "description": "Fast (and loose) selective `process.env` replacer using js-tokens instead of an AST"
+  },
+  "markdown-to-jsx@7.1.7": {
+    "licenses": "MIT",
+    "repository": "https://github.com/probablyup/markdown-to-jsx",
+    "publisher": "Evan Jacobs",
+    "name": "markdown-to-jsx",
+    "version": "7.1.7",
+    "description": "Convert markdown to JSX with ease for React and React-like projects. Super lightweight and highly configurable."
+  },
+  "material-icons@1.11.0": {
+    "licenses": "Apache-2.0",
+    "repository": "https://github.com/marella/material-icons",
+    "name": "material-icons",
+    "author": "",
+    "version": "1.11.0",
+    "description": "Latest icon fonts and CSS for self-hosting material design icons."
+  },
+  "ms@2.1.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/zeit/ms",
+    "name": "ms",
+    "author": "",
+    "version": "2.1.2",
+    "description": "Tiny millisecond conversion utility"
+  },
+  "node-releases@2.0.5": {
+    "licenses": "MIT",
+    "repository": "https://github.com/chicoxyzzy/node-releases",
+    "publisher": "Sergey Rubanov",
+    "name": "node-releases",
+    "version": "2.0.5",
+    "description": "Node.js releases data"
+  },
+  "object-assign@4.1.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/object-assign",
+    "publisher": "Sindre Sorhus",
+    "name": "object-assign",
+    "version": "4.1.1",
+    "description": "ES2015 `Object.assign()` ponyfill"
+  },
+  "onsenui@2.12.0": {
+    "licenses": "Apache-2.0",
+    "repository": "https://github.com/OnsenUI/OnsenUI",
+    "name": "onsenui",
+    "author": "",
+    "version": "2.12.0",
+    "description": "HTML5 Mobile Framework & UI Components"
+  },
+  "parent-module@1.0.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/parent-module",
+    "publisher": "Sindre Sorhus",
+    "name": "parent-module",
+    "version": "1.0.1",
+    "description": "Get the path of the parent module"
+  },
+  "parse-json@5.2.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/parse-json",
+    "publisher": "Sindre Sorhus",
+    "name": "parse-json",
+    "version": "5.2.0",
+    "description": "Parse JSON with more helpful errors"
+  },
+  "path-parse@1.0.7": {
+    "licenses": "MIT",
+    "repository": "https://github.com/jbgutierrez/path-parse",
+    "publisher": "Javier Blanco",
+    "name": "path-parse",
+    "version": "1.0.7",
+    "description": "Node.js path.parse() ponyfill"
+  },
+  "path-type@4.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/path-type",
+    "publisher": "Sindre Sorhus",
+    "name": "path-type",
+    "version": "4.0.0",
+    "description": "Check if a path is a file, directory, or symlink"
+  },
+  "picocolors@1.0.0": {
+    "licenses": "ISC",
+    "repository": "https://github.com/alexeyraspopov/picocolors",
+    "publisher": "Alexey Raspopov",
+    "name": "picocolors",
+    "version": "1.0.0",
+    "description": "The tiniest and the fastest library for terminal output formatting with ANSI colors"
+  },
+  "prop-types-extra@1.1.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/react-bootstrap/prop-types-extra",
+    "publisher": "Matthew L Smith",
+    "name": "prop-types-extra",
+    "version": "1.1.1",
+    "description": "React PropType Utilities"
+  },
+  "prop-types@15.8.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/facebook/prop-types",
+    "name": "prop-types",
+    "author": "",
+    "version": "15.8.1",
+    "description": "Runtime type checking for React props and similar objects."
+  },
+  "react-bootstrap@2.4.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/react-bootstrap/react-bootstrap",
+    "publisher": "Stephen J. Collings",
+    "name": "react-bootstrap",
+    "version": "2.4.0",
+    "description": "Bootstrap 5 components built with React"
+  },
+  "react-device-detect@2.2.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/duskload/react-device-detect",
+    "publisher": "Michael Laktionov",
+    "name": "react-device-detect",
+    "version": "2.2.2",
+    "description": "Detect device type and render your component according to it"
+  },
+  "react-dom@17.0.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/facebook/react",
+    "name": "react-dom",
+    "author": "",
+    "version": "17.0.2",
+    "description": "React package for working with the DOM."
+  },
+  "react-is@16.13.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/facebook/react",
+    "name": "react-is",
+    "author": "",
+    "version": "16.13.1",
+    "description": "Brand checking of React Elements."
+  },
+  "react-is@17.0.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/facebook/react",
+    "name": "react-is",
+    "author": "",
+    "version": "17.0.2",
+    "description": "Brand checking of React Elements."
+  },
+  "react-lifecycles-compat@3.0.4": {
+    "licenses": "MIT",
+    "repository": "https://github.com/reactjs/react-lifecycles-compat",
+    "name": "react-lifecycles-compat",
+    "author": "",
+    "version": "3.0.4",
+    "description": "Backwards compatibility polyfill for React class components"
+  },
+  "react-onsenui@1.12.0": {
+    "licenses": "Apache-2.0",
+    "repository": "https://github.com/OnsenUI/OnsenUI",
+    "publisher": "Onsen UI Team",
+    "name": "react-onsenui",
+    "version": "1.12.0",
+    "description": "Onsen UI - React Components for Hybrid Cordova/PhoneGap Apps with Material Design and iOS UI components"
+  },
+  "react-toastify@9.0.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/fkhadra/react-toastify",
+    "publisher": "Fadi Khadra",
+    "name": "react-toastify",
+    "version": "9.0.1",
+    "description": "React notification made easy"
+  },
+  "react-transition-group@4.4.2": {
+    "licenses": "BSD-3-Clause",
+    "repository": "https://github.com/reactjs/react-transition-group",
+    "name": "react-transition-group",
+    "author": "",
+    "version": "4.4.2",
+    "description": "A react component toolset for managing animations"
+  },
+  "react@17.0.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/facebook/react",
+    "name": "react",
+    "author": "",
+    "version": "17.0.2",
+    "description": "React is a JavaScript library for building user interfaces."
+  },
+  "regenerator-runtime@0.13.9": {
+    "licenses": "MIT",
+    "repository": "https://github.com/facebook/regenerator/tree/master/packages/runtime",
+    "publisher": "Ben Newman",
+    "name": "regenerator-runtime",
+    "version": "0.13.9",
+    "description": "Runtime for Regenerator-compiled generator and async functions."
+  },
+  "resolve-from@4.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/resolve-from",
+    "publisher": "Sindre Sorhus",
+    "name": "resolve-from",
+    "version": "4.0.0",
+    "description": "Resolve the path of a module like `require.resolve()` but from a given path"
+  },
+  "resolve@1.22.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/browserify/resolve",
+    "publisher": "James Halliday",
+    "name": "resolve",
+    "version": "1.22.0",
+    "description": "resolve like require.resolve() on behalf of files asynchronously and synchronously"
+  },
+  "safe-buffer@5.1.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/feross/safe-buffer",
+    "publisher": "Feross Aboukhadijeh",
+    "name": "safe-buffer",
+    "version": "5.1.2",
+    "description": "Safer Node.js Buffer API"
+  },
+  "scheduler@0.20.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/facebook/react",
+    "name": "scheduler",
+    "author": "",
+    "version": "0.20.2",
+    "description": "Cooperative scheduler for the browser environment."
+  },
+  "semver@6.3.0": {
+    "licenses": "ISC",
+    "repository": "https://github.com/npm/node-semver",
+    "name": "semver",
+    "author": "",
+    "version": "6.3.0",
+    "description": "The semantic version parser used by npm."
+  },
+  "source-map@0.5.7": {
+    "licenses": "BSD-3-Clause",
+    "repository": "https://github.com/mozilla/source-map",
+    "publisher": "Nick Fitzgerald",
+    "name": "source-map",
+    "version": "0.5.7",
+    "description": "Generates and consumes source maps"
+  },
+  "stylis@4.0.13": {
+    "licenses": "MIT",
+    "repository": "https://github.com/thysultan/stylis.js",
+    "publisher": "Sultan Tarimo",
+    "name": "stylis",
+    "version": "4.0.13",
+    "description": "A Light–weight CSS Preprocessor"
+  },
+  "supports-color@5.5.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/chalk/supports-color",
+    "publisher": "Sindre Sorhus",
+    "name": "supports-color",
+    "version": "5.5.0",
+    "description": "Detect whether a terminal supports color"
+  },
+  "supports-preserve-symlinks-flag@1.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/inspect-js/node-supports-preserve-symlinks-flag",
+    "publisher": "Jordan Harband",
+    "name": "supports-preserve-symlinks-flag",
+    "version": "1.0.0",
+    "description": "Determine if the current node version supports the `--preserve-symlinks` flag."
+  },
+  "symbol-observable@1.2.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/blesh/symbol-observable",
+    "publisher": "Ben Lesh",
+    "name": "symbol-observable",
+    "version": "1.2.0",
+    "description": "Symbol.observable ponyfill"
+  },
+  "tiny-warning@1.0.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/alexreardon/tiny-warning",
+    "publisher": "Alex Reardon",
+    "name": "tiny-warning",
+    "version": "1.0.3",
+    "description": "A tiny warning function"
+  },
+  "to-fast-properties@2.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/to-fast-properties",
+    "publisher": "Sindre Sorhus",
+    "name": "to-fast-properties",
+    "version": "2.0.0",
+    "description": "Force V8 to use fast properties for an object"
+  },
+  "ua-parser-js@1.0.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/faisalman/ua-parser-js",
+    "publisher": "Faisal Salman",
+    "name": "ua-parser-js",
+    "version": "1.0.2",
+    "description": "Detect Browser, Engine, OS, CPU, and Device type/model from User-Agent data. Supports browser & node.js environment"
+  },
+  "uncontrollable@7.2.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/jquense/uncontrollable",
+    "publisher": "Jason Quense",
+    "name": "uncontrollable",
+    "version": "7.2.1",
+    "description": "Wrap a controlled react component, to allow specific prop/handler pairs to be uncontrolled"
+  },
+  "warning@4.0.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/BerkeleyTrue/warning",
+    "publisher": "Berkeley Martinez",
+    "name": "warning",
+    "version": "4.0.3",
+    "description": "A mirror of Facebook's Warning"
+  },
+  "yaml@1.10.2": {
+    "licenses": "ISC",
+    "repository": "https://github.com/eemeli/yaml",
+    "publisher": "Eemeli Aro",
+    "name": "yaml",
+    "version": "1.10.2",
+    "description": "JavaScript parser and stringifier for YAML"
+  }
+}
+

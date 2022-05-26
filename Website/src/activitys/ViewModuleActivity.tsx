@@ -14,9 +14,14 @@ import Constants from "@Native/Constants";
 import A from "@Components/dapi/A";
 import Video from "@Components/dapi/Video";
 import DiscordWidget from "@Components/dapi/DiscordWidget";
+import LinkManager from "@Native/LinkManager";
 
 interface Props {
   extra?: any;
+  //extra?: {
+  //  [x: string]: any
+  //  moduleProps?: ModuleProps
+  //};
   popPage(): void;
 }
 
@@ -36,7 +41,7 @@ class ViewModuleActivity extends React.Component<Props, States> {
 
   public componentDidMount = () => {
     axios
-      .get(this.props.extra.notes)
+      .get(this.props.extra?.notes)
       .then((response) => {
         this.setState({
           notes: response.data,
@@ -55,7 +60,7 @@ class ViewModuleActivity extends React.Component<Props, States> {
   };
 
   private renderToolbar = () => {
-    const { minMagisk, minApi, maxApi, needsRamdisk, changeBoot } = this.props.extra.moduleProps;
+    const { minMagisk, minApi, maxApi, needRamdisk, changeBoot } = this.props.extra?.moduleProps;
     return (
       // @ts-ignore
       <Toolbar>
@@ -72,7 +77,7 @@ class ViewModuleActivity extends React.Component<Props, States> {
         // @ts-ignore */
           (() => {
             // Don't show up if nothing ot these exists
-            if ((minMagisk || minApi || maxApi || needsRamdisk || changeBoot) != (null || undefined)) {
+            if ((minMagisk || minApi || maxApi || needRamdisk || changeBoot) != (null || undefined)) {
               return (
                 <div className="right">
                   {/**
@@ -99,8 +104,9 @@ class ViewModuleActivity extends React.Component<Props, States> {
   };
 
   public render = () => {
-    const { minMagisk, minApi, maxApi, needRamdisk, changeBoot, name, stars } = this.props.extra.moduleProps;
-    const { verified, low } = this.props.extra.moduleOptions;
+    const { minMagisk, minApi, maxApi, needRamdisk, changeBoot, name, stars, alpahMMRLinstall } = this.props.extra?.moduleProps;
+    const { download, id } = this.props.extra;
+    const { verified, low } = this.props.extra?.moduleOptions;
     return (
       <>
         <Page renderToolbar={this.renderToolbar}>
@@ -181,7 +187,7 @@ class ViewModuleActivity extends React.Component<Props, States> {
             <Button
               modifier="large"
               onClick={() => {
-                window.open(this.props.extra.download, "_parent");
+                LinkManager.downloadFile(download, `${id}.zip`);
               }}
             >
               Download

@@ -4,6 +4,11 @@
 #include <cstdio>
 #include <string>
 #include <sstream>
+#include <stdexcept>
+#include <istream>
+#include <fstream>
+
+using namespace std;
 
 void addToStream(std::ostringstream &) {
 }
@@ -28,6 +33,23 @@ std::string ConvertJString(JNIEnv *env, jstring str) {
     std::string Result(strChars, len);
     env->ReleaseStringUTFChars(str, strChars);
     return Result;
+}
+
+std::string cppExec(const char* cmd) {
+    char buffer[128];
+    std::string result;
+    FILE* pipe = popen(cmd, "r");
+    if (!pipe) throw std::runtime_error("popen() failed!");
+    try {
+        while (fgets(buffer, sizeof buffer, pipe) != nullptr) {
+            result += buffer;
+        }
+    } catch (...) {
+        pclose(pipe);
+        throw;
+    }
+    pclose(pipe);
+    return result;
 }
 
 extern "C"

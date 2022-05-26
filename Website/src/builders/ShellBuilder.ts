@@ -28,7 +28,7 @@ class ShellBuilder {
   /**
    * Executes an command without result
    */
-  public exec(): ShellBuilder & Void {
+  public exec(): void {
     const { command } = this.dialog;
     if (Constants.isAndroid) {
       android.exec(command);
@@ -40,7 +40,7 @@ class ShellBuilder {
   /**
    * Executes an command with result
    */
-  public result(): ShellBuilder | string | undefined {
+  public result(): string {
     const { command } = this.dialog;
     if (Constants.isAndroid) {
       return android.execResult(command);
