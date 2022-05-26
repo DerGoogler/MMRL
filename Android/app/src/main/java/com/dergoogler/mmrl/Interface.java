@@ -67,6 +67,10 @@ public class Interface {
         } else return appGrantedRoot;
     }
 
+    @JavascriptInterface
+    public void makeToast(String content, int duration) {
+        Toast.makeText(this.context, content, duration).show();
+    }
 
     // Native preferences
 
