@@ -1,5 +1,5 @@
 import Constants from "@Native/Constants";
-import LoggerManager from "@Native/LoggerManager";
+import Log from "./Log";
 
 interface ShellInterface {
   command: string;
@@ -7,10 +7,10 @@ interface ShellInterface {
 
 class ShellBuilder {
   private dialog: ShellInterface;
-  private log: LoggerManager;
+  private log: Log;
 
   public constructor() {
-    this.log = new LoggerManager(this.constructor.name);
+    this.log = new Log(this.constructor.name);
     this.dialog = {
       command: "",
     };
@@ -33,7 +33,7 @@ class ShellBuilder {
     if (Constants.isAndroid) {
       android.exec(command);
     } else {
-      this.log.warn(command);
+      this.log.w(command);
     }
   }
 

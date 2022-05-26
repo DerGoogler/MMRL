@@ -7,8 +7,8 @@ import { Chip } from "@mui/material";
 import tools from "@Utils/tools";
 import ViewModuleActivity from "@Activitys/ViewModuleActivity";
 import VerifiedIcon from "@Components/icons/VerfifiedIcon";
-import LoggerManager from "@Native/LoggerManager";
 import Constants from "@Native/Constants";
+import Log from "@Builders/Log";
 
 interface Props {
   notesUrl?: string;
@@ -50,7 +50,7 @@ interface States {
 class ExploreModule extends React.Component<Props, States> {
   private searchedCard: React.RefObject<Card>;
   private cardName: React.RefObject<HTMLSpanElement>;
-  private log: LoggerManager;
+  private log: Log;
 
   public constructor(props: Props | Readonly<Props>) {
     super(props);
@@ -59,7 +59,7 @@ class ExploreModule extends React.Component<Props, States> {
     };
     this.searchedCard = React.createRef();
     this.cardName = React.createRef();
-    this.log = new LoggerManager(this.constructor.name);
+    this.log = new Log(this.constructor.name);
   }
 
   public componentDidMount = () => {
@@ -112,12 +112,12 @@ class ExploreModule extends React.Component<Props, States> {
       const modul = tools.getUrlParam("module");
       if (modul == getId) {
         setTimeout(() => {
-          this.log.info(`Module found! Open ${this.state.props.name}`);
+          this.log.i(`Module found! Open ${this.state.props.name}`);
           e.click();
         }, 2000);
       }
     } catch (error) {
-      this.log.warn("Failed to open given module");
+      this.log.w("Failed to open given module");
     }
   };
 
