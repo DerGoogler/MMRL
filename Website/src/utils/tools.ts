@@ -1,4 +1,4 @@
-import PreferencesManager from "@Native/PreferencesManager";
+import SharedPreferences from "@Native/SharedPreferences";
 
 class tools {
   /**
@@ -109,7 +109,7 @@ class tools {
   }
 
   public static getSettingsSwitch(key: string): boolean {
-    if (new PreferencesManager().getPref(key) === "true") {
+    if (new SharedPreferences().getPref(key) === "true") {
       return true;
     } else {
       return false;

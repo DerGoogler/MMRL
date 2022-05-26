@@ -8,10 +8,10 @@ import RepoIcon from "@Components/icons/RepoIcon";
 import Constants from "@Native/Constants";
 import LinkManager from "@Native/LinkManager";
 import PackageManager from "@Native/PackageManager";
-import PreferencesManager from "@Native/PreferencesManager";
+import SharedPreferences from "@Native/SharedPreferences";
 import tools from "@Utils/tools";
 
-const prefManager = new PreferencesManager();
+const prefManager = new SharedPreferences();
 
 const settings: ListInterface[] = [
   {

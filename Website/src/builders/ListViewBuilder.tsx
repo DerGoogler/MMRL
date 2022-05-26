@@ -4,7 +4,7 @@ import ons from "onsenui";
 import tools from "@Utils/tools";
 import MDIcon from "@Components/MDIcon";
 import Gesture from "@Components/Gesture";
-import PreferencesManager from "@Native/PreferencesManager";
+import SharedPreferences from "@Native/SharedPreferences";
 import { PushProps } from "@Activitys/MainActivity";
 
 interface Props {
@@ -80,11 +80,11 @@ interface ListInterface {
 }
 
 class ListViewBuilder extends React.Component<Props> {
-  private prefManager: PreferencesManager;
+  private prefManager: SharedPreferences;
 
   public constructor(props: Props | Readonly<Props>) {
     super(props);
-    this.prefManager = new PreferencesManager();
+    this.prefManager = new SharedPreferences();
   }
 
   /**

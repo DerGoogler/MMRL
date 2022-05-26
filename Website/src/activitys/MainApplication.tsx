@@ -1,7 +1,8 @@
 import SettingsIcon from "@Components/icons/SettingsIcon";
 import Constants from "@Native/Constants";
 import * as React from "react";
-import { Card, Page, Tab, Tabbar, Toolbar, ToolbarButton } from "react-onsenui";
+import { Page, Tab, Tabbar, Toolbar, ToolbarButton } from "react-onsenui";
+import AppCompatActivity from "./AppCompatActivity";
 import DeviceModuleFragment from "./fragments/DeviceModuleFragment";
 import ExploreModuleFragment from "./fragments/ExploreModuleFragment";
 import SettingsActivity from "./SettingsActivity";
@@ -24,13 +25,13 @@ interface Props {
   pushPage: any;
 }
 
-class MainApplication extends React.Component<Props> {
+class MainApplication extends AppCompatActivity<Props> {
   public constructor(props: Props | Readonly<Props>) {
     super(props);
     this.state = {};
   }
 
-  private renderToolbar = () => {
+  protected onCreateToolbar = () => {
     return (
       // @ts-ignore
       <Toolbar>
@@ -53,7 +54,7 @@ class MainApplication extends React.Component<Props> {
     });
   };
 
-  renderTabs = () => {
+  private renderTabs = () => {
     return [
       {
         content: <ExploreModuleFragment pushPage={this.props.pushPage} />,
@@ -66,9 +67,9 @@ class MainApplication extends React.Component<Props> {
     ];
   };
 
-  render = () => {
+  protected onCreate = () => {
     return (
-      <Page renderToolbar={this.renderToolbar}>
+      <>
         {(() => {
           if (Constants.isAndroid) {
             //@ts-ignore
@@ -77,7 +78,7 @@ class MainApplication extends React.Component<Props> {
             return <ExploreModuleFragment pushPage={this.props.pushPage} />;
           }
         })()}
-      </Page>
+      </>
     );
   };
 }

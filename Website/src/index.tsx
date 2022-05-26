@@ -3,7 +3,7 @@ import preset from "jss-preset-default";
 import ReactDOM from "react-dom";
 import MainActivity from "@Activitys/MainActivity";
 import ons from "onsenui";
-import PreferencesManager from "@Native/PreferencesManager";
+import SharedPreferences from "@Native/SharedPreferences";
 import theme from "@Styles/theme";
 import Constants from "@Native/Constants";
 import { ToastContainer } from "react-toastify";
@@ -20,10 +20,10 @@ import Log from "@Builders/Log";
 class Bootloader {
   private mountNode: Element | null = document.querySelector("app");
   private log: Log;
-  private prefMan: PreferencesManager;
+  private getSharedPreferences: SharedPreferences;
 
   constructor() {
-    this.prefMan = new PreferencesManager();
+    this.getSharedPreferences = new SharedPreferences();
     this.log = new Log(this.constructor.name);
   }
 
@@ -50,10 +50,19 @@ class Bootloader {
         android.requestStoargePermission();
       }
     }
+
+    // Get's removed in non-beta
+    const tempConfirm = window.confirm("Note! This app not not ready yet. You using currently the alpha (1) version of MMRL");
+    if (tempConfirm) {
+      this.getSharedPreferences.setPref("tempConfirm", "true");
+    } else {
+      this.log.w("User has not confirmed the dialog!");
+    }
+
     this.log.i("Intitialze repo");
-    if (this.prefMan.getPref("repo") == Constants.undefined) {
+    if (this.getSharedPreferences.getPref("repo") == Constants.undefined) {
       this.log.e("No repo was found, set https://repo.dergoogler.com/modules.json as default repo");
-      this.prefMan.setPref("repo", "https://repo.dergoogler.com/modules.json");
+      this.getSharedPreferences.setPref("repo", "https://repo.dergoogler.com/modules.json");
     }
     this.log.i("Selecting platform: Android");
     ons.platform.select("android");

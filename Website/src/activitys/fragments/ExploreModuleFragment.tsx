@@ -5,7 +5,7 @@ import MDIcon from "@Components/MDIcon";
 import { toast } from "react-toastify";
 import tools from "@Utils/tools";
 import ExploreModule from "@Components/ExploreModule";
-import PreferencesManager from "@Native/PreferencesManager";
+import SharedPreferences from "@Native/SharedPreferences";
 import { PushProps } from "@Activitys/MainActivity";
 
 interface Props {
@@ -23,7 +23,7 @@ interface States {
 
 class ExploreModuleFragment extends React.Component<Props, States> {
   private searchBar: React.LegacyRef<SearchInput> | undefined;
-  private prefManager: PreferencesManager;
+  private prefManager: SharedPreferences;
 
   public constructor(props: Props | Readonly<Props>) {
     super(props);
@@ -34,7 +34,7 @@ class ExploreModuleFragment extends React.Component<Props, States> {
       moduleOptions: {},
       loading: true,
     };
-    this.prefManager = new PreferencesManager();
+    this.prefManager = new SharedPreferences();
   }
 
   public componentDidMount = () => {

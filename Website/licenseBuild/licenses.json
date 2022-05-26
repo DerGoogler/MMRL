@@ -39,6 +39,22 @@
     "version": "7.18.2",
     "description": "Turns an AST into code."
   },
+  "@babel/helper-annotate-as-pure@7.16.7": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/helper-annotate-as-pure",
+    "version": "7.16.7",
+    "description": "Helper function to annotate paths and nodes with #__PURE__ comment"
+  },
+  "@babel/helper-builder-binary-assignment-operator-visitor@7.16.7": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/helper-builder-binary-assignment-operator-visitor",
+    "version": "7.16.7",
+    "description": "Helper function to build binary assignment operator visitors"
+  },
   "@babel/helper-compilation-targets@7.18.2": {
     "licenses": "MIT",
     "repository": "https://github.com/babel/babel",
@@ -47,6 +63,30 @@
     "version": "7.18.2",
     "description": "Helper functions on Babel compilation targets"
   },
+  "@babel/helper-create-class-features-plugin@7.18.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/helper-create-class-features-plugin",
+    "version": "7.18.0",
+    "description": "Compile class public and private fields, private methods and decorators to ES6"
+  },
+  "@babel/helper-create-regexp-features-plugin@7.17.12": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/helper-create-regexp-features-plugin",
+    "version": "7.17.12",
+    "description": "Compile ESNext Regular Expressions to ES5"
+  },
+  "@babel/helper-define-polyfill-provider@0.3.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel-polyfills",
+    "name": "@babel/helper-define-polyfill-provider",
+    "author": "",
+    "version": "0.3.1",
+    "description": "Babel helper to create your own polyfill provider"
+  },
   "@babel/helper-environment-visitor@7.18.2": {
     "licenses": "MIT",
     "repository": "https://github.com/babel/babel",
@@ -54,6 +94,14 @@
     "name": "@babel/helper-environment-visitor",
     "version": "7.18.2",
     "description": "Helper visitor to only visit nodes in the current 'this' context"
+  },
+  "@babel/helper-explode-assignable-expression@7.16.7": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/helper-explode-assignable-expression",
+    "version": "7.16.7",
+    "description": "Helper function to explode an assignable expression"
   },
   "@babel/helper-function-name@7.17.9": {
     "licenses": "MIT",
@@ -71,6 +119,14 @@
     "version": "7.16.7",
     "description": "Helper function to hoist variables"
   },
+  "@babel/helper-member-expression-to-functions@7.17.7": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/helper-member-expression-to-functions",
+    "version": "7.17.7",
+    "description": "Helper function to replace certain member expressions with function calls"
+  },
   "@babel/helper-module-imports@7.16.7": {
     "licenses": "MIT",
     "repository": "https://github.com/babel/babel",
@@ -87,6 +143,14 @@
     "version": "7.18.0",
     "description": "Babel helper functions for implementing ES6 module transformations"
   },
+  "@babel/helper-optimise-call-expression@7.16.7": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/helper-optimise-call-expression",
+    "version": "7.16.7",
+    "description": "Helper function to optimise call expression"
+  },
   "@babel/helper-plugin-utils@7.17.12": {
     "licenses": "MIT",
     "repository": "https://github.com/babel/babel",
@@ -95,6 +159,22 @@
     "version": "7.17.12",
     "description": "General utilities for plugins to use"
   },
+  "@babel/helper-remap-async-to-generator@7.16.8": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/helper-remap-async-to-generator",
+    "version": "7.16.8",
+    "description": "Helper function to remap async functions to generators"
+  },
+  "@babel/helper-replace-supers@7.18.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/helper-replace-supers",
+    "version": "7.18.2",
+    "description": "Helper function to replace supers"
+  },
   "@babel/helper-simple-access@7.18.2": {
     "licenses": "MIT",
     "repository": "https://github.com/babel/babel",
@@ -102,6 +182,14 @@
     "name": "@babel/helper-simple-access",
     "version": "7.18.2",
     "description": "Babel helper for ensuring that access to a given value is performed through simple accesses"
+  },
+  "@babel/helper-skip-transparent-expression-wrappers@7.16.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/helper-skip-transparent-expression-wrappers",
+    "version": "7.16.0",
+    "description": "Helper which skips types and parentheses"
   },
   "@babel/helper-split-export-declaration@7.16.7": {
     "licenses": "MIT",
@@ -127,6 +215,14 @@
     "version": "7.16.7",
     "description": "Validate plugin/preset options"
   },
+  "@babel/helper-wrap-function@7.16.8": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/helper-wrap-function",
+    "version": "7.16.8",
+    "description": "Helper to wrap functions inside a function call."
+  },
   "@babel/helpers@7.18.2": {
     "licenses": "MIT",
     "repository": "https://github.com/babel/babel",
@@ -151,6 +247,198 @@
     "version": "7.18.3",
     "description": "A JavaScript parser"
   },
+  "@babel/plugin-bugfix-safari-id-destructuring-collision-in-function-expression@7.17.12": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-bugfix-safari-id-destructuring-collision-in-function-expression",
+    "version": "7.17.12",
+    "description": "Rename destructuring parameter to workaround https://bugs.webkit.org/show_bug.cgi?id=220517"
+  },
+  "@babel/plugin-bugfix-v8-spread-parameters-in-optional-chaining@7.17.12": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-bugfix-v8-spread-parameters-in-optional-chaining",
+    "version": "7.17.12",
+    "description": "Transform optional chaining operators to workaround https://crbug.com/v8/11558"
+  },
+  "@babel/plugin-proposal-async-generator-functions@7.17.12": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-proposal-async-generator-functions",
+    "version": "7.17.12",
+    "description": "Turn async generator functions into ES2015 generators"
+  },
+  "@babel/plugin-proposal-class-properties@7.17.12": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-proposal-class-properties",
+    "version": "7.17.12",
+    "description": "This plugin transforms static class properties as well as properties declared with the property initializer syntax"
+  },
+  "@babel/plugin-proposal-class-static-block@7.18.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-proposal-class-static-block",
+    "version": "7.18.0",
+    "description": "Transform class static blocks"
+  },
+  "@babel/plugin-proposal-dynamic-import@7.16.7": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-proposal-dynamic-import",
+    "version": "7.16.7",
+    "description": "Transform import() expressions"
+  },
+  "@babel/plugin-proposal-export-namespace-from@7.17.12": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-proposal-export-namespace-from",
+    "version": "7.17.12",
+    "description": "Compile export namespace to ES2015"
+  },
+  "@babel/plugin-proposal-json-strings@7.17.12": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-proposal-json-strings",
+    "version": "7.17.12",
+    "description": "Escape U+2028 LINE SEPARATOR and U+2029 PARAGRAPH SEPARATOR in JS strings"
+  },
+  "@babel/plugin-proposal-logical-assignment-operators@7.17.12": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-proposal-logical-assignment-operators",
+    "version": "7.17.12",
+    "description": "Transforms logical assignment operators into short-circuited assignments"
+  },
+  "@babel/plugin-proposal-nullish-coalescing-operator@7.17.12": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-proposal-nullish-coalescing-operator",
+    "version": "7.17.12",
+    "description": "Remove nullish coalescing operator"
+  },
+  "@babel/plugin-proposal-numeric-separator@7.16.7": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-proposal-numeric-separator",
+    "version": "7.16.7",
+    "description": "Remove numeric separators from Decimal, Binary, Hex and Octal literals"
+  },
+  "@babel/plugin-proposal-object-rest-spread@7.18.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-proposal-object-rest-spread",
+    "version": "7.18.0",
+    "description": "Compile object rest and spread to ES5"
+  },
+  "@babel/plugin-proposal-optional-catch-binding@7.16.7": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-proposal-optional-catch-binding",
+    "version": "7.16.7",
+    "description": "Compile optional catch bindings"
+  },
+  "@babel/plugin-proposal-optional-chaining@7.17.12": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-proposal-optional-chaining",
+    "version": "7.17.12",
+    "description": "Transform optional chaining operators into a series of nil checks"
+  },
+  "@babel/plugin-proposal-private-methods@7.17.12": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-proposal-private-methods",
+    "version": "7.17.12",
+    "description": "This plugin transforms private class methods"
+  },
+  "@babel/plugin-proposal-private-property-in-object@7.17.12": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-proposal-private-property-in-object",
+    "version": "7.17.12",
+    "description": "This plugin transforms checks for a private property in an object"
+  },
+  "@babel/plugin-proposal-unicode-property-regex@7.17.12": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-proposal-unicode-property-regex",
+    "version": "7.17.12",
+    "description": "Compile Unicode property escapes in Unicode regular expressions to ES5."
+  },
+  "@babel/plugin-syntax-async-generators@7.8.4": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel/tree/master/packages/babel-plugin-syntax-async-generators",
+    "name": "@babel/plugin-syntax-async-generators",
+    "author": "",
+    "version": "7.8.4",
+    "description": "Allow parsing of async generator functions"
+  },
+  "@babel/plugin-syntax-class-properties@7.12.13": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "name": "@babel/plugin-syntax-class-properties",
+    "author": "",
+    "version": "7.12.13",
+    "description": "Allow parsing of class properties"
+  },
+  "@babel/plugin-syntax-class-static-block@7.14.5": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-syntax-class-static-block",
+    "version": "7.14.5",
+    "description": "Allow parsing of class static blocks"
+  },
+  "@babel/plugin-syntax-dynamic-import@7.8.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel/tree/master/packages/babel-plugin-syntax-dynamic-import",
+    "name": "@babel/plugin-syntax-dynamic-import",
+    "author": "",
+    "version": "7.8.3",
+    "description": "Allow parsing of import()"
+  },
+  "@babel/plugin-syntax-export-namespace-from@7.8.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel/tree/master/packages/babel-plugin-syntax-export-namespace-from",
+    "name": "@babel/plugin-syntax-export-namespace-from",
+    "author": "",
+    "version": "7.8.3",
+    "description": "Allow parsing of export namespace from"
+  },
+  "@babel/plugin-syntax-import-assertions@7.17.12": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-syntax-import-assertions",
+    "version": "7.17.12",
+    "description": "Allow parsing of the module assertion attributes in the import statement"
+  },
+  "@babel/plugin-syntax-json-strings@7.8.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel/tree/master/packages/babel-plugin-syntax-json-strings",
+    "name": "@babel/plugin-syntax-json-strings",
+    "author": "",
+    "version": "7.8.3",
+    "description": "Allow parsing of the U+2028 LINE SEPARATOR and U+2029 PARAGRAPH SEPARATOR in JS strings"
+  },
   "@babel/plugin-syntax-jsx@7.17.12": {
     "licenses": "MIT",
     "repository": "https://github.com/babel/babel",
@@ -158,6 +446,382 @@
     "name": "@babel/plugin-syntax-jsx",
     "version": "7.17.12",
     "description": "Allow parsing of jsx"
+  },
+  "@babel/plugin-syntax-logical-assignment-operators@7.10.4": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "name": "@babel/plugin-syntax-logical-assignment-operators",
+    "author": "",
+    "version": "7.10.4",
+    "description": "Allow parsing of the logical assignment operators"
+  },
+  "@babel/plugin-syntax-nullish-coalescing-operator@7.8.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel/tree/master/packages/babel-plugin-syntax-nullish-coalescing-operator",
+    "name": "@babel/plugin-syntax-nullish-coalescing-operator",
+    "author": "",
+    "version": "7.8.3",
+    "description": "Allow parsing of the nullish-coalescing operator"
+  },
+  "@babel/plugin-syntax-numeric-separator@7.10.4": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "name": "@babel/plugin-syntax-numeric-separator",
+    "author": "",
+    "version": "7.10.4",
+    "description": "Allow parsing of Decimal, Binary, Hex and Octal literals that contain a Numeric Literal Separator"
+  },
+  "@babel/plugin-syntax-object-rest-spread@7.8.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel/tree/master/packages/babel-plugin-syntax-object-rest-spread",
+    "name": "@babel/plugin-syntax-object-rest-spread",
+    "author": "",
+    "version": "7.8.3",
+    "description": "Allow parsing of object rest/spread"
+  },
+  "@babel/plugin-syntax-optional-catch-binding@7.8.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel/tree/master/packages/babel-plugin-syntax-optional-catch-binding",
+    "name": "@babel/plugin-syntax-optional-catch-binding",
+    "author": "",
+    "version": "7.8.3",
+    "description": "Allow parsing of optional catch bindings"
+  },
+  "@babel/plugin-syntax-optional-chaining@7.8.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel/tree/master/packages/babel-plugin-syntax-optional-chaining",
+    "name": "@babel/plugin-syntax-optional-chaining",
+    "author": "",
+    "version": "7.8.3",
+    "description": "Allow parsing of optional properties"
+  },
+  "@babel/plugin-syntax-private-property-in-object@7.14.5": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-syntax-private-property-in-object",
+    "version": "7.14.5",
+    "description": "Allow parsing of '#foo in obj' brand checks"
+  },
+  "@babel/plugin-syntax-top-level-await@7.14.5": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-syntax-top-level-await",
+    "version": "7.14.5",
+    "description": "Allow parsing of top-level await in modules"
+  },
+  "@babel/plugin-transform-arrow-functions@7.17.12": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-transform-arrow-functions",
+    "version": "7.17.12",
+    "description": "Compile ES2015 arrow functions to ES5"
+  },
+  "@babel/plugin-transform-async-to-generator@7.17.12": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-transform-async-to-generator",
+    "version": "7.17.12",
+    "description": "Turn async functions into ES2015 generators"
+  },
+  "@babel/plugin-transform-block-scoped-functions@7.16.7": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-transform-block-scoped-functions",
+    "version": "7.16.7",
+    "description": "Babel plugin to ensure function declarations at the block level are block scoped"
+  },
+  "@babel/plugin-transform-block-scoping@7.17.12": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-transform-block-scoping",
+    "version": "7.17.12",
+    "description": "Compile ES2015 block scoping (const and let) to ES5"
+  },
+  "@babel/plugin-transform-classes@7.17.12": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-transform-classes",
+    "version": "7.17.12",
+    "description": "Compile ES2015 classes to ES5"
+  },
+  "@babel/plugin-transform-computed-properties@7.17.12": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-transform-computed-properties",
+    "version": "7.17.12",
+    "description": "Compile ES2015 computed properties to ES5"
+  },
+  "@babel/plugin-transform-destructuring@7.18.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-transform-destructuring",
+    "version": "7.18.0",
+    "description": "Compile ES2015 destructuring to ES5"
+  },
+  "@babel/plugin-transform-dotall-regex@7.16.7": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-transform-dotall-regex",
+    "version": "7.16.7",
+    "description": "Compile regular expressions using the `s` (`dotAll`) flag to ES5."
+  },
+  "@babel/plugin-transform-duplicate-keys@7.17.12": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-transform-duplicate-keys",
+    "version": "7.17.12",
+    "description": "Compile objects with duplicate keys to valid strict ES5"
+  },
+  "@babel/plugin-transform-exponentiation-operator@7.16.7": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-transform-exponentiation-operator",
+    "version": "7.16.7",
+    "description": "Compile exponentiation operator to ES5"
+  },
+  "@babel/plugin-transform-for-of@7.18.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-transform-for-of",
+    "version": "7.18.1",
+    "description": "Compile ES2015 for...of to ES5"
+  },
+  "@babel/plugin-transform-function-name@7.16.7": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-transform-function-name",
+    "version": "7.16.7",
+    "description": "Apply ES2015 function.name semantics to all functions"
+  },
+  "@babel/plugin-transform-literals@7.17.12": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-transform-literals",
+    "version": "7.17.12",
+    "description": "Compile ES2015 unicode string and number literals to ES5"
+  },
+  "@babel/plugin-transform-member-expression-literals@7.16.7": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-transform-member-expression-literals",
+    "version": "7.16.7",
+    "description": "Ensure that reserved words are quoted in property accesses"
+  },
+  "@babel/plugin-transform-modules-amd@7.18.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-transform-modules-amd",
+    "version": "7.18.0",
+    "description": "This plugin transforms ES2015 modules to AMD"
+  },
+  "@babel/plugin-transform-modules-commonjs@7.18.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-transform-modules-commonjs",
+    "version": "7.18.2",
+    "description": "This plugin transforms ES2015 modules to CommonJS"
+  },
+  "@babel/plugin-transform-modules-systemjs@7.18.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-transform-modules-systemjs",
+    "version": "7.18.0",
+    "description": "This plugin transforms ES2015 modules to SystemJS"
+  },
+  "@babel/plugin-transform-modules-umd@7.18.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-transform-modules-umd",
+    "version": "7.18.0",
+    "description": "This plugin transforms ES2015 modules to UMD"
+  },
+  "@babel/plugin-transform-named-capturing-groups-regex@7.17.12": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-transform-named-capturing-groups-regex",
+    "version": "7.17.12",
+    "description": "Compile regular expressions using named groups to ES5."
+  },
+  "@babel/plugin-transform-new-target@7.17.12": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-transform-new-target",
+    "version": "7.17.12",
+    "description": "Transforms new.target meta property"
+  },
+  "@babel/plugin-transform-object-super@7.16.7": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-transform-object-super",
+    "version": "7.16.7",
+    "description": "Compile ES2015 object super to ES5"
+  },
+  "@babel/plugin-transform-parameters@7.17.12": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-transform-parameters",
+    "version": "7.17.12",
+    "description": "Compile ES2015 default and rest parameters to ES5"
+  },
+  "@babel/plugin-transform-property-literals@7.16.7": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-transform-property-literals",
+    "version": "7.16.7",
+    "description": "Ensure that reserved words are quoted in object property keys"
+  },
+  "@babel/plugin-transform-react-display-name@7.16.7": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-transform-react-display-name",
+    "version": "7.16.7",
+    "description": "Add displayName to React.createClass calls"
+  },
+  "@babel/plugin-transform-react-jsx-development@7.16.7": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-transform-react-jsx-development",
+    "version": "7.16.7",
+    "description": "Turn JSX into React function calls in development"
+  },
+  "@babel/plugin-transform-react-jsx@7.17.12": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-transform-react-jsx",
+    "version": "7.17.12",
+    "description": "Turn JSX into React function calls"
+  },
+  "@babel/plugin-transform-react-pure-annotations@7.18.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-transform-react-pure-annotations",
+    "version": "7.18.0",
+    "description": "Mark top-level React method calls as pure for tree shaking"
+  },
+  "@babel/plugin-transform-regenerator@7.18.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-transform-regenerator",
+    "version": "7.18.0",
+    "description": "Explode async and generator functions into a state machine."
+  },
+  "@babel/plugin-transform-reserved-words@7.17.12": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-transform-reserved-words",
+    "version": "7.17.12",
+    "description": "Ensure that no reserved words are used."
+  },
+  "@babel/plugin-transform-shorthand-properties@7.16.7": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-transform-shorthand-properties",
+    "version": "7.16.7",
+    "description": "Compile ES2015 shorthand properties to ES5"
+  },
+  "@babel/plugin-transform-spread@7.17.12": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-transform-spread",
+    "version": "7.17.12",
+    "description": "Compile ES2015 spread to ES5"
+  },
+  "@babel/plugin-transform-sticky-regex@7.16.7": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-transform-sticky-regex",
+    "version": "7.16.7",
+    "description": "Compile ES2015 sticky regex to an ES5 RegExp constructor"
+  },
+  "@babel/plugin-transform-template-literals@7.18.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-transform-template-literals",
+    "version": "7.18.2",
+    "description": "Compile ES2015 template literals to ES5"
+  },
+  "@babel/plugin-transform-typeof-symbol@7.17.12": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-transform-typeof-symbol",
+    "version": "7.17.12",
+    "description": "This transformer wraps all typeof expressions with a method that replicates native behaviour. (ie. returning “symbol” for symbols)"
+  },
+  "@babel/plugin-transform-unicode-escapes@7.16.7": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-transform-unicode-escapes",
+    "version": "7.16.7",
+    "description": "Compile ES2015 Unicode escapes to ES5"
+  },
+  "@babel/plugin-transform-unicode-regex@7.16.7": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/plugin-transform-unicode-regex",
+    "version": "7.16.7",
+    "description": "Compile ES2015 Unicode regex to ES5"
+  },
+  "@babel/preset-env@7.18.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/preset-env",
+    "version": "7.18.2",
+    "description": "A Babel preset for each environment."
+  },
+  "@babel/preset-modules@0.1.5": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/preset-modules",
+    "name": "@babel/preset-modules",
+    "author": "",
+    "version": "0.1.5",
+    "description": "A Babel preset that targets modern browsers by fixing engine bugs."
+  },
+  "@babel/preset-react@7.17.12": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel",
+    "publisher": "The Babel Team",
+    "name": "@babel/preset-react",
+    "version": "7.17.12",
+    "description": "Babel preset for all React plugins."
   },
   "@babel/runtime@7.18.3": {
     "licenses": "MIT",
@@ -190,6 +854,14 @@
     "name": "@babel/types",
     "version": "7.18.2",
     "description": "Babel Types is a Lodash-esque utility library for AST nodes"
+  },
+  "@discoveryjs/json-ext@0.5.7": {
+    "licenses": "MIT",
+    "repository": "https://github.com/discoveryjs/json-ext",
+    "publisher": "Roman Dvornov",
+    "name": "@discoveryjs/json-ext",
+    "version": "0.5.7",
+    "description": "A set of utilities that extend the use of JSON"
   },
   "@emotion/babel-plugin@11.9.2": {
     "licenses": "MIT",
@@ -439,6 +1111,54 @@
     "version": "1.2.0",
     "description": "Utilities for creating robust overlay components"
   },
+  "@trysound/sax@0.2.0": {
+    "licenses": "ISC",
+    "repository": "https://github.com/svg/sax",
+    "publisher": "Isaac Z. Schlueter",
+    "name": "@trysound/sax",
+    "version": "0.2.0",
+    "description": "An evented streaming XML parser in JavaScript"
+  },
+  "@types/eslint-scope@3.7.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped",
+    "name": "@types/eslint-scope",
+    "author": "",
+    "version": "3.7.3",
+    "description": "TypeScript definitions for eslint-scope"
+  },
+  "@types/eslint@8.4.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped",
+    "name": "@types/eslint",
+    "author": "",
+    "version": "8.4.2",
+    "description": "TypeScript definitions for eslint"
+  },
+  "@types/estree@0.0.50": {
+    "licenses": "MIT",
+    "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped",
+    "name": "@types/estree",
+    "author": "",
+    "version": "0.0.50",
+    "description": "TypeScript definitions for ESTree AST specification"
+  },
+  "@types/json-schema@7.0.11": {
+    "licenses": "MIT",
+    "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped",
+    "name": "@types/json-schema",
+    "author": "",
+    "version": "7.0.11",
+    "description": "TypeScript definitions for json-schema 4.0, 6.0 and"
+  },
+  "@types/node@17.0.35": {
+    "licenses": "MIT",
+    "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped",
+    "name": "@types/node",
+    "author": "",
+    "version": "17.0.35",
+    "description": "TypeScript definitions for Node.js"
+  },
   "@types/parse-json@4.0.0": {
     "licenses": "MIT",
     "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped",
@@ -455,6 +1175,14 @@
     "version": "15.7.5",
     "description": "TypeScript definitions for prop-types"
   },
+  "@types/react-dom@18.0.5": {
+    "licenses": "MIT",
+    "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped",
+    "name": "@types/react-dom",
+    "author": "",
+    "version": "18.0.5",
+    "description": "TypeScript definitions for React (react-dom)"
+  },
   "@types/react-is@17.0.3": {
     "licenses": "MIT",
     "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped",
@@ -462,6 +1190,14 @@
     "author": "",
     "version": "17.0.3",
     "description": "TypeScript definitions for react-is"
+  },
+  "@types/react-onsenui@2.9.17": {
+    "licenses": "MIT",
+    "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped",
+    "name": "@types/react-onsenui",
+    "author": "",
+    "version": "2.9.17",
+    "description": "TypeScript definitions for React Onsen UI (react-onsenui)"
   },
   "@types/react-transition-group@4.4.4": {
     "licenses": "MIT",
@@ -495,6 +1231,230 @@
     "version": "3.0.0",
     "description": "TypeScript definitions for warning"
   },
+  "@webassemblyjs/ast@1.11.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/xtuc/webassemblyjs",
+    "publisher": "Sven Sauleau",
+    "name": "@webassemblyjs/ast",
+    "version": "1.11.1",
+    "description": "AST utils for webassemblyjs"
+  },
+  "@webassemblyjs/floating-point-hex-parser@1.11.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/xtuc/webassemblyjs",
+    "publisher": "Mauro Bringolf",
+    "name": "@webassemblyjs/floating-point-hex-parser",
+    "version": "1.11.1",
+    "description": "A function to parse floating point hexadecimal strings as defined by the WebAssembly specification"
+  },
+  "@webassemblyjs/helper-api-error@1.11.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/xtuc/webassemblyjs",
+    "publisher": "Sven Sauleau",
+    "name": "@webassemblyjs/helper-api-error",
+    "version": "1.11.1",
+    "description": "Common API errors"
+  },
+  "@webassemblyjs/helper-buffer@1.11.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/xtuc/webassemblyjs",
+    "publisher": "Sven Sauleau",
+    "name": "@webassemblyjs/helper-buffer",
+    "version": "1.11.1",
+    "description": "Buffer manipulation utility"
+  },
+  "@webassemblyjs/helper-numbers@1.11.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/xtuc/webassemblyjs",
+    "publisher": "Sven Sauleau",
+    "name": "@webassemblyjs/helper-numbers",
+    "version": "1.11.1",
+    "description": "Number parsing utility"
+  },
+  "@webassemblyjs/helper-wasm-bytecode@1.11.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/xtuc/webassemblyjs",
+    "publisher": "Sven Sauleau",
+    "name": "@webassemblyjs/helper-wasm-bytecode",
+    "version": "1.11.1",
+    "description": "WASM's Bytecode constants"
+  },
+  "@webassemblyjs/helper-wasm-section@1.11.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/xtuc/webassemblyjs",
+    "publisher": "Sven Sauleau",
+    "name": "@webassemblyjs/helper-wasm-section",
+    "version": "1.11.1",
+    "description": ""
+  },
+  "@webassemblyjs/ieee754@1.11.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/xtuc/webassemblyjs",
+    "name": "@webassemblyjs/ieee754",
+    "author": "",
+    "version": "1.11.1",
+    "description": "IEEE754 decoder and encoder"
+  },
+  "@webassemblyjs/leb128@1.11.1": {
+    "licenses": "Apache-2.0",
+    "repository": "https://github.com/xtuc/webassemblyjs",
+    "name": "@webassemblyjs/leb128",
+    "author": "",
+    "version": "1.11.1",
+    "description": "LEB128 decoder and encoder"
+  },
+  "@webassemblyjs/utf8@1.11.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/xtuc/webassemblyjs",
+    "publisher": "Sven Sauleau",
+    "name": "@webassemblyjs/utf8",
+    "version": "1.11.1",
+    "description": "UTF8 encoder/decoder for WASM"
+  },
+  "@webassemblyjs/wasm-edit@1.11.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/xtuc/webassemblyjs",
+    "publisher": "Sven Sauleau",
+    "name": "@webassemblyjs/wasm-edit",
+    "version": "1.11.1",
+    "description": "> Rewrite a WASM binary"
+  },
+  "@webassemblyjs/wasm-gen@1.11.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/xtuc/webassemblyjs",
+    "publisher": "Sven Sauleau",
+    "name": "@webassemblyjs/wasm-gen",
+    "version": "1.11.1",
+    "description": "WebAssembly binary format printer"
+  },
+  "@webassemblyjs/wasm-opt@1.11.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/xtuc/webassemblyjs",
+    "publisher": "Sven Sauleau",
+    "name": "@webassemblyjs/wasm-opt",
+    "version": "1.11.1",
+    "description": ""
+  },
+  "@webassemblyjs/wasm-parser@1.11.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/xtuc/webassemblyjs",
+    "publisher": "Sven Sauleau",
+    "name": "@webassemblyjs/wasm-parser",
+    "version": "1.11.1",
+    "description": "WebAssembly binary format parser"
+  },
+  "@webassemblyjs/wast-printer@1.11.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/xtuc/webassemblyjs",
+    "publisher": "Sven Sauleau",
+    "name": "@webassemblyjs/wast-printer",
+    "version": "1.11.1",
+    "description": "WebAssembly text format printer"
+  },
+  "@webpack-cli/configtest@1.1.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/webpack/webpack-cli",
+    "name": "@webpack-cli/configtest",
+    "author": "",
+    "version": "1.1.1",
+    "description": "Validate a webpack configuration."
+  },
+  "@webpack-cli/info@1.4.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/webpack/webpack-cli",
+    "name": "@webpack-cli/info",
+    "author": "",
+    "version": "1.4.1",
+    "description": "Outputs info about system and webpack config"
+  },
+  "@webpack-cli/serve@1.6.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/webpack/webpack-cli",
+    "name": "@webpack-cli/serve",
+    "author": "",
+    "version": "1.6.1",
+    "description": "[![NPM Downloads][downloads]][downloads-url]"
+  },
+  "@xtuc/ieee754@1.2.0": {
+    "licenses": "BSD-3-Clause",
+    "repository": "https://github.com/feross/ieee754",
+    "publisher": "Feross Aboukhadijeh",
+    "name": "@xtuc/ieee754",
+    "version": "1.2.0",
+    "description": "Read/write IEEE754 floating point numbers from/to a Buffer or array-like object"
+  },
+  "@xtuc/long@4.2.2": {
+    "licenses": "Apache-2.0",
+    "repository": "https://github.com/dcodeIO/long.js",
+    "publisher": "Daniel Wirtz",
+    "name": "@xtuc/long",
+    "version": "4.2.2",
+    "description": "A Long class for representing a 64-bit two's-complement integer value."
+  },
+  "abbrev@1.1.1": {
+    "licenses": "ISC",
+    "repository": "https://github.com/isaacs/abbrev-js",
+    "publisher": "Isaac Z. Schlueter",
+    "name": "abbrev",
+    "version": "1.1.1",
+    "description": "Like ruby's abbrev module, but in js"
+  },
+  "acorn-import-assertions@1.8.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/xtuc/acorn-import-assertions",
+    "publisher": "Sven Sauleau",
+    "name": "acorn-import-assertions",
+    "version": "1.8.0",
+    "description": "Support for import assertions in acorn"
+  },
+  "acorn@8.7.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/acornjs/acorn",
+    "name": "acorn",
+    "author": "",
+    "version": "8.7.1",
+    "description": "ECMAScript parser"
+  },
+  "ajv-formats@2.1.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/ajv-validator/ajv-formats",
+    "publisher": "Evgeny Poberezkin",
+    "name": "ajv-formats",
+    "version": "2.1.1",
+    "description": "Format validation for Ajv v7+"
+  },
+  "ajv-keywords@3.5.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/epoberezkin/ajv-keywords",
+    "publisher": "Evgeny Poberezkin",
+    "name": "ajv-keywords",
+    "version": "3.5.2",
+    "description": "Custom JSON-Schema keywords for Ajv validator"
+  },
+  "ajv-keywords@5.1.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/epoberezkin/ajv-keywords",
+    "publisher": "Evgeny Poberezkin",
+    "name": "ajv-keywords",
+    "version": "5.1.0",
+    "description": "Additional JSON-Schema keywords for Ajv JSON validator"
+  },
+  "ajv@6.12.6": {
+    "licenses": "MIT",
+    "repository": "https://github.com/ajv-validator/ajv",
+    "publisher": "Evgeny Poberezkin",
+    "name": "ajv",
+    "version": "6.12.6",
+    "description": "Another JSON Schema Validator"
+  },
+  "ajv@8.11.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/ajv-validator/ajv",
+    "publisher": "Evgeny Poberezkin",
+    "name": "ajv",
+    "version": "8.11.0",
+    "description": "Another JSON Schema Validator"
+  },
   "ansi-styles@3.2.1": {
     "licenses": "MIT",
     "repository": "https://github.com/chalk/ansi-styles",
@@ -502,6 +1462,46 @@
     "name": "ansi-styles",
     "version": "3.2.1",
     "description": "ANSI escape codes for styling strings in the terminal"
+  },
+  "ansi-styles@4.3.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/chalk/ansi-styles",
+    "publisher": "Sindre Sorhus",
+    "name": "ansi-styles",
+    "version": "4.3.0",
+    "description": "ANSI escape codes for styling strings in the terminal"
+  },
+  "anymatch@3.1.2": {
+    "licenses": "ISC",
+    "repository": "https://github.com/micromatch/anymatch",
+    "publisher": "Elan Shanker",
+    "name": "anymatch",
+    "version": "3.1.2",
+    "description": "Matches strings against configurable strings, globs, regular expressions, and/or functions"
+  },
+  "argparse@1.0.10": {
+    "licenses": "MIT",
+    "repository": "https://github.com/nodeca/argparse",
+    "name": "argparse",
+    "author": "",
+    "version": "1.0.10",
+    "description": "Very powerful CLI arguments parser. Native port of argparse - python's options parsing library"
+  },
+  "array-find-index@1.0.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/array-find-index",
+    "publisher": "Sindre Sorhus",
+    "name": "array-find-index",
+    "version": "1.0.2",
+    "description": "ES2015 `Array#findIndex()` ponyfill"
+  },
+  "asap@2.0.6": {
+    "licenses": "MIT",
+    "repository": "https://github.com/kriskowal/asap",
+    "name": "asap",
+    "author": "",
+    "version": "2.0.6",
+    "description": "High-priority task queue for Node.js and browsers"
   },
   "axios@0.26.1": {
     "licenses": "MIT",
@@ -511,6 +1511,22 @@
     "version": "0.26.1",
     "description": "Promise based HTTP client for the browser and node.js"
   },
+  "babel-loader@8.2.5": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel-loader",
+    "publisher": "Luis Couto",
+    "name": "babel-loader",
+    "version": "8.2.5",
+    "description": "babel module loader for webpack"
+  },
+  "babel-plugin-dynamic-import-node@2.3.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/airbnb/babel-plugin-dynamic-import-node",
+    "publisher": "Jordan Gensler",
+    "name": "babel-plugin-dynamic-import-node",
+    "version": "2.3.3",
+    "description": "Babel plugin to transpile import() to a deferred require(), for node"
+  },
   "babel-plugin-macros@2.8.0": {
     "licenses": "MIT",
     "repository": "https://github.com/kentcdodds/babel-plugin-macros",
@@ -518,6 +1534,62 @@
     "name": "babel-plugin-macros",
     "version": "2.8.0",
     "description": "Allows you to build compile-time libraries"
+  },
+  "babel-plugin-polyfill-corejs2@0.3.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel-polyfills",
+    "name": "babel-plugin-polyfill-corejs2",
+    "author": "",
+    "version": "0.3.1",
+    "description": "A Babel plugin to inject imports to core-js@2 polyfills"
+  },
+  "babel-plugin-polyfill-corejs3@0.5.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel-polyfills",
+    "name": "babel-plugin-polyfill-corejs3",
+    "author": "",
+    "version": "0.5.2",
+    "description": "A Babel plugin to inject imports to core-js@3 polyfills"
+  },
+  "babel-plugin-polyfill-regenerator@0.3.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/babel/babel-polyfills",
+    "name": "babel-plugin-polyfill-regenerator",
+    "author": "",
+    "version": "0.3.1",
+    "description": "A Babel plugin to inject imports to regenerator-runtime"
+  },
+  "balanced-match@1.0.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/juliangruber/balanced-match",
+    "publisher": "Julian Gruber",
+    "name": "balanced-match",
+    "version": "1.0.2",
+    "description": "Match balanced character pairs, like \"{\" and \"}\""
+  },
+  "big.js@5.2.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/MikeMcl/big.js",
+    "publisher": "Michael Mclaughlin",
+    "name": "big.js",
+    "version": "5.2.2",
+    "description": "A small, fast, easy-to-use library for arbitrary-precision decimal arithmetic"
+  },
+  "binary-extensions@2.2.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/binary-extensions",
+    "publisher": "Sindre Sorhus",
+    "name": "binary-extensions",
+    "version": "2.2.0",
+    "description": "List of binary file extensions"
+  },
+  "boolbase@1.0.0": {
+    "licenses": "ISC",
+    "repository": "https://github.com/fb55/boolbase",
+    "publisher": "Felix Boehm",
+    "name": "boolbase",
+    "version": "1.0.0",
+    "description": "two functions: One that returns true, one that returns false"
   },
   "bootstrap@5.1.3": {
     "licenses": "MIT",
@@ -527,6 +1599,22 @@
     "version": "5.1.3",
     "description": "The most popular front-end framework for developing responsive, mobile first projects on the web."
   },
+  "brace-expansion@1.1.11": {
+    "licenses": "MIT",
+    "repository": "https://github.com/juliangruber/brace-expansion",
+    "publisher": "Julian Gruber",
+    "name": "brace-expansion",
+    "version": "1.1.11",
+    "description": "Brace expansion as known from sh/bash"
+  },
+  "braces@3.0.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/micromatch/braces",
+    "publisher": "Jon Schlinkert",
+    "name": "braces",
+    "version": "3.0.2",
+    "description": "Bash-like brace expansion, implemented in JavaScript. Safer than other brace expansion libs, with complete support for the Bash 4.3 braces specification, without sacrificing speed."
+  },
   "browserslist@4.20.3": {
     "licenses": "MIT",
     "repository": "https://github.com/browserslist/browserslist",
@@ -535,6 +1623,22 @@
     "version": "4.20.3",
     "description": "Share target browsers between different front-end tools, like Autoprefixer, Stylelint and babel-env-preset"
   },
+  "buffer-from@1.1.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/LinusU/buffer-from",
+    "name": "buffer-from",
+    "author": "",
+    "version": "1.1.2",
+    "description": "A [ponyfill](https://ponyfill.com) for `Buffer.from`, uses native implementation if available."
+  },
+  "call-bind@1.0.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/ljharb/call-bind",
+    "publisher": "Jordan Harband",
+    "name": "call-bind",
+    "version": "1.0.2",
+    "description": "Robustly `.call.bind()` a function"
+  },
   "callsites@3.1.0": {
     "licenses": "MIT",
     "repository": "https://github.com/sindresorhus/callsites",
@@ -542,6 +1646,14 @@
     "name": "callsites",
     "version": "3.1.0",
     "description": "Get callsites from the V8 stack trace API"
+  },
+  "caniuse-api@3.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/nyalab/caniuse-api",
+    "name": "caniuse-api",
+    "author": "",
+    "version": "3.0.0",
+    "description": "request the caniuse data to check browsers compatibilities"
   },
   "caniuse-lite@1.0.30001343": {
     "licenses": "CC-BY-4.0",
@@ -559,6 +1671,30 @@
     "version": "2.4.2",
     "description": "Terminal string styling done right"
   },
+  "chalk@4.1.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/chalk/chalk",
+    "name": "chalk",
+    "author": "",
+    "version": "4.1.2",
+    "description": "Terminal string styling done right"
+  },
+  "chokidar@3.5.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/paulmillr/chokidar",
+    "publisher": "Paul Miller",
+    "name": "chokidar",
+    "version": "3.5.3",
+    "description": "Minimal and efficient cross-platform file watching library"
+  },
+  "chrome-trace-event@1.0.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/samccone/chrome-trace-event",
+    "publisher": "Trent Mick, Sam Saccone",
+    "name": "chrome-trace-event",
+    "version": "1.0.3",
+    "description": "A library to create a trace of your node app per Google's Trace Event format."
+  },
   "classnames@2.3.1": {
     "licenses": "MIT",
     "repository": "https://github.com/JedWatson/classnames",
@@ -566,6 +1702,14 @@
     "name": "classnames",
     "version": "2.3.1",
     "description": "A simple utility for conditionally joining classNames together"
+  },
+  "clone-deep@4.0.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/jonschlinkert/clone-deep",
+    "publisher": "Jon Schlinkert",
+    "name": "clone-deep",
+    "version": "4.0.1",
+    "description": "Recursively (deep) clone JavaScript native types, like Object, Array, RegExp, Date as well as primitives."
   },
   "clsx@1.1.1": {
     "licenses": "MIT",
@@ -583,6 +1727,14 @@
     "version": "1.9.3",
     "description": "Plain color conversion functions"
   },
+  "color-convert@2.0.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/Qix-/color-convert",
+    "publisher": "Heather Arthur",
+    "name": "color-convert",
+    "version": "2.0.1",
+    "description": "Plain color conversion functions"
+  },
   "color-name@1.1.3": {
     "licenses": "MIT",
     "repository": "https://github.com/dfcreative/color-name",
@@ -591,13 +1743,61 @@
     "version": "1.1.3",
     "description": "A list of color names and its values"
   },
-  "com.dergoogler.mmrl.web@1.3.0": {
-    "licenses": "ISC",
-    "publisher": "Der_Googler",
-    "name": "com.dergoogler.mmrl.web",
-    "version": "1.3.0",
-    "description": "",
-    "repository": true
+  "color-name@1.1.4": {
+    "licenses": "MIT",
+    "repository": "https://github.com/colorjs/color-name",
+    "publisher": "DY",
+    "name": "color-name",
+    "version": "1.1.4",
+    "description": "A list of color names and its values"
+  },
+  "colord@2.9.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/omgovich/colord",
+    "publisher": "Vlad Shilov",
+    "name": "colord",
+    "version": "2.9.2",
+    "description": "👑 A tiny yet powerful tool for high-performance color manipulations and conversions"
+  },
+  "colorette@2.0.16": {
+    "licenses": "MIT",
+    "repository": "https://github.com/jorgebucaran/colorette",
+    "publisher": "Jorge Bucaran",
+    "name": "colorette",
+    "version": "2.0.16",
+    "description": "🌈Easily set your terminal text color & styles."
+  },
+  "commander@2.20.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/tj/commander.js",
+    "publisher": "TJ Holowaychuk",
+    "name": "commander",
+    "version": "2.20.3",
+    "description": "the complete solution for node.js command-line programs"
+  },
+  "commander@7.2.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/tj/commander.js",
+    "publisher": "TJ Holowaychuk",
+    "name": "commander",
+    "version": "7.2.0",
+    "description": "the complete solution for node.js command-line programs"
+  },
+  "commondir@1.0.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/substack/node-commondir",
+    "publisher": "James Halliday",
+    "name": "commondir",
+    "version": "1.0.1",
+    "description": "compute the closest common parent for file paths"
+  },
+  "concat-map@0.0.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/substack/node-concat-map",
+    "publisher": "James Halliday",
+    "name": "concat-map",
+    "version": "0.0.1",
+    "description": "concatenative mapdashery"
   },
   "convert-source-map@1.8.0": {
     "licenses": "MIT",
@@ -607,6 +1807,14 @@
     "version": "1.8.0",
     "description": "Converts a source-map from/to  different formats and allows adding/changing properties."
   },
+  "core-js-compat@3.22.7": {
+    "licenses": "MIT",
+    "repository": "https://github.com/zloirock/core-js",
+    "name": "core-js-compat",
+    "author": "",
+    "version": "3.22.7",
+    "description": "core-js compat"
+  },
   "cosmiconfig@6.0.0": {
     "licenses": "MIT",
     "repository": "https://github.com/davidtheclark/cosmiconfig",
@@ -614,6 +1822,62 @@
     "name": "cosmiconfig",
     "version": "6.0.0",
     "description": "Find and load configuration from a package.json property, rc file, or CommonJS module"
+  },
+  "cosmiconfig@7.0.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/davidtheclark/cosmiconfig",
+    "publisher": "David Clark",
+    "name": "cosmiconfig",
+    "version": "7.0.1",
+    "description": "Find and load configuration from a package.json property, rc file, or CommonJS module"
+  },
+  "cross-spawn@7.0.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/moxystudio/node-cross-spawn",
+    "publisher": "André Cruz",
+    "name": "cross-spawn",
+    "version": "7.0.3",
+    "description": "Cross platform child_process#spawn and child_process#spawnSync"
+  },
+  "css-declaration-sorter@6.2.2": {
+    "licenses": "ISC",
+    "repository": "https://github.com/Siilwyn/css-declaration-sorter",
+    "publisher": "Selwyn",
+    "name": "css-declaration-sorter",
+    "version": "6.2.2",
+    "description": "Sorts CSS declarations fast and automatically in a certain order."
+  },
+  "css-loader@6.7.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/webpack-contrib/css-loader",
+    "publisher": "Tobias Koppers @sokra",
+    "name": "css-loader",
+    "version": "6.7.1",
+    "description": "css loader module for webpack"
+  },
+  "css-minimizer-webpack-plugin@3.4.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/webpack-contrib/css-minimizer-webpack-plugin",
+    "publisher": "Loann Neveu",
+    "name": "css-minimizer-webpack-plugin",
+    "version": "3.4.1",
+    "description": "cssnano plugin for Webpack"
+  },
+  "css-select@4.3.0": {
+    "licenses": "BSD-2-Clause",
+    "repository": "https://github.com/fb55/css-select",
+    "publisher": "Felix Boehm",
+    "name": "css-select",
+    "version": "4.3.0",
+    "description": "a CSS selector compiler/engine"
+  },
+  "css-tree@1.1.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/csstree/csstree",
+    "publisher": "Roman Dvornov",
+    "name": "css-tree",
+    "version": "1.1.3",
+    "description": "A tool set for CSS: fast detailed parser (CSS → AST), walker (AST traversal), generator (AST → CSS) and lexer (validation and matching) based on specs and browser implementations"
   },
   "css-vendor@2.0.8": {
     "licenses": "MIT",
@@ -623,6 +1887,54 @@
     "version": "2.0.8",
     "description": "CSS vendor prefix detection and property feature testing."
   },
+  "css-what@6.1.0": {
+    "licenses": "BSD-2-Clause",
+    "repository": "https://github.com/fb55/css-what",
+    "publisher": "Felix Böhm",
+    "name": "css-what",
+    "version": "6.1.0",
+    "description": "a CSS selector parser"
+  },
+  "cssesc@3.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/mathiasbynens/cssesc",
+    "publisher": "Mathias Bynens",
+    "name": "cssesc",
+    "version": "3.0.0",
+    "description": "A JavaScript library for escaping CSS strings and identifiers while generating the shortest possible ASCII-only output."
+  },
+  "cssnano-preset-default@5.2.9": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cssnano/cssnano",
+    "publisher": "Ben Briggs",
+    "name": "cssnano-preset-default",
+    "version": "5.2.9",
+    "description": "Safe defaults for cssnano which require minimal configuration."
+  },
+  "cssnano-utils@3.1.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cssnano/cssnano",
+    "name": "cssnano-utils",
+    "author": "",
+    "version": "3.1.0",
+    "description": "Utility methods and plugin for cssnano projects"
+  },
+  "cssnano@5.1.9": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cssnano/cssnano",
+    "publisher": "Ben Briggs",
+    "name": "cssnano",
+    "version": "5.1.9",
+    "description": "A modular minifier, built on top of the PostCSS ecosystem."
+  },
+  "csso@4.2.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/css/csso",
+    "publisher": "Sergey Kryzhanovsky",
+    "name": "csso",
+    "version": "4.2.0",
+    "description": "CSS minifier with structural optimisations"
+  },
   "csstype@3.1.0": {
     "licenses": "MIT",
     "repository": "https://github.com/frenic/csstype",
@@ -630,6 +1942,14 @@
     "name": "csstype",
     "version": "3.1.0",
     "description": "Strict TypeScript and Flow types for style based on MDN data"
+  },
+  "debug@3.2.7": {
+    "licenses": "MIT",
+    "repository": "https://github.com/visionmedia/debug",
+    "publisher": "TJ Holowaychuk",
+    "name": "debug",
+    "version": "3.2.7",
+    "description": "small debugging utility"
   },
   "debug@4.3.4": {
     "licenses": "MIT",
@@ -639,6 +1959,22 @@
     "version": "4.3.4",
     "description": "Lightweight debugging utility for Node.js and the browser"
   },
+  "debuglog@1.0.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sam-github/node-debuglog",
+    "publisher": "Sam Roberts",
+    "name": "debuglog",
+    "version": "1.0.1",
+    "description": "backport of util.debuglog from node v0.11"
+  },
+  "define-properties@1.1.4": {
+    "licenses": "MIT",
+    "repository": "https://github.com/ljharb/define-properties",
+    "publisher": "Jordan Harband",
+    "name": "define-properties",
+    "version": "1.1.4",
+    "description": "Define multiple non-enumerable properties at once. Uses `Object.defineProperty` when available; falls back to standard assignment in older engines."
+  },
   "dequal@2.0.2": {
     "licenses": "MIT",
     "repository": "https://github.com/lukeed/dequal",
@@ -647,6 +1983,14 @@
     "version": "2.0.2",
     "description": "A tiny (304B to 489B) utility for check for deep equality"
   },
+  "dezalgo@1.0.4": {
+    "licenses": "ISC",
+    "repository": "https://github.com/npm/dezalgo",
+    "publisher": "Isaac Z. Schlueter",
+    "name": "dezalgo",
+    "version": "1.0.4",
+    "description": "Contain async insanity so that the dark pony lord doesn't eat souls"
+  },
   "dom-helpers@5.2.1": {
     "licenses": "MIT",
     "repository": "https://github.com/react-bootstrap/dom-helpers",
@@ -654,6 +1998,38 @@
     "name": "dom-helpers",
     "version": "5.2.1",
     "description": "tiny modular DOM lib for ie9+"
+  },
+  "dom-serializer@1.4.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cheeriojs/dom-renderer",
+    "publisher": "Felix Boehm",
+    "name": "dom-serializer",
+    "version": "1.4.1",
+    "description": "render domhandler DOM nodes to a string"
+  },
+  "domelementtype@2.3.0": {
+    "licenses": "BSD-2-Clause",
+    "repository": "https://github.com/fb55/domelementtype",
+    "publisher": "Felix Boehm",
+    "name": "domelementtype",
+    "version": "2.3.0",
+    "description": "all the types of nodes in htmlparser2's dom"
+  },
+  "domhandler@4.3.1": {
+    "licenses": "BSD-2-Clause",
+    "repository": "https://github.com/fb55/domhandler",
+    "publisher": "Felix Boehm",
+    "name": "domhandler",
+    "version": "4.3.1",
+    "description": "Handler for htmlparser2 that turns pages into a dom"
+  },
+  "domutils@2.8.0": {
+    "licenses": "BSD-2-Clause",
+    "repository": "https://github.com/fb55/domutils",
+    "publisher": "Felix Boehm",
+    "name": "domutils",
+    "version": "2.8.0",
+    "description": "Utilities for working with htmlparser2's dom"
   },
   "dot-properties@1.0.1": {
     "licenses": "MIT",
@@ -671,6 +2047,38 @@
     "version": "1.4.139",
     "description": "Provides a list of electron-to-chromium version mappings"
   },
+  "emojis-list@3.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/kikobeats/emojis-list",
+    "publisher": "Kiko Beats",
+    "name": "emojis-list",
+    "version": "3.0.0",
+    "description": "Complete list of standard emojis."
+  },
+  "enhanced-resolve@5.9.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/webpack/enhanced-resolve",
+    "publisher": "Tobias Koppers @sokra",
+    "name": "enhanced-resolve",
+    "version": "5.9.3",
+    "description": "Offers a async require.resolve function. It's highly configurable."
+  },
+  "entities@2.2.0": {
+    "licenses": "BSD-2-Clause",
+    "repository": "https://github.com/fb55/entities",
+    "publisher": "Felix Boehm",
+    "name": "entities",
+    "version": "2.2.0",
+    "description": "Encode & decode XML and HTML entities with ease"
+  },
+  "envinfo@7.8.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/tabrindle/envinfo",
+    "publisher": "tabrindle@gmail.com",
+    "name": "envinfo",
+    "version": "7.8.1",
+    "description": "Info about your dev environment for debugging purposes"
+  },
   "error-ex@1.3.2": {
     "licenses": "MIT",
     "repository": "https://github.com/qix-/node-error-ex",
@@ -678,6 +2086,14 @@
     "author": "",
     "version": "1.3.2",
     "description": "Easy error subclassing and stack customization"
+  },
+  "es-module-lexer@0.9.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/guybedford/es-module-lexer",
+    "publisher": "Guy Bedford",
+    "name": "es-module-lexer",
+    "version": "0.9.3",
+    "description": "Lexes ES modules returning their import/export metadata"
   },
   "escalade@3.1.1": {
     "licenses": "MIT",
@@ -703,6 +2119,118 @@
     "version": "4.0.0",
     "description": "Escape RegExp special characters"
   },
+  "eslint-scope@5.1.1": {
+    "licenses": "BSD-2-Clause",
+    "repository": "https://github.com/eslint/eslint-scope",
+    "name": "eslint-scope",
+    "author": "",
+    "version": "5.1.1",
+    "description": "ECMAScript scope analyzer for ESLint"
+  },
+  "esprima@4.0.1": {
+    "licenses": "BSD-2-Clause",
+    "repository": "https://github.com/jquery/esprima",
+    "publisher": "Ariya Hidayat",
+    "name": "esprima",
+    "version": "4.0.1",
+    "description": "ECMAScript parsing infrastructure for multipurpose analysis"
+  },
+  "esrecurse@4.3.0": {
+    "licenses": "BSD-2-Clause",
+    "repository": "https://github.com/estools/esrecurse",
+    "name": "esrecurse",
+    "author": "",
+    "version": "4.3.0",
+    "description": "ECMAScript AST recursive visitor"
+  },
+  "estraverse@4.3.0": {
+    "licenses": "BSD-2-Clause",
+    "repository": "https://github.com/estools/estraverse",
+    "name": "estraverse",
+    "author": "",
+    "version": "4.3.0",
+    "description": "ECMAScript JS AST traversal functions"
+  },
+  "estraverse@5.3.0": {
+    "licenses": "BSD-2-Clause",
+    "repository": "https://github.com/estools/estraverse",
+    "name": "estraverse",
+    "author": "",
+    "version": "5.3.0",
+    "description": "ECMAScript JS AST traversal functions"
+  },
+  "esutils@2.0.3": {
+    "licenses": "BSD-2-Clause",
+    "repository": "https://github.com/estools/esutils",
+    "name": "esutils",
+    "author": "",
+    "version": "2.0.3",
+    "description": "utility box for ECMAScript language tools"
+  },
+  "events@3.3.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/Gozala/events",
+    "publisher": "Irakli Gozalishvili",
+    "name": "events",
+    "version": "3.3.0",
+    "description": "Node's event emitter for all engines."
+  },
+  "execa@5.1.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/execa",
+    "publisher": "Sindre Sorhus",
+    "name": "execa",
+    "version": "5.1.1",
+    "description": "Process execution for humans"
+  },
+  "fast-deep-equal@3.1.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/epoberezkin/fast-deep-equal",
+    "publisher": "Evgeny Poberezkin",
+    "name": "fast-deep-equal",
+    "version": "3.1.3",
+    "description": "Fast deep equal"
+  },
+  "fast-json-stable-stringify@2.1.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/epoberezkin/fast-json-stable-stringify",
+    "publisher": "James Halliday",
+    "name": "fast-json-stable-stringify",
+    "version": "2.1.0",
+    "description": "deterministic `JSON.stringify()` - a faster version of substack's json-stable-strigify without jsonify"
+  },
+  "fastest-levenshtein@1.0.12": {
+    "licenses": "MIT",
+    "repository": "https://github.com/ka-weihe/fastest-levenshtein",
+    "publisher": "Kasper U. Weihe",
+    "name": "fastest-levenshtein",
+    "version": "1.0.12",
+    "description": "Fastest Levenshtein distance implementation in JS."
+  },
+  "file-loader@6.2.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/webpack-contrib/file-loader",
+    "publisher": "Tobias Koppers @sokra",
+    "name": "file-loader",
+    "version": "6.2.0",
+    "description": "A file loader module for webpack"
+  },
+  "fill-range@7.0.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/jonschlinkert/fill-range",
+    "publisher": "Jon Schlinkert",
+    "name": "fill-range",
+    "version": "7.0.1",
+    "description": "Fill in a range of numbers or letters, optionally passing an increment or `step` to use, or create a regex-compatible range with `options.toRegex`"
+  },
+  "find-cache-dir@3.3.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/avajs/find-cache-dir",
+    "name": "find-cache-dir",
+    "author": "",
+    "version": "3.3.2",
+    "description": "Finds the common standard cache directory"
+  },
   "find-root@1.1.0": {
     "licenses": "MIT",
     "repository": "https://github.com/js-n/find-root",
@@ -711,6 +2239,14 @@
     "version": "1.1.0",
     "description": "find the closest package.json"
   },
+  "find-up@4.1.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/find-up",
+    "publisher": "Sindre Sorhus",
+    "name": "find-up",
+    "version": "4.1.0",
+    "description": "Find a file or directory by walking up parent directories"
+  },
   "follow-redirects@1.15.0": {
     "licenses": "MIT",
     "repository": "https://github.com/follow-redirects/follow-redirects",
@@ -718,6 +2254,14 @@
     "name": "follow-redirects",
     "version": "1.15.0",
     "description": "HTTP and HTTPS modules that follow redirects."
+  },
+  "fs.realpath@1.0.0": {
+    "licenses": "ISC",
+    "repository": "https://github.com/isaacs/fs.realpath",
+    "publisher": "Isaac Z. Schlueter",
+    "name": "fs.realpath",
+    "version": "1.0.0",
+    "description": "Use node's fs.realpath, but fall back to the JS implementation if the native one fails"
   },
   "function-bind@1.1.1": {
     "licenses": "MIT",
@@ -735,6 +2279,46 @@
     "version": "1.0.0-beta.2",
     "description": "Allows users to use generators in order to write common functions that can be both sync or async."
   },
+  "get-intrinsic@1.1.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/ljharb/get-intrinsic",
+    "publisher": "Jordan Harband",
+    "name": "get-intrinsic",
+    "version": "1.1.1",
+    "description": "Get and robustly cache all JS language-level intrinsics at first require time"
+  },
+  "get-stream@6.0.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/get-stream",
+    "publisher": "Sindre Sorhus",
+    "name": "get-stream",
+    "version": "6.0.1",
+    "description": "Get a stream as a string, buffer, or array"
+  },
+  "glob-parent@5.1.2": {
+    "licenses": "ISC",
+    "repository": "https://github.com/gulpjs/glob-parent",
+    "publisher": "Gulp Team",
+    "name": "glob-parent",
+    "version": "5.1.2",
+    "description": "Extract the non-magic parent path from a glob string."
+  },
+  "glob-to-regexp@0.4.1": {
+    "licenses": "BSD-2-Clause",
+    "repository": "https://github.com/fitzgen/glob-to-regexp",
+    "publisher": "Nick Fitzgerald",
+    "name": "glob-to-regexp",
+    "version": "0.4.1",
+    "description": "Convert globs to regular expressions"
+  },
+  "glob@7.2.3": {
+    "licenses": "ISC",
+    "repository": "https://github.com/isaacs/node-glob",
+    "publisher": "Isaac Z. Schlueter",
+    "name": "glob",
+    "version": "7.2.3",
+    "description": "a little globber"
+  },
   "globals@11.12.0": {
     "licenses": "MIT",
     "repository": "https://github.com/sindresorhus/globals",
@@ -743,6 +2327,14 @@
     "version": "11.12.0",
     "description": "Global identifiers from different JavaScript environments"
   },
+  "graceful-fs@4.2.10": {
+    "licenses": "ISC",
+    "repository": "https://github.com/isaacs/node-graceful-fs",
+    "name": "graceful-fs",
+    "author": "",
+    "version": "4.2.10",
+    "description": "A drop-in replacement for fs, making various improvements."
+  },
   "has-flag@3.0.0": {
     "licenses": "MIT",
     "repository": "https://github.com/sindresorhus/has-flag",
@@ -750,6 +2342,30 @@
     "name": "has-flag",
     "version": "3.0.0",
     "description": "Check if argv has a specific flag"
+  },
+  "has-flag@4.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/has-flag",
+    "publisher": "Sindre Sorhus",
+    "name": "has-flag",
+    "version": "4.0.0",
+    "description": "Check if argv has a specific flag"
+  },
+  "has-property-descriptors@1.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/inspect-js/has-property-descriptors",
+    "publisher": "Jordan Harband",
+    "name": "has-property-descriptors",
+    "version": "1.0.0",
+    "description": "Does the environment have full property descriptor support? Handles IE 8's broken defineProperty/gOPD."
+  },
+  "has-symbols@1.0.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/inspect-js/has-symbols",
+    "publisher": "Jordan Harband",
+    "name": "has-symbols",
+    "version": "1.0.3",
+    "description": "Determine if the JS environment has Symbol support. Supports spec, or shams."
   },
   "has@1.0.3": {
     "licenses": "MIT",
@@ -767,6 +2383,22 @@
     "version": "3.3.2",
     "description": "Copies non-react specific statics from a child component to a parent component"
   },
+  "hosted-git-info@2.8.9": {
+    "licenses": "ISC",
+    "repository": "https://github.com/npm/hosted-git-info",
+    "publisher": "Rebecca Turner",
+    "name": "hosted-git-info",
+    "version": "2.8.9",
+    "description": "Provides metadata and conversions from repository urls for Github, Bitbucket and Gitlab"
+  },
+  "human-signals@2.1.0": {
+    "licenses": "Apache-2.0",
+    "repository": "https://github.com/ehmicky/human-signals",
+    "publisher": "ehmicky",
+    "name": "human-signals",
+    "version": "2.1.0",
+    "description": "Human-friendly process signals"
+  },
   "hyphenate-style-name@1.0.4": {
     "licenses": "BSD-3-Clause",
     "repository": "https://github.com/rexxars/hyphenate-style-name",
@@ -775,6 +2407,22 @@
     "version": "1.0.4",
     "description": "Hyphenates a camelcased CSS property name"
   },
+  "icss-utils@5.1.0": {
+    "licenses": "ISC",
+    "repository": "https://github.com/css-modules/icss-utils",
+    "publisher": "Glen Maddern",
+    "name": "icss-utils",
+    "version": "5.1.0",
+    "description": "ICSS utils for postcss ast"
+  },
+  "immutable@4.1.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/immutable-js/immutable-js",
+    "publisher": "Lee Byron",
+    "name": "immutable",
+    "version": "4.1.0",
+    "description": "Immutable Data Collections"
+  },
   "import-fresh@3.3.0": {
     "licenses": "MIT",
     "repository": "https://github.com/sindresorhus/import-fresh",
@@ -782,6 +2430,38 @@
     "name": "import-fresh",
     "version": "3.3.0",
     "description": "Import a module while bypassing the cache"
+  },
+  "import-local@3.1.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/import-local",
+    "publisher": "Sindre Sorhus",
+    "name": "import-local",
+    "version": "3.1.0",
+    "description": "Let a globally installed package use a locally installed version of itself if available"
+  },
+  "inflight@1.0.6": {
+    "licenses": "ISC",
+    "repository": "https://github.com/npm/inflight",
+    "publisher": "Isaac Z. Schlueter",
+    "name": "inflight",
+    "version": "1.0.6",
+    "description": "Add callbacks to requests in flight to avoid async duplication"
+  },
+  "inherits@2.0.4": {
+    "licenses": "ISC",
+    "repository": "https://github.com/isaacs/inherits",
+    "name": "inherits",
+    "author": "",
+    "version": "2.0.4",
+    "description": "Browser-friendly inheritance fully compatible with standard node.js inherits()"
+  },
+  "interpret@2.2.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/gulpjs/interpret",
+    "publisher": "Gulp Team",
+    "name": "interpret",
+    "version": "2.2.0",
+    "description": "A dictionary of file extensions and associated module loaders."
   },
   "invariant@2.2.4": {
     "licenses": "MIT",
@@ -799,6 +2479,14 @@
     "version": "0.2.1",
     "description": "Determines if an object can be used as an array"
   },
+  "is-binary-path@2.1.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/is-binary-path",
+    "publisher": "Sindre Sorhus",
+    "name": "is-binary-path",
+    "version": "2.1.0",
+    "description": "Check if a file path is a binary file"
+  },
   "is-core-module@2.9.0": {
     "licenses": "MIT",
     "repository": "https://github.com/inspect-js/is-core-module",
@@ -806,6 +2494,22 @@
     "name": "is-core-module",
     "version": "2.9.0",
     "description": "Is this specifier a node.js core module?"
+  },
+  "is-extglob@2.1.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/jonschlinkert/is-extglob",
+    "publisher": "Jon Schlinkert",
+    "name": "is-extglob",
+    "version": "2.1.1",
+    "description": "Returns true if a string has an extglob."
+  },
+  "is-glob@4.0.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/micromatch/is-glob",
+    "publisher": "Jon Schlinkert",
+    "name": "is-glob",
+    "version": "4.0.3",
+    "description": "Returns `true` if the given string looks like a glob pattern or an extglob pattern. This makes it easy to create code that only uses external modules like node-glob when necessary, resulting in much faster code execution and initialization time, and a better user experience."
   },
   "is-in-browser@1.1.3": {
     "licenses": "MIT",
@@ -815,6 +2519,54 @@
     "version": "1.1.3",
     "description": "Simple check to see if current app is running in browser"
   },
+  "is-number@7.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/jonschlinkert/is-number",
+    "publisher": "Jon Schlinkert",
+    "name": "is-number",
+    "version": "7.0.0",
+    "description": "Returns true if a number or string value is a finite number. Useful for regex matches, parsing, user input, etc."
+  },
+  "is-plain-object@2.0.4": {
+    "licenses": "MIT",
+    "repository": "https://github.com/jonschlinkert/is-plain-object",
+    "publisher": "Jon Schlinkert",
+    "name": "is-plain-object",
+    "version": "2.0.4",
+    "description": "Returns true if an object was created by the `Object` constructor."
+  },
+  "is-stream@2.0.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/is-stream",
+    "publisher": "Sindre Sorhus",
+    "name": "is-stream",
+    "version": "2.0.1",
+    "description": "Check if something is a Node.js stream"
+  },
+  "isexe@2.0.0": {
+    "licenses": "ISC",
+    "repository": "https://github.com/isaacs/isexe",
+    "publisher": "Isaac Z. Schlueter",
+    "name": "isexe",
+    "version": "2.0.0",
+    "description": "Minimal module to check if a file is executable."
+  },
+  "isobject@3.0.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/jonschlinkert/isobject",
+    "publisher": "Jon Schlinkert",
+    "name": "isobject",
+    "version": "3.0.1",
+    "description": "Returns true if the value is an object and not an array or null."
+  },
+  "jest-worker@27.5.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/facebook/jest",
+    "name": "jest-worker",
+    "author": "",
+    "version": "27.5.1",
+    "description": "Module for executing heavy tasks under forked processes in parallel, by providing a `Promise` based interface, minimum overhead, and bound workers."
+  },
   "js-tokens@4.0.0": {
     "licenses": "MIT",
     "repository": "https://github.com/lydell/js-tokens",
@@ -822,6 +2574,30 @@
     "name": "js-tokens",
     "version": "4.0.0",
     "description": "A regex that tokenizes JavaScript."
+  },
+  "js-yaml-loader@1.2.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/wwilsman/js-yaml-loader",
+    "publisher": "Wil Wilsman",
+    "name": "js-yaml-loader",
+    "version": "1.2.2",
+    "description": "YAML loader for webpack"
+  },
+  "js-yaml@3.14.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/nodeca/js-yaml",
+    "publisher": "Vladimir Zapparov",
+    "name": "js-yaml",
+    "version": "3.14.1",
+    "description": "YAML 1.2 parser and serializer"
+  },
+  "jsesc@0.5.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/mathiasbynens/jsesc",
+    "publisher": "Mathias Bynens",
+    "name": "jsesc",
+    "version": "0.5.0",
+    "description": "A JavaScript library for escaping JavaScript strings while generating the shortest possible valid output."
   },
   "jsesc@2.5.2": {
     "licenses": "MIT",
@@ -831,6 +2607,14 @@
     "version": "2.5.2",
     "description": "Given some data, jsesc returns the shortest possible stringified & ASCII-safe representation of that data."
   },
+  "json-parse-better-errors@1.0.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/zkat/json-parse-better-errors",
+    "publisher": "Kat Marchán",
+    "name": "json-parse-better-errors",
+    "version": "1.0.2",
+    "description": "JSON.parse with context information on error"
+  },
   "json-parse-even-better-errors@2.3.1": {
     "licenses": "MIT",
     "repository": "https://github.com/npm/json-parse-even-better-errors",
@@ -838,6 +2622,30 @@
     "name": "json-parse-even-better-errors",
     "version": "2.3.1",
     "description": "JSON.parse with context information on error"
+  },
+  "json-schema-traverse@0.4.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/epoberezkin/json-schema-traverse",
+    "publisher": "Evgeny Poberezkin",
+    "name": "json-schema-traverse",
+    "version": "0.4.1",
+    "description": "Traverse JSON Schema passing each schema object to callback"
+  },
+  "json-schema-traverse@1.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/epoberezkin/json-schema-traverse",
+    "publisher": "Evgeny Poberezkin",
+    "name": "json-schema-traverse",
+    "version": "1.0.0",
+    "description": "Traverse JSON Schema passing each schema object to callback"
+  },
+  "json5@1.0.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/json5/json5",
+    "publisher": "Aseem Kishore",
+    "name": "json5",
+    "version": "1.0.1",
+    "description": "JSON for humans."
   },
   "json5@2.2.1": {
     "licenses": "MIT",
@@ -959,6 +2767,38 @@
     "version": "10.9.0",
     "description": "A lib for generating Style Sheets with JavaScript."
   },
+  "kind-of@6.0.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/jonschlinkert/kind-of",
+    "publisher": "Jon Schlinkert",
+    "name": "kind-of",
+    "version": "6.0.3",
+    "description": "Get the native type of a value."
+  },
+  "klona@2.0.5": {
+    "licenses": "MIT",
+    "repository": "https://github.com/lukeed/klona",
+    "publisher": "Luke Edwards",
+    "name": "klona",
+    "version": "2.0.5",
+    "description": "A tiny (240B to 501B) and fast utility to \"deep clone\" Objects, Arrays, Dates, RegExps, and more!"
+  },
+  "license-checker@25.0.1": {
+    "licenses": "BSD-3-Clause",
+    "repository": "https://github.com/davglass/license-checker",
+    "publisher": "Dav Glass",
+    "name": "license-checker",
+    "version": "25.0.1",
+    "description": "Check license info for a package"
+  },
+  "lilconfig@2.0.5": {
+    "licenses": "MIT",
+    "repository": "https://github.com/antonk52/lilconfig",
+    "publisher": "antonk52",
+    "name": "lilconfig",
+    "version": "2.0.5",
+    "description": "A zero-dependency alternative to cosmiconfig"
+  },
   "lines-and-columns@1.2.4": {
     "licenses": "MIT",
     "repository": "https://github.com/eventualbuddha/lines-and-columns",
@@ -967,6 +2807,70 @@
     "version": "1.2.4",
     "description": "Maps lines and columns to character offsets and back."
   },
+  "loader-runner@4.3.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/webpack/loader-runner",
+    "publisher": "Tobias Koppers @sokra",
+    "name": "loader-runner",
+    "version": "4.3.0",
+    "description": "Runs (webpack) loaders"
+  },
+  "loader-utils@1.4.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/webpack/loader-utils",
+    "publisher": "Tobias Koppers @sokra",
+    "name": "loader-utils",
+    "version": "1.4.0",
+    "description": "utils for webpack loaders"
+  },
+  "loader-utils@2.0.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/webpack/loader-utils",
+    "publisher": "Tobias Koppers @sokra",
+    "name": "loader-utils",
+    "version": "2.0.2",
+    "description": "utils for webpack loaders"
+  },
+  "locate-path@5.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/locate-path",
+    "publisher": "Sindre Sorhus",
+    "name": "locate-path",
+    "version": "5.0.0",
+    "description": "Get the first path that exists on disk of multiple paths"
+  },
+  "lodash.debounce@4.0.8": {
+    "licenses": "MIT",
+    "repository": "https://github.com/lodash/lodash",
+    "publisher": "John-David Dalton",
+    "name": "lodash.debounce",
+    "version": "4.0.8",
+    "description": "The lodash method `_.debounce` exported as a module."
+  },
+  "lodash.memoize@4.1.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/lodash/lodash",
+    "publisher": "John-David Dalton",
+    "name": "lodash.memoize",
+    "version": "4.1.2",
+    "description": "The lodash method `_.memoize` exported as a module."
+  },
+  "lodash.sortby@4.7.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/lodash/lodash",
+    "publisher": "John-David Dalton",
+    "name": "lodash.sortby",
+    "version": "4.7.0",
+    "description": "The lodash method `_.sortBy` exported as a module."
+  },
+  "lodash.uniq@4.5.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/lodash/lodash",
+    "publisher": "John-David Dalton",
+    "name": "lodash.uniq",
+    "version": "4.5.0",
+    "description": "The lodash method `_.uniq` exported as a module."
+  },
   "loose-envify@1.4.0": {
     "licenses": "MIT",
     "repository": "https://github.com/zertosh/loose-envify",
@@ -974,6 +2878,22 @@
     "name": "loose-envify",
     "version": "1.4.0",
     "description": "Fast (and loose) selective `process.env` replacer using js-tokens instead of an AST"
+  },
+  "lru-cache@6.0.0": {
+    "licenses": "ISC",
+    "repository": "https://github.com/isaacs/node-lru-cache",
+    "publisher": "Isaac Z. Schlueter",
+    "name": "lru-cache",
+    "version": "6.0.0",
+    "description": "A cache object that deletes the least-recently-used items."
+  },
+  "make-dir@3.1.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/make-dir",
+    "publisher": "Sindre Sorhus",
+    "name": "make-dir",
+    "version": "3.1.0",
+    "description": "Make a directory and its parents if needed - Think `mkdir -p`"
   },
   "markdown-to-jsx@7.1.7": {
     "licenses": "MIT",
@@ -991,6 +2911,86 @@
     "version": "1.11.0",
     "description": "Latest icon fonts and CSS for self-hosting material design icons."
   },
+  "mdn-data@2.0.14": {
+    "licenses": "CC0-1.0",
+    "repository": "https://github.com/mdn/data",
+    "publisher": "Mozilla Developer Network",
+    "name": "mdn-data",
+    "version": "2.0.14",
+    "description": "Open Web data by the Mozilla Developer Network"
+  },
+  "merge-stream@2.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/grncdr/merge-stream",
+    "publisher": "Stephen Sugden",
+    "name": "merge-stream",
+    "version": "2.0.0",
+    "description": "Create a stream that emits events from multiple other streams"
+  },
+  "micromatch@4.0.5": {
+    "licenses": "MIT",
+    "repository": "https://github.com/micromatch/micromatch",
+    "publisher": "Jon Schlinkert",
+    "name": "micromatch",
+    "version": "4.0.5",
+    "description": "Glob matching for javascript/node.js. A replacement and faster alternative to minimatch and multimatch."
+  },
+  "mime-db@1.52.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/jshttp/mime-db",
+    "name": "mime-db",
+    "author": "",
+    "version": "1.52.0",
+    "description": "Media Type Database"
+  },
+  "mime-types@2.1.35": {
+    "licenses": "MIT",
+    "repository": "https://github.com/jshttp/mime-types",
+    "name": "mime-types",
+    "author": "",
+    "version": "2.1.35",
+    "description": "The ultimate javascript content-type utility."
+  },
+  "mimic-fn@2.1.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/mimic-fn",
+    "publisher": "Sindre Sorhus",
+    "name": "mimic-fn",
+    "version": "2.1.0",
+    "description": "Make a function mimic another one"
+  },
+  "mini-css-extract-plugin@2.6.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/webpack-contrib/mini-css-extract-plugin",
+    "publisher": "Tobias Koppers @sokra",
+    "name": "mini-css-extract-plugin",
+    "version": "2.6.0",
+    "description": "extracts CSS into separate files"
+  },
+  "minimatch@3.1.2": {
+    "licenses": "ISC",
+    "repository": "https://github.com/isaacs/minimatch",
+    "publisher": "Isaac Z. Schlueter",
+    "name": "minimatch",
+    "version": "3.1.2",
+    "description": "a glob matcher in javascript"
+  },
+  "minimist@1.2.6": {
+    "licenses": "MIT",
+    "repository": "https://github.com/substack/minimist",
+    "publisher": "James Halliday",
+    "name": "minimist",
+    "version": "1.2.6",
+    "description": "parse argument options"
+  },
+  "mkdirp@0.5.6": {
+    "licenses": "MIT",
+    "repository": "https://github.com/substack/node-mkdirp",
+    "publisher": "James Halliday",
+    "name": "mkdirp",
+    "version": "0.5.6",
+    "description": "Recursively mkdir, like `mkdir -p`"
+  },
   "ms@2.1.2": {
     "licenses": "MIT",
     "repository": "https://github.com/zeit/ms",
@@ -998,6 +2998,22 @@
     "author": "",
     "version": "2.1.2",
     "description": "Tiny millisecond conversion utility"
+  },
+  "nanoid@3.3.4": {
+    "licenses": "MIT",
+    "repository": "https://github.com/ai/nanoid",
+    "publisher": "Andrey Sitnik",
+    "name": "nanoid",
+    "version": "3.3.4",
+    "description": "A tiny (116 bytes), secure URL-friendly unique string ID generator"
+  },
+  "neo-async@2.6.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/suguru03/neo-async",
+    "name": "neo-async",
+    "author": "",
+    "version": "2.6.2",
+    "description": "Neo-Async is a drop-in replacement for Async, it almost fully covers its functionality and runs faster "
   },
   "node-releases@2.0.5": {
     "licenses": "MIT",
@@ -1007,6 +3023,62 @@
     "version": "2.0.5",
     "description": "Node.js releases data"
   },
+  "nopt@4.0.3": {
+    "licenses": "ISC",
+    "repository": "https://github.com/npm/nopt",
+    "publisher": "Isaac Z. Schlueter",
+    "name": "nopt",
+    "version": "4.0.3",
+    "description": "Option parsing for Node, supporting types, shorthands, etc. Used by npm."
+  },
+  "normalize-package-data@2.5.0": {
+    "licenses": "BSD-2-Clause",
+    "repository": "https://github.com/npm/normalize-package-data",
+    "publisher": "Meryn Stol",
+    "name": "normalize-package-data",
+    "version": "2.5.0",
+    "description": "Normalizes data that can be found in package.json files."
+  },
+  "normalize-path@3.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/jonschlinkert/normalize-path",
+    "publisher": "Jon Schlinkert",
+    "name": "normalize-path",
+    "version": "3.0.0",
+    "description": "Normalize slashes in a file path to be posix/unix-like forward slashes. Also condenses repeat slashes to a single slash and removes and trailing slashes, unless disabled."
+  },
+  "normalize-url@6.1.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/normalize-url",
+    "publisher": "Sindre Sorhus",
+    "name": "normalize-url",
+    "version": "6.1.0",
+    "description": "Normalize a URL"
+  },
+  "npm-normalize-package-bin@1.0.1": {
+    "licenses": "ISC",
+    "repository": "https://github.com/npm/npm-normalize-package-bin",
+    "publisher": "Isaac Z. Schlueter",
+    "name": "npm-normalize-package-bin",
+    "version": "1.0.1",
+    "description": "Turn any flavor of allowable package.json bin into a normalized object"
+  },
+  "npm-run-path@4.0.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/npm-run-path",
+    "publisher": "Sindre Sorhus",
+    "name": "npm-run-path",
+    "version": "4.0.1",
+    "description": "Get your PATH prepended with locally installed binaries"
+  },
+  "nth-check@2.1.1": {
+    "licenses": "BSD-2-Clause",
+    "repository": "https://github.com/fb55/nth-check",
+    "publisher": "Felix Boehm",
+    "name": "nth-check",
+    "version": "2.1.1",
+    "description": "Parses and compiles CSS nth-checks to highly optimized functions."
+  },
   "object-assign@4.1.1": {
     "licenses": "MIT",
     "repository": "https://github.com/sindresorhus/object-assign",
@@ -1015,6 +3087,38 @@
     "version": "4.1.1",
     "description": "ES2015 `Object.assign()` ponyfill"
   },
+  "object-keys@1.1.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/ljharb/object-keys",
+    "publisher": "Jordan Harband",
+    "name": "object-keys",
+    "version": "1.1.1",
+    "description": "An Object.keys replacement, in case Object.keys is not available. From https://github.com/es-shims/es5-shim"
+  },
+  "object.assign@4.1.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/ljharb/object.assign",
+    "publisher": "Jordan Harband",
+    "name": "object.assign",
+    "version": "4.1.2",
+    "description": "ES6 spec-compliant Object.assign shim. From https://github.com/es-shims/es6-shim"
+  },
+  "once@1.4.0": {
+    "licenses": "ISC",
+    "repository": "https://github.com/isaacs/once",
+    "publisher": "Isaac Z. Schlueter",
+    "name": "once",
+    "version": "1.4.0",
+    "description": "Run a function exactly one time"
+  },
+  "onetime@5.1.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/onetime",
+    "publisher": "Sindre Sorhus",
+    "name": "onetime",
+    "version": "5.1.2",
+    "description": "Ensure a function is only called once"
+  },
   "onsenui@2.12.0": {
     "licenses": "Apache-2.0",
     "repository": "https://github.com/OnsenUI/OnsenUI",
@@ -1022,6 +3126,54 @@
     "author": "",
     "version": "2.12.0",
     "description": "HTML5 Mobile Framework & UI Components"
+  },
+  "os-homedir@1.0.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/os-homedir",
+    "publisher": "Sindre Sorhus",
+    "name": "os-homedir",
+    "version": "1.0.2",
+    "description": "Node.js 4 `os.homedir()` ponyfill"
+  },
+  "os-tmpdir@1.0.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/os-tmpdir",
+    "publisher": "Sindre Sorhus",
+    "name": "os-tmpdir",
+    "version": "1.0.2",
+    "description": "Node.js os.tmpdir() ponyfill"
+  },
+  "osenv@0.1.5": {
+    "licenses": "ISC",
+    "repository": "https://github.com/npm/osenv",
+    "publisher": "Isaac Z. Schlueter",
+    "name": "osenv",
+    "version": "0.1.5",
+    "description": "Look up environment settings specific to different operating systems"
+  },
+  "p-limit@2.3.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/p-limit",
+    "publisher": "Sindre Sorhus",
+    "name": "p-limit",
+    "version": "2.3.0",
+    "description": "Run multiple promise-returning & async functions with limited concurrency"
+  },
+  "p-locate@4.1.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/p-locate",
+    "publisher": "Sindre Sorhus",
+    "name": "p-locate",
+    "version": "4.1.0",
+    "description": "Get the first fulfilled promise that satisfies the provided testing function"
+  },
+  "p-try@2.2.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/p-try",
+    "publisher": "Sindre Sorhus",
+    "name": "p-try",
+    "version": "2.2.0",
+    "description": "`Start a promise chain"
   },
   "parent-module@1.0.1": {
     "licenses": "MIT",
@@ -1038,6 +3190,30 @@
     "name": "parse-json",
     "version": "5.2.0",
     "description": "Parse JSON with more helpful errors"
+  },
+  "path-exists@4.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/path-exists",
+    "publisher": "Sindre Sorhus",
+    "name": "path-exists",
+    "version": "4.0.0",
+    "description": "Check if a path exists"
+  },
+  "path-is-absolute@1.0.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/path-is-absolute",
+    "publisher": "Sindre Sorhus",
+    "name": "path-is-absolute",
+    "version": "1.0.1",
+    "description": "Node.js 0.12 path.isAbsolute() ponyfill"
+  },
+  "path-key@3.1.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/path-key",
+    "publisher": "Sindre Sorhus",
+    "name": "path-key",
+    "version": "3.1.1",
+    "description": "Get the PATH environment variable key cross-platform"
   },
   "path-parse@1.0.7": {
     "licenses": "MIT",
@@ -1063,6 +3239,302 @@
     "version": "1.0.0",
     "description": "The tiniest and the fastest library for terminal output formatting with ANSI colors"
   },
+  "picomatch@2.3.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/micromatch/picomatch",
+    "publisher": "Jon Schlinkert",
+    "name": "picomatch",
+    "version": "2.3.1",
+    "description": "Blazing fast and accurate glob matcher written in JavaScript, with no dependencies and full support for standard and extended Bash glob features, including braces, extglobs, POSIX brackets, and regular expressions."
+  },
+  "pkg-dir@4.2.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/pkg-dir",
+    "publisher": "Sindre Sorhus",
+    "name": "pkg-dir",
+    "version": "4.2.0",
+    "description": "Find the root directory of a Node.js project or npm package"
+  },
+  "postcss-calc@8.2.4": {
+    "licenses": "MIT",
+    "repository": "https://github.com/postcss/postcss-calc",
+    "publisher": "Andy Jansson",
+    "name": "postcss-calc",
+    "version": "8.2.4",
+    "description": "PostCSS plugin to reduce calc()"
+  },
+  "postcss-colormin@5.3.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cssnano/cssnano",
+    "publisher": "Ben Briggs",
+    "name": "postcss-colormin",
+    "version": "5.3.0",
+    "description": "Minify colors in your CSS files with PostCSS."
+  },
+  "postcss-convert-values@5.1.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cssnano/cssnano",
+    "publisher": "Ben Briggs",
+    "name": "postcss-convert-values",
+    "version": "5.1.1",
+    "description": "Convert values with PostCSS (e.g. ms -> s)"
+  },
+  "postcss-discard-comments@5.1.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cssnano/cssnano",
+    "publisher": "Ben Briggs",
+    "name": "postcss-discard-comments",
+    "version": "5.1.1",
+    "description": "Discard comments in your CSS files with PostCSS."
+  },
+  "postcss-discard-duplicates@5.1.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cssnano/cssnano",
+    "publisher": "Ben Briggs",
+    "name": "postcss-discard-duplicates",
+    "version": "5.1.0",
+    "description": "Discard duplicate rules in your CSS files with PostCSS."
+  },
+  "postcss-discard-empty@5.1.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cssnano/cssnano",
+    "publisher": "Ben Briggs",
+    "name": "postcss-discard-empty",
+    "version": "5.1.1",
+    "description": "Discard empty rules and values with PostCSS."
+  },
+  "postcss-discard-overridden@5.1.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cssnano/cssnano",
+    "publisher": "Justineo",
+    "name": "postcss-discard-overridden",
+    "version": "5.1.0",
+    "description": "PostCSS plugin to discard overridden @keyframes or @counter-style."
+  },
+  "postcss-loader@6.2.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/webpack-contrib/postcss-loader",
+    "publisher": "Andrey Sitnik",
+    "name": "postcss-loader",
+    "version": "6.2.1",
+    "description": "PostCSS loader for webpack"
+  },
+  "postcss-merge-longhand@5.1.5": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cssnano/cssnano",
+    "publisher": "Ben Briggs",
+    "name": "postcss-merge-longhand",
+    "version": "5.1.5",
+    "description": "Merge longhand properties into shorthand with PostCSS."
+  },
+  "postcss-merge-rules@5.1.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cssnano/cssnano",
+    "publisher": "Ben Briggs",
+    "name": "postcss-merge-rules",
+    "version": "5.1.1",
+    "description": "Merge CSS rules with PostCSS."
+  },
+  "postcss-minify-font-values@5.1.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cssnano/cssnano",
+    "publisher": "Bogdan Chadkin",
+    "name": "postcss-minify-font-values",
+    "version": "5.1.0",
+    "description": "Minify font declarations with PostCSS"
+  },
+  "postcss-minify-gradients@5.1.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cssnano/cssnano",
+    "publisher": "Ben Briggs",
+    "name": "postcss-minify-gradients",
+    "version": "5.1.1",
+    "description": "Minify gradient parameters with PostCSS."
+  },
+  "postcss-minify-params@5.1.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cssnano/cssnano",
+    "publisher": "Bogdan Chadkin",
+    "name": "postcss-minify-params",
+    "version": "5.1.3",
+    "description": "Minify at-rule params with PostCSS"
+  },
+  "postcss-minify-selectors@5.2.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cssnano/cssnano",
+    "publisher": "Ben Briggs",
+    "name": "postcss-minify-selectors",
+    "version": "5.2.0",
+    "description": "Minify selectors with PostCSS."
+  },
+  "postcss-modules-extract-imports@3.0.0": {
+    "licenses": "ISC",
+    "repository": "https://github.com/css-modules/postcss-modules-extract-imports",
+    "publisher": "Glen Maddern",
+    "name": "postcss-modules-extract-imports",
+    "version": "3.0.0",
+    "description": "A CSS Modules transform to extract local aliases for inline imports"
+  },
+  "postcss-modules-local-by-default@4.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/css-modules/postcss-modules-local-by-default",
+    "publisher": "Mark Dalgleish",
+    "name": "postcss-modules-local-by-default",
+    "version": "4.0.0",
+    "description": "A CSS Modules transform to make local scope the default"
+  },
+  "postcss-modules-scope@3.0.0": {
+    "licenses": "ISC",
+    "repository": "https://github.com/css-modules/postcss-modules-scope",
+    "publisher": "Glen Maddern",
+    "name": "postcss-modules-scope",
+    "version": "3.0.0",
+    "description": "A CSS Modules transform to extract export statements from local-scope classes"
+  },
+  "postcss-modules-values@4.0.0": {
+    "licenses": "ISC",
+    "repository": "https://github.com/css-modules/postcss-modules-values",
+    "publisher": "Glen Maddern",
+    "name": "postcss-modules-values",
+    "version": "4.0.0",
+    "description": "PostCSS plugin for CSS Modules to pass arbitrary values between your module files"
+  },
+  "postcss-normalize-charset@5.1.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cssnano/cssnano",
+    "publisher": "Bogdan Chadkin",
+    "name": "postcss-normalize-charset",
+    "version": "5.1.0",
+    "description": "Add necessary or remove extra charset with PostCSS"
+  },
+  "postcss-normalize-display-values@5.1.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cssnano/cssnano",
+    "publisher": "Ben Briggs",
+    "name": "postcss-normalize-display-values",
+    "version": "5.1.0",
+    "description": "Normalize multiple value display syntaxes into single values."
+  },
+  "postcss-normalize-positions@5.1.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cssnano/cssnano",
+    "publisher": "Ben Briggs",
+    "name": "postcss-normalize-positions",
+    "version": "5.1.0",
+    "description": "Normalize keyword values for position into length values."
+  },
+  "postcss-normalize-repeat-style@5.1.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cssnano/cssnano",
+    "publisher": "Ben Briggs",
+    "name": "postcss-normalize-repeat-style",
+    "version": "5.1.0",
+    "description": "Convert two value syntax for repeat-style into one value."
+  },
+  "postcss-normalize-string@5.1.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cssnano/cssnano",
+    "publisher": "Ben Briggs",
+    "name": "postcss-normalize-string",
+    "version": "5.1.0",
+    "description": "Normalize wrapping quotes for CSS string literals."
+  },
+  "postcss-normalize-timing-functions@5.1.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cssnano/cssnano",
+    "publisher": "Ben Briggs",
+    "name": "postcss-normalize-timing-functions",
+    "version": "5.1.0",
+    "description": "Normalize CSS animation/transition timing functions."
+  },
+  "postcss-normalize-unicode@5.1.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cssnano/cssnano",
+    "publisher": "Ben Briggs",
+    "name": "postcss-normalize-unicode",
+    "version": "5.1.0",
+    "description": "Normalize unicode-range descriptors, and can convert to wildcard ranges."
+  },
+  "postcss-normalize-url@5.1.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cssnano/cssnano",
+    "publisher": "Ben Briggs",
+    "name": "postcss-normalize-url",
+    "version": "5.1.0",
+    "description": "Normalize URLs with PostCSS"
+  },
+  "postcss-normalize-whitespace@5.1.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cssnano/cssnano",
+    "publisher": "Ben Briggs",
+    "name": "postcss-normalize-whitespace",
+    "version": "5.1.1",
+    "description": "Trim whitespace inside and around CSS rules & declarations."
+  },
+  "postcss-ordered-values@5.1.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cssnano/cssnano",
+    "publisher": "Ben Briggs",
+    "name": "postcss-ordered-values",
+    "version": "5.1.1",
+    "description": "Ensure values are ordered consistently in your CSS."
+  },
+  "postcss-reduce-initial@5.1.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cssnano/cssnano",
+    "publisher": "Ben Briggs",
+    "name": "postcss-reduce-initial",
+    "version": "5.1.0",
+    "description": "Reduce initial definitions to the actual initial value, where possible."
+  },
+  "postcss-reduce-transforms@5.1.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cssnano/cssnano",
+    "publisher": "Ben Briggs",
+    "name": "postcss-reduce-transforms",
+    "version": "5.1.0",
+    "description": "Reduce transform functions with PostCSS."
+  },
+  "postcss-selector-parser@6.0.10": {
+    "licenses": "MIT",
+    "repository": "https://github.com/postcss/postcss-selector-parser",
+    "name": "postcss-selector-parser",
+    "author": "",
+    "version": "6.0.10",
+    "description": "> Selector parser with built in methods for working with selector strings."
+  },
+  "postcss-svgo@5.1.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cssnano/cssnano",
+    "publisher": "Ben Briggs",
+    "name": "postcss-svgo",
+    "version": "5.1.0",
+    "description": "Optimise inline SVG with PostCSS."
+  },
+  "postcss-unique-selectors@5.1.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cssnano/cssnano",
+    "publisher": "Ben Briggs",
+    "name": "postcss-unique-selectors",
+    "version": "5.1.1",
+    "description": "Ensure CSS selectors are unique."
+  },
+  "postcss-value-parser@4.2.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/TrySound/postcss-value-parser",
+    "publisher": "Bogdan Chadkin",
+    "name": "postcss-value-parser",
+    "version": "4.2.0",
+    "description": "Transforms css values and at-rule params into the tree"
+  },
+  "postcss@8.4.14": {
+    "licenses": "MIT",
+    "repository": "https://github.com/postcss/postcss",
+    "publisher": "Andrey Sitnik",
+    "name": "postcss",
+    "version": "8.4.14",
+    "description": "Tool for transforming styles with JS plugins"
+  },
   "prop-types-extra@1.1.1": {
     "licenses": "MIT",
     "repository": "https://github.com/react-bootstrap/prop-types-extra",
@@ -1078,6 +3550,22 @@
     "author": "",
     "version": "15.8.1",
     "description": "Runtime type checking for React props and similar objects."
+  },
+  "punycode@2.1.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/bestiejs/punycode.js",
+    "publisher": "Mathias Bynens",
+    "name": "punycode",
+    "version": "2.1.1",
+    "description": "A robust Punycode converter that fully complies to RFC 3492 and RFC 5891, and works on nearly all JavaScript platforms."
+  },
+  "randombytes@2.1.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/crypto-browserify/randombytes",
+    "name": "randombytes",
+    "author": "",
+    "version": "2.1.0",
+    "description": "random bytes from browserify stand alone"
   },
   "react-bootstrap@2.4.0": {
     "licenses": "MIT",
@@ -1159,6 +3647,62 @@
     "version": "17.0.2",
     "description": "React is a JavaScript library for building user interfaces."
   },
+  "read-installed@4.0.3": {
+    "licenses": "ISC",
+    "repository": "https://github.com/isaacs/read-installed",
+    "publisher": "Isaac Z. Schlueter",
+    "name": "read-installed",
+    "version": "4.0.3",
+    "description": "Read all the installed packages in a folder, and return a tree structure with all the data."
+  },
+  "read-package-json@2.1.2": {
+    "licenses": "ISC",
+    "repository": "https://github.com/npm/read-package-json",
+    "publisher": "Isaac Z. Schlueter",
+    "name": "read-package-json",
+    "version": "2.1.2",
+    "description": "The thing npm uses to read package.json files with semantics and defaults and validation"
+  },
+  "readdir-scoped-modules@1.1.0": {
+    "licenses": "ISC",
+    "repository": "https://github.com/npm/readdir-scoped-modules",
+    "publisher": "Isaac Z. Schlueter",
+    "name": "readdir-scoped-modules",
+    "version": "1.1.0",
+    "description": "Like `fs.readdir` but handling `@org/module` dirs as if they were a single entry."
+  },
+  "readdirp@3.6.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/paulmillr/readdirp",
+    "publisher": "Thorsten Lorenz",
+    "name": "readdirp",
+    "version": "3.6.0",
+    "description": "Recursive version of fs.readdir with streaming API."
+  },
+  "rechoir@0.7.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/gulpjs/rechoir",
+    "publisher": "Gulp Team",
+    "name": "rechoir",
+    "version": "0.7.1",
+    "description": "Prepare a node environment to require files with different extensions."
+  },
+  "regenerate-unicode-properties@10.0.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/mathiasbynens/regenerate-unicode-properties",
+    "publisher": "Mathias Bynens",
+    "name": "regenerate-unicode-properties",
+    "version": "10.0.1",
+    "description": "Regenerate sets for Unicode properties and values."
+  },
+  "regenerate@1.4.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/mathiasbynens/regenerate",
+    "publisher": "Mathias Bynens",
+    "name": "regenerate",
+    "version": "1.4.2",
+    "description": "Generate JavaScript-compatible regular expressions based on a given set of Unicode symbols or code points."
+  },
   "regenerator-runtime@0.13.9": {
     "licenses": "MIT",
     "repository": "https://github.com/facebook/regenerator/tree/master/packages/runtime",
@@ -1167,12 +3711,68 @@
     "version": "0.13.9",
     "description": "Runtime for Regenerator-compiled generator and async functions."
   },
+  "regenerator-transform@0.15.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/facebook/regenerator/tree/master/packages/transform",
+    "publisher": "Ben Newman",
+    "name": "regenerator-transform",
+    "version": "0.15.0",
+    "description": "Explode async and generator functions into a state machine."
+  },
+  "regexpu-core@5.0.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/mathiasbynens/regexpu-core",
+    "publisher": "Mathias Bynens",
+    "name": "regexpu-core",
+    "version": "5.0.1",
+    "description": "regexpu’s core functionality (i.e. `rewritePattern(pattern, flag)`), capable of translating ES6 Unicode regular expressions to ES5."
+  },
+  "regjsgen@0.6.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/bnjmnt4n/regjsgen",
+    "publisher": "Benjamin Tan",
+    "name": "regjsgen",
+    "version": "0.6.0",
+    "description": "Generate regular expressions from regjsparser’s AST."
+  },
+  "regjsparser@0.8.4": {
+    "licenses": "BSD-2-Clause",
+    "repository": "https://github.com/jviereck/regjsparser",
+    "publisher": "'Julian Viereck'",
+    "name": "regjsparser",
+    "version": "0.8.4",
+    "description": "Parsing the JavaScript's RegExp in JavaScript."
+  },
+  "require-from-string@2.0.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/floatdrop/require-from-string",
+    "publisher": "Vsevolod Strukchinsky",
+    "name": "require-from-string",
+    "version": "2.0.2",
+    "description": "Require module from string"
+  },
+  "resolve-cwd@3.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/resolve-cwd",
+    "publisher": "Sindre Sorhus",
+    "name": "resolve-cwd",
+    "version": "3.0.0",
+    "description": "Resolve the path of a module like `require.resolve()` but from the current working directory"
+  },
   "resolve-from@4.0.0": {
     "licenses": "MIT",
     "repository": "https://github.com/sindresorhus/resolve-from",
     "publisher": "Sindre Sorhus",
     "name": "resolve-from",
     "version": "4.0.0",
+    "description": "Resolve the path of a module like `require.resolve()` but from a given path"
+  },
+  "resolve-from@5.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/resolve-from",
+    "publisher": "Sindre Sorhus",
+    "name": "resolve-from",
+    "version": "5.0.0",
     "description": "Resolve the path of a module like `require.resolve()` but from a given path"
   },
   "resolve@1.22.0": {
@@ -1191,6 +3791,22 @@
     "version": "5.1.2",
     "description": "Safer Node.js Buffer API"
   },
+  "sass-loader@12.6.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/webpack-contrib/sass-loader",
+    "publisher": "J. Tangelder",
+    "name": "sass-loader",
+    "version": "12.6.0",
+    "description": "Sass loader for webpack"
+  },
+  "sass@1.52.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sass/dart-sass",
+    "publisher": "Natalie Weizenbaum",
+    "name": "sass",
+    "version": "1.52.1",
+    "description": "A pure JavaScript implementation of Sass."
+  },
   "scheduler@0.20.2": {
     "licenses": "MIT",
     "repository": "https://github.com/facebook/react",
@@ -1198,6 +3814,38 @@
     "author": "",
     "version": "0.20.2",
     "description": "Cooperative scheduler for the browser environment."
+  },
+  "schema-utils@2.7.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/webpack/schema-utils",
+    "publisher": "webpack Contrib",
+    "name": "schema-utils",
+    "version": "2.7.1",
+    "description": "webpack Validation Utils"
+  },
+  "schema-utils@3.1.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/webpack/schema-utils",
+    "publisher": "webpack Contrib",
+    "name": "schema-utils",
+    "version": "3.1.1",
+    "description": "webpack Validation Utils"
+  },
+  "schema-utils@4.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/webpack/schema-utils",
+    "publisher": "webpack Contrib",
+    "name": "schema-utils",
+    "version": "4.0.0",
+    "description": "webpack Validation Utils"
+  },
+  "semver@5.7.1": {
+    "licenses": "ISC",
+    "repository": "https://github.com/npm/node-semver",
+    "name": "semver",
+    "author": "",
+    "version": "5.7.1",
+    "description": "The semantic version parser used by npm."
   },
   "semver@6.3.0": {
     "licenses": "ISC",
@@ -1207,6 +3855,86 @@
     "version": "6.3.0",
     "description": "The semantic version parser used by npm."
   },
+  "semver@7.0.0": {
+    "licenses": "ISC",
+    "repository": "https://github.com/npm/node-semver",
+    "name": "semver",
+    "author": "",
+    "version": "7.0.0",
+    "description": "The semantic version parser used by npm."
+  },
+  "semver@7.3.7": {
+    "licenses": "ISC",
+    "repository": "https://github.com/npm/node-semver",
+    "publisher": "GitHub Inc.",
+    "name": "semver",
+    "version": "7.3.7",
+    "description": "The semantic version parser used by npm."
+  },
+  "serialize-javascript@6.0.0": {
+    "licenses": "BSD-3-Clause",
+    "repository": "https://github.com/yahoo/serialize-javascript",
+    "publisher": "Eric Ferraiuolo",
+    "name": "serialize-javascript",
+    "version": "6.0.0",
+    "description": "Serialize JavaScript to a superset of JSON that includes regular expressions and functions."
+  },
+  "shallow-clone@3.0.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/jonschlinkert/shallow-clone",
+    "publisher": "Jon Schlinkert",
+    "name": "shallow-clone",
+    "version": "3.0.1",
+    "description": "Creates a shallow clone of any JavaScript value."
+  },
+  "shebang-command@2.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/kevva/shebang-command",
+    "publisher": "Kevin Mårtensson",
+    "name": "shebang-command",
+    "version": "2.0.0",
+    "description": "Get the command from a shebang"
+  },
+  "shebang-regex@3.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/shebang-regex",
+    "publisher": "Sindre Sorhus",
+    "name": "shebang-regex",
+    "version": "3.0.0",
+    "description": "Regular expression for matching a shebang line"
+  },
+  "signal-exit@3.0.7": {
+    "licenses": "ISC",
+    "repository": "https://github.com/tapjs/signal-exit",
+    "publisher": "Ben Coe",
+    "name": "signal-exit",
+    "version": "3.0.7",
+    "description": "when you want to fire an event no matter how a process exits."
+  },
+  "slide@1.1.6": {
+    "licenses": "ISC",
+    "repository": "https://github.com/isaacs/slide-flow-control",
+    "publisher": "Isaac Z. Schlueter",
+    "name": "slide",
+    "version": "1.1.6",
+    "description": "A flow control lib small enough to fit on in a slide presentation. Derived live at Oak.JS"
+  },
+  "source-map-js@1.0.2": {
+    "licenses": "BSD-3-Clause",
+    "repository": "https://github.com/7rulnik/source-map-js",
+    "publisher": "Valentin 7rulnik Semirulnik",
+    "name": "source-map-js",
+    "version": "1.0.2",
+    "description": "Generates and consumes source maps"
+  },
+  "source-map-support@0.5.21": {
+    "licenses": "MIT",
+    "repository": "https://github.com/evanw/node-source-map-support",
+    "name": "source-map-support",
+    "author": "",
+    "version": "0.5.21",
+    "description": "Fixes stack traces for files with source maps"
+  },
   "source-map@0.5.7": {
     "licenses": "BSD-3-Clause",
     "repository": "https://github.com/mozilla/source-map",
@@ -1214,6 +3942,118 @@
     "name": "source-map",
     "version": "0.5.7",
     "description": "Generates and consumes source maps"
+  },
+  "source-map@0.6.1": {
+    "licenses": "BSD-3-Clause",
+    "repository": "https://github.com/mozilla/source-map",
+    "publisher": "Nick Fitzgerald",
+    "name": "source-map",
+    "version": "0.6.1",
+    "description": "Generates and consumes source maps"
+  },
+  "source-map@0.8.0-beta.0": {
+    "licenses": "BSD-3-Clause",
+    "repository": "https://github.com/mozilla/source-map",
+    "publisher": "Nick Fitzgerald",
+    "name": "source-map",
+    "version": "0.8.0-beta.0",
+    "description": "Generates and consumes source maps"
+  },
+  "spdx-compare@1.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/kemitchell/spdx-compare.js",
+    "publisher": "Kyle E. Mitchell",
+    "name": "spdx-compare",
+    "version": "1.0.0",
+    "description": "compare SPDX license expressions"
+  },
+  "spdx-correct@3.1.1": {
+    "licenses": "Apache-2.0",
+    "repository": "https://github.com/jslicense/spdx-correct.js",
+    "publisher": "Kyle E. Mitchell",
+    "name": "spdx-correct",
+    "version": "3.1.1",
+    "description": "correct invalid SPDX expressions"
+  },
+  "spdx-exceptions@2.3.0": {
+    "licenses": "CC-BY-3.0",
+    "repository": "https://github.com/kemitchell/spdx-exceptions.json",
+    "publisher": "The Linux Foundation",
+    "name": "spdx-exceptions",
+    "version": "2.3.0",
+    "description": "list of SPDX standard license exceptions"
+  },
+  "spdx-expression-parse@3.0.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/jslicense/spdx-expression-parse.js",
+    "publisher": "Kyle E. Mitchell",
+    "name": "spdx-expression-parse",
+    "version": "3.0.1",
+    "description": "parse SPDX license expressions"
+  },
+  "spdx-license-ids@3.0.11": {
+    "licenses": "CC0-1.0",
+    "repository": "https://github.com/jslicense/spdx-license-ids",
+    "publisher": "Shinnosuke Watanabe",
+    "name": "spdx-license-ids",
+    "version": "3.0.11",
+    "description": "A list of SPDX license identifiers"
+  },
+  "spdx-ranges@2.1.1": {
+    "licenses": "(MIT AND CC-BY-3.0)",
+    "repository": "https://github.com/kemitchell/spdx-ranges.js",
+    "publisher": "The Linux Foundation",
+    "name": "spdx-ranges",
+    "version": "2.1.1",
+    "description": "list of SPDX standard license ranges"
+  },
+  "spdx-satisfies@4.0.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/kemitchell/spdx-satisfies.js",
+    "publisher": "Kyle E. Mitchell",
+    "name": "spdx-satisfies",
+    "version": "4.0.1",
+    "description": "test whether SPDX expressions satisfy licensing criteria"
+  },
+  "sprintf-js@1.0.3": {
+    "licenses": "BSD-3-Clause",
+    "repository": "https://github.com/alexei/sprintf.js",
+    "publisher": "Alexandru Marasteanu",
+    "name": "sprintf-js",
+    "version": "1.0.3",
+    "description": "JavaScript sprintf implementation"
+  },
+  "stable@0.1.8": {
+    "licenses": "MIT",
+    "repository": "https://github.com/Two-Screen/stable",
+    "publisher": "Angry Bytes",
+    "name": "stable",
+    "version": "0.1.8",
+    "description": "A stable array sort for JavaScript"
+  },
+  "strip-final-newline@2.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/sindresorhus/strip-final-newline",
+    "publisher": "Sindre Sorhus",
+    "name": "strip-final-newline",
+    "version": "2.0.0",
+    "description": "Strip the final newline character from a string/buffer"
+  },
+  "style-loader@3.3.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/webpack-contrib/style-loader",
+    "publisher": "Tobias Koppers @sokra",
+    "name": "style-loader",
+    "version": "3.3.1",
+    "description": "style loader module for webpack"
+  },
+  "stylehacks@5.1.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/cssnano/cssnano",
+    "publisher": "Ben Briggs",
+    "name": "stylehacks",
+    "version": "5.1.0",
+    "description": "Detect/remove browser hacks from CSS files."
   },
   "stylis@4.0.13": {
     "licenses": "MIT",
@@ -1231,6 +4071,22 @@
     "version": "5.5.0",
     "description": "Detect whether a terminal supports color"
   },
+  "supports-color@7.2.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/chalk/supports-color",
+    "publisher": "Sindre Sorhus",
+    "name": "supports-color",
+    "version": "7.2.0",
+    "description": "Detect whether a terminal supports color"
+  },
+  "supports-color@8.1.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/chalk/supports-color",
+    "publisher": "Sindre Sorhus",
+    "name": "supports-color",
+    "version": "8.1.1",
+    "description": "Detect whether a terminal supports color"
+  },
   "supports-preserve-symlinks-flag@1.0.0": {
     "licenses": "MIT",
     "repository": "https://github.com/inspect-js/node-supports-preserve-symlinks-flag",
@@ -1239,6 +4095,14 @@
     "version": "1.0.0",
     "description": "Determine if the current node version supports the `--preserve-symlinks` flag."
   },
+  "svgo@2.8.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/svg/svgo",
+    "publisher": "Kir Belevich",
+    "name": "svgo",
+    "version": "2.8.0",
+    "description": "Nodejs-based tool for optimizing SVG vector graphics files"
+  },
   "symbol-observable@1.2.0": {
     "licenses": "MIT",
     "repository": "https://github.com/blesh/symbol-observable",
@@ -1246,6 +4110,30 @@
     "name": "symbol-observable",
     "version": "1.2.0",
     "description": "Symbol.observable ponyfill"
+  },
+  "tapable@2.2.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/webpack/tapable",
+    "publisher": "Tobias Koppers @sokra",
+    "name": "tapable",
+    "version": "2.2.1",
+    "description": "Just a little module for plugins."
+  },
+  "terser-webpack-plugin@5.3.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/webpack-contrib/terser-webpack-plugin",
+    "publisher": "webpack Contrib Team",
+    "name": "terser-webpack-plugin",
+    "version": "5.3.1",
+    "description": "Terser plugin for webpack"
+  },
+  "terser@5.13.1": {
+    "licenses": "BSD-2-Clause",
+    "repository": "https://github.com/terser/terser",
+    "publisher": "Mihai Bazon",
+    "name": "terser",
+    "version": "5.13.1",
+    "description": "JavaScript parser, mangler/compressor and beautifier toolkit for ES6+"
   },
   "tiny-warning@1.0.3": {
     "licenses": "MIT",
@@ -1263,6 +4151,46 @@
     "version": "2.0.0",
     "description": "Force V8 to use fast properties for an object"
   },
+  "to-regex-range@5.0.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/micromatch/to-regex-range",
+    "publisher": "Jon Schlinkert",
+    "name": "to-regex-range",
+    "version": "5.0.1",
+    "description": "Pass two numbers, get a regex-compatible source string for matching ranges. Validated against more than 2.78 million test assertions."
+  },
+  "tr46@1.0.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/Sebmaster/tr46.js",
+    "publisher": "Sebastian Mayr",
+    "name": "tr46",
+    "version": "1.0.1",
+    "description": "An implementation of the Unicode TR46 spec"
+  },
+  "treeify@1.1.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/notatestuser/treeify",
+    "publisher": "Luke Plaster",
+    "name": "treeify",
+    "version": "1.1.0",
+    "description": "converts a JS object into a nice and readable tree structure for the console"
+  },
+  "ts-loader@9.3.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/TypeStrong/ts-loader",
+    "publisher": "John Reilly",
+    "name": "ts-loader",
+    "version": "9.3.0",
+    "description": "TypeScript loader for webpack"
+  },
+  "typescript@4.7.2": {
+    "licenses": "Apache-2.0",
+    "repository": "https://github.com/Microsoft/TypeScript",
+    "publisher": "Microsoft Corp.",
+    "name": "typescript",
+    "version": "4.7.2",
+    "description": "TypeScript is a language for application scale JavaScript development"
+  },
   "ua-parser-js@1.0.2": {
     "licenses": "MIT",
     "repository": "https://github.com/faisalman/ua-parser-js",
@@ -1270,6 +4198,14 @@
     "name": "ua-parser-js",
     "version": "1.0.2",
     "description": "Detect Browser, Engine, OS, CPU, and Device type/model from User-Agent data. Supports browser & node.js environment"
+  },
+  "un-eval@1.2.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/tiansh/un_eval.js",
+    "publisher": "ts",
+    "name": "un-eval",
+    "version": "1.2.0",
+    "description": "un_eval converts an Object to its source"
   },
   "uncontrollable@7.2.1": {
     "licenses": "MIT",
@@ -1279,6 +4215,78 @@
     "version": "7.2.1",
     "description": "Wrap a controlled react component, to allow specific prop/handler pairs to be uncontrolled"
   },
+  "unicode-canonical-property-names-ecmascript@2.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/mathiasbynens/unicode-canonical-property-names-ecmascript",
+    "publisher": "Mathias Bynens",
+    "name": "unicode-canonical-property-names-ecmascript",
+    "version": "2.0.0",
+    "description": "The set of canonical Unicode property names supported in ECMAScript RegExp property escapes."
+  },
+  "unicode-match-property-ecmascript@2.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/mathiasbynens/unicode-match-property-ecmascript",
+    "publisher": "Mathias Bynens",
+    "name": "unicode-match-property-ecmascript",
+    "version": "2.0.0",
+    "description": "Match a Unicode property or property alias to its canonical property name per the algorithm used for RegExp Unicode property escapes in ECMAScript."
+  },
+  "unicode-match-property-value-ecmascript@2.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/mathiasbynens/unicode-match-property-value-ecmascript",
+    "publisher": "Mathias Bynens",
+    "name": "unicode-match-property-value-ecmascript",
+    "version": "2.0.0",
+    "description": "Match a Unicode property or property alias to its canonical property name per the algorithm used for RegExp Unicode property escapes in ECMAScript."
+  },
+  "unicode-property-aliases-ecmascript@2.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/mathiasbynens/unicode-property-aliases-ecmascript",
+    "publisher": "Mathias Bynens",
+    "name": "unicode-property-aliases-ecmascript",
+    "version": "2.0.0",
+    "description": "Unicode property alias mappings in JavaScript format for property names that are supported in ECMAScript RegExp property escapes."
+  },
+  "uri-js@4.4.1": {
+    "licenses": "BSD-2-Clause",
+    "repository": "https://github.com/garycourt/uri-js",
+    "publisher": "Gary Court",
+    "name": "uri-js",
+    "version": "4.4.1",
+    "description": "An RFC 3986/3987 compliant, scheme extendable URI/IRI parsing/validating/resolving library for JavaScript."
+  },
+  "url-loader@4.1.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/webpack-contrib/url-loader",
+    "publisher": "Tobias Koppers @sokra",
+    "name": "url-loader",
+    "version": "4.1.1",
+    "description": "A loader for webpack which transforms files into base64 URIs"
+  },
+  "util-deprecate@1.0.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/TooTallNate/util-deprecate",
+    "publisher": "Nathan Rajlich",
+    "name": "util-deprecate",
+    "version": "1.0.2",
+    "description": "The Node.js `util.deprecate()` function with browser support"
+  },
+  "util-extend@1.0.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/isaacs/util-extend",
+    "name": "util-extend",
+    "author": "",
+    "version": "1.0.3",
+    "description": "Node's internal object extension function"
+  },
+  "validate-npm-package-license@3.0.4": {
+    "licenses": "Apache-2.0",
+    "repository": "https://github.com/kemitchell/validate-npm-package-license.js",
+    "publisher": "Kyle E. Mitchell",
+    "name": "validate-npm-package-license",
+    "version": "3.0.4",
+    "description": "Give me a string and I'll tell you if it's a valid npm package license string"
+  },
   "warning@4.0.3": {
     "licenses": "MIT",
     "repository": "https://github.com/BerkeleyTrue/warning",
@@ -1286,6 +4294,102 @@
     "name": "warning",
     "version": "4.0.3",
     "description": "A mirror of Facebook's Warning"
+  },
+  "watchpack@2.3.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/webpack/watchpack",
+    "publisher": "Tobias Koppers @sokra",
+    "name": "watchpack",
+    "version": "2.3.1",
+    "description": "Wrapper library for directory and file watching."
+  },
+  "webidl-conversions@4.0.2": {
+    "licenses": "BSD-2-Clause",
+    "repository": "https://github.com/jsdom/webidl-conversions",
+    "publisher": "Domenic Denicola",
+    "name": "webidl-conversions",
+    "version": "4.0.2",
+    "description": "Implements the WebIDL algorithms for converting to and from JavaScript values"
+  },
+  "webpack-cli@4.9.2": {
+    "licenses": "MIT",
+    "repository": "https://github.com/webpack/webpack-cli",
+    "name": "webpack-cli",
+    "author": "",
+    "version": "4.9.2",
+    "description": "CLI for webpack & friends"
+  },
+  "webpack-merge@5.8.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/survivejs/webpack-merge",
+    "publisher": "Juho Vepsalainen",
+    "name": "webpack-merge",
+    "version": "5.8.0",
+    "description": "Variant of merge that's useful for webpack configuration"
+  },
+  "webpack-sources@3.2.3": {
+    "licenses": "MIT",
+    "repository": "https://github.com/webpack/webpack-sources",
+    "publisher": "Tobias Koppers @sokra",
+    "name": "webpack-sources",
+    "version": "3.2.3",
+    "description": "Source code handling classes for webpack"
+  },
+  "webpack@5.65.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/webpack/webpack",
+    "publisher": "Tobias Koppers @sokra",
+    "name": "webpack",
+    "version": "5.65.0",
+    "description": "Packs CommonJs/AMD modules for the browser. Allows to split your codebase into multiple bundles, which can be loaded on demand. Support loaders to preprocess files, i.e. json, jsx, es7, css, less, ... and your custom stuff."
+  },
+  "whatwg-url@7.1.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/jsdom/whatwg-url",
+    "publisher": "Sebastian Mayr",
+    "name": "whatwg-url",
+    "version": "7.1.0",
+    "description": "An implementation of the WHATWG URL Standard's URL API and parsing machinery"
+  },
+  "which@2.0.2": {
+    "licenses": "ISC",
+    "repository": "https://github.com/isaacs/node-which",
+    "publisher": "Isaac Z. Schlueter",
+    "name": "which",
+    "version": "2.0.2",
+    "description": "Like which(1) unix command. Find the first instance of an executable in the PATH."
+  },
+  "wildcard@2.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/DamonOehlman/wildcard",
+    "publisher": "Damon Oehlman",
+    "name": "wildcard",
+    "version": "2.0.0",
+    "description": "Wildcard matching tools"
+  },
+  "wrappy@1.0.2": {
+    "licenses": "ISC",
+    "repository": "https://github.com/npm/wrappy",
+    "publisher": "Isaac Z. Schlueter",
+    "name": "wrappy",
+    "version": "1.0.2",
+    "description": "Callback wrapping utility"
+  },
+  "yallist@4.0.0": {
+    "licenses": "ISC",
+    "repository": "https://github.com/isaacs/yallist",
+    "publisher": "Isaac Z. Schlueter",
+    "name": "yallist",
+    "version": "4.0.0",
+    "description": "Yet Another Linked List"
+  },
+  "yaml-loader@0.6.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/eemeli/yaml-loader",
+    "name": "yaml-loader",
+    "author": "",
+    "version": "0.6.0",
+    "description": "YAML loader for Webpack"
   },
   "yaml@1.10.2": {
     "licenses": "ISC",

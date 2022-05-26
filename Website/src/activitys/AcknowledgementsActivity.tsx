@@ -1,8 +1,7 @@
-import * as React from "react";
 import { Card, Page, Toolbar, BackButton } from "react-onsenui";
 import LinkManager from "@Native/LinkManager";
-import pkg from "@Package";
 import dep from "./../../licenseBuild/licenses.json";
+import AppCompatActivity from "./AppCompatActivity";
 
 interface Props {
   popPage: any;
@@ -12,7 +11,7 @@ interface States {
   libs: any;
 }
 
-class AcknowledgementsActivity extends React.Component<Props, States> {
+class AcknowledgementsActivity extends AppCompatActivity<Props, States> {
   public constructor(props: Props | Readonly<Props>) {
     super(props);
     this.state = {
@@ -21,10 +20,11 @@ class AcknowledgementsActivity extends React.Component<Props, States> {
   }
 
   public componentDidMount = () => {
+    super.componentDidMount;
     this.setState({ libs: Object.values(dep) });
   };
 
-  private renderToolbar = () => {
+  protected onCreateToolbar = () => {
     return (
       // @ts-ignore
       <Toolbar>
@@ -45,7 +45,7 @@ class AcknowledgementsActivity extends React.Component<Props, States> {
     );
   };
 
-  public render = () => {
+  protected onCreate = () => {
     const libs = this.state.libs.map((item: any) => {
       return (
         // @ts-ignore
@@ -73,17 +73,13 @@ class AcknowledgementsActivity extends React.Component<Props, States> {
       );
     });
     return (
-      <>
-        <Page renderToolbar={this.renderToolbar}>
-          <lib-container
-            style={{
-              paddingBottom: "4px",
-            }}
-          >
-            {libs}
-          </lib-container>
-        </Page>
-      </>
+      <lib-container
+        style={{
+          paddingBottom: "4px",
+        }}
+      >
+        {libs}
+      </lib-container>
     );
   };
 }

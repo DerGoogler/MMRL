@@ -3,7 +3,7 @@ import Constants from "@Native/Constants";
 /**
  * Simple class to manage the web local sotrage and the Android native preferences
  */
-class PreferencesManager {
+class SharedPreferences {
   /** Returns the number of key/value pairs. */
   public readonly length: number | undefined;
   private webStorage: Storage;
@@ -73,4 +73,4 @@ class PreferencesManager {
   [name: string]: any;
 }
 
-export default PreferencesManager;
+export default SharedPreferences;

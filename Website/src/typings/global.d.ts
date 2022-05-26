@@ -58,7 +58,10 @@ declare global {
       "license-card-infos": HTMLAttributes<HTMLDivElement>;
       "license-card-version": HTMLAttributes<HTMLSpanElement>;
       "license-card-license": HTMLAttributes<HTMLSpanElement>;
-
     }
+  }
+
+  interface Keep {
+    [x: string]: any;
   }
 }

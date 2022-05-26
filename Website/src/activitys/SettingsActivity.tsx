@@ -1,8 +1,8 @@
-import * as React from "react";
-import { Page, Toolbar, BackButton, List } from "react-onsenui";
+import { Toolbar, BackButton, List } from "react-onsenui";
 import { ListViewBuilder } from "@Builders/ListViewBuilder";
 import settings from "@Utils/settings";
 import pkg from "@Package";
+import AppCompatActivity from "./AppCompatActivity";
 
 interface Props {
   pushPage: any;
@@ -13,7 +13,7 @@ interface States {
   libs: any;
 }
 
-class SettingsActivity extends React.Component<Props, States> {
+class SettingsActivity extends AppCompatActivity<Props, States> {
   public constructor(props: Props | Readonly<Props>) {
     super(props);
     this.state = {
@@ -22,10 +22,11 @@ class SettingsActivity extends React.Component<Props, States> {
   }
 
   public componentDidMount = () => {
+    super.componentDidMount;
     this.setState({ libs: Object.keys(pkg.dependencies) });
   };
 
-  public renderToolbar = () => {
+  protected onCreateToolbar = () => {
     return (
       // @ts-ignore
       <Toolbar>
@@ -46,9 +47,9 @@ class SettingsActivity extends React.Component<Props, States> {
     );
   };
 
-  public render = () => {
+  protected onCreate = () => {
     return (
-      <Page renderToolbar={this.renderToolbar}>
+      <>
         <settings-container>
           {/**
             // @ts-ignore */}
@@ -56,7 +57,7 @@ class SettingsActivity extends React.Component<Props, States> {
             <ListViewBuilder data={settings} pushPage={this.props.pushPage} />
           </List>
         </settings-container>
-      </Page>
+      </>
     );
   };
 }
