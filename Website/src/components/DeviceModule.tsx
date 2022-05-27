@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Card } from "react-onsenui";
 import Properties from "@js.properties/properties";
-import Shell from "@Builders/ShellBuilder";
+import MvFile from "@Builders/MvFile";
 
 interface Props {
   module: string;
@@ -34,31 +34,34 @@ class DeviceModule extends React.Component<Props, States> {
     };
   }
 
-  private grep(prop: string): string {
+  public componentDidMount() {
     const module = this.props.module;
-    const readProp = Shell.cmd(`cat /data/adb/modules/${module}/module.prop | sed -n "s|^${prop}=||p"`).result();
-    return readProp;
+    const readProps = new MvFile(`/data/adb/modules/${module}/module.prop`).suRead();
+    this.setState({
+      props: Properties.parseToProperties(readProps),
+    });
   }
 
   public render = () => {
+    const { id, name, version, versionCode, author, description } = this.state.props;
     return (
       <>
         <div>
           {/*
         // @ts-ignore */}
           <Card
-            id={"id"}
-            key={"id"}
+            id={id}
+            key={id}
             //@ts-ignore
             style={{ marginTop: "4px", marginBottom: "4px" }}
           >
             <item-card-wrapper>
               <item-title className="title">
-                <item-module-name>name</item-module-name>
+                <item-module-name>{name}</item-module-name>
               </item-title>
               <div className="content">
-                <item-version-author>version / author</item-version-author>
-                <item-description>description</item-description>
+                <item-version-author>{version} / {author}</item-version-author>
+                <item-description>{description}</item-description>
               </div>
             </item-card-wrapper>
           </Card>

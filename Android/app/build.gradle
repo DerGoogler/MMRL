@@ -7,8 +7,8 @@ android {
         applicationId 'com.dergoogler.mmrl'
         minSdk 28
         targetSdkVersion 32
-        versionCode 10
-        versionName "1.0"
+        versionName "1.4.0@alpha-4"
+        versionCode "1400"
         externalNativeBuild {
             cmake {
                 cppFlags ""

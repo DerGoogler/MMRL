@@ -1,51 +1,67 @@
 package com.dergoogler.utils;
 
-import java.io.FileReader;
+import android.content.Context;
+import android.os.Environment;
+
+import androidx.annotation.NonNull;
+
+import com.topjohnwu.superuser.io.SuFileInputStream;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
-public class File {
-    private static void createNewFile(String path) {
-        int lastSep = path.lastIndexOf(File.separator);
-        if (lastSep > 0) {
-            String dirPath = path.substring(0, lastSep);
-            makeDir(dirPath);
-        }
+public class MvFile extends File {
+    private Context context;
+    private final String pathname;
 
-        File file = new File(path);
+    public MvFile(String pathname) {
+        super(pathname);
+        this.pathname = pathname;
+    }
 
+    public String read() {
         try {
-            if (!file.exists())
-                file.createNewFile();
+            FileInputStream fis = new FileInputStream(this.pathname);  // 2nd line
+            InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8);
+            BufferedReader bufferedReader = new BufferedReader(isr);
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                sb.append(line).append("\n");
+            }
+            fis.close();
+            return sb.toString();
         } catch (IOException e) {
             e.printStackTrace();
+            return "";
         }
     }
-    public static String readFile(String path) {
-        createNewFile(path);
 
-        StringBuilder sb = new StringBuilder();
-        FileReader fr = null;
-        try {
-            fr = new FileReader(new File(path));
-
-            char[] buff = new char[1024];
-            int length = 0;
-
-            while ((length = fr.read(buff)) > 0) {
-                sb.append(new String(buff, 0, length));
+    public String suRead() throws IOException {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(SuFileInputStream.open(this.pathname)))) {
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+                sb.append('\n');
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (fr != null) {
-                try {
-                    fr.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
+            return sb.toString();
         }
+    }
 
-        return sb.toString();
+    public static String getExternalStorageDir() {
+        return Environment.getExternalStorageDirectory().getAbsolutePath();
+    }
+
+    public static String getPackageDataDir(Context context) {
+        return context.getExternalFilesDir(null).getAbsolutePath();
+    }
+
+    public static String getPublicDir(String type) {
+        return Environment.getExternalStoragePublicDirectory(type).getAbsolutePath();
     }
 }

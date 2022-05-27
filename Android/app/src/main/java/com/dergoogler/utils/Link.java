@@ -22,12 +22,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 
-public class LinkManager {
+public class Link {
     private final Context context;
     private final ContextWrapper contextwrapper;
 
 
-    public LinkManager(Context context) {
+    public Link(Context context) {
         this.context = context;
         this.contextwrapper = new ContextWrapper(this.context);
     }

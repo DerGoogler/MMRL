@@ -213,7 +213,7 @@ class ExploreModule extends React.Component<Props, States> {
                     marginTop: isLQModule && !tools.getSettingsSwitch("disable_lq_modules") ? "4px" : "",
                   }}
                 >
-                  {props.version + " / " + props.author}
+                  {props.version} / {props.author}
                 </item-version-author>
                 <item-description>{props.description}</item-description>
                 <item-last-update>Last update: {this.formatDate(new Date(last_update))}</item-last-update>

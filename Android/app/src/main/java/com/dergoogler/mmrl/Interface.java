@@ -18,30 +18,25 @@ import android.widget.Toast;
 
 import androidx.annotation.Keep;
 
-import com.dergoogler.utils.LinkManager;
+import com.dergoogler.utils.Link;
+import com.dergoogler.utils.MvFile;
 import com.topjohnwu.superuser.Shell;
 import com.topjohnwu.superuser.ShellUtils;
 import com.topjohnwu.superuser.io.SuFile;
-import com.topjohnwu.superuser.io.SuFileInputStream;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 
 @Keep
 public class Interface {
     private final Context context;
     private final SharedPreferences localstorage;
-    private final LinkManager link;
+    private final Link link;
 
     public Interface(Context context) {
         this.context = context;
         this.localstorage = context.getSharedPreferences(Lib.getStorageKey(), Activity.MODE_PRIVATE);
-        this.link = new LinkManager(this.context);
+        this.link = new Link(this.context);
     }
 
     @JavascriptInterface
@@ -53,11 +48,6 @@ public class Interface {
     @JavascriptInterface
     public String execResult(String command) {
         return ShellUtils.fastCmd(command);
-    }
-
-    @JavascriptInterface
-    public String getProp(String module, String prop) {
-        return ShellUtils.fastCmd("cat /data/adb/modules/" + module + "/module.prop | sed -n \"s|^" + prop + "=||p\"");
     }
 
     @JavascriptInterface
@@ -159,6 +149,21 @@ public class Interface {
     public String readModules() {
         String[] modules = new SuFile("/data/adb/modules").list();
         return String.join(",", modules);
+    }
+
+    @JavascriptInterface
+    public String readFile(String path) {
+        return new MvFile(path).read();
+    }
+
+    @JavascriptInterface
+    public String suReadFile(String path) {
+        try {
+            return new MvFile(path).suRead();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "";
+        }
     }
 
     @JavascriptInterface

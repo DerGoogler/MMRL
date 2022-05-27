@@ -32,6 +32,14 @@ module = {
 }
 ```
 
+## What MMRL Supports
+
+- [x] Custom repo loading
+- [x] Custom theming (Android only)
+- [x] View installed modules (Android only)
+- [] Module install (Android only)
+- [] Translation
+
 ## Meet the Description API (DAPI)
 
 ### Create an changelog (beta)

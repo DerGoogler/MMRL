@@ -37,7 +37,7 @@ interface Android {
   getDataDir(): string;
   readModules(): string;
   readFile(path: string): string;
-  getProp(module: string, prop: string): string;
+  suReadFile(path: string): string;
 
   // Others
   close(): void;

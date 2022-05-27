@@ -10,6 +10,8 @@ import android.webkit.WebView;
 
 import androidx.annotation.Keep;
 
+import com.dergoogler.mmrl.Lib;
+
 @Keep
 public class ModuleView extends WebView {
 
@@ -52,6 +54,15 @@ public class ModuleView extends WebView {
 
     public void setUserAgentString(String userAgent) {
         this.webSettings.setUserAgentString(userAgent);
+    }
+
+    public void loadHTML(String htmlString) {
+        this.loadData(htmlString, "text/html", "UTF-8");
+    }
+
+    public void loadHTML(String baseUrl, String htmlString) {
+        this.loadDataWithBaseURL(baseUrl, htmlString, "text/html",
+                "utf-8", null);
     }
 
     @SuppressLint("JavascriptInterface")
