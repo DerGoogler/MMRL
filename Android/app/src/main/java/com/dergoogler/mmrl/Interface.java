@@ -197,16 +197,6 @@ public class Interface {
                     public String read() {
                         return new MvFile(path).read();
                     }
-
-                    @JavascriptInterface
-                    public boolean delete() {
-                        return new SuFile(path).delete();
-                    }
-
-                    @JavascriptInterface
-                    public boolean exists() {
-                        return new SuFile(path).exists();
-                    }
                 }
                 return new retn();
             }
@@ -222,12 +212,23 @@ public class Interface {
                             e.printStackTrace();
                             return "";
                         }
+
                     }
 
                     @JavascriptInterface
                     public String list() {
                         String[] modules = new SuFile(path).list();
                         return String.join(",", modules);
+                    }
+
+                    @JavascriptInterface
+                    public boolean delete() {
+                        return new SuFile(path).delete();
+                    }
+
+                    @JavascriptInterface
+                    public boolean exists() {
+                        return new SuFile(path).exists();
                     }
                 }
                 return new retn();

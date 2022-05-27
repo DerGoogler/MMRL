@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 32
@@ -54,6 +55,7 @@ android {
 
 repositories {
     maven { url 'https://jitpack.io' }
+    mavenCentral()
 }
 
 dependencies {
@@ -63,4 +65,6 @@ dependencies {
     implementation "com.github.topjohnwu.libsu:core:5.0.1"
     implementation 'com.github.topjohnwu.libsu:io:5.0.1'
     implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation "androidx.core:core-ktx:+"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }

@@ -35,6 +35,26 @@ string ConvertJString(JNIEnv *env, jstring str) {
     return Result;
 }
 
+string jstring2string(JNIEnv *env, jstring jStr) {
+    if (!jStr)
+        return "";
+
+    const jclass stringClass = env->GetObjectClass(jStr);
+    const jmethodID getBytes = env->GetMethodID(stringClass, "getBytes", "(Ljava/lang/String;)[B");
+    const auto stringJbytes = (jbyteArray) env->CallObjectMethod(jStr, getBytes,
+                                                                 env->NewStringUTF("UTF-8"));
+
+    auto length = (size_t) env->GetArrayLength(stringJbytes);
+    jbyte *pBytes = env->GetByteArrayElements(stringJbytes, nullptr);
+
+    std::string ret = std::string((char *) pBytes, length);
+    env->ReleaseByteArrayElements(stringJbytes, pBytes, JNI_ABORT);
+
+    env->DeleteLocalRef(stringJbytes);
+    env->DeleteLocalRef(stringClass);
+    return ret;
+}
+
 string cppExec(const char *cmd) {
     char buffer[128];
     std::string result;
@@ -79,6 +99,7 @@ Java_com_dergoogler_mmrl_Lib_getStorageKey(JNIEnv *env, jclass clazz) {
     string result = "localstorage";
     return env->NewStringUTF(result.c_str());
 }
+
 extern "C"
 JNIEXPORT jstring JNICALL
 Java_com_dergoogler_mmrl_Lib_getUserAgent(JNIEnv *env, jclass clazz) {
@@ -88,13 +109,23 @@ Java_com_dergoogler_mmrl_Lib_getUserAgent(JNIEnv *env, jclass clazz) {
 
 extern "C"
 JNIEXPORT jstring JNICALL
-Java_com_dergoogler_mmrl_Lib_pageContent(JNIEnv *env, jclass clazz) {
+Java_com_dergoogler_mmrl_Lib_pageContent(JNIEnv *env, jclass clazz, jstring cssInject) {
     string doctype = R"(<!DOCTYPE html>)";
     string htmlStart = R"(<html>)";
     string headStart = R"(<head>)";
     string styleVendor = R"(<link rel="stylesheet" type="text/css" href="bundle/vendor.bundle.css"/>)";
     string styleApp = R"(<link rel="stylesheet" type="text/css" href="bundle/app.bundle.css"/>)";
     string meta = R"(<meta charset="utf-8" />)";
+    string cssInject1 = R"(<script>)";
+    string cssInject2 = R"(var parent = document.getElementsByTagName('head').item(0);)";
+    string cssInject3 = R"(var style = document.createElement('style');)";
+    string cssInject4 = R"(style.type = 'text/css';)";
+    string cssInject5 = "style.innerHTML = window.atob('" + jstring2string(env, cssInject) + "');";
+    string cssInject6 = R"(parent.appendChild(style))";
+    string cssInject7 = R"(</script>)";
+    string cssInjectResult =
+            cssInject1 + cssInject2 + cssInject3 + cssInject4 + cssInject5 + cssInject6 +
+            cssInject7;
     string headEnd = R"(</head>)";
     string bodyStart = R"(<body>)";
     string app = R"(<app></app>)";
@@ -103,7 +134,7 @@ Java_com_dergoogler_mmrl_Lib_pageContent(JNIEnv *env, jclass clazz) {
     string bodyEnd = R"(</body>)";
     string htmlEnd = R"(</html>)";
     string result = doctype + htmlStart + headStart + styleVendor +
-                    styleApp + meta + headEnd +
+                    styleApp + cssInjectResult + meta + headEnd +
                     bodyStart + app + scriptVendor +
                     scriptApp + bodyEnd + htmlEnd;
     return env->NewStringUTF(result.c_str());

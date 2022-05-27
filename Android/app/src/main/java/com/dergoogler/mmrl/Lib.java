@@ -1,5 +1,7 @@
 package com.dergoogler.mmrl;
 
+import androidx.annotation.NonNull;
+
 public class Lib {
 
     static {
@@ -18,7 +20,7 @@ public class Lib {
      * Returns the html page to load. This is to prevent js injection though the html page with <script/> tags
      * @return HTML page string
      */
-    public static native String pageContent();
+    public static native String pageContent(@NonNull String cssInject);
 
     static class log {
 

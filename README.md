@@ -35,9 +35,11 @@ module = {
 ## What MMRL Supports
 
 - [x] Custom repo loading
-- [x] Custom theming (Android only)
-- [x] View installed modules (Android only)
-- [ ] Module install (Android only)
+#### Android only
+- [x] Custom theming
+- [x] View installed modules
+- [x] Delete installed modules
+- [ ] Module install
 - [ ] Translation
 
 ## Meet the Description API (DAPI)
