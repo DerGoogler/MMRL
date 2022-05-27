@@ -51,13 +51,7 @@ class Bootloader {
       }
     }
 
-    // Get's removed in non-beta
-    const tempConfirm = window.confirm("Note! This app not not ready yet. You using currently the alpha (1) version of MMRL");
-    if (tempConfirm) {
-      this.getSharedPreferences.setPref("tempConfirm", "true");
-    } else {
-      this.log.w("User has not confirmed the dialog!");
-    }
+   // this.log.i(android.phoneComponents().getActionBarHeight().toString());
 
     this.log.i("Intitialze repo");
     if (this.getSharedPreferences.getPref("repo") == Constants.undefined) {

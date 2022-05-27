@@ -10,7 +10,7 @@ class AppCompatActivity<P = {}, S = {}> extends React.PureComponent<P, S> {
 
   private onlyAndroid(): void {
     if (Constants.isAndroid) {
-      android.setStatusbarColor(this.setStatusbarColor());
+      android.phoneComponents().setStatusbarColor(this.setStatusbarColor());
     }
   }
 
@@ -24,7 +24,7 @@ class AppCompatActivity<P = {}, S = {}> extends React.PureComponent<P, S> {
 
   public componentWillUnmount(): void {
     if (Constants.isAndroid) {
-      android.setStatusbarColor("#4a148c");
+      android.phoneComponents().setStatusbarColor("#4a148c");
     }
   }
 

@@ -5,7 +5,7 @@ import pkg from "@Package";
 class PackageManager {
   public static get getAppPackageId(): string {
     if (Constants.isAndroid) {
-      return android.getAppPackageId();
+      return android.version().getAppPackageId();
     } else {
       return pkg.name;
     }
@@ -13,7 +13,7 @@ class PackageManager {
 
   public static get getAppVersionName(): string {
     if (Constants.isAndroid) {
-      return android.getAppVersionName();
+      return android.version().getAppVersionName();
     } else {
       return pkg.version;
     }
@@ -21,7 +21,7 @@ class PackageManager {
 
   public static get getAppVersionCode(): int {
     if (Constants.isAndroid) {
-      return android.getAppVersionCode();
+      return android.version().getAppVersionCode();
     } else {
       return Number(pkg.version.replace(".", ""));
     }
@@ -29,14 +29,14 @@ class PackageManager {
 
   public static get getMagiskVersionCode(): string {
     if (Constants.isAndroid) {
-      return Shell.cmd("su -V").result()
+      return Shell.cmd("su -V").result();
     } else {
       return "0";
     }
-  } 
+  }
   public static get getMagiskVersionName(): string {
     if (Constants.isAndroid) {
-      return Shell.cmd("su -v").result()
+      return Shell.cmd("su -v").result();
     } else {
       return "0:MAGISKSU";
     }

@@ -2,32 +2,34 @@ interface Android {
   // Root management
   exec(command: string): void;
   execResult(command: string): string;
-  cppExecResult(command: string): string;
   isAppGrantedRoot(): boolean;
 
   // Preference management
-  setPref(key: string, value: string): void;
-  getPref(key: string): string;
-  removePref(key: string): void;
-  clearPrefs(): void;
+  getSharedPreferences: () => {
+    setPref(key: string, value: string): void;
+    getPref(key: string): string;
+    removePref(key: string): void;
+    clearPrefs(): void;
+  };
 
-  // Statusbar management
-  setStatusbarColor(color: string): void;
-  setStatusbarBackgroundWhite(): void;
+  phoneComponents: () => {
+    setStatusbarColor(color: string): void;
+    setStatusbarBackgroundWhite(): void;
+    getNavigationBarHeight(): int;
+    getStatusBarHeight(): int;
+  };
 
   // Storage management
   hasStoragePermission(): boolean;
   requestStoargePermission(): void;
 
   // Version managment
-  getAppVersionCode(): int;
-  getAppVersionName(): string;
-  getAppPackageId(): string;
-  getAndroidVersionCode(): int;
-  /**
-   * @deprecated
-   */
-  getMagiskVersionCode(): string;
+  version: () => {
+    getAppVersionCode(): int;
+    getAppVersionName(): string;
+    getAppPackageId(): string;
+    getAndroidVersionCode(): int;
+  };
 
   // Link
   open(link: string): void;
@@ -35,9 +37,18 @@ interface Android {
 
   // Storage
   getDataDir(): string;
-  readModules(): string;
-  readFile(path: string): string;
-  suReadFile(path: string): string;
+
+  SuFile: (path: string) => {
+    storage: () => {
+      read(): string;
+    };
+    system: () => {
+      read(): string;
+      list(): string;
+      exists(): boolean;
+      delete(): boolean;
+    };
+  };
 
   // Others
   close(): void;

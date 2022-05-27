@@ -7,7 +7,6 @@
 #include <stdexcept>
 #include <istream>
 #include <fstream>
-#include "./colorlog.h"
 
 using namespace std;
 

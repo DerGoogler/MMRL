@@ -127,7 +127,6 @@ class ExploreModule extends React.Component<Props, States> {
     const isLQModule = moduleOptions[getId]?.low;
     const isVerified = moduleOptions[getId]?.verified;
     const _display = moduleOptions[getId]?.display;
-    const getMagiskVersion = Constants.isAndroid ? android.getMagiskVersionCode() : 0;
 
     return (
       <>

@@ -20,7 +20,7 @@ class DeviceModuleFragment extends React.Component<Props, States> {
   }
 
   public componentDidMount = () => {
-    this.setState({ modules: android.readModules().split(",") });
+    this.setState({ modules: android.SuFile("/data/adb/modules").system().list().split(",") });
   };
 
   public render = () => {

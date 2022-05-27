@@ -1,7 +1,7 @@
 {
   "name": "com.dergoogler.mmrl.web",
-  "version": "1.4.0@alpha-4",
-  "versionCode": "1400",
+  "version": "1.4.0@alpha-2",
+  "versionCode": "140",
   "description": "",
   "main": "index.tsx",
   "keywords": [],

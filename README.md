@@ -87,6 +87,13 @@ import Shell from "@Builders/ShellBuilder";
 Shell.cmd("su -V").exec();
 ```
 
+### Show toast
+```ts
+import Toast from "@Builders/Toast"
+
+Toast.makeText("Hellow", Toast.LENGTH_LONG).show();
+```
+
 ## FAQ
 
 ### Why does some description reports `404: Not Found`?

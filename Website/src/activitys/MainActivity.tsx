@@ -2,6 +2,7 @@ import * as React from "react";
 import { Page, Toolbar, BackButton, RouterNavigator, RouterUtil } from "react-onsenui";
 import MainApplication from "@Activitys/MainApplication";
 import ExploreModuleFragment from "./MainApplication";
+import Constants from "@Native/Constants";
 
 interface ModuleOptions {
   verified?: boolean;
@@ -61,8 +62,9 @@ class MainActivity extends React.Component<PushProps, States> {
       window.onpopstate = () => {
         history.pushState("newjibberish", "", null);
         if (this.state.currentPage === "main") {
-          // Will added later
-          // native.close();
+          if (Constants.isAndroid) {
+            android.close();
+          }
         } else {
           this.popPage();
         }
@@ -149,17 +151,19 @@ class MainActivity extends React.Component<PushProps, States> {
 
   public render = () => {
     return (
-      <Page>
-        <RouterNavigator
-          swipeable={true}
-          // @ts-ignore
-          swipePop={(options: any) => this.popPage(options)}
-          routeConfig={this.state.routeConfig}
-          renderPage={this.renderPage}
-          onPostPush={() => this.onPostPush()}
-          onPostPop={() => this.onPostPop()}
-        />
-      </Page>
+      <>
+        <Page>
+          <RouterNavigator
+            swipeable={true}
+            // @ts-ignore
+            swipePop={(options: any) => this.popPage(options)}
+            routeConfig={this.state.routeConfig}
+            renderPage={this.renderPage}
+            onPostPush={() => this.onPostPush()}
+            onPostPop={() => this.onPostPop()}
+          />
+        </Page>
+      </>
     );
   };
 }

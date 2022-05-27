@@ -8,9 +8,3 @@ dev: licenses
 
 prod: licenses
 	${NODE_BIN}/webpack --mode production
-
-install:
-	npm install -f
-
-debugAPK:
-	./../Android/gradlew assembleDebug

@@ -5,8 +5,11 @@ import static android.content.ContentValues.TAG;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -25,9 +28,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         view = findViewById(R.id.mmrl_view);
-
-
         view.setJavaScriptEnabled(true);
         view.setUserAgentString(Lib.getUserAgent());
         view.loadHTML(Lib.baseUrl(), Lib.pageContent());
@@ -43,10 +45,8 @@ public class MainActivity extends AppCompatActivity {
                     Log.w(TAG, "onCssInject: Theme.css file was not found");
                     return "";
                 }
-
             }
         });
-
     }
 
     @Override
