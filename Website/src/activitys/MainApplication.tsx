@@ -1,7 +1,6 @@
 import SettingsIcon from "@Components/icons/SettingsIcon";
 import Constants from "@Native/Constants";
-import * as React from "react";
-import { Page, Tab, Tabbar, Toolbar, ToolbarButton } from "react-onsenui";
+import { Tab, Tabbar, Toolbar, ToolbarButton } from "react-onsenui";
 import AppCompatActivity from "./AppCompatActivity";
 import DeviceModuleFragment from "./fragments/DeviceModuleFragment";
 import ExploreModuleFragment from "./fragments/ExploreModuleFragment";

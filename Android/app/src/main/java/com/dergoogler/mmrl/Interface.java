@@ -24,12 +24,14 @@ import androidx.annotation.Px;
 
 import com.dergoogler.utils.Link;
 import com.dergoogler.utils.MvFile;
+import com.topjohnwu.superuser.CallbackList;
 import com.topjohnwu.superuser.Shell;
 import com.topjohnwu.superuser.ShellUtils;
 import com.topjohnwu.superuser.io.SuFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 @Keep
 public class Interface {
@@ -212,7 +214,6 @@ public class Interface {
                             e.printStackTrace();
                             return "";
                         }
-
                     }
 
                     @JavascriptInterface
@@ -222,8 +223,8 @@ public class Interface {
                     }
 
                     @JavascriptInterface
-                    public boolean delete() {
-                        return new SuFile(path).delete();
+                    public void delete() {
+                        new SuFile(path).deleteRecursive();
                     }
 
                     @JavascriptInterface

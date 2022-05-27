@@ -3,6 +3,7 @@ import preset from "jss-preset-default";
 import ReactDOM from "react-dom";
 import MainActivity from "@Activitys/MainActivity";
 import ons from "onsenui";
+import Log from "@Builders/Log";
 import SharedPreferences from "@Native/SharedPreferences";
 import theme from "@Styles/theme";
 import Constants from "@Native/Constants";
@@ -15,7 +16,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
 import "@Styles/addtional.scss";
 import "@Styles/markdown-light.scss";
-import Log from "@Builders/Log";
 
 class Bootloader {
   private mountNode: Element | null = document.querySelector("app");
@@ -50,8 +50,6 @@ class Bootloader {
         android.requestStoargePermission();
       }
     }
-
-   // this.log.i(android.phoneComponents().getActionBarHeight().toString());
 
     this.log.i("Intitialze repo");
     if (this.getSharedPreferences.getPref("repo") == Constants.undefined) {
