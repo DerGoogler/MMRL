@@ -9,11 +9,11 @@ Website_version = "./Website/package.json"
 Android_version = "./Android/app/build.gradle"
 
 
-def target_change(target, version):
+def version_change(target, version):
     print(f"Change target {target} version to {version}")
 
 
-target_change("Website", f"{new_version} ({new_versionCode})")
+version_change("Website", f"{new_version} ({new_versionCode})")
 with open(Website_version, 'r+') as f:
     text = f.read()
     text = re.sub(r"\"version\": \"(.*?)\",",
@@ -25,7 +25,7 @@ with open(Website_version, 'r+') as f:
     f.truncate()
 
 
-target_change("Android", f"{new_version} ({new_versionCode})")
+version_change("Android", f"{new_version} ({new_versionCode})")
 with open(Android_version, 'r+') as f:
     text = f.read()
     text = re.sub(r"versionName \"(.*?)\"",

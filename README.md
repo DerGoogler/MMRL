@@ -37,8 +37,8 @@ module = {
 - [x] Custom repo loading
 - [x] Custom theming (Android only)
 - [x] View installed modules (Android only)
-- [] Module install (Android only)
-- [] Translation
+- [ ] Module install (Android only)
+- [ ] Translation
 
 ## Meet the Description API (DAPI)
 
@@ -59,39 +59,6 @@ module = {
 # About somthing
 - <dangericon color="#cf222e" size="16"/> This isn't good!
 - <checkicon color="#1a7f37" size="16"/> That's good!
-```
-
-## Dev API
-
-### Create prompt
-
-```ts
-new AlertBuilder()
-  .setMessage("Custom repo")
-  .setPromptCallback((input: string) => {
-    if (tools.validURL(input)) {
-      prefManager.setPref("repo", input);
-      ons.notification.alert("Repo changed, please refresh the app");
-    } else {
-      ons.notification.alert("Invalid input");
-    }
-  })
-  .showPrompt();
-```
-
-### Run native Android shell
-
-```ts
-import Shell from "@Builders/ShellBuilder";
-
-Shell.cmd("su -V").exec();
-```
-
-### Show toast
-```ts
-import Toast from "@Builders/Toast"
-
-Toast.makeText("Hellow", Toast.LENGTH_LONG).show();
 ```
 
 ## FAQ

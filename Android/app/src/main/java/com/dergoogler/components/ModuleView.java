@@ -1,16 +1,19 @@
 package com.dergoogler.components;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
+import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import androidx.annotation.Keep;
 
-import com.dergoogler.mmrl.Lib;
+import java.util.Map;
 
 @Keep
 public class ModuleView extends WebView {
@@ -63,6 +66,26 @@ public class ModuleView extends WebView {
     public void loadHTML(String baseUrl, String htmlString) {
         this.loadDataWithBaseURL(baseUrl, htmlString, "text/html",
                 "utf-8", null);
+    }
+
+    @Override
+    public void loadUrl(String url, Map<String, String> additionalHttpHeaders) {
+        throw new RuntimeException("Stub!");
+    }
+
+    @Override
+    public void loadUrl(@NonNull String url) {
+        throw new RuntimeException("Stub!");
+    }
+
+    @Override
+    public void postUrl(@NonNull String url, @NonNull byte[] postData) {
+        throw new RuntimeException("Stub!");
+    }
+
+    @Override
+    public void evaluateJavascript(@NonNull String script, @Nullable ValueCallback<String> resultCallback) {
+        throw new RuntimeException("Stub!");
     }
 
     @SuppressLint("JavascriptInterface")
