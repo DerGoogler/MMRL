@@ -39,6 +39,8 @@ module = {
 - [x] Custom theming
 - [x] View installed modules
 - [x] Delete installed modules
+- [ ] Disable installed modules
+- [ ] Enable installed modules
 - [ ] Module install
 - [ ] Translation
 
