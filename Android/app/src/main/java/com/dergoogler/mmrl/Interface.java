@@ -20,18 +20,19 @@ import android.widget.Toast;
 
 import androidx.annotation.Dimension;
 import androidx.annotation.Keep;
+import androidx.annotation.NonNull;
 import androidx.annotation.Px;
 
 import com.dergoogler.utils.Link;
 import com.dergoogler.utils.MvFile;
-import com.topjohnwu.superuser.CallbackList;
 import com.topjohnwu.superuser.Shell;
 import com.topjohnwu.superuser.ShellUtils;
 import com.topjohnwu.superuser.io.SuFile;
 
+import org.jetbrains.annotations.Contract;
+
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 
 @Keep
 public class Interface {
@@ -79,7 +80,7 @@ public class Interface {
         class retn {
             private final SharedPreferences localstorage;
 
-            public retn(Context context) {
+            public retn(@NonNull Context context) {
                 this.localstorage = context.getSharedPreferences(Lib.getStorageKey(), Activity.MODE_PRIVATE);
             }
 
@@ -188,10 +189,14 @@ public class Interface {
         return new MvFile(path).read();
     }
 
+    @NonNull
+    @Contract("_ -> new")
     @JavascriptInterface
     public static Object SuFile(String path) {
         class readWrapper {
 
+            @NonNull
+            @Contract(" -> new")
             @JavascriptInterface
             public Object storage() {
                 class retn {
@@ -203,6 +208,8 @@ public class Interface {
                 return new retn();
             }
 
+            @NonNull
+            @Contract(" -> new")
             @JavascriptInterface
             public Object system() {
                 class retn {
@@ -216,6 +223,7 @@ public class Interface {
                         }
                     }
 
+                    @NonNull
                     @JavascriptInterface
                     public String list() {
                         String[] modules = new SuFile(path).list();
