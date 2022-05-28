@@ -99,7 +99,7 @@ class DeviceModule extends React.Component<Props, States> {
                     .setMessage("Are you sure to delete the module forever?")
                     .setPositiveButton("Yes", () => {
                       if (file.system.exists()) {
-                        file.system.delete();
+                        file.system.deleteRecursive();
                         Toast.makeText("Module deleted", Toast.LENGTH_LONG).show();
                       } else {
                         Toast.makeText(`Failed to delete ${module} module`, Toast.LENGTH_LONG).show();

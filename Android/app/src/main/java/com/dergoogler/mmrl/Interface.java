@@ -231,7 +231,17 @@ public class Interface {
                     }
 
                     @JavascriptInterface
-                    public void delete() {
+                    public boolean createNewFile() {
+                        return new SuFile(path).createNewFile();
+                    }
+
+                    @JavascriptInterface
+                    public boolean delete() {
+                        return new SuFile(path).delete();
+                    }
+
+                    @JavascriptInterface
+                    public void deleteRecursive() {
                         new SuFile(path).deleteRecursive();
                     }
 

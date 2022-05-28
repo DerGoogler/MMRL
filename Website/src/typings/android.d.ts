@@ -47,6 +47,8 @@ interface Android {
       list(): string;
       exists(): boolean;
       delete(): boolean;
+      deleteRecursive(): void;
+      createNewFile(): boolean;
     };
   };
 

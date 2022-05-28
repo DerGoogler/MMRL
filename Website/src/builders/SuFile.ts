@@ -49,11 +49,27 @@ class SuFile {
       }
     },
 
+    createNewFile: (): boolean => {
+      if (Constants.isAndroid) {
+        return android.SuFile(this.pathname).system().createNewFile();
+      } else {
+        return false;
+      }
+    },
+
     delete: (): boolean => {
       if (Constants.isAndroid) {
         return android.SuFile(this.pathname).system().delete();
       } else {
         return false;
+      }
+    },
+
+    deleteRecursive: (): void => {
+      if (Constants.isAndroid) {
+        return android.SuFile(this.pathname).system().deleteRecursive();
+      } else {
+        return;
       }
     },
   };
