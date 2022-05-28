@@ -14,5 +14,5 @@ openApp: generateDebugApp openDebugApp
 openDebugApp:
 	adb shell am start -n "com.dergoogler.mmrl.debug/com.dergoogler.mmrl.MainActivity" -a android.intent.action.MAIN -c android.intent.category.LAUNCHER
 
-generateDebugApp: #dev
+generateDebugApp: dev
 	cd .. && cd Android && ./gradlew installDebug
