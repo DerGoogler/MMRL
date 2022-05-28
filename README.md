@@ -18,7 +18,7 @@ REPO_TITLE = "Magisk Modules Alt Repo"
 
 At least can you edit the json output
 
-> Please leave all default created objects!
+> Please keep all default created objects!
 
 ```py
 # Create meta module information
@@ -36,6 +36,7 @@ module = {
 
 - [x] Custom repo loading
 - [ ] Translation
+- [ ] ~Dark mode~
 
 #### Android only
 

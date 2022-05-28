@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Card, Dialog, List, ListItem, Switch, SwitchChangeEvent } from "react-onsenui";
+import { Card, Dialog, List, ListItem, Ripple, Switch, SwitchChangeEvent } from "react-onsenui";
 import Properties from "@js.properties/properties";
 import SuFile from "@Builders/SuFile";
 import AlertBuilder from "@Builders/AlertBuilder";
@@ -81,7 +81,6 @@ class DeviceModule extends React.Component<Props, States> {
     return (
       <>
         <div>
-          <Gesture event="hold" callback={this.showDialog}>
             {/*
         // @ts-ignore */}
             <Card
@@ -96,8 +95,8 @@ class DeviceModule extends React.Component<Props, States> {
                     <item-name>{name}</item-name>
                     <item-switch>
                       <Switch
-                        checked={this.state.isEnabled}
-                        disabled={this.state.isSwitchDisabled}
+                        checked={isEnabled}
+                        disabled={isSwitchDisabled}
                         onChange={(e: any) => {
                           const checked = e.target.checked;
                           const disable = new SuFile(`/data/adb/modules/${module}/disable`);
@@ -125,74 +124,47 @@ class DeviceModule extends React.Component<Props, States> {
                     {version} / {author}
                   </item-version-author>
                   <item-description>{description}</item-description>
-                </div>
-              </item-card-wrapper>
-            </Card>
-          </Gesture>
-          {/*
- // @ts-ignore */}
-          <Dialog visible={this.state.dialogShown} cancelable={true} onDialogCancel={this.hideDialog}>
-            {/*
-          // @ts-ignore */}
-            <List style={{ margin: "20px" }}>
-              {(() => {
-                if (isSwitchDisabled) {
-                  return (
-                    <>
-                      <ListItem
-                        onClick={() => {
+                  <item-module-button-wrapper>
+                    <item-module-button
+                      onClick={() => {
+                        // Can be improved, but not now
+                        if (isSwitchDisabled) {
                           const remove = new SuFile(`/data/adb/modules/${module}/remove`);
                           if (remove.system.exists()) {
                             if (remove.system.delete()) {
                               this.setState({ isSwitchDisabled: false });
                               this.log.i(`${module} has been recovered`);
                             } else {
-                              this.log.e(`Failed to recover ${module}`);
+                              this.log.e(`Failed to restore ${module}`);
                             }
                           } else {
                             this.log.e(`This remove file don't exists for ${module}`);
                           }
-                        }}
-                      >
-                        <div className="left">
-                          <TimeIcon size="24" />
-                        </div>
-                        <div className="center">Recover module</div>
-                      </ListItem>
-                    </>
-                  );
-                } else {
-                  return (
-                    <>
-                      <ListItem
-                        onClick={() => {
+                        } else {
                           const file = new SuFile(`/data/adb/modules/${module}/remove`);
-                          new AlertBuilder()
-                            .setTitle(`Delete ${name}`)
-                            .setMessage("Are you sure to delete the module forever?")
-                            .setPositiveButton("Yes", () => {
-                              if (file.system.createNewFile()) {
-                                this.setState({ isSwitchDisabled: true });
-                                Toast.makeText("Module get removed on next reboot", Toast.LENGTH_LONG).show();
-                              } else {
-                                this.setState({ isSwitchDisabled: false });
-                                Toast.makeText(`Failed to add reomve to ${module} module`, Toast.LENGTH_LONG).show();
-                              }
-                            })
-                            .showAlert();
-                        }}
-                      >
-                        <div className="left">
-                          <DeleteIcon size="24" />
-                        </div>
-                        <div className="center">Remove module</div>
-                      </ListItem>
-                    </>
-                  );
-                }
-              })()}
-            </List>
-          </Dialog>
+                          if (file.system.createNewFile()) {
+                            this.setState({ isSwitchDisabled: true });
+                          } else {
+                            this.setState({ isSwitchDisabled: false });
+                          }
+                        }
+                      }}
+                    >
+                      <Ripple />
+                      {isSwitchDisabled ? (
+                        <>
+                          <TimeIcon /> Restore
+                        </>
+                      ) : (
+                        <>
+                          <DeleteIcon /> Remove
+                        </>
+                      )}
+                    </item-module-button>
+                  </item-module-button-wrapper>
+                </div>
+              </item-card-wrapper>
+            </Card>
         </div>
       </>
     );

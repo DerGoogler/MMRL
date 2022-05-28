@@ -14,12 +14,12 @@ item-card-wrapper {
   }
   item-version-author {
     display: block;
-    font-size: 12px;
+    font-size: 14px;
     margin-bottom: 8px;
   }
   item-description {
     display: block;
-    font-size: 14px;
+    font-size: 13px;
   }
   item-last-update {
     display: block;
@@ -40,6 +40,15 @@ item-card-wrapper {
       font-size: small;
       text-align: end;
       white-space: nowrap;
+    }
+  }
+  item-module-button-wrapper {
+    display: flex;
+    width: 100%;
+    padding-top: 8px;
+    item-module-button {
+      width: 100%;
+      text-align: end;
     }
   }
 }

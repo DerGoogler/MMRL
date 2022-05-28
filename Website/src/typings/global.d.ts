@@ -49,6 +49,8 @@ declare global {
       "item-module-name": HTMLAttributes<HTMLSpanElement>;
       "item-name": HTMLAttributes<HTMLSpanElement>;
       "item-switch": HTMLAttributes<HTMLSpanElement>;
+      "item-module-button-wrapper": HTMLAttributes<HTMLDivElement>;
+      "item-module-button": HTMLAttributes<HTMLSpanElement>;
 
       // License cards
       "license-card-wrapper": HTMLAttributes<HTMLDivElement>;
