@@ -2,7 +2,7 @@ import * as React from "react";
 import ons from "onsenui";
 import axios from "axios";
 import Properties from "@js.properties/properties";
-import { Card } from "react-onsenui";
+import { Card, Switch } from "react-onsenui";
 import { Chip } from "@mui/material";
 import tools from "@Utils/tools";
 import ViewModuleActivity from "@Activitys/ViewModuleActivity";
@@ -192,7 +192,20 @@ class ExploreModule extends React.Component<Props, States> {
                     return null;
                   }
                 })()}
-                <item-module-name ref={this.cardName}>{props.name}</item-module-name>
+                <item-module-name ref={this.cardName}>
+                  <span
+                    style={{
+                      fontSize: "large",
+                      overflow: "hidden",
+                      textAlign: "start",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      width: "100%",
+                    }}
+                  >
+                    {props.name}
+                  </span>
+                </item-module-name>
                 {(() => {
                   if (isVerified) {
                     return (

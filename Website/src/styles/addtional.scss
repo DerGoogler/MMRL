@@ -27,6 +27,20 @@ item-card-wrapper {
     margin-top: 8px;
   }
   item-module-name {
+    display: flex;
+    item-name {
+      font-size: large;
+      overflow: hidden;
+      text-align: start;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 100%;
+    }
+    item-switch {
+      font-size: small;
+      text-align: end;
+      white-space: nowrap;
+    }
   }
 }
 

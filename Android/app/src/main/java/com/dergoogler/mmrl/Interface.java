@@ -81,7 +81,7 @@ public class Interface {
             private final SharedPreferences localstorage;
 
             public retn(@NonNull Context context) {
-                this.localstorage = context.getSharedPreferences(Lib.getStorageKey(), Activity.MODE_PRIVATE);
+                this.localstorage = context.getSharedPreferences("localstorage", Activity.MODE_PRIVATE);
             }
 
             /**

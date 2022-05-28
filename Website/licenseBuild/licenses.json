@@ -2263,6 +2263,14 @@
     "version": "1.0.0",
     "description": "Use node's fs.realpath, but fall back to the JS implementation if the native one fails"
   },
+  "fuchs-template@1.0.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/maxhoffmann/fuchs-template",
+    "publisher": "Maximilian Hoffmann",
+    "name": "fuchs-template",
+    "version": "1.0.0",
+    "description": "minimum templating engine by thomas fuchs"
+  },
   "function-bind@1.1.1": {
     "licenses": "MIT",
     "repository": "https://github.com/Raynos/function-bind",

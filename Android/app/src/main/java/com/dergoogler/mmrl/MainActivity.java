@@ -34,9 +34,9 @@ public class MainActivity extends AppCompatActivity {
 
         view = findViewById(R.id.mmrl_view);
         view.setJavaScriptEnabled(true);
-        view.setUserAgentString(Lib.getUserAgent());
-        view.loadHTML(Lib.baseUrl(), Lib.pageContent(this.cssInject()));
-        view.setJavascriptInterface(new Interface(this), Lib.interfaceName());
+        view.setUserAgentString("MMRL");
+        view.loadHTML("file:///android_asset/", ModuleView.pageContent(this.cssInject()));
+        view.setJavascriptInterface(new Interface(this), "android");
     }
 
     @Override

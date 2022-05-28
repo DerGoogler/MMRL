@@ -25,6 +25,7 @@ interface Props {
 }
 
 class MainApplication extends AppCompatActivity<Props> {
+  t: any;
   public constructor(props: Props | Readonly<Props>) {
     super(props);
     this.state = {};

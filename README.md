@@ -32,7 +32,7 @@ module = {
 }
 ```
 
-## What MMRL Supports
+## What MMRL Supports (Roadmap)
 
 - [x] Custom repo loading
 - [ ] Translation
@@ -41,9 +41,9 @@ module = {
 
 - [x] Custom theming
 - [x] View installed modules
-- [x] Delete installed modules
-- [ ] Disable installed modules
-- [ ] Enable installed modules
+- [x] Remove installed modules
+- [x] Disable installed modules
+- [x] Enable installed modules
 - [ ] Module install
 
 ## Meet the Description API (DAPI)
