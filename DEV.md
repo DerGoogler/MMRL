@@ -56,4 +56,7 @@ make prod
 
 # Build licenses
 make licenses
+
+# Install debug apk with bundled website
+make openApp
 ```
