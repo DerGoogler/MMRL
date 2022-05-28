@@ -27,11 +27,11 @@ class PackageManager {
     }
   }
 
-  public static get getMagiskVersionCode(): string {
+  public static get getMagiskVersionCode(): number {
     if (Constants.isAndroid) {
-      return Shell.cmd("su -V").result();
+      return parseInt(Shell.cmd("su -V").result());
     } else {
-      return "0";
+      return 0;
     }
   }
   public static get getMagiskVersionName(): string {
@@ -39,6 +39,14 @@ class PackageManager {
       return Shell.cmd("su -v").result();
     } else {
       return "0:MAGISKSU";
+    }
+  }
+  public static parseMagisk(version: string): number {
+    const i = version.indexOf(".");
+    if (i == -1) {
+      return parseInt(version);
+    } else {
+      return parseInt(version.substring(0, i)) * 1000 + parseInt(version.substring(i + 1)) * 100;
     }
   }
 }

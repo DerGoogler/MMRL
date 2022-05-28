@@ -16,6 +16,7 @@ import Video from "@Components/dapi/Video";
 import DiscordWidget from "@Components/dapi/DiscordWidget";
 import LinkManager from "@Native/LinkManager";
 import Log from "@Builders/Log";
+import PackageManager from "@Native/PackageManager";
 
 interface Props {
   extra?: any;
@@ -219,8 +220,24 @@ class ViewModuleActivity extends React.Component<Props, States> {
                   if (minMagisk != (null || undefined)) {
                     return (
                       <tr>
-                        <td style={{ width: "100%" }}>Min. Magisk</td>
-                        <td>{minMagisk}</td>
+                        <td
+                          style={{
+                            width: "100%",
+                          }}
+                        >
+                          Min. Magisk
+                        </td>
+                        <td
+                          style={{
+                            color: Constants.isAndroid
+                              ? PackageManager.parseMagisk(minMagisk) > PackageManager.getMagiskVersionCode
+                                ? "red"
+                                : ""
+                              : "",
+                          }}
+                        >
+                          {minMagisk}
+                        </td>
                       </tr>
                     );
                   } else {

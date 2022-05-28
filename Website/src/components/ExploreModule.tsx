@@ -204,20 +204,21 @@ class ExploreModule extends React.Component<Props, States> {
                     }}
                   >
                     {props.name}
+
+                    {(() => {
+                      if (isVerified) {
+                        return (
+                          <>
+                            {" "}
+                            <VerifiedIcon color="#4a148c" />
+                          </>
+                        );
+                      } else {
+                        return null;
+                      }
+                    })()}
                   </span>
                 </item-module-name>
-                {(() => {
-                  if (isVerified) {
-                    return (
-                      <>
-                        {" "}
-                        <VerifiedIcon color="#4a148c" />
-                      </>
-                    );
-                  } else {
-                    return null;
-                  }
-                })()}
               </item-title>
               <div className="content">
                 <item-version-author
