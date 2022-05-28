@@ -1,4 +1,5 @@
 interface Android {
+  shellResult(): string;
   // Root management
   exec(command: string): void;
   execResult(command: string): string;
@@ -41,6 +42,10 @@ interface Android {
   SuFile: (path: string) => {
     storage: () => {
       read(): string;
+      getExternalStorageDir(): string;
+      getPackageDataDir(): string;
+      getPublicDir(type: string): string;
+      getDataDir(): string;
     };
     system: () => {
       read(): string;

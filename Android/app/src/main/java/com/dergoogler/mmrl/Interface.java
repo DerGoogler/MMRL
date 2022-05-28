@@ -29,7 +29,6 @@ import com.topjohnwu.superuser.Shell;
 import com.topjohnwu.superuser.ShellUtils;
 import com.topjohnwu.superuser.io.SuFile;
 
-import org.jetbrains.annotations.Contract;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -180,36 +179,59 @@ public class Interface {
     }
 
     @JavascriptInterface
-    public String getDataDir() {
-        return this.link.getDataDir();
-    }
-
-    @JavascriptInterface
     public String readFile(String path) {
         return new MvFile(path).read();
     }
 
     @NonNull
-    @Contract("_ -> new")
     @JavascriptInterface
-    public static Object SuFile(String path) {
+    public Object SuFile(String path) {
         class readWrapper {
+            private final Context context;
+
+            public readWrapper(Context ctx) {
+                this.context = ctx;
+            }
 
             @NonNull
-            @Contract(" -> new")
             @JavascriptInterface
             public Object storage() {
                 class retn {
+                    private final Context context;
+
+                    public retn(Context ctx) {
+                        this.context = ctx;
+                    }
+
                     @JavascriptInterface
                     public String read() {
                         return new MvFile(path).read();
                     }
+
+                    @JavascriptInterface
+                    public String getExternalStorageDir() {
+                        return MvFile.getExternalStorageDir();
+                    }
+
+                    @JavascriptInterface
+                    public String getPackageDataDir() {
+                        return MvFile.getPackageDataDir(this.context);
+                    }
+
+                    @JavascriptInterface
+                    public String getPublicDir(String type) {
+                        return MvFile.getPublicDir(type);
+                    }
+
+                    @JavascriptInterface
+                    public String getDataDir() {
+                        return MvFile.getDataDir(this.context);
+                    }
                 }
-                return new retn();
+                return new retn(this.context);
             }
 
             @NonNull
-            @Contract(" -> new")
             @JavascriptInterface
             public Object system() {
                 class retn {
@@ -253,7 +275,7 @@ public class Interface {
                 return new retn();
             }
         }
-        return new readWrapper();
+        return new readWrapper(this.context);
     }
 
     @JavascriptInterface
@@ -272,16 +294,6 @@ public class Interface {
     @JavascriptInterface
     public void open(String link) {
         this.link.openCustomTab(link);
-    }
-
-    @JavascriptInterface
-    public void downloadFile(String url, String outputFile) {
-        try {
-            this.link.downloadFile(url, outputFile);
-        } catch (Exception e) {
-            Toast.makeText(this.context, e.toString(), Toast.LENGTH_SHORT).show();
-        }
-
     }
 
     @JavascriptInterface

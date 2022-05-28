@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Page, Toolbar, BackButton, RouterNavigator, RouterUtil } from "react-onsenui";
 import MainApplication from "@Activitys/MainApplication";
-import ExploreModuleFragment from "./MainApplication";
 import Constants from "@Native/Constants";
 
 interface ModuleOptions {
@@ -36,7 +35,6 @@ class MainActivity extends React.Component<PushProps, States> {
     super(props);
     const routeConfig = RouterUtil.init([
       {
-        //component: MainApplication,
         component: MainApplication,
         props: {
           key: "main",

@@ -69,12 +69,17 @@ class AppCompatActivity<P = {}, S = {}> extends React.PureComponent<P, S> {
 
   protected onInfiniteScroll(): void {}
 
+  protected get pageModifier(): string {
+    return "";
+  }
+
   /**
    * @deprecated
    */
   public render(): JSX.Element {
     return (
       <Page
+        modifier={this.pageModifier}
         renderBottomToolbar={this.onCreateBottomToolbar}
         renderFixed={this.onCreateFAB}
         renderModal={this.onCreateModal}

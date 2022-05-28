@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 32
@@ -10,15 +9,6 @@ android {
         targetSdkVersion 32
         versionName "1.4.0@alpha-2"
         versionCode "140".toInteger()
-        externalNativeBuild {
-            cmake {
-                cppFlags ""
-                arguments "-DANDROID_STL=c++_shared"
-            }
-        }
-        ndk {
-            abiFilters "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
-        }
     }
     buildTypes {
         release {
@@ -34,19 +24,11 @@ android {
             applicationIdSuffix '.debug'
         }
     }
-    externalNativeBuild {
-        cmake {
-            path = file("src/main/cpp/CMakeLists.txt")
-        }
-    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
     packagingOptions {
-        jniLibs {
-            keepDebugSymbols += ['*/armeabi/*.so', '*/armeabi-v7a/*.so', '*/arm64-v8a/*.so', '*/mips/*.so', '*/mips64/*.so', '*/x86/*.so', '*/x86_64/*.so']
-        }
         resources {
             excludes += ['META-INF/DEPENDENCIES.txt', 'META-INF/DEPENDENCIES', 'META-INF/LICENSE', 'META-INF/LICENSE.txt', 'META-INF/MANIFEST.MF', 'META-INF/NOTICE', 'META-INF/NOTICE.txt', 'META-INF/ASL2.0']
         }
@@ -59,12 +41,9 @@ repositories {
 }
 
 dependencies {
-    def libsuVersion = '4.0.3'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "androidx.browser:browser:1.4.0"
     implementation "com.github.topjohnwu.libsu:core:5.0.1"
     implementation 'com.github.topjohnwu.libsu:io:5.0.1'
     implementation 'androidx.appcompat:appcompat:1.4.1'
-    implementation "androidx.core:core-ktx:+"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }

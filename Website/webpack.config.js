@@ -71,11 +71,11 @@ const config = {
   ],
   resolve: {
     fallback: {
-      "path": false,
-      "fs": false,
-      "util": false
+      path: false,
+      fs: false,
+      util: false,
     },
-    extensions: [".js", ".jsx", ".ts", ".tsx", ],
+    extensions: [".js", ".jsx", ".ts", ".tsx"],
     modules: ["node_modules", path.join(process.env.NPM_CONFIG_PREFIX || __dirname, "lib/node_modules")],
     alias: {
       "@Builders": path.resolve(__dirname, "src/builders"),
@@ -91,7 +91,7 @@ const config = {
   },
   resolveLoader: {
     modules: ["node_modules", path.join(process.env.NPM_CONFIG_PREFIX || __dirname, "lib/node_modules")],
-  }
+  },
 };
 
 module.exports = config;

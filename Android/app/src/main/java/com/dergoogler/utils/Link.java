@@ -24,61 +24,10 @@ import java.net.URLConnection;
 
 public class Link {
     private final Context context;
-    private final ContextWrapper contextwrapper;
 
 
     public Link(Context context) {
         this.context = context;
-        this.contextwrapper = new ContextWrapper(this.context);
-    }
-
-    public String getDataDir() {
-        return this.contextwrapper.getFilesDir().getPath();
-    }
-
-    public void downloadFile(String urlStr, String outputFile) {
-        InputStream input = null;
-        OutputStream output = null;
-        String destinationFilePath = this.contextwrapper.getFilesDir().getPath() + "/" + outputFile;
-        HttpURLConnection connection = null;
-        try {
-            URL url = new URL(urlStr);
-
-            connection = (HttpURLConnection) url.openConnection();
-            connection.connect();
-
-            if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                Log.d("downloadZipFile", "Server ResponseCode=" + connection.getResponseCode() + " ResponseMessage=" + connection.getResponseMessage());
-            }
-
-            // download the file
-            input = connection.getInputStream();
-
-            Log.d("downloadZipFile", "destinationFilePath=" + destinationFilePath);
-            new File(destinationFilePath).createNewFile();
-            Toast.makeText(this.context, "Begin download", Toast.LENGTH_SHORT).show();
-            output = new FileOutputStream(destinationFilePath);
-
-            byte[] data = new byte[4096];
-            int count;
-            while ((count = input.read(data)) != -1) {
-                output.write(data, 0, count);
-            }
-        } catch (Exception e) {
-            Toast.makeText(this.context, e.toString(), Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
-        } finally {
-            try {
-                if (output != null) output.close();
-                if (input != null) input.close();
-            } catch (IOException e) {
-                Toast.makeText(this.context, e.toString(), Toast.LENGTH_SHORT).show();
-                e.printStackTrace();
-            }
-
-            if (connection != null) connection.disconnect();
-        }
-        Toast.makeText(this.context, "Download finished", Toast.LENGTH_SHORT).show();
     }
 
     public void openCustomTab(String url) {

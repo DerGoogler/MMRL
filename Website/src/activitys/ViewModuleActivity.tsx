@@ -189,7 +189,7 @@ class ViewModuleActivity extends React.Component<Props, States> {
             <Button
               modifier="large"
               onClick={() => {
-                LinkManager.downloadFile(download, `${id}.zip`);
+                LinkManager.open(download);
               }}
             >
               Download

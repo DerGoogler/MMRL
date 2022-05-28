@@ -17,17 +17,7 @@ import java.util.Map;
 
 @Keep
 public class ModuleView extends WebView {
-
     private final WebSettings webSettings;
-
-    static {
-        System.loadLibrary("native-lib");
-    }
-    /**
-     * Returns the html page to load. This is to prevent js injection though the html page with <script/> tags
-     * @return HTML page string
-     */
-    public static native String pageContent(@NonNull String cssInject);
 
     public ModuleView(Context context) {
         super(context);
