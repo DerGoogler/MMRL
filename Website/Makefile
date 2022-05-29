@@ -1,4 +1,4 @@
-NODE_BIN = "./node_modules/.bin"
+NODE_BIN = ./node_modules/.bin
 
 licenses:
 	${NODE_BIN}/license-checker --json --production --customPath ./licenseBuild/customFormat.json > ./licenseBuild/licenses.json

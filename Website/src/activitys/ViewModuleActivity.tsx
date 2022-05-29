@@ -4,8 +4,6 @@ import ons from "onsenui";
 import axios from "axios";
 import Markdown from "markdown-to-jsx";
 import Alert from "react-bootstrap/Alert";
-import VerifiedIcon from "@Components/icons/VerfifiedIcon";
-import WarningIcon from "@Components/icons/WarningIcon";
 import MDIcon from "@Components/MDIcon";
 import Changelog from "@Components/dapi/Changelog";
 import CheckIcon from "@Components/icons/CheckIcon";
@@ -15,8 +13,8 @@ import A from "@Components/dapi/A";
 import Video from "@Components/dapi/Video";
 import DiscordWidget from "@Components/dapi/DiscordWidget";
 import LinkManager from "@Native/LinkManager";
-import Log from "@Builders/Log";
 import PackageManager from "@Native/PackageManager";
+import { DownloadRounded, InfoRounded, InstallMobileRounded, VerifiedRounded, WarningRounded } from "@mui/icons-material";
 
 interface Props {
   extra?: any;
@@ -85,7 +83,7 @@ class ViewModuleActivity extends React.Component<Props, States> {
                   {/**
                    // @ts-ignore */}
                   <ToolbarButton style={{ padding: "0px 10px" }} onClick={this.showDialog}>
-                    <MDIcon icon="info" isInToolbar={true} theme="white" size="24" />
+                    <InfoRounded />
                   </ToolbarButton>
                 </div>
               );
@@ -121,25 +119,9 @@ class ViewModuleActivity extends React.Component<Props, States> {
                   return (
                     <Alert key="verified-module" variant="success">
                       <strong>
-                        <VerifiedIcon color="#0f5132" />
+                        <VerifiedRounded sx={{ fontSize: 16, color: "#0f5132" }} />
                       </strong>{" "}
-                      This module has been verified!
-                    </Alert>
-                  );
-                }
-              })()
-            }
-            {
-              /*
-            // @ts-ignore */
-              (() => {
-                if (low) {
-                  return (
-                    <Alert key="low-module" variant="warning">
-                      <strong>
-                        <WarningIcon color="#664d03" />
-                      </strong>{" "}
-                      This is an low-quality module!
+                      This module is verified!
                     </Alert>
                   );
                 }
@@ -192,7 +174,7 @@ class ViewModuleActivity extends React.Component<Props, States> {
                 LinkManager.open(download);
               }}
             >
-              Download
+              Download <DownloadRounded />
             </Button>
             <div style={{ padding: "4px", display: !Constants.isAndroid ? "none" : "" }}></div>
             {/*
@@ -207,7 +189,7 @@ class ViewModuleActivity extends React.Component<Props, States> {
                 ons.notification.alert("The option will be available in the future");
               }}
             >
-              Install
+              Install <InstallMobileRounded />
             </Button>
           </div>
           {/*

@@ -2,13 +2,12 @@ import * as React from "react";
 import ons from "onsenui";
 import axios from "axios";
 import Properties from "@js.properties/properties";
-import { Card, Switch } from "react-onsenui";
+import { Card } from "react-onsenui";
 import { Chip } from "@mui/material";
 import tools from "@Utils/tools";
 import ViewModuleActivity from "@Activitys/ViewModuleActivity";
-import VerifiedIcon from "@Components/icons/VerfifiedIcon";
-import Constants from "@Native/Constants";
 import Log from "@Builders/Log";
+import { VerifiedRounded } from "@mui/icons-material";
 
 interface Props {
   notesUrl?: string;
@@ -64,6 +63,7 @@ class ExploreModule extends React.Component<Props, States> {
 
   public componentDidMount = () => {
     const { propsUrl } = this.props;
+    const { props } = this.state;
     axios.get(propsUrl).then((response) => {
       this.setState({
         props: Properties.parseToProperties(response.data),
@@ -124,7 +124,6 @@ class ExploreModule extends React.Component<Props, States> {
   public render = () => {
     const { notesUrl, downloadUrl, pushPage, moduleOptions, stars, last_update, getId } = this.props;
     const { props } = this.state;
-    const isLQModule = moduleOptions[getId]?.low;
     const isVerified = moduleOptions[getId]?.verified;
     const _display = moduleOptions[getId]?.display;
 
@@ -145,7 +144,6 @@ class ExploreModule extends React.Component<Props, States> {
                 stars: stars,
                 moduleOptions: {
                   verified: isVerified,
-                  low: isLQModule,
                 },
                 moduleProps: {
                   minMagisk: props.minMagisk,
@@ -169,29 +167,6 @@ class ExploreModule extends React.Component<Props, States> {
           >
             <item-card-wrapper>
               <item-title className="title">
-                {(() => {
-                  if (isLQModule) {
-                    if (tools.getSettingsSwitch("disable_lq_modules")) {
-                      return null;
-                    } else {
-                      return (
-                        <>
-                          <Chip
-                            onClick={() => {
-                              ons.notification.alert("This module has a bad module.prop");
-                            }}
-                            variant="outlined"
-                            color="warning"
-                            size="small"
-                            label="Low-quality module"
-                          />{" "}
-                        </>
-                      );
-                    }
-                  } else {
-                    return null;
-                  }
-                })()}
                 <item-module-name ref={this.cardName}>
                   <span
                     style={{
@@ -210,7 +185,7 @@ class ExploreModule extends React.Component<Props, States> {
                         return (
                           <>
                             {" "}
-                            <VerifiedIcon color="#4a148c" />
+                            <VerifiedRounded sx={{ fontSize: 16, color: "#4a148c" }} />
                           </>
                         );
                       } else {
@@ -221,12 +196,8 @@ class ExploreModule extends React.Component<Props, States> {
                 </item-module-name>
               </item-title>
               <div className="content">
-                <item-version-author
-                  style={{
-                    marginTop: isLQModule && !tools.getSettingsSwitch("disable_lq_modules") ? "4px" : "",
-                  }}
-                >
-                  {props.version} / {props.author}
+                <item-version-author>
+                  {props.version} ({props.versionCode}) / {props.author}
                 </item-version-author>
                 <item-description>{props.description}</item-description>
                 <item-last-update>Last update: {this.formatDate(new Date(last_update))}</item-last-update>

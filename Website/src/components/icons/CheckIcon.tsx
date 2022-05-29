@@ -1,6 +1,13 @@
 import * as React from "react";
 
-class CheckIcon extends React.Component {
+interface Props {
+  size: string | int;
+  color: `#${string}`;
+  className?: React.SVGAttributes<SVGSVGElement>;
+}
+
+class CheckIcon extends React.Component<Props> {
+  static defaultProps: Props;
   render() {
     const { color, size, className } = this.props;
     return (
@@ -24,7 +31,7 @@ class CheckIcon extends React.Component {
 
 CheckIcon.defaultProps = {
   size: "14",
-  color: "#1a7f37"
+  color: "#1a7f37",
 };
 
 export default CheckIcon;

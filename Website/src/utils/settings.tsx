@@ -10,6 +10,7 @@ import LinkManager from "@Native/LinkManager";
 import PackageManager from "@Native/PackageManager";
 import SharedPreferences from "@Native/SharedPreferences";
 import tools from "@Utils/tools";
+import { BugReportRounded, ExtensionRounded, GavelRounded, SourceRounded } from "@mui/icons-material";
 
 const prefManager = new SharedPreferences();
 
@@ -20,7 +21,7 @@ const settings: ListInterface[] = [
       {
         key: "repo",
         type: "",
-        icon: <RepoIcon size="24" />,
+        icon: <ExtensionRounded />,
         text: "Custom repo",
         onClick: (key) => {
           new AlertBuilder()
@@ -44,6 +45,7 @@ const settings: ListInterface[] = [
       {
         key: "disable_lq_modules",
         type: "switch",
+        disabled: true,
         text: "Disable low-quality module badge",
       },
     ],
@@ -53,7 +55,7 @@ const settings: ListInterface[] = [
     content: [
       {
         type: "",
-        icon: <RepoIcon size="24" />,
+        icon: <SourceRounded />,
         text: "Source code",
         onClick: () => {
           LinkManager.open("https://github.com/DerGoogler/MMRL/", "_blank");
@@ -61,7 +63,7 @@ const settings: ListInterface[] = [
       },
       {
         type: "",
-        icon: <LogsIcon size="24" />,
+        icon: <GavelRounded />,
         text: "Acknowledgements",
         onClick: (key, pushPage) => {
           pushPage({
@@ -72,7 +74,7 @@ const settings: ListInterface[] = [
       },
       {
         type: "",
-        icon: <IssuesIcon size="24" />,
+        icon: <BugReportRounded />,
         text: "Issues",
         onClick: (key, pushPage) => {
           LinkManager.open("https://github.com/DerGoogler/DG-Repo/issues", "_blank");

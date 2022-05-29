@@ -14,7 +14,6 @@ public class Page {
         sb.append("<app></app>");
         sb.append("<script src=\"bundle/vendor.bundle.js\"></script>");
         sb.append("<script src=\"bundle/app.bundle.js\"></script>");
-        sb.append("<script src=\"bundle/ThemeLoader.bundle.js\"></script>");
         sb.append("</body>");
         sb.append("</html>");
         return sb.toString();

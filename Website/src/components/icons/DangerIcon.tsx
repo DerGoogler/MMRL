@@ -1,6 +1,13 @@
 import * as React from "react";
 
-class DangerIcon extends React.Component {
+interface Props {
+  size: string | int;
+  color: `#${string}`;
+  className?: React.SVGAttributes<SVGSVGElement>;
+}
+
+class DangerIcon extends React.Component<Props> {
+  static defaultProps: Props;
   render() {
     const { color, size, className } = this.props;
     return (
@@ -24,7 +31,7 @@ class DangerIcon extends React.Component {
 
 DangerIcon.defaultProps = {
   size: "14",
-  color: "#cf222e"
+  color: "#cf222e",
 };
 
 export default DangerIcon;

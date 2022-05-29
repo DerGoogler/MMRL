@@ -1,4 +1,5 @@
 import SettingsIcon from "@Components/icons/SettingsIcon";
+import { SettingsRounded } from "@mui/icons-material";
 import Constants from "@Native/Constants";
 import { Tab, Tabbar, Toolbar, ToolbarButton } from "react-onsenui";
 import AppCompatActivity from "./AppCompatActivity";
@@ -40,7 +41,7 @@ class MainApplication extends AppCompatActivity<Props> {
           {/*
           // @ts-ignore */}
           <ToolbarButton className="back-button--material__icon" onClick={this.openSettings}>
-            <SettingsIcon size="24" />
+            <SettingsRounded />
           </ToolbarButton>
         </div>
       </Toolbar>

@@ -53,8 +53,8 @@ class Bootloader {
 
     this.log.i("Intitialze repo");
     if (this.getSharedPreferences.getPref("repo") == Constants.undefined) {
-      this.log.e("No repo was found, set https://repo.dergoogler.com/modules.json as default repo");
-      this.getSharedPreferences.setPref("repo", "https://repo.dergoogler.com/modules.json");
+      this.log.e("No repo was found, set Magisk Modules Alternative Repository as default repo");
+      this.getSharedPreferences.setPref("repo", "https://raw.githubusercontent.com/Magisk-Modules-Alt-Repo/json/main/modules.json");
     }
     this.log.i("Selecting platform: Android");
     ons.platform.select("android");

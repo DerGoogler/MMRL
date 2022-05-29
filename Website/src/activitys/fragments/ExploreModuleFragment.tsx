@@ -1,12 +1,12 @@
 import * as React from "react";
 import { Button, Page, SearchInput, ProgressCircular } from "react-onsenui";
 import axios from "axios";
-import MDIcon from "@Components/MDIcon";
 import { toast } from "react-toastify";
 import tools from "@Utils/tools";
 import ExploreModule from "@Components/ExploreModule";
 import SharedPreferences from "@Native/SharedPreferences";
 import { PushProps } from "@Activitys/MainActivity";
+import { SearchRounded } from "@mui/icons-material";
 
 interface Props {
   pushPage(...arg: any): PushProps;
@@ -18,7 +18,6 @@ interface States {
   search: string;
   moduleOptions: any[any];
   loading: boolean;
-  [u: string]: any;
 }
 
 class ExploreModuleFragment extends React.Component<Props, States> {
@@ -61,13 +60,11 @@ class ExploreModuleFragment extends React.Component<Props, States> {
         const modules = response.data.modules;
         this.setState({
           modulesIndex: modules,
-          status: "success",
         });
       })
       .catch((error) => {
         this.setState({
           modulesIndex: [],
-          status: "error",
         });
       })
       .then(() => {
@@ -153,7 +150,19 @@ class ExploreModuleFragment extends React.Component<Props, States> {
                 borderRadius: "8px",
               }}
             >
-              <MDIcon icon="search" size="24" ignoreDarkmode={true} />
+              <div
+                style={{
+                  textAlign: "center",
+                  height: "100%",
+                  width: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <SearchRounded />
+              </div>
             </Button>
           </div>
           <module-container
@@ -173,7 +182,7 @@ class ExploreModuleFragment extends React.Component<Props, States> {
                       WebkitTransform: "translate(-50%, -50%)",
                       transform: "translate(-50%, -50%)",
                     }}
-                  ></ProgressCircular>
+                  />
                 );
               } else {
                 return modules;
