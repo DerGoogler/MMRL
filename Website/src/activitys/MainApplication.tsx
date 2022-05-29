@@ -1,4 +1,3 @@
-import SettingsIcon from "@Components/icons/SettingsIcon";
 import { SettingsRounded } from "@mui/icons-material";
 import Constants from "@Native/Constants";
 import { Tab, Tabbar, Toolbar, ToolbarButton } from "react-onsenui";

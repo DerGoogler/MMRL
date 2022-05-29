@@ -5,6 +5,8 @@ interface Android {
   execResult(command: string): string;
   isAppGrantedRoot(): boolean;
 
+  getSchemeParam(param: string): string;
+
   // Preference management
   getSharedPreferences: () => {
     setPref(key: string, value: string): void;

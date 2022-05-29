@@ -1,3 +1,4 @@
+import Constants from "@Native/Constants";
 import SharedPreferences from "@Native/SharedPreferences";
 
 class tools {
@@ -11,11 +12,15 @@ class tools {
   }
 
   public static getUrlParam(param: string) {
-    param = param.replace(/([\[\](){}*?+^$.\\|])/g, "\\$1");
-    var regex = new RegExp("[?&]" + param + "=([^&#]*)");
-    var url = decodeURIComponent(window.location.href);
-    var match = regex.exec(url);
-    return match ? match[1] : "";
+    if (Constants.isAndroid) {
+      return android.getSchemeParam("module");
+    } else {
+      param = param.replace(/([\[\](){}*?+^$.\\|])/g, "\\$1");
+      var regex = new RegExp("[?&]" + param + "=([^&#]*)");
+      var url = decodeURIComponent(window.location.href);
+      var match = regex.exec(url);
+      return match ? match[1] : "";
+    }
   }
 
   /**

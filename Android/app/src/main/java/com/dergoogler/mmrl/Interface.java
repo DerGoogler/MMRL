@@ -72,6 +72,17 @@ public class Interface {
         Log.i(TAG, message);
     }
 
+    @JavascriptInterface
+    public String getSchemeParam(String param) {
+        Intent intent = ((Activity) this.context).getIntent();
+        if (Intent.ACTION_VIEW.equals(intent.getAction())) {
+            Uri uri = intent.getData();
+            return uri.getQueryParameter(param);
+        } else {
+            return "";
+        }
+    }
+
     // Native preferences
 
     @JavascriptInterface
