@@ -122,6 +122,7 @@ class DeviceModule extends React.Component<Props, States> {
                 <item-description>{description}</item-description>
                 <item-module-button-wrapper>
                   <item-module-button
+                    style={{ color: "#4a148c" }}
                     onClick={() => {
                       // Can be improved, but not now
                       if (isSwitchDisabled) {
@@ -149,11 +150,11 @@ class DeviceModule extends React.Component<Props, States> {
                     <Ripple />
                     {isSwitchDisabled ? (
                       <>
-                        Restore <RefreshRounded />
+                        Restore <RefreshRounded sx={{ color: "#4a148c" }} />
                       </>
                     ) : (
                       <>
-                        Remove <DeleteRounded />
+                        Remove <DeleteRounded sx={{ color: "#4a148c" }} />
                       </>
                     )}
                   </item-module-button>
