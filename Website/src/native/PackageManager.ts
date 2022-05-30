@@ -23,7 +23,7 @@ class PackageManager {
     if (Constants.isAndroid) {
       return android.version().getAppVersionCode();
     } else {
-      return Number(pkg.version.replace(".", ""));
+      return Number(pkg.versionCode);
     }
   }
 
