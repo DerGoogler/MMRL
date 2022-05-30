@@ -1,6 +1,6 @@
 import { Card, Page, Toolbar, BackButton } from "react-onsenui";
 import LinkManager from "@Native/LinkManager";
-import dep from "./../../licenseBuild/licenses.json";
+import dep from "./../utils/licenses.json";
 import AppCompatActivity from "./AppCompatActivity";
 
 interface Props {
