@@ -1,8 +1,8 @@
 NODE_BIN = ./node_modules/.bin
 
 licenses:
-	${NODE_BIN}/license-report --only=prod --package=./package.json --output=json > ./licenseBuild/licenses.json
-
+	node license > ./licenseBuild/licenses.json
+	
 dev: licenses
 	${NODE_BIN}/webpack
 

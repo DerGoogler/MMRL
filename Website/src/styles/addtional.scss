@@ -62,14 +62,15 @@ license-card-wrapper {
       font-size: large;
       width: 100%;
       text-align: start;
-      text-overflow: ellipsis;
-      overflow: hidden;
       white-space: nowrap;
     }
     license-card-author {
       font-size: small;
+      text-overflow: ellipsis;
+      overflow: hidden;
       white-space: nowrap;
       text-align: end;
+      width: 100%;
       padding: 4px;
     }
   }

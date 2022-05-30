@@ -51,7 +51,7 @@ class AcknowledgementsActivity extends AppCompatActivity<Props, States> {
         // @ts-ignore
         <Card
           onClick={() => {
-            LinkManager.open(item.link);
+            LinkManager.open(item.repository);
           }}
           style={{ marginTop: "4px", marginBottom: "4px" }}
         >
@@ -64,8 +64,8 @@ class AcknowledgementsActivity extends AppCompatActivity<Props, States> {
               <license-card-description>{item.description}</license-card-description>
               <hr className="license-card-diver" />
               <license-card-infos>
-                <license-card-version>{item.installedVersion}</license-card-version>
-                <license-card-license>{item.licenseType}</license-card-license>
+                <license-card-version>{item.version}</license-card-version>
+                <license-card-license>{item.license}</license-card-license>
               </license-card-infos>
             </div>
           </license-card-wrapper>
