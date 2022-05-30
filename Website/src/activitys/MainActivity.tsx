@@ -2,6 +2,7 @@ import * as React from "react";
 import { Page, Toolbar, BackButton, RouterNavigator, RouterUtil } from "react-onsenui";
 import MainApplication from "@Activitys/MainApplication";
 import Constants from "@Native/Constants";
+import NoRootActivity from "./NoRootActivity";
 
 interface ModuleOptions {
   verified?: boolean;
@@ -33,9 +34,22 @@ interface States {
 class MainActivity extends React.Component<PushProps, States> {
   public constructor(props: PushProps | Readonly<PushProps>) {
     super(props);
+
+    const CheckRoot = () => {
+      if (Constants.isAndroid) {
+        if (android.isAppGrantedRoot()) {
+          return MainApplication;
+        } else {
+          return NoRootActivity;
+        }
+      } else {
+        return MainApplication;
+      }
+    };
+
     const routeConfig = RouterUtil.init([
       {
-        component: MainApplication,
+        component: CheckRoot(),
         props: {
           key: "main",
           pushPage: (...args: any) => this.pushPage.apply(null, args),

@@ -19,7 +19,6 @@ import android.webkit.JavascriptInterface;
 import android.widget.Toast;
 
 import androidx.annotation.Dimension;
-import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
 import androidx.annotation.Px;
 
@@ -33,7 +32,6 @@ import com.topjohnwu.superuser.io.SuFile;
 import java.io.IOException;
 import java.io.InputStream;
 
-@Keep
 public class Interface {
     private final Context context;
     private final Link link;
@@ -55,7 +53,7 @@ public class Interface {
     }
 
     @JavascriptInterface
-    public Boolean isAppGrantedRoot() {
+    public boolean isAppGrantedRoot() {
         Boolean appGrantedRoot = Shell.isAppGrantedRoot();
         if (appGrantedRoot == null) {
             return false;
