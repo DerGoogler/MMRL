@@ -16,21 +16,24 @@ const settings: ListInterface[] = [
     title: "Repo",
     content: [
       {
-        key: "repo",
         type: "",
         icon: <ExtensionRounded />,
         text: "Custom repo",
         onClick: (key) => {
           new AlertBuilder()
-            .setMessage("Custom repo")
-            .setPromptCallback((input: string) => {
-              if (tools.validURL(input)) {
-                prefManager.setPref("repo", input);
-                ons.notification.alert("Repo changed, please refresh the app");
-              } else {
-                ons.notification.alert("Invalid input");
+            .setTitle("Custom repo")
+            .setMessage("Only URLs are valid")
+            .setPositiveButton("Apply", (input: string) => {
+              if (input != null) {
+                if (tools.validURL(input)) {
+                  prefManager.setPref("repo", input);
+                  ons.notification.alert("Repo changed, please refresh the app");
+                } else {
+                  ons.notification.alert("Invalid input");
+                }
               }
             })
+            .setNegativeButtom("Cancel", () => {})
             .showPrompt();
         },
       },

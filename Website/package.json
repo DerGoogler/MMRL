@@ -7,6 +7,7 @@
   "keywords": [],
   "author": "Der_Googler",
   "license": "ISC",
+  "typings": "types/onsenui.d.ts",
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",

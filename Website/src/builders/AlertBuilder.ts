@@ -74,6 +74,7 @@ class AlertBuilder {
   /**
    * Creates an custom callback for an prompt dialog
    * @alert Not supported
+   * @deprecated
    */
   public setPromptCallback(callback: Function): AlertBuilder {
     this.dialog.callback = callback;
@@ -90,7 +91,7 @@ class AlertBuilder {
     ons.notification.confirm({
       message: this.dialog.message,
       title: this.dialog.title,
-      buttonLabels: [this.dialog.buttons.positive.title, this.dialog.buttons.negative.title],
+      buttonLabels: [positive.title, negative.title],
       animation: "default",
       primaryButtonIndex: 0,
       cancelable: true,
@@ -112,12 +113,24 @@ class AlertBuilder {
   }
 
   public showPrompt(): Alert & Void {
-    const { callback, message, cancelable } = this.dialog;
-    ons.notification.prompt(message).then((input) => {
-      if (typeof callback == "function") {
-        callback(input);
-      }
-    });
+    const { positive, negative } = this.dialog.buttons;
+    const { title, callback, message, cancelable } = this.dialog;
+    ons.notification
+      .prompt(message, {
+        buttonLabels: [negative.title, positive.title],
+        title: title,
+        // @ts-ignore
+        isPrompt: true,
+        // @ts-ignore
+        autofocus: true,
+        // @ts-ignore
+        submitOnEnter: true,
+      })
+      .then((input) => {
+        if (typeof positive.callback == "function") {
+          positive.callback(input);
+        }
+      });
   }
 }
 

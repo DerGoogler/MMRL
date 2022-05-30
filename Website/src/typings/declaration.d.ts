@@ -1,1 +1,1 @@
-declare module 'fuchs-template';
+declare module "fuchs-template";
