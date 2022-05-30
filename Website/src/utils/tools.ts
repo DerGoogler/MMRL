@@ -11,18 +11,6 @@ class tools {
     return window.location.href.replace(/(\?(.*?)=(.*)|\?)/gm, "") + url;
   }
 
-  public static getUrlParam(param: string) {
-    if (Constants.isAndroid) {
-      return android.getSchemeParam("module");
-    } else {
-      param = param.replace(/([\[\](){}*?+^$.\\|])/g, "\\$1");
-      var regex = new RegExp("[?&]" + param + "=([^&#]*)");
-      var url = decodeURIComponent(window.location.href);
-      var match = regex.exec(url);
-      return match ? match[1] : "";
-    }
-  }
-
   /**
    * @param id Given element or ref
    * @param callback HTMLElement or React.RefObject

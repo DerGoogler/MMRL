@@ -3,7 +3,7 @@ import preset from "jss-preset-default";
 import ReactDOM from "react-dom";
 import MainActivity from "@Activitys/MainActivity";
 import ons from "onsenui";
-import Log from "@Builders/Log";
+import Log from "@Native/Log";
 import SharedPreferences from "@Native/SharedPreferences";
 import theme from "@Styles/theme";
 import Constants from "@Native/Constants";
@@ -16,6 +16,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
 import "@Styles/addtional.scss";
 import "@Styles/markdown-light.scss";
+import fs from "@Native/fs";
 
 class Bootloader {
   private mountNode: Element | null = document.querySelector("app");
@@ -46,8 +47,8 @@ class Bootloader {
 
   init() {
     if (Constants.isAndroid) {
-      if (!android.hasStoragePermission()) {
-        android.requestStoargePermission();
+      if (!nos.hasStoragePermission()) {
+        nos.requestStoargePermission();
       }
     }
 

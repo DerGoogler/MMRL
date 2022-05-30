@@ -1,5 +1,4 @@
 import * as React from "react";
-import LinkManager from "@Native/LinkManager";
 import tools from "@Utils/tools";
 
 interface AInterface {
@@ -29,7 +28,7 @@ class A extends React.Component<AInterface> {
           type={type}
           title={"Open " + href}
           onClick={() => {
-            LinkManager.open(href);
+            window.open(href);
           }}
           style={{ cursor: "pointer", color: "#4a148c" }}
         >

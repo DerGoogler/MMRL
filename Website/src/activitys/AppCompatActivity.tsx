@@ -8,11 +8,7 @@ class AppCompatActivity<P = {}, S = {}> extends React.PureComponent<P, S> {
     this.onlyAndroid();
   }
 
-  private onlyAndroid(): void {
-    if (Constants.isAndroid) {
-      android.phoneComponents().setStatusbarColor(this.setStatusbarColor());
-    }
-  }
+  private onlyAndroid(): void {}
 
   public componentDidMount(): void {
     this.onlyAndroid();
@@ -22,11 +18,7 @@ class AppCompatActivity<P = {}, S = {}> extends React.PureComponent<P, S> {
     this.onlyAndroid();
   }
 
-  public componentWillUnmount(): void {
-    if (Constants.isAndroid) {
-      android.phoneComponents().setStatusbarColor("#4a148c");
-    }
-  }
+  public componentWillUnmount(): void {}
 
   /**
    * Sets an custom status bar color for the activity

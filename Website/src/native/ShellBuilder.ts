@@ -1,5 +1,5 @@
 import Constants from "@Native/Constants";
-import Log from "./Log";
+import Log from "@Native/Log";
 
 interface ShellInterface {
   command: string;
@@ -31,7 +31,7 @@ class ShellBuilder {
   public exec(): void {
     const { command } = this.dialog;
     if (Constants.isAndroid) {
-      android.exec(command);
+      nshell.exec(command);
     } else {
       this.log.w(command);
     }
@@ -43,10 +43,14 @@ class ShellBuilder {
   public result(): string {
     const { command } = this.dialog;
     if (Constants.isAndroid) {
-      return android.execResult(command);
+      return nshell.result(command);
     } else {
       return command;
     }
+  }
+
+  public isAppGrantedRoot(): boolean {
+    return nshell.isAppGrantedRoot();
   }
 }
 

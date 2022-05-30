@@ -1,19 +1,17 @@
 package com.dergoogler.mmrl;
 
-import static android.content.ContentValues.TAG;
-
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.webkit.JavascriptInterface;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.dergoogler.components.ModuleView;
-import com.dergoogler.utils.MvFile;
-import com.topjohnwu.superuser.Shell;
+import com.dergoogler.core.fs;
+import com.dergoogler.core.os;
+import com.dergoogler.core.sharedpreferences;
+import com.dergoogler.core.shell;
+import com.dergoogler.core.version;
+import com.dergoogler.core.window;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -28,7 +26,12 @@ public class MainActivity extends AppCompatActivity {
         view.setJavaScriptEnabled(true);
         view.setUserAgentString("MMRL");
         view.loadHTML("file:///android_asset/", Page.load());
-        view.setJavascriptInterface(new Interface(this), "android");
+        view.setJavascriptInterface(new fs(this), "nfs");
+        view.setJavascriptInterface(new shell(this), "nshell");
+        view.setJavascriptInterface(new version(), "nversion");
+        view.setJavascriptInterface(new os(this), "nos");
+        view.setJavascriptInterface(new window(this), "window");
+        view.setJavascriptInterface(new sharedpreferences(this), "nsharedpreferences");
     }
 
     @Override

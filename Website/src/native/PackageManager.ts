@@ -1,11 +1,11 @@
-import Shell from "@Builders/ShellBuilder";
+import Shell from "@Native/ShellBuilder";
 import Constants from "@Native/Constants";
 import pkg from "@Package";
 
 class PackageManager {
   public static get getAppPackageId(): string {
     if (Constants.isAndroid) {
-      return android.version().getAppPackageId();
+      return nversion.getAppPackageId();
     } else {
       return pkg.name;
     }
@@ -13,7 +13,7 @@ class PackageManager {
 
   public static get getAppVersionName(): string {
     if (Constants.isAndroid) {
-      return android.version().getAppVersionName();
+      return nversion.getAppVersionName();
     } else {
       return pkg.version;
     }
@@ -21,7 +21,7 @@ class PackageManager {
 
   public static get getAppVersionCode(): int {
     if (Constants.isAndroid) {
-      return android.version().getAppVersionCode();
+      return nversion.getAppVersionCode();
     } else {
       return Number(pkg.versionCode);
     }

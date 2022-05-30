@@ -14,7 +14,7 @@ class Toast {
 
   public show(): void {
     if (Constants.isAndroid) {
-      android.makeToast(Toast.text, Toast.duration);
+      nos.makeToast(Toast.text, Toast.duration);
     }
   }
 }

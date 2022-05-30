@@ -2,6 +2,7 @@ import * as React from "react";
 import DeviceModule from "@Components/DeviceModule";
 import { PushProps } from "@Activitys/MainActivity";
 import { Page } from "react-onsenui";
+import fs from "@Native/fs";
 
 interface Props {
   pushPage(...arg: any): PushProps;
@@ -20,7 +21,7 @@ class DeviceModuleFragment extends React.Component<Props, States> {
   }
 
   public componentDidMount = () => {
-    this.setState({ modules: android.SuFile("/data/adb/modules").system().list().split(",") });
+    this.setState({ modules: fs.listFiles("/data/adb/modules").split(",") });
   };
 
   public render = () => {

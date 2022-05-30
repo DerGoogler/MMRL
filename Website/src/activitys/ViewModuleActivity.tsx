@@ -12,16 +12,11 @@ import Constants from "@Native/Constants";
 import A from "@Components/dapi/A";
 import Video from "@Components/dapi/Video";
 import DiscordWidget from "@Components/dapi/DiscordWidget";
-import LinkManager from "@Native/LinkManager";
 import PackageManager from "@Native/PackageManager";
 import { DownloadRounded, InfoRounded, InstallMobileRounded, VerifiedRounded, WarningRounded } from "@mui/icons-material";
 
 interface Props {
   extra?: any;
-  //extra?: {
-  //  [x: string]: any
-  //  moduleProps?: ModuleProps
-  //};
   popPage(): void;
 }
 
@@ -171,7 +166,7 @@ class ViewModuleActivity extends React.Component<Props, States> {
             <Button
               modifier="large"
               onClick={() => {
-                LinkManager.open(download);
+                window.open(download);
               }}
             >
               Download <DownloadRounded />

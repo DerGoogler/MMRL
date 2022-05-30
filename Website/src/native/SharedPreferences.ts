@@ -15,7 +15,7 @@ class SharedPreferences {
   /** Returns the current value associated with the given key, or null if the given key does not exist. */ // @ts-ignore
   public getPref(key: string): string | null | undefined {
     if (Constants.isAndroid) {
-      const get = android.getSharedPreferences().getPref(key);
+      const get = nsharedpreferences.getPref(key);
       if (get === undefined || get === null || get === "") {
         return undefined;
       } else {
@@ -39,7 +39,7 @@ class SharedPreferences {
    */
   public setPref(key: string, value: string): void {
     if (Constants.isAndroid) {
-      android.getSharedPreferences().setPref(key, value);
+      nsharedpreferences.setPref(key, value);
     } else {
       this.webStorage.setItem(key, value);
     }
@@ -51,7 +51,7 @@ class SharedPreferences {
    */
   public removePref(key: string): void {
     if (Constants.isAndroid) {
-      android.getSharedPreferences().removePref(key);
+      nsharedpreferences.removePref(key);
     } else {
       this.webStorage.removeItem(key);
     }
@@ -64,7 +64,7 @@ class SharedPreferences {
    */
   public clearPrefs(): void {
     if (Constants.isAndroid) {
-      android.getSharedPreferences().clearPrefs();
+      nsharedpreferences.clearPrefs();
     } else {
       this.webStorage.clear();
     }

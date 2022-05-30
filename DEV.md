@@ -1,37 +1,10 @@
 # Dev API
 
-## Code
-
-### Create prompt
+## File system
 
 ```ts
-new AlertBuilder()
-  .setMessage("Custom repo")
-  .setPromptCallback((input: string) => {
-    if (tools.validURL(input)) {
-      prefManager.setPref("repo", input);
-      ons.notification.alert("Repo changed, please refresh the app");
-    } else {
-      ons.notification.alert("Invalid input");
-    }
-  })
-  .showPrompt();
-```
-
-### Run native Android shell
-
-```ts
-import Shell from "@Builders/ShellBuilder";
-
-Shell.cmd("su -V").exec();
-```
-
-### Show toast
-
-```ts
-import Toast from "@Builders/Toast";
-
-Toast.makeText("Hellow", Toast.LENGTH_LONG).show();
+fs.readFile("data/shdialog"); // or
+new fs("data/shdialog").readFile();
 ```
 
 ## Managment

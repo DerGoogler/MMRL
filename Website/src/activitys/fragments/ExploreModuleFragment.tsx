@@ -7,6 +7,7 @@ import ExploreModule from "@Components/ExploreModule";
 import SharedPreferences from "@Native/SharedPreferences";
 import { PushProps } from "@Activitys/MainActivity";
 import { SearchRounded } from "@mui/icons-material";
+import os from "@Native/os";
 
 interface Props {
   pushPage(...arg: any): PushProps;
@@ -37,7 +38,7 @@ class ExploreModuleFragment extends React.Component<Props, States> {
   }
 
   public componentDidMount = () => {
-    const moduels = tools.getUrlParam("module");
+    const moduels = os.getSchemeParam("module");
     if (moduels != (null || undefined || "")) {
       toast.info("Please wait 2 seconds after the loading screen is gone", {
         position: "top-center",

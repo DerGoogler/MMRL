@@ -6,8 +6,9 @@ import { Card } from "react-onsenui";
 import { Chip } from "@mui/material";
 import tools from "@Utils/tools";
 import ViewModuleActivity from "@Activitys/ViewModuleActivity";
-import Log from "@Builders/Log";
+import Log from "@Native/Log";
 import { VerifiedRounded } from "@mui/icons-material";
+import os from "@Native/os";
 
 interface Props {
   notesUrl?: string;
@@ -109,7 +110,7 @@ class ExploreModule extends React.Component<Props, States> {
     this.componentDidMount;
     const { getId } = this.props;
     try {
-      const modul = tools.getUrlParam("module");
+      const modul = os.getSchemeParam("module");
       if (modul == getId) {
         setTimeout(() => {
           this.log.i(`Module found! Open ${this.state.props.name}`);

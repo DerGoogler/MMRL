@@ -1,8 +1,8 @@
 import * as React from "react";
 import { Card, Ripple, Switch } from "react-onsenui";
 import Properties from "@js.properties/properties";
-import SuFile from "@Builders/SuFile";
-import Log from "@Builders/Log";
+import fs from "@Native/fs";
+import Log from "@Native/Log";
 import { DeleteRounded, RefreshRounded } from "@mui/icons-material";
 
 interface Props {
@@ -46,18 +46,18 @@ class DeviceModule extends React.Component<Props, States> {
 
   public componentDidMount = () => {
     const module = this.props.module;
-    const readProps = new SuFile(`/data/adb/modules/${module}/module.prop`).system.read();
+    const readProps = fs.readFile(`/data/adb/modules/${module}/module.prop`);
     this.setState({
       props: Properties.parseToProperties(readProps),
     });
 
-    const disable = new SuFile(`/data/adb/modules/${module}/disable`);
-    if (disable.system.exists()) {
+    const disable = new fs(`/data/adb/modules/${module}/disable`);
+    if (disable.existFile()) {
       this.setState({ isEnabled: false });
     }
 
-    const remove = new SuFile(`/data/adb/modules/${module}/remove`);
-    if (remove.system.exists()) {
+    const remove = new fs(`/data/adb/modules/${module}/remove`);
+    if (remove.existFile()) {
       this.setState({ isSwitchDisabled: true });
     }
   };
@@ -95,17 +95,17 @@ class DeviceModule extends React.Component<Props, States> {
                       disabled={isSwitchDisabled}
                       onChange={(e: any) => {
                         const checked = e.target.checked;
-                        const disable = new SuFile(`/data/adb/modules/${module}/disable`);
+                        const disable = new fs(`/data/adb/modules/${module}/disable`);
 
                         if (checked) {
-                          if (disable.system.exists()) {
-                            if (disable.system.delete()) {
+                          if (disable.existFile()) {
+                            if (disable.deleteFile()) {
                               this.log.i(`${module} has been enabled`);
                             }
                           }
                         } else {
-                          if (!disable.system.exists()) {
-                            if (disable.system.createNewFile()) {
+                          if (!disable.existFile()) {
+                            if (disable.createFile()) {
                               this.log.i(`${module} has been disabled`);
                             }
                           }
@@ -126,9 +126,9 @@ class DeviceModule extends React.Component<Props, States> {
                     onClick={() => {
                       // Can be improved, but not now
                       if (isSwitchDisabled) {
-                        const remove = new SuFile(`/data/adb/modules/${module}/remove`);
-                        if (remove.system.exists()) {
-                          if (remove.system.delete()) {
+                        const remove = new fs(`/data/adb/modules/${module}/remove`);
+                        if (remove.existFile()) {
+                          if (remove.deleteFile()) {
                             this.setState({ isSwitchDisabled: false });
                             this.log.i(`${module} has been recovered`);
                           } else {
@@ -138,8 +138,8 @@ class DeviceModule extends React.Component<Props, States> {
                           this.log.e(`This remove file don't exists for ${module}`);
                         }
                       } else {
-                        const file = new SuFile(`/data/adb/modules/${module}/remove`);
-                        if (file.system.createNewFile()) {
+                        const file = new fs(`/data/adb/modules/${module}/remove`);
+                        if (file.createFile()) {
                           this.setState({ isSwitchDisabled: true });
                         } else {
                           this.setState({ isSwitchDisabled: false });

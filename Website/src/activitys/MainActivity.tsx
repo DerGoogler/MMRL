@@ -3,6 +3,7 @@ import { Page, Toolbar, BackButton, RouterNavigator, RouterUtil } from "react-on
 import MainApplication from "@Activitys/MainApplication";
 import Constants from "@Native/Constants";
 import NoRootActivity from "./NoRootActivity";
+import Shell from "@Native/ShellBuilder";
 
 interface ModuleOptions {
   verified?: boolean;
@@ -37,7 +38,7 @@ class MainActivity extends React.Component<PushProps, States> {
 
     const CheckRoot = () => {
       if (Constants.isAndroid) {
-        if (android.isAppGrantedRoot()) {
+        if (Shell.isAppGrantedRoot()) {
           return MainApplication;
         } else {
           return NoRootActivity;
@@ -75,7 +76,7 @@ class MainActivity extends React.Component<PushProps, States> {
         history.pushState("newjibberish", "", null);
         if (this.state.currentPage === "main") {
           if (Constants.isAndroid) {
-            android.close();
+            nos.close();
           }
         } else {
           this.popPage();

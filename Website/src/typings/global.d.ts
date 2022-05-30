@@ -1,4 +1,8 @@
-import Android from "./android";
+import FileSystem from "./android/fs";
+import NShell from "./android/shell";
+import NOS from "./android/os";
+import NVersion from "./android/version";
+import NSharedPreferences from "./android/sdfdf";
 
 export {};
 
@@ -7,29 +11,25 @@ declare global {
   type Int = number;
   type Void = void;
   type Any = any;
+  type bool = boolean;
 
   interface Function {
     readonly name: string;
   }
 
   interface Window {
-    /**
-     * Declare the custom window event `Android` for the WebView
-     */
-    readonly android: Android;
+    nfs: FileSystem;
+    nshell: NShell;
+    nos: NOS;
+    nversion: NVersion;
+    nsharedpreferences: NSharedPreferences;
   }
 
-  interface Document {
-    /**
-     * Declare the custom window event `Android` for the WebView
-     */
-    readonly android: Android;
-  }
-
-  /**
-   * Declare the custom window event `Android` for the WebView
-   */
-  const android: Android;
+  const nfs: FileSystem;
+  const nshell: NShell;
+  const nos: NOS;
+  const nversion: NVersion;
+  const nsharedpreferences: NSharedPreferences;
 
   type HTMLAttributes<E, P = {}> = React.DetailedHTMLProps<React.HTMLAttributes<E> & P, E>;
   type AnchorHTMLAttributes<E, P = {}> = React.DetailedHTMLProps<React.AnchorHTMLAttributes<E> & P, E>;

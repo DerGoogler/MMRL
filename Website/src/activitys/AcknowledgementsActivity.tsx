@@ -1,5 +1,4 @@
 import { Card, Page, Toolbar, BackButton } from "react-onsenui";
-import LinkManager from "@Native/LinkManager";
 import dep from "./../utils/licenses.json";
 import AppCompatActivity from "./AppCompatActivity";
 
@@ -51,7 +50,7 @@ class AcknowledgementsActivity extends AppCompatActivity<Props, States> {
         // @ts-ignore
         <Card
           onClick={() => {
-            LinkManager.open(item.repository);
+            window.open(item.repository);
           }}
           style={{ marginTop: "4px", marginBottom: "4px" }}
         >

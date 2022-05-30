@@ -3,7 +3,6 @@ import AcknowledgementsActivity from "@Activitys/AcknowledgementsActivity";
 import AlertBuilder from "@Builders/AlertBuilder";
 import { ListInterface } from "@Builders/ListViewBuilder";
 import Constants from "@Native/Constants";
-import LinkManager from "@Native/LinkManager";
 import PackageManager from "@Native/PackageManager";
 import SharedPreferences from "@Native/SharedPreferences";
 import tools from "@Utils/tools";
@@ -58,7 +57,7 @@ const settings: ListInterface[] = [
         icon: <SourceRounded />,
         text: "Source code",
         onClick: () => {
-          LinkManager.open("https://github.com/DerGoogler/MMRL/", "_blank");
+          window.open("https://github.com/DerGoogler/MMRL/", "_blank");
         },
       },
       {
@@ -77,7 +76,7 @@ const settings: ListInterface[] = [
         icon: <BugReportRounded />,
         text: "Issues",
         onClick: (key, pushPage) => {
-          LinkManager.open("https://github.com/DerGoogler/DG-Repo/issues", "_blank");
+          window.open("https://github.com/DerGoogler/DG-Repo/issues", "_blank");
         },
       },
       {
