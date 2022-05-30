@@ -5,51 +5,27 @@ const visit = require("visit-values");
 const dep = Object.keys(pkg.dependencies);
 let outputArray = [];
 
-function getLicenses(json) {
-  if (typeof json.license === "string") {
-    return json.license;
-  }
-
-  if (typeof json.license === "object") {
-    return json.license.type;
-  }
-
-  if (Array.isArray(json.licenses)) {
-    let result = "";
-    for (let i = 0; i < json.licenses.length; i++) {
-      if (i > 0) result += ", ";
-
-      if (typeof json.licenses[i] === "string") {
-        result += json.licenses[i];
-      } else {
-        result += json.licenses[i].type;
-      }
+function getObject(name, fallback, options) {
+  const checkLink = (link) => {
+    if (options?.isLink) {
+      return link.replace("git+", "");
+    } else {
+      return link;
     }
+  };
 
-    return result;
+  if (typeof name == "undefined") {
+    return checkLink(fallback);
+  } else {
+    return checkLink(name);
   }
 }
 
-function getLink(json) {
-  if (json.repository && json.repository.url) {
-    return json.repository.url;
-  }
-
-  let otherUrls = [];
-
-  visit(json, function (value) {
-    if (typeof value !== "string") return;
-    if (value.substr(0, "http".length) === "http") {
-      return otherUrls.push(value);
-    }
-
-    if (value.substr(0, "git".length) === "git") {
-      return otherUrls.push(value);
-    }
-  });
-
-  if (otherUrls.length > 0) {
-    return otherUrls[0];
+function getInnerObject(name, rightName) {
+  if (typeof name == "object") {
+    return rightName;
+  } else {
+    return name;
   }
 }
 
@@ -57,16 +33,17 @@ dep.forEach((element) => {
   const packagePath = `./node_modules/${element}/package.json`;
   const package = JSON.parse(fs.readFileSync(packagePath));
 
-  const { author, name, version, description } = package;
+  const { author, name, version, description, repository, license } = package;
 
   outputArray.push({
-    name: typeof name == "undefined" ? "null" : name,
-    description: typeof description == "undefined" ? "null" : description,
-    author: typeof author == "undefined" ? "null" : typeof author == "object" ? author.name : author,
-    version: typeof version == "undefined" ? "null" : version,
-    license: getLicenses(package),
-    repository: getLink(package),
+    name: getObject(name, "Unknown Module"),
+    description: getObject(description, "There is no description"),
+    // Fallback doesn't work here.
+    author: typeof author == "undefined" ? "null" : typeof author == "object" ? author.name : author, //getObject(getInnerObject(author, author.name), "Unknown"),
+    version: getObject(version, "null"),
+    license: getObject(license, "No license"),
+    repository: getObject(getInnerObject(repository, repository.url), "empty", { isLink: true }),
   });
 });
 
-console.log(JSON.stringify(outputArray));
+console.log(JSON.stringify(outputArray, null, 4));

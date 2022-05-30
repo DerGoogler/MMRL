@@ -1,7 +1,7 @@
 NODE_BIN = ./node_modules/.bin
 
 licenses:
-	node license > ./licenseBuild/licenses.json
+	node license > ./src/utils/licenses.json
 	
 dev: licenses
 	${NODE_BIN}/webpack
