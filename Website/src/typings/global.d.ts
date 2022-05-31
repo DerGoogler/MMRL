@@ -1,7 +1,7 @@
 import FileSystem from "./android/fs";
 import NShell from "./android/shell";
 import NOS from "./android/os";
-import NVersion from "./android/version";
+import NBuildConfig from "./android/BuildConfig";
 import NSharedPreferences from "./android/sdfdf";
 
 export {};
@@ -21,14 +21,14 @@ declare global {
     nfs: FileSystem;
     nshell: NShell;
     nos: NOS;
-    nversion: NVersion;
+    nversion: NBuildConfig;
     nsharedpreferences: NSharedPreferences;
   }
 
   const nfs: FileSystem;
   const nshell: NShell;
   const nos: NOS;
-  const nversion: NVersion;
+  const nbuildconfig: NBuildConfig;
   const nsharedpreferences: NSharedPreferences;
 
   type HTMLAttributes<E, P = {}> = React.DetailedHTMLProps<React.HTMLAttributes<E> & P, E>;

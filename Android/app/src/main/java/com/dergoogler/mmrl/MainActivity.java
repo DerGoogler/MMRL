@@ -6,11 +6,11 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.dergoogler.components.ModuleView;
+import com.dergoogler.core.NBuildConfig;
 import com.dergoogler.core.fs;
 import com.dergoogler.core.os;
 import com.dergoogler.core.sharedpreferences;
 import com.dergoogler.core.shell;
-import com.dergoogler.core.version;
 import com.dergoogler.core.window;
 
 
@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         view.loadHTML("file:///android_asset/", Page.load());
         view.setJavascriptInterface(new fs(this), "nfs");
         view.setJavascriptInterface(new shell(this), "nshell");
-        view.setJavascriptInterface(new version(), "nversion");
+        view.setJavascriptInterface(new NBuildConfig(), "nbuildconfig");
         view.setJavascriptInterface(new os(this), "nos");
         view.setJavascriptInterface(new window(this), "window");
         view.setJavascriptInterface(new sharedpreferences(this), "nsharedpreferences");

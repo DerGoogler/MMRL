@@ -3,10 +3,10 @@ import AcknowledgementsActivity from "@Activitys/AcknowledgementsActivity";
 import AlertBuilder from "@Builders/AlertBuilder";
 import { ListInterface } from "@Builders/ListViewBuilder";
 import Constants from "@Native/Constants";
-import PackageManager from "@Native/PackageManager";
 import SharedPreferences from "@Native/SharedPreferences";
 import tools from "@Utils/tools";
 import { BugReportRounded, ExtensionRounded, GavelRounded, SourceRounded } from "@mui/icons-material";
+import BuildConfig from "@Native/BuildConfig";
 
 const prefManager = new SharedPreferences();
 
@@ -83,8 +83,8 @@ const settings: ListInterface[] = [
         type: "",
         text: (
           <span>
-            {PackageManager.getAppPackageId} v{PackageManager.getAppVersionName} ({PackageManager.getAppVersionCode})<br />
-            {Constants.isAndroid ? `${PackageManager.getMagiskVersionName} (${PackageManager.getMagiskVersionCode})` : ""}
+            {BuildConfig.APPLICATION_ID} v{BuildConfig.VERSION_NAME} ({BuildConfig.VERSION_CODE})<br />
+            {Constants.isAndroid ? `${BuildConfig.MAGISK.VERSION_NAME} (${BuildConfig.MAGISK.VERSION_CODE})` : ""}
           </span>
         ),
         style: {
