@@ -6,7 +6,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.dergoogler.components.ModuleView;
-import com.dergoogler.core.NBuildConfig;
+import com.dergoogler.core.nbuildconfig;
 import com.dergoogler.core.fs;
 import com.dergoogler.core.os;
 import com.dergoogler.core.sharedpreferences;
@@ -25,10 +25,14 @@ public class MainActivity extends AppCompatActivity {
         view = findViewById(R.id.mmrl_view);
         view.setJavaScriptEnabled(true);
         view.setUserAgentString("MMRL");
-        view.loadHTML("file:///android_asset/", Page.load());
+        if (BuildConfig.DEBUG) {
+            view.loadHTML("http://192.168.178.81:5500/Android/app/src/main/assets/", Page.load());
+        } else {
+            view.loadHTML("file:///android_asset/", Page.load());
+        }
         view.setJavascriptInterface(new fs(this), "nfs");
         view.setJavascriptInterface(new shell(this), "nshell");
-        view.setJavascriptInterface(new NBuildConfig(), "nbuildconfig");
+        view.setJavascriptInterface(new nbuildconfig(), "nbuildconfig");
         view.setJavascriptInterface(new os(this), "nos");
         view.setJavascriptInterface(new window(this), "window");
         view.setJavascriptInterface(new sharedpreferences(this), "nsharedpreferences");

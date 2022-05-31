@@ -5,7 +5,7 @@ import android.webkit.JavascriptInterface;
 
 import com.dergoogler.mmrl.BuildConfig;
 
-public class NBuildConfig {
+public class nbuildconfig {
     @JavascriptInterface
     public int VERSION_CODE() {
         return BuildConfig.VERSION_CODE;
