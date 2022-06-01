@@ -1,8 +1,8 @@
 import FileSystem from "./android/fs";
 import NShell from "./android/shell";
 import NOS from "./android/os";
-import NBuildConfig from "./android/BuildConfig";
-import NSharedPreferences from "./android/sdfdf";
+import NBuildConfig from "./android/buildconfig";
+import NSharedPreferences from "./android/sharedpreferences";
 
 export {};
 

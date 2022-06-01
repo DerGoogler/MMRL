@@ -25,11 +25,7 @@ public class MainActivity extends AppCompatActivity {
         view = findViewById(R.id.mmrl_view);
         view.setJavaScriptEnabled(true);
         view.setUserAgentString("MMRL");
-        if (BuildConfig.DEBUG) {
-            view.loadHTML("http://192.168.178.81:5500/Android/app/src/main/assets/", Page.load());
-        } else {
-            view.loadHTML("file:///android_asset/", Page.load());
-        }
+        view.loadHTML("file:///android_asset/", Page.load());
         view.setJavascriptInterface(new fs(this), "nfs");
         view.setJavascriptInterface(new shell(this), "nshell");
         view.setJavascriptInterface(new nbuildconfig(), "nbuildconfig");

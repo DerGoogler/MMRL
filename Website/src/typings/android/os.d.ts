@@ -6,6 +6,8 @@ interface NOS {
   requestStoargePermission(): void;
   open(link: string): void;
   close(): void;
+  isPackageInstalled(targetPackage: string): bool;
+  launchAppByPackageName(targetPackage: string): void;
 }
 
 export default NOS;

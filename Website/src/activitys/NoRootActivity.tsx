@@ -1,8 +1,11 @@
-import { Card, Toolbar } from "react-onsenui";
+import { Button, Card, Toolbar } from "react-onsenui";
 import AppCompatActivity from "./AppCompatActivity";
 import AMOGUS from "./../utils/amogus.gif";
+import Toast from "@Native/Toast";
 
 class NoRootActivity extends AppCompatActivity {
+  private readonly magiskPackageName: string = "com.topjohnwu.magisk";
+
   protected onCreateToolbar = () => {
     return (
       // @ts-ignore
@@ -16,40 +19,37 @@ class NoRootActivity extends AppCompatActivity {
 
   protected onCreate = () => {
     return (
-      <>
-        <div
-          style={{
-            position: "absolute",
-            left: "50%",
-            top: "50%",
-            WebkitTransform: "translate(-50%, -50%)",
-            transform: "translate(-50%, -50%)",
-          }}
-        >
-          <img
-            src={AMOGUS}
-            style={{
-              width: "100px",
-              height: "100px",
-              display: "block",
-              marginLeft: "auto",
-              marginRight: "auto",
-            }}
-          />
-          {/*
+      <div style={{ padding: "8px" }}>
+        {/*
           //@ts-ignore*/}
-          <Card
-            style={{
-              marginTop: "0px",
+        <Card>
+          <div className="title">Failed!</div>
+          <div className="content">
+            It seems that this device has no root? Please check the Magisk app and enable root permission. If you don't have root, then
+            search in the internet for your device.
+          </div>
+        </Card>
+        {nos.isPackageInstalled(this.magiskPackageName) ? (
+          // @ts-ignore
+          <Button
+            modifier="large"
+            onClick={() => {
+              if (nos.isPackageInstalled(this.magiskPackageName)) {
+                nos.launchAppByPackageName(this.magiskPackageName);
+              } else {
+                Toast.makeText("Magisk was not found!", Toast.LENGTH_LONG).show();
+              }
             }}
           >
-            <div className="content">
-              It seems that this device has no root? Please check the Magisk app and enable root permission. If you don't have root, then
-              search in the internet for your device.
-            </div>
-          </Card>
-        </div>
-      </>
+            Open Magisk
+          </Button>
+        ) : (
+          // @ts-ignore
+          <Button modifier="large" disabled>
+            Magisk Not Found
+          </Button>
+        )}
+      </div>
     );
   };
 }

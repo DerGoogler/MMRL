@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
@@ -90,5 +91,24 @@ public class os {
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_HOME);
         this.ctx.startActivity(intent);
+    }
+
+    @JavascriptInterface
+    public boolean isPackageInstalled(String targetPackage) {
+        PackageManager pm = this.ctx.getPackageManager();
+        try {
+            pm.getPackageInfo(targetPackage, 0);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
+    }
+
+    @JavascriptInterface
+    public void launchAppByPackageName(String targetPackage) {
+        Intent launchIntent = this.ctx.getPackageManager().getLaunchIntentForPackage(targetPackage);
+        if (launchIntent != null) {
+            ((Activity) this.ctx).startActivity(launchIntent);//null pointer check in case package name was not found
+        }
     }
 }
