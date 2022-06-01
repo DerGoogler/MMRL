@@ -12,8 +12,8 @@ import Constants from "@Native/Constants";
 import A from "@Components/dapi/A";
 import Video from "@Components/dapi/Video";
 import DiscordWidget from "@Components/dapi/DiscordWidget";
-import PackageManager from "@Native/PackageManager";
 import { DownloadRounded, InfoRounded, InstallMobileRounded, VerifiedRounded, WarningRounded } from "@mui/icons-material";
+import BuildConfig from "@Native/BuildConfig";
 
 interface Props {
   extra?: any;
@@ -207,7 +207,7 @@ class ViewModuleActivity extends React.Component<Props, States> {
                         <td
                           style={{
                             color: Constants.isAndroid
-                              ? PackageManager.parseMagisk(minMagisk) > PackageManager.getMagiskVersionCode
+                              ? BuildConfig.MAGISK.PARSE_VERSION(minMagisk) > BuildConfig.MAGISK.VERSION_CODE
                                 ? "red"
                                 : ""
                               : "",

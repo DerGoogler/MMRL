@@ -16,7 +16,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
 import "@Styles/addtional.scss";
 import "@Styles/markdown-light.scss";
-import fs from "@Native/fs";
 
 class Bootloader {
   private mountNode: Element | null = document.querySelector("app");

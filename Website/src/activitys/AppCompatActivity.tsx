@@ -3,6 +3,8 @@ import * as React from "react";
 import { Page } from "react-onsenui";
 
 class AppCompatActivity<P = {}, S = {}> extends React.PureComponent<P, S> {
+  public readonly isAndroid: bool = Constants.isAndroid;
+
   public constructor(props: P | Readonly<P>) {
     super(props);
     this.onlyAndroid();
@@ -22,8 +24,9 @@ class AppCompatActivity<P = {}, S = {}> extends React.PureComponent<P, S> {
 
   /**
    * Sets an custom status bar color for the activity
+   * @deprecated
    */
-  public setStatusbarColor(): string {
+  protected setStatusbarColor(): string {
     return "#4a148c";
   }
 

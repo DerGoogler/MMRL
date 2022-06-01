@@ -44,7 +44,7 @@ class NoRootActivity extends AppCompatActivity {
             }}
           >
             <div className="content">
-              It seems that for device has no root? Please check the Magisk app and enable root permission. If you don't have root, then
+              It seems that this device has no root? Please check the Magisk app and enable root permission. If you don't have root, then
               search in the internet for your device.
             </div>
           </Card>

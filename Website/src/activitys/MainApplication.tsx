@@ -1,5 +1,6 @@
 import { SettingsRounded } from "@mui/icons-material";
 import Constants from "@Native/Constants";
+import ons from "onsenui";
 import { Tab, Tabbar, Toolbar, ToolbarButton } from "react-onsenui";
 import AppCompatActivity from "./AppCompatActivity";
 import DeviceModuleFragment from "./fragments/DeviceModuleFragment";
@@ -25,7 +26,6 @@ interface Props {
 }
 
 class MainApplication extends AppCompatActivity<Props> {
-  t: any;
   public constructor(props: Props | Readonly<Props>) {
     super(props);
     this.state = {};
@@ -35,7 +35,17 @@ class MainApplication extends AppCompatActivity<Props> {
     return (
       // @ts-ignore
       <Toolbar>
-        <div className="center">Magisk Module Repo Loader</div>
+        <div
+          className="center"
+          onClick={() => {
+            ons.notification.toast("Hi there!", {
+              timeout: 10000000,
+              animation: "fall",
+            });
+          }}
+        >
+          Magisk Module Repo Loader
+        </div>
         <div className="right">
           {/*
           // @ts-ignore */}

@@ -8,6 +8,7 @@ import SharedPreferences from "@Native/SharedPreferences";
 import { PushProps } from "@Activitys/MainActivity";
 import { SearchRounded } from "@mui/icons-material";
 import os from "@Native/os";
+import ons from "onsenui";
 
 interface Props {
   pushPage(...arg: any): PushProps;
@@ -50,6 +51,7 @@ class ExploreModuleFragment extends React.Component<Props, States> {
         progress: undefined,
       });
     }
+    
     setTimeout(() => {
       this.setState({ loading: false });
     }, 2000);
