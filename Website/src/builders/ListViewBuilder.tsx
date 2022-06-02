@@ -43,6 +43,7 @@ interface ListOptions {
   selectValue?: SelectValue[];
   icon?: string | JSX.Element;
   selectDefaultValue?: string;
+  selectDefaultText?: string;
   switchDefaultValue?: boolean;
   /**
    *
@@ -208,7 +209,6 @@ class ListViewBuilder extends React.Component<Props> {
                       case "select":
                         return (
                           <Select
-                            id="choose-sel"
                             disabled={Boolean(item.disabled)}
                             value={tools.typeCheck(this.getSettingSelect(item.key!), tools.typeCheck(item.selectDefaultValue, ""))}
                             onChange={(e: any) => {
@@ -225,7 +225,7 @@ class ListViewBuilder extends React.Component<Props> {
                             }}
                           >
                             <option value="" selected disabled hidden>
-                              Choose
+                              {item.selectDefaultText ? item.selectDefaultText : "Choose"}
                             </option>
                             {item.selectValue?.map((select: SelectValue) => (
                               <>

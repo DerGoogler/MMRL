@@ -51,7 +51,7 @@ class ExploreModuleFragment extends React.Component<Props, States> {
         progress: undefined,
       });
     }
-    
+
     setTimeout(() => {
       this.setState({ loading: false });
     }, 2000);

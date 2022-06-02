@@ -38,10 +38,7 @@ class MainApplication extends AppCompatActivity<Props> {
         <div
           className="center"
           onClick={() => {
-            ons.notification.toast("Hi there!", {
-              timeout: 10000000,
-              animation: "fall",
-            });
+            ons.notification.toast("My gf left me ... :(");
           }}
         >
           Magisk Module Repo Loader
@@ -78,18 +75,12 @@ class MainApplication extends AppCompatActivity<Props> {
   };
 
   protected onCreate = () => {
-    return (
-      <>
-        {(() => {
-          if (Constants.isAndroid) {
-            //@ts-ignore
-            return <Tabbar swipeable={false} position="auto" renderTabs={this.renderTabs} />;
-          } else {
-            return <ExploreModuleFragment pushPage={this.props.pushPage} />;
-          }
-        })()}
-      </>
-    );
+    if (this.isAndroid) {
+      //@ts-ignore
+      return <Tabbar swipeable={false} position="auto" renderTabs={this.renderTabs} />;
+    } else {
+      return <ExploreModuleFragment pushPage={this.props.pushPage} />;
+    }
   };
 }
 

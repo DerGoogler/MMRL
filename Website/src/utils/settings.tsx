@@ -1,7 +1,7 @@
 import ons from "onsenui";
 import AcknowledgementsActivity from "@Activitys/AcknowledgementsActivity";
 import AlertBuilder from "@Builders/AlertBuilder";
-import { ListInterface } from "@Builders/ListViewBuilder";
+import { ListInterface, ListOptions } from "@Builders/ListViewBuilder";
 import Constants from "@Native/Constants";
 import SharedPreferences from "@Native/SharedPreferences";
 import tools from "@Utils/tools";
@@ -9,6 +9,46 @@ import { BugReportRounded, ExtensionRounded, GavelRounded, SourceRounded } from 
 import BuildConfig from "@Native/BuildConfig";
 
 const prefManager = new SharedPreferences();
+
+function inBuiltRepos(): ListOptions {
+  const repos = {
+    gmr: {
+      id: "gmr",
+      name: "Googlers Magisk Repo",
+      url: "https://repo.dergoogler.com/modules.json",
+    },
+    mmar: {
+      id: "mmar",
+      name: "Magisk Modules Alt Repo",
+      url: "https://raw.githubusercontent.com/Magisk-Modules-Alt-Repo/json/main/modules.json",
+    },
+  };
+  return {
+    key: "repo",
+    type: "select",
+    text: "Built-in repos",
+    selectDefaultValue: repos.gmr.url,
+    selectDefaultText: "Select new repo",
+    selectValue: [
+      {
+        text: repos.gmr.name,
+        value: repos.gmr.url,
+      },
+      {
+        text: repos.mmar.name,
+        value: repos.mmar.url,
+      },
+    ],
+    /*callback: (e: any, key: string, keepDefaultFuntion: void) => {
+      if (native.confirm("Do you change the language?")) {
+        native.reload();
+        keepDefaultFuntion;
+      } else {
+        return;
+      }
+    },*/
+  };
+}
 
 const settings: ListInterface[] = [
   {
@@ -36,6 +76,7 @@ const settings: ListInterface[] = [
             .showPrompt();
         },
       },
+      inBuiltRepos(),
     ],
   },
   {
