@@ -1,12 +1,12 @@
-import * as React from "react";
+import { Component, SVGAttributes } from "react";
 
 interface Props {
   size: string | int;
   color: `#${string}`;
-  className?: React.SVGAttributes<SVGSVGElement>;
+  className?: SVGAttributes<SVGSVGElement>;
 }
 
-class DangerIcon extends React.Component<Props> {
+class DangerIcon extends Component<Props> {
   static defaultProps: Props;
   render() {
     const { color, size, className } = this.props;

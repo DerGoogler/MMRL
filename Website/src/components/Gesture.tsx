@@ -1,4 +1,4 @@
-import * as React from "react";
+import { Component, createRef, RefObject, ReactNode } from "react";
 import tools from "@Utils/tools";
 
 interface Props {
@@ -24,14 +24,14 @@ interface Props {
     | "pinchout"
     | "rotate";
   callback(...props: any): void;
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
-class Gesture extends React.Component<Props, {}> {
-  private gerstureID: React.RefObject<HTMLDivElement>;
+class Gesture extends Component<Props, {}> {
+  private gerstureID: RefObject<HTMLDivElement>;
   constructor(props: any) {
     super(props);
-    this.gerstureID = React.createRef();
+    this.gerstureID = createRef();
   }
   public componentDidMount() {
     const { callback, event } = this.props;

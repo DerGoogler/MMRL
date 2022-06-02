@@ -1,10 +1,10 @@
-import * as React from "react";
+import { Component, ReactNode } from "react";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-class Changelog extends React.Component {
+class Changelog extends Component<{ version: string; children: ReactNode }> {
   render() {
     const { version, children } = this.props;
     return (

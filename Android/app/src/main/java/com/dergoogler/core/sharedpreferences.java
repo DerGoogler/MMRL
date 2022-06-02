@@ -21,16 +21,6 @@ public class sharedpreferences {
     }
 
     @JavascriptInterface
-    public void setPref(String key, boolean value) {
-        this.localstorage.edit().putBoolean(key, value).apply();
-    }
-
-    @JavascriptInterface
-    public void setPref(String key, int value) {
-        this.localstorage.edit().putInt(key, value).apply();
-    }
-
-    @JavascriptInterface
     public String getPref(String key) {
         return this.localstorage.getString(key, "");
     }

@@ -1,10 +1,9 @@
-import * as React from "react";
+import { Component } from "react";
 import { Page, Toolbar, ToolbarButton, BackButton, Button, Dialog } from "react-onsenui";
 import ons from "onsenui";
 import axios from "axios";
 import Markdown from "markdown-to-jsx";
 import Alert from "react-bootstrap/Alert";
-import MDIcon from "@Components/MDIcon";
 import Changelog from "@Components/dapi/Changelog";
 import CheckIcon from "@Components/icons/CheckIcon";
 import DangerIcon from "@Components/icons/DangerIcon";
@@ -25,7 +24,7 @@ interface States {
   dialogShown: boolean;
 }
 
-class ViewModuleActivity extends React.Component<Props, States> {
+class ViewModuleActivity extends Component<Props, States> {
   public constructor(props: Props | Readonly<Props>) {
     super(props);
     this.state = {

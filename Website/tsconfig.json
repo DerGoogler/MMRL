@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
     "outDir": "./../Android/app/src/main/assets",
-    "sourceMap": true,
+    "typeRoots": ["src/typings/global.d.ts"],
+    "sourceMap": false,
     "declaration": false,
     "strict": true,
     "noImplicitReturns": true,
@@ -22,9 +23,16 @@
       "@Types/*": ["typings/*"],
       "@Utils/*": ["utils/*"],
       "@Bootloader": ["index.tsx"],
-      "@Package":["./../package.json"],
+      "@Package": ["./../package.json"],
       "@Styles/*": ["styles/*"],
       "@Activitys/*": ["activitys/*"]
+    },
+    "types": ["node"]
+  },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS",
+      "types": ["node"]
     }
   },
   "include": ["./src/**/*"]

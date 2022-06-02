@@ -1,4 +1,4 @@
-import * as React from "react";
+import { Component } from "react";
 import tools from "@Utils/tools";
 
 interface AInterface {
@@ -13,7 +13,7 @@ interface AInterface {
   children: React.ReactNode | undefined;
 }
 
-class A extends React.Component<AInterface> {
+class A extends Component<AInterface> {
   public render() {
     const { download, href, hrefLang, media, ping, rel, target, type, children } = this.props;
     return (

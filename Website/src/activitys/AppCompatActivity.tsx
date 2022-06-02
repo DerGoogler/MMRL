@@ -1,8 +1,8 @@
 import Constants from "@Native/Constants";
-import * as React from "react";
+import { PureComponent } from "react";
 import { Page } from "react-onsenui";
 
-class AppCompatActivity<P = {}, S = {}> extends React.PureComponent<P, S> {
+class AppCompatActivity<P = {}, S = {}> extends PureComponent<P, S> {
   public readonly isAndroid: bool = Constants.isAndroid;
 
   public constructor(props: P | Readonly<P>) {

@@ -1,4 +1,4 @@
-import * as React from "react";
+import { Component } from "react";
 import { Page, Toolbar, BackButton, RouterNavigator, RouterUtil } from "react-onsenui";
 import MainApplication from "@Activitys/MainApplication";
 import Constants from "@Native/Constants";
@@ -32,7 +32,7 @@ interface States {
   routeConfig: any;
 }
 
-class MainActivity extends React.Component<PushProps, States> {
+class MainActivity extends Component<PushProps, States> {
   public constructor(props: PushProps | Readonly<PushProps>) {
     super(props);
 

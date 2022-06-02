@@ -1,8 +1,7 @@
-import * as React from "react";
+import { Component, isValidElement } from "react";
 import { ListItem, ListTitle, Select, Switch } from "react-onsenui";
 import ons from "onsenui";
 import tools from "@Utils/tools";
-import MDIcon from "@Components/MDIcon";
 import Gesture from "@Components/Gesture";
 import SharedPreferences from "@Native/SharedPreferences";
 import { PushProps } from "@Activitys/MainActivity";
@@ -80,7 +79,7 @@ interface ListInterface {
   content: ListOptions[];
 }
 
-class ListViewBuilder extends React.Component<Props> {
+class ListViewBuilder extends Component<Props> {
   private prefManager: SharedPreferences;
 
   public constructor(props: Props | Readonly<Props>) {
@@ -158,14 +157,10 @@ class ListViewBuilder extends React.Component<Props> {
                   if (item.icon === (null || "" || undefined)) {
                     return;
                   } else {
-                    if (React.isValidElement(item.icon)) {
+                    if (isValidElement(item.icon)) {
                       return <div className="left">{item.icon}</div>;
                     } else {
-                      return (
-                        <div className="left">
-                          <MDIcon icon={item.icon} size="24" isInList={true}></MDIcon>
-                        </div>
-                      );
+                      return null;
                     }
                   }
                 })()}

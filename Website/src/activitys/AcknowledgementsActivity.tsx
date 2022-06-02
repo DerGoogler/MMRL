@@ -1,4 +1,4 @@
-import { Card, Page, Toolbar, BackButton } from "react-onsenui";
+import { Card, Toolbar, BackButton } from "react-onsenui";
 import dep from "./../utils/licenses.json";
 import AppCompatActivity from "./AppCompatActivity";
 
@@ -20,7 +20,7 @@ class AcknowledgementsActivity extends AppCompatActivity<Props, States> {
 
   public componentDidMount = () => {
     super.componentDidMount;
-    this.setState({ libs: Object.values(dep) });
+    this.setState({ libs: dep });
   };
 
   protected onCreateToolbar = () => {

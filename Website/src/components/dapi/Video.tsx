@@ -1,4 +1,4 @@
-import * as React from "react";
+import { Component, CSSProperties } from "react";
 import { isDesktop } from "react-device-detect";
 import tools from "@Utils/tools";
 
@@ -10,10 +10,10 @@ interface VideoInterface {
   controls?: boolean;
   poster?: string;
   noSupportText?: string;
-  style?: React.CSSProperties | string | undefined;
+  style?: CSSProperties | string | undefined;
 }
 
-class Video extends React.Component<VideoInterface> {
+class Video extends Component<VideoInterface> {
   public render() {
     const { src, type, controls, noSupportText, style, poster } = this.props;
     const Style = {

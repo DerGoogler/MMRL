@@ -1,9 +1,7 @@
-import * as React from "react";
-import ons from "onsenui";
+import { Component, RefObject, createRef } from "react";
 import axios from "axios";
 import Properties from "@js.properties/properties";
 import { Card } from "react-onsenui";
-import { Chip } from "@mui/material";
 import tools from "@Utils/tools";
 import ViewModuleActivity from "@Activitys/ViewModuleActivity";
 import Log from "@Native/Log";
@@ -47,9 +45,9 @@ interface States {
   };
 }
 
-class ExploreModule extends React.Component<Props, States> {
-  private searchedCard: React.RefObject<Card>;
-  private cardName: React.RefObject<HTMLSpanElement>;
+class ExploreModule extends Component<Props, States> {
+  private searchedCard: RefObject<Card>;
+  private cardName: RefObject<HTMLSpanElement>;
   private log: Log;
 
   public constructor(props: Props | Readonly<Props>) {
@@ -57,8 +55,8 @@ class ExploreModule extends React.Component<Props, States> {
     this.state = {
       props: {},
     };
-    this.searchedCard = React.createRef();
-    this.cardName = React.createRef();
+    this.searchedCard = createRef();
+    this.cardName = createRef();
     this.log = new Log(this.constructor.name);
   }
 

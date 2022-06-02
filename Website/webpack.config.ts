@@ -1,15 +1,15 @@
-const webpack = require("webpack");
-const path = require("path");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+import { Configuration } from "webpack";
+import { resolve, join } from "path";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
 
-const config = {
+const config: Configuration = {
   entry: {
     app: ["./src/index.tsx"],
   },
   output: {
     filename: "bundle/[name].bundle.js",
-    path: path.resolve(__dirname, "./../Android/app/src/main/assets"),
+    path: resolve(__dirname, "./../Android/app/src/main/assets"),
     assetModuleFilename: "files/[name].[ext]",
   },
   module: {
@@ -76,21 +76,21 @@ const config = {
       util: false,
     },
     extensions: [".js", ".jsx", ".ts", ".tsx"],
-    modules: ["node_modules", path.join(process.env.NPM_CONFIG_PREFIX || __dirname, "lib/node_modules")],
+    modules: ["node_modules", join(process.env.NPM_CONFIG_PREFIX || __dirname, "lib/node_modules")],
     alias: {
-      "@Builders": path.resolve(__dirname, "src/builders"),
-      "@Components": path.resolve(__dirname, "src/components"),
-      "@Native": path.resolve(__dirname, "src/native"),
-      "@Types": path.resolve(__dirname, "src/typings"),
-      "@Utils": path.resolve(__dirname, "src/utils"),
-      "@Bootloader": path.resolve(__dirname, "src/index.tsx"),
-      "@Package": path.resolve(__dirname, "package.json"),
-      "@Styles": path.resolve(__dirname, "src/styles"),
-      "@Activitys": path.resolve(__dirname, "src/activitys"),
+      "@Builders": resolve(__dirname, "src/builders"),
+      "@Components": resolve(__dirname, "src/components"),
+      "@Native": resolve(__dirname, "src/native"),
+      "@Types": resolve(__dirname, "src/typings"),
+      "@Utils": resolve(__dirname, "src/utils"),
+      "@Bootloader": resolve(__dirname, "src/index.tsx"),
+      "@Package": resolve(__dirname, "package.json"),
+      "@Styles": resolve(__dirname, "src/styles"),
+      "@Activitys": resolve(__dirname, "src/activitys"),
     },
   },
   resolveLoader: {
-    modules: ["node_modules", path.join(process.env.NPM_CONFIG_PREFIX || __dirname, "lib/node_modules")],
+    modules: ["node_modules", join(process.env.NPM_CONFIG_PREFIX || __dirname, "lib/node_modules")],
   },
 };
 

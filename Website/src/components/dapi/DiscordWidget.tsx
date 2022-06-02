@@ -1,4 +1,4 @@
-import * as React from "react";
+import { Component } from "react";
 import tools from "@Utils/tools";
 
 declare type Theme = "light" | "dark";
@@ -10,7 +10,7 @@ interface DiscordWidgetInterface {
   theme: Theme;
 }
 
-class DiscordWidget extends React.Component<DiscordWidgetInterface> {
+class DiscordWidget extends Component<DiscordWidgetInterface> {
   public render() {
     const { token, width, height, theme } = this.props;
     return (

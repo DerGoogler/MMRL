@@ -1,4 +1,4 @@
-import * as React from "react";
+import { Component } from "react";
 import DeviceModule from "@Components/DeviceModule";
 import { PushProps } from "@Activitys/MainActivity";
 import { Page } from "react-onsenui";
@@ -12,7 +12,7 @@ interface States {
   modules: any;
 }
 
-class DeviceModuleFragment extends React.Component<Props, States> {
+class DeviceModuleFragment extends Component<Props, States> {
   public constructor(props: Props | Readonly<Props>) {
     super(props);
     this.state = {

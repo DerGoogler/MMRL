@@ -1,5 +1,4 @@
 import { SettingsRounded } from "@mui/icons-material";
-import Constants from "@Native/Constants";
 import ons from "onsenui";
 import { Tab, Tabbar, Toolbar, ToolbarButton } from "react-onsenui";
 import AppCompatActivity from "./AppCompatActivity";

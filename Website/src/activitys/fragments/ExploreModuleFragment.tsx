@@ -1,4 +1,4 @@
-import * as React from "react";
+import { Component, LegacyRef } from "react";
 import { Button, Page, SearchInput, ProgressCircular } from "react-onsenui";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -22,8 +22,8 @@ interface States {
   loading: boolean;
 }
 
-class ExploreModuleFragment extends React.Component<Props, States> {
-  private searchBar: React.LegacyRef<SearchInput> | undefined;
+class ExploreModuleFragment extends Component<Props, States> {
+  private searchBar: LegacyRef<SearchInput> | undefined;
   private prefManager: SharedPreferences;
 
   public constructor(props: Props | Readonly<Props>) {

@@ -1,6 +1,5 @@
 import { Button, Card, Toolbar } from "react-onsenui";
 import AppCompatActivity from "./AppCompatActivity";
-import AMOGUS from "./../utils/amogus.gif";
 import Toast from "@Native/Toast";
 
 class NoRootActivity extends AppCompatActivity {

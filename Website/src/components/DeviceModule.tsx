@@ -1,4 +1,4 @@
-import * as React from "react";
+import { Component } from "react";
 import { Card, Ripple, Switch } from "react-onsenui";
 import Properties from "@js.properties/properties";
 import fs from "@Native/fs";
@@ -31,7 +31,7 @@ interface States {
   };
 }
 
-class DeviceModule extends React.Component<Props, States> {
+class DeviceModule extends Component<Props, States> {
   private log: Log;
   public constructor(props: Props | Readonly<Props>) {
     super(props);
