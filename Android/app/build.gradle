@@ -7,7 +7,7 @@ android {
         applicationId 'com.dergoogler.mmrl'
         minSdk 28
         targetSdkVersion 32
-        versionName "1.4.0@alpha-2"
+        versionName "1.4.0@alpha-3"
         versionCode "140".toInteger()
     }
     buildTypes {
