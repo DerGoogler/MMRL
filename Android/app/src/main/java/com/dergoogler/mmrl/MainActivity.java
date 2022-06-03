@@ -1,23 +1,16 @@
 package com.dergoogler.mmrl;
 
 import android.annotation.SuppressLint;
-import android.app.DownloadManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.webkit.CookieManager;
-import android.webkit.DownloadListener;
-import android.webkit.URLUtil;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.dergoogler.components.ModuleView;
-import com.dergoogler.core.BuildConfig;
-import com.dergoogler.core.FileSystem;
-import com.dergoogler.core.OS;
-import com.dergoogler.core.SharedPreferences;
-import com.dergoogler.core.Shell;
+import com.dergoogler.core.BuildConfigNative;
+import com.dergoogler.core.FileSystemNative;
+import com.dergoogler.core.OSNative;
+import com.dergoogler.core.SharedPreferencesNative;
+import com.dergoogler.core.ShellNative;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -31,12 +24,12 @@ public class MainActivity extends AppCompatActivity {
         view = findViewById(R.id.mmrl_view);
         view.setJavaScriptEnabled(true);
         view.setUserAgentString("MMRL");
-        view.loadHTML("file:///android_asset/", Page.load());
-        view.setJavascriptInterface(new FileSystem(this), "nfs");
-        view.setJavascriptInterface(new Shell(this), "nshell");
-        view.setJavascriptInterface(new BuildConfig(), "nbuildconfig");
-        view.setJavascriptInterface(new OS(this), "nos");
-        view.setJavascriptInterface(new SharedPreferences(this), "nsharedpreferences");
+        view.loadHTML("file:///android_asset/", new Page(this).load());
+        view.setJavascriptInterface(new FileSystemNative(this), "nfs");
+        view.setJavascriptInterface(new ShellNative(this), "nshell");
+        view.setJavascriptInterface(new BuildConfigNative(), "nbuildconfig");
+        view.setJavascriptInterface(new OSNative(this), "nos");
+        view.setJavascriptInterface(new SharedPreferencesNative(this), "nsharedpreferences");
     }
 
     @Override

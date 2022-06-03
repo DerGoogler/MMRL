@@ -9,10 +9,10 @@ import com.topjohnwu.superuser.ShellUtils;
 
 import java.io.InputStream;
 
-public class Shell {
+public class ShellNative {
     private final Context ctx;
 
-    public Shell(Context ctx) {
+    public ShellNative(Context ctx) {
         this.ctx = ctx;
     }
 

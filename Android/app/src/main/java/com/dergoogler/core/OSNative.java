@@ -20,10 +20,10 @@ import androidx.browser.customtabs.CustomTabsIntent;
 
 import com.dergoogler.mmrl.BuildConfig;
 
-public class OS {
+public class OSNative {
     private final Context ctx;
 
-    public OS(Context ctx) {
+    public OSNative(Context ctx) {
         this.ctx = ctx;
     }
 

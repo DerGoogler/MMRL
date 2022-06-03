@@ -5,7 +5,7 @@ import android.webkit.JavascriptInterface;
 
 import com.dergoogler.mmrl.BuildConfig;
 
-public class BuildConfig {
+public class BuildConfigNative {
     @JavascriptInterface
     public int VERSION_CODE() {
         return com.dergoogler.mmrl.BuildConfig.VERSION_CODE;
