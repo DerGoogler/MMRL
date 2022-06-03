@@ -10,46 +10,6 @@ import BuildConfig from "@Native/BuildConfig";
 
 const prefManager = new SharedPreferences();
 
-function inBuiltRepos(): ListOptions {
-  const repos = {
-    gmr: {
-      id: "gmr",
-      name: "Googlers Magisk Repo",
-      url: "https://repo.dergoogler.com/modules.json",
-    },
-    mmar: {
-      id: "mmar",
-      name: "Magisk Modules Alt Repo",
-      url: "https://raw.githubusercontent.com/Magisk-Modules-Alt-Repo/json/main/modules.json",
-    },
-  };
-  return {
-    key: "repo",
-    type: "select",
-    text: "Built-in repos",
-    selectDefaultValue: repos.gmr.url,
-    selectDefaultText: "Select new repo",
-    selectValue: [
-      {
-        text: repos.gmr.name,
-        value: repos.gmr.url,
-      },
-      {
-        text: repos.mmar.name,
-        value: repos.mmar.url,
-      },
-    ],
-    /*callback: (e: any, key: string, keepDefaultFuntion: void) => {
-      if (native.confirm("Do you change the language?")) {
-        native.reload();
-        keepDefaultFuntion;
-      } else {
-        return;
-      }
-    },*/
-  };
-}
-
 const settings: ListInterface[] = [
   {
     title: "Repo",
@@ -64,11 +24,22 @@ const settings: ListInterface[] = [
             .setMessage("Only URLs are valid")
             .setPositiveButton("Apply", (input: string) => {
               if (input != null) {
-                if (tools.validURL(input)) {
-                  prefManager.setPref("repo", input);
-                  ons.notification.alert("Repo changed, please refresh the app");
+                if (input.startsWith(">")) {
+                  switch (input) {
+                    case ">gmr":
+                      prefManager.setPref("repo", "https://repo.dergoogler.com/modules.json");
+                      break;
+                    case ">mmar":
+                      prefManager.setPref("repo", "https://raw.githubusercontent.com/Magisk-Modules-Alt-Repo/json/main/modules.json");
+                      break;
+                  }
                 } else {
-                  ons.notification.alert("Invalid input");
+                  if (tools.validURL(input)) {
+                    prefManager.setPref("repo", input);
+                    ons.notification.alert("Repo changed, please refresh the app");
+                  } else {
+                    ons.notification.alert("Invalid input");
+                  }
                 }
               }
             })
@@ -76,7 +47,6 @@ const settings: ListInterface[] = [
             .showPrompt();
         },
       },
-      inBuiltRepos(),
     ],
   },
   {
