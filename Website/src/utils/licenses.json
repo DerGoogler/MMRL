@@ -64,6 +64,14 @@
         "repository": "https://github.com/DerGoogler/Bota64"
     },
     {
+        "name": "highlight.js",
+        "description": "Syntax highlighting with language autodetection.",
+        "author": "Ivan Sagalaev",
+        "version": "11.5.1",
+        "license": "BSD-3-Clause",
+        "repository": "git://github.com/highlightjs/highlight.js.git"
+    },
+    {
         "name": "jss",
         "description": "A lib for generating Style Sheets with JavaScript.",
         "author": "JSS Team",

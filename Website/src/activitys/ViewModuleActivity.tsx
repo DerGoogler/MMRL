@@ -13,6 +13,7 @@ import Video from "@Components/dapi/Video";
 import DiscordWidget from "@Components/dapi/DiscordWidget";
 import { DownloadRounded, InfoRounded, InstallMobileRounded, VerifiedRounded, WarningRounded } from "@mui/icons-material";
 import BuildConfig from "@Native/BuildConfig";
+import { HighlightedMarkdown } from "@Components/HighlightMarkdown";
 
 interface Props {
   extra?: any;
@@ -121,32 +122,7 @@ class ViewModuleActivity extends Component<Props, States> {
                 }
               })()
             }
-            <Markdown
-              options={{
-                overrides: {
-                  a: {
-                    component: A,
-                  },
-                  video: {
-                    component: Video,
-                  },
-                  discordwidget: {
-                    component: DiscordWidget,
-                  },
-                  changelog: {
-                    component: Changelog,
-                  },
-                  checkicon: {
-                    component: CheckIcon,
-                  },
-                  dangericon: {
-                    component: DangerIcon,
-                  },
-                },
-              }}
-            >
-              {this.state.notes}
-            </Markdown>
+            <HighlightedMarkdown>{this.state.notes}</HighlightedMarkdown>
           </div>
           <div
             style={{

@@ -2,6 +2,19 @@
   display: none;
 }
 
+code {
+  color: none;
+}
+
+// Changelog expand
+.css-67l5gl.Mui-expanded {
+  margin: 0;
+}
+
+.css-67l5gl.Mui-expanded:last-of-type {
+  margin: 0;
+}
+
 img,
 svg {
   vertical-align: middle;
