@@ -20,10 +20,10 @@ import androidx.browser.customtabs.CustomTabsIntent;
 
 import com.dergoogler.mmrl.BuildConfig;
 
-public class os {
+public class OS {
     private final Context ctx;
 
-    public os(Context ctx) {
+    public OS(Context ctx) {
         this.ctx = ctx;
     }
 
@@ -108,7 +108,7 @@ public class os {
     public void launchAppByPackageName(String targetPackage) {
         Intent launchIntent = this.ctx.getPackageManager().getLaunchIntentForPackage(targetPackage);
         if (launchIntent != null) {
-            ((Activity) this.ctx).startActivity(launchIntent);//null pointer check in case package name was not found
+            this.ctx.startActivity(launchIntent);//null pointer check in case package name was not found
         }
     }
 }

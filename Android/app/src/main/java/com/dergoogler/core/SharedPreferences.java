@@ -6,11 +6,11 @@ import android.content.SharedPreferences;
 import android.webkit.JavascriptInterface;
 
 
-public class sharedpreferences {
+public class SharedPreferences {
     private final Context ctx;
-    private final SharedPreferences localstorage;
+    private final android.content.SharedPreferences localstorage;
 
-    public sharedpreferences(Context ctx) {
+    public SharedPreferences(Context ctx) {
         this.ctx = ctx;
         this.localstorage = ctx.getSharedPreferences("localstorage", Activity.MODE_PRIVATE);
     }

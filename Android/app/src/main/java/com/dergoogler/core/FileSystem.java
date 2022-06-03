@@ -14,10 +14,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class fs {
+public class FileSystem {
     private final Context ctx;
 
-    public fs(Context ctx) {
+    public FileSystem(Context ctx) {
         this.ctx = ctx;
     }
 

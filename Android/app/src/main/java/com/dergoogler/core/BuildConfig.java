@@ -5,20 +5,20 @@ import android.webkit.JavascriptInterface;
 
 import com.dergoogler.mmrl.BuildConfig;
 
-public class nbuildconfig {
+public class BuildConfig {
     @JavascriptInterface
     public int VERSION_CODE() {
-        return BuildConfig.VERSION_CODE;
+        return com.dergoogler.mmrl.BuildConfig.VERSION_CODE;
     }
 
     @JavascriptInterface
     public String VERSION_NAME() {
-        return BuildConfig.VERSION_NAME;
+        return com.dergoogler.mmrl.BuildConfig.VERSION_NAME;
     }
 
     @JavascriptInterface
     public String APPLICATION_ID() {
-        return BuildConfig.APPLICATION_ID;
+        return com.dergoogler.mmrl.BuildConfig.APPLICATION_ID;
     }
 
     @JavascriptInterface
@@ -28,11 +28,11 @@ public class nbuildconfig {
 
     @JavascriptInterface
     public boolean DEBUG() {
-        return BuildConfig.DEBUG;
+        return com.dergoogler.mmrl.BuildConfig.DEBUG;
     }
 
     @JavascriptInterface
     public String BUILD_TYPE() {
-        return BuildConfig.BUILD_TYPE;
+        return com.dergoogler.mmrl.BuildConfig.BUILD_TYPE;
     }
 }

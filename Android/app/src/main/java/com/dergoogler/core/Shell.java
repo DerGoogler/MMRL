@@ -9,17 +9,17 @@ import com.topjohnwu.superuser.ShellUtils;
 
 import java.io.InputStream;
 
-public class shell {
+public class Shell {
     private final Context ctx;
 
-    public shell(Context ctx) {
+    public Shell(Context ctx) {
         this.ctx = ctx;
     }
 
     @JavascriptInterface
     public void exec(String command) {
         InputStream bashrc = this.ctx.getResources().openRawResource(R.raw.bashrc);
-        Shell.cmd(bashrc).add(command).exec();
+        com.topjohnwu.superuser.Shell.cmd(bashrc).add(command).exec();
     }
 
     @JavascriptInterface
@@ -29,7 +29,7 @@ public class shell {
 
     @JavascriptInterface
     public boolean isAppGrantedRoot() {
-        Boolean appGrantedRoot = Shell.isAppGrantedRoot();
+        Boolean appGrantedRoot = com.topjohnwu.superuser.Shell.isAppGrantedRoot();
         if (appGrantedRoot == null) {
             return false;
         } else return appGrantedRoot;
