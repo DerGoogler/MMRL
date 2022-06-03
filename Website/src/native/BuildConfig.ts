@@ -2,6 +2,9 @@ import Shell from "@Native/ShellBuilder";
 import Constants from "@Native/Constants";
 import pkg from "@Package";
 
+/**
+ * BuildConfigs for Android
+ */
 class BuildConfig {
   public static get APPLICATION_ID(): string {
     if (Constants.isAndroid) {

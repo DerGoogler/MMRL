@@ -1,8 +1,22 @@
-import Constants from "./Constants";
+import BuildConfig from "./BuildConfig";
 
+/**
+ * The `os` module provides operating system-related utility methods and
+ * properties. It can be accessed using:
+ *
+ * ```js
+ * import os from "@Native/os"
+ * ```
+ */
 class os {
+  private static readonly userAgentAndroid = "MMRL";
+  public static readonly userAgent = window.navigator.userAgent;
+  public static readonly isAndroid = this.userAgentAndroid === this.userAgent ? true : false;
+  public static readonly isAndroid_A12 = os.isAndroid && BuildConfig.VERSION.SDK_INT > 31;
+  private static readonly android = os.isAndroid;
+
   public static getSchemeParam(param: string): string {
-    if (Constants.isAndroid) {
+    if (os.android) {
       return nos.getSchemeParam(param);
     } else {
       param = param.replace(/([\[\](){}*?+^$.\\|])/g, "\\$1");
@@ -14,19 +28,35 @@ class os {
   }
 
   public static hasStoragePermission(): boolean {
-    return nos.hasStoragePermission();
+    if (os.android) {
+      return nos.hasStoragePermission();
+    } else {
+      return true;
+    }
   }
 
   public static requestStoargePermission(): void {
-    nos.requestStoargePermission();
+    if (os.android) {
+      nos.requestStoargePermission();
+    } else {
+      name;
+    }
   }
 
   public static close(): void {
-    nos.close();
+    if (os.android) {
+      nos.close();
+    } else {
+      window.close();
+    }
   }
 
   public static open(link: string): void {
-    nos.open(link);
+    if (os.android) {
+      nos.open(link);
+    } else {
+      window.open(link, "_blank");
+    }
   }
 }
 

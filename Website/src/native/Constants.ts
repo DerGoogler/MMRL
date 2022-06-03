@@ -1,8 +1,15 @@
 class Constants {
+  /**
+   * @deprecated
+   */
   private static readonly userAgentAndroid = "MMRL";
+  /**
+   * @deprecated
+   */
   public static readonly userAgent = window.navigator.userAgent;
   /**
    * Checks if the app is on Android
+   * @deprecated
    */
   public static readonly isAndroid = this.userAgentAndroid === this.userAgent ? true : false;
   /**
