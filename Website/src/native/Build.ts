@@ -1,40 +1,90 @@
+import os from "./os";
+
 class Build {
   public static readonly VERSION_CODES = {
     get LOLLIPOP(): int {
-      return nbuild.VERSION_CODES().LOLLIPOP();
+      if (os.isAndroid) {
+        return nbuild.VERSION_CODES().LOLLIPOP();
+      } else {
+        return 0;
+      }
     },
     get LOLLIPOP_MR1(): int {
-      return nbuild.VERSION_CODES().LOLLIPOP_MR1();
+      if (os.isAndroid) {
+        return nbuild.VERSION_CODES().LOLLIPOP_MR1();
+      } else {
+        return 0;
+      }
     },
     get M(): int {
-      return nbuild.VERSION_CODES().M();
+      if (os.isAndroid) {
+        return nbuild.VERSION_CODES().M();
+      } else {
+        return 0;
+      }
     },
     get N(): int {
-      return nbuild.VERSION_CODES().N();
+      if (os.isAndroid) {
+        return nbuild.VERSION_CODES().N();
+      } else {
+        return 0;
+      }
     },
     get N_MR1(): int {
-      return nbuild.VERSION_CODES().N_MR1();
+      if (os.isAndroid) {
+        return nbuild.VERSION_CODES().N_MR1();
+      } else {
+        return 0;
+      }
     },
     get O(): int {
-      return nbuild.VERSION_CODES().O();
+      if (os.isAndroid) {
+        return nbuild.VERSION_CODES().O();
+      } else {
+        return 0;
+      }
     },
     get O_MR1(): int {
-      return nbuild.VERSION_CODES().O_MR1();
+      if (os.isAndroid) {
+        return nbuild.VERSION_CODES().O_MR1();
+      } else {
+        return 0;
+      }
     },
     get P(): int {
-      return nbuild.VERSION_CODES().P();
+      if (os.isAndroid) {
+        return nbuild.VERSION_CODES().P();
+      } else {
+        return 0;
+      }
     },
     get Q(): int {
-      return nbuild.VERSION_CODES().Q();
+      if (os.isAndroid) {
+        return nbuild.VERSION_CODES().Q();
+      } else {
+        return 0;
+      }
     },
     get R(): int {
-      return nbuild.VERSION_CODES().R();
+      if (os.isAndroid) {
+        return nbuild.VERSION_CODES().R();
+      } else {
+        return 0;
+      }
     },
     get S(): int {
-      return nbuild.VERSION_CODES().S();
+      if (os.isAndroid) {
+        return nbuild.VERSION_CODES().S();
+      } else {
+        return 0;
+      }
     },
     get S_V2(): int {
-      return nbuild.VERSION_CODES().S_V2();
+      if (os.isAndroid) {
+        return nbuild.VERSION_CODES().S_V2();
+      } else {
+        return 0;
+      }
     },
   };
 }

@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.dergoogler.component.ModuleView;
 import com.dergoogler.core.BuildConfigNative;
+import com.dergoogler.core.BuildNative;
 import com.dergoogler.core.FileSystemNative;
 import com.dergoogler.core.OSNative;
 import com.dergoogler.core.SharedPreferencesNative;
@@ -25,6 +26,12 @@ public class MainActivity extends AppCompatActivity {
         view.setJavaScriptEnabled(true);
         view.setUserAgentString("MMRL");
         view.loadHTML("file:///android_asset/", new Page(this).load());
+        view.addJavascriptInterface(new FileSystemNative(this), "nfs");
+        view.addJavascriptInterface(new ShellNative(this), "nshell");
+        view.addJavascriptInterface(new BuildNative(), "nbuild");
+        view.addJavascriptInterface(new BuildConfigNative(), "nbuildconfig");
+        view.addJavascriptInterface(new OSNative(this), "nos");
+        view.addJavascriptInterface(new SharedPreferencesNative(this), "nsharedpreferences");
     }
 
 

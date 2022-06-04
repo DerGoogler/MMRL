@@ -67,14 +67,6 @@ public class ModuleView extends WebView {
         this.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
         this.setLayerType(View.LAYER_TYPE_HARDWARE, null);
         this.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-
-        // Internal interfaces
-        super.addJavascriptInterface(new FileSystemNative(this.ctx), "nfs");
-        super.addJavascriptInterface(new ShellNative(this.ctx), "nshell");
-        super.addJavascriptInterface(new BuildConfigNative(), "nbuildconfig");
-        super.addJavascriptInterface(new BuildNative(), "nbuild");
-        super.addJavascriptInterface(new OSNative(this.ctx), "nos");
-        super.addJavascriptInterface(new SharedPreferencesNative(this.ctx), "nsharedpreferences");
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -112,12 +104,6 @@ public class ModuleView extends WebView {
 
     @Override
     public void evaluateJavascript(@NonNull String script, @Nullable ValueCallback<String> resultCallback) {
-        throw new RuntimeException("Stub!");
-    }
-
-    @SuppressLint("JavascriptInterface")
-    @Override
-    public void addJavascriptInterface(Object object, String name) {
         throw new RuntimeException("Stub!");
     }
 

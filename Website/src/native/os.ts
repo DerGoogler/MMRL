@@ -13,7 +13,6 @@ class os {
   private static readonly userAgentAndroid = "MMRL";
   public static readonly userAgent = window.navigator.userAgent;
   public static readonly isAndroid = this.userAgentAndroid === this.userAgent ? true : false;
-  public static readonly isAndroid_A12 = os.isAndroid && BuildConfig.VERSION.SDK_INT > Build.VERSION_CODES.S;
   private static readonly android = os.isAndroid;
 
   public static getSchemeParam(param: string): string {
@@ -67,7 +66,7 @@ class os {
    * @returns Current hex string of monet theme
    */
   public static getMonetColor(id: string, fallback: string): string {
-    if (os.isAndroid_A12) {
+    if (os.isAndroid && BuildConfig.VERSION.SDK_INT > Build.VERSION_CODES.S) {
       return nos.getMonetColor(id);
     } else {
       return fallback;

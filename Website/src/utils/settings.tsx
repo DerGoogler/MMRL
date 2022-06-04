@@ -1,12 +1,13 @@
 import ons from "onsenui";
 import AcknowledgementsActivity from "@Activitys/AcknowledgementsActivity";
 import AlertBuilder from "@Builders/AlertBuilder";
-import { ListInterface, ListOptions } from "@Builders/ListViewBuilder";
-import Constants from "@Native/Constants";
+import { ListInterface } from "@Builders/ListViewBuilder";
 import SharedPreferences from "@Native/SharedPreferences";
 import tools from "@Utils/tools";
 import { BugReportRounded, ExtensionRounded, GavelRounded, SourceRounded } from "@mui/icons-material";
 import BuildConfig from "@Native/BuildConfig";
+import os from "@Native/os";
+import Build from "@Native/Build";
 
 const prefManager = new SharedPreferences();
 
@@ -53,10 +54,17 @@ const settings: ListInterface[] = [
     title: "Appearance",
     content: [
       {
-        key: "disable_lq_modules",
+        key: "enableMonet",
         type: "switch",
-        disabled: true,
-        text: "Disable low-quality module badge",
+        disabled: os.isAndroid && BuildConfig.VERSION.SDK_INT < Build.VERSION_CODES.S,
+        text: "Monet theme",
+        subtext:
+          os.isAndroid && BuildConfig.VERSION.SDK_INT < Build.VERSION_CODES.S
+            ? "Reqiures Android 12+"
+            : "Enabled monet theme on devices higher than Android 12",
+        //style: {
+        //  display: !os.isAndroid ? "none" : "",
+        //},
       },
     ],
   },
@@ -95,7 +103,7 @@ const settings: ListInterface[] = [
         text: (
           <span>
             {BuildConfig.APPLICATION_ID} v{BuildConfig.VERSION_NAME} ({BuildConfig.VERSION_CODE})<br />
-            {Constants.isAndroid ? `${BuildConfig.MAGISK.VERSION_NAME} (${BuildConfig.MAGISK.VERSION_CODE})` : ""}
+            {os.isAndroid ? `${BuildConfig.MAGISK.VERSION_NAME} (${BuildConfig.MAGISK.VERSION_CODE})` : ""}
           </span>
         ),
         style: {

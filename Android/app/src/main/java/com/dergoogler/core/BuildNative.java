@@ -8,6 +8,7 @@ public class BuildNative extends Build {
 
     }
 
+    @JavascriptInterface
     public Object VERSION_CODES() {
         class retn {
 

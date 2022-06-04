@@ -33,6 +33,7 @@ interface ListOptions {
   helper?: Helper;
   type: "switch" | "select" | "";
   text: string | JSX.Element;
+  subtext?: string | JSX.Element;
 
   /**
    * Performs an onClick event to the current list item
@@ -177,7 +178,22 @@ class ListViewBuilder extends Component<Props> {
                     });
                   }}
                 >
-                  <div className="center">{item.text}</div>
+                  <div className="center">
+                    {(() => {
+                      if (item.subtext === (null || "" || undefined)) {
+                        return item.text;
+                      } else {
+                        return (
+                          <>
+                            <span className="list-item__title">{item.text}</span>
+                            <span className="list-item__subtitle" style={{ display: "block" }}>
+                              {item.subtext}
+                            </span>
+                          </>
+                        );
+                      }
+                    })()}
+                  </div>
                 </Gesture>
                 <div className="right">
                   {(() => {

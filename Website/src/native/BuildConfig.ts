@@ -1,6 +1,6 @@
+import os from "./os";
 import Shell from "@Native/ShellBuilder";
 import pkg from "@Package";
-import os from "./os";
 
 /**
  * BuildConfigs for Android

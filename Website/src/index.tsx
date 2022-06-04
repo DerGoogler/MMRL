@@ -16,6 +16,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
 import "@Styles/addtional.scss";
 import "@Styles/markdown-light.scss";
+import os from "@Native/os";
+import monet_theme from "@Styles/monet_theme";
 
 class Bootloader {
   private mountNode: Element | null = document.querySelector("app");
@@ -30,7 +32,11 @@ class Bootloader {
   loadStyle() {
     this.log.i("Setup theme");
     jss.setup(preset());
-    jss.createStyleSheet(theme).attach();
+    if (this.getSharedPreferences.getPref("enableMonet") === "true") {
+      jss.createStyleSheet(monet_theme).attach();
+    } else {
+      jss.createStyleSheet(theme).attach();
+    }
   }
 
   loadActivity() {
@@ -45,7 +51,7 @@ class Bootloader {
   }
 
   init() {
-    if (Constants.isAndroid) {
+    if (os.isAndroid) {
       if (!nos.hasStoragePermission()) {
         nos.requestStoargePermission();
       }
