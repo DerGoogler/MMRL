@@ -3,12 +3,17 @@ package com.dergoogler.mmrl;
 import android.content.Context;
 import android.util.Log;
 
+import com.dergoogler.component.ModuleView;
 import com.dergoogler.core.FileSystemNative;
+
+import java.io.InputStream;
 
 public class Page {
     private final FileSystemNative fs;
+    private final Context ctx;
 
     public Page(Context ctx) {
+        this.ctx = ctx;
         this.fs = new FileSystemNative(ctx);
     }
 

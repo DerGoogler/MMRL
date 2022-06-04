@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.dergoogler.components.ModuleView;
+import com.dergoogler.component.ModuleView;
 import com.dergoogler.core.BuildConfigNative;
 import com.dergoogler.core.FileSystemNative;
 import com.dergoogler.core.OSNative;
@@ -25,12 +25,8 @@ public class MainActivity extends AppCompatActivity {
         view.setJavaScriptEnabled(true);
         view.setUserAgentString("MMRL");
         view.loadHTML("file:///android_asset/", new Page(this).load());
-        view.setJavascriptInterface(new FileSystemNative(this), "nfs");
-        view.setJavascriptInterface(new ShellNative(this), "nshell");
-        view.setJavascriptInterface(new BuildConfigNative(), "nbuildconfig");
-        view.setJavascriptInterface(new OSNative(this), "nos");
-        view.setJavascriptInterface(new SharedPreferencesNative(this), "nsharedpreferences");
     }
+
 
     @Override
     public void onBackPressed() {

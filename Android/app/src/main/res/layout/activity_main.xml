@@ -5,7 +5,7 @@
     android:fitsSystemWindows="false"
     tools:context=".MainActivity">
 
-    <com.dergoogler.components.ModuleView
+    <com.dergoogler.component.ModuleView
         android:id="@+id/mmrl_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

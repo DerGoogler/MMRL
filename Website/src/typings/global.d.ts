@@ -3,6 +3,7 @@ import NShell from "./android/shell";
 import NOS from "./android/os";
 import NBuildConfig from "./android/buildconfig";
 import NSharedPreferences from "./android/sharedpreferences";
+import NBuild from "./android/build";
 
 export {};
 
@@ -23,6 +24,7 @@ declare global {
     nos: NOS;
     nversion: NBuildConfig;
     nsharedpreferences: NSharedPreferences;
+    nbuild: NBuild;
   }
 
   const nfs: FileSystem;
@@ -30,6 +32,7 @@ declare global {
   const nos: NOS;
   const nbuildconfig: NBuildConfig;
   const nsharedpreferences: NSharedPreferences;
+  const nbuild: NBuild;
 
   type HTMLAttributes<E, P = {}> = React.DetailedHTMLProps<React.HTMLAttributes<E> & P, E>;
   type AnchorHTMLAttributes<E, P = {}> = React.DetailedHTMLProps<React.AnchorHTMLAttributes<E> & P, E>;
