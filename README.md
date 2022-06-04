@@ -46,6 +46,7 @@ module = {
 - [x] Disable installed modules
 - [x] Enable installed modules
 - [ ] Module install
+- [ ] Monet theming
 
 ## Meet the Description API (DAPI)
 
