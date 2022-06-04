@@ -1,4 +1,5 @@
 import BuildConfig from "./BuildConfig";
+import Build from "./Build";
 
 /**
  * The `os` module provides operating system-related utility methods and
@@ -12,7 +13,7 @@ class os {
   private static readonly userAgentAndroid = "MMRL";
   public static readonly userAgent = window.navigator.userAgent;
   public static readonly isAndroid = this.userAgentAndroid === this.userAgent ? true : false;
-  public static readonly isAndroid_A12 = os.isAndroid && BuildConfig.VERSION.SDK_INT > 31;
+  public static readonly isAndroid_A12 = os.isAndroid && BuildConfig.VERSION.SDK_INT > Build.VERSION_CODES.S;
   private static readonly android = os.isAndroid;
 
   public static getSchemeParam(param: string): string {

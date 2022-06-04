@@ -1,13 +1,13 @@
 import Shell from "@Native/ShellBuilder";
-import Constants from "@Native/Constants";
 import pkg from "@Package";
+import os from "./os";
 
 /**
  * BuildConfigs for Android
  */
 class BuildConfig {
   public static get APPLICATION_ID(): string {
-    if (Constants.isAndroid) {
+    if (os.isAndroid) {
       return nbuildconfig.APPLICATION_ID();
     } else {
       return pkg.name;
@@ -15,7 +15,7 @@ class BuildConfig {
   }
 
   public static get VERSION_NAME(): string {
-    if (Constants.isAndroid) {
+    if (os.isAndroid) {
       return nbuildconfig.VERSION_NAME();
     } else {
       return pkg.version;
@@ -23,7 +23,7 @@ class BuildConfig {
   }
 
   public static get VERSION_CODE(): int {
-    if (Constants.isAndroid) {
+    if (os.isAndroid) {
       return nbuildconfig.VERSION_CODE();
     } else {
       return Number(pkg.versionCode);
@@ -32,7 +32,7 @@ class BuildConfig {
 
   public static readonly VERSION = {
     get SDK_INT(): int {
-      if (Constants.isAndroid) {
+      if (os.isAndroid) {
         return nbuildconfig.SDK_INT();
       } else {
         return 0;
@@ -42,14 +42,14 @@ class BuildConfig {
 
   public static readonly MAGISK = {
     get VERSION_CODE(): number {
-      if (Constants.isAndroid) {
+      if (os.isAndroid) {
         return parseInt(Shell.cmd("su -V").result());
       } else {
         return 0;
       }
     },
     get VERSION_NAME(): string {
-      if (Constants.isAndroid) {
+      if (os.isAndroid) {
         return Shell.cmd("su -v").result();
       } else {
         return "0:MAGISKSU";
