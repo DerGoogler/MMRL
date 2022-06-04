@@ -4,8 +4,10 @@ import ReactDOM from "react-dom";
 import MainActivity from "@Activitys/MainActivity";
 import ons from "onsenui";
 import Log from "@Native/Log";
+import monet_theme from "@Styles/monet_theme";
 import SharedPreferences from "@Native/SharedPreferences";
 import theme from "@Styles/theme";
+import { os } from "@Native/os";
 import Constants from "@Native/Constants";
 import { ToastContainer } from "react-toastify";
 
@@ -16,8 +18,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
 import "@Styles/addtional.scss";
 import "@Styles/markdown-light.scss";
-import os from "@Native/os";
-import monet_theme from "@Styles/monet_theme";
 
 class Bootloader {
   private mountNode: Element | null = document.querySelector("app");

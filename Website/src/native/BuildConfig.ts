@@ -1,6 +1,8 @@
-import os from "./os";
+import { os } from "./os";
 import Shell from "@Native/ShellBuilder";
 import pkg from "@Package";
+import SharedPreferences from "./SharedPreferences";
+import Build from "./Build";
 
 /**
  * BuildConfigs for Android
@@ -64,6 +66,11 @@ class BuildConfig {
       }
     },
   };
+
+  public static readonly isMonetEnabled: boolean =
+    os.isAndroid && new SharedPreferences().getPref("enableMonet") === "true" && BuildConfig.VERSION.SDK_INT > Build.VERSION_CODES.S
+      ? true
+      : false;
 }
 
 export default BuildConfig;

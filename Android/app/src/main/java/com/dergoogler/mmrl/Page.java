@@ -20,7 +20,6 @@ public class Page {
     private String loadCss() {
         String css = fs.getExternalStorageDir() + "/MMRL/Theme.css";
         if (fs.existFile(css)) {
-            Log.i("TAG", "loadCss: " + fs.readFile(css));
             return fs.readFile(css);
         } else {
             return "";

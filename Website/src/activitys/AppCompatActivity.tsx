@@ -1,4 +1,6 @@
+import BuildConfig from "@Native/BuildConfig";
 import Constants from "@Native/Constants";
+import { os } from "@Native/os";
 import { PureComponent } from "react";
 import { Page } from "react-onsenui";
 
@@ -10,7 +12,9 @@ class AppCompatActivity<P = {}, S = {}> extends PureComponent<P, S> {
     this.onlyAndroid();
   }
 
-  private onlyAndroid(): void {}
+  private onlyAndroid(): void {
+    os.setStatusbarColor(this.setStatusbarColor(), true);
+  }
 
   public componentDidMount(): void {
     this.onlyAndroid();
@@ -24,10 +28,13 @@ class AppCompatActivity<P = {}, S = {}> extends PureComponent<P, S> {
 
   /**
    * Sets an custom status bar color for the activity
-   * @deprecated
    */
   protected setStatusbarColor(): string {
-    return "#4a148c";
+    if (BuildConfig.isMonetEnabled) {
+      return os.getMonetColor("system_accent2_100", "#4a148c");
+    } else {
+      return "#4a148c";
+    }
   }
 
   /**

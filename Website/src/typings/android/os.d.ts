@@ -9,6 +9,8 @@ interface NOS {
   isPackageInstalled(targetPackage: string): bool;
   launchAppByPackageName(targetPackage: string): void;
   getMonetColor(id: string): string;
+  getColorRes(id: string): string;
+  setStatusbarColor(color: string, white?: bool): void;
 }
 
 export default NOS;

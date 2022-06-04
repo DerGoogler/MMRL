@@ -1,4 +1,4 @@
-import os from "./os";
+import { os } from "./os";
 
 class Build {
   public static readonly VERSION_CODES = {

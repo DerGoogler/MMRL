@@ -6,7 +6,7 @@ import tools from "@Utils/tools";
 import ViewModuleActivity from "@Activitys/ViewModuleActivity";
 import Log from "@Native/Log";
 import { VerifiedRounded } from "@mui/icons-material";
-import os from "@Native/os";
+import { os } from "@Native/os";
 
 interface Props {
   notesUrl?: string;
@@ -184,7 +184,7 @@ class ExploreModule extends Component<Props, States> {
                         return (
                           <>
                             {" "}
-                            <VerifiedRounded sx={{ fontSize: 16, color: "#4a148c" }} />
+                            <VerifiedRounded sx={{ fontSize: 16 }} />
                           </>
                         );
                       } else {

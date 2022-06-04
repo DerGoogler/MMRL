@@ -6,7 +6,7 @@ import SharedPreferences from "@Native/SharedPreferences";
 import tools from "@Utils/tools";
 import { BugReportRounded, ExtensionRounded, GavelRounded, SourceRounded } from "@mui/icons-material";
 import BuildConfig from "@Native/BuildConfig";
-import os from "@Native/os";
+import { os } from "@Native/os";
 import Build from "@Native/Build";
 
 const prefManager = new SharedPreferences();

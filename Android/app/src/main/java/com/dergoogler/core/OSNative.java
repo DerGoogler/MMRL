@@ -12,6 +12,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.widget.Toast;
 
@@ -129,6 +130,24 @@ public class OSNative {
             int blue = Color.blue(color);
             int green = Color.green(color);
             return String.format("#%02x%02x%02x", red, green, blue);
+        }
+    }
+
+    @JavascriptInterface
+    public void setStatusbarColor(String color, boolean white) {
+        if (white) {
+            try {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    ((Activity) this.ctx).getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            ((Activity) this.ctx).getWindow().setStatusBarColor(Color.parseColor(color));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

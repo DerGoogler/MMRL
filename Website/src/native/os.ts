@@ -1,5 +1,6 @@
 import BuildConfig from "./BuildConfig";
 import Build from "./Build";
+import SharedPreferences from "./SharedPreferences";
 
 /**
  * The `os` module provides operating system-related utility methods and
@@ -66,12 +67,26 @@ class os {
    * @returns Current hex string of monet theme
    */
   public static getMonetColor(id: string, fallback: string): string {
-    if (os.isAndroid && BuildConfig.VERSION.SDK_INT > Build.VERSION_CODES.S) {
+    const pref = new SharedPreferences().getPref("enableMonet");
+    if (os.isAndroid && pref === "true" && BuildConfig.VERSION.SDK_INT > Build.VERSION_CODES.S) {
       return nos.getMonetColor(id);
     } else {
       return fallback;
     }
   }
+
+  /**
+   * Changes the status bar color
+   * @param color Your color
+   * @param white `true` makes the status bar white 
+   */
+  public static setStatusbarColor(color: string, white: bool): void {
+    if (os.isAndroid) {
+      nos.setStatusbarColor(color, white);
+    } else {
+      name;
+    }
+  }
 }
 
-export default os;
+export { os };

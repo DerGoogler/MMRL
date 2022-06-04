@@ -50,7 +50,7 @@ class SettingsActivity extends AppCompatActivity<Props, States> {
   protected onCreate = () => {
     return (
       <>
-        <settings-container>
+        <settings-container className="settings-dfjsklgdj">
           {/**
             // @ts-ignore */}
           <List>

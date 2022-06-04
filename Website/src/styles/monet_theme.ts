@@ -1,3 +1,6 @@
+import BuildConfig from "@Native/BuildConfig";
+import { os } from "@Native/os";
+
 const monet_theme: any = {
   "@global": {
     ":root": {},
@@ -50,6 +53,12 @@ const monet_theme: any = {
     },
     "h4, h5, h6": {
       fontSize: "18px",
+    },
+    ".MuiSvgIcon-root": {
+      color: os.getMonetColor("system_accent1_400", "#4a148c"),
+    },
+    ".settings-dfjsklgdj .MuiSvgIcon-root": {
+      color: "black",
     },
     ".page": {
       fontFamily: '-apple-system, "Helvetica Neue", "Helvetica", "Arial", "Lucida Grande", sans-serif',
@@ -179,10 +188,10 @@ const monet_theme: any = {
       fontSize: "20px",
     },
     ".page--material__background": {
-      backgroundColor: "rgba(255, 255, 255, 1)",
+      backgroundColor: os.getMonetColor("system_accent2_100", "rgba(255, 255, 255, 1)"),
       fallbacks: [
         {
-          backgroundColor: "#ffffff",
+          backgroundColor: os.getMonetColor("system_accent2_100", "#ffffff"),
         },
       ],
     },
@@ -1036,7 +1045,7 @@ const monet_theme: any = {
       borderBottom: "0",
       boxShadow: "0 1px 5px rgba(0, 0, 0, 0.3)",
       padding: "0",
-      backgroundColor: "#4a148c",
+      backgroundColor: os.getMonetColor("system_accent2_100", "#4a148c"),
       backgroundSize: "0",
     },
     ".toolbar--noshadow": {
@@ -1051,13 +1060,13 @@ const monet_theme: any = {
       fontSize: "20px",
       fallbacks: [
         {
-          color: "#ffffff",
+          color: BuildConfig.isMonetEnabled ? "black" : "#ffffff",
         },
         {
           fontWeight: "400",
         },
       ],
-      color: "rgba(255, 255, 255, 1)",
+      color: BuildConfig.isMonetEnabled ? "rgba(0, 0, 0, 1)" : "rgba(255, 255, 255, 1)",
       height: "56px",
       minWidth: "72px",
       width: "auto",
@@ -1070,13 +1079,13 @@ const monet_theme: any = {
       fontSize: "20px",
       fallbacks: [
         {
-          color: "#ffffff",
+          color: BuildConfig.isMonetEnabled ? "black" : "#ffffff",
         },
         {
           fontWeight: "400",
         },
       ],
-      color: "rgba(255, 255, 255, 1)",
+      color: BuildConfig.isMonetEnabled ? "rgba(0, 0, 0, 1)" : "rgba(255, 255, 255, 1)",
       height: "56px",
       width: "auto",
       webkitBoxFlex: "1",
@@ -1560,7 +1569,7 @@ const monet_theme: any = {
       margin: "0",
       font: "inherit",
       color: "#ffffff",
-      background: "transparent",
+      backgroundColor: os.getMonetColor("system_accent1_400", "#4a148c"),
       border: "0 solid currentColor",
       lineHeight: "36px",
       fontFamily: '"Roboto", "Noto", sans-serif',
@@ -1626,7 +1635,6 @@ const monet_theme: any = {
       fontSize: "14px",
       letterSpacing: "0",
       verticalAlign: "middle",
-      backgroundColor: "#4a148c",
       borderRadius: "8px",
       transition: "all 0.25s linear",
       boxShadow: "0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12),\r\n    0 3px 1px -2px rgba(0, 0, 0, 0.2)",
@@ -2240,19 +2248,21 @@ const monet_theme: any = {
     },
     ".tabbar--material": {
       background: "none",
-      backgroundColor: "#4a148c",
+      backgroundColor: os.getMonetColor("system_accent2_100", "#4a148c"),
       borderBottomWidth: "0",
-      boxShadow: "0 4px 2px -2px rgba(0, 0, 0, 0.14), 0 3px 5px -2px rgba(0, 0, 0, 0.12),\r\n    0 5px 1px -4px rgba(0, 0, 0, 0.2)",
+      boxShadow: BuildConfig.isMonetEnabled
+        ? "none"
+        : "0 4px 2px -2px rgba(0, 0, 0, 0.14), 0 3px 5px -2px rgba(0, 0, 0, 0.12),\r\n    0 5px 1px -4px rgba(0, 0, 0, 0.2)",
     },
     ".tabbar--material__button": {
       backgroundColor: "transparent",
-      color: "rgba(255, 255, 255, 1)",
+      color: BuildConfig.isMonetEnabled ? "rgba(0, 0, 0, 1)" : "rgba(255, 255, 255, 1)",
       fallbacks: [
         {
           fontWeight: "500",
         },
         {
-          color: "#ffffff",
+          color: BuildConfig.isMonetEnabled ? "#000000" : "#ffffff",
         },
       ],
       textTransform: "uppercase",
@@ -2269,10 +2279,10 @@ const monet_theme: any = {
       bottom: "0",
       position: "absolute",
       marginTop: "-2px",
-      backgroundColor: "rgba(255, 255, 255, 1)",
+      backgroundColor: BuildConfig.isMonetEnabled ? "rgba(0, 0, 0, 1)" : "rgba(255, 255, 255, 1)",
       fallbacks: [
         {
-          backgroundColor: "#ffffff",
+          backgroundColor: BuildConfig.isMonetEnabled ? "#000000" : "#ffffff",
         },
       ],
     },
@@ -2282,10 +2292,10 @@ const monet_theme: any = {
     },
     ":checked + .tabbar--material__button": {
       backgroundColor: "transparent",
-      color: "rgba(255, 255, 255, 1)",
+      color: BuildConfig.isMonetEnabled ? "#rgba(0, 0, 0, 1)" : "rgba(255, 255, 255, 1)",
       fallbacks: [
         {
-          color: "#ffffff",
+          color: BuildConfig.isMonetEnabled ? "#000000" : "#ffffff",
         },
       ],
     },
@@ -2299,10 +2309,10 @@ const monet_theme: any = {
     },
     ".tabbar--material__border": {
       height: "2px",
-      backgroundColor: "rgba(255, 255, 255, 1)",
+      backgroundColor: os.getMonetColor("system_accent1_400", "rgba(255, 255, 255, 1)"),
       fallbacks: [
         {
-          backgroundColor: "#ffffff",
+          backgroundColor: os.getMonetColor("system_accent1_400", "#ffffff"),
         },
       ],
     },
@@ -3611,7 +3621,7 @@ const monet_theme: any = {
       fontWeight: "400",
       borderRadius: "8px",
       height: "48px",
-      backgroundColor: "#fafafa",
+      backgroundColor: os.getMonetColor("system_accent2_200", "#fafafa"),
       backgroundImage:
         'url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMThweCIgaGVpZ2h0PSIxOHB4IiB2aWV3Qm94PSIwIDAgMTggMTgiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8IS0tIEdlbmVyYXRvcjogU2tldGNoIDQzLjIgKDM5MDY5KSAtIGh0dHA6Ly93d3cuYm9oZW1pYW5jb2RpbmcuY29tL3NrZXRjaCAtLT4KICAgIDx0aXRsZT5TaGFwZTwvdGl0bGU+CiAgICA8ZGVzYz5DcmVhdGVkIHdpdGggU2tldGNoLjwvZGVzYz4KICAgIDxkZWZzPjwvZGVmcz4KICAgIDxnIGlkPSJQYWdlLTEiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIiBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPgogICAgICAgIDxnIGlkPSJhbmRyb2lkLXNlYXJjaC1pbnB1dC1pY29uIiBmaWxsLXJ1bGU9Im5vbnplcm8iIGZpbGw9IiM4OTg5ODkiPgogICAgICAgICAgICA8ZyBpZD0iY29tcG9uZW50cyI+CiAgICAgICAgICAgICAgICA8ZyBpZD0ibWF0ZXJpYWwtc2VhcmNoIj4KICAgICAgICAgICAgICAgICAgICA8ZyBpZD0ic2VhcmNoIj4KICAgICAgICAgICAgICAgICAgICAgICAgPGcgaWQ9Ik1hdGVyaWFsL0ljb25zLWJsYWNrL3NlYXJjaCI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8cGF0aCBkPSJNMTIuNTAyLDYuNDkxIEwxMS43MDgsNi40OTEgTDExLjQzMiw2Ljc2NSBDMTIuNDA3LDcuOTAyIDEzLDkuMzc2IDEzLDEwLjk5MSBDMTMsMTQuNTgxIDEwLjA5LDE3LjQ5MSA2LjUsMTcuNDkxIEMyLjkxLDE3LjQ5MSAwLDE0LjU4MSAwLDEwLjk5MSBDMCw3LjQwMSAyLjkxLDQuNDkxIDYuNSw0LjQ5MSBDOC4xMTUsNC40OTEgOS41ODgsNS4wODMgMTAuNzI1LDYuMDU3IEwxMS4wMDEsNS43ODMgTDExLjAwMSw0Ljk5MSBMMTUuOTk5LDAgTDE3LjQ5LDEuNDkxIEwxMi41MDIsNi40OTEgTDEyLjUwMiw2LjQ5MSBaIE02LjUsNi40OTEgQzQuMDE0LDYuNDkxIDIsOC41MDUgMiwxMC45OTEgQzIsMTMuNDc2IDQuMDE0LDE1LjQ5MSA2LjUsMTUuNDkxIEM4Ljk4NSwxNS40OTEgMTEsMTMuNDc2IDExLDEwLjk5MSBDMTEsOC41MDUgOC45ODUsNi40OTEgNi41LDYuNDkxIEw2LjUsNi40OTEgWiIgaWQ9IlNoYXBlIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg4Ljc0NTAwMCwgOC43NDU1MDApIHNjYWxlKC0xLCAxKSByb3RhdGUoLTE4MC4wMDAwMDApIHRyYW5zbGF0ZSgtOC43NDUwMDAsIC04Ljc0NTUwMCkgIj48L3BhdGg+CiAgICAgICAgICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgICAgICAgICA8L2c+CiAgICAgICAgICAgICAgICA8L2c+CiAgICAgICAgICAgIDwvZz4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPg==")',
       backgroundSize: "18px",
@@ -5548,7 +5558,7 @@ const monet_theme: any = {
       boxSizing: "border-box",
     },
     ".card--material": {
-      backgroundColor: "white",
+      backgroundColor: os.getMonetColor("system_accent2_200", "white"),
       borderRadius: "8px",
       boxShadow: "0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12),\r\n    0 3px 1px -2px rgba(0, 0, 0, 0.2)",
       fontFamily: '"Roboto", "Noto", sans-serif',

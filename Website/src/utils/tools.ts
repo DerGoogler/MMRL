@@ -1,4 +1,3 @@
-import Constants from "@Native/Constants";
 import SharedPreferences from "@Native/SharedPreferences";
 
 class tools {

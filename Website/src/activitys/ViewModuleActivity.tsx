@@ -14,6 +14,7 @@ import DiscordWidget from "@Components/dapi/DiscordWidget";
 import { DownloadRounded, InfoRounded, InstallMobileRounded, VerifiedRounded, WarningRounded } from "@mui/icons-material";
 import BuildConfig from "@Native/BuildConfig";
 import { HighlightedMarkdown } from "@Components/HighlightMarkdown";
+import { os } from "@Native/os";
 
 interface Props {
   extra?: any;
@@ -144,22 +145,22 @@ class ViewModuleActivity extends Component<Props, States> {
                 window.open(download);
               }}
             >
-              Download <DownloadRounded />
+              Download <DownloadRounded sx={{ color: "white" }} />
             </Button>
-            <div style={{ padding: "4px", display: !Constants.isAndroid ? "none" : "" }}></div>
+            <div style={{ padding: "4px", display: !os.isAndroid ? "none" : "" }}></div>
             {/*
           // @ts-ignore */}
             <Button
               modifier="large"
-              disabled={!Constants.isAndroid}
+              disabled={!os.isAndroid}
               style={{
-                display: !Constants.isAndroid ? "none" : "",
+                display: !os.isAndroid ? "none" : "",
               }}
               onClick={() => {
                 ons.notification.alert("The option will be available in the future");
               }}
             >
-              Install <InstallMobileRounded />
+              Install <InstallMobileRounded sx={{ color: "white" }} />
             </Button>
           </div>
           {/*
@@ -181,7 +182,7 @@ class ViewModuleActivity extends Component<Props, States> {
                         </td>
                         <td
                           style={{
-                            color: Constants.isAndroid
+                            color: os.isAndroid
                               ? BuildConfig.MAGISK.PARSE_VERSION(minMagisk) > BuildConfig.MAGISK.VERSION_CODE
                                 ? "red"
                                 : ""

@@ -2,13 +2,12 @@ import { Component, LegacyRef } from "react";
 import { Button, Page, SearchInput, ProgressCircular } from "react-onsenui";
 import axios from "axios";
 import { toast } from "react-toastify";
-import tools from "@Utils/tools";
 import ExploreModule from "@Components/ExploreModule";
 import SharedPreferences from "@Native/SharedPreferences";
 import { PushProps } from "@Activitys/MainActivity";
 import { SearchRounded } from "@mui/icons-material";
-import os from "@Native/os";
-import ons from "onsenui";
+import { os } from "@Native/os";
+import BuildConfig from "@Native/BuildConfig";
 
 interface Props {
   pushPage(...arg: any): PushProps;
@@ -164,7 +163,7 @@ class ExploreModuleFragment extends Component<Props, States> {
                   alignItems: "center",
                 }}
               >
-                <SearchRounded />
+                <SearchRounded sx={{ color: "white" }} />
               </div>
             </Button>
           </div>
