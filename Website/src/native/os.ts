@@ -59,6 +59,20 @@ class os {
       window.open(link, "_blank");
     }
   }
+
+  /**
+   * Getting theme color for Android devices that over Android 12
+   * @param id Get the monet color
+   * @param fallback Is used when the Android version is lower than 12
+   * @returns Current hex string of monet theme
+   */
+  public static getMonetColor(id: string, fallback: string): string {
+    if (os.isAndroid_A12) {
+      return nos.getMonetColor(id);
+    } else {
+      return fallback;
+    }
+  }
 }
 
 export default os;

@@ -8,6 +8,7 @@ interface NOS {
   close(): void;
   isPackageInstalled(targetPackage: string): bool;
   launchAppByPackageName(targetPackage: string): void;
+  getMonetColor(id: string): string;
 }
 
 export default NOS;

@@ -15,8 +15,10 @@ import android.util.Log;
 import android.webkit.JavascriptInterface;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.browser.customtabs.CustomTabColorSchemeParams;
 import androidx.browser.customtabs.CustomTabsIntent;
+import androidx.core.content.ContextCompat;
 
 import com.dergoogler.mmrl.BuildConfig;
 
@@ -49,6 +51,7 @@ public class OSNative {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @JavascriptInterface
     public boolean hasStoragePermission() {
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -58,6 +61,7 @@ public class OSNative {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @JavascriptInterface
     public void requestStoargePermission() {
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -109,6 +113,22 @@ public class OSNative {
         Intent launchIntent = this.ctx.getPackageManager().getLaunchIntentForPackage(targetPackage);
         if (launchIntent != null) {
             this.ctx.startActivity(launchIntent);//null pointer check in case package name was not found
+        }
+    }
+
+    @JavascriptInterface
+    public String getMonetColor(String id) {
+        int nameResourceID = this.ctx.getResources().getIdentifier("@android:color/" + id,
+                "color", this.ctx.getApplicationInfo().packageName);
+        if (nameResourceID == 0) {
+            throw new IllegalArgumentException(
+                    "No resource string found with name " + id);
+        } else {
+            int color = ContextCompat.getColor(this.ctx, nameResourceID);
+            int red = Color.red(color);
+            int blue = Color.blue(color);
+            int green = Color.green(color);
+            return String.format("#%02x%02x%02x", red, green, blue);
         }
     }
 }
