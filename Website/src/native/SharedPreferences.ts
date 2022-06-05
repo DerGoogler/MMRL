@@ -1,4 +1,5 @@
 import Constants from "@Native/Constants";
+import { os } from "./os";
 
 /**
  * Simple class to manage the web local sotrage and the Android native preferences
@@ -12,7 +13,98 @@ class SharedPreferences {
     this.webStorage = localStorage;
   }
 
-  /** Returns the current value associated with the given key, or null if the given key does not exist. */ // @ts-ignore
+  public setString(key: string, value: string): void {
+    if (os.isAndroid) {
+      nsharedpreferences.setString(key, value);
+    } else {
+      this.webStorage.setItem(key, String(value));
+    }
+  }
+
+  public setBoolean(key: string, value: bool): void {
+    if (os.isAndroid) {
+      nsharedpreferences.setBoolean(key, value);
+    } else {
+      this.webStorage.setItem(key, String(value));
+    }
+  }
+
+  public setInt(key: string, value: int): void {
+    if (os.isAndroid) {
+      nsharedpreferences.setInt(key, value);
+    } else {
+      this.webStorage.setItem(key, String(value));
+    }
+  }
+
+  /**
+   * Retrieve a String value from the preferences.
+   *
+   * @param key The name of the preference to retrieve.
+   * @param defValue Value to return if this preference does not exist.
+   *
+   * @return Returns the preference value if it exists, or defValue. Throws ClassCastException if there is a preference with this name that is not a String.
+   *
+   * @throws ClassCastException
+   */
+  public getString(key: string, defValue: string): string | String {
+    if (os.isAndroid) {
+      return nsharedpreferences.getString(key, defValue);
+    } else {
+      return String(this.webStorage.getItem(key));
+    }
+  }
+
+  /**
+   * Retrieve a boolean value from the preferences.
+   *
+   * @param key The name of the preference to retrieve.
+   * @param defValue Value to return if this preference does not exist.
+   *
+   * @returns Returns the preference value if it exists, or defValue. Throws ClassCastException if there is a preference with this name that is not a boolean.
+   *
+   * @throws ClassCastException
+   */
+  public getBoolean(key: string, defValue: bool): boolean | Boolean {
+    if (os.isAndroid) {
+      return nsharedpreferences.getBoolean(key, defValue);
+    } else {
+      return Boolean(this.webStorage.getItem(key));
+    }
+  }
+
+  /**
+   * Retrieve a int value from the preferences.
+   *
+   * @param key The name of the preference to retrieve.
+   * @param defValue Value to return if this preference does not exist.
+   *
+   * @returns Returns the preference value if it exists, or defValue. Throws ClassCastException if there is a preference with this name that is not an int.
+   *
+   * @throws ClassCastException
+   */
+  public getInt(key: string, defValue: int): number | Number {
+    if (os.isAndroid) {
+      return nsharedpreferences.getInt(key, defValue);
+    } else {
+      return Number(this.webStorage.getItem(key));
+    }
+  }
+
+  /**
+   * @deprecated
+   */
+  public setPref(key: string, value: string): void {
+    if (Constants.isAndroid) {
+      nsharedpreferences.setPref(key, value);
+    } else {
+      this.webStorage.setItem(key, value);
+    }
+  }
+
+  /**
+   * @deprecated
+   */
   public getPref(key: string): string | null | undefined {
     if (Constants.isAndroid) {
       const get = nsharedpreferences.getPref(key);
@@ -30,20 +122,7 @@ class SharedPreferences {
       }
     }
   }
-  /**
-   * Sets the value of the pair identified by key to value, creating a new key/value pair if none existed for key previously.
-   *
-   * Throws a "QuotaExceededError" DOMException exception if the new value couldn't be set. (Setting could fail if, e.g., the user has disabled storage for the site, or if the quota has been exceeded.)
-   *
-   * Dispatches a storage event on Window objects holding an equivalent Storage object.
-   */
-  public setPref(key: string, value: string): void {
-    if (Constants.isAndroid) {
-      nsharedpreferences.setPref(key, value);
-    } else {
-      this.webStorage.setItem(key, value);
-    }
-  }
+
   /**
    * Removes the key/value pair with the given key, if a key/value pair with the given key exists.
    *

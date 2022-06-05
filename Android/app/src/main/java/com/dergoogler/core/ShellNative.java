@@ -19,7 +19,7 @@ public class ShellNative {
     @JavascriptInterface
     public void exec(String command) {
         InputStream bashrc = this.ctx.getResources().openRawResource(R.raw.bashrc);
-        com.topjohnwu.superuser.Shell.cmd(bashrc).add(command).exec();
+        Shell.cmd(bashrc).add(command).exec();
     }
 
     @JavascriptInterface
@@ -29,7 +29,7 @@ public class ShellNative {
 
     @JavascriptInterface
     public boolean isAppGrantedRoot() {
-        Boolean appGrantedRoot = com.topjohnwu.superuser.Shell.isAppGrantedRoot();
+        Boolean appGrantedRoot = Shell.isAppGrantedRoot();
         if (appGrantedRoot == null) {
             return false;
         } else return appGrantedRoot;
