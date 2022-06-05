@@ -81,11 +81,11 @@ interface ListInterface {
 }
 
 class ListViewBuilder extends Component<Props> {
-  private prefManager: SharedPreferences;
+  private pref: SharedPreferences;
 
   public constructor(props: Props | Readonly<Props>) {
     super(props);
-    this.prefManager = new SharedPreferences();
+    this.pref = new SharedPreferences();
   }
 
   /**
@@ -112,11 +112,11 @@ class ListViewBuilder extends Component<Props> {
   }
 
   private getPref(key: string): string | null | undefined {
-    return this.prefManager.getPref(key);
+    return this.pref.getPref(key);
   }
 
   private setPref(key: string, content: string): void {
-    this.prefManager.setPref(key, content);
+    this.pref.setPref(key, content);
   }
 
   private setSetting(key: string, data: any): void {
@@ -201,13 +201,14 @@ class ListViewBuilder extends Component<Props> {
                       case "switch":
                         return (
                           <Switch
-                            checked={this.default(item.switchDefaultValue, this.getSettingSwitch(item.key!), false)}
+                            //@ts-ignore
+                            checked={this.pref.getBoolean(item.key!, false)}
                             disabled={Boolean(item.disabled)}
                             onChange={(e: any) => {
                               /**
                                * This will keep the default funtion
                                */
-                              const keepDefaultFuntion = (): void => this.setSetting(item.key!, e.target.checked);
+                              const keepDefaultFuntion = (): void => this.pref.setBoolean(item.key!, e.target.checked);
                               if (typeof item.callback == "function") {
                                 const key = item.key;
                                 item.callback(e, key, keepDefaultFuntion());
@@ -221,12 +222,13 @@ class ListViewBuilder extends Component<Props> {
                         return (
                           <Select
                             disabled={Boolean(item.disabled)}
-                            value={tools.typeCheck(this.getSettingSelect(item.key!), tools.typeCheck(item.selectDefaultValue, ""))}
+                            // @ts-ignore
+                            value={this.pref.getString(item.key!, item.selectDefaultValue)}
                             onChange={(e: any) => {
                               /**
                                * This will keep the default funtion
                                */
-                              const keepDefaultFuntion = () => this.setSetting(item.key!, e.target.value);
+                              const keepDefaultFuntion = () => this.pref.setString(item.key!, e.target.value);
                               if (typeof item.callback == "function") {
                                 const key = item.key;
                                 item.callback(e, key, keepDefaultFuntion());

@@ -4,12 +4,12 @@ import ReactDOM from "react-dom";
 import MainActivity from "@Activitys/MainActivity";
 import ons from "onsenui";
 import Log from "@Native/Log";
-import monet_theme from "@Styles/monet_theme";
 import SharedPreferences from "@Native/SharedPreferences";
-import theme from "@Styles/theme";
 import { os } from "@Native/os";
 import Constants from "@Native/Constants";
 import { ToastContainer } from "react-toastify";
+import light_theme from "@Styles/light_theme";
+import dark_theme from "@Styles/dark_theme";
 
 // Webpack CSS import
 import "onsenui/css/onsenui-core.css";
@@ -18,6 +18,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
 import "@Styles/addtional.scss";
 import "@Styles/markdown-light.scss";
+import "@Styles/markdown-dark.scss";
 
 class Bootloader {
   private mountNode: Element | null = document.querySelector("app");
@@ -32,10 +33,10 @@ class Bootloader {
   loadStyle() {
     this.log.i("Setup theme");
     jss.setup(preset());
-    if (this.getSharedPreferences.getPref("enableMonet") === "true") {
-      jss.createStyleSheet(monet_theme).attach();
+    if (this.getSharedPreferences.getBoolean("enableDarkmode", false)) {
+      jss.createStyleSheet(dark_theme).attach();
     } else {
-      jss.createStyleSheet(theme).attach();
+      jss.createStyleSheet(light_theme).attach();
     }
   }
 

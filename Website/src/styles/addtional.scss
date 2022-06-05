@@ -8,11 +8,15 @@ code {
 
 // Changelog expand
 .css-67l5gl.Mui-expanded {
-  margin: 0;
+  margin: 0px;
+}
+
+.css-67l5gl.Mui-expanded:first-of-type {
+  margin-bottom: 0px;
 }
 
 .css-67l5gl.Mui-expanded:last-of-type {
-  margin: 0;
+  margin-top: 0px;
 }
 
 img,

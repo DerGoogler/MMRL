@@ -1,5 +1,6 @@
 import { Component } from "react";
 import tools from "@Utils/tools";
+import SharedPreferences from "@Native/SharedPreferences";
 
 interface AInterface {
   download?: any;
@@ -30,7 +31,7 @@ class A extends Component<AInterface> {
           onClick={() => {
             window.open(href);
           }}
-          style={{ cursor: "pointer", color: "#4a148c" }}
+          style={{ cursor: "pointer", color: new SharedPreferences().getBoolean("enableDarkmode", false) ? "#bb86fc" : "#4a148c" }}
         >
           {children}
         </a>

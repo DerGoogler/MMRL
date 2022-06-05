@@ -51,7 +51,12 @@ class SharedPreferences {
     if (os.isAndroid) {
       return nsharedpreferences.getString(key, defValue);
     } else {
-      return String(this.webStorage.getItem(key));
+      const get = this.webStorage.getItem(key);
+      if (get === null) {
+        return defValue;
+      } else {
+        return String(get);
+      }
     }
   }
 
@@ -69,7 +74,12 @@ class SharedPreferences {
     if (os.isAndroid) {
       return nsharedpreferences.getBoolean(key, defValue);
     } else {
-      return Boolean(this.webStorage.getItem(key));
+      const get = this.webStorage.getItem(key);
+      if (get === null) {
+        return defValue;
+      } else {
+        return Boolean(get);
+      }
     }
   }
 
@@ -87,7 +97,12 @@ class SharedPreferences {
     if (os.isAndroid) {
       return nsharedpreferences.getInt(key, defValue);
     } else {
-      return Number(this.webStorage.getItem(key));
+      const get = this.webStorage.getItem(key);
+      if (get === null) {
+        return defValue;
+      } else {
+        return Number(get);
+      }
     }
   }
 

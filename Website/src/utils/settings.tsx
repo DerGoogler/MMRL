@@ -54,17 +54,11 @@ const settings: ListInterface[] = [
     title: "Appearance",
     content: [
       {
-        key: "enableMonet",
+        key: "enableDarkmode",
         type: "switch",
         disabled: os.isAndroid && BuildConfig.VERSION.SDK_INT < Build.VERSION_CODES.S,
-        text: "Monet theme",
-        subtext:
-          os.isAndroid && BuildConfig.VERSION.SDK_INT < Build.VERSION_CODES.S
-            ? "Reqiures Android 12+"
-            : "Enabled monet theme on devices higher than Android 12",
-        //style: {
-        //  display: !os.isAndroid ? "none" : "",
-        //},
+        text: "Dark theme",
+        subtext: "Works on both platform",
       },
     ],
   },

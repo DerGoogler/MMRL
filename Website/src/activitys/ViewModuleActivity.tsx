@@ -15,6 +15,7 @@ import { DownloadRounded, InfoRounded, InstallMobileRounded, VerifiedRounded, Wa
 import BuildConfig from "@Native/BuildConfig";
 import { HighlightedMarkdown } from "@Components/HighlightMarkdown";
 import { os } from "@Native/os";
+import SharedPreferences from "@Native/SharedPreferences";
 
 interface Props {
   extra?: any;
@@ -106,7 +107,10 @@ class ViewModuleActivity extends Component<Props, States> {
     return (
       <>
         <Page renderToolbar={this.renderToolbar}>
-          <div style={{ padding: "8px", marginBottom: "56px" }} className="markdown-body-light">
+          <div
+            style={{ padding: "8px", marginBottom: "56px" }}
+            className={new SharedPreferences().getBoolean("enableDarkmode", false) ? "markdown-body-dark" : "markdown-body-light"}
+          >
             {
               /*
             // @ts-ignore */
@@ -134,7 +138,9 @@ class ViewModuleActivity extends Component<Props, States> {
               bottom: 0,
               width: "100%",
               textAlign: "center",
-              backgroundColor: "rgba(256, 256, 256, .85)",
+              backgroundColor: new SharedPreferences().getBoolean("enableDarkmode", false)
+                ? "rgba(18, 18, 18, .85)"
+                : "rgba(256, 256, 256, .85)",
             }}
           >
             {/*

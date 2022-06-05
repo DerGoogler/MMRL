@@ -1,4 +1,4 @@
-const theme: any = {
+const light_theme: any = {
   "@global": {
     ":root": {},
     html: {
@@ -5959,4 +5959,4 @@ const theme: any = {
   },
 };
 
-export default theme;
+export default light_theme;
