@@ -4,39 +4,15 @@ The Magisk Module Repo Loader (MMRL). Allows you to load custom repos with an si
 
 ## How to create custom repo?
 
-At first need you to fork [Magisk-Modules-Alt-Repo/json](https://github.com/Magisk-Modules-Alt-Repo/json) or create yourself one
-
-### Configuration
-
-Change `Magisk-Modules-Alt-Repo` to your username or something where is hosted.
-
-```py
-# Configuration
-REPO_NAME = "Magisk-Modules-Alt-Repo"
-REPO_TITLE = "Magisk Modules Alt Repo"
-```
-
-At least can you edit the json output
-
-> Please keep all default created objects!
-
-```py
-# Create meta module information
-module = {
-    "id": moduleprop["id"],
-    "last_update": int(repo.updated_at.timestamp() * 1000),
-    "prop_url": f"https://raw.githubusercontent.com/{repo.full_name}/{repo.default_branch}/module.prop",
-    "zip_url": f"https://github.com/{repo.full_name}/archive/{repo.default_branch}.zip",
-    "notes_url": f"https://raw.githubusercontent.com/{repo.full_name}/{repo.default_branch}/README.md",
-    "stars": int(repo.stargazers_count)
-}
-```
+Please use [Googlers-Magisk-Repo/Magisk-Module-Repo-Builder](https://github.com/Googlers-Magisk-Repo/Magisk-Module-Repo-Builder) to build you an own repository.
+        
+~At first need you to fork [Magisk-Modules-Alt-Repo/json](https://github.com/Magisk-Modules-Alt-Repo/json) or create yourself one~
 
 ## What MMRL Supports (Roadmap)
 
 - [x] Custom repo loading
 - [ ] Translation
-- [ ] ~Dark mode~
+- [x] Dark mode
 
 #### Android only
 
