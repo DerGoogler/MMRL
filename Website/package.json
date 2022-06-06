@@ -1,7 +1,7 @@
 {
     "name": "com.dergoogler.mmrl.web",
-    "version": "sdds",
-    "versionCode": "sds",
+    "version": "1.4.0@alpha-3",
+    "versionCode": "140",
     "description": "",
     "main": "index.tsx",
     "keywords": [],
