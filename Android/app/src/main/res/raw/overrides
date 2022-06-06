@@ -1,0 +1,19 @@
+window.open = (url) => {
+  nos.open(url);
+};
+
+window.close = () => {
+  nos.close();
+};
+
+console.log = (tag, message) => {
+  nos.logi(tag, message);
+};
+
+console.warn = (tag, message) => {
+  nos.logw(tag, message);
+};
+
+console.error = (tag, message) => {
+  nos.loge(tag, message);
+};

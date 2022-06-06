@@ -3,6 +3,7 @@ package com.dergoogler.core;
 import android.os.Build;
 import android.webkit.JavascriptInterface;
 
+
 public class BuildNative extends Build {
     public BuildNative() {
 

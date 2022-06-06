@@ -13,7 +13,7 @@ import SharedPreferences from "./SharedPreferences";
 class os {
   private static readonly userAgentAndroid = "MMRL";
   public static readonly userAgent = window.navigator.userAgent;
-  public static readonly isAndroid = this.userAgentAndroid === this.userAgent ? true : false;
+  public static readonly isAndroid = this.userAgentAndroid === this.userAgent || window.hasOwnProperty("cordova") ? true : false;
   private static readonly android = os.isAndroid;
 
   public static getSchemeParam(param: string): string {
@@ -78,7 +78,7 @@ class os {
   /**
    * Changes the status bar color
    * @param color Your color
-   * @param white `true` makes the status bar white 
+   * @param white `true` makes the status bar white
    */
   public static setStatusbarColor(color: string, white: bool): void {
     if (os.isAndroid) {

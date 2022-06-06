@@ -18,6 +18,12 @@ declare global {
     readonly name: string;
   }
 
+  interface Console {
+    log(tag: string, message: string): void;
+    warn(tag: string, message: string): void;
+    error(tag: string, message: string): void;
+  }
+
   interface Window {
     nfs: FileSystem;
     nshell: NShell;

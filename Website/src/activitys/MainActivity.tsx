@@ -131,8 +131,7 @@ class MainActivity extends Component<PushProps, States> {
       },
     });
 
-    this.setState({ routeConfig });
-    this.setState({ currentPage: "main" });
+    this.setState({ routeConfig, currentPage: "main" });
   };
 
   private onPostPush = () => {

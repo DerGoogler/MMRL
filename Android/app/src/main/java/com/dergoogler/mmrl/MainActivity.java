@@ -2,10 +2,13 @@ package com.dergoogler.mmrl;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.dergoogler.component.ModuleView;
+import com.dergoogler.component.ModuleViewClient;
 import com.dergoogler.core.BuildConfigNative;
 import com.dergoogler.core.BuildNative;
 import com.dergoogler.core.FileSystemNative;
@@ -32,8 +35,14 @@ public class MainActivity extends AppCompatActivity {
         view.addJavascriptInterface(new BuildConfigNative(), "nbuildconfig");
         view.addJavascriptInterface(new OSNative(this), "nos");
         view.addJavascriptInterface(new SharedPreferencesNative(this), "nsharedpreferences");
+        view.setWebViewClient(new ModuleViewClient() {
+            @Override
+            public void onPageFinished(ModuleView view, String url) {
+                super.onPageFinished(view, url);
+                view.loadUrl("javascript:function inputClick(val){native.abcd(val);}");
+            }
+        });
     }
-
 
     @Override
     public void onBackPressed() {

@@ -36,10 +36,27 @@ public class OSNative {
         Toast.makeText(this.ctx, content, duration).show();
     }
 
+    @Deprecated
     @JavascriptInterface
     public void log(String TAG, String message) {
         Log.i(TAG, message);
     }
+
+    @JavascriptInterface
+    public void logi(String TAG, String message) {
+        Log.i(TAG, message);
+    }
+
+    @JavascriptInterface
+    public void logw(String TAG, String message) {
+        Log.w(TAG, message);
+    }
+
+    @JavascriptInterface
+    public void loge(String TAG, String message) {
+        Log.e(TAG, message);
+    }
+
 
     @JavascriptInterface
     public String getSchemeParam(String param) {
@@ -52,7 +69,6 @@ public class OSNative {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @JavascriptInterface
     public boolean hasStoragePermission() {
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -62,7 +78,6 @@ public class OSNative {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @JavascriptInterface
     public void requestStoargePermission() {
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {

@@ -1,6 +1,5 @@
 interface NOS {
   makeToast(content: string, duration: int): void;
-  log(tag: string, message: string): void;
   getSchemeParam(param: string): string;
   hasStoragePermission(): bool;
   requestStoargePermission(): void;
@@ -11,6 +10,13 @@ interface NOS {
   getMonetColor(id: string): string;
   getColorRes(id: string): string;
   setStatusbarColor(color: string, white?: bool): void;
+  /**
+   * @deprecated 
+   */
+  log(tag: string, message: string): void;
+  logi(tag: string, message: string): void;
+  logw(tag: string, message: string): void;
+  loge(tag: string, message: string): void;
 }
 
 export default NOS;
