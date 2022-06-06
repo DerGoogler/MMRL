@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.github.node-gradle.node'
 
 android {
     compileSdkVersion 32
@@ -41,7 +42,6 @@ repositories {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "androidx.browser:browser:1.4.0"
     implementation "com.github.topjohnwu.libsu:core:5.0.1"
     implementation 'com.github.topjohnwu.libsu:io:5.0.1'

@@ -64,6 +64,14 @@
         "repository": "https://github.com/DerGoogler/Bota64"
     },
     {
+        "name": "gradle-to-js",
+        "description": "A quick & dirty Gradle build file to JavaScript object parser",
+        "author": "Karl Lindmark",
+        "version": "2.0.1",
+        "license": "Apache-2.0",
+        "repository": "https://github.com/ninetwozero/gradle-to-js.git"
+    },
+    {
         "name": "highlight.js",
         "description": "Syntax highlighting with language autodetection.",
         "author": "Ivan Sagalaev",
@@ -166,5 +174,45 @@
         "version": "2.0.0",
         "license": "MIT",
         "repository": "https://github.com/kessler/node-visit-values"
+    },
+    {
+        "name": "",
+        "description": "null",
+        "author": "null",
+        "version": "",
+        "license": "null",
+        "repository": "null"
+    },
+    {
+        "name": "androidx.browser",
+        "description": "null",
+        "author": "null",
+        "version": "1.4.0",
+        "license": "null",
+        "repository": "null"
+    },
+    {
+        "name": "com.github.topjohnwu.libsu",
+        "description": "null",
+        "author": "null",
+        "version": "5.0.1",
+        "license": "null",
+        "repository": "null"
+    },
+    {
+        "name": "com.github.topjohnwu.libsu",
+        "description": "null",
+        "author": "null",
+        "version": "5.0.1",
+        "license": "null",
+        "repository": "null"
+    },
+    {
+        "name": "androidx.appcompat",
+        "description": "null",
+        "author": "null",
+        "version": "1.4.1",
+        "license": "null",
+        "repository": "null"
     }
 ]
