@@ -2,14 +2,12 @@ import FileSystem from "./android/fs";
 import NShell from "./android/shell";
 import NOS from "./android/os";
 import NBuildConfig from "./android/buildconfig";
-import NSharedPreferences from "./android/sharedpreferences";
-import NBuild from "./android/build";
 
 export {};
 
 declare global {
   type int = number;
-  type Int = number;
+  type Int = Number;
   type Void = void;
   type Any = any;
   type bool = boolean;
@@ -18,27 +16,17 @@ declare global {
     readonly name: string;
   }
 
-  interface Console {
-    log(tag: string, message: string): void;
-    warn(tag: string, message: string): void;
-    error(tag: string, message: string): void;
-  }
-
   interface Window {
     nfs: FileSystem;
     nshell: NShell;
     nos: NOS;
     nversion: NBuildConfig;
-    nsharedpreferences: NSharedPreferences;
-    nbuild: NBuild;
   }
 
   const nfs: FileSystem;
   const nshell: NShell;
   const nos: NOS;
   const nbuildconfig: NBuildConfig;
-  const nsharedpreferences: NSharedPreferences;
-  const nbuild: NBuild;
 
   type HTMLAttributes<E, P = {}> = React.DetailedHTMLProps<React.HTMLAttributes<E> & P, E>;
   type AnchorHTMLAttributes<E, P = {}> = React.DetailedHTMLProps<React.AnchorHTMLAttributes<E> & P, E>;

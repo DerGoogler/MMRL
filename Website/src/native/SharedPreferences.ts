@@ -1,12 +1,31 @@
 import Constants from "@Native/Constants";
 import { os } from "./os";
 
+export interface ISharedPreferences {
+  /**
+   * @deprecated
+   */
+  setPref(key: string, value: string): void;
+  /**
+   * @deprecated
+   */
+  getPref(key: string): string | null | undefined;
+  setString(key: string, value: string): void;
+  setBoolean(key: string, value: bool): void;
+  setInt(key: string, value: int): void;
+  getString(key: string, defValue: string): string | String;
+  getBoolean(key: string, defValue: boolean): boolean | Boolean;
+  getInt(key: string, defValue: int): int | Int;
+  removePref(key: string): void;
+  clearPrefs(): void;
+}
+
+var nsharedpreferences: ISharedPreferences;
+
 /**
  * Simple class to manage the web local sotrage and the Android native preferences
  */
-class SharedPreferences {
-  /** Returns the number of key/value pairs. */
-  public readonly length: number | undefined;
+class SharedPreferences implements ISharedPreferences {
   private webStorage: Storage;
 
   public constructor() {
@@ -144,7 +163,7 @@ class SharedPreferences {
    * Dispatches a storage event on Window objects holding an equivalent Storage object.
    */
   public removePref(key: string): void {
-    if (Constants.isAndroid) {
+    if (os.isAndroid) {
       nsharedpreferences.removePref(key);
     } else {
       this.webStorage.removeItem(key);
@@ -157,7 +176,7 @@ class SharedPreferences {
    * Dispatches a storage event on Window objects holding an equivalent Storage object.
    */
   public clearPrefs(): void {
-    if (Constants.isAndroid) {
+    if (os.isAndroid) {
       nsharedpreferences.clearPrefs();
     } else {
       this.webStorage.clear();

@@ -4,12 +4,12 @@ import ReactDOM from "react-dom";
 import MainActivity from "@Activitys/MainActivity";
 import ons from "onsenui";
 import Log from "@Native/Log";
-import SharedPreferences from "@Native/SharedPreferences";
 import { os } from "@Native/os";
 import Constants from "@Native/Constants";
 import { ToastContainer } from "react-toastify";
 import light_theme from "@Styles/light_theme";
 import dark_theme from "@Styles/dark_theme";
+import SharedPreferences, { ISharedPreferences } from "@Native/SharedPreferences";
 
 // Webpack CSS import
 import "onsenui/css/onsenui-core.css";
@@ -23,7 +23,7 @@ import "@Styles/markdown-dark.scss";
 class Bootloader {
   private mountNode: Element | null = document.querySelector("app");
   private log: Log;
-  private getSharedPreferences: SharedPreferences;
+  private readonly getSharedPreferences: ISharedPreferences;
 
   constructor() {
     this.getSharedPreferences = new SharedPreferences();
@@ -59,9 +59,9 @@ class Bootloader {
     }
 
     this.log.i("Intitialze repo");
-    if (this.getSharedPreferences.getPref("repo") == Constants.undefined) {
+    if (this.getSharedPreferences.getString("repo", "") == Constants.undefined) {
       this.log.e("No repo was found, set Magisk Modules Alternative Repository as default repo");
-      this.getSharedPreferences.setPref("repo", "https://raw.githubusercontent.com/Magisk-Modules-Alt-Repo/json/main/modules.json");
+      this.getSharedPreferences.setString("repo", "https://raw.githubusercontent.com/Magisk-Modules-Alt-Repo/json/main/modules.json");
     }
     this.log.i("Selecting platform: Android");
     ons.platform.select("android");
