@@ -1,4 +1,10 @@
 interface NBuild {
+  VERSION: () => {
+    SDK_INT(): int;
+    SECURITY_PATCH(): string;
+    CODENAME(): string;
+    RELEASE(): string;
+  };
   VERSION_CODES: () => {
     LOLLIPOP(): int;
     LOLLIPOP_MR1(): int;

@@ -1,6 +1,21 @@
 import { os } from "./os";
 
 class Build {
+  public static readonly VERSION = {
+    get SDK_INT(): int {
+      return nbuild.VERSION().SDK_INT();
+    },
+    get SECURITY_PATCH(): string {
+      return nbuild.VERSION().SECURITY_PATCH();
+    },
+    get CODENAME(): string {
+      return nbuild.VERSION().CODENAME();
+    },
+    get RELEASE(): string {
+      return nbuild.VERSION().RELEASE();
+    },
+  };
+
   public static readonly VERSION_CODES = {
     get LOLLIPOP(): int {
       if (os.isAndroid) {

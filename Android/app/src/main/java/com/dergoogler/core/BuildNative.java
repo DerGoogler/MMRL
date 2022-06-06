@@ -9,6 +9,37 @@ public class BuildNative extends Build {
     }
 
     @JavascriptInterface
+    public Object VERSION() {
+        class retn {
+            @JavascriptInterface
+            public String SECURITY_PATCH() {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    return Build.VERSION.SECURITY_PATCH;
+                } else {
+                    return "Unsupported";
+                }
+            }
+
+            @JavascriptInterface
+            public int SDK_INT() {
+                return Build.VERSION.SDK_INT;
+            }
+
+            @JavascriptInterface
+            public String CODENAME() {
+                return Build.VERSION.CODENAME;
+            }
+
+            @JavascriptInterface
+            public String RELEASE() {
+                return Build.VERSION.RELEASE;
+            }
+
+        }
+        return new retn();
+    }
+
+    @JavascriptInterface
     public Object VERSION_CODES() {
         class retn {
 

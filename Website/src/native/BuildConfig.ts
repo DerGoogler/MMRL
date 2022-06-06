@@ -33,6 +33,9 @@ class BuildConfig {
   }
 
   public static readonly VERSION = {
+    /**
+     * @deprecated
+     */
     get SDK_INT(): int {
       if (os.isAndroid) {
         return nbuildconfig.SDK_INT();
