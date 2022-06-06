@@ -62,6 +62,8 @@ class SharedPreferences implements ISharedPreferences {
    * @param key The name of the preference to retrieve.
    * @param defValue Value to return if this preference does not exist.
    *
+   * @encode The `defValue` should also encoded
+   *
    * @return Returns the preference value if it exists, or defValue. Throws ClassCastException if there is a preference with this name that is not a String.
    *
    * @throws ClassCastException

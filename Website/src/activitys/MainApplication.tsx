@@ -53,6 +53,14 @@ class MainApplication extends AppCompatActivity<Props> {
     );
   };
 
+  public componentDidMount() {
+    super.componentDidMount;
+  }
+
+  public componentDidUpdate() {
+    super.componentDidUpdate;
+  }
+
   private openSettings = () => {
     this.props.pushPage({
       key: "settings",

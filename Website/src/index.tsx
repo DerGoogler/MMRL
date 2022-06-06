@@ -1,20 +1,19 @@
-import jss from "jss";
-import preset from "jss-preset-default";
 import ReactDOM from "react-dom";
 import MainActivity from "@Activitys/MainActivity";
 import ons from "onsenui";
 import Log from "@Native/Log";
 import { os } from "@Native/os";
-import Constants from "@Native/Constants";
-import { ToastContainer } from "react-toastify";
+import jss from "jss";
+import preset from "jss-preset-default";
 import light_theme from "@Styles/light_theme";
 import dark_theme from "@Styles/dark_theme";
+import Constants from "@Native/Constants";
+import { ToastContainer } from "react-toastify";
 import SharedPreferences, { ISharedPreferences } from "@Native/SharedPreferences";
 
 // Webpack CSS import
 import "onsenui/css/onsenui-core.css";
 import "material-icons/iconfont/material-icons.css";
-import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
 import "@Styles/addtional.scss";
 import "@Styles/markdown-light.scss";
@@ -30,7 +29,7 @@ class Bootloader {
     this.log = new Log(this.constructor.name);
   }
 
-  loadStyle() {
+  private loadStyle() {
     this.log.i("Setup theme");
     jss.setup(preset());
     if (this.getSharedPreferences.getBoolean("enableDarkmode", false)) {

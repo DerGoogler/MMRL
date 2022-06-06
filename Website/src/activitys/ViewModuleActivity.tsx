@@ -2,20 +2,12 @@ import { Component } from "react";
 import { Page, Toolbar, ToolbarButton, BackButton, Button, Dialog } from "react-onsenui";
 import ons from "onsenui";
 import axios from "axios";
-import Markdown from "markdown-to-jsx";
-import Alert from "react-bootstrap/Alert";
-import Changelog from "@Components/dapi/Changelog";
-import CheckIcon from "@Components/icons/CheckIcon";
-import DangerIcon from "@Components/icons/DangerIcon";
-import Constants from "@Native/Constants";
-import A from "@Components/dapi/A";
-import Video from "@Components/dapi/Video";
-import DiscordWidget from "@Components/dapi/DiscordWidget";
-import { DownloadRounded, InfoRounded, InstallMobileRounded, VerifiedRounded, WarningRounded } from "@mui/icons-material";
+import { DownloadRounded, InfoRounded, InstallMobileRounded, VerifiedRounded } from "@mui/icons-material";
 import BuildConfig from "@Native/BuildConfig";
 import { HighlightedMarkdown } from "@Components/HighlightMarkdown";
 import { os } from "@Native/os";
 import SharedPreferences from "@Native/SharedPreferences";
+import Alert from "@mui/material/Alert";
 
 interface Props {
   extra?: any;
@@ -117,10 +109,7 @@ class ViewModuleActivity extends Component<Props, States> {
               (() => {
                 if (verified) {
                   return (
-                    <Alert key="verified-module" variant="success">
-                      <strong>
-                        <VerifiedRounded sx={{ fontSize: 16, color: "#0f5132" }} />
-                      </strong>{" "}
+                    <Alert key="verified-module" icon={<VerifiedRounded fontSize="inherit" />} severity="success">
                       This module is verified!
                     </Alert>
                   );
@@ -134,40 +123,39 @@ class ViewModuleActivity extends Component<Props, States> {
               position: "fixed",
               display: "flex",
               left: 0,
-              padding: "8px",
               bottom: 0,
               width: "100%",
               textAlign: "center",
-              backgroundColor: new SharedPreferences().getBoolean("enableDarkmode", false)
-                ? "rgba(18, 18, 18, .85)"
-                : "rgba(256, 256, 256, .85)",
+              backgroundColor: SharedPreferences.getBoolean("enableDarkmode", false) ? "rgba(18, 18, 18, .85)" : "rgba(256, 256, 256, .85)",
             }}
           >
-            {/*
+            <div style={{ margin: "8px", width: "100%" }}>
+              {/*
           // @ts-ignore */}
-            <Button
-              modifier="large"
-              onClick={() => {
-                window.open(download);
-              }}
-            >
-              Download <DownloadRounded sx={{ color: "white" }} />
-            </Button>
-            <div style={{ padding: "4px", display: !os.isAndroid ? "none" : "" }}></div>
-            {/*
+              <Button
+                modifier="large"
+                onClick={() => {
+                  window.open(download);
+                }}
+              >
+                Download <DownloadRounded sx={{ color: "white" }} />
+              </Button>
+              <div style={{ padding: "4px", display: !os.isAndroid ? "none" : "" }}></div>
+              {/*
           // @ts-ignore */}
-            <Button
-              modifier="large"
-              disabled={!os.isAndroid}
-              style={{
-                display: !os.isAndroid ? "none" : "",
-              }}
-              onClick={() => {
-                ons.notification.alert("The option will be available in the future");
-              }}
-            >
-              Install <InstallMobileRounded sx={{ color: "white" }} />
-            </Button>
+              <Button
+                modifier="large"
+                disabled={!os.isAndroid}
+                style={{
+                  display: !os.isAndroid ? "none" : "",
+                }}
+                onClick={() => {
+                  ons.notification.alert("The option will be available in the future");
+                }}
+              >
+                Install <InstallMobileRounded sx={{ color: "white" }} />
+              </Button>
+            </div>
           </div>
           {/*
           // @ts-ignore */}

@@ -176,14 +176,6 @@
         "repository": "https://github.com/kessler/node-visit-values"
     },
     {
-        "name": "",
-        "description": "null",
-        "author": "null",
-        "version": "",
-        "license": "null",
-        "repository": "null"
-    },
-    {
         "name": "androidx.browser",
         "description": "null",
         "author": "null",
