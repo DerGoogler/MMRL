@@ -31,7 +31,6 @@ import java.util.Map;
 
 @Keep
 public class ModuleView extends WebView {
-    private PropertyName id;
     private final WebSettings webSettings;
     private final Context ctx;
 
@@ -61,15 +60,6 @@ public class ModuleView extends WebView {
         this.webSettings = this.getSettings();
         this.ctx = context;
         this.init();
-    }
-
-    /**
-     * Get webview id.
-     *
-     * @return Webview id.
-     */
-    public final PropertyName getWebViewId() {
-        return webViewId;
     }
 
     @SuppressLint("JavascriptInterface")
