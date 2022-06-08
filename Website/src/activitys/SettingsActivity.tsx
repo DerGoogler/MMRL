@@ -1,5 +1,5 @@
 import { Toolbar, BackButton, List } from "react-onsenui";
-import { ListViewBuilder } from "@Builders/ListViewBuilder";
+import ListViewBuilder from "@Builders/ListViewBuilder";
 import settings from "@Utils/settings";
 import pkg from "@Package";
 import AppCompatActivity from "./AppCompatActivity";

@@ -3,15 +3,15 @@ import { ListItem, ListTitle, Select, Switch } from "react-onsenui";
 import ons from "onsenui";
 import tools from "@Utils/tools";
 import Gesture from "@Components/Gesture";
-import SharedPreferences from "@Native/SharedPreferences";
+import SharedPreferences, { ISharedPreferences } from "@Native/SharedPreferences";
 import { PushProps } from "@Activitys/MainActivity";
 
-interface Props {
-  data: ListInterface[];
+interface IProps {
+  data: IListInterface[];
   pushPage: any;
 }
 
-interface ListOptions {
+export interface IListOptions {
   key?: string;
   disabled?: boolean | any;
   id?: string;
@@ -30,7 +30,7 @@ interface ListOptions {
   /**
    * Makes an dialog
    */
-  helper?: Helper;
+  helper?: IListHelper;
   type: "switch" | "select" | "";
   text: string | JSX.Element;
   subtext?: string | JSX.Element;
@@ -40,7 +40,7 @@ interface ListOptions {
    * @param key Get the key from the current list item
    */
   onClick?(key: string | undefined, pushPage: (props: PushProps) => void): void;
-  selectValue?: SelectValue[];
+  selectValue?: IListSelectValue[];
   icon?: string | JSX.Element;
   selectDefaultValue?: string;
   selectDefaultText?: string;
@@ -54,7 +54,7 @@ interface ListOptions {
   callback?(e?: any, key?: string | undefined, keepDefaultFuntion?: void): void;
 }
 
-interface Helper {
+export interface IListHelper {
   /**
    * Hold the current list item text to open the dialog
    */
@@ -65,82 +65,39 @@ interface Helper {
   cancelable?: boolean;
 }
 
-interface SelectValue {
+export interface IListSelectValue {
   text: string;
   value: string;
   disabled?: boolean;
 }
 
-interface ListInterface {
+export interface IListInterface {
   title: string;
   id?: string;
   unTyped?: any;
   style?: React.CSSProperties;
   className?: string;
-  content: ListOptions[];
+  content: IListOptions[];
 }
 
-class ListViewBuilder extends Component<Props> {
-  private pref: SharedPreferences;
+class ListViewBuilder extends Component<IProps> {
+  private pref: ISharedPreferences;
 
-  public constructor(props: Props | Readonly<Props>) {
+  public constructor(props: IProps | Readonly<IProps>) {
     super(props);
     this.pref = new SharedPreferences();
-  }
-
-  /**
-   * Check if an key is there
-   * @param key
-   * @returns {Boolean}
-   */
-  private getSettingSwitch(key: string): boolean {
-    var get = this.getPref(key);
-    if (get === undefined || get === null || get === "" || get === "false") {
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  private getSettingSelect(key: string): string | String {
-    var get = this.getPref(key);
-    if (get === undefined || get === null || get === "") {
-      return "en";
-    } else {
-      return get;
-    }
-  }
-
-  private getPref(key: string): string | null | undefined {
-    return this.pref.getPref(key);
-  }
-
-  private setPref(key: string, content: string): void {
-    this.pref.setPref(key, content);
-  }
-
-  private setSetting(key: string, data: any): void {
-    this.setPref(key, data);
-  }
-
-  private default(_: any, __: any, ___: any) {
-    if (_ === undefined || _ === null) {
-      return __;
-    } else if (_ === undefined || _ === null) {
-      return ___;
-    }
   }
 
   public render() {
     const { data, pushPage } = this.props;
 
-    const list = data.map((header: ListInterface) => (
+    const list = data.map((header: IListInterface) => (
       <>
         <section id={header.id} className={header.className} style={header.style}>
           {/**
             // @ts-ignore */}
           <ListTitle>{header.title}</ListTitle>
-          {header.content.map((item: ListOptions) => (
+          {header.content.map((item: IListOptions) => (
             <>
               <ListItem
                 modifier={tools.typeCheck(item.modifier, "")}
@@ -240,7 +197,7 @@ class ListViewBuilder extends Component<Props> {
                             <option value="" selected disabled hidden>
                               {item.selectDefaultText ? item.selectDefaultText : "Choose"}
                             </option>
-                            {item.selectValue?.map((select: SelectValue) => (
+                            {item.selectValue?.map((select: IListSelectValue) => (
                               <>
                                 <option value={select.value} disabled={select.disabled}>
                                   {select.text}
@@ -265,4 +222,4 @@ class ListViewBuilder extends Component<Props> {
   }
 }
 
-export { ListViewBuilder, ListOptions, ListInterface, SelectValue };
+export default ListViewBuilder;
