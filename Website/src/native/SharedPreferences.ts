@@ -1,4 +1,5 @@
 import Constants from "@Native/Constants";
+import tools from "@Utils/tools";
 import { os } from "./os";
 
 export interface ISharedPreferences {
@@ -13,9 +14,9 @@ export interface ISharedPreferences {
   setString(key: string, value: string): void;
   setBoolean(key: string, value: bool): void;
   setInt(key: string, value: int): void;
-  getString(key: string, defValue: string): string | String;
-  getBoolean(key: string, defValue: boolean): boolean | Boolean;
-  getInt(key: string, defValue: int): int | Int;
+  getString(key: string, defValue: string): string;
+  getBoolean(key: string, defValue: boolean): boolean;
+  getInt(key: string, defValue: int): int;
   removePref(key: string): void;
   clearPrefs(): void;
 }
@@ -68,7 +69,7 @@ class SharedPreferences implements ISharedPreferences {
    *
    * @throws ClassCastException
    */
-  public getString(key: string, defValue: string): string | String {
+  public getString(key: string, defValue: string): string {
     if (os.isAndroid) {
       return nsharedpreferences.getString(key, defValue);
     } else {
@@ -91,7 +92,7 @@ class SharedPreferences implements ISharedPreferences {
    *
    * @throws ClassCastException
    */
-  public getBoolean(key: string, defValue: bool): boolean | Boolean {
+  public getBoolean(key: string, defValue: bool): boolean {
     if (os.isAndroid) {
       return nsharedpreferences.getBoolean(key, defValue);
     } else {
@@ -99,7 +100,7 @@ class SharedPreferences implements ISharedPreferences {
       if (get === null) {
         return defValue;
       } else {
-        return Boolean(get);
+        return tools.stringToBoolean(get);
       }
     }
   }
@@ -114,7 +115,7 @@ class SharedPreferences implements ISharedPreferences {
    *
    * @throws ClassCastException
    */
-  public getInt(key: string, defValue: int): number | Number {
+  public getInt(key: string, defValue: int): number {
     if (os.isAndroid) {
       return nsharedpreferences.getInt(key, defValue);
     } else {
