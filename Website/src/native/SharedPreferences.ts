@@ -150,7 +150,7 @@ class SharedPreferences implements ISharedPreferences {
 
   // Statics
 
-  private static s: SharedPreferences = new this();
+  private static s: ISharedPreferences = new this();
 
   public static setString(key: string, value: string): void {
     this.s.setString(key, value);

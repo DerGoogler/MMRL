@@ -71,7 +71,7 @@ class BuildConfig {
   };
 
   public static readonly isMonetEnabled: boolean =
-    os.isAndroid && new SharedPreferences().getPref("enableMonet") === "true" && BuildConfig.VERSION.SDK_INT > Build.VERSION_CODES.S
+    os.isAndroid && SharedPreferences.getBoolean("enableMonet", false) && BuildConfig.VERSION.SDK_INT > Build.VERSION_CODES.S
       ? true
       : false;
 }

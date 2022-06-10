@@ -100,14 +100,6 @@ class tools {
     }
   }
 
-  public static getSettingsSwitch(key: string): boolean {
-    if (new SharedPreferences().getPref(key) === "true") {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   public static returnUndefined(value: undefined | any, theReturn: string | boolean | int): any {
     if (value === undefined) {
       return theReturn;

@@ -56,8 +56,7 @@ class ExploreModuleFragment extends Component<Props, States> {
     }, 2000);
 
     axios
-      // @ts-ignore stfu
-      .get(this.prefManager.getPref("repo"))
+      .get(this.prefManager.getString("repo", ""))
       .then((response) => {
         const modules = response.data.modules;
         this.setState({

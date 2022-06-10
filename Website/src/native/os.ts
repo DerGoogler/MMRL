@@ -67,8 +67,7 @@ class os {
    * @returns Current hex string of monet theme
    */
   public static getMonetColor(id: string, fallback: string): string {
-    const pref = new SharedPreferences().getPref("enableMonet");
-    if (os.isAndroid && pref === "true" && BuildConfig.VERSION.SDK_INT > Build.VERSION_CODES.S) {
+    if (os.isAndroid && SharedPreferences.getBoolean("enableMonet", false) && BuildConfig.VERSION.SDK_INT > Build.VERSION_CODES.S) {
       return nos.getMonetColor(id);
     } else {
       return fallback;

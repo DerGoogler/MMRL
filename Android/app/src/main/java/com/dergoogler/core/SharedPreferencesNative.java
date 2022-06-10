@@ -3,30 +3,18 @@ package com.dergoogler.core;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.webkit.JavascriptInterface;
 
 import androidx.annotation.NonNull;
 
 
 public class SharedPreferencesNative {
-    private final Context ctx;
-    private final android.content.SharedPreferences localstorage;
+    private final SharedPreferences localstorage;
 
     public SharedPreferencesNative(@NonNull Context ctx) {
-        this.ctx = ctx;
         this.localstorage = ctx.getSharedPreferences("localstorage", Activity.MODE_PRIVATE);
-    }
-
-    @Deprecated
-    @JavascriptInterface
-    public void setPref(String key, String value) {
-        this.localstorage.edit().putString(key, value).apply();
-    }
-
-    @Deprecated
-    @JavascriptInterface
-    public String getPref(String key) {
-        return this.localstorage.getString(key, "");
+        Log.i("TAG", "SharedPreferencesNative: "+this.localstorage.getBoolean("enableDarkmode", false));
     }
 
     @JavascriptInterface
