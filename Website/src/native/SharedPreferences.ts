@@ -3,14 +3,6 @@ import tools from "@Utils/tools";
 import { os } from "./os";
 
 export interface ISharedPreferences {
-  /**
-   * @deprecated
-   */
-  setPref(key: string, value: string): void;
-  /**
-   * @deprecated
-   */
-  getPref(key: string): string | null | undefined;
   setString(key: string, value: string): void;
   setBoolean(key: string, value: bool): void;
   setInt(key: string, value: int): void;
@@ -124,38 +116,6 @@ class SharedPreferences implements ISharedPreferences {
         return defValue;
       } else {
         return Number(get);
-      }
-    }
-  }
-
-  /**
-   * @deprecated
-   */
-  public setPref(key: string, value: string): void {
-    if (Constants.isAndroid) {
-      nsharedpreferences.setPref(key, value);
-    } else {
-      this.webStorage.setItem(key, value);
-    }
-  }
-
-  /**
-   * @deprecated
-   */
-  public getPref(key: string): string | null | undefined {
-    if (Constants.isAndroid) {
-      const get = nsharedpreferences.getPref(key);
-      if (get === undefined || get === null || get === "") {
-        return undefined;
-      } else {
-        return get;
-      }
-    } else {
-      const get = this.webStorage.getItem(key);
-      if (get === undefined || get === null || get === "") {
-        return undefined;
-      } else {
-        return get;
       }
     }
   }
