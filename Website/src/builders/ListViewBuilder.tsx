@@ -13,7 +13,7 @@ interface IProps {
 
 export interface IListOptions {
   key?: string;
-  disabled?: boolean | any;
+  disabled?: boolean;
   id?: string;
   style?: React.CSSProperties;
   /**
@@ -159,13 +159,13 @@ class ListViewBuilder extends Component<IProps> {
                         return (
                           <Switch
                             //@ts-ignore
-                            checked={this.pref.getBoolean(item.key!, false)}
-                            disabled={Boolean(item.disabled)}
+                            checked={this.pref.getBoolean(`${item.key!}_switch`, false)}
+                            disabled={item.disabled}
                             onChange={(e: any) => {
                               /**
                                * This will keep the default funtion
                                */
-                              const keepDefaultFuntion = (): void => this.pref.setBoolean(item.key!, e.target.checked);
+                              const keepDefaultFuntion = (): void => this.pref.setBoolean(`${item.key!}_switch`, e.target.checked);
                               if (typeof item.callback == "function") {
                                 const key = item.key;
                                 item.callback(e, key, keepDefaultFuntion());
@@ -178,14 +178,14 @@ class ListViewBuilder extends Component<IProps> {
                       case "select":
                         return (
                           <Select
-                            disabled={Boolean(item.disabled)}
+                            disabled={item.disabled}
                             // @ts-ignore
-                            value={this.pref.getString(item.key!, item.selectDefaultValue)}
+                            value={this.pref.getString(`${item.key!}_select`, item.selectDefaultValue)}
                             onChange={(e: any) => {
                               /**
                                * This will keep the default funtion
                                */
-                              const keepDefaultFuntion = () => this.pref.setString(item.key!, e.target.value);
+                              const keepDefaultFuntion = () => this.pref.setString(`${item.key!}_select`, e.target.value);
                               if (typeof item.callback == "function") {
                                 const key = item.key;
                                 item.callback(e, key, keepDefaultFuntion());

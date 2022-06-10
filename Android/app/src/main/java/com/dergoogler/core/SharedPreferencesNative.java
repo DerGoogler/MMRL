@@ -14,22 +14,33 @@ public class SharedPreferencesNative {
 
     public SharedPreferencesNative(@NonNull Context ctx) {
         this.localstorage = ctx.getSharedPreferences("localstorage", Activity.MODE_PRIVATE);
-        Log.i("TAG", "SharedPreferencesNative: "+this.localstorage.getBoolean("enableDarkmode", false));
     }
 
     @JavascriptInterface
     public String getString(String key, String defValue) {
-        return this.localstorage.getString(key, defValue);
+        if (this.localstorage.contains(key)) {
+            return this.localstorage.getString(key, defValue);
+        } else {
+            return defValue;
+        }
     }
 
     @JavascriptInterface
     public boolean getBoolean(String key, boolean defValue) {
-        return this.localstorage.getBoolean(key, defValue);
+        if (this.localstorage.contains(key)) {
+            return this.localstorage.getBoolean(key, defValue);
+        } else {
+            return defValue;
+        }
     }
 
     @JavascriptInterface
     public int getInt(String key, int defValue) {
-        return this.localstorage.getInt(key, defValue);
+        if (this.localstorage.contains(key)) {
+            return this.localstorage.getInt(key, defValue);
+        } else {
+            return defValue;
+        }
     }
 
     @JavascriptInterface
@@ -38,8 +49,12 @@ public class SharedPreferencesNative {
     }
 
     @JavascriptInterface
-    public void setBoolean(String key, boolean value) {
-        this.localstorage.edit().putBoolean(key, value).apply();
+    public void setBoolean(String key, String value) {
+        if (value.equals("true")) {
+            this.localstorage.edit().putBoolean(key, true).apply();
+        } else {
+            this.localstorage.edit().putBoolean(key, false).apply();
+        }
     }
 
     @JavascriptInterface

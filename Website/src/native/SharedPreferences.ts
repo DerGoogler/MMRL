@@ -13,7 +13,7 @@ export interface ISharedPreferences {
   clearPrefs(): void;
 }
 
-var nsharedpreferences: ISharedPreferences;
+declare const nsharedpreferences: ISharedPreferences;
 
 /**
  * Simple class to manage the web local sotrage and the Android native preferences
@@ -35,7 +35,8 @@ class SharedPreferences implements ISharedPreferences {
 
   public setBoolean(key: string, value: bool): void {
     if (os.isAndroid) {
-      nsharedpreferences.setBoolean(key, value);
+      // @ts-ignore needs to cast to string, ignore it
+      nsharedpreferences.setBoolean(key, String(value));
     } else {
       this.webStorage.setItem(key, String(value));
     }

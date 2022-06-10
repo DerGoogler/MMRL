@@ -1,5 +1,8 @@
 import { os } from "./os";
 
+/**
+ * @deprecated
+ */
 export interface IBuildVersionCodes {
   get LOLLIPOP(): int;
   get LOLLIPOP_MR1(): int;
@@ -15,6 +18,9 @@ export interface IBuildVersionCodes {
   get S_V2(): int;
 }
 
+/**
+ * @deprecated
+ */
 export interface IBuildVersion {
   get SDK_INT(): int;
   get SECURITY_PATCH(): string;
@@ -22,108 +28,112 @@ export interface IBuildVersion {
   get RELEASE(): string;
 }
 
-var nbuild: any;
+export var IBuild: typeof Build;
 
-export default class Build {
-  public static VERSION = class implements IBuildVersion {
-    public get SDK_INT(): number {
-      return nbuild.VERSION.SDK_INT;
-    }
-    public get SECURITY_PATCH(): string {
+declare const nbuild: any;
+
+class Build {
+  public static readonly VERSION = {
+    get SDK_INT(): int {
+      return nbuild.VERSION().SDK_INT();
+    },
+    get SECURITY_PATCH(): string {
       return nbuild.VERSION().SECURITY_PATCH();
-    }
-    public get CODENAME(): string {
+    },
+    get CODENAME(): string {
       return nbuild.VERSION().CODENAME();
-    }
-    public get RELEASE(): string {
+    },
+    get RELEASE(): string {
       return nbuild.VERSION().RELEASE();
-    }
+    },
   };
 
-  public static VERSION_CODES = class {
-    public static get LOLLIPOP(): int {
+  public static readonly VERSION_CODES = {
+    get LOLLIPOP(): int {
       if (os.isAndroid) {
         return nbuild.VERSION_CODES().LOLLIPOP();
       } else {
         return 0;
       }
-    }
-    public static get LOLLIPOP_MR1(): int {
+    },
+    get LOLLIPOP_MR1(): int {
       if (os.isAndroid) {
         return nbuild.VERSION_CODES().LOLLIPOP_MR1();
       } else {
         return 0;
       }
-    }
-    public static get M(): int {
+    },
+    get M(): int {
       if (os.isAndroid) {
         return nbuild.VERSION_CODES().M();
       } else {
         return 0;
       }
-    }
-    public static get N(): int {
+    },
+    get N(): int {
       if (os.isAndroid) {
         return nbuild.VERSION_CODES().N();
       } else {
         return 0;
       }
-    }
-    public static get N_MR1(): int {
+    },
+    get N_MR1(): int {
       if (os.isAndroid) {
         return nbuild.VERSION_CODES().N_MR1();
       } else {
         return 0;
       }
-    }
-    public static get O(): int {
+    },
+    get O(): int {
       if (os.isAndroid) {
         return nbuild.VERSION_CODES().O();
       } else {
         return 0;
       }
-    }
-    public static get O_MR1(): int {
+    },
+    get O_MR1(): int {
       if (os.isAndroid) {
         return nbuild.VERSION_CODES().O_MR1();
       } else {
         return 0;
       }
-    }
-    public static get P(): int {
+    },
+    get P(): int {
       if (os.isAndroid) {
         return nbuild.VERSION_CODES().P();
       } else {
         return 0;
       }
-    }
-    public static get Q(): int {
+    },
+    get Q(): int {
       if (os.isAndroid) {
         return nbuild.VERSION_CODES().Q();
       } else {
         return 0;
       }
-    }
-    public static get R(): int {
+    },
+    get R(): int {
       if (os.isAndroid) {
         return nbuild.VERSION_CODES().R();
       } else {
         return 0;
       }
-    }
-    public static get S(): int {
+    },
+    get S(): int {
       if (os.isAndroid) {
         return nbuild.VERSION_CODES().S();
       } else {
         return 0;
       }
-    }
-    public static get S_V2(): int {
+    },
+    get S_V2(): int {
       if (os.isAndroid) {
         return nbuild.VERSION_CODES().S_V2();
       } else {
         return 0;
       }
-    }
+    },
   };
 }
+
+export default Build;
