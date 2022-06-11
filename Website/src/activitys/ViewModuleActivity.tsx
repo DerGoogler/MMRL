@@ -101,7 +101,7 @@ class ViewModuleActivity extends Component<Props, States> {
         <Page renderToolbar={this.renderToolbar}>
           <div
             style={{ padding: "8px", marginBottom: "56px" }}
-            className={new SharedPreferences().getBoolean("enableDarkmode", false) ? "markdown-body-dark" : "markdown-body-light"}
+            className={new SharedPreferences().getBoolean("enableDarkmode_switch", false) ? "markdown-body-dark" : "markdown-body-light"}
           >
             {
               /*
@@ -126,7 +126,7 @@ class ViewModuleActivity extends Component<Props, States> {
               bottom: 0,
               width: "100%",
               textAlign: "center",
-              backgroundColor: SharedPreferences.getBoolean("enableDarkmode", false) ? "rgba(18, 18, 18, .85)" : "rgba(256, 256, 256, .85)",
+              backgroundColor: SharedPreferences.getBoolean("enableDarkmode_switch", false) ? "rgba(18, 18, 18, .85)" : "rgba(256, 256, 256, .85)",
             }}
           >
             <div style={{ margin: "8px", width: "100%" }}>

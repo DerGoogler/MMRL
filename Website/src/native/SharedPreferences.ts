@@ -1,4 +1,3 @@
-import Constants from "@Native/Constants";
 import tools from "@Utils/tools";
 import { os } from "./os";
 
@@ -35,8 +34,7 @@ class SharedPreferences implements ISharedPreferences {
 
   public setBoolean(key: string, value: bool): void {
     if (os.isAndroid) {
-      // @ts-ignore needs to cast to string, ignore it
-      nsharedpreferences.setBoolean(key, String(value));
+      nsharedpreferences.setBoolean(key, value);
     } else {
       this.webStorage.setItem(key, String(value));
     }
@@ -78,6 +76,8 @@ class SharedPreferences implements ISharedPreferences {
   /**
    * Retrieve a boolean value from the preferences.
    *
+   * @remember if it's from an Switch or Select, put `_switch` or `_select` after the name
+   * 
    * @param key The name of the preference to retrieve.
    * @param defValue Value to return if this preference does not exist.
    *
@@ -182,6 +182,8 @@ class SharedPreferences implements ISharedPreferences {
   /**
    * Retrieve a boolean value from the preferences.
    *
+   * @remember if it's from an Switch or Select, put `_switch` or `_select` after the name
+   * 
    * @param key The name of the preference to retrieve.
    * @param defValue Value to return if this preference does not exist.
    *

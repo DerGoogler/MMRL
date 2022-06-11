@@ -32,7 +32,7 @@ class Bootloader {
   private loadStyle() {
     this.log.i("Setup theme");
     jss.setup(preset());
-    if (this.getSharedPreferences.getBoolean("enableDarkmode", false)) {
+    if (this.getSharedPreferences.getBoolean("enableDarkmode_switch", false)) {
       jss.createStyleSheet(dark_theme).attach();
     } else {
       jss.createStyleSheet(light_theme).attach();

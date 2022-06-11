@@ -49,12 +49,8 @@ public class SharedPreferencesNative {
     }
 
     @JavascriptInterface
-    public void setBoolean(String key, String value) {
-        if (value.equals("true")) {
-            this.localstorage.edit().putBoolean(key, true).apply();
-        } else {
-            this.localstorage.edit().putBoolean(key, false).apply();
-        }
+    public void setBoolean(String key, boolean value) {
+        this.localstorage.edit().putBoolean(key, value).apply();
     }
 
     @JavascriptInterface

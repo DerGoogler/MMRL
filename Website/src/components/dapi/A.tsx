@@ -31,7 +31,7 @@ class A extends Component<AInterface> {
           onClick={() => {
             window.open(href);
           }}
-          style={{ cursor: "pointer", color: new SharedPreferences().getBoolean("enableDarkmode", false) ? "#bb86fc" : "#4a148c" }}
+          style={{ cursor: "pointer", color: new SharedPreferences().getBoolean("enableDarkmode_switch", false) ? "#bb86fc" : "#4a148c" }}
         >
           {children}
         </a>

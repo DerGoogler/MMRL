@@ -1,6 +1,7 @@
 import BuildConfig from "@Native/BuildConfig";
 import Constants from "@Native/Constants";
 import { os } from "@Native/os";
+import SharedPreferences from "@Native/SharedPreferences";
 import { PureComponent } from "react";
 import { Page } from "react-onsenui";
 
@@ -13,7 +14,7 @@ class AppCompatActivity<P = {}, S = {}> extends PureComponent<P, S> {
   }
 
   private onlyAndroid(): void {
-    os.setStatusbarColor(this.setStatusbarColor(), true);
+    os.setStatusbarColor(this.setStatusbarColor(), false);
   }
 
   public componentDidMount(): void {
@@ -30,8 +31,8 @@ class AppCompatActivity<P = {}, S = {}> extends PureComponent<P, S> {
    * Sets an custom status bar color for the activity
    */
   protected setStatusbarColor(): string {
-    if (BuildConfig.isMonetEnabled) {
-      return os.getMonetColor("system_accent2_100", "#4a148c");
+    if (SharedPreferences.getBoolean("enableDarkmode_switch", false)) {
+      return "#1f1f1f";
     } else {
       return "#4a148c";
     }

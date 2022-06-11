@@ -2,4 +2,7 @@
 
 - Fixed Android version
 - Removed `setPref` & `getPref`. Now should be merged to the new API
+- Depen. updated
+- Fix white statusbar
+- Design improvements
 - 

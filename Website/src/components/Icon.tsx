@@ -20,7 +20,7 @@ class Icon extends Component<IProps & SvgIconProps> {
   public constructor(props: (IProps & SvgIconProps) | Readonly<IProps & SvgIconProps>) {
     super(props);
     this.pref = new SharedPreferences();
-    this.isDarkmode = this.pref.getBoolean("enableDarkmode", false);
+    this.isDarkmode = this.pref.getBoolean("enableDarkmode_switch", false);
   }
 
   public render() {

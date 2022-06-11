@@ -78,6 +78,22 @@ public class ModuleView extends WebView {
         this.webSettings.setUserAgentString(userAgent);
     }
 
+    public void setAllowFileAccess(boolean enabled) {
+        this.webSettings.setAllowFileAccess(enabled);
+    }
+
+    public void setAllowContentAccess(boolean enabled) {
+        this.webSettings.setAllowContentAccess(enabled);
+    }
+
+    public void setAllowFileAccessFromFileURLs(boolean enabled) {
+        this.webSettings.setAllowFileAccessFromFileURLs(enabled);
+    }
+
+    public void setAllowUniversalAccessFromFileURLs(boolean enabled) {
+        this.webSettings.setAllowUniversalAccessFromFileURLs(enabled);
+    }
+
     public void loadHTML(String htmlString) {
         this.loadData(htmlString, "text/html", "UTF-8");
     }

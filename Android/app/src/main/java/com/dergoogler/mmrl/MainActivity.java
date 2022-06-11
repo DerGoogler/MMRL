@@ -2,8 +2,6 @@ package com.dergoogler.mmrl;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,7 +14,6 @@ import com.dergoogler.core.OSNative;
 import com.dergoogler.core.SharedPreferencesNative;
 import com.dergoogler.core.ShellNative;
 
-
 public class MainActivity extends AppCompatActivity {
     private ModuleView view;
 
@@ -26,22 +23,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         view = findViewById(R.id.mmrl_view);
+
+        // Options
         view.setJavaScriptEnabled(true);
+        view.setAllowFileAccess(true);
+        view.setAllowContentAccess(true);
+        view.setAllowFileAccessFromFileURLs(true);
+        view.setAllowUniversalAccessFromFileURLs(true);
         view.setUserAgentString("MMRL");
+
+        // Content
         view.loadHTML("file:///android_asset/", new Page(this).load());
+
+        // Core
         view.addJavascriptInterface(new FileSystemNative(this), "nfs");
         view.addJavascriptInterface(new ShellNative(this), "nshell");
         view.addJavascriptInterface(new BuildNative(), "nbuild");
         view.addJavascriptInterface(new BuildConfigNative(), "nbuildconfig");
         view.addJavascriptInterface(new OSNative(this), "nos");
         view.addJavascriptInterface(new SharedPreferencesNative(this), "nsharedpreferences");
-        view.setWebViewClient(new ModuleViewClient() {
-            @Override
-            public void onPageFinished(ModuleView view, String url) {
-                super.onPageFinished(view, url);
-                view.loadUrl("javascript:function inputClick(val){native.abcd(val);}");
-            }
-        });
     }
 
     @Override
