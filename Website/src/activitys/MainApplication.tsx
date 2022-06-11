@@ -33,7 +33,6 @@ class MainApplication extends AppCompatActivity<Props> {
 
   protected onCreateToolbar = () => {
     return (
-      // @ts-ignore
       <Toolbar>
         <div
           className="center"
@@ -44,8 +43,6 @@ class MainApplication extends AppCompatActivity<Props> {
           Magisk Module Repo Loader
         </div>
         <div className="right">
-          {/*
-          // @ts-ignore */}
           <ToolbarButton className="back-button--material__icon" onClick={this.openSettings}>
             <SettingsRounded />
           </ToolbarButton>
@@ -85,7 +82,6 @@ class MainApplication extends AppCompatActivity<Props> {
   protected onCreate = () => {
     if (this.isAndroid) {
       return (
-        //@ts-ignore
         <Tabbar
           swipeable={false}
           position={SharedPreferences.getBoolean("enableBottomTabs_switch", false) ? "bottom" : "top"}
@@ -93,7 +89,11 @@ class MainApplication extends AppCompatActivity<Props> {
         />
       );
     } else {
-      return <ExploreModuleFragment pushPage={this.props.pushPage} />;
+      return (
+        <>
+          <ExploreModuleFragment pushPage={this.props.pushPage} />
+        </>
+      );
     }
   };
 }

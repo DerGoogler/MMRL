@@ -28,21 +28,15 @@ class SettingsActivity extends AppCompatActivity<Props, States> {
 
   protected onCreateToolbar = () => {
     return (
-      // @ts-ignore
       <Toolbar>
         <div className="left">
-          {/**
-        // @ts-ignore */}
           <BackButton
-            // @ts-ignore
             onClick={() => {
               this.props.popPage();
             }}
           />
         </div>
         <div className="center">Settings</div>
-        {/**
-        // @ts-ignore */}
       </Toolbar>
     );
   };
@@ -51,8 +45,6 @@ class SettingsActivity extends AppCompatActivity<Props, States> {
     return (
       <>
         <settings-container className="settings-dfjsklgdj">
-          {/**
-            // @ts-ignore */}
           <List>
             <ListViewBuilder data={settings} pushPage={this.props.pushPage} />
           </List>

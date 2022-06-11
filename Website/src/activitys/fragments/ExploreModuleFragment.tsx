@@ -7,7 +7,6 @@ import SharedPreferences from "@Native/SharedPreferences";
 import { PushProps } from "@Activitys/MainActivity";
 import { SearchRounded } from "@mui/icons-material";
 import { os } from "@Native/os";
-import ContentBody from "@Components/ContentBody";
 
 interface Props {
   pushPage(...arg: any): PushProps;
@@ -139,8 +138,6 @@ class ExploreModuleFragment extends Component<Props, States> {
               }}
               onChange={this.filter}
             />
-            {/*
-              // @ts-ignore */}
             <Button
               onClick={this.triggerSearch}
               style={{

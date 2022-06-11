@@ -7,11 +7,8 @@ class NoRootActivity extends AppCompatActivity {
 
   protected onCreateToolbar = () => {
     return (
-      // @ts-ignore
       <Toolbar>
         <div className="center">No Root</div>
-        {/**
-        // @ts-ignore */}
       </Toolbar>
     );
   };
@@ -19,8 +16,6 @@ class NoRootActivity extends AppCompatActivity {
   protected onCreate = () => {
     return (
       <div style={{ padding: "8px" }}>
-        {/*
-          //@ts-ignore*/}
         <Card>
           <div className="title">Failed!</div>
           <div className="content">
@@ -29,7 +24,6 @@ class NoRootActivity extends AppCompatActivity {
           </div>
         </Card>
         {nos.isPackageInstalled(this.magiskPackageName) ? (
-          // @ts-ignore
           <Button
             modifier="large"
             onClick={() => {
@@ -43,7 +37,6 @@ class NoRootActivity extends AppCompatActivity {
             Open Magisk
           </Button>
         ) : (
-          // @ts-ignore
           <Button modifier="large" disabled>
             Magisk Not Found
           </Button>

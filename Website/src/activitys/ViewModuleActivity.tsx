@@ -1,5 +1,4 @@
-import { Component } from "react";
-import { Page, Toolbar, ToolbarButton, BackButton, Button, Dialog } from "react-onsenui";
+import { Toolbar, ToolbarButton, BackButton, Button, Dialog } from "react-onsenui";
 import ons from "onsenui";
 import axios from "axios";
 import { DownloadRounded, InfoRounded, InstallMobileRounded, VerifiedRounded } from "@mui/icons-material";
@@ -52,34 +51,28 @@ class ViewModuleActivity extends AppCompatActivity<Props, States> {
   protected onCreateToolbar = () => {
     const { minMagisk, minApi, maxApi, needRamdisk, changeBoot } = this.props.extra?.moduleProps;
     return (
-      // @ts-ignore
       <Toolbar>
         <div className="left">
           <BackButton
-            // @ts-ignore
             onClick={() => {
               this.props.popPage();
             }}
           />
         </div>
-        {
-          /*
-        // @ts-ignore */
-          (() => {
-            // Don't show up if nothing ot these exists
-            if ((minMagisk || minApi || maxApi || needRamdisk || changeBoot) != (null || undefined)) {
-              return (
-                <div className="right">
-                  {/**
-                   // @ts-ignore */}
-                  <ToolbarButton style={{ padding: "0px 10px" }} onClick={this.showDialog}>
-                    <InfoRounded />
-                  </ToolbarButton>
-                </div>
-              );
-            }
-          })()
-        }
+        {(() => {
+          // Don't show up if nothing ot these exists
+          if ((minMagisk || minApi || maxApi || needRamdisk || changeBoot) != (null || undefined)) {
+            return (
+              <div className="right">
+                <ToolbarButton style={{ padding: "0px 10px" }} onClick={this.showDialog}>
+                  <InfoRounded />
+                </ToolbarButton>
+              </div>
+            );
+          } else {
+            return null;
+          }
+        })()}
         <div className="center">{this.props.extra.name}</div>
       </Toolbar>
     );

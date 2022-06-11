@@ -94,8 +94,6 @@ class ListViewBuilder extends Component<IProps> {
     const list = data.map((header: IListInterface) => (
       <>
         <section id={header.id} className={header.className} style={header.style}>
-          {/**
-            // @ts-ignore */}
           <ListTitle>{header.title}</ListTitle>
           {header.content.map((item: IListOptions) => (
             <>

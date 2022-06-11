@@ -1,3 +1,4 @@
+import React from "react";
 import { Card, Toolbar, BackButton } from "react-onsenui";
 import dep from "./../utils/licenses.json";
 import AppCompatActivity from "./AppCompatActivity";
@@ -25,21 +26,15 @@ class AcknowledgementsActivity extends AppCompatActivity<Props, States> {
 
   protected onCreateToolbar = () => {
     return (
-      // @ts-ignore
       <Toolbar>
         <div className="left">
-          {/**
-        // @ts-ignore */}
           <BackButton
-            // @ts-ignore
             onClick={() => {
               this.props.popPage();
             }}
           />
         </div>
         <div className="center">Acknowledgements</div>
-        {/**
-        // @ts-ignore */}
       </Toolbar>
     );
   };
@@ -47,7 +42,6 @@ class AcknowledgementsActivity extends AppCompatActivity<Props, States> {
   protected onCreate = () => {
     const libs = this.state.libs.map((item: any) => {
       return (
-        // @ts-ignore
         <Card
           onClick={() => {
             window.open(item.repository);

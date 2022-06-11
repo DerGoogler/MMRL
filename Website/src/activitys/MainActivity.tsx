@@ -151,7 +151,6 @@ class MainActivity extends Component<PushProps, States> {
 
   private renderToolbar = () => {
     return (
-      // @ts-ignore
       <Toolbar>
         <div className="left">
           <BackButton />
@@ -167,7 +166,6 @@ class MainActivity extends Component<PushProps, States> {
         <Page>
           <RouterNavigator
             swipeable={true}
-            // @ts-ignore
             swipePop={(options: any) => this.popPage(options)}
             routeConfig={this.state.routeConfig}
             renderPage={this.renderPage}
