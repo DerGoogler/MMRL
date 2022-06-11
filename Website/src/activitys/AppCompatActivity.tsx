@@ -1,3 +1,4 @@
+import ContentBody from "@Components/ContentBody";
 import BuildConfig from "@Native/BuildConfig";
 import Constants from "@Native/Constants";
 import { os } from "@Native/os";
@@ -102,7 +103,9 @@ class AppCompatActivity<P = {}, S = {}> extends PureComponent<P, S> {
         onInit={this.onInit}
         renderToolbar={this.onCreateToolbar}
       >
-        <this.onCreate />
+        <ContentBody>
+          <this.onCreate />
+        </ContentBody>
       </Page>
     );
   }

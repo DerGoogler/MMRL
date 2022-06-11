@@ -7,6 +7,7 @@ import SharedPreferences from "@Native/SharedPreferences";
 import { PushProps } from "@Activitys/MainActivity";
 import { SearchRounded } from "@mui/icons-material";
 import { os } from "@Native/os";
+import ContentBody from "@Components/ContentBody";
 
 interface Props {
   pushPage(...arg: any): PushProps;
@@ -108,7 +109,7 @@ class ExploreModuleFragment extends Component<Props, States> {
     });
 
     return (
-      <Page>
+      <>
         <div
           style={{
             textAlign: "center",
@@ -190,7 +191,7 @@ class ExploreModuleFragment extends Component<Props, States> {
             })()}
           </module-container>
         </div>
-      </Page>
+      </>
     );
   };
 }

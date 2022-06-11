@@ -36,6 +36,8 @@ declare global {
       "module-container": HTMLAttributes<HTMLDivElement>;
       "lib-container": HTMLAttributes<HTMLDivElement>;
       "settings-container": HTMLAttributes<HTMLDivElement>;
+      "content-body": HTMLAttributes<HTMLDivElement>;
+      "content-body-inner": HTMLAttributes<HTMLDivElement>;
 
       // ./components/Item.tsx
       "item-card-wrapper": HTMLAttributes<HTMLDivElement>;

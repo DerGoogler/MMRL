@@ -10,4 +10,5 @@
 - Fix white statusbar
 - Design improvements
 - Added option to move the navigation bar to the bottom (only Android)
+- Added component to make the view better on large screens
 - 
