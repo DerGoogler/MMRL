@@ -8,10 +8,11 @@ import { os } from "@Native/os";
 import SharedPreferences from "@Native/SharedPreferences";
 import Alert from "@mui/material/Alert";
 import AppCompatActivity from "./AppCompatActivity";
+import ToolbarBuilder from "@Builders/ToolbarBuilder";
 
 interface Props {
   extra?: any;
-  popPage(): void;
+  popPage: any;
 }
 
 interface States {
@@ -51,30 +52,22 @@ class ViewModuleActivity extends AppCompatActivity<Props, States> {
   protected onCreateToolbar = () => {
     const { minMagisk, minApi, maxApi, needRamdisk, changeBoot } = this.props.extra?.moduleProps;
     return (
-      <Toolbar>
-        <div className="left">
-          <BackButton
-            onClick={() => {
-              this.props.popPage();
-            }}
-          />
-        </div>
-        {(() => {
-          // Don't show up if nothing ot these exists
-          if ((minMagisk || minApi || maxApi || needRamdisk || changeBoot) != (null || undefined)) {
-            return (
+      <ToolbarBuilder
+        title={this.props.extra.name}
+        onBackButton={this.props.popPage}
+        addToolbarButton={
+          <>
+            {(minMagisk || minApi || maxApi || needRamdisk || changeBoot) != (null || undefined) ? (
               <div className="right">
                 <ToolbarButton style={{ padding: "0px 10px" }} onClick={this.showDialog}>
                   <InfoRounded />
                 </ToolbarButton>
               </div>
-            );
-          } else {
-            return null;
-          }
-        })()}
-        <div className="center">{this.props.extra.name}</div>
-      </Toolbar>
+            ) : null}
+          </>
+        }
+        addToolbarButtonPosition="right"
+      />
     );
   };
 

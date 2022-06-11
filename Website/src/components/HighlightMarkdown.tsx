@@ -8,7 +8,6 @@ import A from "./dapi/A";
 import Changelog from "./dapi/Changelog";
 import CheckIcon from "./icons/CheckIcon";
 import DangerIcon from "./icons/DangerIcon";
-import "highlight.js/styles/atom-one-dark.css";
 
 interface IProps {
   children: string;

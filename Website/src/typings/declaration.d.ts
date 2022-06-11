@@ -145,7 +145,8 @@ declare module "react-onsenui" {
   export class BackButton extends Component<
     {
       modifier?: string | undefined;
-      onClick?(navigator: Navigator): void;
+      onClick?(navigator?: Navigator): void;
+      context?: any;
     },
     any
   > {}
