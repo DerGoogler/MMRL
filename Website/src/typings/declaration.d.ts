@@ -476,6 +476,7 @@ declare module "react-onsenui" {
 
   export class SearchInput extends Component<
     {
+      placeholder?: string
       modifier?: string | undefined;
       disabled?: boolean | undefined;
       onChange?(e: Event): void;

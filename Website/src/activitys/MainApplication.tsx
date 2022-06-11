@@ -37,7 +37,7 @@ class MainApplication extends AppCompatActivity<Props> {
         <div
           className="center"
           onClick={() => {
-            ons.notification.toast("My gf left me ... :(");
+            ons.notification.toast("My gf left me ... :(", { timeout: 1000, animation: "fall" });
           }}
         >
           Magisk Module Repo Loader

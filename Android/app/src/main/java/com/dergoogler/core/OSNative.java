@@ -89,7 +89,6 @@ public class OSNative {
             ((Activity) this.ctx).requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1000);
         }
     }
-    // Others
 
     @JavascriptInterface
     public void open(String link) {

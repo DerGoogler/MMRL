@@ -1,19 +1,13 @@
 package com.dergoogler.mmrl;
 
 import android.content.Context;
-import android.util.Log;
 
-import com.dergoogler.component.ModuleView;
 import com.dergoogler.core.FileSystemNative;
-
-import java.io.InputStream;
 
 public class Page {
     private final FileSystemNative fs;
-    private final Context ctx;
 
     public Page(Context ctx) {
-        this.ctx = ctx;
         this.fs = new FileSystemNative(ctx);
     }
 
@@ -27,21 +21,19 @@ public class Page {
     }
 
     public String load() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("<!DOCTYPE html>");
-        sb.append("<html>");
-        sb.append("<head>");
-        sb.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"bundle/vendor.bundle.css\"/>");
-        sb.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"bundle/app.bundle.css\"/>");
-        sb.append("<meta charset=\"utf-8\" />");
-        sb.append("</head>");
-        sb.append("<body>");
-        sb.append("<app></app>");
-        sb.append("<script src=\"bundle/vendor.bundle.js\"></script>");
-        sb.append("<script src=\"bundle/app.bundle.js\"></script>");
-        sb.append("<script>const styles = `").append(this.loadCss()).append("`;const styleSheet = document.createElement(\"style\");styleSheet.innerText = styles; document.head.appendChild(styleSheet)</script>");
-        sb.append("</body>");
-        sb.append("</html>");
-        return sb.toString();
+        return "<!DOCTYPE html>" +
+                "<html>" +
+                "<head>" +
+                "<link rel=\"stylesheet\" type=\"text/css\" href=\"bundle/vendor.bundle.css\"/>" +
+                "<link rel=\"stylesheet\" type=\"text/css\" href=\"bundle/app.bundle.css\"/>" +
+                "<meta charset=\"utf-8\" />" +
+                "</head>" +
+                "<body>" +
+                "<app></app>" +
+                "<script src=\"bundle/vendor.bundle.js\"></script>" +
+                "<script src=\"bundle/app.bundle.js\"></script>" +
+                "<script>const styles = `" + this.loadCss() + "`;const styleSheet = document.createElement(\"style\");styleSheet.innerText = styles; document.head.appendChild(styleSheet)</script>" +
+                "</body>" +
+                "</html>";
     }
 }

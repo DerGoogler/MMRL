@@ -1,5 +1,5 @@
 import { Component, LegacyRef } from "react";
-import { Button, Page, SearchInput, ProgressCircular } from "react-onsenui";
+import { Button, SearchInput, ProgressCircular } from "react-onsenui";
 import axios from "axios";
 import { toast } from "react-toastify";
 import ExploreModule from "@Components/ExploreModule";
@@ -7,6 +7,7 @@ import SharedPreferences from "@Native/SharedPreferences";
 import { PushProps } from "@Activitys/MainActivity";
 import { SearchRounded } from "@mui/icons-material";
 import { os } from "@Native/os";
+import ons from "onsenui";
 
 interface Props {
   pushPage(...arg: any): PushProps;
@@ -39,15 +40,7 @@ class ExploreModuleFragment extends Component<Props, States> {
   public componentDidMount = () => {
     const moduels = os.getSchemeParam("module");
     if (moduels != (null || undefined || "")) {
-      toast.info("Please wait 2 seconds after the loading screen is gone", {
-        position: "top-center",
-        autoClose: 1500,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      ons.notification.toast("Please wait 2 seconds after the loading screen is gone", { timeout: 2000, animation: "fall" });
     }
 
     setTimeout(() => {
@@ -128,7 +121,6 @@ class ExploreModuleFragment extends Component<Props, States> {
             }}
           >
             <SearchInput
-              // @ts-ignore
               placeholder={"Search modules"}
               ref={this.searchBar}
               style={{

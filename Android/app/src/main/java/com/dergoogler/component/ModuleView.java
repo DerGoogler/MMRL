@@ -15,21 +15,11 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Toast;
 
-import androidx.annotation.Keep;
-
-import com.dergoogler.core.BuildConfigNative;
-import com.dergoogler.core.BuildNative;
-import com.dergoogler.core.FileSystemNative;
-import com.dergoogler.core.OSNative;
-import com.dergoogler.core.SharedPreferencesNative;
-import com.dergoogler.core.ShellNative;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.util.Map;
 
-@Keep
 public class ModuleView extends WebView {
     private final WebSettings webSettings;
     private final Context ctx;

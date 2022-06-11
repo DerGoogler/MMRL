@@ -18,8 +18,3 @@ allprojects {
         google()
     }
 }
-
-task makedev(type:Exec) {
-    workingDir './../Website'
-    commandLine 'make dev'
-}

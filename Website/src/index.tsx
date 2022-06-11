@@ -56,8 +56,8 @@ class Bootloader {
       os.requestStoargePermission();
     }
 
-    // Prevent context menu on Android browsers.
-    if (os.isAndroid || isMobile) window.addEventListener("contextmenu", (e: Event) => e.preventDefault());
+    // Prevent context menu on browsers.
+    window.addEventListener("contextmenu", (e: Event) => e.preventDefault());
 
     this.log.i("Selecting platform: Android");
     ons.platform.select("android");

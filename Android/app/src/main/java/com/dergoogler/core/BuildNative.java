@@ -14,11 +14,7 @@ public class BuildNative extends Build {
         class retn {
             @JavascriptInterface
             public String SECURITY_PATCH() {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    return Build.VERSION.SECURITY_PATCH;
-                } else {
-                    return "Unsupported";
-                }
+                return VERSION.SECURITY_PATCH;
             }
 
             @JavascriptInterface
