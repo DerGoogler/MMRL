@@ -51,17 +51,10 @@ class Bootloader {
   }
 
   init() {
-    if (os.isAndroid) {
-      if (!nos.hasStoragePermission()) {
-        nos.requestStoargePermission();
-      }
+    if (!os.hasStoragePermission()) {
+      os.requestStoargePermission();
     }
 
-    this.log.i("Intitialze repo");
-    if (this.getSharedPreferences.getString("repo", "") == Constants.undefined) {
-      this.log.e("No repo was found, set Magisk Modules Alternative Repository as default repo");
-      this.getSharedPreferences.setString("repo", "https://raw.githubusercontent.com/Magisk-Modules-Alt-Repo/json/main/modules.json");
-    }
     this.log.i("Selecting platform: Android");
     ons.platform.select("android");
     this.loadStyle();

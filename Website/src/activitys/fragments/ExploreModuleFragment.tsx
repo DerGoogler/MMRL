@@ -56,7 +56,7 @@ class ExploreModuleFragment extends Component<Props, States> {
     }, 2000);
 
     axios
-      .get(this.prefManager.getString("repo", ""))
+      .get(this.prefManager.getString("repo", "https://raw.githubusercontent.com/Magisk-Modules-Alt-Repo/json/main/modules.json"))
       .then((response) => {
         const modules = response.data.modules;
         this.setState({

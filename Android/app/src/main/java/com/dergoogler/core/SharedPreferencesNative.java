@@ -18,29 +18,17 @@ public class SharedPreferencesNative {
 
     @JavascriptInterface
     public String getString(String key, String defValue) {
-        if (this.localstorage.contains(key)) {
-            return this.localstorage.getString(key, defValue);
-        } else {
-            return defValue;
-        }
+        return this.localstorage.getString(key, defValue);
     }
 
     @JavascriptInterface
     public boolean getBoolean(String key, boolean defValue) {
-        if (this.localstorage.contains(key)) {
-            return this.localstorage.getBoolean(key, defValue);
-        } else {
-            return defValue;
-        }
+        return this.localstorage.getBoolean(key, defValue);
     }
 
     @JavascriptInterface
     public int getInt(String key, int defValue) {
-        if (this.localstorage.contains(key)) {
-            return this.localstorage.getInt(key, defValue);
-        } else {
-            return defValue;
-        }
+        return this.localstorage.getInt(key, defValue);
     }
 
     @JavascriptInterface

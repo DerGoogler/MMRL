@@ -77,7 +77,7 @@ class SharedPreferences implements ISharedPreferences {
    * Retrieve a boolean value from the preferences.
    *
    * @remember if it's from an Switch or Select, put `_switch` or `_select` after the name
-   * 
+   *
    * @param key The name of the preference to retrieve.
    * @param defValue Value to return if this preference does not exist.
    *
@@ -183,7 +183,7 @@ class SharedPreferences implements ISharedPreferences {
    * Retrieve a boolean value from the preferences.
    *
    * @remember if it's from an Switch or Select, put `_switch` or `_select` after the name
-   * 
+   *
    * @param key The name of the preference to retrieve.
    * @param defValue Value to return if this preference does not exist.
    *
