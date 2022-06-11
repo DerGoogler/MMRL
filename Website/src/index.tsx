@@ -18,6 +18,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "@Styles/addtional.scss";
 import "@Styles/markdown-light.scss";
 import "@Styles/markdown-dark.scss";
+import { isMobile } from "react-device-detect";
 
 class Bootloader {
   private mountNode: Element | null = document.querySelector("app");
@@ -56,7 +57,7 @@ class Bootloader {
     }
 
     // Prevent context menu on Android browsers.
-    if (os.isAndroid) window.addEventListener("contextmenu", (e: Event) => e.preventDefault());
+    if (os.isAndroid || isMobile) window.addEventListener("contextmenu", (e: Event) => e.preventDefault());
 
     this.log.i("Selecting platform: Android");
     ons.platform.select("android");

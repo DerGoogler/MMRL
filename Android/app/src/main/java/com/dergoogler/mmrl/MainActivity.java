@@ -6,7 +6,6 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.dergoogler.component.ModuleView;
-import com.dergoogler.component.ModuleViewClient;
 import com.dergoogler.core.BuildConfigNative;
 import com.dergoogler.core.BuildNative;
 import com.dergoogler.core.FileSystemNative;

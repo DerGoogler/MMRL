@@ -2,12 +2,12 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.github.node-gradle.node'
 
 android {
-    compileSdkVersion 32
+    compileSdk 33
 
     defaultConfig {
         applicationId 'com.dergoogler.mmrl'
         minSdk 26
-        targetSdkVersion 32
+        targetSdk 33
         versionName "1.4.0@alpha-3"
         versionCode "140".toInteger()
     }

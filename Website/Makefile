@@ -9,12 +9,11 @@ dev: licenses
 prod: licenses
 	${NODE_BIN}/webpack --mode production
 
-openapp: generateDebugApp openDebugApp
+app: generateDebugApp openDebugApp
 
 openDebugApp:
 	adb shell am start -n "com.dergoogler.mmrl.debug/com.dergoogler.mmrl.MainActivity" -a android.intent.action.MAIN -c android.intent.category.LAUNCHER
 
 generateDebugApp: dev
 	cd .. && cd Android && ./gradlew installDebug
-
 
