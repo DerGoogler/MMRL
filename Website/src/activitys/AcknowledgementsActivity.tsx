@@ -1,3 +1,4 @@
+import ToolbarBuilder from "@Builders/ToolbarBuilder";
 import React from "react";
 import { Card, Toolbar, BackButton } from "react-onsenui";
 import dep from "./../utils/licenses.json";
@@ -25,18 +26,7 @@ class AcknowledgementsActivity extends AppCompatActivity<Props, States> {
   };
 
   protected onCreateToolbar = () => {
-    return (
-      <Toolbar>
-        <div className="left">
-          <BackButton
-            onClick={() => {
-              this.props.popPage();
-            }}
-          />
-        </div>
-        <div className="center">Acknowledgements</div>
-      </Toolbar>
-    );
+    return <ToolbarBuilder title="Acknowledgements" onBackButton={this.props.popPage} />;
   };
 
   protected onCreate = () => {

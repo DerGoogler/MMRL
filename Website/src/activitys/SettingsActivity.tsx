@@ -3,6 +3,7 @@ import ListViewBuilder from "@Builders/ListViewBuilder";
 import settings from "@Utils/settings";
 import pkg from "@Package";
 import AppCompatActivity from "./AppCompatActivity";
+import ToolbarBuilder from "@Builders/ToolbarBuilder";
 
 interface Props {
   pushPage: any;
@@ -27,18 +28,7 @@ class SettingsActivity extends AppCompatActivity<Props, States> {
   };
 
   protected onCreateToolbar = () => {
-    return (
-      <Toolbar>
-        <div className="left">
-          <BackButton
-            onClick={() => {
-              this.props.popPage();
-            }}
-          />
-        </div>
-        <div className="center">Settings</div>
-      </Toolbar>
-    );
+    return <ToolbarBuilder title="Settings" onBackButton={this.props.popPage} />;
   };
 
   protected onCreate = () => {
