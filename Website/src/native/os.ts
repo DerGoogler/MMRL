@@ -79,9 +79,16 @@ class os {
    * @param color Your color
    * @param white `true` makes the status bar white
    */
-  public static setStatusbarColor(color: string, white: bool): void {
+  public static setStatusBarColor(color: string, white: bool): void {
     if (os.isAndroid) {
-      nos.setStatusbarColor(color, white);
+      nos.setStatusBarColor(color, white);
+    } else {
+      name;
+    }
+  }
+  public static setNavigationBarColor(color: string): void {
+    if (os.isAndroid) {
+      nos.setNavigationBarColor(color);
     } else {
       name;
     }

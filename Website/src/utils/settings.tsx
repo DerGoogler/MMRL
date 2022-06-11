@@ -4,7 +4,14 @@ import AlertBuilder from "@Builders/AlertBuilder";
 import { IListInterface } from "@Builders/ListViewBuilder";
 import SharedPreferences from "@Native/SharedPreferences";
 import tools from "@Utils/tools";
-import { BugReportRounded, ExtensionRounded, GavelRounded, SourceRounded } from "@mui/icons-material";
+import {
+  Brightness2Rounded,
+  BugReportRounded,
+  ExtensionRounded,
+  GavelRounded,
+  PowerInputRounded,
+  SourceRounded,
+} from "@mui/icons-material";
 import BuildConfig from "@Native/BuildConfig";
 import { os } from "@Native/os";
 import Build from "@Native/Build";
@@ -57,9 +64,16 @@ const settings: IListInterface[] = [
       {
         key: "enableDarkmode",
         type: "switch",
-        disabled: os.isAndroid && BuildConfig.VERSION.SDK_INT < Build.VERSION_CODES.S,
+        icon: <Icon icon={Brightness2Rounded} />,
         text: "Dark theme",
-        subtext: "Works on both platform",
+      },
+      {
+        key: "enableBottomTabs",
+        type: "switch",
+        icon: <Icon icon={PowerInputRounded} />,
+        disabled: !os.isAndroid,
+        text: "Bottom navigation",
+        subtext: !os.isAndroid ? "Not supported in web version" : "Moves tabs to the bottom of screen.",
       },
     ],
   },
@@ -69,7 +83,6 @@ const settings: IListInterface[] = [
       {
         type: "",
         icon: <Icon icon={SourceRounded} />,
-        // icon: <SourceRounded color="inherit" />,
         text: "Source code",
         onClick: () => {
           window.open("https://github.com/DerGoogler/MMRL/", "_blank");
@@ -103,7 +116,6 @@ const settings: IListInterface[] = [
           </span>
         ),
         style: {
-          // display: !Constants.isAndroid ? "none" : "",
           color: "dimgray",
           fontSize: "15px",
         },

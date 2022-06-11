@@ -8,13 +8,23 @@ import { Page } from "react-onsenui";
 class AppCompatActivity<P = {}, S = {}> extends PureComponent<P, S> {
   public readonly isAndroid: bool = Constants.isAndroid;
 
+  private darkColor: string = "#1f1f1f";
+  private lightColor: string = "#4a148c";
+
   public constructor(props: P | Readonly<P>) {
     super(props);
     this.onlyAndroid();
   }
 
   private onlyAndroid(): void {
-    os.setStatusbarColor(this.setStatusbarColor(), false);
+    os.setStatusBarColor(this.setStatusbarColor(), false);
+    if (SharedPreferences.getBoolean("enableBottomTabs_switch", false)) {
+      if (SharedPreferences.getBoolean("enableDarkmode_switch", false)) {
+        os.setNavigationBarColor(this.darkColor);
+      } else {
+        os.setNavigationBarColor(this.lightColor);
+      }
+    }
   }
 
   public componentDidMount(): void {
@@ -32,9 +42,9 @@ class AppCompatActivity<P = {}, S = {}> extends PureComponent<P, S> {
    */
   protected setStatusbarColor(): string {
     if (SharedPreferences.getBoolean("enableDarkmode_switch", false)) {
-      return "#1f1f1f";
+      return this.darkColor;
     } else {
-      return "#4a148c";
+      return this.lightColor;
     }
   }
 

@@ -149,7 +149,7 @@ public class OSNative {
     }
 
     @JavascriptInterface
-    public void setStatusbarColor(String color, boolean white) {
+    public void setStatusBarColor(String color, boolean white) {
         if (white) {
             try {
                 ((Activity) this.ctx).getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
@@ -159,6 +159,15 @@ public class OSNative {
         }
         try {
             ((Activity) this.ctx).getWindow().setStatusBarColor(Color.parseColor(color));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @JavascriptInterface
+    public void setNavigationBarColor(String color) {
+        try {
+            ((Activity) this.ctx).getWindow().setNavigationBarColor(Color.parseColor(color));
         } catch (Exception e) {
             e.printStackTrace();
         }

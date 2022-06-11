@@ -7,7 +7,6 @@ import SharedPreferences from "@Native/SharedPreferences";
 import { PushProps } from "@Activitys/MainActivity";
 import { SearchRounded } from "@mui/icons-material";
 import { os } from "@Native/os";
-import BuildConfig from "@Native/BuildConfig";
 
 interface Props {
   pushPage(...arg: any): PushProps;

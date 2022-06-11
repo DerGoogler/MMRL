@@ -1,4 +1,5 @@
 import { SettingsRounded } from "@mui/icons-material";
+import SharedPreferences from "@Native/SharedPreferences";
 import ons from "onsenui";
 import { Tab, Tabbar, Toolbar, ToolbarButton } from "react-onsenui";
 import AppCompatActivity from "./AppCompatActivity";
@@ -83,8 +84,14 @@ class MainApplication extends AppCompatActivity<Props> {
 
   protected onCreate = () => {
     if (this.isAndroid) {
-      //@ts-ignore
-      return <Tabbar swipeable={false} position="auto" renderTabs={this.renderTabs} />;
+      return (
+        //@ts-ignore
+        <Tabbar
+          swipeable={false}
+          position={SharedPreferences.getBoolean("enableBottomTabs_switch", false) ? "bottom" : "top"}
+          renderTabs={this.renderTabs}
+        />
+      );
     } else {
       return <ExploreModuleFragment pushPage={this.props.pushPage} />;
     }

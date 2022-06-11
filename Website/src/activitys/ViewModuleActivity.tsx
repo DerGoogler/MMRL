@@ -124,38 +124,39 @@ class ViewModuleActivity extends Component<Props, States> {
               display: "flex",
               left: 0,
               bottom: 0,
+              padding: "8px",
               width: "100%",
               textAlign: "center",
-              backgroundColor: SharedPreferences.getBoolean("enableDarkmode_switch", false) ? "rgba(18, 18, 18, .85)" : "rgba(256, 256, 256, .85)",
+              backgroundColor: SharedPreferences.getBoolean("enableDarkmode_switch", false)
+                ? "rgba(18, 18, 18, .85)"
+                : "rgba(256, 256, 256, .85)",
             }}
           >
-            <div style={{ margin: "8px", width: "100%" }}>
-              {/*
+            {/*
           // @ts-ignore */}
-              <Button
-                modifier="large"
-                onClick={() => {
-                  window.open(download);
-                }}
-              >
-                Download <DownloadRounded sx={{ color: "white" }} />
-              </Button>
-              <div style={{ padding: "4px", display: !os.isAndroid ? "none" : "" }}></div>
-              {/*
+            <Button
+              modifier="large"
+              onClick={() => {
+                window.open(download);
+              }}
+            >
+              Download <DownloadRounded sx={{ color: "white" }} />
+            </Button>
+            <div style={{ padding: "4px", display: !os.isAndroid ? "none" : "" }}></div>
+            {/*
           // @ts-ignore */}
-              <Button
-                modifier="large"
-                disabled={!os.isAndroid}
-                style={{
-                  display: !os.isAndroid ? "none" : "",
-                }}
-                onClick={() => {
-                  ons.notification.alert("The option will be available in the future");
-                }}
-              >
-                Install <InstallMobileRounded sx={{ color: "white" }} />
-              </Button>
-            </div>
+            <Button
+              modifier="large"
+              disabled={!os.isAndroid}
+              style={{
+                display: !os.isAndroid ? "none" : "",
+              }}
+              onClick={() => {
+                ons.notification.alert("The option will be available in the future");
+              }}
+            >
+              Install <InstallMobileRounded sx={{ color: "white" }} />
+            </Button>
           </div>
           {/*
           // @ts-ignore */}

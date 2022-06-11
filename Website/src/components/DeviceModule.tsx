@@ -4,6 +4,7 @@ import Properties from "@js.properties/properties";
 import fs from "@Native/fs";
 import Log from "@Native/Log";
 import { DeleteRounded, RefreshRounded } from "@mui/icons-material";
+import SharedPreferences from "@Native/SharedPreferences";
 
 interface Props {
   module: string;
@@ -33,6 +34,8 @@ interface States {
 
 class DeviceModule extends Component<Props, States> {
   private log: Log;
+  private iconColor: string = SharedPreferences.getBoolean("enableDarkmode_switch", false) ? "#bb86fc" : "#4a148c";
+
   public constructor(props: Props | Readonly<Props>) {
     super(props);
     this.state = {
@@ -60,14 +63,6 @@ class DeviceModule extends Component<Props, States> {
     if (remove.existFile()) {
       this.setState({ isSwitchDisabled: true });
     }
-  };
-
-  private showDialog = () => {
-    this.setState({ dialogShown: true });
-  };
-
-  private hideDialog = () => {
-    this.setState({ dialogShown: false });
   };
 
   public render = () => {
@@ -122,7 +117,7 @@ class DeviceModule extends Component<Props, States> {
                 <item-description>{description}</item-description>
                 <item-module-button-wrapper>
                   <item-module-button
-                    style={{ color: "#4a148c" }}
+                    style={{ color: this.iconColor }}
                     onClick={() => {
                       // Can be improved, but not now
                       if (isSwitchDisabled) {
@@ -150,11 +145,11 @@ class DeviceModule extends Component<Props, States> {
                     <Ripple />
                     {isSwitchDisabled ? (
                       <>
-                        Restore <RefreshRounded sx={{ color: "#4a148c" }} />
+                        Restore <RefreshRounded sx={{ color: this.iconColor }} />
                       </>
                     ) : (
                       <>
-                        Remove <DeleteRounded sx={{ color: "#4a148c" }} />
+                        Remove <DeleteRounded sx={{ color: this.iconColor }} />
                       </>
                     )}
                   </item-module-button>

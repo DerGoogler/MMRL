@@ -9,9 +9,10 @@ interface NOS {
   launchAppByPackageName(targetPackage: string): void;
   getMonetColor(id: string): string;
   getColorRes(id: string): string;
-  setStatusbarColor(color: string, white?: bool): void;
+  setStatusBarColor(color: string, white?: bool): void;
+  setNavigationBarColor(color: string): void;
   /**
-   * @deprecated 
+   * @deprecated
    */
   log(tag: string, message: string): void;
   logi(tag: string, message: string): void;
