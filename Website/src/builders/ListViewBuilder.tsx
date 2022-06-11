@@ -91,7 +91,7 @@ class ListViewBuilder extends Component<IProps> {
   public render() {
     const { data, pushPage } = this.props;
 
-    const list = data.map((header: IListInterface) => (
+    return data.map((header: IListInterface) => (
       <>
         <section id={header.id} className={header.className} style={header.style}>
           <ListTitle>{header.title}</ListTitle>
@@ -109,45 +109,35 @@ class ListViewBuilder extends Component<IProps> {
                   }
                 }}
               >
-                {(() => {
-                  if (item.icon === (null || "" || undefined)) {
-                    return;
-                  } else {
-                    if (isValidElement(item.icon)) {
-                      return <div className="left">{item.icon}</div>;
-                    } else {
-                      return null;
-                    }
-                  }
-                })()}
+                {item.icon === (null || "" || undefined) ? null : isValidElement(item.icon) ? (
+                  <div className="left">{item.icon}</div>
+                ) : null}
                 <Gesture
                   event="hold"
                   callback={() => {
-                    ons.notification.alert({
-                      message: item.helper?.text,
-                      title: "Info",
-                      buttonLabels: ["Ok"],
-                      animation: "default",
-                      primaryButtonIndex: 1,
-                      cancelable: tools.typeCheck(item.helper?.cancelable, true),
-                    });
+                    if (item.helper?.text) {
+                      ons.notification.alert({
+                        message: item.helper?.text,
+                        title: "Info",
+                        buttonLabels: ["Ok"],
+                        animation: "default",
+                        primaryButtonIndex: 1,
+                        cancelable: tools.typeCheck(item.helper?.cancelable, true),
+                      });
+                    }
                   }}
                 >
                   <div className="center">
-                    {(() => {
-                      if (item.subtext === (null || "" || undefined)) {
-                        return item.text;
-                      } else {
-                        return (
-                          <>
-                            <span className="list-item__title">{item.text}</span>
-                            <span className="list-item__subtitle" style={{ display: "block" }}>
-                              {item.subtext}
-                            </span>
-                          </>
-                        );
-                      }
-                    })()}
+                    {item.subtext === (null || "" || undefined) ? (
+                      item.text
+                    ) : (
+                      <>
+                        <span className="list-item__title">{item.text}</span>
+                        <span className="list-item__subtitle" style={{ display: "block" }}>
+                          {item.subtext}
+                        </span>
+                      </>
+                    )}
                   </div>
                 </Gesture>
                 <div className="right">
@@ -177,12 +167,9 @@ class ListViewBuilder extends Component<IProps> {
                         return (
                           <Select
                             disabled={item.disabled}
-                            // @ts-ignore
+                            // @ts-ignore --> Argument of type 'string | undefined' is not assignable to parameter of type 'string'. Type 'undefined' is not assignable to type 'string'.ts(2345)
                             value={this.pref.getString(`${item.key!}_select`, item.selectDefaultValue)}
                             onChange={(e: any) => {
-                              /**
-                               * This will keep the default funtion
-                               */
                               const keepDefaultFuntion = () => this.pref.setString(`${item.key!}_select`, e.target.value);
                               if (typeof item.callback == "function") {
                                 const key = item.key;
@@ -215,8 +202,6 @@ class ListViewBuilder extends Component<IProps> {
         </section>
       </>
     ));
-
-    return list;
   }
 }
 
