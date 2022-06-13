@@ -7,8 +7,7 @@ import jss from "jss";
 import preset from "jss-preset-default";
 import light_theme from "@Styles/light_theme";
 import dark_theme from "@Styles/dark_theme";
-import Constants from "@Native/Constants";
-import { ToastContainer } from "react-toastify";
+import MainApplication from "@Activitys/MainApplication";
 import SharedPreferences, { ISharedPreferences } from "@Native/SharedPreferences";
 
 // Webpack CSS import
@@ -18,7 +17,6 @@ import "react-toastify/dist/ReactToastify.css";
 import "@Styles/addtional.scss";
 import "@Styles/markdown-light.scss";
 import "@Styles/markdown-dark.scss";
-import { isMobile } from "react-device-detect";
 
 class Bootloader {
   private mountNode: Element | null = document.querySelector("app");
@@ -44,8 +42,7 @@ class Bootloader {
     this.log.i("Loading MainActivty");
     ReactDOM.render(
       <>
-        <MainActivity />
-        <ToastContainer />
+        <MainActivity activity={MainApplication} />
       </>,
       this.mountNode
     );

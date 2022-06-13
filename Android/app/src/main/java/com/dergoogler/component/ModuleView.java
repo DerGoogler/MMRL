@@ -84,6 +84,14 @@ public class ModuleView extends WebView {
         this.webSettings.setAllowUniversalAccessFromFileURLs(enabled);
     }
 
+    public void setDomStorageEnabled(boolean enabled) {
+        this.webSettings.setDomStorageEnabled(enabled);
+    }
+
+    public void setDatabaseEnabled(boolean enabled) {
+        this.webSettings.setDatabaseEnabled(enabled);
+    }
+
     public void loadHTML(String htmlString) {
         this.loadData(htmlString, "text/html", "UTF-8");
     }

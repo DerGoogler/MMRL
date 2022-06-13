@@ -1,8 +1,10 @@
 import Constants from "@Native/Constants";
+import ons from "onsenui";
+import { os } from "./os";
 
 class Toast {
-  public static readonly LENGTH_LONG: int = 1;
-  public static readonly LENGTH_SHORT: int = 0;
+  public static readonly LENGTH_LONG: int = os.isAndroid ? 1 : 5000;
+  public static readonly LENGTH_SHORT: int = os.isAndroid ? 0 : 2000;
   private static duration: int;
   private static text: string;
 
@@ -13,8 +15,10 @@ class Toast {
   }
 
   public show(): void {
-    if (Constants.isAndroid) {
+    if (os.isAndroid) {
       nos.makeToast(Toast.text, Toast.duration);
+    } else {
+      ons.notification.toast(Toast.text, { timeout: Toast.duration, animation: "fall" });
     }
   }
 }

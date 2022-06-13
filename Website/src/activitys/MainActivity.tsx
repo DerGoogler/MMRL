@@ -4,6 +4,7 @@ import MainApplication from "@Activitys/MainApplication";
 import Constants from "@Native/Constants";
 import NoRootActivity from "./NoRootActivity";
 import Shell from "@Native/ShellBuilder";
+import tools from "@Utils/tools";
 
 interface ModuleOptions {
   verified?: boolean;
@@ -20,9 +21,9 @@ export interface ModuleProps {
 }
 
 export interface PushProps {
-  activity?: JSX.Element | any;
+  activity: any;
   key?: any;
-  extras?: any;
+  extra?: any;
   moduleOptions?: ModuleOptions;
   moduleProps?: ModuleProps;
 }
@@ -53,7 +54,7 @@ class MainActivity extends Component<PushProps, States> {
         component: CheckRoot(),
         props: {
           key: "main",
-          pushPage: (...args: any) => this.pushPage.apply(null, args),
+          pushPage: (...args: [props: PushProps]) => this.pushPage.apply(null, args),
         },
       },
     ]);
@@ -61,50 +62,27 @@ class MainActivity extends Component<PushProps, States> {
     this.state = { routeConfig, currentPage: "main" };
   }
 
-  public componentDidMount = () => {
-    window.addEventListener("load", this.windowLoadPush);
-  };
-
-  public componentWillUnmount = () => {
-    window.removeEventListener("load", this.windowLoadPush);
-  };
-
-  private windowLoadPush = () => {
-    if (typeof history.pushState === "function") {
-      history.pushState("jibberish", "", null);
-      window.onpopstate = () => {
-        history.pushState("newjibberish", "", null);
-        if (this.state.currentPage === "main") {
-          if (Constants.isAndroid) {
-            nos.close();
-          }
-        } else {
-          this.popPage();
-        }
-      };
-    } else {
-      var ignoreHashChange = true;
-      window.onhashchange = () => {
-        if (!ignoreHashChange) {
-          ignoreHashChange = true;
-          window.location.hash = Math.random().toString();
-        } else {
-          ignoreHashChange = false;
-        }
-      };
-    }
-  };
-
-  private pushPage = (props: any) => {
+  private pushPage = (props: PushProps): void & PushProps => {
     const route = {
       component: props.activity,
       props: {
         key: props.key,
         extra: props?.extra,
         popPage: () => this.popPage(),
-        pushPage: (...args: any) => this.pushPage.apply(null, args),
+        pushPage: (...args: [props: PushProps]) => this.pushPage.apply(null, args),
       },
     };
+
+    // Make an fake path. Note: The page should not refreshed!
+    tools.setURL((set, currentPath) => {
+      const acty = props.activity;
+      const getName = () => {
+        return acty.name.toLowerCase().replace("activity", "");
+      };
+      if (!acty.ignoreURL) {
+        set(props.key, props.key, `${currentPath}/#${getName()}`);
+      }
+    });
 
     let routeConfig = this.state.routeConfig;
 
@@ -130,6 +108,9 @@ class MainActivity extends Component<PushProps, States> {
         },
       },
     });
+
+    // Remove fake path
+    window.history.back();
 
     this.setState({ routeConfig, currentPage: "main" });
   };

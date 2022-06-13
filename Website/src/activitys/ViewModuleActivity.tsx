@@ -1,4 +1,4 @@
-import { Toolbar, ToolbarButton, BackButton, Button, Dialog } from "react-onsenui";
+import { ToolbarButton, Dialog, Button } from "react-onsenui";
 import ons from "onsenui";
 import axios from "axios";
 import { DownloadRounded, InfoRounded, InstallMobileRounded, VerifiedRounded } from "@mui/icons-material";
@@ -21,6 +21,8 @@ interface States {
 }
 
 class ViewModuleActivity extends AppCompatActivity<Props, States> {
+  public static readonly ignoreURL: bool = true;
+
   public constructor(props: Props | Readonly<Props>) {
     super(props);
     this.state = {

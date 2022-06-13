@@ -107,6 +107,17 @@ class tools {
       return false;
     }
   }
+
+  public static setURL(
+    callback: (set: (data: any, unused: string, url?: string | URL | null | undefined) => void, currentPath: string) => void
+  ): void {
+    const loc = window.location.pathname;
+    const set = (data: any, unused: string, url?: string | URL | null | undefined) => window.history.pushState(data, unused, url);
+    const currentPath: string = loc === "/" ? "" : loc;
+    if (typeof callback == "function") {
+      callback(set, currentPath);
+    }
+  }
 }
 
 export default tools;

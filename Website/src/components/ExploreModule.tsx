@@ -7,6 +7,7 @@ import ViewModuleActivity from "@Activitys/ViewModuleActivity";
 import Log from "@Native/Log";
 import { VerifiedRounded } from "@mui/icons-material";
 import { os } from "@Native/os";
+import Toast from "@Native/Toast";
 
 interface Props {
   notesUrl?: string;
@@ -131,6 +132,11 @@ class ExploreModule extends Component<Props, States> {
         <div
           ref={this.openReadmeFromParam}
           onClick={() => {
+            // Make an fake path. Note: The page should not refreshed!
+            tools.setURL((set, currentPath) => {
+              set(`view_${props.id}`, `view_${props.id}`, `${currentPath}/?module=${props.id}`);
+            });
+
             pushPage({
               key: `view_${props.id}`,
               activity: ViewModuleActivity,

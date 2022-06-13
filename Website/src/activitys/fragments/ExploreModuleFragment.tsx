@@ -84,21 +84,6 @@ class ExploreModuleFragment extends Component<Props, States> {
 
   public render = () => {
     const { search, loading } = this.state;
-    const modules = this.state.modulesIndex.map((item: any) => {
-      return (
-        <ExploreModule
-          key={item.id}
-          getId={item.id}
-          propsUrl={item.prop_url}
-          notesUrl={item.notes_url}
-          downloadUrl={item.zip_url}
-          pushPage={this.props.pushPage}
-          searchState={search}
-          moduleOptions={this.state.moduleOptions}
-          last_update={item.last_update}
-        />
-      );
-    });
 
     return (
       <>
@@ -160,24 +145,34 @@ class ExploreModuleFragment extends Component<Props, States> {
               paddingBottom: "4px",
             }}
           >
-            {(() => {
-              if (loading) {
+            {loading ? (
+              <ProgressCircular
+                indeterminate
+                style={{
+                  position: "absolute",
+                  left: "50%",
+                  top: "50%",
+                  WebkitTransform: "translate(-50%, -50%)",
+                  transform: "translate(-50%, -50%)",
+                }}
+              />
+            ) : (
+              this.state.modulesIndex.map((item: any) => {
                 return (
-                  <ProgressCircular
-                    indeterminate
-                    style={{
-                      position: "absolute",
-                      left: "50%",
-                      top: "50%",
-                      WebkitTransform: "translate(-50%, -50%)",
-                      transform: "translate(-50%, -50%)",
-                    }}
+                  <ExploreModule
+                    key={item.id}
+                    getId={item.id}
+                    propsUrl={item.prop_url}
+                    notesUrl={item.notes_url}
+                    downloadUrl={item.zip_url}
+                    pushPage={this.props.pushPage}
+                    searchState={search}
+                    moduleOptions={this.state.moduleOptions}
+                    last_update={item.last_update}
                   />
                 );
-              } else {
-                return modules;
-              }
-            })()}
+              })
+            )}
           </module-container>
         </div>
       </>

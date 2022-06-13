@@ -1,5 +1,6 @@
 import { SettingsRounded } from "@mui/icons-material";
 import SharedPreferences from "@Native/SharedPreferences";
+import Toast from "@Native/Toast";
 import ons from "onsenui";
 import { Tab, Tabbar, Toolbar, ToolbarButton } from "react-onsenui";
 import AppCompatActivity from "./AppCompatActivity";
@@ -37,7 +38,7 @@ class MainApplication extends AppCompatActivity<Props> {
         <div
           className="center"
           onClick={() => {
-            ons.notification.toast("My gf left me ... :(", { timeout: 1000, animation: "fall" });
+            Toast.makeText("My gf left me ... :(", Toast.LENGTH_SHORT).show();
           }}
         >
           Magisk Module Repo Loader

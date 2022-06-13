@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
         view.setAllowContentAccess(true);
         view.setAllowFileAccessFromFileURLs(true);
         view.setAllowUniversalAccessFromFileURLs(true);
+        view.setDatabaseEnabled(true);
+        view.setDomStorageEnabled(false);
         view.setUserAgentString("MMRL");
 
         // Content

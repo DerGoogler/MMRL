@@ -4,7 +4,7 @@
 - Fixed Android version
 - Removed `setPref` & `getPref`. Now should be merged to the new API
 - Depen. updated
-- 
+- Added fake url system
 
 ## App
 - Fix white statusbar
