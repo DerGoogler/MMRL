@@ -1,5 +1,5 @@
 import { Component, LegacyRef } from "react";
-import { Button, SearchInput, ProgressCircular } from "react-onsenui";
+import { Button, SearchInput, ProgressCircular, Page } from "react-onsenui";
 import axios from "axios";
 import { toast } from "react-toastify";
 import ExploreModule from "@Components/ExploreModule";
@@ -86,7 +86,7 @@ class ExploreModuleFragment extends Component<Props, States> {
     const { search, loading } = this.state;
 
     return (
-      <>
+      <Page>
         <div
           style={{
             textAlign: "center",
@@ -175,7 +175,7 @@ class ExploreModuleFragment extends Component<Props, States> {
             )}
           </module-container>
         </div>
-      </>
+      </Page>
     );
   };
 }

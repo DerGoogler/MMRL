@@ -27,11 +27,11 @@ class SettingsActivity extends AppCompatActivity<Props, States> {
     this.setState({ libs: Object.keys(pkg.dependencies) });
   };
 
-  protected onCreateToolbar = () => {
+  public onCreateToolbar = () => {
     return <ToolbarBuilder title="Settings" onBackButton={this.props.popPage} />;
   };
 
-  protected onCreate = () => {
+  public onCreate = () => {
     return (
       <>
         <settings-container className="settings-dfjsklgdj">

@@ -6,11 +6,11 @@ import ToolbarBuilder from "@Builders/ToolbarBuilder";
 class NoRootActivity extends AppCompatActivity {
   private readonly magiskPackageName: string = "com.topjohnwu.magisk";
 
-  protected onCreateToolbar = () => {
+  public onCreateToolbar = () => {
     return <ToolbarBuilder title="No Root" />;
   };
 
-  protected onCreate = () => {
+  public onCreate = () => {
     return (
       <div style={{ padding: "8px" }}>
         <Card>

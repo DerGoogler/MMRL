@@ -7,7 +7,6 @@ import jss from "jss";
 import preset from "jss-preset-default";
 import light_theme from "@Styles/light_theme";
 import dark_theme from "@Styles/dark_theme";
-import MainApplication from "@Activitys/MainApplication";
 import SharedPreferences, { ISharedPreferences } from "@Native/SharedPreferences";
 
 // Webpack CSS import
@@ -42,7 +41,7 @@ class Bootloader {
     this.log.i("Loading MainActivty");
     ReactDOM.render(
       <>
-        <MainActivity activity={MainApplication} />
+        <MainActivity />
       </>,
       this.mountNode
     );

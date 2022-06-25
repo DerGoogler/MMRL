@@ -41,7 +41,7 @@ class AppCompatActivity<P = {}, S = {}> extends PureComponent<P, S> {
   /**
    * Sets an custom status bar color for the activity
    */
-  protected setStatusbarColor(): string {
+  public setStatusbarColor(): string {
     if (SharedPreferences.getBoolean("enableDarkmode_switch", false)) {
       return this.darkColor;
     } else {
@@ -52,45 +52,45 @@ class AppCompatActivity<P = {}, S = {}> extends PureComponent<P, S> {
   /**
    * Creates the activity
    */
-  protected onCreate(): JSX.Element {
+  public onCreate(): JSX.Element {
     return <></>;
   }
 
   /**
    * Renders the Toolbar
    */
-  protected onCreateToolbar(): JSX.Element {
+  public onCreateToolbar(): JSX.Element {
     return <></>;
   }
 
-  protected onCreateModal(): JSX.Element {
+  public onCreateModal(): JSX.Element {
     return <></>;
   }
 
-  protected onCreateBottomToolbar(): JSX.Element {
+  public onCreateBottomToolbar(): JSX.Element {
     return <></>;
   }
 
-  protected onCreateFAB(): JSX.Element {
+  public onCreateFAB(): JSX.Element {
     return <></>;
   }
 
-  protected onInit(): void {}
+  public onInit(): void {}
 
-  protected onShow(): void {}
+  public onShow(): void {}
 
-  protected onHide(): void {}
+  public onHide(): void {}
 
-  protected onInfiniteScroll(): void {}
+  public onInfiniteScroll(): void {}
 
-  protected get pageModifier(): string {
+  public get pageModifier(): string {
     return "";
   }
 
   /**
    * @deprecated
    */
-  public render(): JSX.Element {
+  public render = (): JSX.Element => {
     return (
       <Page
         modifier={this.pageModifier}
@@ -108,7 +108,7 @@ class AppCompatActivity<P = {}, S = {}> extends PureComponent<P, S> {
         </ContentBody>
       </Page>
     );
-  }
+  };
 }
 
 export default AppCompatActivity;

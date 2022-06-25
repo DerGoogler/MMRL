@@ -29,13 +29,15 @@ class DeviceModuleFragment extends Component<Props, States> {
       return <DeviceModule module={item} />;
     });
     return (
-      <div
-        style={{
-          paddingBottom: "4px",
-        }}
-      >
-        {moduels}
-      </div>
+      <Page>
+        <div
+          style={{
+            paddingBottom: "4px",
+          }}
+        >
+          {moduels}
+        </div>
+      </Page>
     );
   };
 }

@@ -51,7 +51,7 @@ class ViewModuleActivity extends AppCompatActivity<Props, States> {
       });
   };
 
-  protected onCreateToolbar = () => {
+  public onCreateToolbar = () => {
     const { minMagisk, minApi, maxApi, needRamdisk, changeBoot } = this.props.extra?.moduleProps;
     return (
       <ToolbarBuilder

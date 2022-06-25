@@ -21,7 +21,7 @@ export interface ModuleProps {
 }
 
 export interface PushProps {
-  activity: any;
+  activity?: any;
   key?: any;
   extra?: any;
   moduleOptions?: ModuleOptions;
@@ -80,7 +80,7 @@ class MainActivity extends Component<PushProps, States> {
         return acty.name.toLowerCase().replace("activity", "");
       };
       if (!acty.ignoreURL) {
-        set(props.key, props.key, `${currentPath}/#${getName()}`);
+        set(props.key, props.key, `/#${currentPath}/${getName()}`);
       }
     });
 

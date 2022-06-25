@@ -25,11 +25,11 @@ class AcknowledgementsActivity extends AppCompatActivity<Props, States> {
     this.setState({ libs: dep });
   };
 
-  protected onCreateToolbar = () => {
+  public onCreateToolbar = () => {
     return <ToolbarBuilder title="Acknowledgements" onBackButton={this.props.popPage} />;
   };
 
-  protected onCreate = () => {
+  public onCreate = () => {
     const libs = this.state.libs.map((item: any) => {
       return (
         <Card

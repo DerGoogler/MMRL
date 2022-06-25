@@ -1,8 +1,8 @@
 import { SettingsRounded } from "@mui/icons-material";
+import { os } from "@Native/os";
 import SharedPreferences from "@Native/SharedPreferences";
 import Toast from "@Native/Toast";
-import ons from "onsenui";
-import { Tab, Tabbar, Toolbar, ToolbarButton } from "react-onsenui";
+import { Tab, Tabbar, TabbarRenderTab, Toolbar, ToolbarButton } from "react-onsenui";
 import AppCompatActivity from "./AppCompatActivity";
 import DeviceModuleFragment from "./fragments/DeviceModuleFragment";
 import ExploreModuleFragment from "./fragments/ExploreModuleFragment";
@@ -32,7 +32,7 @@ class MainApplication extends AppCompatActivity<Props> {
     this.state = {};
   }
 
-  protected onCreateToolbar = () => {
+  public onCreateToolbar = () => {
     return (
       <Toolbar>
         <div
@@ -67,7 +67,7 @@ class MainApplication extends AppCompatActivity<Props> {
     });
   };
 
-  private renderTabs = () => {
+  private renderTabs = (): TabbarRenderTab[] => {
     return [
       {
         content: <ExploreModuleFragment pushPage={this.props.pushPage} />,
@@ -80,22 +80,20 @@ class MainApplication extends AppCompatActivity<Props> {
     ];
   };
 
-  protected onCreate = () => {
-    if (this.isAndroid) {
-      return (
-        <Tabbar
-          swipeable={false}
-          position={SharedPreferences.getBoolean("enableBottomTabs_switch", false) ? "bottom" : "top"}
-          renderTabs={this.renderTabs}
-        />
-      );
-    } else {
-      return (
-        <>
+  public onCreate = () => {
+    return (
+      <>
+        {os.isAndroid ? (
+          <Tabbar
+            swipeable={false}
+            position={SharedPreferences.getBoolean("enableBottomTabs_switch", false) ? "bottom" : "top"}
+            renderTabs={this.renderTabs}
+          />
+        ) : (
           <ExploreModuleFragment pushPage={this.props.pushPage} />
-        </>
-      );
-    }
+        )}
+      </>
+    );
   };
 }
 
