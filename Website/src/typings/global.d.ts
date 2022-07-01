@@ -1,4 +1,3 @@
-import FileSystem from "./android/fs";
 import NShell from "./android/shell";
 import NOS from "./android/os";
 import NBuildConfig from "./android/buildconfig";
@@ -17,13 +16,11 @@ declare global {
   }
 
   interface Window {
-    nfs: FileSystem;
     nshell: NShell;
     nos: NOS;
     nversion: NBuildConfig;
   }
 
-  const nfs: FileSystem;
   const nshell: NShell;
   const nos: NOS;
   const nbuildconfig: NBuildConfig;

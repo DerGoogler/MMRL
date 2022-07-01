@@ -8,8 +8,8 @@ android {
         applicationId 'com.dergoogler.mmrl'
         minSdk 26
         targetSdk 32
-        versionName "1.4.0@alpha-3"
-        versionCode "140".toInteger()
+        versionName "1.4.1"
+        versionCode "141".toInteger()
     }
     buildTypes {
         release {

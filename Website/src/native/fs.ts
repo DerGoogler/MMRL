@@ -1,10 +1,26 @@
+export interface IFileSystem {
+  readFile(path: string): string;
+  listFiles(path: string): string;
+  existFile(path: string): boolean;
+  deleteFile(path: string): boolean;
+  deleteRecursive(path: string): void;
+  createFile(path: string): boolean;
+  getExternalStorageDir(): string;
+  getPackageDataDir(): string;
+  getPublicDir(type: string): string;
+  getDataDir(): string;
+  download(output: string, path: string): void;
+}
+
+declare const nfs: IFileSystem;
+
 /**
  * Nothing
  */
-class fs {
+class fs implements IFileSystem {
   private path: string;
-  public constructor(path: string) {
-    this.path = path;
+  public constructor(path?: string) {
+    this.path = path ? path : "";
   }
 
   public readFile(): string {
@@ -37,8 +53,28 @@ class fs {
     return nfs.createFile(this.path);
   }
 
+  public getExternalStorageDir(): string {
+    return nfs.getExternalStorageDir();
+  }
+
+  public getPackageDataDir(): string {
+    return nfs.getPackageDataDir();
+  }
+
+  public getPublicDir(type: string): string {
+    return nfs.getPublicDir(type);
+  }
+
+  public getDataDir(): string {
+    return nfs.getDataDir();
+  }
+
+  public download(url: string): void {
+    return nfs.download(this.path, url);
+  }
+
   public static readFile(path: string): string {
-    return nfs.readFile(path);
+    return new fs(path).readFile();
   }
 
   /**
@@ -50,39 +86,43 @@ class fs {
    * ```
    */
   public static listFiles(path: string): string {
-    return nfs.listFiles(path);
+    return new fs(path).listFiles();
   }
 
   public static existFile(path: string): boolean {
-    return nfs.existFile(path);
+    return new fs(path).existFile();
   }
 
   public static deleteFile(path: string): boolean {
-    return nfs.deleteFile(path);
+    return new fs(path).deleteFile();
   }
 
   public static deleteRecursive(path: string): void {
-    nfs.deleteRecursive(path);
+    new fs(path).deleteRecursive();
   }
 
   public static createFile(path: string): boolean {
-    return nfs.createFile(path);
+    return new fs(path).createFile();
   }
 
   public static getExternalStorageDir(): string {
-    return nfs.getExternalStorageDir();
+    return new fs().getExternalStorageDir();
   }
 
   public static getPackageDataDir(): string {
-    return nfs.getPackageDataDir();
+    return new fs().getPackageDataDir();
   }
 
   public static getPublicDir(type: string): string {
-    return nfs.getPublicDir(type);
+    return new fs().getPublicDir(type);
   }
 
   public static getDataDir(): string {
-    return nfs.getDataDir();
+    return new fs().getDataDir();
+  }
+
+  public static download(output: string, url: string): void {
+    new fs(output).download(url);
   }
 }
 

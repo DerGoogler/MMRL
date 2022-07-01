@@ -9,6 +9,8 @@ import SharedPreferences from "@Native/SharedPreferences";
 import Alert from "@mui/material/Alert";
 import AppCompatActivity from "./AppCompatActivity";
 import ToolbarBuilder from "@Builders/ToolbarBuilder";
+import fs from "@Native/fs";
+import Toast from "@Native/Toast";
 
 interface Props {
   extra?: any;
@@ -126,6 +128,8 @@ class ViewModuleActivity extends AppCompatActivity<Props, States> {
             modifier="large"
             onClick={() => {
               window.open(download);
+              // Toast.makeText(`Download ${id!}`, Toast.LENGTH_LONG).show();
+              // fs.download(`${id!}.zip`, download);
             }}
           >
             Download <DownloadRounded sx={{ color: "white" }} />

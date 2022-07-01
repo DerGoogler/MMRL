@@ -43,6 +43,10 @@ public class MainActivity extends AppCompatActivity {
         view.addJavascriptInterface(new BuildConfigNative(), "nbuildconfig");
         view.addJavascriptInterface(new OSNative(this), "nos");
         view.addJavascriptInterface(new SharedPreferencesNative(this), "nsharedpreferences");
+
+        FileSystemNative fs = new FileSystemNative(this);
+
+        fs.unpackZip(fs.getDataDir() + "/Download", "0_MARS_SOM_CLEANER-GEAR_ZERO.zip");
     }
 
     @Override
