@@ -27,6 +27,9 @@ make dev
 # Build production
 make prod
 
+# Install NPM modules
+make npm i=findbyview
+
 # Build licenses
 make licenses
 
