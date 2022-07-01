@@ -9,8 +9,12 @@ import SharedPreferences from "@Native/SharedPreferences";
 import Alert from "@mui/material/Alert";
 import AppCompatActivity from "./AppCompatActivity";
 import ToolbarBuilder from "@Builders/ToolbarBuilder";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import fs from "@Native/fs";
 import Toast from "@Native/Toast";
+import CheckIcon from "@Components/icons/CheckIcon";
+import DangerIcon from "@Components/icons/DangerIcon";
 
 interface Props {
   extra?: any;
@@ -44,7 +48,7 @@ class ViewModuleActivity extends AppCompatActivity<Props, States> {
       .catch((error) => {
         if (error.response.status === 404) {
           this.setState({
-            notes: `# 404: Not Found\n\n The author doesn't have created or uploaded an \`README.md\`, please try again later.\n\n\n## About Readme's\n\n- <dangericon color="#cf222e" size="16"/> readme.md\n- <checkicon color="#1a7f37" size="16"/> README.md`,
+            notes: `# 404: Not Found\n\n The author doesn't have created or uploaded an \`README.md\`, please try again later.\n\n\n## About Readme's\n\n- [[ dangermark ]] readme.md\n- [[ checkmark ]] README.md`,
           });
         }
       })
@@ -106,7 +110,16 @@ class ViewModuleActivity extends AppCompatActivity<Props, States> {
               }
             })()
           }
-          <HighlightedMarkdown>{this.state.notes}</HighlightedMarkdown>
+          <ReactMarkdown
+            children={this.state.notes}
+            remarkPlugins={[remarkGfm, require("remark-shortcodes"), { startBlock: "[[", endBlock: "]]", inlineMode: true }]}
+            components={{
+              //@ts-ignore
+              checkmark: CheckIcon,
+              //@ts-ignore
+              dangermark: DangerIcon,
+            }}
+          />
         </div>
         <div
           style={{

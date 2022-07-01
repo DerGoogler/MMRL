@@ -30,7 +30,7 @@ class DangerIcon extends Component<Props> {
 }
 
 DangerIcon.defaultProps = {
-  size: "14",
+  size: "16",
   color: "#cf222e",
 };
 

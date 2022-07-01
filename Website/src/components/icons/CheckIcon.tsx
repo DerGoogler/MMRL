@@ -30,7 +30,7 @@ class CheckIcon extends Component<Props> {
 }
 
 CheckIcon.defaultProps = {
-  size: "14",
+  size: "16",
   color: "#1a7f37",
 };
 
