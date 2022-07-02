@@ -2,6 +2,7 @@ import { SettingsRounded } from "@mui/icons-material";
 import { os } from "@Native/os";
 import SharedPreferences from "@Native/SharedPreferences";
 import Toast from "@Native/Toast";
+import { string } from "@Strings";
 import { Tab, Tabbar, TabbarRenderTab, Toolbar, ToolbarButton } from "react-onsenui";
 import AppCompatActivity from "./AppCompatActivity";
 import DeviceModuleFragment from "./fragments/DeviceModuleFragment";
@@ -71,11 +72,11 @@ class MainApplication extends AppCompatActivity<Props> {
     return [
       {
         content: <ExploreModuleFragment pushPage={this.props.pushPage} />,
-        tab: <Tab label="Explore" />,
+        tab: <Tab label={string.explore} />,
       },
       {
         content: <DeviceModuleFragment pushPage={this.props.pushPage} />,
-        tab: <Tab label="Installed" />,
+        tab: <Tab label={string.installed} />,
       },
     ];
   };

@@ -9,6 +9,7 @@ import SharedPreferences from "@Native/SharedPreferences";
 import Alert from "@mui/material/Alert";
 import AppCompatActivity from "./AppCompatActivity";
 import ToolbarBuilder from "@Builders/ToolbarBuilder";
+import { string } from "@Strings";
 
 interface Props {
   extra?: any;
@@ -98,7 +99,7 @@ class ViewModuleActivity extends AppCompatActivity<Props, States> {
               if (verified) {
                 return (
                   <Alert key="verified-module" icon={<VerifiedRounded fontSize="inherit" />} severity="success">
-                    This module is verified!
+                    {string.module_verified}
                   </Alert>
                 );
               }
@@ -130,7 +131,7 @@ class ViewModuleActivity extends AppCompatActivity<Props, States> {
               // fs.download(`${id!}.zip`, download);
             }}
           >
-            Download <DownloadRounded sx={{ color: "white" }} />
+            {string.download} <DownloadRounded sx={{ color: "white" }} />
           </Button>
           <div style={{ padding: "4px", display: !os.isAndroid ? "none" : "" }}></div>
           {/*
@@ -145,7 +146,7 @@ class ViewModuleActivity extends AppCompatActivity<Props, States> {
               ons.notification.alert("The option will be available in the future");
             }}
           >
-            Install <InstallMobileRounded sx={{ color: "white" }} />
+            {string.install} <InstallMobileRounded sx={{ color: "white" }} />
           </Button>
         </div>
         {/*

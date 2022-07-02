@@ -168,9 +168,9 @@ class ListViewBuilder extends Component<IProps> {
                           <Select
                             disabled={item.disabled}
                             // @ts-ignore --> Argument of type 'string | undefined' is not assignable to parameter of type 'string'. Type 'undefined' is not assignable to type 'string'.ts(2345)
-                            value={this.pref.getString(`${item.key!}_select`, item.selectDefaultValue)}
+                            value={this.pref.getString(`${item.key}_select`, item.selectDefaultValue)}
                             onChange={(e: any) => {
-                              const keepDefaultFuntion = () => this.pref.setString(`${item.key!}_select`, e.target.value);
+                              const keepDefaultFuntion = () => this.pref.setString(`${item.key}_select`, e.target.value);
                               if (typeof item.callback == "function") {
                                 const key = item.key;
                                 item.callback(e, key, keepDefaultFuntion());
@@ -179,7 +179,7 @@ class ListViewBuilder extends Component<IProps> {
                               }
                             }}
                           >
-                            <option value="" selected disabled hidden>
+                            <option defaultValue={item.selectDefaultValue} selected disabled hidden>
                               {item.selectDefaultText ? item.selectDefaultText : "Choose"}
                             </option>
                             {item.selectValue?.map((select: IListSelectValue) => (

@@ -87,6 +87,7 @@ const config: Configuration = {
       "@Package": resolve(__dirname, "package.json"),
       "@Styles": resolve(__dirname, "src/styles"),
       "@Activitys": resolve(__dirname, "src/activitys"),
+      "@Strings": resolve(__dirname, "src/language/core/index.ts"),
     },
   },
   resolveLoader: {

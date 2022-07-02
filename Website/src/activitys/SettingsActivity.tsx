@@ -4,6 +4,7 @@ import settings from "@Utils/settings";
 import pkg from "@Package";
 import AppCompatActivity from "./AppCompatActivity";
 import ToolbarBuilder from "@Builders/ToolbarBuilder";
+import { string } from "@Strings";
 
 interface Props {
   pushPage: any;
@@ -28,7 +29,7 @@ class SettingsActivity extends AppCompatActivity<Props, States> {
   };
 
   public onCreateToolbar = () => {
-    return <ToolbarBuilder title="Settings" onBackButton={this.props.popPage} />;
+    return <ToolbarBuilder title={string.settings} onBackButton={this.props.popPage} />;
   };
 
   public onCreate = () => {

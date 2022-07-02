@@ -1,3 +1,22 @@
 {
-    
+  "search_modules": "Module durchsuchen",
+  "settings": "Einstellungen",
+  "repository": "Repository",
+  "custom_repository": "Eigende repository",
+  "appearance": "Aussehen",
+  "language": "Sprache",
+  "dark_theme": "Dunkles Design",
+  "bottom_navigation": {
+    "text": "Navigation unten",
+    "subtext": "Bewegt Tabs an den unteren Bildschirmrand."
+  },
+  "not_supported_in_web_version": "In der Web-Version nicht unterstuetzt",
+  "source_code": "Quellcode",
+  "acknowledgements": "Acknowledgements",
+  "issues": "Issues",
+  "module_verified": "Dieses Modul ist verifiziert und vertrauenswürdig",
+  "download": "Herunterladen",
+  "install": "Installieren",
+  "explore": "Erkunden",
+  "installed": "Installiert"
 }

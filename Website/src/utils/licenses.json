@@ -104,6 +104,14 @@
         "repository": "https://github.com/cssinjs/jss"
     },
     {
+        "name": "localized-strings",
+        "description": "Simple module to localize the strings of any JS based program using the same syntax used in the ReactLocalization and ReactNativeLocalization module, use 'npm run build' before publishing",
+        "author": "Stefano Falda <stefano.falda@gmail.com> (http://www.babisoft.com)",
+        "version": "0.2.4",
+        "license": "MIT",
+        "repository": "https://github.com/stefalda/localized-strings.git"
+    },
+    {
         "name": "markdown-to-jsx",
         "description": "Convert markdown to JSX with ease for React and React-like projects. Super lightweight and highly configurable.",
         "author": "Evan Jacobs <probablyup@gmail.com>",

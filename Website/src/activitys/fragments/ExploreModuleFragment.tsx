@@ -8,6 +8,7 @@ import { PushProps } from "@Activitys/MainActivity";
 import { SearchRounded } from "@mui/icons-material";
 import { os } from "@Native/os";
 import ons from "onsenui";
+import { string } from "@Strings";
 
 interface Props {
   pushPage(...arg: any): PushProps;
@@ -106,7 +107,7 @@ class ExploreModuleFragment extends Component<Props, States> {
             }}
           >
             <SearchInput
-              placeholder={"Search modules"}
+              placeholder={string.search_modules}
               ref={this.searchBar}
               style={{
                 borderRadius: "8px",

@@ -25,7 +25,8 @@
       "@Bootloader": ["index.tsx"],
       "@Package": ["./../package.json"],
       "@Styles/*": ["styles/*"],
-      "@Activitys/*": ["activitys/*"]
+      "@Activitys/*": ["activitys/*"],
+      "@Strings": ["language/core/index.ts"]
     },
     "types": ["node"]
   },

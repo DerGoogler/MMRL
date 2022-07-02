@@ -8,6 +8,7 @@ import preset from "jss-preset-default";
 import light_theme from "@Styles/light_theme";
 import dark_theme from "@Styles/dark_theme";
 import SharedPreferences, { ISharedPreferences } from "@Native/SharedPreferences";
+import { string } from "./language/core";
 
 // Webpack CSS import
 import "onsenui/css/onsenui-core.css";
@@ -20,17 +21,17 @@ import "@Styles/markdown-dark.scss";
 class Bootloader {
   private mountNode: Element | null = document.querySelector("app");
   private log: Log;
-  private readonly getSharedPreferences: ISharedPreferences;
+  private readonly pref: ISharedPreferences;
 
   constructor() {
-    this.getSharedPreferences = new SharedPreferences();
+    this.pref = new SharedPreferences();
     this.log = new Log(this.constructor.name);
   }
 
   private loadStyle() {
     this.log.i("Setup theme");
     jss.setup(preset());
-    if (this.getSharedPreferences.getBoolean("enableDarkmode_switch", false)) {
+    if (this.pref.getBoolean("enableDarkmode_switch", false)) {
       jss.createStyleSheet(dark_theme).attach();
     } else {
       jss.createStyleSheet(light_theme).attach();
@@ -51,6 +52,8 @@ class Bootloader {
     if (!os.hasStoragePermission()) {
       os.requestStoargePermission();
     }
+
+    string.setLanguage(this.pref.getString("language_select", "en"));
 
     // Prevent context menu on browsers.
     window.addEventListener("contextmenu", (e: Event) => e.preventDefault());

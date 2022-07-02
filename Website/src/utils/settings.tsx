@@ -16,20 +16,21 @@ import BuildConfig from "@Native/BuildConfig";
 import { os } from "@Native/os";
 import Build from "@Native/Build";
 import Icon from "@Components/Icon";
+import { string } from "@Strings";
 
 const prefManager = new SharedPreferences();
 
 const settings: IListInterface[] = [
   {
-    title: "Repo",
+    title: string.repository,
     content: [
       {
         type: "",
         icon: <Icon icon={ExtensionRounded} />,
-        text: "Custom repo",
+        text: string.custom_repository,
         onClick: (key) => {
           new AlertBuilder()
-            .setTitle("Custom repo")
+            .setTitle(string.custom_repository)
             .setMessage("Only URLs are valid")
             .setPositiveButton("Apply", (input: string) => {
               if (input != null) {
@@ -59,21 +60,45 @@ const settings: IListInterface[] = [
     ],
   },
   {
-    title: "Appearance",
+    title: string.appearance,
     content: [
+      {
+        key: "language",
+        icon: "language",
+        type: "select",
+        text: string.language,
+        selectDefaultValue: "en",
+        selectValue: [
+          {
+            text: "English",
+            value: "en",
+          },
+          {
+            text: "German",
+            value: "de",
+          },
+        ],
+        callback: (e: Event, key: string, keepDefaultFuntion: void) => {
+          if (confirm("Do you change the language?")) {
+            keepDefaultFuntion;
+          } else {
+            return;
+          }
+        },
+      },
       {
         key: "enableDarkmode",
         type: "switch",
         icon: <Icon icon={Brightness2Rounded} />,
-        text: "Dark theme",
+        text: string.dark_theme,
       },
       {
         key: "enableBottomTabs",
         type: "switch",
         icon: <Icon icon={PowerInputRounded} />,
         disabled: !os.isAndroid,
-        text: "Bottom navigation",
-        subtext: !os.isAndroid ? "Not supported in web version" : "Moves tabs to the bottom of screen.",
+        text: string.bottom_navigation.text,
+        subtext: !os.isAndroid ? string.not_supported_in_web_version : string.bottom_navigation.subtext,
       },
     ],
   },
@@ -83,7 +108,7 @@ const settings: IListInterface[] = [
       {
         type: "",
         icon: <Icon icon={SourceRounded} />,
-        text: "Source code",
+        text: string.source_code,
         onClick: () => {
           window.open("https://github.com/DerGoogler/MMRL/", "_blank");
         },

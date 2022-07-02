@@ -22,6 +22,7 @@
         "highlight.js": "^11.5.1",
         "jss": "^10.9.0",
         "jss-preset-default": "^10.9.0",
+        "localized-strings": "^0.2.4",
         "markdown-to-jsx": "^7.1.7",
         "material-icons": "^1.10.8",
         "onsenui": "^2.12.1",
