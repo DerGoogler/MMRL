@@ -79,11 +79,13 @@ const settings: IListInterface[] = [
           },
         ],
         callback: (e: Event, key: string, keepDefaultFuntion: void) => {
-          if (confirm("Do you change the language?")) {
-            keepDefaultFuntion;
-          } else {
-            return;
-          }
+          new AlertBuilder()
+            .setTitle("Sure?")
+            .setMessage("Do you wanna change the language?")
+            .setPositiveButton("Yes", (input: string) => {
+              keepDefaultFuntion;
+            })
+            .showAlert();
         },
       },
       {

@@ -18,6 +18,20 @@ interface AlertButton {
   callback: Function | undefined;
 }
 
+interface AlertOptions {
+  message?: string;
+  messageHTML?: string;
+  buttonLabel?: string;
+  buttonLabels?: string[];
+  primaryButtonIndex?: number;
+  cancelable?: boolean;
+  animation?: string;
+  title?: string;
+  modifier?: string;
+  callback?: any;
+  id?: string;
+}
+
 class AlertBuilder {
   private dialog: Alert;
 
@@ -88,10 +102,9 @@ class AlertBuilder {
 
   public showAlert(): Alert & Void {
     const { positive, negative } = this.dialog.buttons;
-    ons.notification.confirm({
-      message: this.dialog.message,
-      title: this.dialog.title,
-      buttonLabels: [positive.title, negative.title],
+    const { title, message } = this.dialog;
+    const pla: AlertOptions = {
+      buttonLabels: [],
       animation: "default",
       primaryButtonIndex: 0,
       cancelable: true,
@@ -103,13 +116,21 @@ class AlertBuilder {
           case 1:
             if (typeof negative.callback == "function") negative.callback();
             break;
-
           default:
             // Nothing
             break;
         }
       },
-    });
+    };
+    pla.message = message;
+    pla.title = title;
+    if (positive.title) {
+      pla.buttonLabels?.push(positive.title);
+    }
+    if (negative.title) {
+      pla.buttonLabels?.push(negative.title);
+    }
+    ons.notification.confirm(pla);
   }
 
   public showPrompt(): Alert & Void {
