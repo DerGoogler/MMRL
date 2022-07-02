@@ -6,10 +6,6 @@ on:
   pull_request:
     branches: [ master ]
 
-defaults:
-  run:
-    working-directory: Website
-
 jobs:
   build:
     runs-on: ubuntu-latest
