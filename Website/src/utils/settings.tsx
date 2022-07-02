@@ -18,7 +18,9 @@ import { os } from "@Native/os";
 import Build from "@Native/Build";
 import Icon from "@Components/Icon";
 import { string } from "@Strings";
-import TerminalActivity from "@Activitys/TerminalActivity";
+import fs from "@Native/fs";
+import Magiskboot from "@Native/Magiskboot";
+import Toast from "@Native/Toast";
 
 const prefManager = new SharedPreferences();
 
@@ -106,6 +108,75 @@ const settings: IListInterface[] = [
       },
     ],
   },
+
+  {
+    title: "Util",
+    content: [
+      {
+        type: "",
+        text: "Unpack boot",
+        onClick: () => {
+          new AlertBuilder()
+            .setTitle("Unpack boot")
+            .setMessage("The boot.img will in the current work directory unpacked")
+            .setPositiveButton("try", (input: string) => {
+              if (input != null) {
+                const boo = new fs(input);
+                try {
+                  if (boo.existFile()) {
+                    Magiskboot.unpack(["-h", input]);
+                  } else {
+                    Toast.makeText(`${input} does not exist`, Toast.LENGTH_SHORT).show();
+                  }
+                } catch (e: any) {
+                  Toast.makeText(e, Toast.LENGTH_SHORT).show();
+                }
+              }
+            })
+            .setNegativeButtom("Cancel", () => {})
+            .showPrompt();
+        },
+      },
+      {
+        type: "",
+        text: "Boot status",
+        onClick: () => {
+          new AlertBuilder()
+            .setTitle("Boot status")
+            .setMessage("Enter the ramdisk.cpio file")
+            .setPositiveButton("try", (input: string) => {
+              if (input != null) {
+                const boo = new fs(input);
+                try {
+                  if (boo.existFile()) {
+                    switch (Number(Magiskboot.cpio([input, "test"]))) {
+                      case 0:
+                        Toast.makeText("Stock boot image detected", Toast.LENGTH_SHORT).show();
+                        break;
+                      case 1:
+                        Toast.makeText("Magisk patched boot image detected", Toast.LENGTH_SHORT).show();
+                        break;
+                      case 2:
+                        Toast.makeText("Boot image patched by unsupported programs", Toast.LENGTH_SHORT).show();
+                        break;
+                      default:
+                        Toast.makeText("Unable to detect status", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                  } else {
+                    Toast.makeText(`${input} does not exist`, Toast.LENGTH_SHORT).show();
+                  }
+                } catch (e: any) {
+                  Toast.makeText(e, Toast.LENGTH_SHORT).show();
+                }
+              }
+            })
+            .setNegativeButtom("Cancel", () => {})
+            .showPrompt();
+        },
+      },
+    ],
+  },
   {
     title: "Info",
     content: [
@@ -125,17 +196,6 @@ const settings: IListInterface[] = [
           pushPage({
             key: "acknowledgements",
             activity: AcknowledgementsActivity,
-          });
-        },
-      },
-      {
-        type: "",
-        icon: <Icon icon={TerminalRounded} />,
-        text: "Terminal",
-        onClick: (key, pushPage) => {
-          pushPage({
-            key: "terminal",
-            activity: TerminalActivity,
           });
         },
       },

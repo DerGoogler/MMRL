@@ -1,7 +1,15 @@
 package com.dergoogler.mmrl;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.webkit.PermissionRequest;
+import android.webkit.ValueCallback;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,6 +23,7 @@ import com.dergoogler.core.ShellNative;
 
 public class MainActivity extends AppCompatActivity {
     private ModuleView view;
+    private ValueCallback<Uri[]> fileChooserCallback;
 
     @Override
     @SuppressLint("SetJavaScriptEnabled")
@@ -35,6 +44,31 @@ public class MainActivity extends AppCompatActivity {
 
         // Content
         view.loadHTML("file:///android_asset/", new Page(this).load());
+        view.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onPermissionRequest(final PermissionRequest request) {
+                request.grant(request.getResources());
+            }
+
+            @Override
+            public boolean onShowFileChooser(WebView vw, ValueCallback<Uri[]> filePathCallback,
+                                             FileChooserParams fileChooserParams) {
+                if (fileChooserCallback != null) {
+                    fileChooserCallback.onReceiveValue(null);
+                }
+                fileChooserCallback = filePathCallback;
+
+                Intent selectionIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                selectionIntent.addCategory(Intent.CATEGORY_OPENABLE);
+                selectionIntent.setType("*/*");
+
+                Intent chooserIntent = new Intent(Intent.ACTION_CHOOSER);
+                chooserIntent.putExtra(Intent.EXTRA_INTENT, selectionIntent);
+                startActivityForResult(chooserIntent, 0);
+
+                return true;
+            }
+        });
 
         // Core
         view.addJavascriptInterface(new FileSystemNative(this), "nfs");
