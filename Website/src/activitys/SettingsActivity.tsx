@@ -35,7 +35,7 @@ class SettingsActivity extends AppCompatActivity<Props, States> {
   public onCreate = () => {
     return (
       <>
-        <settings-container className="settings-dfjsklgdj">
+        <settings-container style={{ height: "100%" }} className="settings-dfjsklgdj">
           <List>
             <ListViewBuilder data={settings} pushPage={this.props.pushPage} />
           </List>

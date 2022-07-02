@@ -89,7 +89,7 @@ class ViewModuleActivity extends AppCompatActivity<Props, States> {
     return (
       <>
         <div
-          style={{ padding: "8px", marginBottom: "56px" }}
+          style={{ padding: "8px", marginBottom: "56px", height: "100%" }}
           className={new SharedPreferences().getBoolean("enableDarkmode_switch", false) ? "markdown-body-dark" : "markdown-body-light"}
         >
           {

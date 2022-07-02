@@ -59,7 +59,7 @@
         "name": "bota64",
         "description": "Custom encoding",
         "author": "Der_Googler <support@dergoogler.com>",
-        "version": "1.0.0",
+        "version": "1.0.1",
         "license": "MIT",
         "repository": "https://github.com/DerGoogler/Bota64"
     },
@@ -190,6 +190,14 @@
         "version": "15.5.0",
         "license": "MIT",
         "repository": "https://github.com/react-syntax-highlighter/react-syntax-highlighter.git"
+    },
+    {
+        "name": "react-terminal",
+        "description": "React component that renders a terminal",
+        "author": "Bony Roopchandani",
+        "version": "v1.2.8",
+        "license": "MIT",
+        "repository": "https://github.com/bony2023/react-terminal.git"
     },
     {
         "name": "react-toastify",

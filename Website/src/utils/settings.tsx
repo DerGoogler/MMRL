@@ -11,12 +11,14 @@ import {
   GavelRounded,
   PowerInputRounded,
   SourceRounded,
+  TerminalRounded,
 } from "@mui/icons-material";
 import BuildConfig from "@Native/BuildConfig";
 import { os } from "@Native/os";
 import Build from "@Native/Build";
 import Icon from "@Components/Icon";
 import { string } from "@Strings";
+import TerminalActivity from "@Activitys/TerminalActivity";
 
 const prefManager = new SharedPreferences();
 
@@ -123,6 +125,17 @@ const settings: IListInterface[] = [
           pushPage({
             key: "acknowledgements",
             activity: AcknowledgementsActivity,
+          });
+        },
+      },
+      {
+        type: "",
+        icon: <Icon icon={TerminalRounded} />,
+        text: "Terminal",
+        onClick: (key, pushPage) => {
+          pushPage({
+            key: "terminal",
+            activity: TerminalActivity,
           });
         },
       },

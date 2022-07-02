@@ -1,5 +1,8 @@
 NODE_BIN = ./node_modules/.bin
 
+install:
+	cd Website && npm install --force
+
 licenses:
 	cd Website && node license > ./src/utils/licenses.json
 	
@@ -9,8 +12,11 @@ dev: licenses
 prod: licenses
 	cd Website && ${NODE_BIN}/webpack --mode=production
 
-npm:
-	cd Website && npm install ${i}
+npmi:
+	cd Website && npm install $i
+
+npmu:
+	cd Website && npm uninstall $u
 
 app: generateDebugApp openDebugApp
 
