@@ -1,4 +1,4 @@
-import { Component, createRef, RefObject } from "react";
+import { Component, createRef, ReactNode, RefObject } from "react";
 import Markdown from "markdown-to-jsx";
 import hljs from "highlight.js";
 import tools from "@Utils/tools";
@@ -45,9 +45,9 @@ class HighlightedMarkdown extends Component<IProps> {
             //@ts-ignore kinda weird...
             code: this.codeblock,
             //@ts-ignore
-            checkmark: CheckIcon,
+            checkmark: this.checkmark,
             //@ts-ignore
-            dangermark: DangerIcon,
+            dangermark: this.dangermark,
           }}
         />
       </div>
@@ -79,6 +79,70 @@ class HighlightedMarkdown extends Component<IProps> {
       <code className={className} {...props}>
         {children}
       </code>
+    );
+  }
+
+  private checkmark({
+    node,
+    inline,
+    className,
+    children,
+    ...props
+  }: {
+    node: Element;
+    inline: boolean | undefined;
+    className: string | undefined;
+    children: React.ReactNode & React.ReactNode[];
+    size: string;
+    color: string;
+  }): ReactNode {
+    return (
+      <svg
+        width={tools.typeCheck(props.size, "16")}
+        viewBox="0 0 16 16"
+        version="1.1"
+        height={tools.typeCheck(props.size, "16")}
+        aria-hidden="true"
+        className={"octicon octicon-check color-fg-success ml-n3 v-align-middle " + className}
+      >
+        <path
+          fill={tools.typeCheck(props.color, "#1a7f37")}
+          fill-rule="evenodd"
+          d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"
+        ></path>
+      </svg>
+    );
+  }
+
+  private dangermark({
+    node,
+    inline,
+    className,
+    children,
+    ...props
+  }: {
+    node: Element;
+    inline: boolean | undefined;
+    className: string | undefined;
+    children: React.ReactNode & React.ReactNode[];
+    size: string;
+    color: string;
+  }): ReactNode {
+    return (
+      <svg
+        width={tools.typeCheck(props.size, "16")}
+        viewBox="0 0 16 16"
+        version="1.1"
+        height={tools.typeCheck(props.size, "16")}
+        aria-hidden="true"
+        className={"octicon octicon-x color-fg-danger ml-n3 v-align-middle " + className}
+      >
+        <path
+          fill={tools.typeCheck(props.color, "#1a7f37")}
+          fill-rule="evenodd"
+          d="M3.72 3.72a.75.75 0 011.06 0L8 6.94l3.22-3.22a.75.75 0 111.06 1.06L9.06 8l3.22 3.22a.75.75 0 11-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 01-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 010-1.06z"
+        ></path>
+      </svg>
     );
   }
 }

@@ -43,7 +43,7 @@ class ViewModuleActivity extends AppCompatActivity<Props, States> {
       .catch((error) => {
         if (error.response.status === 404) {
           this.setState({
-            notes: `# 404: Not Found\n\n The author doesn't have created or uploaded an \`README.md\`, please try again later.\n\n\n## About Readme's\n\n- [[ dangermark ]] readme.md\n- [[ checkmark ]] README.md`,
+            notes: `# 404: Not Found\n\n The author doesn't have created or uploaded an \`README.md\`, please try again later.\n\n\n## About Readme's\n\n- <dangermark /> readme.md\n- <checkmark/> README.md`,
           });
         }
       })
