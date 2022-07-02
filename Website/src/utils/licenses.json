@@ -176,6 +176,14 @@
         "repository": "https://github.com/OnsenUI/OnsenUI.git"
     },
     {
+        "name": "react-syntax-highlighter",
+        "description": "syntax highlighting component for react with prismjs or highlightjs ast using inline styles",
+        "author": "Conor Hastings",
+        "version": "15.5.0",
+        "license": "MIT",
+        "repository": "https://github.com/react-syntax-highlighter/react-syntax-highlighter.git"
+    },
+    {
         "name": "react-toastify",
         "description": "React notification made easy",
         "author": "Fadi Khadra  <fdkhadra@gmail.com> (https://fkhadra.github.io)",
