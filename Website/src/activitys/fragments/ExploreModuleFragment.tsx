@@ -1,5 +1,5 @@
 import { Component, LegacyRef } from "react";
-import { Button, SearchInput, ProgressCircular, Page } from "react-onsenui";
+import { Button, SearchInput, ProgressCircular, Page, Row } from "react-onsenui";
 import axios from "axios";
 import { toast } from "react-toastify";
 import ExploreModule from "@Components/ExploreModule";
@@ -9,6 +9,7 @@ import { SearchRounded } from "@mui/icons-material";
 import { os } from "@Native/os";
 import ons from "onsenui";
 import { string } from "@Strings";
+import { isTablet } from "react-device-detect";
 
 interface Props {
   pushPage(...arg: any): PushProps;
@@ -84,7 +85,13 @@ class ExploreModuleFragment extends Component<Props, States> {
   };
 
   public render = () => {
-    const { search, loading } = this.state;
+    const { search, loading, modulesIndex } = this.state;
+
+    const resultsRender = [];
+
+    for (var i = 0; i < modulesIndex.length; i += 2) {
+      resultsRender.push(<Row>{this.cardRender(modulesIndex.slice(i, i + 2))}</Row>);
+    }
 
     return (
       <Page>
@@ -157,28 +164,34 @@ class ExploreModuleFragment extends Component<Props, States> {
                   transform: "translate(-50%, -50%)",
                 }}
               />
+            ) : isTablet ? (
+              resultsRender
             ) : (
-              this.state.modulesIndex.map((item: any) => {
-                return (
-                  <ExploreModule
-                    key={item.id}
-                    getId={item.id}
-                    propsUrl={item.prop_url}
-                    notesUrl={item.notes_url}
-                    downloadUrl={item.zip_url}
-                    pushPage={this.props.pushPage}
-                    searchState={search}
-                    moduleOptions={this.state.moduleOptions}
-                    last_update={item.last_update}
-                  />
-                );
-              })
+              this.cardRender(modulesIndex)
             )}
           </module-container>
         </div>
       </Page>
     );
   };
+
+  private cardRender(map: Array<any>) {
+    return map.map((item: any) => {
+      return (
+        <ExploreModule
+          key={item.id}
+          getId={item.id}
+          propsUrl={item.prop_url}
+          notesUrl={item.notes_url}
+          downloadUrl={item.zip_url}
+          pushPage={this.props.pushPage}
+          searchState={this.state.search}
+          moduleOptions={this.state.moduleOptions}
+          last_update={item.last_update}
+        />
+      );
+    });
+  }
 }
 
 export default ExploreModuleFragment;

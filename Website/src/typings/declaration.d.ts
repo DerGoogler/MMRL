@@ -130,6 +130,7 @@ declare module "react-onsenui" {
     {
       verticalAlign?: "top" | "bottom" | "center" | undefined;
       width?: string | undefined;
+      children?: React.ReactNode;
     },
     any
   > {}
@@ -137,6 +138,7 @@ declare module "react-onsenui" {
   export class Row extends Component<
     {
       verticalAlign?: "top" | "bottom" | "center" | undefined;
+      children?: React.ReactNode;
     },
     any
   > {}
@@ -476,7 +478,7 @@ declare module "react-onsenui" {
 
   export class SearchInput extends Component<
     {
-      placeholder?: string
+      placeholder?: string;
       modifier?: string | undefined;
       disabled?: boolean | undefined;
       onChange?(e: Event): void;

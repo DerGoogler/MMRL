@@ -1,13 +1,14 @@
 import { Component, RefObject, createRef } from "react";
 import axios from "axios";
 import Properties from "@js.properties/properties";
-import { Card } from "react-onsenui";
+import { Card, Col } from "react-onsenui";
 import tools from "@Utils/tools";
 import ViewModuleActivity from "@Activitys/ViewModuleActivity";
 import Log from "@Native/Log";
 import { VerifiedRounded } from "@mui/icons-material";
 import { os } from "@Native/os";
 import Toast from "@Native/Toast";
+import { isTablet } from "react-device-detect";
 
 interface Props {
   notesUrl?: string;
@@ -121,13 +122,21 @@ class ExploreModule extends Component<Props, States> {
     }
   };
 
+  private checkDeviceSize(element: JSX.Element): JSX.Element {
+    if (isTablet) {
+      return <Col style={{ width: "50%", height: "50%" }}>{element}</Col>;
+    } else {
+      return element;
+    }
+  }
+
   public render = () => {
     const { notesUrl, downloadUrl, pushPage, moduleOptions, stars, last_update, getId } = this.props;
     const { props } = this.state;
     const isVerified = moduleOptions[getId]?.verified;
     const _display = moduleOptions[getId]?.display;
 
-    return (
+    return this.checkDeviceSize(
       <>
         <div
           ref={this.openReadmeFromParam}
