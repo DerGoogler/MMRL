@@ -1,7 +1,6 @@
 import subprocess
 import sys
 import cmd
-import re
 import os
 
 os.environ['SYSTEMD_COLORS'] = '1'
@@ -17,7 +16,7 @@ def shellWebsite(arg):
 
 
 class MMRLBuildTools(cmd.Cmd):
-    prompt = 'mmrl-tools$ '
+    prompt = '\033[92mmmmrl-tools\033[0m$ '
     intro = "Welcome! Type ? to list commands"
 
     def do_install(self, arg):
