@@ -15,9 +15,9 @@ interface NOS {
    * @deprecated
    */
   log(tag: string, message: string): void;
-  logi(tag: string, message: string): void;
-  logw(tag: string, message: string): void;
-  loge(tag: string, message: string): void;
+  logi<T>(tag: string, message: T | T[]): void;
+  logw<T>(tag: string, message: T | T[]): void;
+  loge<T>(tag: string, message: T | T[]): void;
 }
 
 export default NOS;

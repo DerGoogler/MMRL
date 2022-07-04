@@ -59,6 +59,7 @@ class Bootloader {
     window.addEventListener("contextmenu", (e: Event) => e.preventDefault());
 
     this.log.i("Selecting platform: Android");
+    this.log.i(<img alt="Random kitten" src="http://placekitten.com/180/150" width={180} height={150} />);
     ons.platform.select("android");
     this.loadStyle();
     this.loadActivity();

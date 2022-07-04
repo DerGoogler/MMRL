@@ -160,6 +160,14 @@
         "repository": "https://github.com/react-bootstrap/react-bootstrap.git"
     },
     {
+        "name": "react-console",
+        "description": "A React reconciler for browser consoles.",
+        "author": "Christopher Turner <turner296@gmail.com>",
+        "version": "1.0.0-rc.2",
+        "license": "MIT",
+        "repository": "https://github.com/tur-nr/react-console.git"
+    },
+    {
         "name": "react-device-detect",
         "description": "Detect device type and render your component according to it",
         "author": "Michael Laktionov",
