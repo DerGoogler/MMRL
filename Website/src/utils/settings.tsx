@@ -11,16 +11,11 @@ import {
   GavelRounded,
   PowerInputRounded,
   SourceRounded,
-  TerminalRounded,
 } from "@mui/icons-material";
 import BuildConfig from "@Native/BuildConfig";
 import { os } from "@Native/os";
-import Build from "@Native/Build";
 import Icon from "@Components/Icon";
 import { string } from "@Strings";
-import fs from "@Native/fs";
-import Magiskboot from "@Native/Magiskboot";
-import Toast from "@Native/Toast";
 
 const prefManager = new SharedPreferences();
 
@@ -32,6 +27,9 @@ const settings: IListInterface[] = [
         type: "",
         icon: <Icon icon={ExtensionRounded} />,
         text: string.custom_repository,
+        helper: {
+          text: "Test",
+        },
         onClick: (key) => {
           new AlertBuilder()
             .setTitle(string.custom_repository)

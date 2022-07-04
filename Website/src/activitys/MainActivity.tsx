@@ -22,7 +22,7 @@ export interface ModuleProps {
 
 export interface PushProps {
   activity?: any;
-  key?: any;
+  key?: string;
   extra?: any;
   moduleOptions?: ModuleOptions;
   moduleProps?: ModuleProps;
@@ -80,7 +80,7 @@ class MainActivity extends Component<PushProps, States> {
         return acty.name.toLowerCase().replace("activity", "");
       };
       if (!acty.ignoreURL) {
-        set(props.key, props.key, `/#${currentPath}/${getName()}`);
+        set(props.key, props.key!, `/#${currentPath}/${getName()}`);
       }
     });
 
@@ -91,7 +91,7 @@ class MainActivity extends Component<PushProps, States> {
       route,
     });
 
-    this.setState({ routeConfig, currentPage: props.key });
+    this.setState({ routeConfig, currentPage: props.key! });
   };
 
   private popPage = (options = {}) => {

@@ -1,5 +1,6 @@
 import { Component, createRef, RefObject, ReactNode } from "react";
 import tools from "@Utils/tools";
+import { Dom as dom } from "googlers-tools";
 
 interface Props {
   event:
@@ -36,7 +37,7 @@ class Gesture extends Component<Props, {}> {
   public componentDidMount() {
     const { callback, event } = this.props;
 
-    tools.ref(this.gerstureID, (ref: HTMLDivElement) => {
+    dom.findBy(this.gerstureID, (ref: HTMLDivElement) => {
       ref.addEventListener(event, callback);
     });
   }
