@@ -1,10 +1,10 @@
 import { Component, isValidElement } from "react";
 import { ListItem, ListTitle, Select, Switch } from "react-onsenui";
 import ons from "onsenui";
-import tools from "@Utils/tools";
 import Gesture from "@Components/Gesture";
 import SharedPreferences, { ISharedPreferences } from "@Native/SharedPreferences";
 import { PushProps } from "@Activitys/MainActivity";
+import { Util } from "googlers-tools";
 
 interface IProps {
   data: IListInterface[];
@@ -98,8 +98,8 @@ class ListViewBuilder extends Component<IProps> {
           {header.content.map((item: IListOptions) => (
             <>
               <ListItem
-                modifier={tools.typeCheck(item.modifier, "")}
-                tappable={tools.typeCheck(item.tappable, false)}
+                modifier={Util.typeCheck(item.modifier, "")}
+                tappable={Util.typeCheck(item.tappable, false)}
                 id={item.key + "-ListItem"}
                 style={item.style}
                 onClick={() => {
@@ -122,7 +122,7 @@ class ListViewBuilder extends Component<IProps> {
                         buttonLabels: ["Ok"],
                         animation: "default",
                         primaryButtonIndex: 1,
-                        cancelable: tools.typeCheck(item.helper?.cancelable, true),
+                        cancelable: Util.typeCheck(item.helper?.cancelable, true),
                       });
                     }
                   }}

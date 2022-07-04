@@ -1,17 +1,10 @@
 import { Component, createRef, ReactNode, RefObject } from "react";
-import Markdown from "markdown-to-jsx";
 import hljs from "highlight.js";
-import tools from "@Utils/tools";
-import Video from "./dapi/Video";
-import DiscordWidget from "./dapi/DiscordWidget";
-import A from "./dapi/A";
-import Changelog from "./dapi/Changelog";
-import CheckIcon from "./icons/CheckIcon";
-import DangerIcon from "./icons/DangerIcon";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { LightAsync as SyntaxHighlighter } from "react-syntax-highlighter";
 import { github } from "react-syntax-highlighter/dist/cjs/styles/hljs";
+import { Dom, Util } from "googlers-tools";
 
 interface IProps {
   children: string;
@@ -26,7 +19,7 @@ class HighlightedMarkdown extends Component<IProps> {
   }
 
   public componentDidMount() {
-    tools.ref(this.rootRef, (ref: HTMLDivElement) => {
+    Dom.findBy(this.rootRef, (ref: HTMLDivElement) => {
       ref.querySelectorAll("pre code").forEach((block: any) => {
         hljs.highlightElement(block);
       });
@@ -98,15 +91,15 @@ class HighlightedMarkdown extends Component<IProps> {
   }): ReactNode {
     return (
       <svg
-        width={tools.typeCheck(props.size, "16")}
+        width={Util.typeCheck(props.size, "16")}
         viewBox="0 0 16 16"
         version="1.1"
-        height={tools.typeCheck(props.size, "16")}
+        height={Util.typeCheck(props.size, "16")}
         aria-hidden="true"
         className={"octicon octicon-check color-fg-success ml-n3 v-align-middle " + className}
       >
         <path
-          fill={tools.typeCheck(props.color, "#1a7f37")}
+          fill={Util.typeCheck(props.color, "#1a7f37")}
           fill-rule="evenodd"
           d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"
         ></path>
@@ -130,15 +123,15 @@ class HighlightedMarkdown extends Component<IProps> {
   }): ReactNode {
     return (
       <svg
-        width={tools.typeCheck(props.size, "16")}
+        width={Util.typeCheck(props.size, "16")}
         viewBox="0 0 16 16"
         version="1.1"
-        height={tools.typeCheck(props.size, "16")}
+        height={Util.typeCheck(props.size, "16")}
         aria-hidden="true"
         className={"octicon octicon-x color-fg-danger ml-n3 v-align-middle " + className}
       >
         <path
-          fill={tools.typeCheck(props.color, "#1a7f37")}
+          fill={Util.typeCheck(props.color, "#1a7f37")}
           fill-rule="evenodd"
           d="M3.72 3.72a.75.75 0 011.06 0L8 6.94l3.22-3.22a.75.75 0 111.06 1.06L9.06 8l3.22 3.22a.75.75 0 11-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 01-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 010-1.06z"
         ></path>

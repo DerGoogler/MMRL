@@ -3,7 +3,7 @@ import AcknowledgementsActivity from "@Activitys/AcknowledgementsActivity";
 import AlertBuilder from "@Builders/AlertBuilder";
 import { IListInterface } from "@Builders/ListViewBuilder";
 import SharedPreferences from "@Native/SharedPreferences";
-import tools from "@Utils/tools";
+import { Link } from "googlers-tools";
 import {
   Brightness2Rounded,
   BugReportRounded,
@@ -46,7 +46,7 @@ const settings: IListInterface[] = [
                       break;
                   }
                 } else {
-                  if (tools.validURL(input)) {
+                  if (Link.validURL(input)) {
                     prefManager.setString("repo", input);
                     ons.notification.alert("Repo changed, please refresh the app");
                   } else {

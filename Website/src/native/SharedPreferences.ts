@@ -1,4 +1,4 @@
-import tools from "@Utils/tools";
+import { Util } from "googlers-tools";
 import { os } from "./os";
 
 export interface ISharedPreferences {
@@ -93,7 +93,7 @@ class SharedPreferences implements ISharedPreferences {
       if (get === null) {
         return defValue;
       } else {
-        return tools.stringToBoolean(get);
+        return Util.stringToBoolean(get);
       }
     }
   }
