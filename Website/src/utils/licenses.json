@@ -72,6 +72,14 @@
         "repository": "https://github.com/DerGoogler/findByView"
     },
     {
+        "name": "googlers-tools",
+        "description": "My own tools / scripts that i use.",
+        "author": "Der_Googler <jimmyboehm@dergoogler.com>",
+        "version": "1.0.2",
+        "license": "MIT",
+        "repository": "https://github.com/DerGoogler/googlers-tools"
+    },
+    {
         "name": "gradle-to-js",
         "description": "A quick & dirty Gradle build file to JavaScript object parser",
         "author": "Karl Lindmark",

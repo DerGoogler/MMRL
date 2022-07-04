@@ -1,4 +1,5 @@
 import SharedPreferences from "@Native/SharedPreferences";
+import { CSSProperties } from "react";
 
 class tools {
   /**
@@ -42,6 +43,24 @@ class tools {
         }
       }
     }
+  }
+
+  /**
+   * Convert a given style object into CSS string value.
+   *
+   * @param {object} style
+   * @returns {string}
+   */
+  public static toCSSString(style: CSSProperties | any): string {
+    let cssString = "";
+    for (const prop in style) {
+      if (style.hasOwnProperty(prop)) {
+        const cssProp = prop.replace(/([A-Z])/g, "-$1").toLowerCase();
+        cssString += cssProp + ":" + style[prop] + ";";
+      }
+    }
+
+    return cssString;
   }
 
   /**
