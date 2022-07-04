@@ -15,6 +15,15 @@ def shellWebsite(arg):
             f.write(c)
 
 
+def shellAndroid(arg):
+    with open('./__pycache__/test.log', 'wb') as f:
+        process = subprocess.Popen(
+            arg, stdout=subprocess.PIPE, cwd=r'./Android')
+        for c in iter(lambda: process.stdout.read(1), b''):
+            sys.stdout.buffer.write(c)
+            f.write(c)
+
+
 class MMRLBuildTools(cmd.Cmd):
     prompt = '\033[92mmmmrl-tools\033[0m$ '
     intro = "Welcome! Type ? to list commands"
@@ -36,6 +45,13 @@ class MMRLBuildTools(cmd.Cmd):
 
     def do_prod(self, arg):
         shellWebsite(['npm', "run", "build-prod"])
+
+    def do_buildapp(self, arg):
+        shellAndroid(["./gradlew", "installDebug"])
+
+    def do_runapp(self, arg):
+        shellAndroid(["adb", "shell", "am", "start", "-n", "\"com.dergoogler.mmrl.debug/com.dergoogler.mmrl.MainActivity\"",
+                     "-a", "android.intent.action.MAIN", "-c", "android.intent.category.LAUNCHER"])
 
     def do_exit(self, arg):
         print("Bye")

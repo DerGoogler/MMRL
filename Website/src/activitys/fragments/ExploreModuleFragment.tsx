@@ -1,7 +1,6 @@
 import { Component, LegacyRef } from "react";
 import { Button, SearchInput, ProgressCircular, Page, Row } from "react-onsenui";
 import axios from "axios";
-import { toast } from "react-toastify";
 import ExploreModule from "@Components/ExploreModule";
 import SharedPreferences from "@Native/SharedPreferences";
 import { PushProps } from "@Activitys/MainActivity";
