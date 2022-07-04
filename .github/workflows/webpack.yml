@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [ master ]
 
+defaults:
+  run:
+    working-directory: Website
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -24,5 +28,5 @@ jobs:
 
     - name: Build
       run: |
-        make install
-        make prod
+        npm install --force
+        npm run prod
