@@ -65,7 +65,7 @@ class ExploreModuleFragment extends Component<Props, States> {
         // always executed
       });
 
-    axios.get("https://repo.dergoogler.com/moduleOptions.json").then((response) => {
+    axios.get("https://dergoogler.com/repo/moduleOptions.json").then((response) => {
       this.setState({
         moduleOptions: response.data,
       });
