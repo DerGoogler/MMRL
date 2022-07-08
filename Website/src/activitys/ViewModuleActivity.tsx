@@ -90,7 +90,7 @@ class ViewModuleActivity extends AppCompatActivity<Props, States> {
     return (
       <>
         <div
-          style={{ padding: "8px", marginBottom: "56px", height: "100%" }}
+          style={{ padding: "8px", height: "100%" }}
           className={new SharedPreferences().getBoolean("enableDarkmode_switch", false) ? "markdown-body-dark" : "markdown-body-light"}
         >
           {
@@ -108,6 +108,7 @@ class ViewModuleActivity extends AppCompatActivity<Props, States> {
           }
           <HighlightedMarkdown children={this.state.notes} />
         </div>
+        <div style={{ height: "52px" }}></div>
         <div
           style={{
             position: "fixed",

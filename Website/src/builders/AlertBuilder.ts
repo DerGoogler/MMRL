@@ -122,7 +122,7 @@ class AlertBuilder {
         }
       },
     };
-    pla.message = message;
+    pla.messageHTML = message;
     pla.title = title;
     if (positive.title) {
       pla.buttonLabels?.push(positive.title);
