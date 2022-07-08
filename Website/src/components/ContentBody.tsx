@@ -17,6 +17,7 @@ class ContentBody extends React.Component<React.HTMLAttributes<Element>, Element
     maxWidth: "580px",
     margin: "0px auto",
     padding: isMobile ? "" : "45px",
+    ...this.props.style,
   };
 
   private checkDevice(designWeb: any, designAndroid: any) {

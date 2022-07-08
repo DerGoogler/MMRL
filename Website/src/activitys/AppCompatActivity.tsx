@@ -3,7 +3,7 @@ import ContentBody from "@Components/ContentBody";
 import Constants from "@Native/Constants";
 import { os } from "@Native/os";
 import SharedPreferences from "@Native/SharedPreferences";
-import { PureComponent } from "react";
+import { CSSProperties, PureComponent } from "react";
 import { Page } from "react-onsenui";
 
 class AppCompatActivity<P = {}, S = {}> extends PureComponent<P, S> {
@@ -27,6 +27,11 @@ class AppCompatActivity<P = {}, S = {}> extends PureComponent<P, S> {
       }
     }
   }
+
+  /**
+   * Set an custom style for centent-body
+   */
+  public style: CSSProperties = {};
 
   public componentDidMount(): void {
     this.onlyAndroid();
@@ -107,7 +112,7 @@ class AppCompatActivity<P = {}, S = {}> extends PureComponent<P, S> {
           return <Toolbar.Builder {...this.onCreateToolbar()} />;
         }}
       >
-        <ContentBody>
+        <ContentBody style={this.style}>
           <this.onCreate />
         </ContentBody>
       </Page>

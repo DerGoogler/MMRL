@@ -22,6 +22,7 @@ import { os } from "@Native/os";
 import Icon from "@Components/Icon";
 import Magisk from "@Native/Magisk";
 import Toolbar from "@Builders/ToolbarBuilder";
+import RepoGeneratorActivity from "./RepoGeneratorActivity";
 
 interface Props {
   pushPage: any;
@@ -152,6 +153,21 @@ class SettingsActivity extends AppCompatActivity<Props, States> {
                       disabled: !os.isAndroid,
                       text: string.bottom_navigation.text,
                       subtext: !os.isAndroid ? string.not_supported_in_web_version : string.bottom_navigation.subtext,
+                    },
+                  ],
+                },
+                {
+                  title: "Utils",
+                  content: [
+                    {
+                      type: "",
+                      text: "Generate repo",
+                      onClick(key, pushPage) {
+                        pushPage({
+                          key: "repogeneraste",
+                          activity: RepoGeneratorActivity,
+                        });
+                      },
                     },
                   ],
                 },
