@@ -18,5 +18,9 @@
   "download": "Herunterladen",
   "install": "Installieren",
   "explore": "Erkunden",
-  "installed": "Installiert"
+  "installed": "Installiert",
+  "remove": "Entfernen",
+  "restore": "Wiederherstellen",
+  "module_enabled_LOG": "{module} wurde aktiviert",
+  "module_disabled_LOG": "{module} wurde deaktiviert"
 }

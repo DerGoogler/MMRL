@@ -4,14 +4,12 @@ Magisk Module Repo Loader (MMRL). Allows you to load custom repos with an simple
 
 ## How to create custom repo?
 
-Please use [Googlers-Magisk-Repo/Magisk-Module-Repo-Builder](https://github.com/Googlers-Magisk-Repo/Magisk-Module-Repo-Builder) to build you an own repository.
-        
-~At first need you to fork [Magisk-Modules-Alt-Repo/json](https://github.com/Magisk-Modules-Alt-Repo/json) or create yourself one~
+Use [this](https://dergoogler.com/repo-generator/) service to create a custom repository.
 
 ## What MMRL Supports (Roadmap)
 
 - [x] Custom repo loading
-- [ ] Translation
+- [x] Translation
 - [x] Dark mode
 
 #### Android only
@@ -19,8 +17,7 @@ Please use [Googlers-Magisk-Repo/Magisk-Module-Repo-Builder](https://github.com/
 - [x] Custom theming
 - [x] View installed modules
 - [x] Remove installed modules
-- [x] Disable installed modules
-- [x] Enable installed modules
+- [x] Enable/Disable installed modules
 - [ ] Module install
 - [ ] Monet theming
 
