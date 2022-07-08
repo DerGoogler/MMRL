@@ -22,7 +22,7 @@
     "axios": "^0.27.2",
     "bootstrap": "^5.1.3",
     "findbyview": "^1.0.2",
-    "googlers-tools": "^1.1.4",
+    "googlers-tools": "^1.1.7",
     "gradle-to-js": "^2.0.1",
     "highlight.js": "^11.5.1",
     "jss": "^10.9.0",

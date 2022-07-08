@@ -3,7 +3,7 @@
         "name": "@emotion/react",
         "description": "There is no description",
         "author": "Emotion Contributors",
-        "version": "11.9.0",
+        "version": "11.9.3",
         "license": "MIT",
         "repository": "https://github.com/emotion-js/emotion/tree/main/packages/react"
     },
@@ -11,7 +11,7 @@
         "name": "@emotion/styled",
         "description": "styled API for emotion",
         "author": "null",
-        "version": "11.8.1",
+        "version": "11.9.3",
         "license": "MIT",
         "repository": "https://github.com/emotion-js/emotion/tree/main/packages/styled"
     },
@@ -27,7 +27,7 @@
         "name": "@mui/icons-material",
         "description": "Material Design icons distributed as SVG React components.",
         "author": "MUI Team",
-        "version": "5.8.0",
+        "version": "5.8.4",
         "license": "MIT",
         "repository": "https://github.com/mui/material-ui.git"
     },
@@ -35,7 +35,7 @@
         "name": "@mui/material",
         "description": "React components that implement Google's Material Design.",
         "author": "MUI Team",
-        "version": "5.8.1",
+        "version": "5.8.7",
         "license": "MIT",
         "repository": "https://github.com/mui/material-ui.git"
     },
@@ -67,8 +67,8 @@
         "name": "googlers-tools",
         "description": "My own tools / scripts that i use.",
         "author": "Der_Googler <jimmyboehm@dergoogler.com>",
-        "version": "1.1.4",
-        "license": "MIT",
+        "version": "1.1.7",
+        "license": "GPL-3.0",
         "repository": "https://github.com/DerGoogler/googlers-tools"
     },
     {
@@ -131,7 +131,7 @@
         "name": "material-icons",
         "description": "Latest icon fonts and CSS for self-hosting material design icons.",
         "author": "null",
-        "version": "1.11.0",
+        "version": "1.11.4",
         "license": "Apache-2.0",
         "repository": "https://github.com/marella/material-icons.git"
     },
@@ -203,7 +203,7 @@
         "name": "react-toastify",
         "description": "React notification made easy",
         "author": "Fadi Khadra  <fdkhadra@gmail.com> (https://fkhadra.github.io)",
-        "version": "9.0.1",
+        "version": "9.0.5",
         "license": "MIT",
         "repository": "https://github.com/fkhadra/react-toastify.git"
     },

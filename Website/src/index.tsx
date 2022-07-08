@@ -1,7 +1,5 @@
-import ReactDOM from "react-dom";
 import MainActivity from "@Activitys/MainActivity";
 import { Dom as dom } from "googlers-tools";
-import { StrictMode } from "react";
 import ons from "onsenui";
 import Log from "@Native/Log";
 import { os } from "@Native/os";
@@ -21,7 +19,6 @@ import "@Styles/markdown-light.scss";
 import "@Styles/markdown-dark.scss";
 
 class Bootloader {
-  private mountNode: Element | null = document.querySelector("app");
   private log: Log;
   private readonly pref: ISharedPreferences;
 
@@ -41,13 +38,9 @@ class Bootloader {
   }
 
   private loadActivity() {
+    "use strict";
     this.log.i("Loading MainActivty");
-    ReactDOM.render(
-      <StrictMode>
-        <MainActivity />
-      </StrictMode>,
-      this.mountNode
-    );
+    dom.renderAuto(MainActivity);
   }
 
   public init() {
