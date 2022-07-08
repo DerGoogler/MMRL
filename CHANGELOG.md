@@ -7,6 +7,8 @@
 - Depen. updated
 - Added fake url system
 - Removed DAPI
+- Moved Download and Install button to an dialog
+- 
 
 ## App
 

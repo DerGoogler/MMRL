@@ -1,6 +1,9 @@
 import BuildConfig from "./BuildConfig";
 import Build from "./Build";
 import SharedPreferences from "./SharedPreferences";
+import ons from "onsenui";
+import { isValidElement } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
 
 /**
  * The `os` module provides operating system-related utility methods and
@@ -42,6 +45,15 @@ class os {
     } else {
       name;
     }
+  }
+
+  /**
+   * Create an simple dialog that's supports JSX
+   * @param message
+   */
+  public static alert(message: string | JSX.Element): void {
+    // @ts-ignore Type 'string | Element' is not assignable to type 'string | undefined'. Type 'Element' is not assignable to type 'string'.ts(2322)
+    ons.notification.alert({ messageHTML: isValidElement(message) ? renderToStaticMarkup(message) : message });
   }
 
   public static close(): void {

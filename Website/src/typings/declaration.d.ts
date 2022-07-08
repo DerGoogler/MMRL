@@ -409,7 +409,7 @@ declare module "react-onsenui" {
 
   export class Button extends Component<
     {
-      children: React.ReactNode;
+      children?: React.ReactNode;
       modifier?: string | undefined;
       disabled?: boolean | undefined;
       ripple?: boolean | undefined;

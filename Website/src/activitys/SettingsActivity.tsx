@@ -6,7 +6,7 @@ import ToolbarBuilder from "@Builders/ToolbarBuilder";
 import { string } from "@Strings";
 import ons from "onsenui";
 import AcknowledgementsActivity from "@Activitys/AcknowledgementsActivity";
-import AlertBuilder from "@Builders/AlertBuilder";
+import AlertDialog from "@Builders/AlertDialog";
 import SharedPreferences, { ISharedPreferences } from "@Native/SharedPreferences";
 import { Link } from "googlers-tools";
 import {
@@ -69,7 +69,7 @@ class SettingsActivity extends AppCompatActivity<Props, States> {
                         text: "Test",
                       },
                       onClick: (key) => {
-                        new AlertBuilder()
+                        new AlertDialog.Builder()
                           .setTitle(string.custom_repository)
                           .setMessage("Only URLs are valid")
                           .setPositiveButton("Apply", (input: string) => {
@@ -122,7 +122,7 @@ class SettingsActivity extends AppCompatActivity<Props, States> {
                         },
                       ],
                       callback: (e: Event, key: string, keepDefaultFuntion: void) => {
-                        new AlertBuilder()
+                        new AlertDialog.Builder()
                           .setTitle("Sure?")
                           .setMessage(
                             <div>

@@ -72,8 +72,6 @@ class DeviceModule extends Component<Props, States> {
     return (
       <>
         <div>
-          {/*
-        // @ts-ignore */}
           <Card
             id={id}
             key={id}
