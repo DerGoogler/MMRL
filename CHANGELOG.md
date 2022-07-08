@@ -9,6 +9,7 @@
 - Removed DAPI
 - Moved Download and Install button to an dialog
 - Added translations
+- Added some support for Magisk Delta (by @HuskyDG)
 
 ## App
 

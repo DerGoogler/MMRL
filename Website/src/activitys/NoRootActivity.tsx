@@ -5,6 +5,7 @@ import Toolbar from "@Builders/ToolbarBuilder";
 
 class NoRootActivity extends AppCompatActivity {
   private readonly magiskPackageName: string = "com.topjohnwu.magisk";
+  private readonly magiskDeltaPackageName: string = "io.github.huskydg.magisk";
 
   public onCreateToolbar(): Toolbar.Props {
     return {
@@ -22,24 +23,20 @@ class NoRootActivity extends AppCompatActivity {
             search in the internet for your device.
           </div>
         </Card>
-        {nos.isPackageInstalled(this.magiskPackageName) ? (
-          <Button
-            modifier="large"
-            onClick={() => {
-              if (nos.isPackageInstalled(this.magiskPackageName)) {
-                nos.launchAppByPackageName(this.magiskPackageName);
-              } else {
-                Toast.makeText("Magisk was not found!", Toast.LENGTH_LONG).show();
-              }
-            }}
-          >
-            Open Magisk
-          </Button>
-        ) : (
-          <Button modifier="large" disabled>
-            Magisk Not Found
-          </Button>
-        )}
+        <Button
+          modifier="large"
+          onClick={() => {
+            if (nos.isPackageInstalled(this.magiskPackageName)) {
+              nos.launchAppByPackageName(this.magiskPackageName);
+            } else if (nos.isPackageInstalled(this.magiskDeltaPackageName)) {
+              nos.launchAppByPackageName(this.magiskDeltaPackageName);
+            } else {
+              Toast.makeText("Magisk was not found.", Toast.LENGTH_LONG).show();
+            }
+          }}
+        >
+          Open Magisk
+        </Button>
       </div>
     );
   };
