@@ -8,8 +8,8 @@
   "author": "Der_Googler",
   "license": "ISC",
   "scripts": {
-    "build-dev": "npm run licenses && webpack --mode=development",
-    "build-prod": "npm run licenses && webpack --mode=production",
+    "dev": "npm run licenses && webpack --mode=development",
+    "prod": "npm run licenses && webpack --mode=production",
     "licenses": "node license > ./src/utils/licenses.json"
   },
   "typings": "types/onsenui.d.ts",

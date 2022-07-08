@@ -1,3 +1,36 @@
+[bun]: https://bun.sh/
+
+# Dev setup
+
+Requirements;
+
+- [Bun][bun] v0.1.0
+- Brain
+
+## Install all packages
+
+```
+bun install
+```
+
+## Adding an package
+
+```
+bun add googlers-tools
+```
+
+## Remove an package
+
+```
+bun remove googlers-tools
+```
+
+## Run an action/script from package.json
+
+```
+bun run dev
+```
+
 # Dev API
 
 ## File system
@@ -5,23 +38,4 @@
 ```ts
 fs.readFile("data/shdialog"); // or
 new fs("data/shdialog").readFile();
-```
-
-## Managment
-
-### Bump version
-
-```bash
-# Run in main dir
-python3 update.py
-```
-
-### Managment
-
-
-```logs
-jimmy@hur:~/Documents/GitHub/MMRL$ make shell
-python3 buildTools.py
-Welcome! Type ? to list commands
-mmmrl-tools$ install googlers-tools
 ```

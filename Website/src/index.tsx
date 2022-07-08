@@ -1,6 +1,7 @@
 import ReactDOM from "react-dom";
 import MainActivity from "@Activitys/MainActivity";
-import { Dom, Dom as dom } from "googlers-tools";
+import { Dom as dom } from "googlers-tools";
+import { StrictMode } from "react";
 import ons from "onsenui";
 import Log from "@Native/Log";
 import { os } from "@Native/os";
@@ -39,17 +40,17 @@ class Bootloader {
     }
   }
 
-  loadActivity() {
+  private loadActivity() {
     this.log.i("Loading MainActivty");
     ReactDOM.render(
-      <>
+      <StrictMode>
         <MainActivity />
-      </>,
+      </StrictMode>,
       this.mountNode
     );
   }
 
-  init() {
+  public init() {
     if (!os.hasStoragePermission()) {
       os.requestStoargePermission();
     }
