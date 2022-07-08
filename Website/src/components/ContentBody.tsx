@@ -13,7 +13,6 @@ class ContentBody extends React.Component<React.HTMLAttributes<Element>, Element
     display: "flex",
     justifyContent: "center",
     flexDirection: "column",
-    height: "100%",
     minWidth: "200px",
     maxWidth: "580px",
     margin: "0px auto",

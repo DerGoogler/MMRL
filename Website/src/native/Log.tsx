@@ -1,64 +1,48 @@
 import { os } from "./os";
-import console from "react-console";
+import { Dom } from "googlers-tools";
 
-class Log {
-  private tag: string;
-
+/**
+ * Custom logger for MMRL with Native Android logging support. It also support React/JSX element.
+ * @extends {Dom.Logger}
+ */
+class Log extends Dom.Logger {
   public constructor(tag: string) {
-    this.tag = tag;
+    super(tag);
   }
 
-  public i<T = string>(message: T | T[]) {
+  public i<T = string>(message: T) {
     if (os.isAndroid) {
       nos.logi<T>(this.tag, message);
     } else {
-      console.info(
-        //@ts-ignore
-        <div>
-          <strong style={{ color: "#0693e3" }}>{`[${this.tag}] `}</strong>
-          {message}
-        </div>
-      );
+      this.info<T>(message);
     }
   }
 
-  public w<T = string>(message: T | T[]) {
+  public w<T = string>(message: T) {
     if (os.isAndroid) {
       nos.logw(this.tag, message);
     } else {
-      console.info(
-        //@ts-ignore
-        <div>
-          <strong style={{ color: "orange" }}>{`[${this.tag}] `}</strong>
-          {message}
-        </div>
-      );
+      this.warn<T>(message);
     }
   }
 
-  public e<T = string>(message: T | T[]) {
+  public e<T = string>(message: T) {
     if (os.isAndroid) {
       nos.loge(this.tag, message);
     } else {
-      console.info(
-        //@ts-ignore
-        <div>
-          <strong style={{ color: "#d44950" }}>{`[${this.tag}] `}</strong>
-          {message}
-        </div>
-      );
+      this.error<T>(message);
     }
   }
 
-  public static i<T>(tag: string, message: T | T[]) {
+  public static i<T>(tag: string, message: T) {
     new Log(tag).i<T>(message);
   }
 
-  public static w<T>(tag: string, message: T | T[]) {
+  public static w<T>(tag: string, message: T) {
     new Log(tag).w<T>(message);
   }
 
-  public static e<T>(tag: string, message: T | T[]) {
+  public static e<T>(tag: string, message: T) {
     new Log(tag).e<T>(message);
   }
 }
