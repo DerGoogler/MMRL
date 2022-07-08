@@ -1,16 +1,22 @@
 import Toolbar from "@Builders/ToolbarBuilder";
 import ContentBody from "@Components/ContentBody";
+import ErrorBoundary from "@Components/ErrorBoundary";
 import Constants from "@Native/Constants";
+import Log from "@Native/Log";
 import { os } from "@Native/os";
 import SharedPreferences from "@Native/SharedPreferences";
-import { CSSProperties, PureComponent } from "react";
+import { Context, createContext, CSSProperties, ErrorInfo, PureComponent } from "react";
 import { Page } from "react-onsenui";
 
-class AppCompatActivity<P = {}, S = {}> extends PureComponent<P, S> {
+export const AppCompatActivityContext: Context<string> = createContext("null");
+
+class AppCompatActivity<P = {}, S = {}, SS = any> extends PureComponent<P, S, SS> {
   public readonly isAndroid: bool = Constants.isAndroid;
 
   private darkColor: string = "#1f1f1f";
   private lightColor: string = "#4a148c";
+
+  public static contextType: Context<string> = AppCompatActivityContext;
 
   public constructor(props: P | Readonly<P>) {
     super(props);
@@ -99,23 +105,27 @@ class AppCompatActivity<P = {}, S = {}> extends PureComponent<P, S> {
    */
   public render = (): JSX.Element => {
     return (
-      <Page
-        modifier={this.pageModifier}
-        renderBottomToolbar={this.onCreateBottomToolbar}
-        renderFixed={this.onCreateFAB}
-        renderModal={this.onCreateModal}
-        onInfiniteScroll={this.onInfiniteScroll}
-        onHide={this.onHide}
-        onShow={this.onShow}
-        onInit={this.onInit}
-        renderToolbar={() => {
-          return <Toolbar.Builder {...this.onCreateToolbar()} />;
-        }}
-      >
-        <ContentBody style={this.style}>
-          <this.onCreate />
-        </ContentBody>
-      </Page>
+      <AppCompatActivityContext.Provider value="new null">
+        <ErrorBoundary logger={this.constructor.name}>
+          <Page
+            modifier={this.pageModifier}
+            renderBottomToolbar={this.onCreateBottomToolbar}
+            renderFixed={this.onCreateFAB}
+            renderModal={this.onCreateModal}
+            onInfiniteScroll={this.onInfiniteScroll}
+            onHide={this.onHide}
+            onShow={this.onShow}
+            onInit={this.onInit}
+            renderToolbar={() => {
+              return <Toolbar.Builder {...this.onCreateToolbar()} />;
+            }}
+          >
+            <ContentBody style={this.style}>
+              <this.onCreate />
+            </ContentBody>
+          </Page>
+        </ErrorBoundary>
+      </AppCompatActivityContext.Provider>
     );
   };
 }
