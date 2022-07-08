@@ -10,6 +10,7 @@ import Alert from "@mui/material/Alert";
 import AppCompatActivity from "./AppCompatActivity";
 import ToolbarBuilder from "@Builders/ToolbarBuilder";
 import { string } from "@Strings";
+import Magisk from "@Native/Magisk";
 
 interface Props {
   extra?: any;
@@ -169,11 +170,7 @@ class ViewModuleActivity extends AppCompatActivity<Props, States> {
                       </td>
                       <td
                         style={{
-                          color: os.isAndroid
-                            ? BuildConfig.MAGISK.PARSE_VERSION(minMagisk) > BuildConfig.MAGISK.VERSION_CODE
-                              ? "red"
-                              : ""
-                            : "",
+                          color: os.isAndroid ? (Magisk.PARSE_VERSION(minMagisk) > Magisk.VERSION_CODE ? "red" : "") : "",
                         }}
                       >
                         {minMagisk}

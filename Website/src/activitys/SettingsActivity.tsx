@@ -20,6 +20,7 @@ import {
 import BuildConfig from "@Native/BuildConfig";
 import { os } from "@Native/os";
 import Icon from "@Components/Icon";
+import Magisk from "@Native/Magisk";
 
 interface Props {
   pushPage: any;
@@ -181,7 +182,7 @@ class SettingsActivity extends AppCompatActivity<Props, States> {
                       text: (
                         <span>
                           {BuildConfig.APPLICATION_ID} v{BuildConfig.VERSION_NAME} ({BuildConfig.VERSION_CODE})<br />
-                          {os.isAndroid ? `${BuildConfig.MAGISK.VERSION_NAME} (${BuildConfig.MAGISK.VERSION_CODE})` : ""}
+                          {os.isAndroid ? `${Magisk.VERSION_NAME} (${Magisk.VERSION_CODE})` : ""}
                         </span>
                       ),
                       style: {

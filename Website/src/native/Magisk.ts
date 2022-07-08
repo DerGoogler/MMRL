@@ -24,6 +24,20 @@ class Magisk {
   }
 
   /**
+   * `XX.Y` is parsed as `XXY00`, so you can just put the Magisk version name.
+   * @param version
+   * @returns
+   */
+  public static PARSE_VERSION(version: string): number {
+    const i = version.indexOf(".");
+    if (i == -1) {
+      return parseInt(version);
+    } else {
+      return parseInt(version.substring(0, i)) * 1000 + parseInt(version.substring(i + 1)) * 100;
+    }
+  }
+
+  /**
    * Installs an Magisk module from path
    * @param path Directory path
    */
