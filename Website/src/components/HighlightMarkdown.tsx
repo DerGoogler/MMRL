@@ -1,7 +1,5 @@
 import { Component } from "react";
-import ReactMarkdown from "react-markdown";
 import Markdown from "marked-react";
-import remarkGfm from "remark-gfm";
 import { LightAsync as SyntaxHighlighter } from "react-syntax-highlighter";
 import { github } from "react-syntax-highlighter/dist/cjs/styles/hljs";
 

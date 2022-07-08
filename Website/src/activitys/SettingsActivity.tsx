@@ -124,7 +124,11 @@ class SettingsActivity extends AppCompatActivity<Props, States> {
                       callback: (e: Event, key: string, keepDefaultFuntion: void) => {
                         new AlertBuilder()
                           .setTitle("Sure?")
-                          .setMessage("Do you wanna change the language?")
+                          .setMessage(
+                            <div>
+                              Do you wanna <span style={{ color: "red" }}>change</span> the language?
+                            </div>
+                          )
                           .setPositiveButton("Yes", (input: string) => {
                             keepDefaultFuntion;
                           })

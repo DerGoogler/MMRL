@@ -192,14 +192,6 @@
         "repository": "https://github.com/facebook/react.git"
     },
     {
-        "name": "react-markdown",
-        "description": "React component to render markdown",
-        "author": "Espen Hovlandsdal <espen@hovlandsdal.com>",
-        "version": "8.0.3",
-        "license": "MIT",
-        "repository": "remarkjs/react-markdown"
-    },
-    {
         "name": "react-onsenui",
         "description": "Onsen UI - React Components for Hybrid Cordova/PhoneGap Apps with Material Design and iOS UI components",
         "author": "Onsen UI Team <team@monaca.io>",
@@ -222,14 +214,6 @@
         "version": "9.0.1",
         "license": "MIT",
         "repository": "https://github.com/fkhadra/react-toastify.git"
-    },
-    {
-        "name": "remark-gfm",
-        "description": "remark plugin to support GFM (autolink literals, footnotes, strikethrough, tables, tasklists)",
-        "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
-        "version": "3.0.1",
-        "license": "MIT",
-        "repository": "remarkjs/remark-gfm"
     },
     {
         "name": "remark-shortcodes",

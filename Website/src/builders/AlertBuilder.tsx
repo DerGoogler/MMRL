@@ -1,8 +1,10 @@
 import ons from "onsenui";
+import { isValidElement } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
 
 interface Alert {
   title: string;
-  message: string;
+  messageHTML: string | JSX.Element;
   cancelable: boolean;
   callback: Function;
   buttons: AlertButtons;
@@ -20,7 +22,7 @@ interface AlertButton {
 
 interface AlertOptions {
   message?: string;
-  messageHTML?: string;
+  messageHTML?: string | JSX.Element;
   buttonLabel?: string;
   buttonLabels?: string[];
   primaryButtonIndex?: number;
@@ -38,7 +40,7 @@ class AlertBuilder {
   public constructor() {
     this.dialog = {
       title: "",
-      message: "",
+      messageHTML: "",
       cancelable: true,
       callback: () => {},
       buttons: {
@@ -62,8 +64,12 @@ class AlertBuilder {
     return this;
   }
 
-  public setMessage(value: string): AlertBuilder {
-    this.dialog.message = value;
+  public setMessage(value: string | JSX.Element): AlertBuilder {
+    if (isValidElement(value)) {
+      this.dialog.messageHTML = renderToStaticMarkup(value);
+    } else {
+      this.dialog.messageHTML = value;
+    }
     return this;
   }
 
@@ -102,7 +108,7 @@ class AlertBuilder {
 
   public showAlert(): Alert & Void {
     const { positive, negative } = this.dialog.buttons;
-    const { title, message } = this.dialog;
+    const { title, messageHTML } = this.dialog;
     const pla: AlertOptions = {
       buttonLabels: [],
       animation: "default",
@@ -122,7 +128,7 @@ class AlertBuilder {
         }
       },
     };
-    pla.messageHTML = message;
+    pla.messageHTML = messageHTML;
     pla.title = title;
     if (positive.title) {
       pla.buttonLabels?.push(positive.title);
@@ -130,14 +136,17 @@ class AlertBuilder {
     if (negative.title) {
       pla.buttonLabels?.push(negative.title);
     }
+    // @ts-ignore
     ons.notification.confirm(pla);
   }
 
   public showPrompt(): Alert & Void {
     const { positive, negative } = this.dialog.buttons;
-    const { title, callback, message, cancelable } = this.dialog;
+    const { title, callback, messageHTML, cancelable } = this.dialog;
     ons.notification
-      .prompt(message, {
+      .prompt({
+        // @ts-ignore
+        messageHTML: messageHTML,
         buttonLabels: [negative.title, positive.title],
         title: title,
         // @ts-ignore
