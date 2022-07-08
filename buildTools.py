@@ -32,11 +32,11 @@ class MMRLBuildTools(cmd.Cmd):
         shellWebsite(['npm', "install", arg])
 
     def do_uninstall(self, arg):
-        shellWebsite(['npm', "uninstall", arg])
+        shellWebsite(['npm', "remove", arg])
 
     def do_installDev(self, arg):
         shellWebsite(['npm', "install", "--save-dev", arg])
-
+ 
     def do_uninstallDev(self, arg):
         shellWebsite(['npm', "uninstall", "--save-dev", arg])
 

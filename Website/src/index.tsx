@@ -1,5 +1,6 @@
 import ReactDOM from "react-dom";
 import MainActivity from "@Activitys/MainActivity";
+import { Dom, Dom as dom } from "googlers-tools";
 import ons from "onsenui";
 import Log from "@Native/Log";
 import { os } from "@Native/os";
@@ -56,7 +57,7 @@ class Bootloader {
     string.setLanguage(this.pref.getString("language_select", "en"));
 
     // Prevent context menu on browsers.
-    window.addEventListener("contextmenu", (e: Event) => e.preventDefault());
+    dom.preventer(["contextmenu"]);
 
     this.log.i("Selecting platform: Android");
     this.log.i(<img alt="Random kitten" src="http://placekitten.com/180/150" width={180} height={150} />);
