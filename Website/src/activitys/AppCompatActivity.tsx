@@ -1,5 +1,5 @@
+import Toolbar from "@Builders/ToolbarBuilder";
 import ContentBody from "@Components/ContentBody";
-import BuildConfig from "@Native/BuildConfig";
 import Constants from "@Native/Constants";
 import { os } from "@Native/os";
 import SharedPreferences from "@Native/SharedPreferences";
@@ -59,8 +59,10 @@ class AppCompatActivity<P = {}, S = {}> extends PureComponent<P, S> {
   /**
    * Renders the Toolbar
    */
-  public onCreateToolbar(): JSX.Element {
-    return <></>;
+  public onCreateToolbar(): Toolbar.Props {
+    return {
+      title: "Default",
+    };
   }
 
   public onCreateModal(): JSX.Element {
@@ -101,7 +103,9 @@ class AppCompatActivity<P = {}, S = {}> extends PureComponent<P, S> {
         onHide={this.onHide}
         onShow={this.onShow}
         onInit={this.onInit}
-        renderToolbar={this.onCreateToolbar}
+        renderToolbar={() => {
+          return <Toolbar.Builder {...this.onCreateToolbar()} />;
+        }}
       >
         <ContentBody>
           <this.onCreate />

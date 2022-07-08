@@ -21,6 +21,7 @@ import BuildConfig from "@Native/BuildConfig";
 import { os } from "@Native/os";
 import Icon from "@Components/Icon";
 import Magisk from "@Native/Magisk";
+import Toolbar from "@Builders/ToolbarBuilder";
 
 interface Props {
   pushPage: any;
@@ -47,9 +48,12 @@ class SettingsActivity extends AppCompatActivity<Props, States> {
     this.setState({ libs: Object.keys(pkg.dependencies) });
   };
 
-  public onCreateToolbar = () => {
-    return <ToolbarBuilder title={string.settings} onBackButton={this.props.popPage} />;
-  };
+  public onCreateToolbar(): Toolbar.Props {
+    return {
+      title: string.settings,
+      onBackButton: this.props.popPage,
+    };
+  }
 
   public onCreate = () => {
     return (

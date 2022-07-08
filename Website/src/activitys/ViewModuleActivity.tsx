@@ -2,15 +2,14 @@ import { ToolbarButton, Dialog, Button } from "react-onsenui";
 import ons from "onsenui";
 import axios from "axios";
 import { DownloadRounded, InfoRounded, InstallMobileRounded, VerifiedRounded } from "@mui/icons-material";
-import BuildConfig from "@Native/BuildConfig";
 import { HighlightedMarkdown } from "@Components/HighlightMarkdown";
 import { os } from "@Native/os";
 import SharedPreferences from "@Native/SharedPreferences";
 import Alert from "@mui/material/Alert";
 import AppCompatActivity from "./AppCompatActivity";
-import ToolbarBuilder from "@Builders/ToolbarBuilder";
 import { string } from "@Strings";
 import Magisk from "@Native/Magisk";
+import Toolbar from "@Builders/ToolbarBuilder";
 
 interface Props {
   extra?: any;
@@ -53,26 +52,24 @@ class ViewModuleActivity extends AppCompatActivity<Props, States> {
       });
   };
 
-  public onCreateToolbar = () => {
+  public onCreateToolbar = (): Toolbar.Props => {
     const { minMagisk, minApi, maxApi, needRamdisk, changeBoot } = this.props.extra?.moduleProps;
-    return (
-      <ToolbarBuilder
-        title={this.props.extra.name}
-        onBackButton={this.props.popPage}
-        addToolbarButton={
-          <>
-            {(minMagisk || minApi || maxApi || needRamdisk || changeBoot) != (null || undefined) ? (
-              <div className="right">
-                <ToolbarButton style={{ padding: "0px 10px" }} onClick={this.showDialog}>
-                  <InfoRounded />
-                </ToolbarButton>
-              </div>
-            ) : null}
-          </>
-        }
-        addToolbarButtonPosition="right"
-      />
-    );
+    return {
+      title: this.props.extra.name,
+      onBackButton: this.props.popPage,
+      addToolbarButton: (
+        <>
+          {(minMagisk || minApi || maxApi || needRamdisk || changeBoot) != (null || undefined) ? (
+            <div className="right">
+              <ToolbarButton style={{ padding: "0px 10px" }} onClick={this.showDialog}>
+                <InfoRounded />
+              </ToolbarButton>
+            </div>
+          ) : null}
+        </>
+      ),
+      addToolbarButtonPosition: "right",
+    };
   };
 
   private showDialog = () => {

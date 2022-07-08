@@ -36,9 +36,6 @@ declare global {
       "content-body": HTMLAttributes<HTMLDivElement>;
       "content-body-inner": HTMLAttributes<HTMLDivElement>;
 
-      "checkmark": keyof JSX.IntrinsicElements | HeadingComponent | undefined;
-      "dangermark": HTMLAttributes<HTMLOrSVGImageElement>;
-
       // ./components/Item.tsx
       "item-card-wrapper": HTMLAttributes<HTMLDivElement>;
       "item-title": HTMLAttributes<HTMLDivElement>;

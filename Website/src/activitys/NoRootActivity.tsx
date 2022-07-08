@@ -1,14 +1,16 @@
-import { Button, Card, Toolbar } from "react-onsenui";
+import { Button, Card } from "react-onsenui";
 import AppCompatActivity from "./AppCompatActivity";
 import Toast from "@Native/Toast";
-import ToolbarBuilder from "@Builders/ToolbarBuilder";
+import Toolbar from "@Builders/ToolbarBuilder";
 
 class NoRootActivity extends AppCompatActivity {
   private readonly magiskPackageName: string = "com.topjohnwu.magisk";
 
-  public onCreateToolbar = () => {
-    return <ToolbarBuilder title="No Root" />;
-  };
+  public onCreateToolbar(): Toolbar.Props {
+    return {
+      title: "No Root",
+    };
+  }
 
   public onCreate = () => {
     return (

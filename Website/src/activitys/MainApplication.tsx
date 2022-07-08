@@ -1,9 +1,10 @@
+import Toolbar from "@Builders/ToolbarBuilder";
 import { SettingsRounded } from "@mui/icons-material";
 import { os } from "@Native/os";
 import SharedPreferences from "@Native/SharedPreferences";
 import Toast from "@Native/Toast";
 import { string } from "@Strings";
-import { Tab, Tabbar, TabbarRenderTab, Toolbar, ToolbarButton } from "react-onsenui";
+import { Tab, Tabbar, TabbarRenderTab, ToolbarButton } from "react-onsenui";
 import AppCompatActivity from "./AppCompatActivity";
 import DeviceModuleFragment from "./fragments/DeviceModuleFragment";
 import ExploreModuleFragment from "./fragments/ExploreModuleFragment";
@@ -33,25 +34,17 @@ class MainApplication extends AppCompatActivity<Props> {
     this.state = {};
   }
 
-  public onCreateToolbar = () => {
-    return (
-      <Toolbar>
-        <div
-          className="center"
-          onClick={() => {
-            Toast.makeText("My gf left me ... :(", Toast.LENGTH_SHORT).show();
-          }}
-        >
-          Magisk Module Repo Loader
-        </div>
-        <div className="right">
-          <ToolbarButton className="back-button--material__icon" onClick={this.openSettings}>
-            <SettingsRounded />
-          </ToolbarButton>
-        </div>
-      </Toolbar>
-    );
-  };
+  public onCreateToolbar(): Toolbar.Props {
+    return {
+      title: "Magisk Module Repo Loader",
+      addToolbarButtonPosition: "right",
+      addToolbarButton: (
+        <ToolbarButton className="back-button--material__icon" onClick={this.openSettings}>
+          <SettingsRounded />
+        </ToolbarButton>
+      ),
+    };
+  }
 
   public componentDidMount() {
     super.componentDidMount;
