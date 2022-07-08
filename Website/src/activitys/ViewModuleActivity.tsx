@@ -126,7 +126,8 @@ class ViewModuleActivity extends AppCompatActivity<Props, States> {
           <Button
             modifier="large"
             onClick={() => {
-              window.open(download);
+              os.open(download);
+
               // Toast.makeText(`Download ${id!}`, Toast.LENGTH_LONG).show();
               // fs.download(`${id!}.zip`, download);
             }}

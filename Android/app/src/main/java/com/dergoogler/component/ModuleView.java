@@ -11,8 +11,10 @@ import android.util.JsonToken;
 import android.util.Log;
 import android.view.View;
 import android.webkit.ValueCallback;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -62,6 +64,14 @@ public class ModuleView extends WebView {
     @SuppressLint("SetJavaScriptEnabled")
     public void setJavaScriptEnabled(boolean enabled) {
         this.webSettings.setJavaScriptEnabled(enabled);
+    }
+
+    public void setModuleViewClient(final ModuleViewClient client) {
+        super.setWebViewClient(client);
+    }
+
+    public void setModuleChromeClient(final WebChromeClient client) {
+        super.setWebChromeClient(client);
     }
 
     public void setUserAgentString(String userAgent) {

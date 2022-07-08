@@ -1,11 +1,16 @@
 package com.dergoogler.mmrl;
 
 import android.annotation.SuppressLint;
+import android.app.DownloadManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.webkit.CookieManager;
+import android.webkit.DownloadListener;
 import android.webkit.PermissionRequest;
+import android.webkit.URLUtil;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -13,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.dergoogler.component.ModuleChromeClient;
 import com.dergoogler.component.ModuleView;
 import com.dergoogler.core.BuildConfigNative;
 import com.dergoogler.core.BuildNative;
@@ -44,31 +50,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Content
         view.loadHTML("file:///android_asset/", new Page(this).load());
-        view.setWebChromeClient(new WebChromeClient() {
-            @Override
-            public void onPermissionRequest(final PermissionRequest request) {
-                request.grant(request.getResources());
-            }
-
-            @Override
-            public boolean onShowFileChooser(WebView vw, ValueCallback<Uri[]> filePathCallback,
-                                             FileChooserParams fileChooserParams) {
-                if (fileChooserCallback != null) {
-                    fileChooserCallback.onReceiveValue(null);
-                }
-                fileChooserCallback = filePathCallback;
-
-                Intent selectionIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                selectionIntent.addCategory(Intent.CATEGORY_OPENABLE);
-                selectionIntent.setType("*/*");
-
-                Intent chooserIntent = new Intent(Intent.ACTION_CHOOSER);
-                chooserIntent.putExtra(Intent.EXTRA_INTENT, selectionIntent);
-                startActivityForResult(chooserIntent, 0);
-
-                return true;
-            }
-        });
 
         // Core
         view.addJavascriptInterface(new FileSystemNative(this), "nfs");
@@ -77,10 +58,6 @@ public class MainActivity extends AppCompatActivity {
         view.addJavascriptInterface(new BuildConfigNative(), "nbuildconfig");
         view.addJavascriptInterface(new OSNative(this), "nos");
         view.addJavascriptInterface(new SharedPreferencesNative(this), "nsharedpreferences");
-
-        FileSystemNative fs = new FileSystemNative(this);
-
-        fs.unpackZip(fs.getDataDir() + "/Download", "0_MARS_SOM_CLEANER-GEAR_ZERO.zip");
     }
 
     @Override
