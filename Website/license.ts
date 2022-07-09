@@ -1,11 +1,11 @@
 import pkg from "./package.json";
 import fs from "fs";
-import { Bota64 } from "bota64";
+import Bota64 from "bota64";
 
 const dep = Object.keys(pkg.dependencies);
 let outputArray: any = [];
 
-const b = new Bota64({ withBase64: false });
+const b = new Bota64();
 
 function getObject(name?: any, fallback?: any, options?: any) {
   const checkLink = (link?: any) => {

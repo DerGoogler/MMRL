@@ -20,7 +20,7 @@
     "@mui/icons-material": "^5.8.0",
     "@mui/material": "^5.8.0",
     "axios": "^0.27.2",
-    "bota64": "^1.0.2",
+    "bota64": "^1.0.5",
     "googlers-tools": "^1.1.7",
     "jss": "^10.9.0",
     "jss-preset-default": "^10.9.0",

@@ -13,7 +13,6 @@ import { string } from "./language/core";
 // Webpack CSS import
 import "onsenui/css/onsenui-core.css";
 import "material-icons/iconfont/material-icons.css";
-import "react-toastify/dist/ReactToastify.css";
 import "@Styles/addtional.scss";
 import "@Styles/markdown-light.scss";
 import "@Styles/markdown-dark.scss";
