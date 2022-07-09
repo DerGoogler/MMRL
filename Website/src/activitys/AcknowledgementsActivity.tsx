@@ -2,6 +2,7 @@ import Toolbar from "@Builders/ToolbarBuilder";
 import { Card } from "react-onsenui";
 import dep from "./../utils/licenses.json";
 import AppCompatActivity from "./AppCompatActivity";
+import { Bota64 } from "bota64";
 
 interface Props {
   popPage: any;
@@ -12,11 +13,14 @@ interface States {
 }
 
 class AcknowledgementsActivity extends AppCompatActivity<Props, States> {
+  private b: Bota64;
   public constructor(props: Props | Readonly<Props>) {
     super(props);
     this.state = {
       libs: [],
     };
+
+    this.b = new Bota64({ withBase64: false });
   }
 
   public componentDidMount = () => {
@@ -42,15 +46,15 @@ class AcknowledgementsActivity extends AppCompatActivity<Props, States> {
         >
           <license-card-wrapper>
             <license-card-title className="title">
-              <license-card-name>{item.name}</license-card-name>
-              <license-card-author>{item.author}</license-card-author>
+              <license-card-name>{this.b.decode(item.name)}</license-card-name>
+              <license-card-author>{this.b.decode(item.author)}</license-card-author>
             </license-card-title>
             <div className="content">
-              <license-card-description>{item.description}</license-card-description>
+              <license-card-description>{this.b.decode(item.description)}</license-card-description>
               <hr className="license-card-diver" />
               <license-card-infos>
-                <license-card-version>{item.version}</license-card-version>
-                <license-card-license>{item.license}</license-card-license>
+                <license-card-version>{this.b.decode(item.version)}</license-card-version>
+                <license-card-license>{this.b.decode(item.license)}</license-card-license>
               </license-card-infos>
             </div>
           </license-card-wrapper>

@@ -1,4 +1,4 @@
-# Magisk Modules Repo Loader (MMRL)
+<h1 align="center"><pre>Magisk Modules Repo Loader</pre></h1>
 
 Magisk Module Repo Loader (MMRL). Allows you to load custom repos with an simple UI
 
