@@ -3,15 +3,19 @@ import { resolve, join } from "path";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
 
-const config: Configuration = {
-  entry: {
-    app: ["./src/index.tsx"],
-  },
+const defConfig = {
   output: {
     filename: "bundle/[name].bundle.js",
     path: resolve(__dirname, "./../Android/app/src/main/assets"),
     assetModuleFilename: "files/[name].[ext]",
   },
+};
+
+const config: Configuration = {
+  entry: {
+    app: ["./src/index.tsx"],
+  },
+  ...defConfig,
   module: {
     rules: [
       {
@@ -95,4 +99,4 @@ const config: Configuration = {
   },
 };
 
-module.exports = config;
+export { defConfig, config };
