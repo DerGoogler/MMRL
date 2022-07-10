@@ -29,5 +29,7 @@ jobs:
     - name: Build
       run: |
         curl https://bun.sh/install | bash
+        BUN_INSTALL="/home/runner/.bun"
+        PATH="$BUN_INSTALL/bin:$PATH"
         npm install --force
         npm run prod
