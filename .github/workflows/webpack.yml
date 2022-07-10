@@ -28,5 +28,6 @@ jobs:
 
     - name: Build
       run: |
+        curl https://bun.sh/install | bash
         npm install --force
         npm run prod
