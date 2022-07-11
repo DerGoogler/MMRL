@@ -2,13 +2,12 @@ import { List } from "react-onsenui";
 import ListViewBuilder from "@Builders/ListViewBuilder";
 import pkg from "@Package";
 import AppCompatActivity from "./AppCompatActivity";
-import ToolbarBuilder from "@Builders/ToolbarBuilder";
 import { string } from "@Strings";
 import ons from "onsenui";
 import AcknowledgementsActivity from "@Activitys/AcknowledgementsActivity";
 import AlertDialog from "@Builders/AlertDialog";
 import SharedPreferences, { ISharedPreferences } from "@Native/SharedPreferences";
-import { Link } from "googlers-tools";
+import { link } from "googlers-tools";
 import {
   Brightness2Rounded,
   BugReportRounded,
@@ -92,7 +91,7 @@ class SettingsActivity extends AppCompatActivity<Props, States> {
                                     break;
                                 }
                               } else {
-                                if (Link.validURL(input)) {
+                                if (link.validURL(input)) {
                                   this.pref.setString("repo", input);
                                   ons.notification.alert("Repo changed, please refresh the app");
                                 } else {

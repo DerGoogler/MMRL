@@ -5,14 +5,12 @@ import Bota64 from "bota64";
 const dep = Object.keys(pkg.dependencies);
 let outputArray: any = [];
 
-const b = new Bota64();
-
 function getObject(name?: any, fallback?: any, options?: any) {
   const checkLink = (link?: any) => {
     if (options?.isLink) {
-      return b.encode(link.replace("git+", ""));
+      return Bota64.encode(link.replace("git+", ""));
     } else {
-      return b.encode(link);
+      return Bota64.encode(link);
     }
   };
 
@@ -25,9 +23,9 @@ function getObject(name?: any, fallback?: any, options?: any) {
 
 function getInnerObject(name?: any, rightName?: any) {
   if (typeof name == "object") {
-    return b.encode(rightName);
+    return Bota64.encode(rightName);
   } else {
-    return b.encode(name);
+    return Bota64.encode(name);
   }
 }
 
@@ -41,7 +39,7 @@ dep.forEach((element?: any) => {
     name: getObject(name, "Unknown Module"),
     description: getObject(description, "There is no description"),
     // Fallback doesn't work here.
-    author: typeof author == "undefined" ? "null" : typeof author == "object" ? b.encode(author.name) : b.encode(author), //getObject(getInnerObject(author, author.name), "Unknown"),
+    author: typeof author == "undefined" ? Bota64.encode("null") : typeof author == "object" ? Bota64.encode(author.name) : Bota64.encode(author), //getObject(getInnerObject(author, author.name), "Unknown"),
     version: getObject(version, "null"),
     license: getObject(license, "null"),
     repository: getObject(getInnerObject(repository, repository.url), "empty", { isLink: true }),

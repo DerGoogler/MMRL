@@ -79,8 +79,9 @@ class ExploreModuleFragment extends Component<Props, States> {
   };
 
   private triggerSearch = () => {
-    const { currentSerachText } = this.state;
-    this.setState({ search: currentSerachText });
+    this.setState((state: Readonly<States>, props: Readonly<Props>) => ({
+      search: state.currentSerachText,
+    }));
   };
 
   public render = () => {

@@ -4,7 +4,7 @@ import MainApplication from "@Activitys/MainApplication";
 import Constants from "@Native/Constants";
 import NoRootActivity from "./NoRootActivity";
 import Shell from "@Native/ShellBuilder";
-import { Link } from "googlers-tools";
+import { link } from "googlers-tools";
 
 interface ModuleOptions {
   verified?: boolean;
@@ -74,7 +74,7 @@ class MainActivity extends Component<PushProps, States> {
     };
 
     // Make an fake path. Note: The page should not refreshed!
-    Link.setURL((set, currentPath) => {
+    link.setURL((set, currentPath) => {
       const acty = props.activity;
       const getName = () => {
         return acty.name.toLowerCase().replace("activity", "");

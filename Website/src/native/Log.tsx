@@ -1,13 +1,15 @@
 import { os } from "./os";
-import { Dom } from "googlers-tools";
+import { Logger } from "googlers-tools";
 
 /**
  * Custom logger for MMRL with Native Android logging support. It also support React/JSX element.
- * @extends {Dom.Logger}
+ * @extends {Logger}
  */
-class Log extends Dom.Logger {
+class Log extends Logger {
+  private tag: string;
   public constructor(tag: string) {
     super(tag);
+    this.tag = tag;
   }
 
   public i<T = string>(message: T) {

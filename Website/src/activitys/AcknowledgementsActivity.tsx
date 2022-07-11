@@ -2,7 +2,7 @@ import Toolbar from "@Builders/ToolbarBuilder";
 import { Card } from "react-onsenui";
 import dep from "./../utils/licenses.json";
 import AppCompatActivity from "./AppCompatActivity";
-import Bota64 from "bota64";
+import { Bota64Class, IBota64 } from "bota64";
 
 interface Props {
   popPage: any;
@@ -13,14 +13,14 @@ interface States {
 }
 
 class AcknowledgementsActivity extends AppCompatActivity<Props, States> {
-  private b: Bota64;
+  private b: IBota64;
   public constructor(props: Props | Readonly<Props>) {
     super(props);
     this.state = {
       libs: [],
     };
 
-    this.b = new Bota64();
+    this.b = new Bota64Class();
   }
 
   public componentDidMount = () => {

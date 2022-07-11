@@ -8,7 +8,7 @@ import { VerifiedRounded } from "@mui/icons-material";
 import { os } from "@Native/os";
 import Toast from "@Native/Toast";
 import { isTablet } from "react-device-detect";
-import { Dom, Link } from "googlers-tools";
+import { dom, link } from "googlers-tools";
 
 interface Props {
   notesUrl?: string;
@@ -74,20 +74,20 @@ class ExploreModule extends Component<Props, States> {
 
   public componentDidUpdate() {
     const { searchState } = this.props;
-    Dom.findBy(this.cardName, (ref) => {
+    dom.findBy(this.cardName, (ref) => {
       if (searchState != "") {
         const search = ref.textContent || ref.innerText;
         if (search.toLowerCase().indexOf(searchState) > -1) {
-          Dom.findBy(this.searchedCard, (ref) => {
+          dom.findBy(this.searchedCard, (ref: HTMLElement) => {
             ref.style.display = "";
           });
         } else {
-          Dom.findBy(this.searchedCard, (ref) => {
+          dom.findBy(this.searchedCard, (ref: HTMLElement) => {
             ref.style.display = "none";
           });
         }
       } else {
-        Dom.findBy(this.searchedCard, (ref) => {
+        dom.findBy(this.searchedCard, (ref: HTMLElement) => {
           ref.style.display = "";
         });
       }
@@ -142,7 +142,7 @@ class ExploreModule extends Component<Props, States> {
           ref={this.openReadmeFromParam}
           onClick={() => {
             // Make an fake path. Note: The page should not refreshed!
-            Link.setURL((set, currentPath) => {
+            link.setURL((set, currentPath) => {
               set(`view_${props.id}`, `view_${props.id}`, `${currentPath}/?module=${props.id}`);
             });
 

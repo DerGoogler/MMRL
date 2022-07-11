@@ -3,6 +3,7 @@
     "outDir": "./../Android/app/src/main/assets",
     "typeRoots": ["src/typings/global.d.ts"],
     "sourceMap": false,
+    "experimentalDecorators": true,
     "declaration": false,
     "strict": true,
     "noImplicitReturns": true,

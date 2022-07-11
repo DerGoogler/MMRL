@@ -1,5 +1,5 @@
 import { Component, createRef, RefObject, ReactNode } from "react";
-import { Dom as dom } from "googlers-tools";
+import { dom } from "googlers-tools";
 
 interface Props {
   event:

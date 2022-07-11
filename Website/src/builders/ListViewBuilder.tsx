@@ -4,7 +4,7 @@ import ons from "onsenui";
 import Gesture from "@Components/Gesture";
 import SharedPreferences, { ISharedPreferences } from "@Native/SharedPreferences";
 import { PushProps } from "@Activitys/MainActivity";
-import { Util } from "googlers-tools";
+import { util } from "googlers-tools";
 
 interface IProps {
   data: IListInterface[];
@@ -98,8 +98,8 @@ class ListViewBuilder extends Component<IProps> {
           {header.content.map((item: IListOptions) => (
             <>
               <ListItem
-                modifier={Util.typeCheck(item.modifier, "")}
-                tappable={Util.typeCheck(item.tappable, false)}
+                modifier={util.typeCheck(item.modifier, "")}
+                tappable={util.typeCheck(item.tappable, false)}
                 id={item.key + "-ListItem"}
                 style={item.style}
                 onClick={() => {
@@ -122,7 +122,7 @@ class ListViewBuilder extends Component<IProps> {
                         buttonLabels: ["Ok"],
                         animation: "default",
                         primaryButtonIndex: 1,
-                        cancelable: Util.typeCheck(item.helper?.cancelable, true),
+                        cancelable: util.typeCheck(item.helper?.cancelable, true),
                       });
                     }
                   }}

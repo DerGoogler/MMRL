@@ -1,7 +1,7 @@
 import { Component } from "react";
 import { Card, Ripple, Switch } from "react-onsenui";
 import Properties from "@js.properties/properties";
-import fs from "@Native/fs";
+import File from "@Native/File";
 import Log from "@Native/Log";
 import { DeleteRounded, RefreshRounded } from "@mui/icons-material";
 import SharedPreferences from "@Native/SharedPreferences";
@@ -50,18 +50,18 @@ class DeviceModule extends Component<Props, States> {
 
   public componentDidMount = () => {
     const module = this.props.module;
-    const readProps = fs.readFile(`/data/adb/modules/${module}/module.prop`);
+    const readProps = File.read(`/data/adb/modules/${module}/module.prop`);
     this.setState({
       props: Properties.parseToProperties(readProps),
     });
 
-    const disable = new fs(`/data/adb/modules/${module}/disable`);
-    if (disable.existFile()) {
+    const disable = new File(`/data/adb/modules/${module}/disable`);
+    if (disable.exist()) {
       this.setState({ isEnabled: false });
     }
 
-    const remove = new fs(`/data/adb/modules/${module}/remove`);
-    if (remove.existFile()) {
+    const remove = new File(`/data/adb/modules/${module}/remove`);
+    if (remove.exist()) {
       this.setState({ isSwitchDisabled: true });
     }
   };
@@ -89,11 +89,11 @@ class DeviceModule extends Component<Props, States> {
                       disabled={isSwitchDisabled}
                       onChange={(e: any) => {
                         const checked = e.target.checked;
-                        const disable = new fs(`/data/adb/modules/${module}/disable`);
+                        const disable = new File(`/data/adb/modules/${module}/disable`);
 
                         if (checked) {
-                          if (disable.existFile()) {
-                            if (disable.deleteFile()) {
+                          if (disable.exist()) {
+                            if (disable.delete()) {
                               this.log.i(
                                 string.formatString(string.module_enabled_LOG, {
                                   module: module,
@@ -102,8 +102,8 @@ class DeviceModule extends Component<Props, States> {
                             }
                           }
                         } else {
-                          if (!disable.existFile()) {
-                            if (disable.createFile()) {
+                          if (!disable.exist()) {
+                            if (disable.create()) {
                               this.log.i(
                                 string.formatString(string.module_disabled_LOG, {
                                   module: module,
@@ -128,9 +128,9 @@ class DeviceModule extends Component<Props, States> {
                     onClick={() => {
                       // Can be improved, but not now
                       if (isSwitchDisabled) {
-                        const remove = new fs(`/data/adb/modules/${module}/remove`);
-                        if (remove.existFile()) {
-                          if (remove.deleteFile()) {
+                        const remove = new File(`/data/adb/modules/${module}/remove`);
+                        if (remove.exist()) {
+                          if (remove.delete()) {
                             this.setState({ isSwitchDisabled: false });
                             this.log.i(`${module} has been recovered`);
                           } else {
@@ -140,8 +140,8 @@ class DeviceModule extends Component<Props, States> {
                           this.log.e(`This remove file don't exists for ${module}`);
                         }
                       } else {
-                        const file = new fs(`/data/adb/modules/${module}/remove`);
-                        if (file.createFile()) {
+                        const file = new File(`/data/adb/modules/${module}/remove`);
+                        if (file.create()) {
                           this.setState({ isSwitchDisabled: true });
                         } else {
                           this.setState({ isSwitchDisabled: false });

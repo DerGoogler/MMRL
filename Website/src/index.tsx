@@ -1,5 +1,5 @@
 import MainActivity from "@Activitys/MainActivity";
-import { Dom as dom } from "googlers-tools";
+import { dom } from "googlers-tools";
 import ons from "onsenui";
 import Log from "@Native/Log";
 import { os } from "@Native/os";
