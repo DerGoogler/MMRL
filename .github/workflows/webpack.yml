@@ -1,4 +1,4 @@
-name: NodeJS with Webpack
+name: Bun with Webpack
 
 on:
   push:
@@ -16,20 +16,21 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.x]
+        bun-version: ["0.1.2"]
     
     steps:
     - uses: actions/checkout@v2
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
+    - uses: xhyrom/setup-bun@v1
       with:
-        node-version: ${{ matrix.node-version }}
+        bun-version: ${{ matrix.bun-version }}
 
-    - name: Build
+    - name: Build Development
       run: |
-        curl https://bun.sh/install | bash
-        BUN_INSTALL="/home/runner/.bun"
-        PATH="$BUN_INSTALL/bin:$PATH"
+        bun install --force
+        bun run dev
+
+    - name: Build Production
+      run: |
         bun install --force
         bun run prod
