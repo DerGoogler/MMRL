@@ -5,6 +5,7 @@ import SharedPreferences from "@Native/SharedPreferences";
 import Toast from "@Native/Toast";
 import { string } from "@Strings";
 import { Tab, Tabbar, TabbarRenderTab, ToolbarButton } from "react-onsenui";
+import { ActivityXRenderData } from "react-onsenuix";
 import AppCompatActivity from "./AppCompatActivity";
 import DeviceModuleFragment from "./fragments/DeviceModuleFragment";
 import ExploreModuleFragment from "./fragments/ExploreModuleFragment";
@@ -32,6 +33,9 @@ class MainApplication extends AppCompatActivity<Props> {
   public constructor(props: Props | Readonly<Props>) {
     super(props);
     this.state = {};
+
+    this.openSettings = this.openSettings.bind(this);
+    this.renderTabs = this.renderTabs.bind(this);
   }
 
   public onCreateToolbar(): Toolbar.Props {
@@ -54,14 +58,14 @@ class MainApplication extends AppCompatActivity<Props> {
     super.componentDidUpdate;
   }
 
-  private openSettings = () => {
+  private openSettings() {
     this.props.pushPage({
       key: "settings",
       activity: SettingsActivity,
     });
-  };
+  }
 
-  private renderTabs = (): TabbarRenderTab[] => {
+  private renderTabs(): TabbarRenderTab[] {
     return [
       {
         content: <ExploreModuleFragment pushPage={this.props.pushPage} />,
@@ -72,9 +76,9 @@ class MainApplication extends AppCompatActivity<Props> {
         tab: <Tab label={string.installed} />,
       },
     ];
-  };
+  }
 
-  public onCreate = () => {
+  public onCreate(data: ActivityXRenderData<Props, {}>) {
     return (
       <>
         {os.isAndroid ? (
@@ -88,7 +92,7 @@ class MainApplication extends AppCompatActivity<Props> {
         )}
       </>
     );
-  };
+  }
 }
 
 export default MainApplication;

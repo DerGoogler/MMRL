@@ -1,5 +1,6 @@
 import { Component } from "react";
-import { Page, Toolbar, BackButton, RouterNavigator, RouterUtil } from "react-onsenui";
+import { RouterUtil } from "react-onsenui";
+import { Page, RouterNavigator } from "react-onsenui";
 import MainApplication from "@Activitys/MainApplication";
 import Constants from "@Native/Constants";
 import NoRootActivity from "./NoRootActivity";
@@ -128,17 +129,6 @@ class MainActivity extends Component<PushProps, States> {
   private renderPage = (route: any) => {
     const props = route.props || {};
     return <route.component {...props} />;
-  };
-
-  private renderToolbar = () => {
-    return (
-      <Toolbar>
-        <div className="left">
-          <BackButton />
-        </div>
-        <div className="center">Stateless Navigator</div>
-      </Toolbar>
-    );
   };
 
   public render = () => {

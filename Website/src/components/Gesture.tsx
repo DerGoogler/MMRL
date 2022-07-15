@@ -1,5 +1,6 @@
-import { Component, createRef, RefObject, ReactNode } from "react";
+import { createRef, RefObject, ReactNode } from "react";
 import { dom } from "googlers-tools";
+import { ViewX, ViewXRenderData } from "react-onsenuix";
 
 interface Props {
   event:
@@ -27,7 +28,7 @@ interface Props {
   children: ReactNode;
 }
 
-class Gesture extends Component<Props, {}> {
+class Gesture extends ViewX<Props, {}> {
   private gerstureID: RefObject<HTMLDivElement>;
   constructor(props: any) {
     super(props);
@@ -41,9 +42,8 @@ class Gesture extends Component<Props, {}> {
     });
   }
 
-  public render() {
-    const { children } = this.props;
-    return <div ref={this.gerstureID}>{children}</div>;
+  public createView(data: ViewXRenderData<Props, {}, HTMLElement>): JSX.Element {
+    return <div ref={this.gerstureID}>{data.p.children}</div>;
   }
 }
 

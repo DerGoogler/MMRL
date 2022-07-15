@@ -1,4 +1,4 @@
-import { Component, RefObject, createRef } from "react";
+import { RefObject, createRef } from "react";
 import axios from "axios";
 import Properties from "@js.properties/properties";
 import { Card, Col } from "react-onsenui";
@@ -6,9 +6,9 @@ import ViewModuleActivity from "@Activitys/ViewModuleActivity";
 import Log from "@Native/Log";
 import { VerifiedRounded } from "@mui/icons-material";
 import { os } from "@Native/os";
-import Toast from "@Native/Toast";
 import { isTablet } from "react-device-detect";
 import { dom, link } from "googlers-tools";
+import { ViewX, ViewXRenderData } from "react-onsenuix";
 
 interface Props {
   notesUrl?: string;
@@ -47,7 +47,7 @@ interface States {
   };
 }
 
-class ExploreModule extends Component<Props, States> {
+class ExploreModule extends ViewX<Props, States> {
   private searchedCard: RefObject<Card>;
   private cardName: RefObject<HTMLSpanElement>;
   private log: Log;
@@ -130,9 +130,9 @@ class ExploreModule extends Component<Props, States> {
     }
   }
 
-  public render = () => {
-    const { notesUrl, downloadUrl, pushPage, moduleOptions, stars, last_update, getId } = this.props;
-    const { props } = this.state;
+  public createView(data: ViewXRenderData<Props, States, HTMLElement>): JSX.Element {
+    const { notesUrl, downloadUrl, pushPage, moduleOptions, stars, last_update, getId } = data.p;
+    const { props } = data.s;
     const isVerified = moduleOptions[getId]?.verified;
     const _display = moduleOptions[getId]?.display;
 
@@ -221,7 +221,7 @@ class ExploreModule extends Component<Props, States> {
         </div>
       </>
     );
-  };
+  }
 }
 
 export default ExploreModule;

@@ -1,5 +1,6 @@
 import { Component, LegacyRef } from "react";
-import { Button, SearchInput, ProgressCircular, Page, Row } from "react-onsenui";
+import { SearchInput, ProgressCircular, Row } from "react-onsenui";
+import { Button, Page } from "react-onsenuix";
 import axios from "axios";
 import ExploreModule from "@Components/ExploreModule";
 import SharedPreferences from "@Native/SharedPreferences";

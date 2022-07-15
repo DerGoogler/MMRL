@@ -27,7 +27,7 @@ class RepoGeneratorActivity extends AppCompatActivity<Props> {
   public onCreate(): JSX.Element {
     return (
       <>
-        <WebView url={"https://dergoogler.com/repo-generator/"} height="100%" width="100%"></WebView>
+        <WebView url={"https://dergoogler.com/repo-generator/"} height="100%" width="100%" />
       </>
     );
   }

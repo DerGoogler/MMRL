@@ -1,4 +1,4 @@
-import { Button, Card } from "react-onsenui";
+import { Button, Card } from "react-onsenuix";
 import AppCompatActivity from "./AppCompatActivity";
 import Toast from "@Native/Toast";
 import Toolbar from "@Builders/ToolbarBuilder";
@@ -13,7 +13,7 @@ class NoRootActivity extends AppCompatActivity {
     };
   }
 
-  public onCreate = () => {
+  public onCreate() {
     return (
       <div style={{ padding: "8px" }}>
         <Card>
@@ -39,7 +39,7 @@ class NoRootActivity extends AppCompatActivity {
         </Button>
       </div>
     );
-  };
+  }
 }
 
 export default NoRootActivity;

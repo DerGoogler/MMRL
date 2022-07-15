@@ -1,4 +1,4 @@
-import { List } from "react-onsenui";
+import { List } from "react-onsenuix";
 import ListViewBuilder from "@Builders/ListViewBuilder";
 import pkg from "@Package";
 import AppCompatActivity from "./AppCompatActivity";

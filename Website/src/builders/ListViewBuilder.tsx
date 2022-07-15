@@ -1,5 +1,6 @@
 import { Component, isValidElement } from "react";
 import { ListItem, ListTitle, Select, Switch } from "react-onsenui";
+import { List } from "react-onsenuix";
 import ons from "onsenui";
 import Gesture from "@Components/Gesture";
 import SharedPreferences, { ISharedPreferences } from "@Native/SharedPreferences";
@@ -94,11 +95,12 @@ class ListViewBuilder extends Component<IProps> {
     return data.map((header: IListInterface) => (
       <>
         <section id={header.id} className={header.className} style={header.style}>
-          <ListTitle>{header.title}</ListTitle>
+          <List.Title>{header.title}</List.Title>
           {header.content.map((item: IListOptions) => (
             <>
-              <ListItem
+              <List.Item
                 modifier={util.typeCheck(item.modifier, "")}
+                // @ts-ignore
                 tappable={util.typeCheck(item.tappable, false)}
                 id={item.key + "-ListItem"}
                 style={item.style}
@@ -196,7 +198,7 @@ class ListViewBuilder extends Component<IProps> {
                     }
                   })()}
                 </div>
-              </ListItem>
+              </List.Item>
             </>
           ))}
         </section>

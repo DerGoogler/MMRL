@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { BackButton, Toolbar as Cockbar } from "react-onsenui";
+import { BackButton, Toolbar as Cockbar } from "react-onsenuix";
 
 namespace Toolbar {
   export interface Props {

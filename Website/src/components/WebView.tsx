@@ -1,5 +1,5 @@
-import { Component, ReactNode } from "react";
 import objectAssign from "object-assign";
+import { ViewX, ViewXRenderData } from "react-onsenuix";
 
 interface Props {
   url: string;
@@ -52,12 +52,12 @@ interface Props {
   title?: string;
 }
 
-class WebView extends Component<Props> {
+class WebView extends ViewX<Props> {
   public constructor(props: Props | Readonly<Props>) {
     super(props);
   }
 
-  public render(): ReactNode {
+  public createView(data: ViewXRenderData<Props, {}, HTMLElement>): JSX.Element {
     const {
       url,
       allowFullScreen,

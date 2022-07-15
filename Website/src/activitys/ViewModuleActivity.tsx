@@ -1,4 +1,5 @@
-import { ToolbarButton, Dialog, Button } from "react-onsenui";
+import { Toolbar as gae, Button } from "react-onsenuix";
+import { Dialog } from "react-onsenui";
 import ons from "onsenui";
 import axios from "axios";
 import { DownloadRounded, InfoRounded, InstallMobileRounded, VerifiedRounded } from "@mui/icons-material";
@@ -61,9 +62,9 @@ class ViewModuleActivity extends AppCompatActivity<Props, States> {
         <>
           {(minMagisk || minApi || maxApi || needRamdisk || changeBoot) != (null || undefined) ? (
             <div className="right">
-              <ToolbarButton style={{ padding: "0px 10px" }} onClick={this.showDialog}>
+              <gae.Button style={{ padding: "0px 10px" }} onClick={this.showDialog}>
                 <InfoRounded />
-              </ToolbarButton>
+              </gae.Button>
             </div>
           ) : null}
         </>
@@ -120,8 +121,6 @@ class ViewModuleActivity extends AppCompatActivity<Props, States> {
               : "rgba(256, 256, 256, .85)",
           }}
         >
-          {/*
-          // @ts-ignore */}
           <Button
             modifier="large"
             onClick={() => {
@@ -134,8 +133,6 @@ class ViewModuleActivity extends AppCompatActivity<Props, States> {
             {string.download} <DownloadRounded sx={{ color: "white" }} />
           </Button>
           <div style={{ padding: "4px", display: !os.isAndroid ? "none" : "" }}></div>
-          {/*
-          // @ts-ignore */}
           <Button
             modifier="large"
             disabled={!os.isAndroid}

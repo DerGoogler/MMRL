@@ -2,15 +2,14 @@ import Toolbar from "@Builders/ToolbarBuilder";
 import ContentBody from "@Components/ContentBody";
 import ErrorBoundary from "@Components/ErrorBoundary";
 import Constants from "@Native/Constants";
-import Log from "@Native/Log";
 import { os } from "@Native/os";
 import SharedPreferences from "@Native/SharedPreferences";
-import { Context, createContext, CSSProperties, ErrorInfo, PureComponent } from "react";
-import { Page } from "react-onsenui";
+import { Context, createContext, CSSProperties } from "react";
+import { ActivityX, Page } from "react-onsenuix";
 
 export const AppCompatActivityContext: Context<string> = createContext("null");
 
-class AppCompatActivity<P = {}, S = {}, SS = any> extends PureComponent<P, S, SS> {
+class AppCompatActivity<P = {}, S = {}, SS = any> extends ActivityX<P, S, SS> {
   public readonly isAndroid: bool = Constants.isAndroid;
 
   private darkColor: string = "#1f1f1f";
@@ -21,6 +20,9 @@ class AppCompatActivity<P = {}, S = {}, SS = any> extends PureComponent<P, S, SS
   public constructor(props: P | Readonly<P>) {
     super(props);
     this.onlyAndroid();
+
+    this.onCreate = this.onCreate.bind(this);
+    this.onCreateToolbar = this.onCreateToolbar.bind(this);
   }
 
   private onlyAndroid(): void {
@@ -61,48 +63,14 @@ class AppCompatActivity<P = {}, S = {}, SS = any> extends PureComponent<P, S, SS
   }
 
   /**
-   * Creates the activity
-   */
-  public onCreate(): JSX.Element {
-    return <></>;
-  }
-
-  /**
    * Renders the Toolbar
    */
-  public onCreateToolbar(): Toolbar.Props {
+  public onCreateToolbar(): Toolbar.Props | any {
     return {
       title: "Default",
     };
   }
 
-  public onCreateModal(): JSX.Element {
-    return <></>;
-  }
-
-  public onCreateBottomToolbar(): JSX.Element {
-    return <></>;
-  }
-
-  public onCreateFAB(): JSX.Element {
-    return <></>;
-  }
-
-  public onInit(): void {}
-
-  public onShow(): void {}
-
-  public onHide(): void {}
-
-  public onInfiniteScroll(): void {}
-
-  public get pageModifier(): string {
-    return "";
-  }
-
-  /**
-   * @deprecated
-   */
   public render = (): JSX.Element => {
     return (
       <AppCompatActivityContext.Provider value="new null">
@@ -121,7 +89,7 @@ class AppCompatActivity<P = {}, S = {}, SS = any> extends PureComponent<P, S, SS
             }}
           >
             <ContentBody style={this.style}>
-              <this.onCreate />
+              <this.onCreate p={this.props} s={this.state} />
             </ContentBody>
           </Page>
         </ErrorBoundary>

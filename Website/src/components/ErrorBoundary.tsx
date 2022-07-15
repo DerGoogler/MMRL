@@ -1,5 +1,6 @@
 import Log from "@Native/Log";
-import { Component, ErrorInfo, ReactNode } from "react";
+import { ErrorInfo, ReactNode } from "react";
+import { ViewX, ViewXRenderData } from "react-onsenuix";
 
 interface Props {
   children: ReactNode;
@@ -12,7 +13,7 @@ interface States {
   errorInfo: ErrorInfo | string | null;
 }
 
-class ErrorBoundary extends Component<Props, States> {
+class ErrorBoundary extends ViewX<Props, States> {
   private _log: Log;
   constructor(props: Props | Readonly<Props>) {
     super(props);
@@ -46,24 +47,24 @@ class ErrorBoundary extends Component<Props, States> {
     );
   }
 
-  public render() {
-    if (this.state.hasError) {
+  public createView(data: ViewXRenderData<Props, States, HTMLElement>): JSX.Element {
+    if (data.s.hasError) {
       return (
         <div>
           <h2>Something went wrong.</h2>
           <details style={{ whiteSpace: "pre-wrap" }}>
-            {this.state.hasError && this.state.hasError.toString()}
+            {data.s.hasError && data.s.hasError.toString()}
             <br />
 
             {
               // @ts-ignore
-              this.state.errorInfo?.componentStack
+              data.s.errorInfo?.componentStack
             }
           </details>
         </div>
       );
     }
-    return this.props.children;
+    return data.p.children as any;
   }
 }
 

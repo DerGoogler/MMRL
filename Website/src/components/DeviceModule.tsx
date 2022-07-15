@@ -1,4 +1,3 @@
-import { Component } from "react";
 import { Card, Ripple, Switch } from "react-onsenui";
 import Properties from "@js.properties/properties";
 import File from "@Native/File";
@@ -6,6 +5,7 @@ import Log from "@Native/Log";
 import { DeleteRounded, RefreshRounded } from "@mui/icons-material";
 import SharedPreferences from "@Native/SharedPreferences";
 import { string } from "@Strings";
+import { ViewX, ViewXRenderData } from "react-onsenuix";
 
 interface Props {
   module: string;
@@ -33,7 +33,7 @@ interface States {
   };
 }
 
-class DeviceModule extends Component<Props, States> {
+class DeviceModule extends ViewX<Props, States> {
   private log: Log;
   private iconColor: string = SharedPreferences.getBoolean("enableDarkmode_switch", false) ? "#bb86fc" : "#4a148c";
 
@@ -66,10 +66,10 @@ class DeviceModule extends Component<Props, States> {
     }
   };
 
-  public render = () => {
-    const module = this.props.module;
-    const { id, name, version, versionCode, author, description } = this.state.props;
-    const { isEnabled, isSwitchDisabled } = this.state;
+  public createView(data: ViewXRenderData<Props, States, HTMLElement>): JSX.Element {
+    const module = data.p.module;
+    const { id, name, version, versionCode, author, description } = data.s.props;
+    const { isEnabled, isSwitchDisabled } = data.s;
     return (
       <>
         <div>
@@ -167,7 +167,7 @@ class DeviceModule extends Component<Props, States> {
         </div>
       </>
     );
-  };
+  }
 }
 
 export default DeviceModule;
