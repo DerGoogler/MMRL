@@ -22,6 +22,7 @@
     "axios": "^0.27.2",
     "bota64": "^1.0.7",
     "googlers-tools": "^1.2.5",
+    "highlight.js": "^11.6.0",
     "jss": "^10.9.0",
     "jss-preset-default": "^10.9.0",
     "localized-strings": "^0.2.4",
