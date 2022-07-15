@@ -8,9 +8,9 @@ let outputArray: any = [];
 function getObject(name?: any, fallback?: any, options?: any) {
   const checkLink = (link?: any) => {
     if (options?.isLink) {
-      return Bota64.encode(link.replace("git+", ""));
+      return link.replace("git+", "");
     } else {
-      return Bota64.encode(link);
+      return link;
     }
   };
 
@@ -23,9 +23,9 @@ function getObject(name?: any, fallback?: any, options?: any) {
 
 function getInnerObject(name?: any, rightName?: any) {
   if (typeof name == "object") {
-    return Bota64.encode(rightName);
+    return rightName;
   } else {
-    return Bota64.encode(name);
+    return name;
   }
 }
 
@@ -39,7 +39,7 @@ dep.forEach((element?: any) => {
     name: getObject(name, "Unknown Module"),
     description: getObject(description, "There is no description"),
     // Fallback doesn't work here.
-    author: typeof author == "undefined" ? Bota64.encode("null") : typeof author == "object" ? Bota64.encode(author.name) : Bota64.encode(author), //getObject(getInnerObject(author, author.name), "Unknown"),
+    author: typeof author == "undefined" ? "null" : typeof author == "object" ? author.name : author, //getObject(getInnerObject(author, author.name), "Unknown"),
     version: getObject(version, "null"),
     license: getObject(license, "null"),
     repository: getObject(getInnerObject(repository, repository.url), "empty", { isLink: true }),
