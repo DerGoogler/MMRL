@@ -22,5 +22,6 @@
   "remove": "Remove",
   "restore": "Restore",
   "module_enabled_LOG": "{module} has been enabled",
-  "module_disabled_LOG": "{module} has been disabled"
+  "module_disabled_LOG": "{module} has been disabled",
+  "last_updated": "Last update: {date}"
 }

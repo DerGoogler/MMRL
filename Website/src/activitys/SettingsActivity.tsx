@@ -157,6 +157,9 @@ class SettingsActivity extends AppCompatActivity<Props, States> {
                 },
                 {
                   title: "Utils",
+                  style: {
+                    display: os.isAndroid ? "none" : "",
+                  },
                   content: [
                     {
                       type: "",
@@ -184,7 +187,7 @@ class SettingsActivity extends AppCompatActivity<Props, States> {
                     {
                       type: "",
                       icon: <Icon icon={GavelRounded} />,
-                      text: "Acknowledgements",
+                      text: string.acknowledgements,
                       onClick: (key, pushPage) => {
                         pushPage({
                           key: "acknowledgements",
@@ -195,7 +198,7 @@ class SettingsActivity extends AppCompatActivity<Props, States> {
                     {
                       type: "",
                       icon: <Icon icon={BugReportRounded} />,
-                      text: "Issues",
+                      text: string.issues,
                       onClick: (key, pushPage) => {
                         window.open("https://github.com/DerGoogler/DG-Repo/issues", "_blank");
                       },

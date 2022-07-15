@@ -9,6 +9,7 @@ import { os } from "@Native/os";
 import { isTablet } from "react-device-detect";
 import { dom, link } from "googlers-tools";
 import { ViewX, ViewXRenderData } from "react-onsenuix";
+import { string } from "@Strings";
 
 interface Props {
   notesUrl?: string;
@@ -214,7 +215,11 @@ class ExploreModule extends ViewX<Props, States> {
                   {props.version} ({props.versionCode}) / {props.author}
                 </item-version-author>
                 <item-description>{props.description}</item-description>
-                <item-last-update>Last update: {this.formatDate(new Date(last_update))}</item-last-update>
+                <item-last-update>
+                  {string.formatString(string.last_updated, {
+                    date: this.formatDate(new Date(last_update)),
+                  })}
+                </item-last-update>
               </div>
             </item-card-wrapper>
           </Card>

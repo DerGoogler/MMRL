@@ -5,14 +5,14 @@
   "custom_repository": "Eigene repository",
   "appearance": "Aussehen",
   "language": "Sprache",
-  "dark_theme": "Dunkles Design",
+  "dark_theme": "Dunkles Thema",
   "bottom_navigation": {
     "text": "Navigation unten",
     "subtext": "Bewegt Tabs an den unteren Bildschirmrand."
   },
   "not_supported_in_web_version": "In der Web-Version nicht unterstuetzt",
   "source_code": "Quellcode",
-  "acknowledgements": "Acknowledgements",
+  "acknowledgements": "Danksagungen/Lizenzen",
   "issues": "Issues",
   "module_verified": "Dieses Modul ist verifiziert und vertrauenswürdig",
   "download": "Herunterladen",
@@ -22,5 +22,6 @@
   "remove": "Entfernen",
   "restore": "Wiederherstellen",
   "module_enabled_LOG": "{module} wurde aktiviert",
-  "module_disabled_LOG": "{module} wurde deaktiviert"
+  "module_disabled_LOG": "{module} wurde deaktiviert",
+  "last_updated": "Letztes Update: {date}"
 }
