@@ -1,10 +1,11 @@
 import { Component, isValidElement } from "react";
 import { ListItem, ListTitle, Select, Switch } from "react-onsenui";
+import { List } from "react-onsenuix";
 import ons from "onsenui";
-import tools from "@Utils/tools";
 import Gesture from "@Components/Gesture";
 import SharedPreferences, { ISharedPreferences } from "@Native/SharedPreferences";
 import { PushProps } from "@Activitys/MainActivity";
+import { util } from "googlers-tools";
 
 interface IProps {
   data: IListInterface[];
@@ -94,12 +95,13 @@ class ListViewBuilder extends Component<IProps> {
     return data.map((header: IListInterface) => (
       <>
         <section id={header.id} className={header.className} style={header.style}>
-          <ListTitle>{header.title}</ListTitle>
+          <List.Title>{header.title}</List.Title>
           {header.content.map((item: IListOptions) => (
             <>
-              <ListItem
-                modifier={tools.typeCheck(item.modifier, "")}
-                tappable={tools.typeCheck(item.tappable, false)}
+              <List.Item
+                modifier={util.typeCheck(item.modifier, "")}
+                // @ts-ignore
+                tappable={util.typeCheck(item.tappable, false)}
                 id={item.key + "-ListItem"}
                 style={item.style}
                 onClick={() => {
@@ -122,7 +124,7 @@ class ListViewBuilder extends Component<IProps> {
                         buttonLabels: ["Ok"],
                         animation: "default",
                         primaryButtonIndex: 1,
-                        cancelable: tools.typeCheck(item.helper?.cancelable, true),
+                        cancelable: util.typeCheck(item.helper?.cancelable, true),
                       });
                     }
                   }}
@@ -168,9 +170,9 @@ class ListViewBuilder extends Component<IProps> {
                           <Select
                             disabled={item.disabled}
                             // @ts-ignore --> Argument of type 'string | undefined' is not assignable to parameter of type 'string'. Type 'undefined' is not assignable to type 'string'.ts(2345)
-                            value={this.pref.getString(`${item.key!}_select`, item.selectDefaultValue)}
+                            value={this.pref.getString(`${item.key}_select`, item.selectDefaultValue)}
                             onChange={(e: any) => {
-                              const keepDefaultFuntion = () => this.pref.setString(`${item.key!}_select`, e.target.value);
+                              const keepDefaultFuntion = () => this.pref.setString(`${item.key}_select`, e.target.value);
                               if (typeof item.callback == "function") {
                                 const key = item.key;
                                 item.callback(e, key, keepDefaultFuntion());
@@ -179,7 +181,7 @@ class ListViewBuilder extends Component<IProps> {
                               }
                             }}
                           >
-                            <option value="" selected disabled hidden>
+                            <option defaultValue={item.selectDefaultValue} selected disabled hidden>
                               {item.selectDefaultText ? item.selectDefaultText : "Choose"}
                             </option>
                             {item.selectValue?.map((select: IListSelectValue) => (
@@ -196,7 +198,7 @@ class ListViewBuilder extends Component<IProps> {
                     }
                   })()}
                 </div>
-              </ListItem>
+              </List.Item>
             </>
           ))}
         </section>

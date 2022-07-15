@@ -1,27 +1,32 @@
-import Constants from "@Native/Constants";
 import Log from "@Native/Log";
+import { os } from "./os";
 
-interface ShellInterface {
-  command: string;
+interface IShell {
+  cmd(cmd: string): this;
+  exec(): void;
+  result(): string;
+  isAppGrantedRoot(): boolean;
 }
 
-class ShellBuilder {
-  private dialog: ShellInterface;
+/**
+ * Run Shell commands native on Android
+ * @implements {IShell}
+ */
+class ShellClass implements IShell {
+  private command: string;
   private log: Log;
 
   public constructor() {
     this.log = new Log(this.constructor.name);
-    this.dialog = {
-      command: "",
-    };
+    this.command = "";
   }
 
   /**
    * Runs an Android native shell cmd
    * Should never used multiple
    */
-  public cmd(cmd: string): ShellBuilder {
-    this.dialog.command = cmd;
+  public cmd(cmd: string): this {
+    this.command = cmd;
     return this;
   }
 
@@ -29,11 +34,10 @@ class ShellBuilder {
    * Executes an command without result
    */
   public exec(): void {
-    const { command } = this.dialog;
-    if (Constants.isAndroid) {
-      nshell.exec(command);
+    if (os.isAndroid) {
+      nshell.exec(this.command);
     } else {
-      this.log.w(command);
+      this.log.i(this.command);
     }
   }
 
@@ -41,11 +45,10 @@ class ShellBuilder {
    * Executes an command with result
    */
   public result(): string {
-    const { command } = this.dialog;
-    if (Constants.isAndroid) {
-      return nshell.result(command);
+    if (os.isAndroid) {
+      return nshell.result(this.command);
     } else {
-      return command;
+      return this.command;
     }
   }
 
@@ -54,6 +57,7 @@ class ShellBuilder {
   }
 }
 
-const Shell: ShellBuilder = new ShellBuilder();
+const Shell: IShell = new ShellClass();
 
 export default Shell;
+export { ShellClass, IShell };

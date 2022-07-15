@@ -1,3 +1,5 @@
+declare module "react-console";
+
 declare module "react-onsenui" {
   export type HTMLAttributes<K extends keyof React.HTMLAttributes<{}>> = Partial<Pick<React.HTMLAttributes<{}>, K>>;
   export type InputHTMLAttributes<K extends keyof React.InputHTMLAttributes<{}>> = Partial<Pick<React.InputHTMLAttributes<{}>, K>>;
@@ -130,6 +132,7 @@ declare module "react-onsenui" {
     {
       verticalAlign?: "top" | "bottom" | "center" | undefined;
       width?: string | undefined;
+      children?: React.ReactNode;
     },
     any
   > {}
@@ -137,6 +140,7 @@ declare module "react-onsenui" {
   export class Row extends Component<
     {
       verticalAlign?: "top" | "bottom" | "center" | undefined;
+      children?: React.ReactNode;
     },
     any
   > {}
@@ -405,7 +409,7 @@ declare module "react-onsenui" {
 
   export class Button extends Component<
     {
-      children: React.ReactNode;
+      children?: React.ReactNode;
       modifier?: string | undefined;
       disabled?: boolean | undefined;
       ripple?: boolean | undefined;
@@ -476,7 +480,7 @@ declare module "react-onsenui" {
 
   export class SearchInput extends Component<
     {
-      placeholder?: string
+      placeholder?: string;
       modifier?: string | undefined;
       disabled?: boolean | undefined;
       onChange?(e: Event): void;

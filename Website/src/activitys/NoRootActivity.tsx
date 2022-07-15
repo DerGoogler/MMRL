@@ -1,16 +1,19 @@
-import { Button, Card, Toolbar } from "react-onsenui";
+import { Button, Card } from "react-onsenuix";
 import AppCompatActivity from "./AppCompatActivity";
 import Toast from "@Native/Toast";
-import ToolbarBuilder from "@Builders/ToolbarBuilder";
+import Toolbar from "@Builders/ToolbarBuilder";
 
 class NoRootActivity extends AppCompatActivity {
   private readonly magiskPackageName: string = "com.topjohnwu.magisk";
+  private readonly magiskDeltaPackageName: string = "io.github.huskydg.magisk";
 
-  protected onCreateToolbar = () => {
-    return <ToolbarBuilder title="No Root" />;
-  };
+  public onCreateToolbar(): Toolbar.Props {
+    return {
+      title: "No Root",
+    };
+  }
 
-  protected onCreate = () => {
+  public onCreate() {
     return (
       <div style={{ padding: "8px" }}>
         <Card>
@@ -20,27 +23,23 @@ class NoRootActivity extends AppCompatActivity {
             search in the internet for your device.
           </div>
         </Card>
-        {nos.isPackageInstalled(this.magiskPackageName) ? (
-          <Button
-            modifier="large"
-            onClick={() => {
-              if (nos.isPackageInstalled(this.magiskPackageName)) {
-                nos.launchAppByPackageName(this.magiskPackageName);
-              } else {
-                Toast.makeText("Magisk was not found!", Toast.LENGTH_LONG).show();
-              }
-            }}
-          >
-            Open Magisk
-          </Button>
-        ) : (
-          <Button modifier="large" disabled>
-            Magisk Not Found
-          </Button>
-        )}
+        <Button
+          modifier="large"
+          onClick={() => {
+            if (nos.isPackageInstalled(this.magiskPackageName)) {
+              nos.launchAppByPackageName(this.magiskPackageName);
+            } else if (nos.isPackageInstalled(this.magiskDeltaPackageName)) {
+              nos.launchAppByPackageName(this.magiskDeltaPackageName);
+            } else {
+              Toast.makeText("Magisk was not found.", Toast.LENGTH_LONG).show();
+            }
+          }}
+        >
+          Open Magisk
+        </Button>
       </div>
     );
-  };
+  }
 }
 
 export default NoRootActivity;

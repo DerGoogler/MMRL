@@ -45,7 +45,13 @@ class BuildConfig {
     },
   };
 
+  /**
+   * @deprecated
+   */
   public static readonly MAGISK = {
+    /**
+     * @deprecated
+     */
     get VERSION_CODE(): number {
       if (os.isAndroid) {
         return parseInt(Shell.cmd("su -V").result());
@@ -53,6 +59,10 @@ class BuildConfig {
         return 0;
       }
     },
+
+    /**
+     * @deprecated
+     */
     get VERSION_NAME(): string {
       if (os.isAndroid) {
         return Shell.cmd("su -v").result();
@@ -60,6 +70,10 @@ class BuildConfig {
         return "0:MAGISKSU";
       }
     },
+
+    /**
+     * @deprecated
+     */
     PARSE_VERSION(version: string): number {
       const i = version.indexOf(".");
       if (i == -1) {

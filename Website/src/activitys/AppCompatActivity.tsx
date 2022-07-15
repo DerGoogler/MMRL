@@ -1,20 +1,28 @@
+import Toolbar from "@Builders/ToolbarBuilder";
 import ContentBody from "@Components/ContentBody";
-import BuildConfig from "@Native/BuildConfig";
+import ErrorBoundary from "@Components/ErrorBoundary";
 import Constants from "@Native/Constants";
 import { os } from "@Native/os";
 import SharedPreferences from "@Native/SharedPreferences";
-import { PureComponent } from "react";
-import { Page } from "react-onsenui";
+import { Context, createContext, CSSProperties } from "react";
+import { ActivityX, Page } from "react-onsenuix";
 
-class AppCompatActivity<P = {}, S = {}> extends PureComponent<P, S> {
+export const AppCompatActivityContext: Context<string> = createContext("null");
+
+class AppCompatActivity<P = {}, S = {}, SS = any> extends ActivityX<P, S, SS> {
   public readonly isAndroid: bool = Constants.isAndroid;
 
   private darkColor: string = "#1f1f1f";
   private lightColor: string = "#4a148c";
 
+  public static contextType: Context<string> = AppCompatActivityContext;
+
   public constructor(props: P | Readonly<P>) {
     super(props);
     this.onlyAndroid();
+
+    this.onCreate = this.onCreate.bind(this);
+    this.onCreateToolbar = this.onCreateToolbar.bind(this);
   }
 
   private onlyAndroid(): void {
@@ -27,6 +35,11 @@ class AppCompatActivity<P = {}, S = {}> extends PureComponent<P, S> {
       }
     }
   }
+
+  /**
+   * Set an custom style for centent-body
+   */
+  public style: CSSProperties = {};
 
   public componentDidMount(): void {
     this.onlyAndroid();
@@ -41,7 +54,7 @@ class AppCompatActivity<P = {}, S = {}> extends PureComponent<P, S> {
   /**
    * Sets an custom status bar color for the activity
    */
-  protected setStatusbarColor(): string {
+  public setStatusbarColor(): string {
     if (SharedPreferences.getBoolean("enableDarkmode_switch", false)) {
       return this.darkColor;
     } else {
@@ -50,65 +63,39 @@ class AppCompatActivity<P = {}, S = {}> extends PureComponent<P, S> {
   }
 
   /**
-   * Creates the activity
-   */
-  protected onCreate(): JSX.Element {
-    return <></>;
-  }
-
-  /**
    * Renders the Toolbar
    */
-  protected onCreateToolbar(): JSX.Element {
-    return <></>;
+  public onCreateToolbar(): Toolbar.Props | any {
+    return {
+      title: "Default",
+    };
   }
 
-  protected onCreateModal(): JSX.Element {
-    return <></>;
-  }
-
-  protected onCreateBottomToolbar(): JSX.Element {
-    return <></>;
-  }
-
-  protected onCreateFAB(): JSX.Element {
-    return <></>;
-  }
-
-  protected onInit(): void {}
-
-  protected onShow(): void {}
-
-  protected onHide(): void {}
-
-  protected onInfiniteScroll(): void {}
-
-  protected get pageModifier(): string {
-    return "";
-  }
-
-  /**
-   * @deprecated
-   */
-  public render(): JSX.Element {
+  public render = (): JSX.Element => {
     return (
-      <Page
-        modifier={this.pageModifier}
-        renderBottomToolbar={this.onCreateBottomToolbar}
-        renderFixed={this.onCreateFAB}
-        renderModal={this.onCreateModal}
-        onInfiniteScroll={this.onInfiniteScroll}
-        onHide={this.onHide}
-        onShow={this.onShow}
-        onInit={this.onInit}
-        renderToolbar={this.onCreateToolbar}
-      >
-        <ContentBody>
-          <this.onCreate />
-        </ContentBody>
-      </Page>
+      <AppCompatActivityContext.Provider value="new null">
+        <ErrorBoundary logger={this.constructor.name}>
+          <Page
+            modifier={this.pageModifier}
+            renderBottomToolbar={this.onCreateBottomToolbar}
+            renderFixed={this.onCreateFAB}
+            renderModal={this.onCreateModal}
+            onInfiniteScroll={this.onInfiniteScroll}
+            onHide={this.onHide}
+            onShow={this.onShow}
+            onInit={this.onInit}
+            renderToolbar={() => {
+              return <Toolbar.Builder {...this.onCreateToolbar()} />;
+            }}
+          >
+            <ContentBody style={this.style}>
+              <this.onCreate p={this.props} s={this.state} />
+            </ContentBody>
+          </Page>
+        </ErrorBoundary>
+      </AppCompatActivityContext.Provider>
     );
-  }
+  };
 }
 
 export default AppCompatActivity;

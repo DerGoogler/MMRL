@@ -1,10 +1,11 @@
 import { Component } from "react";
-import { Page, Toolbar, BackButton, RouterNavigator, RouterUtil } from "react-onsenui";
+import { RouterUtil } from "react-onsenui";
+import { Page, RouterNavigator } from "react-onsenui";
 import MainApplication from "@Activitys/MainApplication";
 import Constants from "@Native/Constants";
 import NoRootActivity from "./NoRootActivity";
 import Shell from "@Native/ShellBuilder";
-import tools from "@Utils/tools";
+import { link } from "googlers-tools";
 
 interface ModuleOptions {
   verified?: boolean;
@@ -21,8 +22,8 @@ export interface ModuleProps {
 }
 
 export interface PushProps {
-  activity: any;
-  key?: any;
+  activity?: any;
+  key?: string;
   extra?: any;
   moduleOptions?: ModuleOptions;
   moduleProps?: ModuleProps;
@@ -74,13 +75,13 @@ class MainActivity extends Component<PushProps, States> {
     };
 
     // Make an fake path. Note: The page should not refreshed!
-    tools.setURL((set, currentPath) => {
+    link.setURL((set, currentPath) => {
       const acty = props.activity;
       const getName = () => {
         return acty.name.toLowerCase().replace("activity", "");
       };
       if (!acty.ignoreURL) {
-        set(props.key, props.key, `${currentPath}/#${getName()}`);
+        set(props.key, props.key!, `/#${currentPath}/${getName()}`);
       }
     });
 
@@ -91,7 +92,7 @@ class MainActivity extends Component<PushProps, States> {
       route,
     });
 
-    this.setState({ routeConfig, currentPage: props.key });
+    this.setState({ routeConfig, currentPage: props.key! });
   };
 
   private popPage = (options = {}) => {
@@ -128,17 +129,6 @@ class MainActivity extends Component<PushProps, States> {
   private renderPage = (route: any) => {
     const props = route.props || {};
     return <route.component {...props} />;
-  };
-
-  private renderToolbar = () => {
-    return (
-      <Toolbar>
-        <div className="left">
-          <BackButton />
-        </div>
-        <div className="center">Stateless Navigator</div>
-      </Toolbar>
-    );
   };
 
   public render = () => {

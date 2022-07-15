@@ -1,8 +1,8 @@
 import { Component } from "react";
 import DeviceModule from "@Components/DeviceModule";
 import { PushProps } from "@Activitys/MainActivity";
-import { Page } from "react-onsenui";
-import fs from "@Native/fs";
+import { Page } from "react-onsenuix";
+import File from "@Native/File";
 
 interface Props {
   pushPage(...arg: any): PushProps;
@@ -21,7 +21,7 @@ class DeviceModuleFragment extends Component<Props, States> {
   }
 
   public componentDidMount = () => {
-    this.setState({ modules: fs.listFiles("/data/adb/modules").split(",") });
+    this.setState({ modules: File.list("/data/adb/modules").split(",") });
   };
 
   public render = () => {
@@ -29,13 +29,15 @@ class DeviceModuleFragment extends Component<Props, States> {
       return <DeviceModule module={item} />;
     });
     return (
-      <div
-        style={{
-          paddingBottom: "4px",
-        }}
-      >
-        {moduels}
-      </div>
+      <Page>
+        <div
+          style={{
+            paddingBottom: "4px",
+          }}
+        >
+          {moduels}
+        </div>
+      </Page>
     );
   };
 }

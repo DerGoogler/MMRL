@@ -1,8 +1,8 @@
-import ToolbarBuilder from "@Builders/ToolbarBuilder";
-import React from "react";
-import { Card, Toolbar, BackButton } from "react-onsenui";
+import Toolbar from "@Builders/ToolbarBuilder";
+import { ActivityXRenderData, Card } from "react-onsenuix";
 import dep from "./../utils/licenses.json";
 import AppCompatActivity from "./AppCompatActivity";
+import { Bota64Class, IBota64 } from "bota64";
 
 interface Props {
   popPage: any;
@@ -13,11 +13,14 @@ interface States {
 }
 
 class AcknowledgementsActivity extends AppCompatActivity<Props, States> {
+  private b: IBota64;
   public constructor(props: Props | Readonly<Props>) {
     super(props);
     this.state = {
       libs: [],
     };
+
+    this.b = new Bota64Class();
   }
 
   public componentDidMount = () => {
@@ -25,46 +28,49 @@ class AcknowledgementsActivity extends AppCompatActivity<Props, States> {
     this.setState({ libs: dep });
   };
 
-  protected onCreateToolbar = () => {
-    return <ToolbarBuilder title="Acknowledgements" onBackButton={this.props.popPage} />;
-  };
+  public onCreateToolbar(): Toolbar.Props {
+    return {
+      title: "Acknowledgements",
+      onBackButton: this.props.popPage,
+    };
+  }
 
-  protected onCreate = () => {
-    const libs = this.state.libs.map((item: any) => {
-      return (
-        <Card
-          onClick={() => {
-            window.open(item.repository);
-          }}
-          style={{ marginTop: "4px", marginBottom: "4px" }}
-        >
-          <license-card-wrapper>
-            <license-card-title className="title">
-              <license-card-name>{item.name}</license-card-name>
-              <license-card-author>{item.author}</license-card-author>
-            </license-card-title>
-            <div className="content">
-              <license-card-description>{item.description}</license-card-description>
-              <hr className="license-card-diver" />
-              <license-card-infos>
-                <license-card-version>{item.version}</license-card-version>
-                <license-card-license>{item.license}</license-card-license>
-              </license-card-infos>
-            </div>
-          </license-card-wrapper>
-        </Card>
-      );
-    });
+  public onCreate(data: ActivityXRenderData<Props, States>) {
     return (
       <lib-container
         style={{
           paddingBottom: "4px",
         }}
       >
-        {libs}
+        {data.s.libs.map((item: any) => {
+          return (
+            <Card
+              // @ts-ignore
+              onClick={() => {
+                window.open(item.repository);
+              }}
+              style={{ marginTop: "4px", marginBottom: "4px" }}
+            >
+              <license-card-wrapper>
+                <license-card-title className="title">
+                  <license-card-name>{this.b.decode(item.name)}</license-card-name>
+                  <license-card-author>{this.b.decode(item.author)}</license-card-author>
+                </license-card-title>
+                <Card.Content>
+                  <license-card-description>{this.b.decode(item.description)}</license-card-description>
+                  <hr className="license-card-diver" />
+                  <license-card-infos>
+                    <license-card-version>{this.b.decode(item.version)}</license-card-version>
+                    <license-card-license>{this.b.decode(item.license)}</license-card-license>
+                  </license-card-infos>
+                </Card.Content>
+              </license-card-wrapper>
+            </Card>
+          );
+        })}
       </lib-container>
     );
-  };
+  }
 }
 
 export default AcknowledgementsActivity;

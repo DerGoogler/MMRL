@@ -1,8 +1,11 @@
+import Toolbar from "@Builders/ToolbarBuilder";
 import { SettingsRounded } from "@mui/icons-material";
+import { os } from "@Native/os";
 import SharedPreferences from "@Native/SharedPreferences";
 import Toast from "@Native/Toast";
-import ons from "onsenui";
-import { Tab, Tabbar, Toolbar, ToolbarButton } from "react-onsenui";
+import { string } from "@Strings";
+import { Tab, Tabbar, TabbarRenderTab, ToolbarButton } from "react-onsenui";
+import { ActivityXRenderData } from "react-onsenuix";
 import AppCompatActivity from "./AppCompatActivity";
 import DeviceModuleFragment from "./fragments/DeviceModuleFragment";
 import ExploreModuleFragment from "./fragments/ExploreModuleFragment";
@@ -30,27 +33,22 @@ class MainApplication extends AppCompatActivity<Props> {
   public constructor(props: Props | Readonly<Props>) {
     super(props);
     this.state = {};
+
+    this.openSettings = this.openSettings.bind(this);
+    this.renderTabs = this.renderTabs.bind(this);
   }
 
-  protected onCreateToolbar = () => {
-    return (
-      <Toolbar>
-        <div
-          className="center"
-          onClick={() => {
-            Toast.makeText("My gf left me ... :(", Toast.LENGTH_SHORT).show();
-          }}
-        >
-          Magisk Module Repo Loader
-        </div>
-        <div className="right">
-          <ToolbarButton className="back-button--material__icon" onClick={this.openSettings}>
-            <SettingsRounded />
-          </ToolbarButton>
-        </div>
-      </Toolbar>
-    );
-  };
+  public onCreateToolbar(): Toolbar.Props {
+    return {
+      title: "Magisk Module Repo Loader",
+      addToolbarButtonPosition: "right",
+      addToolbarButton: (
+        <ToolbarButton className="back-button--material__icon" onClick={this.openSettings}>
+          <SettingsRounded />
+        </ToolbarButton>
+      ),
+    };
+  }
 
   public componentDidMount() {
     super.componentDidMount;
@@ -60,43 +58,41 @@ class MainApplication extends AppCompatActivity<Props> {
     super.componentDidUpdate;
   }
 
-  private openSettings = () => {
+  private openSettings() {
     this.props.pushPage({
       key: "settings",
       activity: SettingsActivity,
     });
-  };
+  }
 
-  private renderTabs = () => {
+  private renderTabs(): TabbarRenderTab[] {
     return [
       {
         content: <ExploreModuleFragment pushPage={this.props.pushPage} />,
-        tab: <Tab label="Explore" />,
+        tab: <Tab label={string.explore} />,
       },
       {
         content: <DeviceModuleFragment pushPage={this.props.pushPage} />,
-        tab: <Tab label="Installed" />,
+        tab: <Tab label={string.installed} />,
       },
     ];
-  };
+  }
 
-  protected onCreate = () => {
-    if (this.isAndroid) {
-      return (
-        <Tabbar
-          swipeable={false}
-          position={SharedPreferences.getBoolean("enableBottomTabs_switch", false) ? "bottom" : "top"}
-          renderTabs={this.renderTabs}
-        />
-      );
-    } else {
-      return (
-        <>
+  public onCreate(data: ActivityXRenderData<Props, {}>) {
+    return (
+      <>
+        {os.isAndroid ? (
+          <Tabbar
+            swipeable={false}
+            position={SharedPreferences.getBoolean("enableBottomTabs_switch", false) ? "bottom" : "top"}
+            renderTabs={this.renderTabs}
+          />
+        ) : (
           <ExploreModuleFragment pushPage={this.props.pushPage} />
-        </>
-      );
-    }
-  };
+        )}
+      </>
+    );
+  }
 }
 
 export default MainApplication;

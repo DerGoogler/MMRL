@@ -9,6 +9,12 @@ node_modules/
 cdn_modules/
 *.log
 
+# --
+node_modules/
+cdn_modules/
+package-lock.json
+node_modules.bun
+
 # OS generated files
 .DS_Store
 .DS_Store?

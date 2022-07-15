@@ -1,10 +1,11 @@
-import { Component } from "react";
 import { Card, Ripple, Switch } from "react-onsenui";
 import Properties from "@js.properties/properties";
-import fs from "@Native/fs";
+import File from "@Native/File";
 import Log from "@Native/Log";
 import { DeleteRounded, RefreshRounded } from "@mui/icons-material";
 import SharedPreferences from "@Native/SharedPreferences";
+import { string } from "@Strings";
+import { ViewX, ViewXRenderData } from "react-onsenuix";
 
 interface Props {
   module: string;
@@ -32,7 +33,7 @@ interface States {
   };
 }
 
-class DeviceModule extends Component<Props, States> {
+class DeviceModule extends ViewX<Props, States> {
   private log: Log;
   private iconColor: string = SharedPreferences.getBoolean("enableDarkmode_switch", false) ? "#bb86fc" : "#4a148c";
 
@@ -49,31 +50,29 @@ class DeviceModule extends Component<Props, States> {
 
   public componentDidMount = () => {
     const module = this.props.module;
-    const readProps = fs.readFile(`/data/adb/modules/${module}/module.prop`);
+    const readProps = File.read(`/data/adb/modules/${module}/module.prop`);
     this.setState({
       props: Properties.parseToProperties(readProps),
     });
 
-    const disable = new fs(`/data/adb/modules/${module}/disable`);
-    if (disable.existFile()) {
+    const disable = new File(`/data/adb/modules/${module}/disable`);
+    if (disable.exist()) {
       this.setState({ isEnabled: false });
     }
 
-    const remove = new fs(`/data/adb/modules/${module}/remove`);
-    if (remove.existFile()) {
+    const remove = new File(`/data/adb/modules/${module}/remove`);
+    if (remove.exist()) {
       this.setState({ isSwitchDisabled: true });
     }
   };
 
-  public render = () => {
-    const module = this.props.module;
-    const { id, name, version, versionCode, author, description } = this.state.props;
-    const { isEnabled, isSwitchDisabled } = this.state;
+  public createView(data: ViewXRenderData<Props, States, HTMLElement>): JSX.Element {
+    const module = data.p.module;
+    const { id, name, version, versionCode, author, description } = data.s.props;
+    const { isEnabled, isSwitchDisabled } = data.s;
     return (
       <>
         <div>
-          {/*
-        // @ts-ignore */}
           <Card
             id={id}
             key={id}
@@ -90,18 +89,26 @@ class DeviceModule extends Component<Props, States> {
                       disabled={isSwitchDisabled}
                       onChange={(e: any) => {
                         const checked = e.target.checked;
-                        const disable = new fs(`/data/adb/modules/${module}/disable`);
+                        const disable = new File(`/data/adb/modules/${module}/disable`);
 
                         if (checked) {
-                          if (disable.existFile()) {
-                            if (disable.deleteFile()) {
-                              this.log.i(`${module} has been enabled`);
+                          if (disable.exist()) {
+                            if (disable.delete()) {
+                              this.log.i(
+                                string.formatString(string.module_enabled_LOG, {
+                                  module: module,
+                                })
+                              );
                             }
                           }
                         } else {
-                          if (!disable.existFile()) {
-                            if (disable.createFile()) {
-                              this.log.i(`${module} has been disabled`);
+                          if (!disable.exist()) {
+                            if (disable.create()) {
+                              this.log.i(
+                                string.formatString(string.module_disabled_LOG, {
+                                  module: module,
+                                })
+                              );
                             }
                           }
                         }
@@ -121,9 +128,9 @@ class DeviceModule extends Component<Props, States> {
                     onClick={() => {
                       // Can be improved, but not now
                       if (isSwitchDisabled) {
-                        const remove = new fs(`/data/adb/modules/${module}/remove`);
-                        if (remove.existFile()) {
-                          if (remove.deleteFile()) {
+                        const remove = new File(`/data/adb/modules/${module}/remove`);
+                        if (remove.exist()) {
+                          if (remove.delete()) {
                             this.setState({ isSwitchDisabled: false });
                             this.log.i(`${module} has been recovered`);
                           } else {
@@ -133,8 +140,8 @@ class DeviceModule extends Component<Props, States> {
                           this.log.e(`This remove file don't exists for ${module}`);
                         }
                       } else {
-                        const file = new fs(`/data/adb/modules/${module}/remove`);
-                        if (file.createFile()) {
+                        const file = new File(`/data/adb/modules/${module}/remove`);
+                        if (file.create()) {
                           this.setState({ isSwitchDisabled: true });
                         } else {
                           this.setState({ isSwitchDisabled: false });
@@ -145,11 +152,11 @@ class DeviceModule extends Component<Props, States> {
                     <Ripple />
                     {isSwitchDisabled ? (
                       <>
-                        Restore <RefreshRounded sx={{ color: this.iconColor }} />
+                        {string.restore} <RefreshRounded sx={{ color: this.iconColor }} />
                       </>
                     ) : (
                       <>
-                        Remove <DeleteRounded sx={{ color: this.iconColor }} />
+                        {string.remove} <DeleteRounded sx={{ color: this.iconColor }} />
                       </>
                     )}
                   </item-module-button>
@@ -160,7 +167,7 @@ class DeviceModule extends Component<Props, States> {
         </div>
       </>
     );
-  };
+  }
 }
 
 export default DeviceModule;

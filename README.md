@@ -1,17 +1,15 @@
-# Magisk Modules Repo Loader (MMRL)
+<h1 align="center"><pre>Magisk Modules Repo Loader</pre></h1>
 
-The Magisk Module Repo Loader (MMRL). Allows you to load custom repos with an simple UI
+Magisk Module Repo Loader (MMRL). Allows you to load custom repos with an simple UI
 
 ## How to create custom repo?
 
-Please use [Googlers-Magisk-Repo/Magisk-Module-Repo-Builder](https://github.com/Googlers-Magisk-Repo/Magisk-Module-Repo-Builder) to build you an own repository.
-        
-~At first need you to fork [Magisk-Modules-Alt-Repo/json](https://github.com/Magisk-Modules-Alt-Repo/json) or create yourself one~
+Use [this](https://dergoogler.com/repo-generator/) service to create a custom repository.
 
 ## What MMRL Supports (Roadmap)
 
 - [x] Custom repo loading
-- [ ] Translation
+- [x] Translation
 - [x] Dark mode
 
 #### Android only
@@ -19,31 +17,9 @@ Please use [Googlers-Magisk-Repo/Magisk-Module-Repo-Builder](https://github.com/
 - [x] Custom theming
 - [x] View installed modules
 - [x] Remove installed modules
-- [x] Disable installed modules
-- [x] Enable installed modules
+- [x] Enable/Disable installed modules
 - [ ] Module install
 - [ ] Monet theming
-
-## Meet the Description API (DAPI)
-
-### Create an changelog (beta)
-
-<!-- prettier-ignore -->
-```html
-<changelog version="1.0.0">
-    - Fixed somthing
-    - Better
-</changelog>
-```
-
-### Create check mark & danger mark
-
-<!-- prettier-ignore -->
-```markdown
-# About somthing
-- <dangericon color="#cf222e" size="16"/> This isn't good!
-- <checkicon color="#1a7f37" size="16"/> That's good!
-```
 
 ## Screenshots
 

@@ -3,6 +3,7 @@
     "outDir": "./../Android/app/src/main/assets",
     "typeRoots": ["src/typings/global.d.ts"],
     "sourceMap": false,
+    "experimentalDecorators": true,
     "declaration": false,
     "strict": true,
     "noImplicitReturns": true,
@@ -25,7 +26,8 @@
       "@Bootloader": ["index.tsx"],
       "@Package": ["./../package.json"],
       "@Styles/*": ["styles/*"],
-      "@Activitys/*": ["activitys/*"]
+      "@Activitys/*": ["activitys/*"],
+      "@Strings": ["language/core/index.ts"]
     },
     "types": ["node"]
   },

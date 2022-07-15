@@ -1,14 +1,16 @@
-import { ToolbarButton, Dialog, Button } from "react-onsenui";
+import { Toolbar as gae, Button } from "react-onsenuix";
+import { Dialog } from "react-onsenui";
 import ons from "onsenui";
 import axios from "axios";
 import { DownloadRounded, InfoRounded, InstallMobileRounded, VerifiedRounded } from "@mui/icons-material";
-import BuildConfig from "@Native/BuildConfig";
 import { HighlightedMarkdown } from "@Components/HighlightMarkdown";
 import { os } from "@Native/os";
 import SharedPreferences from "@Native/SharedPreferences";
 import Alert from "@mui/material/Alert";
 import AppCompatActivity from "./AppCompatActivity";
-import ToolbarBuilder from "@Builders/ToolbarBuilder";
+import { string } from "@Strings";
+import Magisk from "@Native/Magisk";
+import Toolbar from "@Builders/ToolbarBuilder";
 
 interface Props {
   extra?: any;
@@ -42,7 +44,7 @@ class ViewModuleActivity extends AppCompatActivity<Props, States> {
       .catch((error) => {
         if (error.response.status === 404) {
           this.setState({
-            notes: `# 404: Not Found\n\n The author doesn't have created or uploaded an \`README.md\`, please try again later.\n\n\n## About Readme's\n\n- <dangericon color="#cf222e" size="16"/> readme.md\n- <checkicon color="#1a7f37" size="16"/> README.md`,
+            notes: `# 404: Not Found\n\n The author doesn't have created or uploaded an \`README.md\`, please try again later.\n\n\n## About Readme's\n\n- ❌ readme.md\n- ✅ README.md`,
           });
         }
       })
@@ -51,26 +53,24 @@ class ViewModuleActivity extends AppCompatActivity<Props, States> {
       });
   };
 
-  protected onCreateToolbar = () => {
+  public onCreateToolbar = (): Toolbar.Props => {
     const { minMagisk, minApi, maxApi, needRamdisk, changeBoot } = this.props.extra?.moduleProps;
-    return (
-      <ToolbarBuilder
-        title={this.props.extra.name}
-        onBackButton={this.props.popPage}
-        addToolbarButton={
-          <>
-            {(minMagisk || minApi || maxApi || needRamdisk || changeBoot) != (null || undefined) ? (
-              <div className="right">
-                <ToolbarButton style={{ padding: "0px 10px" }} onClick={this.showDialog}>
-                  <InfoRounded />
-                </ToolbarButton>
-              </div>
-            ) : null}
-          </>
-        }
-        addToolbarButtonPosition="right"
-      />
-    );
+    return {
+      title: this.props.extra.name,
+      onBackButton: this.props.popPage,
+      addToolbarButton: (
+        <>
+          {(minMagisk || minApi || maxApi || needRamdisk || changeBoot) != (null || undefined) ? (
+            <div className="right">
+              <gae.Button style={{ padding: "0px 10px" }} onClick={this.showDialog}>
+                <InfoRounded />
+              </gae.Button>
+            </div>
+          ) : null}
+        </>
+      ),
+      addToolbarButtonPosition: "right",
+    };
   };
 
   private showDialog = () => {
@@ -88,7 +88,7 @@ class ViewModuleActivity extends AppCompatActivity<Props, States> {
     return (
       <>
         <div
-          style={{ padding: "8px", marginBottom: "56px" }}
+          style={{ padding: "8px", height: "100%" }}
           className={new SharedPreferences().getBoolean("enableDarkmode_switch", false) ? "markdown-body-dark" : "markdown-body-light"}
         >
           {
@@ -98,14 +98,15 @@ class ViewModuleActivity extends AppCompatActivity<Props, States> {
               if (verified) {
                 return (
                   <Alert key="verified-module" icon={<VerifiedRounded fontSize="inherit" />} severity="success">
-                    This module is verified!
+                    {string.module_verified}
                   </Alert>
                 );
               }
             })()
           }
-          <HighlightedMarkdown>{this.state.notes}</HighlightedMarkdown>
+          <HighlightedMarkdown children={this.state.notes} />
         </div>
+        <div style={{ height: "52px" }}></div>
         <div
           style={{
             position: "fixed",
@@ -120,19 +121,18 @@ class ViewModuleActivity extends AppCompatActivity<Props, States> {
               : "rgba(256, 256, 256, .85)",
           }}
         >
-          {/*
-          // @ts-ignore */}
           <Button
             modifier="large"
             onClick={() => {
-              window.open(download);
+              os.open(download);
+
+              // Toast.makeText(`Download ${id!}`, Toast.LENGTH_LONG).show();
+              // fs.download(`${id!}.zip`, download);
             }}
           >
-            Download <DownloadRounded sx={{ color: "white" }} />
+            {string.download} <DownloadRounded sx={{ color: "white" }} />
           </Button>
           <div style={{ padding: "4px", display: !os.isAndroid ? "none" : "" }}></div>
-          {/*
-          // @ts-ignore */}
           <Button
             modifier="large"
             disabled={!os.isAndroid}
@@ -143,7 +143,7 @@ class ViewModuleActivity extends AppCompatActivity<Props, States> {
               ons.notification.alert("The option will be available in the future");
             }}
           >
-            Install <InstallMobileRounded sx={{ color: "white" }} />
+            {string.install} <InstallMobileRounded sx={{ color: "white" }} />
           </Button>
         </div>
         {/*
@@ -165,11 +165,7 @@ class ViewModuleActivity extends AppCompatActivity<Props, States> {
                       </td>
                       <td
                         style={{
-                          color: os.isAndroid
-                            ? BuildConfig.MAGISK.PARSE_VERSION(minMagisk) > BuildConfig.MAGISK.VERSION_CODE
-                              ? "red"
-                              : ""
-                            : "",
+                          color: os.isAndroid ? (Magisk.PARSE_VERSION(minMagisk) > Magisk.VERSION_CODE ? "red" : "") : "",
                         }}
                       >
                         {minMagisk}

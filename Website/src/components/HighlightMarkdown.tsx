@@ -1,64 +1,48 @@
-import { Component, createRef, RefObject } from "react";
-import Markdown from "markdown-to-jsx";
-import hljs from "highlight.js";
-import tools from "@Utils/tools";
-import Video from "./dapi/Video";
-import DiscordWidget from "./dapi/DiscordWidget";
-import A from "./dapi/A";
-import Changelog from "./dapi/Changelog";
-import CheckIcon from "./icons/CheckIcon";
-import DangerIcon from "./icons/DangerIcon";
+import Markdown from "marked-react";
+import { LightAsync as SyntaxHighlighter } from "react-syntax-highlighter";
+import { github } from "react-syntax-highlighter/dist/cjs/styles/hljs";
+import { ViewX, ViewXRenderData } from "react-onsenuix";
 
 interface IProps {
   children: string;
 }
 
-class HighlightedMarkdown extends Component<IProps> {
-  private rootRef: RefObject<HTMLDivElement>;
-
+class HighlightedMarkdown extends ViewX<IProps> {
   public constructor(props: any) {
     super(props);
-    this.rootRef = createRef();
   }
 
-  public componentDidMount() {
-    tools.ref(this.rootRef, (ref: HTMLDivElement) => {
-      ref.querySelectorAll("pre code").forEach((block: any) => {
-        hljs.highlightElement(block);
-      });
-    });
+  public componentDidMount() {}
+
+  public createView(data: ViewXRenderData<IProps, {}, HTMLElement>): JSX.Element {
+    const renderer = {
+      code(snippet: any, lang: any) {
+        return <SyntaxHighlighter children={String(snippet).replace(/\n$/, "")} style={github} language={lang} />;
+      },
+    };
+
+    return <Markdown children={data.p.children} renderer={renderer} />;
   }
 
-  public render() {
-    return (
-      <div ref={this.rootRef}>
-        <Markdown
-          options={{
-            overrides: {
-              a: {
-                component: A,
-              },
-              video: {
-                component: Video,
-              },
-              discordwidget: {
-                component: DiscordWidget,
-              },
-              changelog: {
-                component: Changelog,
-              },
-              checkicon: {
-                component: CheckIcon,
-              },
-              dangericon: {
-                component: DangerIcon,
-              },
-            },
-          }}
-        >
-          {this.props.children}
-        </Markdown>
-      </div>
+  private codeblock({
+    code,
+    lang,
+    className,
+    children,
+    ...props
+  }: {
+    code: any;
+    lang: any;
+    className: string | undefined;
+    children: React.ReactNode & React.ReactNode[];
+  }) {
+    const match = /language-(\w+)/.exec(className || "");
+    return !lang && match ? (
+      <SyntaxHighlighter children={String(children).replace(/\n$/, "")} style={github} language={match[1]} PreTag="div" {...props} />
+    ) : (
+      <code className={className} {...props}>
+        {children}
+      </code>
     );
   }
 }
