@@ -1,4 +1,5 @@
 import Toolbar from "@Builders/ToolbarBuilder";
+import { string } from "@Strings";
 import { ActivityXRenderData, Card } from "react-onsenuix";
 import dep from "./../utils/licenses.json";
 import AppCompatActivity from "./AppCompatActivity";
@@ -26,7 +27,7 @@ class AcknowledgementsActivity extends AppCompatActivity<Props, States> {
 
   public onCreateToolbar(): Toolbar.Props {
     return {
-      title: "Acknowledgements",
+      title: string.acknowledgements,
       onBackButton: this.props.popPage,
     };
   }

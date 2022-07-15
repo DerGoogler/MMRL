@@ -25,6 +25,7 @@
     "jss": "^10.9.0",
     "jss-preset-default": "^10.9.0",
     "localized-strings": "^0.2.4",
+    "markdown-to-jsx": "^7.1.7",
     "marked-react": "^1.1.2",
     "material-icons": "^1.10.8",
     "object-assign": "^4.1.1",

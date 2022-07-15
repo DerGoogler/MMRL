@@ -1,7 +1,12 @@
-import Markdown from "marked-react";
+import Markdown from "markdown-to-jsx";
 import { LightAsync as SyntaxHighlighter } from "react-syntax-highlighter";
 import { github } from "react-syntax-highlighter/dist/cjs/styles/hljs";
 import { ViewX, ViewXRenderData } from "react-onsenuix";
+import Anchor from "./dapi/Anchor";
+import Video from "./dapi/Video";
+import DiscordWidget from "./dapi/DiscordWidget";
+import Checkmark from "./icons/Checkmark";
+import Dangermark from "./icons/Dangermark";
 
 interface IProps {
   children: string;
@@ -21,7 +26,31 @@ class HighlightedMarkdown extends ViewX<IProps> {
       },
     };
 
-    return <Markdown children={data.p.children} renderer={renderer} />;
+    return (
+      <Markdown
+        options={{
+          forceBlock: true,
+          overrides: {
+            a: {
+              component: Anchor,
+            },
+            video: {
+              component: Video,
+            },
+            discordwidget: {
+              component: DiscordWidget,
+            },
+            checkmark: {
+              component: Checkmark,
+            },
+            dangermark: {
+              component: Dangermark,
+            },
+          },
+        }}
+        children={data.p.children}
+      />
+    );
   }
 
   private codeblock({
