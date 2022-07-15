@@ -20,6 +20,9 @@ class Checkmark extends ViewX<Props, {}, SVGSVGElement> {
         height={size}
         aria-hidden="true"
         className={"octicon octicon-check color-fg-success ml-n3 v-align-middle " + className}
+        style={{
+          verticalAlign: "baseline",
+        }}
       >
         <path
           fill={color}

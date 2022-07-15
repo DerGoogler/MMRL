@@ -20,6 +20,9 @@ class Dankermark extends ViewX<Props, {}, SVGSVGElement> {
         height={size}
         aria-hidden="true"
         className={"octicon octicon-x color-fg-danger ml-n3 v-align-middle " + className}
+        style={{
+          verticalAlign: "baseline",
+        }}
       >
         <path
           fill={color}

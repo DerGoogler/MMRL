@@ -7,6 +7,7 @@ import Video from "./dapi/Video";
 import DiscordWidget from "./dapi/DiscordWidget";
 import Checkmark from "./icons/Checkmark";
 import Dangermark from "./icons/Dangermark";
+import Warnmark from "./icons/Warnmark";
 
 interface IProps {
   children: string;
@@ -45,6 +46,9 @@ class HighlightedMarkdown extends ViewX<IProps> {
             },
             dangermark: {
               component: Dangermark,
+            },
+            warnmark: {
+              component: Warnmark,
             },
           },
         }}
