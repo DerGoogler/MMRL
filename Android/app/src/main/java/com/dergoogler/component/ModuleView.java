@@ -128,7 +128,13 @@ public class ModuleView extends WebView {
 
     @Override
     public void evaluateJavascript(@NonNull String script, @Nullable ValueCallback<String> resultCallback) {
-        throw new RuntimeException("Stub!");
+        super.evaluateJavascript(script, resultCallback);
+    }
+
+    public void eventDispatcher(@NonNull String event) {
+        super.evaluateJavascript(
+                "(function() { window.dispatchEvent(" + event + "); })();"
+                , null);
     }
 
     public void loadJavascript(String javascript) {

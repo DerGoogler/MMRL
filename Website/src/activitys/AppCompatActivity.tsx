@@ -1,5 +1,4 @@
 import Toolbar from "@Builders/ToolbarBuilder";
-import ContentBody from "@Components/ContentBody";
 import ErrorBoundary from "@Components/ErrorBoundary";
 import Constants from "@Native/Constants";
 import { os } from "@Native/os";
@@ -21,9 +20,13 @@ class AppCompatActivity<P = {}, S = {}, SS = any> extends ActivityX<P, S, SS> {
     super(props);
     this.onlyAndroid();
 
+    window["onBackButton"] = new Event("onBackButton");
+
     this.onCreate = this.onCreate.bind(this);
     this.onCreateToolbar = this.onCreateToolbar.bind(this);
   }
+
+  public onBackButton(): void {}
 
   private onlyAndroid(): void {
     os.setStatusBarColor(this.setStatusbarColor(), false);
@@ -42,6 +45,7 @@ class AppCompatActivity<P = {}, S = {}, SS = any> extends ActivityX<P, S, SS> {
   public style: CSSProperties = {};
 
   public componentDidMount(): void {
+    os.addNativeEventListener("onBackButton", this.onBackButton);
     this.onlyAndroid();
   }
 
@@ -49,7 +53,9 @@ class AppCompatActivity<P = {}, S = {}, SS = any> extends ActivityX<P, S, SS> {
     this.onlyAndroid();
   }
 
-  public componentWillUnmount(): void {}
+  public componentWillUnmount(): void {
+    os.removeNativeEventListener("onBackButton", this.onBackButton);
+  }
 
   /**
    * Sets an custom status bar color for the activity

@@ -31,42 +31,20 @@ interface Props {
   pushPage: any;
 }
 
-interface States {
-  isHeaderTitleVisible: boolean;
-  isHeaderBGVisible: boolean;
-}
+interface States {}
 
 class MainApplication extends AppCompatActivity<Props, States> {
-  private headerTitleRef: RefObject<HTMLSpanElement>;
-  private headerTtileObserver: IntersectionObserver;
-  private headerBgObserver: IntersectionObserver;
-  private headerBgRef: RefObject<HTMLDivElement>;
-
   public constructor(props: Props | Readonly<Props>) {
     super(props);
-    this.state = {
-      isHeaderTitleVisible: false,
-      isHeaderBGVisible: false,
-    };
+    this.state = {};
 
     this.openSettings = this.openSettings.bind(this);
     this.renderTabs = this.renderTabs.bind(this);
-
-    this.headerTitleRef = createRef();
-    this.headerBgRef = createRef();
-
-    this.headerTtileObserver = new IntersectionObserver(([entry]) => {
-      this.setState({ isHeaderTitleVisible: entry.isIntersecting });
-    });
-    this.headerBgObserver = new IntersectionObserver(([entry]) => {
-      this.setState({ isHeaderBGVisible: entry.isIntersecting });
-    });
   }
 
   public onCreateToolbar(): Toolbar.Props {
     return {
-      title: !this.state.isHeaderTitleVisible ? "Magisk Module Repo Loader" : "",
-      modifier: this.state.isHeaderBGVisible ? "noshadow" : "",
+      title: "Magisk Module Repo Loader",
       addToolbarButtonPosition: "right",
       addToolbarButton: (
         <ToolbarButton className="back-button--material__icon" onClick={this.openSettings}>
@@ -76,15 +54,8 @@ class MainApplication extends AppCompatActivity<Props, States> {
     };
   }
 
-  public componentDidMount() {
-    super.componentDidMount;
-    this.headerTtileObserver.observe(this.headerTitleRef.current as any);
-    this.headerBgObserver.observe(this.headerBgRef.current as any);
-  }
-
-  public componentWillUnmount() {
-    this.headerTtileObserver.disconnect();
-    this.headerBgObserver.disconnect();
+  public onBackButton(): void {
+    os.close();
   }
 
   public componentDidUpdate() {
@@ -121,23 +92,7 @@ class MainApplication extends AppCompatActivity<Props, States> {
             renderTabs={this.renderTabs}
           />
         ) : (
-          <>
-            <div
-              ref={this.headerBgRef}
-              style={{
-                padding: "50px",
-                paddingTop: "6px",
-                textAlign: "center",
-                backgroundColor: SharedPreferences.getBoolean("enableDarkmode_switch", false) ? "rgb(31, 31, 31)" : "#4a148c",
-                color: "white",
-                fontSize: "30px",
-                boxShadow: "rgba(0, 0, 0, 0.3) 0px 1px 5px",
-              }}
-            >
-              <span ref={this.headerTitleRef}>Magisk Module Repo Loader</span>
-            </div>
-            <ExploreModuleFragment pushPage={this.props.pushPage} />
-          </>
+          <ExploreModuleFragment pushPage={this.props.pushPage} />
         )}
       </>
     );

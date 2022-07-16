@@ -16,6 +16,7 @@ declare global {
   }
 
   interface Window {
+    [x: string]: any;
     nshell: NShell;
     nos: NOS;
     nversion: NBuildConfig;

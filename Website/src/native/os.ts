@@ -105,6 +105,20 @@ class os {
       name;
     }
   }
+
+  public static addNativeEventListener(event: any, callback: any) {
+    // @ts-ignore
+    window[event] = new Event(event.toLowerCase());
+
+    window.addEventListener(event.toLowerCase(), callback, false);
+  }
+
+  public static removeNativeEventListener(event: any, callback: any) {
+    // @ts-ignore
+    window[event] = new Event(event.toLowerCase());
+
+    window.removeEventListener(event.toLowerCase(), callback, false);
+  }
 }
 
 export { os };

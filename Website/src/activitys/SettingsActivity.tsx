@@ -44,8 +44,13 @@ class SettingsActivity extends AppCompatActivity<Props, States> {
     this.pref = new SharedPreferences();
   }
 
+  public onBackButton(): void {
+    this.props.popPage();
+  }
+
   public componentDidMount = () => {
     super.componentDidMount;
+
     this.setState({ libs: Object.keys(pkg.dependencies) });
   };
 
