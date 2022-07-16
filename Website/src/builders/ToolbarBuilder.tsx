@@ -15,13 +15,14 @@ namespace Toolbar {
     onBackButton?: boolean;
     addToolbarButton?: React.ReactNode;
     addToolbarButtonPosition?: "left" | "right";
+    modifier?: string;
   }
 
   export class Builder extends Component<Props> {
     public render() {
-      const { title, onBackButton, addToolbarButton, addToolbarButtonPosition } = this.props;
+      const { title, onBackButton, addToolbarButton, addToolbarButtonPosition, modifier } = this.props;
       return (
-        <Cockbar>
+        <Cockbar modifier={modifier}>
           <div className="left">
             {/**
               // @ts-ignore */}

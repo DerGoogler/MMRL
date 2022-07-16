@@ -95,7 +95,7 @@ class ExploreModuleFragment extends Component<Props, States> {
     }
 
     return (
-      <Page>
+      <>
         <div
           style={{
             textAlign: "center",
@@ -172,7 +172,7 @@ class ExploreModuleFragment extends Component<Props, States> {
             )}
           </module-container>
         </div>
-      </Page>
+      </>
     );
   };
 

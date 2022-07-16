@@ -88,9 +88,7 @@ class AppCompatActivity<P = {}, S = {}, SS = any> extends ActivityX<P, S, SS> {
               return <Toolbar.Builder {...this.onCreateToolbar()} />;
             }}
           >
-            <ContentBody style={this.style}>
-              <this.onCreate p={this.props} s={this.state} />
-            </ContentBody>
+            <this.onCreate p={this.props} s={this.state} />
           </Page>
         </ErrorBoundary>
       </AppCompatActivityContext.Provider>

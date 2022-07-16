@@ -34,6 +34,7 @@ class HighlightedMarkdown extends ViewX<IProps> {
     return (
       <div ref={this.ref}>
         <Markdown
+          style={this.props.style}
           options={{
             forceBlock: true,
             overrides: {

@@ -62,7 +62,7 @@ class ViewModuleActivity extends AppCompatActivity<Props, States> {
         <>
           {(minMagisk || minApi || maxApi || needRamdisk || changeBoot) != (null || undefined) ? (
             <div className="right">
-              <gae.Button style={{ padding: "0px 10px" }} onClick={this.showDialog}>
+              <gae.Button style={{ padding: "0px 10px" }} className="back-button--material__icon" onClick={this.showDialog}>
                 <InfoRounded />
               </gae.Button>
             </div>
@@ -104,13 +104,13 @@ class ViewModuleActivity extends AppCompatActivity<Props, States> {
               }
             })()
           }
-          <HighlightedMarkdown children={this.state.notes} />
+          <HighlightedMarkdown style={{ marginBottom: "56px" }} children={this.state.notes} />
         </div>
-        <div style={{ height: "52px" }}></div>
         <div
           style={{
             position: "fixed",
             display: "flex",
+            height: "52px",
             left: 0,
             bottom: 0,
             padding: "8px",

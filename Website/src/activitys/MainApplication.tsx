@@ -4,8 +4,9 @@ import { os } from "@Native/os";
 import SharedPreferences from "@Native/SharedPreferences";
 import Toast from "@Native/Toast";
 import { string } from "@Strings";
+import { createRef, RefObject } from "react";
 import { Tab, Tabbar, TabbarRenderTab, ToolbarButton } from "react-onsenui";
-import { ActivityXRenderData } from "react-onsenuix";
+import { ActivityXRenderData, Page } from "react-onsenuix";
 import AppCompatActivity from "./AppCompatActivity";
 import DeviceModuleFragment from "./fragments/DeviceModuleFragment";
 import ExploreModuleFragment from "./fragments/ExploreModuleFragment";
@@ -29,18 +30,42 @@ interface Props {
   pushPage: any;
 }
 
-class MainApplication extends AppCompatActivity<Props> {
+interface States {
+  isHeaderTitleVisible: boolean;
+  isHeaderBGVisible: boolean;
+}
+
+class MainApplication extends AppCompatActivity<Props, States> {
+  private headerTitleRef: RefObject<HTMLSpanElement>;
+  private headerTtileObserver: IntersectionObserver;
+  private headerBgObserver: IntersectionObserver;
+  private headerBgRef: RefObject<HTMLDivElement>;
+
   public constructor(props: Props | Readonly<Props>) {
     super(props);
-    this.state = {};
+    this.state = {
+      isHeaderTitleVisible: false,
+      isHeaderBGVisible: false,
+    };
 
     this.openSettings = this.openSettings.bind(this);
     this.renderTabs = this.renderTabs.bind(this);
+
+    this.headerTitleRef = createRef();
+    this.headerBgRef = createRef();
+
+    this.headerTtileObserver = new IntersectionObserver(([entry]) => {
+      this.setState({ isHeaderTitleVisible: entry.isIntersecting });
+    });
+    this.headerBgObserver = new IntersectionObserver(([entry]) => {
+      this.setState({ isHeaderBGVisible: entry.isIntersecting });
+    });
   }
 
   public onCreateToolbar(): Toolbar.Props {
     return {
-      title: "Magisk Module Repo Loader",
+      title: !this.state.isHeaderTitleVisible ? "Magisk Module Repo Loader" : "",
+      modifier: this.state.isHeaderBGVisible ? "noshadow" : "",
       addToolbarButtonPosition: "right",
       addToolbarButton: (
         <ToolbarButton className="back-button--material__icon" onClick={this.openSettings}>
@@ -52,6 +77,13 @@ class MainApplication extends AppCompatActivity<Props> {
 
   public componentDidMount() {
     super.componentDidMount;
+    this.headerTtileObserver.observe(this.headerTitleRef.current as any);
+    this.headerBgObserver.observe(this.headerBgRef.current as any);
+  }
+
+  public componentWillUnmount() {
+    this.headerTtileObserver.disconnect();
+    this.headerBgObserver.disconnect();
   }
 
   public componentDidUpdate() {
@@ -88,7 +120,23 @@ class MainApplication extends AppCompatActivity<Props> {
             renderTabs={this.renderTabs}
           />
         ) : (
-          <ExploreModuleFragment pushPage={this.props.pushPage} />
+          <>
+            <div
+              ref={this.headerBgRef}
+              style={{
+                padding: "50px",
+                paddingTop: "6px",
+                textAlign: "center",
+                backgroundColor: SharedPreferences.getBoolean("enableDarkmode_switch", false) ? "rgb(31, 31, 31)" : "#4a148c" ,
+                color: "white",
+                fontSize: "30px",
+                boxShadow: "rgba(0, 0, 0, 0.3) 0px 1px 5px",
+              }}
+            >
+              <span ref={this.headerTitleRef}>Magisk Module Repo Loader</span>
+            </div>
+            <ExploreModuleFragment pushPage={this.props.pushPage} />
+          </>
         )}
       </>
     );
