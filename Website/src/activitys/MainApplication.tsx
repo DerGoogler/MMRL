@@ -1,4 +1,5 @@
 import Toolbar from "@Builders/ToolbarBuilder";
+import { TabWrapper } from "@Components/TabWrapper";
 import { SettingsRounded } from "@mui/icons-material";
 import { os } from "@Native/os";
 import SharedPreferences from "@Native/SharedPreferences";
@@ -100,11 +101,11 @@ class MainApplication extends AppCompatActivity<Props, States> {
   private renderTabs(): TabbarRenderTab[] {
     return [
       {
-        content: <ExploreModuleFragment pushPage={this.props.pushPage} />,
+        content: <TabWrapper element={<ExploreModuleFragment pushPage={this.props.pushPage} />} />,
         tab: <Tab label={string.explore} />,
       },
       {
-        content: <DeviceModuleFragment pushPage={this.props.pushPage} />,
+        content: <TabWrapper element={<DeviceModuleFragment pushPage={this.props.pushPage} />} />,
         tab: <Tab label={string.installed} />,
       },
     ];
@@ -127,7 +128,7 @@ class MainApplication extends AppCompatActivity<Props, States> {
                 padding: "50px",
                 paddingTop: "6px",
                 textAlign: "center",
-                backgroundColor: SharedPreferences.getBoolean("enableDarkmode_switch", false) ? "rgb(31, 31, 31)" : "#4a148c" ,
+                backgroundColor: SharedPreferences.getBoolean("enableDarkmode_switch", false) ? "rgb(31, 31, 31)" : "#4a148c",
                 color: "white",
                 fontSize: "30px",
                 boxShadow: "rgba(0, 0, 0, 0.3) 0px 1px 5px",
