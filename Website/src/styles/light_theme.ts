@@ -4340,11 +4340,11 @@ const light_theme: any = {
       ],
     },
     ".alert-dialog--material": {
-      borderRadius: "8px",
+      borderRadius: "25px",
       backgroundColor: "#ffffff",
     },
     ".alert-dialog-container--material": {
-      borderRadius: "8px",
+      borderRadius: "25px",
       padding: "22px 0 0 0",
       boxShadow:
         "0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12),\r\n    0 8px 10px -5px rgba(0, 0, 0, 0.4)",
@@ -4770,7 +4770,7 @@ const light_theme: any = {
       verticalAlign: "middle",
       textAlign: "center",
       backgroundColor: "#4a148c",
-      borderRadius: "50%",
+      borderRadius: "30%",
       overflow: "hidden",
       boxShadow: "0 3px 6px rgba(0, 0, 0, 0.12)",
       transition: "all 0.1s linear",

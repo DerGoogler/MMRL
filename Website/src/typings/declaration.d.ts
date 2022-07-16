@@ -244,6 +244,7 @@ declare module "react-onsenui" {
   /*** AlertDialog ***/
   export class AlertDialog extends Component<
     {
+      children: React.ReactNode
       onCancel?(): void;
       isOpen?: boolean | undefined;
       isCancelable?: boolean | undefined;
@@ -629,6 +630,7 @@ declare module "react-onsenui" {
   /** Pull-to-refresh hook. */
   export class PullHook extends Component<
     {
+      children: string;
       onChange?(e: PullHookChangeEvent): void;
       onLoad?(done: () => void): void;
       onPull?(): void;

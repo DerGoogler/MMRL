@@ -10,13 +10,14 @@ import { os } from "@Native/os";
 import ons from "onsenui";
 import { string } from "@Strings";
 import { isTablet } from "react-device-detect";
+import RepoActivity from "@Activitys/RepoActivity";
 
 interface Props {
   pushPage(...arg: any): PushProps;
 }
 
 interface States {
-  modulesIndex: any[any];
+  modulesIndex: Array<any>;
   currentSerachText: string;
   search: string;
   moduleOptions: any[any];
@@ -49,7 +50,28 @@ class ExploreModuleFragment extends Component<Props, States> {
       this.setState({ loading: false });
     }, 2000);
 
-    axios
+    RepoActivity.getReadOnlyRepos()
+      .concat(JSON.parse(SharedPreferences.getString("repos", "[]")))
+      .map((repo: any) => {
+        axios
+          .get(repo.link)
+          .then((response) => {
+            const modules = response.data.modules;
+            this.setState((state, props) => ({
+              modulesIndex: state.modulesIndex.concat(modules),
+            }));
+          })
+          .catch((error) => {
+            this.setState({
+              modulesIndex: [],
+            });
+          })
+          .then(() => {
+            // always executed
+          });
+      });
+
+    /* axios
       .get(this.prefManager.getString("repo", "https://raw.githubusercontent.com/Magisk-Modules-Alt-Repo/json/main/modules.json"))
       .then((response) => {
         const modules = response.data.modules;
@@ -64,7 +86,7 @@ class ExploreModuleFragment extends Component<Props, States> {
       })
       .then(() => {
         // always executed
-      });
+      });*/
 
     axios.get("https://dergoogler.com/repo/moduleOptions.json").then((response) => {
       this.setState({
@@ -177,21 +199,23 @@ class ExploreModuleFragment extends Component<Props, States> {
   };
 
   private cardRender(map: Array<any>) {
-    return map.map((item: any) => {
-      return (
-        <ExploreModule
-          key={item.id}
-          getId={item.id}
-          propsUrl={item.prop_url}
-          notesUrl={item.notes_url}
-          downloadUrl={item.zip_url}
-          pushPage={this.props.pushPage}
-          searchState={this.state.search}
-          moduleOptions={this.state.moduleOptions}
-          last_update={item.last_update}
-        />
-      );
-    });
+    return map
+      .sort((a, b) => (a.id > b.id ? 1 : -1))
+      .map((item: any) => {
+        return (
+          <ExploreModule
+            key={item.id}
+            getId={item.id}
+            propsUrl={item.prop_url}
+            notesUrl={item.notes_url}
+            downloadUrl={item.zip_url}
+            pushPage={this.props.pushPage}
+            searchState={this.state.search}
+            moduleOptions={this.state.moduleOptions}
+            last_update={item.last_update}
+          />
+        );
+      });
   }
 }
 

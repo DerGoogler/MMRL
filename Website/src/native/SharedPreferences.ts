@@ -175,7 +175,7 @@ class SharedPreferences implements ISharedPreferences {
    *
    * @throws ClassCastException
    */
-  public static getString(key: string, defValue: string): string | String {
+  public static getString(key: string, defValue: string): string {
     return this.s.getString(key, defValue);
   }
 
@@ -191,7 +191,7 @@ class SharedPreferences implements ISharedPreferences {
    *
    * @throws ClassCastException
    */
-  public static getBoolean(key: string, defValue: bool): boolean | Boolean {
+  public static getBoolean(key: string, defValue: bool): boolean {
     return this.s.getBoolean(key, defValue);
   }
 
@@ -205,7 +205,7 @@ class SharedPreferences implements ISharedPreferences {
    *
    * @throws ClassCastException
    */
-  public static getInt(key: string, defValue: int): number | Number {
+  public static getInt(key: string, defValue: int): number {
     return this.s.getInt(key, defValue);
   }
 

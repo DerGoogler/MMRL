@@ -163,6 +163,7 @@ class ListViewBuilder extends Component<IProps> {
                                 keepDefaultFuntion();
                               }
                             }}
+                            modifier="material3"
                           ></Switch>
                         );
                       case "select":

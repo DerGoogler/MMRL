@@ -22,6 +22,7 @@ import Icon from "@Components/Icon";
 import Magisk from "@Native/Magisk";
 import Toolbar from "@Builders/ToolbarBuilder";
 import RepoGeneratorActivity from "./RepoGeneratorActivity";
+import RepoActivity from "./RepoActivity";
 
 interface Props {
   pushPage: any;
@@ -67,41 +68,14 @@ class SettingsActivity extends AppCompatActivity<Props, States> {
                   content: [
                     {
                       type: "",
+                      text: "Repositories",
                       icon: <Icon icon={ExtensionRounded} />,
-                      text: string.custom_repository,
-                      helper: {
-                        text: "Test",
-                      },
-                      onClick: (key) => {
-                        new AlertDialog.Builder()
-                          .setTitle(string.custom_repository)
-                          .setMessage("Only URLs are valid")
-                          .setPositiveButton("Apply", (input: string) => {
-                            if (input != null) {
-                              if (input.startsWith(">")) {
-                                switch (input) {
-                                  case ">gmr":
-                                    this.pref.setString("repo", "https://repo.dergoogler.com/modules.json");
-                                    break;
-                                  case ">mmar":
-                                    this.pref.setString(
-                                      "repo",
-                                      "https://raw.githubusercontent.com/Magisk-Modules-Alt-Repo/json/main/modules.json"
-                                    );
-                                    break;
-                                }
-                              } else {
-                                if (link.validURL(input)) {
-                                  this.pref.setString("repo", input);
-                                  ons.notification.alert("Repo changed, please refresh the app");
-                                } else {
-                                  ons.notification.alert("Invalid input");
-                                }
-                              }
-                            }
-                          })
-                          .setNegativeButtom("Cancel", () => {})
-                          .showPrompt();
+
+                      onClick(key, pushPage) {
+                        pushPage({
+                          key: "repoactivity",
+                          activity: RepoActivity,
+                        });
                       },
                     },
                   ],
