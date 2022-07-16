@@ -1,23 +1,12 @@
-import { ActivityXRenderData, List, Toolbar } from "react-onsenuix";
+import { ActivityXRenderData, AlertDialog, List, Toolbar } from "react-onsenuix";
 import AppCompatActivity from "./AppCompatActivity";
-import { string } from "@Strings";
 import SharedPreferences, { ISharedPreferences } from "@Native/SharedPreferences";
-import {
-  Add,
-  AddCircle,
-  DeleteRounded,
-  LanguageRounded,
-  Remove,
-  SupportRounded,
-  UploadFileRounded,
-  VolunteerActivismRounded,
-} from "@mui/icons-material";
+import { Add, DeleteRounded, LanguageRounded, SupportRounded, UploadFileRounded, VolunteerActivismRounded } from "@mui/icons-material";
 import { link } from "googlers-tools";
 import ons from "onsenui";
 import Icon from "@Components/Icon";
-import { AlertDialog, Input } from "react-onsenui";
+import { AlertDialog as Dialog, Input } from "react-onsenui";
 import Toast from "@Native/Toast";
-import Constants from "@Native/Constants";
 import { os } from "@Native/os";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { SvgIconTypeMap } from "@mui/material/SvgIcon/SvgIcon";
@@ -81,6 +70,30 @@ class RepoActivity extends AppCompatActivity<Props, States> {
         readonly: true,
       },
     ];
+  }
+
+  public componentDidMount(): void {
+    const _: string = "userAcceptNewRepos";
+    const userAcceptNewRepos = SharedPreferences.getBoolean(_, false);
+
+    if (!userAcceptNewRepos) {
+      const builder = new AlertDialog.Builder();
+      builder.setTitle("Custom repositories!");
+      builder.setMessage(
+        <div>
+          MMRL introduces new <strong>repositories system</strong> with <em>1.4.2</em>. Now can you load every repo into MMRL (This can slow
+          down the app if to much repo at once are enabled)
+          <span style={{ fontSize: 10, display: "inline-block" }}>
+            Magisk Modules Alternative Repository is an read-only repo and can't be removed.
+          </span>
+        </div>
+      );
+      builder.setPositiveButton("Oaky!", () => {
+        SharedPreferences.setBoolean(_, true);
+      });
+      builder.setCancelable(true);
+      builder.showAlert();
+    }
   }
 
   private getRepos(): Array<any> {
@@ -254,7 +267,7 @@ class RepoActivity extends AppCompatActivity<Props, States> {
             ))}
         </List>
         <>
-          <AlertDialog isOpen={this.state.alertDialogShown} isCancelable={false}>
+          <Dialog isOpen={this.state.alertDialogShown} isCancelable={false}>
             <div className="alert-dialog-title">Add repo</div>
             <div className="alert-dialog-content">
               <p>
@@ -272,7 +285,7 @@ class RepoActivity extends AppCompatActivity<Props, States> {
                 Add
               </button>
             </div>
-          </AlertDialog>
+          </Dialog>
         </>
       </>
     );
