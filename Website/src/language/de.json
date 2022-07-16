@@ -23,5 +23,13 @@
   "restore": "Wiederherstellen",
   "module_enabled_LOG": "{module} wurde aktiviert",
   "module_disabled_LOG": "{module} wurde deaktiviert",
-  "last_updated": "Letztes Update: {date}"
+  "last_updated": "Letztes Update: {date}",
+  "add": "Hinzufügen",
+  "cancel": "Abbrechen",
+  "add_repo": "Repository hinzufügen",
+  "confirm_repo_delete": "Möchten Sie das {name}-Repository wirklich entfernen?",
+  "submit_module": "Ein Module einreichen",
+  "donate": "Spenden",
+  "support": "Support",
+  "website": "Webseite"
 }

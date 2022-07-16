@@ -11,6 +11,7 @@ import { os } from "@Native/os";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { SvgIconTypeMap } from "@mui/material/SvgIcon/SvgIcon";
 import axios from "axios";
+import { string } from "@Strings";
 
 interface Props {
   pushPage: any;
@@ -218,7 +219,7 @@ class RepoActivity extends AppCompatActivity<Props, States> {
                 <ListItem
                   part={repo.website}
                   icon={LanguageRounded}
-                  text="Website"
+                  text={string.website}
                   onClick={() => {
                     os.open(repo.website);
                   }}
@@ -226,7 +227,7 @@ class RepoActivity extends AppCompatActivity<Props, States> {
                 <ListItem
                   part={repo.support}
                   icon={SupportRounded}
-                  text="Support"
+                  text={string.support}
                   onClick={() => {
                     os.open(repo.support);
                   }}
@@ -234,7 +235,7 @@ class RepoActivity extends AppCompatActivity<Props, States> {
                 <ListItem
                   part={repo.donate}
                   icon={VolunteerActivismRounded}
-                  text="Donate"
+                  text={string.donate}
                   onClick={() => {
                     os.open(repo.donate);
                   }}
@@ -242,7 +243,7 @@ class RepoActivity extends AppCompatActivity<Props, States> {
                 <ListItem
                   part={repo.submitModule}
                   icon={UploadFileRounded}
-                  text="Submit module"
+                  text={string.submit_module}
                   onClick={() => {
                     os.open(repo.submitModule);
                   }}
@@ -250,17 +251,23 @@ class RepoActivity extends AppCompatActivity<Props, States> {
                 <ListItem
                   part={!repo.readonly}
                   icon={DeleteRounded}
-                  text="Remove"
+                  text={string.remove}
                   onClick={() => {
-                    ons.notification.confirm(`Are you sure to remove ${repo.name} repository?`).then((g) => {
-                      if (g) {
-                        this.removeRepo({
+                    ons.notification
+                      .confirm(
+                        string.formatString(string.confirm_repo_delete, {
                           name: repo.name,
-                          modules: repo.link,
-                          readonly: false,
-                        });
-                      }
-                    });
+                        }) as string
+                      )
+                      .then((g) => {
+                        if (g) {
+                          this.removeRepo({
+                            name: repo.name,
+                            modules: repo.link,
+                            readonly: false,
+                          });
+                        }
+                      });
                   }}
                 />
               </>
@@ -268,7 +275,7 @@ class RepoActivity extends AppCompatActivity<Props, States> {
         </List>
         <>
           <Dialog isOpen={this.state.alertDialogShown} isCancelable={false}>
-            <div className="alert-dialog-title">Add repo</div>
+            <div className="alert-dialog-title">{string.add_repo}</div>
             <div className="alert-dialog-content">
               <p>
                 <Input value={this.state.repoName} onChange={this.handleRepoNameChange} modifier="underbar" float placeholder="Repo name" />
@@ -279,10 +286,10 @@ class RepoActivity extends AppCompatActivity<Props, States> {
             </div>
             <div className="alert-dialog-footer">
               <button onClick={this.hideAlertDialog} className="alert-dialog-button">
-                Cancel
+                {string.cancel}
               </button>
               <button onClick={this.addRepo} className="alert-dialog-button">
-                Add
+                {string.add}
               </button>
             </div>
           </Dialog>

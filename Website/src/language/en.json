@@ -23,5 +23,13 @@
   "restore": "Restore",
   "module_enabled_LOG": "{module} has been enabled",
   "module_disabled_LOG": "{module} has been disabled",
-  "last_updated": "Last update: {date}"
+  "last_updated": "Last update: {date}",
+  "add": "Add",
+  "cancel": "Cancel",
+  "add_repo": "Add a repository",
+  "confirm_repo_delete": "Are you sure to remove {name} repository?",
+  "submit_module": "Submit a module",
+  "donate": "Donate",
+  "support": "Support",
+  "website": "Website"
 }
