@@ -2,13 +2,26 @@ import { ActivityXRenderData, List, Toolbar } from "react-onsenuix";
 import AppCompatActivity from "./AppCompatActivity";
 import { string } from "@Strings";
 import SharedPreferences, { ISharedPreferences } from "@Native/SharedPreferences";
-import { Add, AddCircle, DeleteRounded, Remove } from "@mui/icons-material";
+import {
+  Add,
+  AddCircle,
+  DeleteRounded,
+  LanguageRounded,
+  Remove,
+  SupportRounded,
+  UploadFileRounded,
+  VolunteerActivismRounded,
+} from "@mui/icons-material";
 import { link } from "googlers-tools";
 import ons from "onsenui";
 import Icon from "@Components/Icon";
 import { AlertDialog, Input } from "react-onsenui";
 import Toast from "@Native/Toast";
 import Constants from "@Native/Constants";
+import { os } from "@Native/os";
+import { OverridableComponent } from "@mui/material/OverridableComponent";
+import { SvgIconTypeMap } from "@mui/material/SvgIcon/SvgIcon";
+import axios from "axios";
 
 interface Props {
   pushPage: any;
@@ -20,6 +33,13 @@ interface States {
   alertDialogShown: boolean;
   repoName: string;
   repoLink: string;
+}
+
+interface ListItemProps {
+  part: any;
+  text: string;
+  icon: OverridableComponent<SvgIconTypeMap<{}, "svg">>;
+  onClick: () => void;
 }
 
 class RepoActivity extends AppCompatActivity<Props, States> {
@@ -47,11 +67,17 @@ class RepoActivity extends AppCompatActivity<Props, States> {
     this.handleRepoNameChange = this.handleRepoNameChange.bind(this);
   }
 
+  // Contact @Der_Googler on Telegram to request changes
   public static getReadOnlyRepos(): Array<any> {
     return [
       {
         name: "Magisk Modules Alternative Repository",
-        link: "https://raw.githubusercontent.com/Magisk-Modules-Alt-Repo/json/main/modules.json",
+        website: "https://github.com/Magisk-Modules-Alt-Repo",
+        support: undefined,
+        donate: undefined,
+        submitModule: "https://github.com/Magisk-Modules-Alt-Repo/submission",
+        last_update: undefined,
+        modules: "https://raw.githubusercontent.com/Magisk-Modules-Alt-Repo/json/main/modules.json",
         readonly: true,
       },
     ];
@@ -76,19 +102,36 @@ class RepoActivity extends AppCompatActivity<Props, States> {
 
     if (repoName != "") {
       if (link.validURL(repoLink)) {
-        this.pref.setString(
-          "repos",
-          JSON.stringify([
-            ...JSON.parse(this.pref.getString("repos", "[]")),
-            {
-              name: repoName,
-              link: repoLink,
-              readonly: false,
-            },
-          ])
-        );
-        this.setState({ repos: this.getRepos(), repoName: "", repoLink: "" });
-        this.hideAlertDialog();
+        axios
+          .get(repoLink)
+          .then((response) => {
+            const data = response.data;
+            this.pref.setString(
+              "repos",
+              JSON.stringify([
+                ...JSON.parse(this.pref.getString("repos", "[]")),
+                {
+                  name: repoName,
+                  website: data.website ? data.website : null,
+                  support: data.support ? data.support : null,
+                  donate: data.donate ? data.donate : null,
+                  submitModule: data.submitModule ? data.submitModule : null,
+                  last_update: data.last_update ? data.last_update : null,
+                  modules: repoLink,
+                  readonly: false,
+                },
+              ])
+            );
+
+            this.hideAlertDialog();
+          })
+          .catch((error) => {
+            Toast.makeText(error, Toast.LENGTH_SHORT).show();
+            this.hideAlertDialog();
+          })
+          .then(() => {
+            this.setState({ repos: this.getRepos(), repoName: "", repoLink: "" });
+          });
       } else {
         Toast.makeText("The given link isn't valid.", Toast.LENGTH_SHORT).show();
       }
@@ -127,43 +170,87 @@ class RepoActivity extends AppCompatActivity<Props, States> {
     this.setState({ repoLink: e.target.value });
   }
 
+  // Some layout atr inspired from @Fox2Code
   public onCreate(data: ActivityXRenderData<Props, States>): JSX.Element {
+    const ListItem = (props: ListItemProps) => {
+      return (
+        <>
+          {props.part ? (
+            <List.Item
+              // @ts-ignore
+              onClick={props.onClick}
+            >
+              <div className="left">
+                <Icon icon={props.icon} />
+              </div>
+
+              <div className="center">{props.text}</div>
+            </List.Item>
+          ) : null}
+        </>
+      );
+    };
+
     return (
       <>
         <List>
           {RepoActivity.getReadOnlyRepos()
             .concat(data.s.repos)
             .map((repo: any) => (
-              <List.Item>
-                {repo.readonly ? (
-                  <div className="center">
-                    <span className="list-item__title">{repo.name}</span>
-                    <span className="list-item__subtitle">Read-Only Repository</span>
-                  </div>
-                ) : (
-                  <div className="center">{repo.name}</div>
-                )}
-
-                {!repo.readonly ? (
-                  <div className="right">
-                    <div
-                      onClick={() => {
-                        ons.notification.confirm(`Are you sure to remove ${repo.name} repository?`).then((g) => {
-                          if (g) {
-                            this.removeRepo({
-                              name: repo.name,
-                              link: repo.link,
-                              readonly: false,
-                            });
-                          }
+              <>
+                <List.Header>
+                  {repo.name}
+                  {repo.readonly ? " (Read-Only)" : ""}
+                </List.Header>
+                <ListItem
+                  part={repo.website}
+                  icon={LanguageRounded}
+                  text="Website"
+                  onClick={() => {
+                    os.open(repo.website);
+                  }}
+                />
+                <ListItem
+                  part={repo.support}
+                  icon={SupportRounded}
+                  text="Support"
+                  onClick={() => {
+                    os.open(repo.support);
+                  }}
+                />
+                <ListItem
+                  part={repo.donate}
+                  icon={VolunteerActivismRounded}
+                  text="Donate"
+                  onClick={() => {
+                    os.open(repo.donate);
+                  }}
+                />
+                <ListItem
+                  part={repo.submitModule}
+                  icon={UploadFileRounded}
+                  text="Submit module"
+                  onClick={() => {
+                    os.open(repo.submitModule);
+                  }}
+                />
+                <ListItem
+                  part={!repo.readonly}
+                  icon={DeleteRounded}
+                  text="Remove"
+                  onClick={() => {
+                    ons.notification.confirm(`Are you sure to remove ${repo.name} repository?`).then((g) => {
+                      if (g) {
+                        this.removeRepo({
+                          name: repo.name,
+                          modules: repo.link,
+                          readonly: false,
                         });
-                      }}
-                    >
-                      <Icon icon={DeleteRounded} />
-                    </div>
-                  </div>
-                ) : null}
-              </List.Item>
+                      }
+                    });
+                  }}
+                />
+              </>
             ))}
         </List>
         <>

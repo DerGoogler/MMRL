@@ -54,7 +54,7 @@ class ExploreModuleFragment extends Component<Props, States> {
       .concat(JSON.parse(SharedPreferences.getString("repos", "[]")))
       .map((repo: any) => {
         axios
-          .get(repo.link)
+          .get(repo.modules)
           .then((response) => {
             const modules = response.data.modules;
             this.setState((state, props) => ({
