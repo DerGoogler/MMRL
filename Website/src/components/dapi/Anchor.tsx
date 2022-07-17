@@ -28,7 +28,6 @@ class Anchor extends ViewX<AnchorProps> {
           rel={rel}
           target={util.typeCheck(target, "_blank")}
           type={type}
-          title={"Open " + href}
           onClick={() => {
             os.open(href);
           }}

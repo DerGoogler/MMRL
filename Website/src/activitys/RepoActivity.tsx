@@ -70,6 +70,16 @@ class RepoActivity extends AppCompatActivity<Props, States> {
         modules: "https://raw.githubusercontent.com/Magisk-Modules-Alt-Repo/json/main/modules.json",
         readonly: true,
       },
+      {
+        name: "Googlers-Magisk-Repo",
+        website: "https://github.com/Googlers-Magisk-Repo",
+        support: undefined,
+        donate: undefined,
+        submitModule: undefined,
+        last_update: undefined,
+        modules: "https://raw.githubusercontent.com/Googlers-Magisk-Repo/googlers-magisk-repo.github.io/master/modules.json",
+        readonly: true,
+      },
     ];
   }
 
