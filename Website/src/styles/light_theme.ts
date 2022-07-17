@@ -1,3 +1,6 @@
+import { Md3Fab } from "./Md3Fab";
+import { Md3Switch } from "./Md3Switch";
+
 const light_theme: any = {
   "@global": {
     ":root": {},
@@ -18,14 +21,14 @@ const light_theme: any = {
       touchAction: "manipulation",
     },
     "html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video":
-    {
-      webkitUserSelect: "none",
-      mozUserSelect: "none",
-      msUserSelect: "none",
-      userSelect: "none",
-      webkitTapHighlightColor: "transparent",
-      webkitTouchCallout: "none",
-    },
+      {
+        webkitUserSelect: "none",
+        mozUserSelect: "none",
+        msUserSelect: "none",
+        userSelect: "none",
+        webkitTapHighlightColor: "transparent",
+        webkitTouchCallout: "none",
+      },
     "input, textarea, select": {
       webkitUserSelect: "auto",
       msUserSelect: "auto",
@@ -157,18 +160,18 @@ const light_theme: any = {
       fontSize: "20px",
     },
     ".page--material__content h1, .page--material__content h2, .page--material__content h3, .page--material__content h4, .page--material__content h5":
-    {
-      fontFamily: '"Roboto", "Noto", sans-serif',
-      webkitFontSmoothing: "antialiased",
-      fontWeight: "500",
-      fallbacks: [
-        {
-          fontWeight: "400",
-        },
-      ],
-      margin: "0.6em 0",
-      padding: "0",
-    },
+      {
+        fontFamily: '"Roboto", "Noto", sans-serif',
+        webkitFontSmoothing: "antialiased",
+        fontWeight: "500",
+        fallbacks: [
+          {
+            fontWeight: "400",
+          },
+        ],
+        margin: "0.6em 0",
+        padding: "0",
+      },
     ".page--material__content h1": {
       fontSize: "28px",
     },
@@ -319,8 +322,7 @@ const light_theme: any = {
       marginTop: "-5px",
       width: "20px",
       height: "20px",
-      boxShadow:
-        "0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12),\r\n    0 2px 4px -1px rgba(0, 0, 0, 0.4)",
+      boxShadow: "0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12),\r\n    0 2px 4px -1px rgba(0, 0, 0, 0.4)",
     },
     ":checked + .switch--material__toggle": {
       backgroundColor: "#7c43bd",
@@ -329,8 +331,7 @@ const light_theme: any = {
     ":checked + .switch--material__toggle > .switch--material__handle": {
       left: "16px",
       backgroundColor: "#4a148c",
-      boxShadow:
-        "0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12),\r\n    0 3px 1px -2px rgba(0, 0, 0, 0.2)",
+      boxShadow: "0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12),\r\n    0 3px 1px -2px rgba(0, 0, 0, 0.2)",
     },
     ":disabled + .switch--material__toggle": {
       opacity: "0.3",
@@ -360,6 +361,15 @@ const light_theme: any = {
       left: "-15px",
       right: "-15px",
     },
+
+    // Custom Material 3 Switch and FAB
+    ...Md3Switch({
+      bgColor: "#b0afaf",
+      thumbColor: "#f1f1f1",
+      checkedThumbColor: "#ffffff",
+      checkedBgColor: "#7c43bd",
+    }),
+
     ".range": {
       display: "inline-block",
       position: "relative",
@@ -581,8 +591,7 @@ const light_theme: any = {
         "-moz-radial-gradient(\r\n    circle farthest-corner,\r\n    #4a148c 0%,\r\n    #4a148c 6.6px,\r\n    transparent 7px\r\n  )",
       boxShadow: "none",
     },
-    ".range--material__input:active::-webkit-slider-thumb, .range--material__input.range__input--active::-webkit-slider-thumb":
-    {
+    ".range--material__input:active::-webkit-slider-thumb, .range--material__input.range__input--active::-webkit-slider-thumb": {
       webkitTransform: "scale(1.5)",
       transform: "scale(1.5)",
       transition: "transform 0.1s linear, -webkit-transform 0.1s linear",
@@ -796,8 +805,7 @@ const light_theme: any = {
       ".list-item--material.list-item--expandable": {
         backgroundImage: "linear-gradient(0deg, #eee, #eee 50%, transparent 50%)",
       },
-      ".list-item--material.list-item--longdivider, .list-item--material.list-item--expandable.list-item--longdivider":
-      {
+      ".list-item--material.list-item--longdivider, .list-item--material.list-item--expandable.list-item--longdivider": {
         backgroundImage: "linear-gradient(0deg, #eee, #eee 50%, transparent 50%)",
       },
       ".list-header--material:not(:first-of-type)": {
@@ -1633,8 +1641,7 @@ const light_theme: any = {
       backgroundColor: "#4a148c",
       borderRadius: "8px",
       transition: "all 0.25s linear",
-      boxShadow:
-        "0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12),\r\n    0 3px 1px -2px rgba(0, 0, 0, 0.2)",
+      boxShadow: "0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12),\r\n    0 3px 1px -2px rgba(0, 0, 0, 0.2)",
       minHeight: "36px",
       textAlign: "center",
       webkitTransform: "translate3d(0, 0, 0)",
@@ -1646,8 +1653,7 @@ const light_theme: any = {
       transition: "all 0.25s linear",
     },
     ".button--material:active": {
-      boxShadow:
-        "0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12),\r\n    0 3px 5px -1px rgba(0, 0, 0, 0.4)",
+      boxShadow: "0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12),\r\n    0 3px 5px -1px rgba(0, 0, 0, 0.4)",
       backgroundColor: "#4a148c",
       opacity: "0.9",
       transition: "all 0.25s linear",
@@ -1698,8 +1704,7 @@ const light_theme: any = {
           backgroundColor: "#4a148c",
         },
         {
-          boxShadow:
-            "0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12),\r\n    0 3px 1px -2px rgba(0, 0, 0, 0.2)",
+          boxShadow: "0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12),\r\n    0 3px 1px -2px rgba(0, 0, 0, 0.2)",
         },
         {
           transition: "none",
@@ -2032,8 +2037,7 @@ const light_theme: any = {
       borderRadius: "0",
       borderWidth: "0",
     },
-    ".segment--material__item:first-child > .segment--material__button, .segment--material__item:last-child > .segment--material__button":
-    {
+    ".segment--material__item:first-child > .segment--material__button, .segment--material__item:last-child > .segment--material__button": {
       borderRadius: "0",
       borderWidth: "0",
     },
@@ -2250,8 +2254,7 @@ const light_theme: any = {
       background: "none",
       backgroundColor: "#4a148c",
       borderBottomWidth: "0",
-      boxShadow:
-        "0 4px 2px -2px rgba(0, 0, 0, 0.14), 0 3px 5px -2px rgba(0, 0, 0, 0.12),\r\n    0 5px 1px -4px rgba(0, 0, 0, 0.2)",
+      boxShadow: "0 4px 2px -2px rgba(0, 0, 0, 0.14), 0 3px 5px -2px rgba(0, 0, 0, 0.12),\r\n    0 5px 1px -4px rgba(0, 0, 0, 0.2)",
     },
     ".tabbar--material__button": {
       backgroundColor: "transparent",
@@ -3439,10 +3442,10 @@ const light_theme: any = {
       paddingRight: "30px",
     },
     ".list-item--nodivider__center, .list-item--nodivider__right, .list-item--nodivider.list-item--expandable, .list-item--expandable .list-item__center, .list-item--expandable .list-item__right":
-    {
-      border: "none",
-      backgroundImage: "none",
-    },
+      {
+        border: "none",
+        backgroundImage: "none",
+      },
     ".list-item--longdivider": {
       borderBottom: "none",
       fallbacks: [
@@ -3627,8 +3630,7 @@ const light_theme: any = {
       backgroundPosition: "18px center",
       fontSize: "14px",
       padding: "0 24px 0 64px",
-      boxShadow:
-        "0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24),\r\n    0 1px 0 0 rgba(255, 255, 255, 0.06) inset",
+      boxShadow: "0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24),\r\n    0 1px 0 0 rgba(255, 255, 255, 0.06) inset",
     },
     ".text-input": {
       boxSizing: "border-box",
@@ -3924,8 +3926,7 @@ const light_theme: any = {
       ],
     },
     ".text-input--material:focus": {
-      backgroundImage:
-        "linear-gradient(#3d5afe, #3d5afe),\r\n    linear-gradient(to top, transparent 1px, #afafaf 1px)",
+      backgroundImage: "linear-gradient(#3d5afe, #3d5afe),\r\n    linear-gradient(to top, transparent 1px, #afafaf 1px)",
       webkitAnimation: "material-text-input-animate 0.3s forwards",
       animation: "material-text-input-animate 0.3s forwards",
     },
@@ -4144,8 +4145,7 @@ const light_theme: any = {
       webkitFontSmoothing: "antialiased",
       fontWeight: "400",
       textAlign: "left",
-      boxShadow:
-        "0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12),\r\n    0 8px 10px -5px rgba(0, 0, 0, 0.4)",
+      boxShadow: "0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12),\r\n    0 8px 10px -5px rgba(0, 0, 0, 0.4)",
     },
     ".dialog-container--material": {
       borderRadius: "8px",
@@ -4346,8 +4346,7 @@ const light_theme: any = {
     ".alert-dialog-container--material": {
       borderRadius: "25px",
       padding: "22px 0 0 0",
-      boxShadow:
-        "0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12),\r\n    0 8px 10px -5px rgba(0, 0, 0, 0.4)",
+      boxShadow: "0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12),\r\n    0 8px 10px -5px rgba(0, 0, 0, 0.4)",
     },
     ".alert-dialog-title--material": {
       fontFamily: '"Roboto", "Noto", sans-serif',
@@ -4549,8 +4548,7 @@ const light_theme: any = {
       backgroundColor: "#fafafa",
       borderRadius: "2px",
       color: "#1f1f21",
-      boxShadow:
-        "0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12),\r\n    0 3px 1px -2px rgba(0, 0, 0, 0.2)",
+      boxShadow: "0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12),\r\n    0 3px 1px -2px rgba(0, 0, 0, 0.2)",
     },
     ".popover--material__arrow": {
       display: "none",
@@ -4718,8 +4716,7 @@ const light_theme: any = {
         strokeDashoffset: "-251.32%",
       },
     },
-    ".progress-circular--material__background, .progress-circular--material__primary, .progress-circular--material__secondary":
-    {
+    ".progress-circular--material__background, .progress-circular--material__primary, .progress-circular--material__secondary": {
       strokeWidth: "9%",
     },
     ".progress-circular--material__background": {
@@ -4731,6 +4728,10 @@ const light_theme: any = {
     ".progress-circular--material__secondary": {
       stroke: "#12005e",
     },
+
+    // Custom Material 3 Fab
+    ...Md3Fab(),
+
     "ons-fab.fab, ons-speed-dial-item.fab, button.fab": {
       position: "relative",
       display: "inline-block",
@@ -4789,12 +4790,12 @@ const light_theme: any = {
       outline: "0",
     },
     "ons-fab.fab:disabled, ons-fab.fab[disabled], ons-speed-dial-item.fab:disabled, ons-speed-dial-item.fab[disabled], button.fab:disabled, button.fab[disabled]":
-    {
-      backgroundColor: "color-mod(black alpha(50%))",
-      boxShadow: "none",
-      opacity: "0.3",
-      pointerEvents: "none",
-    },
+      {
+        backgroundColor: "color-mod(black alpha(50%))",
+        boxShadow: "none",
+        opacity: "0.3",
+        pointerEvents: "none",
+      },
     "ons-fab.fab__icon, ons-speed-dial-item.fab__icon, button.fab__icon": {
       position: "relative",
       overflow: "hidden",
@@ -4886,13 +4887,11 @@ const light_theme: any = {
       backgroundColor: "#4a148c",
       borderRadius: "50%",
       overflow: "hidden",
-      boxShadow:
-        "0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12),\r\n    0 2px 4px -1px rgba(0, 0, 0, 0.4)",
+      boxShadow: "0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12),\r\n    0 2px 4px -1px rgba(0, 0, 0, 0.4)",
       transition: "all 0.2s ease-in-out",
     },
     "ons-fab.fab--material:active, ons-speed-dial-item.fab--material:active, button.fab--material:active": {
-      boxShadow:
-        "0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12),\r\n    0 5px 5px -3px rgba(0, 0, 0, 0.4)",
+      boxShadow: "0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12),\r\n    0 5px 5px -3px rgba(0, 0, 0, 0.4)",
       backgroundColor: "rgba(255, 255, 255, 0.75)",
       fallbacks: [
         {
@@ -4916,12 +4915,12 @@ const light_theme: any = {
       lineHeight: "56px",
     },
     "ons-fab.fab--material:disabled, ons-fab.fab--material[disabled], ons-speed-dial-item.fab--material:disabled, ons-speed-dial-item.fab--material[disabled], button.fab--material:disabled, button.fab--material[disabled]":
-    {
-      backgroundColor: "color-mod(black alpha(50%))",
-      boxShadow: "none",
-      opacity: "0.3",
-      pointerEvents: "none",
-    },
+      {
+        backgroundColor: "color-mod(black alpha(50%))",
+        boxShadow: "none",
+        opacity: "0.3",
+        pointerEvents: "none",
+      },
     "ons-fab.fab--mini, ons-speed-dial-item.fab--mini, button.fab--mini": {
       width: "40px",
       height: "40px",
@@ -5455,8 +5454,7 @@ const light_theme: any = {
       left: "0",
       right: "0",
       bottom: "0",
-      boxShadow:
-        "0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12),\r\n    0 8px 10px -5px rgba(0, 0, 0, 0.4)",
+      boxShadow: "0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12),\r\n    0 8px 10px -5px rgba(0, 0, 0, 0.4)",
     },
     ".action-sheet-title--material": {
       fontFamily: '"Roboto", "Noto", sans-serif',
@@ -5568,8 +5566,7 @@ const light_theme: any = {
     ".card--material": {
       backgroundColor: "white",
       borderRadius: "8px",
-      boxShadow:
-        "0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12),\r\n    0 3px 1px -2px rgba(0, 0, 0, 0.2)",
+      boxShadow: "0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12),\r\n    0 3px 1px -2px rgba(0, 0, 0, 0.2)",
       fontFamily: '"Roboto", "Noto", sans-serif',
       webkitFontSmoothing: "antialiased",
       fontWeight: "400",
@@ -5697,15 +5694,15 @@ const light_theme: any = {
       top: "0",
     },
     ".toolbar.toolbar--transparent.toolbar--cover-content + .page__background + .page__content, .toolbar.toolbar--transparent.toolbar--cover-content\r\n  + .page__background\r\n  + .page__content\r\n  .page_content":
-    {
-      top: "0",
-      paddingTop: "44px",
-    },
+      {
+        top: "0",
+        paddingTop: "44px",
+      },
     ".toolbar.toolbar--material.toolbar--transparent.toolbar--cover-content\r\n  + .page__background\r\n  + .page__content, .toolbar.toolbar--material.toolbar--transparent.toolbar--cover-content\r\n  + .page__background\r\n  + .page__content\r\n  .page_content":
-    {
-      top: "0",
-      paddingTop: "56px",
-    },
+      {
+        top: "0",
+        paddingTop: "56px",
+      },
     ".tabbar:not(.tabbar--top)": {
       paddingBottom: "0",
     },
@@ -5739,9 +5736,9 @@ const light_theme: any = {
         width: "calc(100% - 88px)",
       },
       "html[onsflag-iphonex-landscape] .fab--bottom__left, html[onsflag-iphonex-landscape] .fab--bottom__center, html[onsflag-iphonex-landscape] .fab--bottom__right":
-      {
-        bottom: "21px",
-      },
+        {
+          bottom: "21px",
+        },
       "html[onsflag-iphonex-landscape] .fab--top__left, html[onsflag-iphonex-landscape] .fab--bottom__left": {
         left: "44px",
       },
@@ -5759,39 +5756,39 @@ const light_theme: any = {
         bottom: "21px",
       },
       "html[onsflag-iphonex-landscape] .dialog .bottom-bar, html[onsflag-iphonex-landscape] .page-with-bottom-toolbar > .page__content .bottom-bar, html[onsflag-iphonex-landscape] .tabbar__content:not(.tabbar--top__content) .bottom-bar":
-      {
-        bottom: "0",
-        boxSizing: "border-box",
-        paddingBottom: "0",
-      },
+        {
+          bottom: "0",
+          boxSizing: "border-box",
+          paddingBottom: "0",
+        },
       "html[onsflag-iphonex-landscape] .dialog .page__content, html[onsflag-iphonex-landscape] .page-with-bottom-toolbar > .page__content .page__content, html[onsflag-iphonex-landscape] .tabbar__content:not(.tabbar--top__content) .page__content, html[onsflag-iphonex-landscape] .page-with-bottom-toolbar > .page__content":
-      {
-        bottom: "0",
-        paddingBottom: "0",
-      },
+        {
+          bottom: "0",
+          paddingBottom: "0",
+        },
       "html[onsflag-iphonex-landscape] .page-with-bottom-toolbar > .page__content": {
         bottom: "65px",
         paddingBottom: "0",
       },
       "html[onsflag-iphonex-landscape] .dialog .page-with-bottom-toolbar > .page__content, html[onsflag-iphonex-landscape] .page-with-bottom-toolbar > .page__content .page-with-bottom-toolbar > .page__content, html[onsflag-iphonex-landscape] .tabbar__content:not(.tabbar--top__content) .page-with-bottom-toolbar > .page__content":
-      {
-        bottom: "44px",
-        paddingBottom: "0",
-      },
+        {
+          bottom: "44px",
+          paddingBottom: "0",
+        },
       "html[onsflag-iphonex-landscape] .tabbar:not(.tabbar--top)": {
         paddingBottom: "21px",
       },
       "html[onsflag-iphonex-landscape] .dialog .tabbar:not(.tabbar--top), html[onsflag-iphonex-landscape] .page-with-bottom-toolbar > .page__content .tabbar:not(.tabbar--top), html[onsflag-iphonex-landscape] .tabbar__content:not(.tabbar--top__content) .tabbar:not(.tabbar--top)":
-      {
-        paddingBottom: "0",
-      },
+        {
+          paddingBottom: "0",
+        },
       "html[onsflag-iphonex-landscape] .tabbar__content:not(.tabbar--top__content)": {
         bottom: "70px",
       },
       "html[onsflag-iphonex-landscape] .dialog .tabbar__content:not(.tabbar--top__content), html[onsflag-iphonex-landscape] .page-with-bottom-toolbar > .page__content .tabbar__content:not(.tabbar--top__content), html[onsflag-iphonex-landscape] .tabbar__content:not(.tabbar--top__content) .tabbar__content:not(.tabbar--top__content)":
-      {
-        bottom: "49px",
-      },
+        {
+          bottom: "49px",
+        },
       "html[onsflag-iphonex-landscape] .page__content > .list:not(.list--inset)": {
         marginLeft: "-44px",
         marginRight: "-44px",
@@ -5802,22 +5799,21 @@ const light_theme: any = {
       "html[onsflag-iphonex-landscape] .page__content > .list:not(.list--inset) > .list-item": {
         paddingLeft: "58px",
       },
-      "html[onsflag-iphonex-landscape]\r\n    .page__content\r\n    > .list:not(.list--inset)\r\n    > .list-item--chevron:before":
-      {
+      "html[onsflag-iphonex-landscape]\r\n    .page__content\r\n    > .list:not(.list--inset)\r\n    > .list-item--chevron:before": {
         right: "60px",
       },
       "html[onsflag-iphonex-landscape]\r\n    .page__content\r\n    > .list:not(.list--inset)\r\n    > .list-item\r\n    > .list-item__center:last-child":
-      {
-        paddingRight: "50px",
-      },
+        {
+          paddingRight: "50px",
+        },
       "html[onsflag-iphonex-landscape]\r\n    .page__content\r\n    > .list:not(.list--inset)\r\n    > .list-item\r\n    > .list-item__right":
-      {
-        paddingRight: "56px",
-      },
+        {
+          paddingRight: "56px",
+        },
       "html[onsflag-iphonex-landscape]\r\n    .page__content\r\n    > .list:not(.list--inset)\r\n    > .list-item\r\n    > .list-item--chevron__right":
-      {
-        paddingRight: "74px",
-      },
+        {
+          paddingRight: "74px",
+        },
       "html[onsflag-iphonex-landscape] .dialog .page__content > .list:not(.list--inset)": {
         marginLeft: "0",
         marginRight: "0",
@@ -5829,31 +5825,31 @@ const light_theme: any = {
         paddingLeft: "14px",
       },
       "html[onsflag-iphonex-landscape]\r\n    .dialog\r\n    .page__content\r\n    > .list:not(.list--inset)\r\n    > .list-item--chevron:before":
-      {
-        right: "16px",
-      },
+        {
+          right: "16px",
+        },
       "html[onsflag-iphonex-landscape]\r\n    .dialog\r\n    .page__content\r\n    > .list:not(.list--inset)\r\n    > .list-item\r\n    > .list-item__center:last-child":
-      {
-        paddingRight: "6px",
-      },
+        {
+          paddingRight: "6px",
+        },
       "html[onsflag-iphonex-landscape]\r\n    .dialog\r\n    .page__content\r\n    > .list:not(.list--inset)\r\n    > .list-item\r\n    > .list-item__right":
-      {
-        paddingRight: "12px",
-      },
+        {
+          paddingRight: "12px",
+        },
       "html[onsflag-iphonex-landscape]\r\n    .dialog\r\n    .page__content\r\n    > .list:not(.list--inset)\r\n    > .list-item\r\n    > .list-item--chevron__right":
-      {
-        paddingRight: "30px",
-      },
+        {
+          paddingRight: "30px",
+        },
     },
     "@media (orientation: portrait)": {
       "html[onsflag-iphonex-portrait] .fab--top__left, html[onsflag-iphonex-portrait] .fab--top__center, html[onsflag-iphonex-portrait] .fab--top__right":
-      {
-        top: "64px",
-      },
+        {
+          top: "64px",
+        },
       "html[onsflag-iphonex-portrait] .fab--bottom__left, html[onsflag-iphonex-portrait] .fab--bottom__center, html[onsflag-iphonex-portrait] .fab--bottom__right":
-      {
-        bottom: "34px",
-      },
+        {
+          bottom: "34px",
+        },
       "html[onsflag-iphonex-portrait] .action-sheet": {
         bottom: "48px",
       },
@@ -5866,22 +5862,22 @@ const light_theme: any = {
         paddingTop: "44px",
       },
       "html[onsflag-iphonex-portrait] .dialog .toolbar, html[onsflag-iphonex-portrait] .toolbar:not(.toolbar--cover-content)+.page__background+.page__content .toolbar, html[onsflag-iphonex-portrait] .tabbar--top__content .toolbar":
-      {
-        top: "0",
-        boxSizing: "border-box",
-        paddingTop: "0",
-      },
+        {
+          top: "0",
+          boxSizing: "border-box",
+          paddingTop: "0",
+        },
       "html[onsflag-iphonex-portrait] .bottom-bar": {
         bottom: "0",
         boxSizing: "content-box",
         paddingBottom: "34px",
       },
       "html[onsflag-iphonex-portrait] .dialog .bottom-bar, html[onsflag-iphonex-portrait] .page-with-bottom-toolbar > .page__content .bottom-bar, html[onsflag-iphonex-portrait] .tabbar__content:not(.tabbar--top__content) .bottom-bar":
-      {
-        bottom: "0",
-        boxSizing: "border-box",
-        paddingBottom: "0",
-      },
+        {
+          bottom: "0",
+          boxSizing: "border-box",
+          paddingBottom: "0",
+        },
       "html[onsflag-iphonex-portrait] .page__content": {
         top: "0",
         paddingTop: "44px",
@@ -5889,72 +5885,72 @@ const light_theme: any = {
         paddingBottom: "34px",
       },
       "html[onsflag-iphonex-portrait] .dialog .page__content, html[onsflag-iphonex-portrait] .toolbar:not(.toolbar--cover-content)+.page__background+.page__content .page__content, html[onsflag-iphonex-portrait] .tabbar--top__content .page__content, html[onsflag-iphonex-portrait] .toolbar:not(.toolbar--cover-content)+.page__background+.page__content":
-      {
-        top: "0",
-        paddingTop: "0",
-      },
+        {
+          top: "0",
+          paddingTop: "0",
+        },
       "html[onsflag-iphonex-portrait] .dialog .page__content, html[onsflag-iphonex-portrait] .page-with-bottom-toolbar > .page__content .page__content, html[onsflag-iphonex-portrait] .tabbar__content:not(.tabbar--top__content) .page__content, html[onsflag-iphonex-portrait] .page-with-bottom-toolbar > .page__content":
-      {
-        bottom: "0",
-        paddingBottom: "0",
-      },
+        {
+          bottom: "0",
+          paddingBottom: "0",
+        },
       "html[onsflag-iphonex-portrait] .toolbar:not(.toolbar--cover-content) + .page__background, html[onsflag-iphonex-portrait]\r\n    .toolbar:not(.toolbar--cover-content)\r\n    + .page__background\r\n    + .page__content":
-      {
-        top: "88px",
-        paddingTop: "0",
-      },
+        {
+          top: "88px",
+          paddingTop: "0",
+        },
       "html[onsflag-iphonex-portrait] .dialog .toolbar:not(.toolbar--cover-content)+.page__background, html[onsflag-iphonex-portrait] .dialog .toolbar:not(.toolbar--cover-content)+.page__background+.page__content, html[onsflag-iphonex-portrait] .toolbar:not(.toolbar--cover-content)+.page__background+.page__content .toolbar:not(.toolbar--cover-content)+.page__background, html[onsflag-iphonex-portrait] .toolbar:not(.toolbar--cover-content)+.page__background+.page__content .toolbar:not(.toolbar--cover-content)+.page__background+.page__content, html[onsflag-iphonex-portrait] .tabbar--top__content .toolbar:not(.toolbar--cover-content)+.page__background, html[onsflag-iphonex-portrait] .tabbar--top__content .toolbar:not(.toolbar--cover-content)+.page__background+.page__content":
-      {
-        top: "44px",
-        paddingTop: "0",
-      },
+        {
+          top: "44px",
+          paddingTop: "0",
+        },
       "html[onsflag-iphonex-portrait] .page-with-bottom-toolbar > .page__content": {
         bottom: "78px",
         paddingBottom: "0",
       },
       "html[onsflag-iphonex-portrait] .dialog .page-with-bottom-toolbar > .page__content, html[onsflag-iphonex-portrait] .page-with-bottom-toolbar > .page__content .page-with-bottom-toolbar > .page__content, html[onsflag-iphonex-portrait] .tabbar__content:not(.tabbar--top__content) .page-with-bottom-toolbar > .page__content":
-      {
-        bottom: "44px",
-        paddingBottom: "0",
-      },
+        {
+          bottom: "44px",
+          paddingBottom: "0",
+        },
       "html[onsflag-iphonex-portrait]\r\n    .toolbar.toolbar--transparent.toolbar--cover-content\r\n    + .page__background\r\n    + .page__content, html[onsflag-iphonex-portrait]\r\n    .toolbar.toolbar--transparent.toolbar--cover-content\r\n    + .page__background\r\n    + .page__content\r\n    .page_content":
-      {
-        top: "0",
-        paddingTop: "88px",
-      },
+        {
+          top: "0",
+          paddingTop: "88px",
+        },
       "html[onsflag-iphonex-portrait] .dialog .toolbar.toolbar--transparent.toolbar--cover-content+.page__background+.page__content, html[onsflag-iphonex-portrait] .dialog .toolbar.toolbar--transparent.toolbar--cover-content+.page__background+.page__content .page_content, html[onsflag-iphonex-portrait] .toolbar:not(.toolbar--cover-content)+.page__background+.page__content .toolbar.toolbar--transparent.toolbar--cover-content+.page__background+.page__content, html[onsflag-iphonex-portrait] .toolbar:not(.toolbar--cover-content)+.page__background+.page__content .toolbar.toolbar--transparent.toolbar--cover-content+.page__background+.page__content .page__content, html[onsflag-iphonex-portrait] .tabbar--top__content .toolbar.toolbar--transparent.toolbar--cover-content+.page__background+.page__content, html[onsflag-iphonex-portrait] .tabbar--top__content .toolbar.toolbar--transparent.toolbar--cover-content+.page__background+.page__content .page_content":
-      {
-        top: "0",
-        paddingTop: "44px",
-      },
+        {
+          top: "0",
+          paddingTop: "44px",
+        },
       "html[onsflag-iphonex-portrait] .tabbar--top": {
         paddingTop: "44px",
       },
       "html[onsflag-iphonex-portrait] .dialog .tabbar--top, html[onsflag-iphonex-portrait] .toolbar:not(.toolbar--cover-content)+.page__background+.page__content .tabbar--top, html[onsflag-iphonex-portrait] .tabbar--top__content .tabbar--top":
-      {
-        paddingTop: "0",
-      },
+        {
+          paddingTop: "0",
+        },
       "html[onsflag-iphonex-portrait] .tabbar--top__content": {
         top: "93px",
       },
       "html[onsflag-iphonex-portrait] .dialog .tabbar--top__content, html[onsflag-iphonex-portrait] .toolbar:not(.toolbar--cover-content)+.page__background+.page__content .tabbar--top__content, html[onsflag-iphonex-portrait] .tabbar--top__content .tabbar--top__content":
-      {
-        top: "49px",
-      },
+        {
+          top: "49px",
+        },
       "html[onsflag-iphonex-portrait] .tabbar:not(.tabbar--top):not(.tabbar--top)": {
         paddingBottom: "34px",
       },
       "html[onsflag-iphonex-portrait] .dialog .tabbar:not(.tabbar--top):not(.tabbar--top), html[onsflag-iphonex-portrait] .page-with-bottom-toolbar > .page__content .tabbar:not(.tabbar--top), html[onsflag-iphonex-portrait] .tabbar__content:not(.tabbar--top__content) .tabbar:not(.tabbar--top)":
-      {
-        paddingBottom: "0",
-      },
+        {
+          paddingBottom: "0",
+        },
       "html[onsflag-iphonex-portrait] .tabbar__content:not(.tabbar--top__content)": {
         bottom: "83px",
       },
       "html[onsflag-iphonex-portrait] .dialog .tabbar__content:not(.tabbar--top__content), html[onsflag-iphonex-portrait] .page-with-bottom-toolbar > .page__content .tabbar__content:not(.tabbar--top__content), html[onsflag-iphonex-portrait] .tabbar__content:not(.tabbar--top__content) .tabbar__content:not(.tabbar--top__content)":
-      {
-        bottom: "49px",
-      },
+        {
+          bottom: "49px",
+        },
     },
   },
 };

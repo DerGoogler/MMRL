@@ -1,3 +1,6 @@
+import { Md3Fab } from "./Md3Fab";
+import { Md3Switch } from "./Md3Switch";
+
 const dark_theme: any = {
   "@global": {
     html: {
@@ -340,6 +343,15 @@ const dark_theme: any = {
       left: "-15px",
       right: "-15px",
     },
+
+    // Custom Material 3 Switch and FAB
+    ...Md3Switch({
+      bgColor: "#adacac",
+      thumbColor: "#f1f1f1",
+      checkedThumbColor: "#ffffff",
+      checkedBgColor: "#bb86fc",
+    }),
+
     ".range": {
       display: "inline-block",
       position: "relative",
@@ -4896,6 +4908,10 @@ const dark_theme: any = {
     ".progress-circular--material__secondary": {
       stroke: "rgba(172, 105, 254, 1)",
     },
+
+    // Custom Material 3 Fab
+    ...Md3Fab(),
+
     "button.fab, ons-fab.fab, ons-speed-dial-item.fab": {
       position: "relative",
       display: "inline-block",

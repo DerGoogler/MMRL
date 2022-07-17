@@ -290,6 +290,7 @@ class RepoActivity extends AppCompatActivity<Props, States> {
                   <div className="center">Enabled</div>
                   <div className="right">
                     <Switch
+                      modifier="material3"
                       checked={repo.isOn}
                       onChange={(e: any) => {
                         switch (repo.built_in_type) {

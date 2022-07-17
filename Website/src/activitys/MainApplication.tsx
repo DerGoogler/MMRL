@@ -1,14 +1,15 @@
 import Toolbar from "@Builders/ToolbarBuilder";
 import { TabWrapper } from "@Components/TabWrapper";
-import { SettingsRounded } from "@mui/icons-material";
+import { ExtensionRounded, SettingsRounded } from "@mui/icons-material";
 import { os } from "@Native/os";
 import SharedPreferences from "@Native/SharedPreferences";
 import { string } from "@Strings";
 import { Tab, Tabbar, TabbarRenderTab, ToolbarButton } from "react-onsenui";
-import { ActivityXRenderData } from "react-onsenuix";
+import { ActivityXRenderData, Fab } from "react-onsenuix";
 import AppCompatActivity from "./AppCompatActivity";
 import DeviceModuleFragment from "./fragments/DeviceModuleFragment";
 import ExploreModuleFragment from "./fragments/ExploreModuleFragment";
+import RepoActivity from "./RepoActivity";
 import SettingsActivity from "./SettingsActivity";
 
 interface Props {
@@ -38,6 +39,7 @@ class MainApplication extends AppCompatActivity<Props, States> {
 
     this.openSettings = this.openSettings.bind(this);
     this.renderTabs = this.renderTabs.bind(this);
+    this.onCreateFAB = this.onCreateFAB.bind(this);
   }
 
   public onCreateToolbar(): Toolbar.Props {
@@ -54,6 +56,32 @@ class MainApplication extends AppCompatActivity<Props, States> {
 
   public onBackButton(): void {
     os.close();
+  }
+
+  public onCreateFAB(): JSX.Element {
+    return (
+      <>
+        <Fab
+          style={{ borderRadius: "30%" }}
+          modifier="material3"
+          onClick={() => {
+            this.props.pushPage({
+              key: "repoactivity",
+              activity: RepoActivity,
+            });
+          }}
+          position="bottom right"
+        >
+          <span
+            style={{
+              verticalAlign: "middle",
+            }}
+          >
+            <ExtensionRounded sx={{ verticalAlign: "baseline" }} />
+          </span>
+        </Fab>
+      </>
+    );
   }
 
   public componentDidUpdate() {
