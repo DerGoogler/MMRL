@@ -2,8 +2,8 @@ import re
 
 # Run "python3 update.py"
 
-new_version = "1.4.1"
-new_versionCode = 141
+new_version = "1.4.2"
+new_versionCode = 142
 
 Website_version = "./Website/package.json"
 Android_version = "./Android/app/build.gradle"
