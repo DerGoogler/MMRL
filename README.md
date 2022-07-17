@@ -28,12 +28,6 @@ Use [this](https://dergoogler.com/repo-generator/) service to create a custom re
 	<td><img src="https://user-images.githubusercontent.com/54764558/170883584-008e135e-09d3-4c5f-9780-9d963b70205f.png"/>
 	<td><img src="https://user-images.githubusercontent.com/54764558/170883624-b564a344-7f6a-4a94-8494-3ca6b7e6a311.png"/>
 <tr>
-	<td><img src="https://user-images.githubusercontent.com/54764558/170883656-acacbe8e-2f78-48a5-9f85-839cebdf0f82.png"/>
-	<td><img src="https://user-images.githubusercontent.com/54764558/170883697-ff98c975-74e0-4622-b71c-189576e8c4f7.png"/>
-<tr>
-	<td><img src="https://user-images.githubusercontent.com/54764558/170883716-1b774428-e9dd-4de6-b341-9bc07417e771.png"/>
-	<td><img src=""/>
-<tr>
 </table>
 
 ## FAQ
