@@ -8,13 +8,12 @@ Use [this](https://dergoogler.com/repo-generator/) service to create a custom re
 
 ## What MMRL Supports (Roadmap)
 
-- [x] Custom repo loading
+- [x] Custom repo loading (Since 1.4.2 mutiple repositories are supported)
 - [x] Translation
 - [x] Dark mode
 
 #### Android only
 
-- [x] Custom theming
 - [x] View installed modules
 - [x] Remove installed modules
 - [x] Enable/Disable installed modules
