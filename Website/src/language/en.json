@@ -31,5 +31,9 @@
   "submit_module": "Submit a module",
   "donate": "Donate",
   "support": "Support",
-  "website": "Website"
+  "website": "Website",
+  "no_root": "No Root",
+  "failed": "Failed",
+  "no_root_message": "Seems that you'e doesn't having root permissions? If you have Magisk (Delta) installed you can directly open it from here.",
+  "open_magisk": "Open Magisk"
 }

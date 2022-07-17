@@ -243,7 +243,7 @@ class RepoActivity extends AppCompatActivity<Props, States> {
     const ListItem = (props: ListItemProps) => {
       return (
         <>
-          {props.part || props.part ? (
+          {props.part && (
             <List.Item
               // @ts-ignore
               onClick={props.onClick}
@@ -254,7 +254,7 @@ class RepoActivity extends AppCompatActivity<Props, States> {
 
               <div className="center">{props.text}</div>
             </List.Item>
-          ) : null}
+          )}
         </>
       );
     };

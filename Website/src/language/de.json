@@ -31,5 +31,9 @@
   "submit_module": "Ein Module einreichen",
   "donate": "Spenden",
   "support": "Support",
-  "website": "Webseite"
+  "website": "Webseite",
+  "no_root": "Kein Root",
+  "failed": "Fehlgeschlagen",
+  "no_root_message": "Scheint, dass keine Root-Berechtigungen vorhanden sind? Wenn Sie Magisk (Delta) installiert haben, können Sie es direkt von hier aus öffnen.",
+  "open_magisk": "Magisk öffnen"
 }

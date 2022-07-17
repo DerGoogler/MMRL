@@ -3,13 +3,15 @@ import ErrorBoundary from "@Components/ErrorBoundary";
 import Constants from "@Native/Constants";
 import { os } from "@Native/os";
 import SharedPreferences from "@Native/SharedPreferences";
-import { Context, createContext, CSSProperties } from "react";
+import React, { Context, createContext, CSSProperties } from "react";
 import { ActivityX, Page } from "react-onsenuix";
 
 export const AppCompatActivityContext: Context<string> = createContext("null");
 
 class AppCompatActivity<P = {}, S = {}, SS = any> extends ActivityX<P, S, SS> {
   public readonly isAndroid: bool = Constants.isAndroid;
+
+  public pageStyle: React.CSSProperties = {};
 
   private darkColor: string = "#1f1f1f";
   private lightColor: string = "#4a148c";
@@ -82,6 +84,7 @@ class AppCompatActivity<P = {}, S = {}, SS = any> extends ActivityX<P, S, SS> {
       <AppCompatActivityContext.Provider value="new null">
         <ErrorBoundary logger={this.constructor.name}>
           <Page
+            style={this.pageStyle}
             modifier={this.pageModifier}
             renderBottomToolbar={this.onCreateBottomToolbar}
             renderFixed={this.onCreateFAB}

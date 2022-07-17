@@ -11,6 +11,8 @@ import AppCompatActivity from "./AppCompatActivity";
 import { string } from "@Strings";
 import Magisk from "@Native/Magisk";
 import Toolbar from "@Builders/ToolbarBuilder";
+import { CSSProperties } from "react";
+import { link } from "googlers-tools";
 
 interface Props {
   extra?: any;
@@ -24,6 +26,7 @@ interface States {
 
 class ViewModuleActivity extends AppCompatActivity<Props, States> {
   public static readonly ignoreURL: bool = true;
+  public pageStyle: CSSProperties = { marginBottom: "28px" };
 
   public constructor(props: Props | Readonly<Props>) {
     super(props);
@@ -91,21 +94,14 @@ class ViewModuleActivity extends AppCompatActivity<Props, States> {
           style={{ padding: "8px", height: "100%" }}
           className={new SharedPreferences().getBoolean("enableDarkmode_switch", false) ? "markdown-body-dark" : "markdown-body-light"}
         >
-          {
-            /*
-            // @ts-ignore */
-            (() => {
-              if (verified) {
-                return (
-                  <Alert key="verified-module" icon={<VerifiedRounded fontSize="inherit" />} severity="success">
-                    {string.module_verified}
-                  </Alert>
-                );
-              }
-            })()
-          }
-          <HighlightedMarkdown style={{ marginBottom: "56px" }} children={this.state.notes} />
+          {verified && (
+            <Alert key="verified-module" icon={<VerifiedRounded fontSize="inherit" />} severity="success">
+              {string.module_verified}
+            </Alert>
+          )}
+          <HighlightedMarkdown style={{ marginBottom: "8px", height: "100%" }} children={this.state.notes} />
         </div>
+        <div style={{ height: "56px", width: "100%" }}></div>
         <div
           style={{
             position: "fixed",
@@ -152,78 +148,48 @@ class ViewModuleActivity extends AppCompatActivity<Props, States> {
           <div style={{ margin: "20px" }} className="markdown-body-light">
             <table style={{ width: "100%" }}>
               <th>Informations</th>
-              {(() => {
-                if (minMagisk != (null || undefined)) {
-                  return (
-                    <tr>
-                      <td
-                        style={{
-                          width: "100%",
-                        }}
-                      >
-                        Min. Magisk
-                      </td>
-                      <td
-                        style={{
-                          color: os.isAndroid ? (Magisk.PARSE_VERSION(minMagisk) > Magisk.VERSION_CODE ? "red" : "") : "",
-                        }}
-                      >
-                        {minMagisk}
-                      </td>
-                    </tr>
-                  );
-                } else {
-                  return null;
-                }
-              })()}
-              {(() => {
-                if (minApi != (null || undefined)) {
-                  return (
-                    <tr>
-                      <td style={{ width: "100%" }}>Min. Android</td>
-                      <td>{minApi}</td>
-                    </tr>
-                  );
-                } else {
-                  return null;
-                }
-              })()}
-              {(() => {
-                if (maxApi != (null || undefined)) {
-                  return (
-                    <tr>
-                      <td style={{ width: "100%" }}>Max. Android</td>
-                      <td>{maxApi}</td>
-                    </tr>
-                  );
-                } else {
-                  return null;
-                }
-              })()}
-              {(() => {
-                if (needRamdisk != (null || undefined)) {
-                  return (
-                    <tr>
-                      <td style={{ width: "100%" }}>needsRamdisk</td>
-                      <td>{needRamdisk}</td>
-                    </tr>
-                  );
-                } else {
-                  return null;
-                }
-              })()}
-              {(() => {
-                if (changeBoot != (null || undefined)) {
-                  return (
-                    <tr>
-                      <td style={{ width: "100%" }}>changeBoot</td>
-                      <td>{changeBoot}</td>
-                    </tr>
-                  );
-                } else {
-                  return null;
-                }
-              })()}
+              {minMagisk != (null || undefined) && (
+                <tr>
+                  <td
+                    style={{
+                      width: "100%",
+                    }}
+                  >
+                    Min. Magisk
+                  </td>
+                  <td
+                    style={{
+                      color: os.isAndroid ? (Magisk.PARSE_VERSION(minMagisk) > Magisk.VERSION_CODE ? "red" : "") : "",
+                    }}
+                  >
+                    {minMagisk}
+                  </td>
+                </tr>
+              )}
+              {minApi != (null || undefined) && (
+                <tr>
+                  <td style={{ width: "100%" }}>Min. Android</td>
+                  <td>{minApi}</td>
+                </tr>
+              )}
+              {maxApi != (null || undefined) && (
+                <tr>
+                  <td style={{ width: "100%" }}>Max. Android</td>
+                  <td>{maxApi}</td>
+                </tr>
+              )}
+              {needRamdisk != (null || undefined) && (
+                <tr>
+                  <td style={{ width: "100%" }}>needsRamdisk</td>
+                  <td>{needRamdisk}</td>
+                </tr>
+              )}
+              {changeBoot != (null || undefined) && (
+                <tr>
+                  <td style={{ width: "100%" }}>changeBoot</td>
+                  <td>{changeBoot}</td>
+                </tr>
+              )}
             </table>
           </div>
         </Dialog>

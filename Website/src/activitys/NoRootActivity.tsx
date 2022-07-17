@@ -2,6 +2,7 @@ import { Button, Card } from "react-onsenuix";
 import AppCompatActivity from "./AppCompatActivity";
 import Toast from "@Native/Toast";
 import Toolbar from "@Builders/ToolbarBuilder";
+import { string } from "@Strings";
 
 class NoRootActivity extends AppCompatActivity {
   private readonly magiskPackageName: string = "com.topjohnwu.magisk";
@@ -9,7 +10,7 @@ class NoRootActivity extends AppCompatActivity {
 
   public onCreateToolbar(): Toolbar.Props {
     return {
-      title: "No Root",
+      title: string.no_root,
     };
   }
 
@@ -17,14 +18,12 @@ class NoRootActivity extends AppCompatActivity {
     return (
       <div style={{ padding: "8px" }}>
         <Card>
-          <div className="title">Failed!</div>
-          <div className="content">
-            It seems that this device has no root? Please check the Magisk app and enable root permission. If you don't have root, then
-            search in the internet for your device.
-          </div>
+          <div className="title">{string.failed}!</div>
+          <div className="content">{string.no_root_message}</div>
         </Card>
         <Button
           modifier="large"
+          style={{ marginLeft: "8px", marginRight: "8px" }}
           onClick={() => {
             if (nos.isPackageInstalled(this.magiskPackageName)) {
               nos.launchAppByPackageName(this.magiskPackageName);
@@ -35,7 +34,7 @@ class NoRootActivity extends AppCompatActivity {
             }
           }}
         >
-          Open Magisk
+          {string.open_magisk}
         </Button>
       </div>
     );

@@ -90,6 +90,7 @@ class MainApplication extends AppCompatActivity<Props, States> {
     );
   }
 
+
   public componentDidUpdate() {
     super.componentDidUpdate;
   }
