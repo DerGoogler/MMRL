@@ -1,11 +1,10 @@
-import Toolbar from "@Builders/ToolbarBuilder";
 import { TabWrapper } from "@Components/TabWrapper";
 import { ExtensionRounded, SettingsRounded } from "@mui/icons-material";
 import { os } from "@Native/os";
 import SharedPreferences from "@Native/SharedPreferences";
 import { string } from "@Strings";
-import { Tab, Tabbar, TabbarRenderTab, ToolbarButton } from "react-onsenui";
-import { ActivityXRenderData, Fab } from "react-onsenuix";
+import { OnsFabElement } from "onsenui";
+import { ActivityXRenderData, Fab, TabbarEvent, Tab, Tabbar, TabbarRenderTab, Toolbar } from "react-onsenuix";
 import AppCompatActivity from "./AppCompatActivity";
 import DeviceModuleFragment from "./fragments/DeviceModuleFragment";
 import ExploreModuleFragment from "./fragments/ExploreModuleFragment";
@@ -30,26 +29,32 @@ interface Props {
   pushPage: any;
 }
 
-interface States {}
+interface States {
+  fabDisplay: string;
+}
 
 class MainApplication extends AppCompatActivity<Props, States> {
   public constructor(props: Props | Readonly<Props>) {
     super(props);
-    this.state = {};
+    this.state = {
+      fabDisplay: "",
+    };
 
     this.openSettings = this.openSettings.bind(this);
     this.renderTabs = this.renderTabs.bind(this);
     this.onCreateFAB = this.onCreateFAB.bind(this);
+
+    document.querySelector<OnsFabElement>("ons-fab")?.hide();
   }
 
-  public onCreateToolbar(): Toolbar.Props {
+  public onCreateToolbar() {
     return {
       title: "Magisk Module Repo Loader",
       addToolbarButtonPosition: "right",
       addToolbarButton: (
-        <ToolbarButton className="back-button--material__icon" onClick={this.openSettings}>
+        <Toolbar.Button className="back-button--material__icon" onClick={this.openSettings}>
           <SettingsRounded />
-        </ToolbarButton>
+        </Toolbar.Button>
       ),
     };
   }
@@ -62,7 +67,7 @@ class MainApplication extends AppCompatActivity<Props, States> {
     return (
       <>
         <Fab
-          style={{ borderRadius: "30%" }}
+          style={{ borderRadius: "30%", display: this.state.fabDisplay }}
           modifier="material3"
           onClick={() => {
             this.props.pushPage({
@@ -116,6 +121,13 @@ class MainApplication extends AppCompatActivity<Props, States> {
             swipeable={false}
             position={SharedPreferences.getBoolean("enableBottomTabs_switch", false) ? "bottom" : "top"}
             renderTabs={this.renderTabs}
+            onPreChange={(event: TabbarEvent) => {
+              if (event.index == 1) {
+                this.setState({ fabDisplay: "none" });
+              } else {
+                this.setState({ fabDisplay: "" });
+              }
+            }}
           />
         ) : (
           <ExploreModuleFragment pushPage={this.props.pushPage} />
