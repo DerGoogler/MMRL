@@ -52,7 +52,7 @@ class ExploreModuleFragment extends Component<Props, States> {
     }, 2000);
 
     RepoActivity.getReadOnlyRepos()
-      .concat(JSON.parse(this.pref.getString("repos", "[]")))
+      .concat(this.pref.getJSON<Array<RepoInterface>>("repos", []))
       .map((repo: RepoInterface) => {
         if (repo.isOn) {
           axios
@@ -74,23 +74,6 @@ class ExploreModuleFragment extends Component<Props, States> {
             });
         } // If the repo is disabled, do nothing.
       });
-
-    /* axios
-      .get(this.prefManager.getString("repo", "https://raw.githubusercontent.com/Magisk-Modules-Alt-Repo/json/main/modules.json"))
-      .then((response) => {
-        const modules = response.data.modules;
-        this.setState({
-          modulesIndex: modules,
-        });
-      })
-      .catch((error) => {
-        this.setState({
-          modulesIndex: [],
-        });
-      })
-      .then(() => {
-        // always executed
-      });*/
 
     axios.get("https://dergoogler.com/repo/moduleOptions.json").then((response) => {
       this.setState({

@@ -13,7 +13,7 @@ import {
 import { link, util } from "googlers-tools";
 import ons from "onsenui";
 import Icon from "@Components/Icon";
-import { AlertDialog as Dialog, Input, Switch } from "react-onsenui";
+import { AlertDialog as Dialog, Input, Switch, ToolbarButton } from "react-onsenui";
 import Toast from "@Native/Toast";
 import { os } from "@Native/os";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
@@ -147,7 +147,7 @@ class RepoActivity extends AppCompatActivity<Props, States> {
   }
 
   private getRepos(): Array<RepoInterface> {
-    return JSON.parse(this.pref.getString("repos", "[]"));
+    return this.pref.getJSON<Array<RepoInterface>>("repos", []);
   }
 
   private removeRepo(item: any) {
@@ -156,7 +156,7 @@ class RepoActivity extends AppCompatActivity<Props, States> {
     var index = array.indexOf(item);
     array.splice(index, 1);
 
-    this.pref.setString("repos", JSON.stringify(array));
+    this.pref.setJSON<Array<RepoInterface>>("repos", array);
     this.setState({ repos: this.getRepos() });
   }
 
@@ -166,7 +166,7 @@ class RepoActivity extends AppCompatActivity<Props, States> {
     if (item) {
       item.isOn = state;
     }
-    this.pref.setString("repos", JSON.stringify(array));
+    this.pref.setJSON<Array<RepoInterface>>("repos", array);
   }
 
   private addRepo() {
@@ -178,23 +178,20 @@ class RepoActivity extends AppCompatActivity<Props, States> {
           .get(repoLink)
           .then((response) => {
             const data = response.data;
-            this.pref.setString(
-              "repos",
-              JSON.stringify([
-                ...JSON.parse(this.pref.getString("repos", "[]")),
-                {
-                  name: repoName,
-                  website: util.typeCheck(data.website, null),
-                  support: util.typeCheck(data.support, null),
-                  donate: util.typeCheck(data.donate, null),
-                  submitModule: util.typeCheck(data.submitModule, null),
-                  last_update: util.typeCheck(data.last_update, null),
-                  modules: repoLink,
-                  readonly: false,
-                  isOn: false,
-                },
-              ])
-            );
+            this.pref.setJSON<Array<RepoInterface>>("repos", [
+              ...this.pref.getJSON<Array<RepoInterface>>("repos", []),
+              {
+                name: repoName,
+                website: util.typeCheck(data.website, null),
+                support: util.typeCheck(data.support, null),
+                donate: util.typeCheck(data.donate, null),
+                submitModule: util.typeCheck(data.submitModule, null),
+                last_update: util.typeCheck(data.last_update, null),
+                modules: repoLink,
+                readonly: false,
+                isOn: false,
+              },
+            ]);
 
             this.hideAlertDialog();
           })
@@ -219,11 +216,9 @@ class RepoActivity extends AppCompatActivity<Props, States> {
       onBackButton: this.props.popPage,
       addToolbarButtonPosition: "right",
       addToolbarButton: (
-        <Toolbar.Button className="back-button--material__icon" onClick={this.showAlertDialog}>
-          <span className="back-button__icon back-button--material__icon">
-            <Add />
-          </span>
-        </Toolbar.Button>
+        <ToolbarButton className="back-button--material__icon" onClick={this.showAlertDialog}>
+          <Add />
+        </ToolbarButton>
       ),
     };
   }
