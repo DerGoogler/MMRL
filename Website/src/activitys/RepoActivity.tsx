@@ -1,17 +1,26 @@
 import { ActivityXRenderData, AlertDialog, List, Toolbar } from "react-onsenuix";
 import AppCompatActivity from "./AppCompatActivity";
 import SharedPreferences, { ISharedPreferences } from "@Native/SharedPreferences";
-import { Add, DeleteRounded, LanguageRounded, SupportRounded, UploadFileRounded, VolunteerActivismRounded } from "@mui/icons-material";
+import {
+  Add,
+  DeleteRounded,
+  ExtensionRounded,
+  LanguageRounded,
+  SupportRounded,
+  UploadFileRounded,
+  VolunteerActivismRounded,
+} from "@mui/icons-material";
 import { link } from "googlers-tools";
 import ons from "onsenui";
 import Icon from "@Components/Icon";
-import { AlertDialog as Dialog, Input } from "react-onsenui";
+import { AlertDialog as Dialog, Input, Switch } from "react-onsenui";
 import Toast from "@Native/Toast";
 import { os } from "@Native/os";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { SvgIconTypeMap } from "@mui/material/SvgIcon/SvgIcon";
 import axios from "axios";
 import { string } from "@Strings";
+import { Fragment } from "react";
 
 interface Props {
   pushPage: any;
@@ -32,6 +41,31 @@ interface ListItemProps {
   onClick: () => void;
 }
 
+export interface RepoInterface {
+  /**
+   * An required filed, to disply the repository name
+   */
+  name: string;
+  /**
+   * An given website link for the repository
+   */
+  website?: string | undefined;
+  /**
+   * Given support link i.g. Telegram, Xda, GitHub or something
+   */
+  support?: string | undefined;
+  donate?: string | undefined;
+  submitModule?: string | undefined;
+  last_update?: string | number | undefined;
+  modules: string;
+  /**
+   * The setting enabled by default if the repo is built-in
+   */
+  readonly: boolean;
+  isOn: boolean;
+  built_in_type?: string;
+}
+
 class RepoActivity extends AppCompatActivity<Props, States> {
   private pref: ISharedPreferences;
 
@@ -49,6 +83,7 @@ class RepoActivity extends AppCompatActivity<Props, States> {
 
     this.addRepo = this.addRepo.bind(this);
     this.removeRepo = this.removeRepo.bind(this);
+    this.changeEnabledState = this.changeEnabledState.bind(this);
     this.onCreateToolbar = this.onCreateToolbar.bind(this);
 
     this.hideAlertDialog = this.hideAlertDialog.bind(this);
@@ -58,7 +93,7 @@ class RepoActivity extends AppCompatActivity<Props, States> {
   }
 
   // Contact @Der_Googler on Telegram to request changes
-  public static getReadOnlyRepos(): Array<any> {
+  public static getReadOnlyRepos(): Array<RepoInterface> {
     return [
       {
         name: "Magisk Modules Alternative Repository",
@@ -69,9 +104,11 @@ class RepoActivity extends AppCompatActivity<Props, States> {
         last_update: undefined,
         modules: "https://raw.githubusercontent.com/Magisk-Modules-Alt-Repo/json/main/modules.json",
         readonly: true,
+        isOn: SharedPreferences.getBoolean("repoMMARenabled", true),
+        built_in_type: "MMAR",
       },
       {
-        name: "Googlers-Magisk-Repo",
+        name: "Googlers Magisk Repo",
         website: "https://github.com/Googlers-Magisk-Repo",
         support: undefined,
         donate: undefined,
@@ -79,6 +116,8 @@ class RepoActivity extends AppCompatActivity<Props, States> {
         last_update: undefined,
         modules: "https://raw.githubusercontent.com/Googlers-Magisk-Repo/googlers-magisk-repo.github.io/master/modules.json",
         readonly: true,
+        isOn: SharedPreferences.getBoolean("repoGMRenabled", true),
+        built_in_type: "GMR",
       },
     ];
   }
@@ -107,7 +146,7 @@ class RepoActivity extends AppCompatActivity<Props, States> {
     }
   }
 
-  private getRepos(): Array<any> {
+  private getRepos(): Array<RepoInterface> {
     return JSON.parse(this.pref.getString("repos", "[]"));
   }
 
@@ -119,6 +158,15 @@ class RepoActivity extends AppCompatActivity<Props, States> {
 
     this.pref.setString("repos", JSON.stringify(array));
     this.setState({ repos: this.getRepos() });
+  }
+
+  private changeEnabledState(state: any) {
+    let array = this.getRepos();
+    var item = array.find((item: RepoInterface) => item.isOn === !state);
+    if (item) {
+      item.isOn = state;
+    }
+    this.pref.setString("repos", JSON.stringify(array));
   }
 
   private addRepo() {
@@ -143,6 +191,7 @@ class RepoActivity extends AppCompatActivity<Props, States> {
                   last_update: data.last_update ? data.last_update : null,
                   modules: repoLink,
                   readonly: false,
+                  isOn: false,
                 },
               ])
             );
@@ -215,23 +264,57 @@ class RepoActivity extends AppCompatActivity<Props, States> {
       );
     };
 
+    const roReposOption = (): Array<RepoInterface> => {
+      return !SharedPreferences.getBoolean("enableHideReadonlyRepositories_switch", false) ? RepoActivity.getReadOnlyRepos() : [];
+    };
+
     return (
       <>
         <List>
-          {RepoActivity.getReadOnlyRepos()
+          {roReposOption()
             .concat(data.s.repos)
-            .map((repo: any) => (
-              <>
+            .map((repo: RepoInterface, index: number) => (
+              <Fragment key={index}>
                 <List.Header>
                   {repo.name}
                   {repo.readonly ? " (Read-Only)" : ""}
                 </List.Header>
+                <List.Item
+                  // @ts-ignore
+                  onClick={() => {}}
+                >
+                  <div className="left">
+                    <Icon icon={ExtensionRounded} />
+                  </div>
+
+                  <div className="center">Enabled</div>
+                  <div className="right">
+                    <Switch
+                      checked={repo.isOn}
+                      onChange={(e: any) => {
+                        switch (repo.built_in_type) {
+                          case "MMAR":
+                            this.pref.setBoolean("repoMMARenabled", e.target.checked);
+                            break;
+                          case "GMR":
+                            this.pref.setBoolean("repoGMRenabled", e.target.checked);
+                            break;
+                          default:
+                            this.changeEnabledState(e.target.checked);
+                            break;
+                        }
+                      }}
+                    />
+                  </div>
+                </List.Item>
                 <ListItem
                   part={repo.website}
                   icon={LanguageRounded}
                   text={string.website}
                   onClick={() => {
-                    os.open(repo.website);
+                    if (repo.website) {
+                      os.open(repo.website);
+                    }
                   }}
                 />
                 <ListItem
@@ -239,7 +322,9 @@ class RepoActivity extends AppCompatActivity<Props, States> {
                   icon={SupportRounded}
                   text={string.support}
                   onClick={() => {
-                    os.open(repo.support);
+                    if (repo.support) {
+                      os.open(repo.support);
+                    }
                   }}
                 />
                 <ListItem
@@ -247,7 +332,9 @@ class RepoActivity extends AppCompatActivity<Props, States> {
                   icon={VolunteerActivismRounded}
                   text={string.donate}
                   onClick={() => {
-                    os.open(repo.donate);
+                    if (repo.donate) {
+                      os.open(repo.donate);
+                    }
                   }}
                 />
                 <ListItem
@@ -255,7 +342,9 @@ class RepoActivity extends AppCompatActivity<Props, States> {
                   icon={UploadFileRounded}
                   text={string.submit_module}
                   onClick={() => {
-                    os.open(repo.submitModule);
+                    if (repo.submitModule) {
+                      os.open(repo.submitModule);
+                    }
                   }}
                 />
                 <ListItem
@@ -271,16 +360,12 @@ class RepoActivity extends AppCompatActivity<Props, States> {
                       )
                       .then((g) => {
                         if (g) {
-                          this.removeRepo({
-                            name: repo.name,
-                            modules: repo.link,
-                            readonly: false,
-                          });
+                          this.removeRepo(repo);
                         }
                       });
                   }}
                 />
-              </>
+              </Fragment>
             ))}
         </List>
         <>

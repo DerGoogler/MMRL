@@ -13,6 +13,7 @@ import {
   BugReportRounded,
   ExtensionRounded,
   GavelRounded,
+  HideSourceRounded,
   PowerInputRounded,
   SourceRounded,
 } from "@mui/icons-material";
@@ -82,6 +83,12 @@ class SettingsActivity extends AppCompatActivity<Props, States> {
                           activity: RepoActivity,
                         });
                       },
+                    },
+                    {
+                      key: "enableHideReadonlyRepositories",
+                      type: "switch",
+                      icon: <Icon icon={HideSourceRounded} />,
+                      text: "Hide Readonly Repositories",
                     },
                   ],
                 },

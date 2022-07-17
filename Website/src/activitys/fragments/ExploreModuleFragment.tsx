@@ -10,7 +10,8 @@ import { os } from "@Native/os";
 import ons from "onsenui";
 import { string } from "@Strings";
 import { isTablet } from "react-device-detect";
-import RepoActivity from "@Activitys/RepoActivity";
+import RepoActivity, { RepoInterface } from "@Activitys/RepoActivity";
+import Toast from "@Native/Toast";
 
 interface Props {
   pushPage(...arg: any): PushProps;
@@ -26,7 +27,7 @@ interface States {
 
 class ExploreModuleFragment extends Component<Props, States> {
   private searchBar: LegacyRef<SearchInput> | undefined;
-  private prefManager: SharedPreferences;
+  private pref: SharedPreferences;
 
   public constructor(props: Props | Readonly<Props>) {
     super(props);
@@ -37,7 +38,7 @@ class ExploreModuleFragment extends Component<Props, States> {
       moduleOptions: {},
       loading: true,
     };
-    this.prefManager = new SharedPreferences();
+    this.pref = new SharedPreferences();
   }
 
   public componentDidMount = () => {
@@ -51,24 +52,27 @@ class ExploreModuleFragment extends Component<Props, States> {
     }, 2000);
 
     RepoActivity.getReadOnlyRepos()
-      .concat(JSON.parse(SharedPreferences.getString("repos", "[]")))
-      .map((repo: any) => {
-        axios
-          .get(repo.modules)
-          .then((response) => {
-            const modules = response.data.modules;
-            this.setState((state, props) => ({
-              modulesIndex: state.modulesIndex.concat(modules),
-            }));
-          })
-          .catch((error) => {
-            this.setState({
-              modulesIndex: [],
+      .concat(JSON.parse(this.pref.getString("repos", "[]")))
+      .map((repo: RepoInterface) => {
+        if (repo.isOn) {
+          axios
+            .get(repo.modules)
+            .then((response) => {
+              const modules = response.data.modules;
+              this.setState((state, props) => ({
+                modulesIndex: state.modulesIndex.concat(modules),
+              }));
+            })
+            .catch((error) => {
+              this.setState({
+                modulesIndex: [],
+              });
+              Toast.makeText(error, Toast.LENGTH_SHORT).show();
+            })
+            .then(() => {
+              // always executed
             });
-          })
-          .then(() => {
-            // always executed
-          });
+        } // If the repo is disabled, do nothing.
       });
 
     /* axios
