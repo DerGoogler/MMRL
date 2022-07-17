@@ -85,6 +85,7 @@ class DeviceModule extends ViewX<Props, States> {
                   <item-name>{name}</item-name>
                   <item-switch>
                     <Switch
+                      modifier="material3"
                       checked={isEnabled}
                       disabled={isSwitchDisabled}
                       onChange={(e: any) => {

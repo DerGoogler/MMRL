@@ -367,7 +367,7 @@ const light_theme: any = {
       bgColor: "#b0afaf",
       thumbColor: "#f1f1f1",
       checkedThumbColor: "#ffffff",
-      checkedBgColor: "#7c43bd",
+      checkedBgColor: "#4a148c",
     }),
 
     ".range": {
