@@ -59,7 +59,7 @@
         "name": "googlers-tools",
         "description": "My own tools / scripts that i use.",
         "author": "Der_Googler <jimmyboehm@dergoogler.com>",
-        "version": "1.2.5",
+        "version": "1.2.7",
         "license": "GPL-3.0",
         "repository": "https://github.com/DerGoogler/googlers-tools"
     },

@@ -10,7 +10,7 @@ import {
   UploadFileRounded,
   VolunteerActivismRounded,
 } from "@mui/icons-material";
-import { link } from "googlers-tools";
+import { link, util } from "googlers-tools";
 import ons from "onsenui";
 import Icon from "@Components/Icon";
 import { AlertDialog as Dialog, Input, Switch } from "react-onsenui";
@@ -184,11 +184,11 @@ class RepoActivity extends AppCompatActivity<Props, States> {
                 ...JSON.parse(this.pref.getString("repos", "[]")),
                 {
                   name: repoName,
-                  website: data.website ? data.website : null,
-                  support: data.support ? data.support : null,
-                  donate: data.donate ? data.donate : null,
-                  submitModule: data.submitModule ? data.submitModule : null,
-                  last_update: data.last_update ? data.last_update : null,
+                  website: util.typeCheck(data.website, null),
+                  support: util.typeCheck(data.support, null),
+                  donate: util.typeCheck(data.donate, null),
+                  submitModule: util.typeCheck(data.submitModule, null),
+                  last_update: util.typeCheck(data.last_update, null),
                   modules: repoLink,
                   readonly: false,
                   isOn: false,
@@ -248,7 +248,7 @@ class RepoActivity extends AppCompatActivity<Props, States> {
     const ListItem = (props: ListItemProps) => {
       return (
         <>
-          {props.part ? (
+          {props.part || props.part ? (
             <List.Item
               // @ts-ignore
               onClick={props.onClick}
