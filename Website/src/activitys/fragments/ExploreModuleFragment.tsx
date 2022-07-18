@@ -11,6 +11,7 @@ import { isDesktop, isTablet } from "react-device-detect";
 import RepoActivity, { RepoInterface } from "@Activitys/RepoActivity";
 import Toast from "@Native/Toast";
 import { Searchbar } from "@Components/Searchbar";
+import ModuleProps from "@Types/ModuleProps";
 
 interface Props {
   pushPage(...arg: any): PushProps;
@@ -28,13 +29,12 @@ interface ModuleObject {
   id: string;
   last_update: number;
   notes_url: string;
-  prop_url: string;
+  prop_url: ModuleProps.PropUrl;
   stars: number;
   zip_url: string;
 }
 
 class ExploreModuleFragment extends Component<Props, States> {
-  private searchBar: LegacyRef<SearchInput> | undefined;
   private pref: SharedPreferences;
 
   public constructor(props: Props | Readonly<Props>) {

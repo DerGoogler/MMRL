@@ -10,6 +10,7 @@ import { isDesktop, isTablet } from "react-device-detect";
 import { dom, link } from "googlers-tools";
 import { ViewX, ViewXRenderData } from "react-onsenuix";
 import { string } from "@Strings";
+import ModuleProps from "@Types/ModuleProps";
 
 interface Props {
   notesUrl?: string;
@@ -19,7 +20,7 @@ interface Props {
   stars?: int;
   last_update?: any;
   getId: any;
-  propsUrl: string;
+  propsUrl: string | ModuleProps.PropUrl;
 }
 
 interface ModuleOptions {
@@ -29,22 +30,7 @@ interface ModuleOptions {
 }
 
 interface States {
-  props: {
-    id?: string;
-    name?: string;
-    version?: string;
-    versionCode?: int;
-    author?: string;
-    description?: string;
-    minApi?: int;
-    maxApi?: int;
-    minMagisk?: int;
-    needRamdisk?: boolean;
-    support?: string;
-    donate?: string;
-    config?: string;
-    changeBoot?: boolean;
-  };
+  props: Partial<ModuleProps.PropUrl>;
 }
 
 class ExploreModule extends ViewX<Props, States> {
@@ -64,12 +50,26 @@ class ExploreModule extends ViewX<Props, States> {
 
   public componentDidMount = () => {
     const { propsUrl } = this.props;
-    const { props } = this.state;
-    axios.get(propsUrl).then((response) => {
-      this.setState({
-        props: Properties.parseToProperties(response.data),
+    if (link.validURL(propsUrl as any)) {
+      axios.get(propsUrl as string).then((response) => {
+        let tmp = Properties.parseToProperties(response.data);
+        tmp.foxprops = {
+          minApi: null as any,
+          maxApi: null as any,
+          minMagisk: null as any,
+          needRamdisk: null as any,
+          support: null as any,
+          donate: null as any,
+          config: null as any,
+          changeBoot: null as any,
+        };
+        this.setState({
+          props: tmp,
+        });
       });
-    });
+    } else {
+      this.setState({ props: propsUrl as ModuleProps.PropUrl });
+    }
   };
 
   private formatDate(date: Date) {
@@ -137,13 +137,7 @@ class ExploreModule extends ViewX<Props, States> {
                 moduleOptions: {
                   verified: isVerified,
                 },
-                moduleProps: {
-                  minMagisk: props.minMagisk,
-                  minApi: props.minApi,
-                  maxApi: props.maxApi,
-                  needRamdisk: props?.needRamdisk,
-                  changeBoot: props.changeBoot,
-                },
+                moduleProps: props,
               },
             });
           }}

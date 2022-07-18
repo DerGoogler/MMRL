@@ -1,4 +1,4 @@
-import { Toolbar as gae, Button } from "react-onsenuix";
+import { Toolbar as gae, Button, AlertDialog } from "react-onsenuix";
 import { Dialog } from "react-onsenui";
 import ons from "onsenui";
 import axios from "axios";
@@ -12,16 +12,22 @@ import { string } from "@Strings";
 import Magisk from "@Native/Magisk";
 import Toolbar from "@Builders/ToolbarBuilder";
 import { CSSProperties } from "react";
-import { link } from "googlers-tools";
+import { link, util } from "googlers-tools";
+import ModuleProps from "@Types/ModuleProps";
 
 interface Props {
-  extra?: any;
+  extra: {
+    moduleProps: ModuleProps.PropUrl;
+    [x: string]: any;
+  };
   popPage: any;
 }
 
 interface States {
   notes: string;
   dialogShown: boolean;
+  mProps: ModuleProps.PropUrl;
+  mFoxProps: ModuleProps.FoxProps;
 }
 
 class ViewModuleActivity extends AppCompatActivity<Props, States> {
@@ -33,6 +39,8 @@ class ViewModuleActivity extends AppCompatActivity<Props, States> {
     this.state = {
       notes: "",
       dialogShown: false,
+      mProps: this.props.extra.moduleProps,
+      mFoxProps: this.props.extra.moduleProps.foxprops,
     };
   }
 
@@ -54,16 +62,33 @@ class ViewModuleActivity extends AppCompatActivity<Props, States> {
       .then(() => {
         // always executed
       });
+
+    const { minMagisk, minApi, maxApi, needRamdisk, changeBoot } = this.state.mFoxProps;
+    if (minApi && minApi > 20) {
+      const builder = new AlertDialog.Builder();
+      builder.setTitle("Unsupported!");
+      builder.setMessage("This module target api is higher than your device api.");
+      builder.setPositiveButton("Ok");
+      builder.setCancelable(false);
+      builder.showAlert();
+    }
   };
 
   public onCreateToolbar = (): Toolbar.Props => {
-    const { minMagisk, minApi, maxApi, needRamdisk, changeBoot } = this.props.extra?.moduleProps;
+    // Normal props
+    const { name } = this.state.mProps;
+    // FoxProps
+    const { minMagisk, minApi, maxApi, needRamdisk, changeBoot } = this.state.mFoxProps;
     return {
-      title: this.props.extra.name,
+      title: this.props.extra?.name,
       onBackButton: this.props.popPage,
       addToolbarButton: (
         <>
-          {(minMagisk || minApi || maxApi || needRamdisk || changeBoot) != (null || undefined) ? (
+          {((minMagisk && minMagisk) ||
+            (minApi && minApi) ||
+            (maxApi && maxApi) ||
+            (needRamdisk && needRamdisk) ||
+            (changeBoot && changeBoot)) != (null || undefined) ? (
             <div className="right">
               <gae.Button style={{ padding: "0px 10px" }} className="back-button--material__icon" onClick={this.showDialog}>
                 <InfoRounded />
@@ -85,7 +110,10 @@ class ViewModuleActivity extends AppCompatActivity<Props, States> {
   };
 
   public onCreate = () => {
-    const { minMagisk, minApi, maxApi, needRamdisk, changeBoot, name, stars, alpahMMRLinstall } = this.props.extra?.moduleProps;
+    // Normal props
+    const { name } = this.state.mProps;
+    // FoxProps
+    const { minMagisk, minApi, maxApi, needRamdisk, changeBoot } = this.state.mFoxProps;
     const { download, id } = this.props.extra;
     const { verified, low } = this.props.extra?.moduleOptions;
     return (
@@ -159,7 +187,7 @@ class ViewModuleActivity extends AppCompatActivity<Props, States> {
                   </td>
                   <td
                     style={{
-                      color: os.isAndroid ? (Magisk.PARSE_VERSION(minMagisk) > Magisk.VERSION_CODE ? "red" : "") : "",
+                      color: os.isAndroid ? (Magisk.PARSE_VERSION(minMagisk as any) > Magisk.VERSION_CODE ? "red" : "") : "",
                     }}
                   >
                     {minMagisk}
