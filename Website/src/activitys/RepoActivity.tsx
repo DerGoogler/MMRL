@@ -216,9 +216,9 @@ class RepoActivity extends AppCompatActivity<Props, States> {
       onBackButton: this.props.popPage,
       addToolbarButtonPosition: "right",
       addToolbarButton: (
-        <ToolbarButton className="back-button--material__icon" onClick={this.showAlertDialog}>
-          <Add />
-        </ToolbarButton>
+        <Toolbar.Button className="back-button--material__icon" onClick={this.showAlertDialog}>
+          <Icon icon={Add} keepLight={true}  />
+        </Toolbar.Button>
       ),
     };
   }

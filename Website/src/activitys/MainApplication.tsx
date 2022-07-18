@@ -1,3 +1,4 @@
+import Icon from "@Components/Icon";
 import { TabWrapper } from "@Components/TabWrapper";
 import { ExtensionRounded, SettingsRounded } from "@mui/icons-material";
 import { os } from "@Native/os";
@@ -5,7 +6,7 @@ import SharedPreferences from "@Native/SharedPreferences";
 import { string } from "@Strings";
 import { OnsFabElement } from "onsenui";
 import { ToolbarButton } from "react-onsenui";
-import { ActivityXRenderData, Fab, TabbarEvent, Tab, Tabbar, TabbarRenderTab } from "react-onsenuix";
+import { ActivityXRenderData, Fab, TabbarEvent, Tab, Tabbar, TabbarRenderTab, Toolbar } from "react-onsenuix";
 import AppCompatActivity from "./AppCompatActivity";
 import DeviceModuleFragment from "./fragments/DeviceModuleFragment";
 import ExploreModuleFragment from "./fragments/ExploreModuleFragment";
@@ -53,9 +54,10 @@ class MainApplication extends AppCompatActivity<Props, States> {
       title: "Magisk Module Repo Loader",
       addToolbarButtonPosition: "right",
       addToolbarButton: (
-        <ToolbarButton className="back-button--material__icon" onClick={this.openSettings}>
-          <SettingsRounded />
-        </ToolbarButton>
+        <Toolbar.Button className="back-button--material__icon" onClick={this.openSettings}>
+          <Icon icon={SettingsRounded} keepLight={true}  />
+          {/*<SettingsRounded />*/}
+        </Toolbar.Button>
       ),
     };
   }
@@ -89,7 +91,6 @@ class MainApplication extends AppCompatActivity<Props, States> {
       </>
     );
   }
-
 
   public componentDidUpdate() {
     super.componentDidUpdate;

@@ -169,9 +169,9 @@
     },
     {
         "name": "react-onsenuix",
-        "description": "Onsen UI - React Components for Hybrid Cordova/PhoneGap Apps with Material Design and iOS UI components",
+        "description": "React Onsen UI, but Typed!",
         "author": "Der_Googler <jimmyboehm@dergoogler.com>",
-        "version": "1.0.5",
+        "version": "1.0.6",
         "license": "null",
         "repository": "https://github.com/DerGoogler/react-onsenuix"
     },

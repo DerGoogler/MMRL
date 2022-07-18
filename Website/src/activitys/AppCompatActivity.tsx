@@ -6,8 +6,6 @@ import SharedPreferences from "@Native/SharedPreferences";
 import React, { Context, createContext, CSSProperties } from "react";
 import { ActivityX, Page } from "react-onsenuix";
 
-export const AppCompatActivityContext: Context<string> = createContext("null");
-
 class AppCompatActivity<P = {}, S = {}, SS = any> extends ActivityX<P, S, SS> {
   public readonly isAndroid: bool = Constants.isAndroid;
 
@@ -15,8 +13,6 @@ class AppCompatActivity<P = {}, S = {}, SS = any> extends ActivityX<P, S, SS> {
 
   private darkColor: string = "#1f1f1f";
   private lightColor: string = "#4a148c";
-
-  public static contextType: Context<string> = AppCompatActivityContext;
 
   public constructor(props: P | Readonly<P>) {
     super(props);
@@ -81,26 +77,24 @@ class AppCompatActivity<P = {}, S = {}, SS = any> extends ActivityX<P, S, SS> {
 
   public render = (): JSX.Element => {
     return (
-      <AppCompatActivityContext.Provider value="new null">
-        <ErrorBoundary logger={this.constructor.name}>
-          <Page
-            style={this.pageStyle}
-            modifier={this.pageModifier}
-            renderBottomToolbar={this.onCreateBottomToolbar}
-            renderFixed={this.onCreateFAB}
-            renderModal={this.onCreateModal}
-            onInfiniteScroll={this.onInfiniteScroll}
-            onHide={this.onHide}
-            onShow={this.onShow}
-            onInit={this.onInit}
-            renderToolbar={() => {
-              return <Toolbar.Builder {...this.onCreateToolbar()} />;
-            }}
-          >
-            <this.onCreate p={this.props} s={this.state} />
-          </Page>
-        </ErrorBoundary>
-      </AppCompatActivityContext.Provider>
+      <ErrorBoundary logger={this.constructor.name}>
+        <Page
+          style={this.pageStyle}
+          modifier={this.pageModifier}
+          renderBottomToolbar={this.onCreateBottomToolbar}
+          renderFixed={this.onCreateFAB}
+          renderModal={this.onCreateModal}
+          onInfiniteScroll={this.onInfiniteScroll}
+          onHide={this.onHide}
+          onShow={this.onShow}
+          onInit={this.onInit}
+          renderToolbar={() => {
+            return <Toolbar.Builder {...this.onCreateToolbar()} />;
+          }}
+        >
+          <this.onCreate p={this.props} s={this.state} />
+        </Page>
+      </ErrorBoundary>
     );
   };
 }

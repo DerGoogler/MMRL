@@ -2410,7 +2410,6 @@ const dark_theme: any = {
         },
       ],
       display: "inline-block",
-      padding: "0 12px",
       height: "100%",
       margin: "0",
       border: "none",

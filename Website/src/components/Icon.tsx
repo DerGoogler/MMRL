@@ -22,12 +22,17 @@ class Icon extends ViewX<IProps, {}, SVGSVGElement> {
     super(props);
     this.pref = new SharedPreferences();
     this.isDarkmode = this.pref.getBoolean("enableDarkmode_switch", false);
+
+    this.createView = this.createView.bind(this);
   }
 
   public createView(data: ViewXRenderData<IProps, {}, SVGSVGElement>): JSX.Element {
     return (
       <this.props.icon
-        sx={{ color: this.isDarkmode ? (data.p.keepLight ? "rgba(0, 0, 0, 0.54)" : "rgba(255, 255, 255, 1)") : "rgba(0, 0, 0, 0.54)" }}
+        sx={{
+          color: data.p.keepLight ? "rgba(255, 255, 255, 1)" : this.isDarkmode ? "rgba(255, 255, 255, 1)" : "rgba(0, 0, 0, 0.54)",
+          verticalAlign: "baseline",
+        }}
         {...data.p}
       />
     );
