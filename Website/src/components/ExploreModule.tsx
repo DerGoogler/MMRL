@@ -6,7 +6,7 @@ import ViewModuleActivity from "@Activitys/ViewModuleActivity";
 import Log from "@Native/Log";
 import { VerifiedRounded } from "@mui/icons-material";
 import { os } from "@Native/os";
-import { isTablet } from "react-device-detect";
+import { isDesktop, isTablet } from "react-device-detect";
 import { dom, link } from "googlers-tools";
 import { ViewX, ViewXRenderData } from "react-onsenuix";
 import { string } from "@Strings";
@@ -101,7 +101,7 @@ class ExploreModule extends ViewX<Props, States> {
   };
 
   private checkDeviceSize(element: JSX.Element): JSX.Element {
-    if (isTablet) {
+    if (isTablet || isDesktop) {
       return <Col style={{ width: "50%", height: "50%" }}>{element}</Col>;
     } else {
       return element;

@@ -1,15 +1,13 @@
 import { Component, LegacyRef } from "react";
 import { SearchInput, ProgressCircular, Row } from "react-onsenui";
-import { Button, Page } from "react-onsenuix";
 import axios from "axios";
 import ExploreModule from "@Components/ExploreModule";
 import SharedPreferences from "@Native/SharedPreferences";
 import { PushProps } from "@Activitys/MainActivity";
-import { SearchRounded } from "@mui/icons-material";
 import { os } from "@Native/os";
 import ons from "onsenui";
 import { string } from "@Strings";
-import { isTablet } from "react-device-detect";
+import { isDesktop, isTablet } from "react-device-detect";
 import RepoActivity, { RepoInterface } from "@Activitys/RepoActivity";
 import Toast from "@Native/Toast";
 import { Searchbar } from "@Components/Searchbar";
@@ -144,7 +142,7 @@ class ExploreModuleFragment extends Component<Props, States> {
                   transform: "translate(-50%, -50%)",
                 }}
               />
-            ) : isTablet ? (
+            ) : isTablet || isDesktop ? (
               resultsRender
             ) : (
               this.cardRender(modulesIndex)
