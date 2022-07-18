@@ -1,4 +1,4 @@
-import Shell from "./ShellBuilder";
+import Shell from "./Shell";
 
 class Magiskboot {
   public static readonly magiskbootpath: string = "/data/adb/magisk/magiskboot";

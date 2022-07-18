@@ -1,5 +1,5 @@
 import { os } from "./os";
-import Shell from "@Native/ShellBuilder";
+import Shell from "@Native/Shell";
 import pkg from "@Package";
 import SharedPreferences from "./SharedPreferences";
 import Build from "./Build";

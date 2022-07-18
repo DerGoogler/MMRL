@@ -4,7 +4,7 @@ import { Page, RouterNavigator } from "react-onsenui";
 import MainApplication from "@Activitys/MainApplication";
 import Constants from "@Native/Constants";
 import NoRootActivity from "./NoRootActivity";
-import Shell from "@Native/ShellBuilder";
+import Shell from "@Native/Shell";
 import { link } from "googlers-tools";
 
 interface ModuleOptions {

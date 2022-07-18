@@ -1,8 +1,10 @@
 import Log from "@Native/Log";
 import { os } from "./os";
 
+type cmdReturn = Omit<IShell, "isAppGrantedRoot" | "cmd">;
+
 interface IShell {
-  cmd(cmd: string): this;
+  cmd(cmd: string): cmdReturn;
   exec(): void;
   result(): string;
   isAppGrantedRoot(): boolean;
@@ -25,7 +27,7 @@ class ShellClass implements IShell {
    * Runs an Android native shell cmd
    * Should never used multiple
    */
-  public cmd(cmd: string): this {
+  public cmd(cmd: string): cmdReturn {
     this.command = cmd;
     return this;
   }
