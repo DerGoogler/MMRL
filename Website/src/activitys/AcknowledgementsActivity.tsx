@@ -2,6 +2,7 @@ import Toolbar from "@Builders/ToolbarBuilder";
 import { string } from "@Strings";
 import { ActivityXRenderData, Card } from "react-onsenuix";
 import dep from "./../utils/licenses.json";
+import depNative from "./../utils/native-licenses.json";
 import AppCompatActivity from "./AppCompatActivity";
 
 interface Props {
@@ -22,7 +23,7 @@ class AcknowledgementsActivity extends AppCompatActivity<Props, States> {
 
   public componentDidMount = () => {
     super.componentDidMount;
-    this.setState({ libs: dep });
+    this.setState({ libs: dep.concat(depNative) });
   };
 
   public onCreateToolbar(): Toolbar.Props {

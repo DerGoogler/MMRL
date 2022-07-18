@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "bun run licenses && webpack --config webpack.dev.ts",
     "prod": "bun run licenses && bun run dev && webpack --config webpack.prod.ts && rm ./../Android/app/src/main/assets/**/*.map",
-    "licenses": "bun license.ts > ./src/utils/licenses.json"
+    "licenses": "bun license.ts > ./src/utils/licenses.json && cd ../Android && ./gradlew app:printSolvedDepsTreeInJson"
   },
   "typings": "types/onsenui.d.ts",
   "dependencies": {

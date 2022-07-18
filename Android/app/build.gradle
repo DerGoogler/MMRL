@@ -1,5 +1,9 @@
+import groovy.json.*
+import org.json.*
+import com.google.gson.*;
+
 apply plugin: 'com.android.application'
-// apply plugin: 'com.github.node-gradle.node'
+apply plugin: 'com.github.node-gradle.node'
 
 android {
     compileSdk 32
@@ -8,8 +12,8 @@ android {
         applicationId 'com.dergoogler.mmrl'
         minSdk 26
         targetSdk 32
-        versionName "1.4.2"
-        versionCode "142".toInteger()
+        versionName "1.4.1"
+        versionCode "141".toInteger()
     }
     buildTypes {
         release {
@@ -23,6 +27,7 @@ android {
             minifyEnabled false
             multiDexEnabled false
             applicationIdSuffix '.debug'
+            buildConfigField "String", "BASE_URL", "\"leer\""
         }
     }
     compileOptions {
@@ -47,4 +52,45 @@ dependencies {
     implementation "com.github.topjohnwu.libsu:io:5.0.1"
     implementation "androidx.appcompat:appcompat:1.4.2"
    // implementation 'com.google.android.material:material:1.6.0'
+}
+
+configurations.implementation.setCanBeResolved(true)
+
+task printDepsTreeInJson {
+    doLast {
+        configurations.implementation.incoming.getResolutionResult().getAllDependencies().each { depResult  ->
+            println "{\"from\":\"" + depResult.getFrom() + "\"," + "\"requested\":\"" + depResult.getRequested() + "\"}"
+        }
+    }
+}
+
+task printSolvedDepsTreeInJson {
+    doLast {
+        def jsonOutput = "["
+        configurations.implementation.resolvedConfiguration.firstLevelModuleDependencies.each { dep ->
+            def addToJson
+            addToJson = { resolvedDep ->
+                jsonOutput += "\n{"
+                jsonOutput += "\"name\":\"${resolvedDep.module.id.group}:${resolvedDep.module.id.name}\","
+                jsonOutput += "\"description\":\"${resolvedDep.module.id}\","
+                jsonOutput += "\"version\":\"${resolvedDep.module.id.version}\","
+                jsonOutput += "\"license\":\"null\","
+                jsonOutput += "\"author\":\"null\","
+                jsonOutput += "\"repository\":\"https://mvnrepository.com/artifact/${resolvedDep.module.id.group}/${resolvedDep.module.id.name}/${resolvedDep.module.id.version}\""
+                jsonOutput += "},"
+            }
+            addToJson(dep)
+        }
+        if(jsonOutput[-1] == ','){
+            jsonOutput = jsonOutput[0..-2]
+        }
+        jsonOutput += "]"
+
+        // This took me more than two hours to make -_-
+        def jsonFile =new JsonSlurper().parseText(jsonOutput)
+        def json = JsonOutput.toJson(jsonFile)
+        def pretty = JsonOutput.prettyPrint(json)
+        def myFile = new File('./../Website/src/utils/native-licenses.json')
+        myFile.write(pretty)
+    }
 }
