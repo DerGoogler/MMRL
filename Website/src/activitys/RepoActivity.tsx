@@ -21,6 +21,7 @@ import { SvgIconTypeMap } from "@mui/material/SvgIcon/SvgIcon";
 import axios from "axios";
 import { string } from "@Strings";
 import { Fragment } from "react";
+import { Searchbar } from "@Components/Searchbar";
 
 interface Props {
   pushPage: any;
@@ -32,6 +33,8 @@ interface States {
   alertDialogShown: boolean;
   repoName: string;
   repoLink: string;
+  searchValue: string;
+  finalSearchValue: string;
 }
 
 interface ListItemProps {
@@ -79,6 +82,8 @@ class RepoActivity extends AppCompatActivity<Props, States> {
       alertDialogShown: false,
       repoName: "",
       repoLink: "",
+      searchValue: "",
+      finalSearchValue: "",
     };
 
     this.addRepo = this.addRepo.bind(this);
@@ -90,6 +95,8 @@ class RepoActivity extends AppCompatActivity<Props, States> {
     this.showAlertDialog = this.showAlertDialog.bind(this);
     this.handleRepoLinkChange = this.handleRepoLinkChange.bind(this);
     this.handleRepoNameChange = this.handleRepoNameChange.bind(this);
+    this.repoSearchFilter = this.repoSearchFilter.bind(this);
+    this.triggerRepoSearch = this.triggerRepoSearch.bind(this);
   }
 
   // Contact @Der_Googler on Telegram to request changes
@@ -217,7 +224,7 @@ class RepoActivity extends AppCompatActivity<Props, States> {
       addToolbarButtonPosition: "right",
       addToolbarButton: (
         <Toolbar.Button className="back-button--material__icon" onClick={this.showAlertDialog}>
-          <Icon icon={Add} keepLight={true}  />
+          <Icon icon={Add} keepLight={true} />
         </Toolbar.Button>
       ),
     };
@@ -236,6 +243,18 @@ class RepoActivity extends AppCompatActivity<Props, States> {
   }
   private handleRepoLinkChange(e: any) {
     this.setState({ repoLink: e.target.value });
+  }
+
+  private repoSearchFilter(e: any) {
+    this.setState((state: Readonly<States>, props: Readonly<Props>) => ({
+      searchValue: e.target.value,
+    }));
+  }
+
+  private triggerRepoSearch() {
+    this.setState((state: Readonly<States>, props: Readonly<Props>) => ({
+      finalSearchValue: state.searchValue,
+    }));
   }
 
   // Some layout atr inspired from @Fox2Code
@@ -263,106 +282,109 @@ class RepoActivity extends AppCompatActivity<Props, States> {
       return !SharedPreferences.getBoolean("enableHideReadonlyRepositories_switch", false) ? RepoActivity.getReadOnlyRepos() : [];
     };
 
+    const filteredRepos = roReposOption()
+      .concat(data.s.repos)
+      .filter((item) => item.name.toLowerCase().includes(this.state.finalSearchValue.toLowerCase()));
+
     return (
       <>
+        <Searchbar placeholder={string.search_modules} onButtonClick={this.triggerRepoSearch} onInputChange={this.repoSearchFilter} />
         <List>
-          {roReposOption()
-            .concat(data.s.repos)
-            .map((repo: RepoInterface, index: number) => (
-              <Fragment key={index}>
-                <List.Header>
-                  {repo.name}
-                  {repo.readonly ? " (Read-Only)" : ""}
-                </List.Header>
-                <List.Item
-                  // @ts-ignore
-                  onClick={() => {}}
-                >
-                  <div className="left">
-                    <Icon icon={ExtensionRounded} />
-                  </div>
+          {filteredRepos.map((repo: RepoInterface, index: number) => (
+            <Fragment key={index}>
+              <List.Header>
+                {repo.name}
+                {repo.readonly ? " (Read-Only)" : ""}
+              </List.Header>
+              <List.Item
+                // @ts-ignore
+                onClick={() => {}}
+              >
+                <div className="left">
+                  <Icon icon={ExtensionRounded} />
+                </div>
 
-                  <div className="center">Enabled</div>
-                  <div className="right">
-                    <Switch
-                      modifier="material3"
-                      checked={repo.isOn}
-                      onChange={(e: any) => {
-                        switch (repo.built_in_type) {
-                          case "MMAR":
-                            this.pref.setBoolean("repoMMARenabled", e.target.checked);
-                            break;
-                          case "GMR":
-                            this.pref.setBoolean("repoGMRenabled", e.target.checked);
-                            break;
-                          default:
-                            this.changeEnabledState(e.target.checked);
-                            break;
-                        }
-                      }}
-                    />
-                  </div>
-                </List.Item>
-                <ListItem
-                  part={repo.website}
-                  icon={LanguageRounded}
-                  text={string.website}
-                  onClick={() => {
-                    if (repo.website) {
-                      os.open(repo.website);
-                    }
-                  }}
-                />
-                <ListItem
-                  part={repo.support}
-                  icon={SupportRounded}
-                  text={string.support}
-                  onClick={() => {
-                    if (repo.support) {
-                      os.open(repo.support);
-                    }
-                  }}
-                />
-                <ListItem
-                  part={repo.donate}
-                  icon={VolunteerActivismRounded}
-                  text={string.donate}
-                  onClick={() => {
-                    if (repo.donate) {
-                      os.open(repo.donate);
-                    }
-                  }}
-                />
-                <ListItem
-                  part={repo.submitModule}
-                  icon={UploadFileRounded}
-                  text={string.submit_module}
-                  onClick={() => {
-                    if (repo.submitModule) {
-                      os.open(repo.submitModule);
-                    }
-                  }}
-                />
-                <ListItem
-                  part={!repo.readonly}
-                  icon={DeleteRounded}
-                  text={string.remove}
-                  onClick={() => {
-                    ons.notification
-                      .confirm(
-                        string.formatString(string.confirm_repo_delete, {
-                          name: repo.name,
-                        }) as string
-                      )
-                      .then((g) => {
-                        if (g) {
-                          this.removeRepo(repo);
-                        }
-                      });
-                  }}
-                />
-              </Fragment>
-            ))}
+                <div className="center">Enabled</div>
+                <div className="right">
+                  <Switch
+                    modifier="material3"
+                    checked={repo.isOn}
+                    onChange={(e: any) => {
+                      switch (repo.built_in_type) {
+                        case "MMAR":
+                          this.pref.setBoolean("repoMMARenabled", e.target.checked);
+                          break;
+                        case "GMR":
+                          this.pref.setBoolean("repoGMRenabled", e.target.checked);
+                          break;
+                        default:
+                          this.changeEnabledState(e.target.checked);
+                          break;
+                      }
+                    }}
+                  />
+                </div>
+              </List.Item>
+              <ListItem
+                part={repo.website}
+                icon={LanguageRounded}
+                text={string.website}
+                onClick={() => {
+                  if (repo.website) {
+                    os.open(repo.website);
+                  }
+                }}
+              />
+              <ListItem
+                part={repo.support}
+                icon={SupportRounded}
+                text={string.support}
+                onClick={() => {
+                  if (repo.support) {
+                    os.open(repo.support);
+                  }
+                }}
+              />
+              <ListItem
+                part={repo.donate}
+                icon={VolunteerActivismRounded}
+                text={string.donate}
+                onClick={() => {
+                  if (repo.donate) {
+                    os.open(repo.donate);
+                  }
+                }}
+              />
+              <ListItem
+                part={repo.submitModule}
+                icon={UploadFileRounded}
+                text={string.submit_module}
+                onClick={() => {
+                  if (repo.submitModule) {
+                    os.open(repo.submitModule);
+                  }
+                }}
+              />
+              <ListItem
+                part={!repo.readonly}
+                icon={DeleteRounded}
+                text={string.remove}
+                onClick={() => {
+                  ons.notification
+                    .confirm(
+                      string.formatString(string.confirm_repo_delete, {
+                        name: repo.name,
+                      }) as string
+                    )
+                    .then((g) => {
+                      if (g) {
+                        this.removeRepo(repo);
+                      }
+                    });
+                }}
+              />
+            </Fragment>
+          ))}
         </List>
         <>
           <Dialog isOpen={this.state.alertDialogShown} isCancelable={false}>

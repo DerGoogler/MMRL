@@ -1,12 +1,10 @@
 import Icon from "@Components/Icon";
 import { TabWrapper } from "@Components/TabWrapper";
-import { ExtensionRounded, SettingsRounded } from "@mui/icons-material";
+import { SettingsRounded } from "@mui/icons-material";
 import { os } from "@Native/os";
 import SharedPreferences from "@Native/SharedPreferences";
 import { string } from "@Strings";
-import { OnsFabElement } from "onsenui";
-import { ToolbarButton } from "react-onsenui";
-import { ActivityXRenderData, Fab, TabbarEvent, Tab, Tabbar, TabbarRenderTab, Toolbar } from "react-onsenuix";
+import { ActivityXRenderData, Tab, Tabbar, TabbarRenderTab, Toolbar } from "react-onsenuix";
 import AppCompatActivity from "./AppCompatActivity";
 import DeviceModuleFragment from "./fragments/DeviceModuleFragment";
 import ExploreModuleFragment from "./fragments/ExploreModuleFragment";
@@ -45,8 +43,6 @@ class MainApplication extends AppCompatActivity<Props, States> {
     this.openSettings = this.openSettings.bind(this);
     this.renderTabs = this.renderTabs.bind(this);
     this.onCreateFAB = this.onCreateFAB.bind(this);
-
-    document.querySelector<OnsFabElement>("ons-fab")?.hide();
   }
 
   public onCreateToolbar() {
@@ -55,8 +51,7 @@ class MainApplication extends AppCompatActivity<Props, States> {
       addToolbarButtonPosition: "right",
       addToolbarButton: (
         <Toolbar.Button className="back-button--material__icon" onClick={this.openSettings}>
-          <Icon icon={SettingsRounded} keepLight={true}  />
-          {/*<SettingsRounded />*/}
+          <Icon icon={SettingsRounded} keepLight={true} />
         </Toolbar.Button>
       ),
     };
@@ -64,32 +59,6 @@ class MainApplication extends AppCompatActivity<Props, States> {
 
   public onBackButton(): void {
     os.close();
-  }
-
-  public onCreateFAB(): JSX.Element {
-    return (
-      <>
-        <Fab
-          style={{ borderRadius: "30%", display: this.state.fabDisplay }}
-          modifier="material3"
-          onClick={() => {
-            this.props.pushPage({
-              key: "repoactivity",
-              activity: RepoActivity,
-            });
-          }}
-          position="bottom right"
-        >
-          <span
-            style={{
-              verticalAlign: "middle",
-            }}
-          >
-            <ExtensionRounded sx={{ verticalAlign: "baseline" }} />
-          </span>
-        </Fab>
-      </>
-    );
   }
 
   public componentDidUpdate() {
@@ -124,13 +93,6 @@ class MainApplication extends AppCompatActivity<Props, States> {
             swipeable={false}
             position={SharedPreferences.getBoolean("enableBottomTabs_switch", false) ? "bottom" : "top"}
             renderTabs={this.renderTabs}
-            onPreChange={(event: TabbarEvent) => {
-              if (event.index == 1) {
-                this.setState({ fabDisplay: "none" });
-              } else {
-                this.setState({ fabDisplay: "" });
-              }
-            }}
           />
         ) : (
           <ExploreModuleFragment pushPage={this.props.pushPage} />

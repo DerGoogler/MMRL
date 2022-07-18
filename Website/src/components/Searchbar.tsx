@@ -22,6 +22,7 @@ class Searchbar extends ViewX<SearchbarProps, {}, HTMLDivElement> {
           display: "inline-flex",
           justifyContent: "center",
           padding: "8px 8px 4px",
+          width: "100%",
         }}
       >
         <SearchInput

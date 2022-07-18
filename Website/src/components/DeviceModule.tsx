@@ -76,7 +76,6 @@ class DeviceModule extends ViewX<Props, States> {
           <Card
             id={id}
             key={id}
-            //@ts-ignore
             style={{ marginTop: "4px", marginBottom: "4px" }}
           >
             <item-card-wrapper>
