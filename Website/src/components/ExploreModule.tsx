@@ -19,7 +19,6 @@ interface Props {
   stars?: int;
   last_update?: any;
   getId: any;
-  searchState?: string;
   propsUrl: string;
 }
 
@@ -72,28 +71,6 @@ class ExploreModule extends ViewX<Props, States> {
       });
     });
   };
-
-  public componentDidUpdate() {
-    const { searchState } = this.props;
-    dom.findBy(this.cardName, (ref) => {
-      if (searchState != "") {
-        const search = ref.textContent || ref.innerText;
-        if (search.toLowerCase().indexOf(searchState) > -1) {
-          dom.findBy(this.searchedCard, (ref: HTMLElement) => {
-            ref.style.display = "";
-          });
-        } else {
-          dom.findBy(this.searchedCard, (ref: HTMLElement) => {
-            ref.style.display = "none";
-          });
-        }
-      } else {
-        dom.findBy(this.searchedCard, (ref: HTMLElement) => {
-          ref.style.display = "";
-        });
-      }
-    });
-  }
 
   private formatDate(date: Date) {
     var hours = date.getHours();

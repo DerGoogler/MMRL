@@ -12,17 +12,27 @@ import { string } from "@Strings";
 import { isTablet } from "react-device-detect";
 import RepoActivity, { RepoInterface } from "@Activitys/RepoActivity";
 import Toast from "@Native/Toast";
+import { Searchbar } from "@Components/Searchbar";
 
 interface Props {
   pushPage(...arg: any): PushProps;
 }
 
 interface States {
-  modulesIndex: Array<any>;
-  currentSerachText: string;
-  search: string;
+  modulesIndex: Array<ModuleObject>;
   moduleOptions: any[any];
   loading: boolean;
+  searchValue: string;
+  finalSearchValue: string;
+}
+
+interface ModuleObject {
+  id: string;
+  last_update: number;
+  notes_url: string;
+  prop_url: string;
+  stars: number;
+  zip_url: string;
 }
 
 class ExploreModuleFragment extends Component<Props, States> {
@@ -33,10 +43,10 @@ class ExploreModuleFragment extends Component<Props, States> {
     super(props);
     this.state = {
       modulesIndex: [],
-      currentSerachText: "",
-      search: "",
       moduleOptions: {},
       loading: true,
+      searchValue: "",
+      finalSearchValue: "",
     };
     this.pref = new SharedPreferences();
   }
@@ -85,19 +95,21 @@ class ExploreModuleFragment extends Component<Props, States> {
   public componentDidCatch = () => {};
 
   private filter = (e: any) => {
-    this.setState({ currentSerachText: e.target.value.toLowerCase() });
+    this.setState((state: Readonly<States>, props: Readonly<Props>) => ({
+      searchValue: e.target.value,
+    }));
   };
 
   private triggerSearch = () => {
     this.setState((state: Readonly<States>, props: Readonly<Props>) => ({
-      search: state.currentSerachText,
+      finalSearchValue: state.searchValue,
     }));
   };
 
   public render = () => {
-    const { search, loading, modulesIndex } = this.state;
+    const { loading, modulesIndex, searchValue, finalSearchValue } = this.state;
 
-    const resultsRender = [];
+    const resultsRender: Array<any> = [];
 
     for (var i = 0; i < modulesIndex.length; i += 2) {
       resultsRender.push(<Row>{this.cardRender(modulesIndex.slice(i, i + 2))}</Row>);
@@ -115,49 +127,7 @@ class ExploreModuleFragment extends Component<Props, States> {
             flexDirection: "column",
           }}
         >
-          <div
-            style={{
-              textAlign: "center",
-              display: "inline-flex",
-              justifyContent: "center",
-              padding: "8px 8px 4px",
-            }}
-          >
-            <SearchInput
-              placeholder={string.search_modules}
-              ref={this.searchBar}
-              style={{
-                borderRadius: "8px",
-                width: "100%",
-                marginRight: "4px",
-              }}
-              onChange={this.filter}
-            />
-            <Button
-              onClick={this.triggerSearch}
-              style={{
-                textAlign: "center",
-                display: "flex",
-                justifyContent: "center",
-                marginLeft: "4px",
-                borderRadius: "8px",
-              }}
-            >
-              <div
-                style={{
-                  textAlign: "center",
-                  height: "100%",
-                  width: "100%",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <SearchRounded sx={{ color: "white" }} />
-              </div>
-            </Button>
-          </div>
+          <Searchbar placeholder={string.search_modules} onButtonClick={this.triggerSearch} onInputChange={this.filter} />
           <module-container
             style={{
               paddingBottom: "4px",
@@ -185,10 +155,12 @@ class ExploreModuleFragment extends Component<Props, States> {
     );
   };
 
-  private cardRender(map: Array<any>) {
-    return map
+  private cardRender(map: Array<ModuleObject>) {
+    const filteredModules = map.filter((item) => item.id.toLowerCase().includes(this.state.finalSearchValue.toLowerCase()));
+
+    return filteredModules
       .sort((a, b) => (a.id > b.id ? 1 : -1))
-      .map((item: any) => {
+      .map((item) => {
         return (
           <ExploreModule
             key={item.id}
@@ -197,7 +169,6 @@ class ExploreModuleFragment extends Component<Props, States> {
             notesUrl={item.notes_url}
             downloadUrl={item.zip_url}
             pushPage={this.props.pushPage}
-            searchState={this.state.search}
             moduleOptions={this.state.moduleOptions}
             last_update={item.last_update}
           />
