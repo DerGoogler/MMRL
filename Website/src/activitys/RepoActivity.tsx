@@ -72,6 +72,8 @@ export interface RepoInterface {
 class RepoActivity extends AppCompatActivity<Props, States> {
   private pref: ISharedPreferences;
 
+  private readonly MAX_REPO_LENGTH: number = 5;
+
   public constructor(props: Props | Readonly<Props>) {
     super(props);
 
@@ -121,7 +123,7 @@ class RepoActivity extends AppCompatActivity<Props, States> {
         donate: undefined,
         submitModule: undefined,
         last_update: undefined,
-        modules: "https://raw.githubusercontent.com/Googlers-Magisk-Repo/googlers-magisk-repo.github.io/master/modules.json",
+        modules: "https://repo.dergoogler.com/modules.json",
         readonly: true,
         isOn: SharedPreferences.getBoolean("repoGMRenabled", true),
         built_in_type: "GMR",
@@ -189,11 +191,11 @@ class RepoActivity extends AppCompatActivity<Props, States> {
               ...this.pref.getJSON<Array<RepoInterface>>("repos", []),
               {
                 name: repoName,
-                website: util.typeCheck(data.website, null),
-                support: util.typeCheck(data.support, null),
-                donate: util.typeCheck(data.donate, null),
-                submitModule: util.typeCheck(data.submitModule, null),
-                last_update: util.typeCheck(data.last_update, null),
+                website: util.typeCheck(link.validURL(data.website), null),
+                support: util.typeCheck(link.validURL(data.support), null),
+                donate: util.typeCheck(link.validURL(data.donate), null),
+                submitModule: util.typeCheck(link.validURL(data.submitModule), null),
+                last_update: util.typeCheck(link.validURL(data.last_update), null),
                 modules: repoLink,
                 readonly: false,
                 isOn: false,
@@ -231,7 +233,11 @@ class RepoActivity extends AppCompatActivity<Props, States> {
   }
 
   private showAlertDialog() {
-    this.setState({ alertDialogShown: true });
+    if (this.getRepos().length === this.MAX_REPO_LENGTH) {
+      Toast.makeText("You can't add more than 5 repositories (Read-Only Repos are not counted).", Toast.LENGTH_SHORT).show();
+    } else {
+      this.setState({ alertDialogShown: true });
+    }
   }
 
   private hideAlertDialog() {

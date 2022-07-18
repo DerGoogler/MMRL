@@ -1,5 +1,5 @@
 interface NOS {
-  makeToast(content: string, duration: int): void;
+  makeToast(content: string | undefined, duration: int| undefined): void;
   getSchemeParam(param: string): string;
   hasStoragePermission(): bool;
   requestStoargePermission(): void;
