@@ -1,10 +1,12 @@
 import { merge } from "webpack-merge";
-import { defConfig, config } from "./webpack.config";
-import UglifyJsPlugin from "uglifyjs-webpack-plugin";
+import { defConfig, Mode } from "./webpack/defConfig";
+import config from "./webpack.config";
+import { ProdPlugins } from "./webpack/plugins";
 
 export default merge(config, {
-  mode: "production",
+  mode: Mode.Production,
   ...defConfig,
+  ...ProdPlugins,
   optimization: {
     //@ts-ignore
     minimizer: [new UglifyJsPlugin()],

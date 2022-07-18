@@ -2,14 +2,7 @@ import { Configuration } from "webpack";
 import { resolve, join } from "path";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
-
-const defConfig = {
-  output: {
-    filename: "bundle/[name].bundle.js",
-    path: resolve(__dirname, "./../Android/app/src/main/assets"),
-    assetModuleFilename: "files/[name].[ext]",
-  },
-};
+import { defConfig } from "./webpack/defConfig";
 
 const config: Configuration = {
   entry: {
@@ -68,11 +61,7 @@ const config: Configuration = {
     maxEntrypointSize: 512000,
     maxAssetSize: 512000,
   },
-  plugins: [
-    new MiniCssExtractPlugin({
-      filename: "bundle/[name].bundle.css",
-    }),
-  ],
+  plugins: [],
   resolve: {
     fallback: {
       path: false,
@@ -99,4 +88,4 @@ const config: Configuration = {
   },
 };
 
-export { defConfig, config };
+export default config;
