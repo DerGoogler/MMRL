@@ -2,6 +2,10 @@
 
 Magisk Module Repo Loader (MMRL). Allows you to load custom repos with an simple UI
 
+[![Build with Webpack](https://github.com/DerGoogler/MMRL/actions/workflows/webpack.yml/badge.svg?branch=master)](https://github.com/DerGoogler/MMRL/actions/workflows/webpack.yml)
+[![CodeQL](https://github.com/DerGoogler/MMRL/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/DerGoogler/MMRL/actions/workflows/codeql-analysis.yml)
+[![Android CI](https://github.com/DerGoogler/MMRL/actions/workflows/android.yml/badge.svg)](https://github.com/DerGoogler/MMRL/actions/workflows/android.yml)
+
 ## How to create custom repo?
 
 Use [this](https://dergoogler.com/repo-generator/) service to create a custom repository.
