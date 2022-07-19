@@ -42,7 +42,7 @@ dep.forEach((element?: any) => {
     author: typeof author == "undefined" ? "null" : typeof author == "object" ? author.name : author, //getObject(getInnerObject(author, author.name), "Unknown"),
     version: getObject(version, "null"),
     license: getObject(license, "null"),
-    repository: getObject(getInnerObject(repository, repository.url), "empty", { isLink: true }),
+    repository: `https://www.npmjs.com/package/${getObject(name, "Unknown Module")}`,
   });
 });
 
