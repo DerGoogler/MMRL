@@ -11,6 +11,7 @@ Use [this](https://dergoogler.com/repo-generator/) service to create a custom re
 - [x] Custom repo loading (Since 1.4.2 mutiple repositories are supported)
 - [x] Translation
 - [x] Dark mode
+- [ ] Favorite lists
 
 #### Android only
 
@@ -33,8 +34,7 @@ Use [this](https://dergoogler.com/repo-generator/) service to create a custom re
 
 **MMRL** new default
 
-> **Note**
-> `prop_url` can also used as fallback
+> **Note** > `prop_url` can also used as fallback
 
 ```json
 {

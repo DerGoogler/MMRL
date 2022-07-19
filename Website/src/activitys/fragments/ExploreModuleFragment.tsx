@@ -1,5 +1,5 @@
-import { Component, LegacyRef } from "react";
-import { SearchInput, ProgressCircular, Row } from "react-onsenui";
+import { Component } from "react";
+import { ProgressCircular, Row } from "react-onsenui";
 import axios from "axios";
 import ExploreModule from "@Components/ExploreModule";
 import SharedPreferences from "@Native/SharedPreferences";
@@ -29,7 +29,8 @@ interface ModuleObject {
   id: string;
   last_update: number;
   notes_url: string;
-  prop_url: ModuleProps.PropUrl;
+  prop_url: string;
+  props: ModuleProps.PropUrl;
   stars: number;
   zip_url: string;
 }
@@ -68,7 +69,7 @@ class ExploreModuleFragment extends Component<Props, States> {
             .then((response) => {
               const modules = response.data.modules;
               this.setState((state, props) => ({
-                modulesIndex: state.modulesIndex.concat(modules),
+                modulesIndex: state.modulesIndex.concat(modules /*.map((item: any) => ({ ...item }))*/),
               }));
             })
             .catch((error) => {
@@ -161,9 +162,11 @@ class ExploreModuleFragment extends Component<Props, States> {
       .map((item) => {
         return (
           <ExploreModule
+            fullItem={item}
             key={item.id}
             getId={item.id}
             propsUrl={item.prop_url}
+            props={item.props}
             notesUrl={item.notes_url}
             downloadUrl={item.zip_url}
             pushPage={this.props.pushPage}
