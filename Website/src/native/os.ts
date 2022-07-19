@@ -4,6 +4,7 @@ import SharedPreferences from "./SharedPreferences";
 import ons from "onsenui";
 import { isValidElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
+import Constants from "@Utils/Constants";
 
 /**
  * The `os` module provides operating system-related utility methods and
@@ -14,7 +15,7 @@ import { renderToStaticMarkup } from "react-dom/server";
  * ```
  */
 class os {
-  private static readonly userAgentAndroid = "MMRL";
+  private static readonly userAgentAndroid = Constants.UserAgentAndroid;
   public static readonly userAgent = window.navigator.userAgent;
   public static readonly isAndroid = this.userAgentAndroid === this.userAgent || window.hasOwnProperty("cordova") ? true : false;
   private static readonly android = os.isAndroid;

@@ -1,10 +1,10 @@
 import { Component } from "react";
 import { Page, RouterNavigator, RouterUtil } from "react-onsenui";
 import MainApplication from "@Activitys/MainApplication";
-import Constants from "@Native/Constants";
 import NoRootActivity from "./NoRootActivity";
 import Shell from "@Native/Shell";
 import { link } from "googlers-tools";
+import { os } from "@Native/os";
 
 interface ModuleOptions {
   verified?: boolean;
@@ -38,7 +38,7 @@ class MainActivity extends Component<PushProps, States> {
     super(props);
 
     const CheckRoot = () => {
-      if (Constants.isAndroid) {
+      if (os.isAndroid) {
         if (Shell.isAppGrantedRoot()) {
           return MainApplication;
         } else {

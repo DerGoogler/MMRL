@@ -4,6 +4,7 @@ import { SettingsRounded } from "@mui/icons-material";
 import { os } from "@Native/os";
 import SharedPreferences from "@Native/SharedPreferences";
 import { string } from "@Strings";
+import Constants from "@Utils/Constants";
 import { Disappear } from "react-disappear";
 import { Tab, Tabbar, TabbarRenderTab, ToolbarButton } from "react-onsenui";
 import AppCompatActivity from "./AppCompatActivity";
@@ -51,7 +52,7 @@ class MainApplication extends AppCompatActivity<Props, States> {
   public onCreateToolbar() {
     return {
       modifier: this.state.toolbarShadow,
-      title: this.state.toolbarTitle,
+      title: os.isAndroid ? Constants.GlobalMMRLTitle : this.state.toolbarTitle,
       addToolbarButtonPosition: "right",
       addToolbarButton: (
         <ToolbarButton className="back-button--material__icon" onClick={this.openSettings}>
@@ -118,10 +119,10 @@ class MainApplication extends AppCompatActivity<Props, States> {
               >
                 <Disappear
                   onDisappear={(visible) => {
-                    this.setState({ toolbarTitle: visible ? "" : "Magisk Module Repo Loader" });
+                    this.setState({ toolbarTitle: visible ? "" : Constants.GlobalMMRLTitle });
                   }}
                 >
-                  <span>Magisk Module Repo Loader</span>
+                  <span>{Constants.GlobalMMRLTitle}</span>
                 </Disappear>
               </div>
             </Disappear>
