@@ -109,17 +109,17 @@ class SettingsActivity extends AppCompatActivity<Props, States> {
                         },
                       ],
                       callback: (e: Event, key: string, keepDefaultFuntion: void) => {
-                        new AlertDialog.Builder()
-                          .setTitle("Sure?")
-                          .setMessage(
-                            <div>
-                              Do you wanna <span style={{ color: "red" }}>change</span> the language?
-                            </div>
-                          )
-                          .setPositiveButton("Yes", (input: string) => {
-                            keepDefaultFuntion;
-                          })
-                          .show();
+                        const builder = AlertDialog.Builder;
+                        builder.setTitle("Sure?");
+                        builder.setMessage(
+                          <div>
+                            Do you wanna <span style={{ color: "red" }}>change</span> the language?
+                          </div>
+                        );
+                        builder.setPositiveButton("Yes", (input: string) => {
+                          keepDefaultFuntion;
+                        });
+                        builder.show();
                       },
                     },
                     {

@@ -136,7 +136,7 @@ class RepoActivity extends AppCompatActivity<Props, States> {
     const userAcceptNewRepos = SharedPreferences.getBoolean(_, false);
 
     if (!userAcceptNewRepos) {
-      const builder = new AlertDialog.Builder();
+      const builder = AlertDialog.Builder;
       builder.setTitle("Custom repositories!");
       builder.setMessage(
         <div>

@@ -64,7 +64,7 @@ class ViewModuleActivity extends AppCompatActivity<Props, States> {
 
     const { minMagisk, minApi, maxApi, needRamdisk, changeBoot } = this.state.mFoxProps;
     if (minApi && minApi > 20) {
-      const builder = new AlertDialog.Builder();
+      const builder = AlertDialog.Builder;
       builder.setTitle("Unsupported!");
       builder.setMessage("This module target api is higher than your device api.");
       builder.setPositiveButton("Ok");

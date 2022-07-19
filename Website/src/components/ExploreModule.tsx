@@ -20,7 +20,8 @@ interface Props {
   stars?: int;
   last_update?: any;
   getId: any;
-  propsUrl: string | ModuleProps.PropUrl;
+  propsUrl: string;
+  props: ModuleProps.PropUrl;
 }
 
 interface ModuleOptions {
@@ -49,8 +50,10 @@ class ExploreModule extends ViewX<Props, States> {
   }
 
   public componentDidMount = () => {
-    const { propsUrl } = this.props;
-    if (link.validURL(propsUrl as any)) {
+    const { propsUrl, props } = this.props;
+    if (typeof props == "object") {
+      this.setState({ props: props });
+    } else {
       axios.get(propsUrl as string).then((response) => {
         let tmp = Properties.parseToProperties(response.data);
         tmp.foxprops = {
@@ -67,8 +70,6 @@ class ExploreModule extends ViewX<Props, States> {
           props: tmp,
         });
       });
-    } else {
-      this.setState({ props: propsUrl as ModuleProps.PropUrl });
     }
   };
 

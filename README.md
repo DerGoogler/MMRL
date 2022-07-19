@@ -29,6 +29,73 @@ Use [this](https://dergoogler.com/repo-generator/) service to create a custom re
 <tr>
 </table>
 
+## Supported `module.json` syntax
+
+**MMRL** new default
+
+> **Note**
+> `prop_url` can also used as fallback
+
+```json
+{
+  "last_update": 1658146279000,
+  "name": "Googlers Magisk Repo",
+  "website": "https://dergoogler.com/repo",
+  "support": "https://t.me/The_Googler",
+  "donate": null,
+  "submitModule": null,
+  "modules": [
+    {
+      "id": "samsung_a70_raven_prop_overlay",
+      "last_update": 1654181061000,
+      "prop_url": "https://.../module.prop",
+      "zip_url": "https://.../master.zip",
+      "notes_url": "https://.../README.md",
+      "props": {
+        "id": "samsung_a70_raven_prop_overlay",
+        "name": "Samsung Galaxy A70 Overlay",
+        "author": "Der_Googler",
+        "version": "2022-05-22",
+        "versionCode": "2205-22",
+        "description": "Spoof your device to RAVEN pixel prop (April 2022) with an generared overlay for Samsung Galaxy A70 (GSI's only). Prop original made by Tesla",
+        "foxprops": {
+          "minApi": "31",
+          "maxApi": "31",
+          "minMagisk": "18000",
+          "needRamdisk": null,
+          "support": null,
+          "donate": null,
+          "config": null,
+          "changeBoot": null
+        }
+      }
+    }
+  ]
+}
+```
+
+**FoxMMM**
+
+```json
+{
+  "name": "Repo name",
+  "website": "repo website",
+  "support": "optional support url",
+  "donate": "optional support url",
+  "submitModule": "optional submit module URL",
+  "last_update": 0,
+  "modules": [
+    {
+      "id": "module id",
+      "last_update": 0,
+      "notes_url": "notes url",
+      "prop_url": "module.prop url",
+      "zip_url": "module.zip url"
+    }
+  ]
+}
+```
+
 ## FAQ
 
 ### Why does some description reports `404: Not Found`?
