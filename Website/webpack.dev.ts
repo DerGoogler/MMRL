@@ -1,8 +1,11 @@
 import { merge } from "webpack-merge";
-import { defConfig, config } from "./webpack.config";
+import { defConfig, Mode } from "./webpack/defConfig";
+import { devPlugins } from "./webpack/plugins";
+import config from "./webpack.config";
 
 export default merge(config, {
-  mode: "development",
+  mode: Mode.Development,
   ...defConfig,
+  ...devPlugins,
   devtool: "source-map",
 });

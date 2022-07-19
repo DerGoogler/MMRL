@@ -1,5 +1,4 @@
-import { Toolbar as gae, Button } from "react-onsenuix";
-import { Dialog } from "react-onsenui";
+import { Button, Dialog, ToolbarButton } from "react-onsenui";
 import ons from "onsenui";
 import axios from "axios";
 import { DownloadRounded, InfoRounded, InstallMobileRounded, VerifiedRounded } from "@mui/icons-material";
@@ -10,26 +9,37 @@ import Alert from "@mui/material/Alert";
 import AppCompatActivity from "./AppCompatActivity";
 import { string } from "@Strings";
 import Magisk from "@Native/Magisk";
-import Toolbar from "@Builders/ToolbarBuilder";
+import { CSSProperties } from "react";
+import { link, util } from "googlers-tools";
+import ModuleProps from "@Types/ModuleProps";
+import AlertDialog from "@Builders/AlertDialog";
 
 interface Props {
-  extra?: any;
+  extra: {
+    moduleProps: ModuleProps.PropUrl;
+    [x: string]: any;
+  };
   popPage: any;
 }
 
 interface States {
   notes: string;
   dialogShown: boolean;
+  mProps: ModuleProps.PropUrl;
+  mFoxProps: ModuleProps.FoxProps;
 }
 
 class ViewModuleActivity extends AppCompatActivity<Props, States> {
   public static readonly ignoreURL: bool = true;
+  public pageStyle: CSSProperties = { marginBottom: "28px" };
 
   public constructor(props: Props | Readonly<Props>) {
     super(props);
     this.state = {
       notes: "",
       dialogShown: false,
+      mProps: this.props.extra.moduleProps,
+      mFoxProps: this.props.extra.moduleProps.foxprops,
     };
   }
 
@@ -44,27 +54,44 @@ class ViewModuleActivity extends AppCompatActivity<Props, States> {
       .catch((error) => {
         if (error.response.status === 404) {
           this.setState({
-            notes: `# 404: Not Found\n\n The author doesn't have created or uploaded an \`README.md\`, please try again later.\n\n\n## About Readme's\n\n- ❌ readme.md\n- ✅ README.md`,
+            notes: `# 404: Not Found\n\n The author doesn't have created or uploaded an \`README.md\`, please try again later.\n\n\n## About Readme's\n\n- <dangermark/> readme.md\n- <checkmark/> README.md`,
           });
         }
       })
       .then(() => {
         // always executed
       });
+
+    const { minMagisk, minApi, maxApi, needRamdisk, changeBoot } = this.state.mFoxProps;
+    if (minApi && minApi > 20) {
+      const builder = AlertDialog.Builder;
+      builder.setTitle("Unsupported!");
+      builder.setMessage("This module target api is higher than your device api.");
+      builder.setPositiveButton("Ok");
+      builder.setCancelable(false);
+      builder.show();
+    }
   };
 
-  public onCreateToolbar = (): Toolbar.Props => {
-    const { minMagisk, minApi, maxApi, needRamdisk, changeBoot } = this.props.extra?.moduleProps;
+  public onCreateToolbar = () => {
+    // Normal props
+    const { name } = this.state.mProps;
+    // FoxProps
+    const { minMagisk, minApi, maxApi, needRamdisk, changeBoot } = this.state.mFoxProps;
     return {
-      title: this.props.extra.name,
+      title: this.props.extra?.name,
       onBackButton: this.props.popPage,
       addToolbarButton: (
         <>
-          {(minMagisk || minApi || maxApi || needRamdisk || changeBoot) != (null || undefined) ? (
+          {((minMagisk && minMagisk) ||
+            (minApi && minApi) ||
+            (maxApi && maxApi) ||
+            (needRamdisk && needRamdisk) ||
+            (changeBoot && changeBoot)) != (null || undefined) ? (
             <div className="right">
-              <gae.Button style={{ padding: "0px 10px" }} onClick={this.showDialog}>
+              <ToolbarButton style={{ padding: "0px 10px" }} className="back-button--material__icon" onClick={this.showDialog}>
                 <InfoRounded />
-              </gae.Button>
+              </ToolbarButton>
             </div>
           ) : null}
         </>
@@ -82,7 +109,10 @@ class ViewModuleActivity extends AppCompatActivity<Props, States> {
   };
 
   public onCreate = () => {
-    const { minMagisk, minApi, maxApi, needRamdisk, changeBoot, name, stars, alpahMMRLinstall } = this.props.extra?.moduleProps;
+    // Normal props
+    const { name } = this.state.mProps;
+    // FoxProps
+    const { minMagisk, minApi, maxApi, needRamdisk, changeBoot } = this.state.mFoxProps;
     const { download, id } = this.props.extra;
     const { verified, low } = this.props.extra?.moduleOptions;
     return (
@@ -91,26 +121,19 @@ class ViewModuleActivity extends AppCompatActivity<Props, States> {
           style={{ padding: "8px", height: "100%" }}
           className={new SharedPreferences().getBoolean("enableDarkmode_switch", false) ? "markdown-body-dark" : "markdown-body-light"}
         >
-          {
-            /*
-            // @ts-ignore */
-            (() => {
-              if (verified) {
-                return (
-                  <Alert key="verified-module" icon={<VerifiedRounded fontSize="inherit" />} severity="success">
-                    {string.module_verified}
-                  </Alert>
-                );
-              }
-            })()
-          }
-          <HighlightedMarkdown children={this.state.notes} />
+          {verified && (
+            <Alert key="verified-module" icon={<VerifiedRounded fontSize="inherit" />} severity="success">
+              {string.module_verified}
+            </Alert>
+          )}
+          <HighlightedMarkdown style={{ marginBottom: "8px", height: "100%" }} children={this.state.notes} />
         </div>
-        <div style={{ height: "52px" }}></div>
+        <div style={{ height: "56px", width: "100%" }}></div>
         <div
           style={{
             position: "fixed",
             display: "flex",
+            height: "52px",
             left: 0,
             bottom: 0,
             padding: "8px",
@@ -152,78 +175,48 @@ class ViewModuleActivity extends AppCompatActivity<Props, States> {
           <div style={{ margin: "20px" }} className="markdown-body-light">
             <table style={{ width: "100%" }}>
               <th>Informations</th>
-              {(() => {
-                if (minMagisk != (null || undefined)) {
-                  return (
-                    <tr>
-                      <td
-                        style={{
-                          width: "100%",
-                        }}
-                      >
-                        Min. Magisk
-                      </td>
-                      <td
-                        style={{
-                          color: os.isAndroid ? (Magisk.PARSE_VERSION(minMagisk) > Magisk.VERSION_CODE ? "red" : "") : "",
-                        }}
-                      >
-                        {minMagisk}
-                      </td>
-                    </tr>
-                  );
-                } else {
-                  return null;
-                }
-              })()}
-              {(() => {
-                if (minApi != (null || undefined)) {
-                  return (
-                    <tr>
-                      <td style={{ width: "100%" }}>Min. Android</td>
-                      <td>{minApi}</td>
-                    </tr>
-                  );
-                } else {
-                  return null;
-                }
-              })()}
-              {(() => {
-                if (maxApi != (null || undefined)) {
-                  return (
-                    <tr>
-                      <td style={{ width: "100%" }}>Max. Android</td>
-                      <td>{maxApi}</td>
-                    </tr>
-                  );
-                } else {
-                  return null;
-                }
-              })()}
-              {(() => {
-                if (needRamdisk != (null || undefined)) {
-                  return (
-                    <tr>
-                      <td style={{ width: "100%" }}>needsRamdisk</td>
-                      <td>{needRamdisk}</td>
-                    </tr>
-                  );
-                } else {
-                  return null;
-                }
-              })()}
-              {(() => {
-                if (changeBoot != (null || undefined)) {
-                  return (
-                    <tr>
-                      <td style={{ width: "100%" }}>changeBoot</td>
-                      <td>{changeBoot}</td>
-                    </tr>
-                  );
-                } else {
-                  return null;
-                }
-              })()}
+              {minMagisk != (null || undefined) && (
+                <tr>
+                  <td
+                    style={{
+                      width: "100%",
+                    }}
+                  >
+                    Min. Magisk
+                  </td>
+                  <td
+                    style={{
+                      color: os.isAndroid ? (Magisk.PARSE_VERSION(minMagisk as any) > Magisk.VERSION_CODE ? "red" : "") : "",
+                    }}
+                  >
+                    {minMagisk}
+                  </td>
+                </tr>
+              )}
+              {minApi != (null || undefined) && (
+                <tr>
+                  <td style={{ width: "100%" }}>Min. Android</td>
+                  <td>{minApi}</td>
+                </tr>
+              )}
+              {maxApi != (null || undefined) && (
+                <tr>
+                  <td style={{ width: "100%" }}>Max. Android</td>
+                  <td>{maxApi}</td>
+                </tr>
+              )}
+              {needRamdisk != (null || undefined) && (
+                <tr>
+                  <td style={{ width: "100%" }}>needsRamdisk</td>
+                  <td>{needRamdisk}</td>
+                </tr>
+              )}
+              {changeBoot != (null || undefined) && (
+                <tr>
+                  <td style={{ width: "100%" }}>changeBoot</td>
+                  <td>{changeBoot}</td>
+                </tr>
+              )}
             </table>
           </div>
         </Dialog>

@@ -1,4 +1,4 @@
-import Toolbar from "@Builders/ToolbarBuilder";
+
 import WebView from "@Components/WebView";
 import { CSSProperties } from "react";
 import AppCompatActivity from "./AppCompatActivity";
@@ -17,7 +17,7 @@ class RepoGeneratorActivity extends AppCompatActivity<Props> {
     super(props);
   }
 
-  public onCreateToolbar(): Toolbar.Props {
+  public onCreateToolbar() {
     return {
       title: "Repo Generator",
       onBackButton: this.props.popPage,

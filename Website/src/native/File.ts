@@ -1,6 +1,4 @@
-import { util } from "googlers-tools";
-
-export interface IFile {
+export interface FileSystemNative {
   read(): string;
   list(): string;
   exist(): boolean;
@@ -14,30 +12,13 @@ export interface IFile {
   download(url: string): void;
 }
 
-export interface IFileStatic {
-  new (path?: string | undefined): File;
-  read(path: string): string;
-  list(path: string): string;
-  exist(path: string): boolean;
-  delete(path: string): boolean;
-  deleteRecursive(path: string): void;
-  create(path: string): boolean;
-  get getExternalStorageDir(): string;
-  get getPackageDataDir(): string;
-  getPublicDir(type: string): string;
-  get getDataDir(): string;
-  download(output: string, path: string): void;
-}
-
 declare const nfs: any;
 
 /**
  * Class to read files on a native Android device
- * @implements {IFileStatic}
+ * @implements {FileSystemNative}
  */
-
-@util.ImplementsStatics<IFileStatic>()
-class File {
+class File implements FileSystemNative {
   private path: string | undefined;
 
   public constructor(path?: string | undefined) {
@@ -54,7 +35,8 @@ class File {
    * new File("").list().split(",");
    * ```
    */
-  public list(): string {
+  public list(): string;
+  public list(join?: string): string {
     return nfs.listFiles(this.path);
   }
 

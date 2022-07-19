@@ -244,6 +244,7 @@ declare module "react-onsenui" {
   /*** AlertDialog ***/
   export class AlertDialog extends Component<
     {
+      children: React.ReactNode;
       onCancel?(): void;
       isOpen?: boolean | undefined;
       isCancelable?: boolean | undefined;
@@ -303,7 +304,8 @@ declare module "react-onsenui" {
 
   export class Popover extends Component<
     {
-      getTarget?(): React.ReactInstance;
+      children?: React.ReactNode;
+      getTarget?(): /*React.ReactInstance |*/ any;
       onCancel?(): void;
       isOpen?: boolean | undefined;
       isCancelable?: boolean | undefined;
@@ -313,6 +315,8 @@ declare module "react-onsenui" {
       maskColor?: string | undefined;
       animationOptions?: AnimationOptions | undefined;
       onPreShow?(): void;
+      onOpen?(): void;
+      onHide?(): void;
       onPostShow?(): void;
       onPreHide?(): void;
       onPostHide?(): void;
@@ -584,6 +588,7 @@ declare module "react-onsenui" {
 
   export class ListHeader extends Component<
     {
+      children?: React.ReactNode;
       modifier?: string | undefined;
     },
     any
@@ -605,7 +610,7 @@ declare module "react-onsenui" {
 
   export class ListTitle extends Component<
     {
-      children: string;
+      children: React.ReactNode;
       modifier?: string | undefined;
       onClick?: React.MouseEventHandler<any> | undefined;
     },
@@ -629,6 +634,7 @@ declare module "react-onsenui" {
   /** Pull-to-refresh hook. */
   export class PullHook extends Component<
     {
+      children: string;
       onChange?(e: PullHookChangeEvent): void;
       onLoad?(done: () => void): void;
       onPull?(): void;
@@ -646,6 +652,33 @@ declare module "react-onsenui" {
       tabbarId?: string | undefined;
       modifier?: string | undefined;
       onPostChange?(): void;
+    },
+    any
+  > {}
+
+  export class GestureDetector extends Component<
+    {
+      children?: React.ReactNode;
+      onDrag?(): void;
+      onDragLeft?(): void;
+      onDragRight?(): void;
+      onDragUp?(): void;
+      onDragDown?(): void;
+      onHold?(): void;
+      onRelease?(): void;
+      onSwipe?(): void;
+      onSwipeLeft?(): void;
+      onSwipeRight?(): void;
+      onSwipeUp?(): void;
+      onSwipeDown?(): void;
+      onTap?(): void;
+      onDoubleTap?(): void;
+      onPinch?(): void;
+      onPinchIn?(): void;
+      onPinchOut?(): void;
+      onTouch?(): void;
+      onTransform?(): void;
+      onRotate?(): void;
     },
     any
   > {}

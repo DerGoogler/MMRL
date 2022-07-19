@@ -1,14 +1,16 @@
-import Toolbar from "@Builders/ToolbarBuilder";
+import Icon from "@Components/Icon";
+import { TabWrapper } from "@Components/TabWrapper";
 import { SettingsRounded } from "@mui/icons-material";
 import { os } from "@Native/os";
 import SharedPreferences from "@Native/SharedPreferences";
-import Toast from "@Native/Toast";
 import { string } from "@Strings";
+import Constants from "@Utils/Constants";
+import { Disappear } from "react-disappear";
 import { Tab, Tabbar, TabbarRenderTab, ToolbarButton } from "react-onsenui";
-import { ActivityXRenderData } from "react-onsenuix";
 import AppCompatActivity from "./AppCompatActivity";
 import DeviceModuleFragment from "./fragments/DeviceModuleFragment";
 import ExploreModuleFragment from "./fragments/ExploreModuleFragment";
+import RepoActivity from "./RepoActivity";
 import SettingsActivity from "./SettingsActivity";
 
 interface Props {
@@ -29,29 +31,39 @@ interface Props {
   pushPage: any;
 }
 
-class MainApplication extends AppCompatActivity<Props> {
+interface States {
+  toolbarShadow: string;
+  toolbarTitle: string;
+}
+
+class MainApplication extends AppCompatActivity<Props, States> {
   public constructor(props: Props | Readonly<Props>) {
     super(props);
-    this.state = {};
+    this.state = {
+      toolbarShadow: "noshadow",
+      toolbarTitle: "",
+    };
 
     this.openSettings = this.openSettings.bind(this);
     this.renderTabs = this.renderTabs.bind(this);
+    this.onCreateFAB = this.onCreateFAB.bind(this);
   }
 
-  public onCreateToolbar(): Toolbar.Props {
+  public onCreateToolbar() {
     return {
-      title: "Magisk Module Repo Loader",
+      modifier: this.state.toolbarShadow,
+      title: os.isAndroid ? Constants.GlobalMMRLTitle : this.state.toolbarTitle,
       addToolbarButtonPosition: "right",
       addToolbarButton: (
         <ToolbarButton className="back-button--material__icon" onClick={this.openSettings}>
-          <SettingsRounded />
+          <Icon icon={SettingsRounded} keepLight={true} />
         </ToolbarButton>
       ),
     };
   }
 
-  public componentDidMount() {
-    super.componentDidMount;
+  public onBackButton(): void {
+    os.close();
   }
 
   public componentDidUpdate() {
@@ -68,17 +80,17 @@ class MainApplication extends AppCompatActivity<Props> {
   private renderTabs(): TabbarRenderTab[] {
     return [
       {
-        content: <ExploreModuleFragment pushPage={this.props.pushPage} />,
+        content: <TabWrapper element={ExploreModuleFragment} props={{ pushPage: this.props.pushPage }} />,
         tab: <Tab label={string.explore} />,
       },
       {
-        content: <DeviceModuleFragment pushPage={this.props.pushPage} />,
+        content: <TabWrapper element={DeviceModuleFragment} props={{ pushPage: this.props.pushPage }} />,
         tab: <Tab label={string.installed} />,
       },
     ];
   }
 
-  public onCreate(data: ActivityXRenderData<Props, {}>) {
+  public onCreate() {
     return (
       <>
         {os.isAndroid ? (
@@ -88,7 +100,34 @@ class MainApplication extends AppCompatActivity<Props> {
             renderTabs={this.renderTabs}
           />
         ) : (
-          <ExploreModuleFragment pushPage={this.props.pushPage} />
+          <>
+            <Disappear
+              onDisappear={(visible) => {
+                this.setState({ toolbarShadow: visible ? "noshadow" : "" });
+              }}
+            >
+              <div
+                style={{
+                  padding: "50px",
+                  paddingTop: "6px",
+                  textAlign: "center",
+                  backgroundColor: SharedPreferences.getBoolean("enableDarkmode_switch", false) ? "rgb(31, 31, 31)" : "#4a148c",
+                  color: "white",
+                  fontSize: "30px",
+                  boxShadow: "rgba(0, 0, 0, 0.3) 0px 1px 5px",
+                }}
+              >
+                <Disappear
+                  onDisappear={(visible) => {
+                    this.setState({ toolbarTitle: visible ? "" : Constants.GlobalMMRLTitle });
+                  }}
+                >
+                  <span>{Constants.GlobalMMRLTitle}</span>
+                </Disappear>
+              </div>
+            </Disappear>
+            <ExploreModuleFragment pushPage={this.props.pushPage} />
+          </>
         )}
       </>
     );

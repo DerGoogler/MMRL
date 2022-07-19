@@ -1,18 +1,16 @@
-import { List } from "react-onsenuix";
 import ListViewBuilder from "@Builders/ListViewBuilder";
 import pkg from "@Package";
 import AppCompatActivity from "./AppCompatActivity";
 import { string } from "@Strings";
-import ons from "onsenui";
 import AcknowledgementsActivity from "@Activitys/AcknowledgementsActivity";
 import AlertDialog from "@Builders/AlertDialog";
 import SharedPreferences, { ISharedPreferences } from "@Native/SharedPreferences";
-import { link } from "googlers-tools";
 import {
   Brightness2Rounded,
   BugReportRounded,
   ExtensionRounded,
   GavelRounded,
+  HideSourceRounded,
   PowerInputRounded,
   SourceRounded,
 } from "@mui/icons-material";
@@ -20,8 +18,9 @@ import BuildConfig from "@Native/BuildConfig";
 import { os } from "@Native/os";
 import Icon from "@Components/Icon";
 import Magisk from "@Native/Magisk";
-import Toolbar from "@Builders/ToolbarBuilder";
 import RepoGeneratorActivity from "./RepoGeneratorActivity";
+import RepoActivity from "./RepoActivity";
+import { List } from "react-onsenui";
 
 interface Props {
   pushPage: any;
@@ -43,12 +42,17 @@ class SettingsActivity extends AppCompatActivity<Props, States> {
     this.pref = new SharedPreferences();
   }
 
+  public onBackButton(): void {
+    this.props.popPage();
+  }
+
   public componentDidMount = () => {
     super.componentDidMount;
+
     this.setState({ libs: Object.keys(pkg.dependencies) });
   };
 
-  public onCreateToolbar(): Toolbar.Props {
+  public onCreateToolbar() {
     return {
       title: string.settings,
       onBackButton: this.props.popPage,
@@ -67,42 +71,21 @@ class SettingsActivity extends AppCompatActivity<Props, States> {
                   content: [
                     {
                       type: "",
+                      text: "Repositories",
                       icon: <Icon icon={ExtensionRounded} />,
-                      text: string.custom_repository,
-                      helper: {
-                        text: "Test",
+
+                      onClick(key, pushPage) {
+                        pushPage({
+                          key: "repoactivity",
+                          activity: RepoActivity,
+                        });
                       },
-                      onClick: (key) => {
-                        new AlertDialog.Builder()
-                          .setTitle(string.custom_repository)
-                          .setMessage("Only URLs are valid")
-                          .setPositiveButton("Apply", (input: string) => {
-                            if (input != null) {
-                              if (input.startsWith(">")) {
-                                switch (input) {
-                                  case ">gmr":
-                                    this.pref.setString("repo", "https://repo.dergoogler.com/modules.json");
-                                    break;
-                                  case ">mmar":
-                                    this.pref.setString(
-                                      "repo",
-                                      "https://raw.githubusercontent.com/Magisk-Modules-Alt-Repo/json/main/modules.json"
-                                    );
-                                    break;
-                                }
-                              } else {
-                                if (link.validURL(input)) {
-                                  this.pref.setString("repo", input);
-                                  ons.notification.alert("Repo changed, please refresh the app");
-                                } else {
-                                  ons.notification.alert("Invalid input");
-                                }
-                              }
-                            }
-                          })
-                          .setNegativeButtom("Cancel", () => {})
-                          .showPrompt();
-                      },
+                    },
+                    {
+                      key: "enableHideReadonlyRepositories",
+                      type: "switch",
+                      icon: <Icon icon={HideSourceRounded} />,
+                      text: "Hide Readonly Repositories",
                     },
                   ],
                 },
@@ -126,17 +109,17 @@ class SettingsActivity extends AppCompatActivity<Props, States> {
                         },
                       ],
                       callback: (e: Event, key: string, keepDefaultFuntion: void) => {
-                        new AlertDialog.Builder()
-                          .setTitle("Sure?")
-                          .setMessage(
-                            <div>
-                              Do you wanna <span style={{ color: "red" }}>change</span> the language?
-                            </div>
-                          )
-                          .setPositiveButton("Yes", (input: string) => {
-                            keepDefaultFuntion;
-                          })
-                          .showAlert();
+                        const builder = AlertDialog.Builder;
+                        builder.setTitle("Sure?");
+                        builder.setMessage(
+                          <div>
+                            Do you wanna <span style={{ color: "red" }}>change</span> the language?
+                          </div>
+                        );
+                        builder.setPositiveButton("Yes", (input: string) => {
+                          keepDefaultFuntion;
+                        });
+                        builder.show();
                       },
                     },
                     {
@@ -157,6 +140,9 @@ class SettingsActivity extends AppCompatActivity<Props, States> {
                 },
                 {
                   title: "Utils",
+                  style: {
+                    display: os.isAndroid ? "none" : "",
+                  },
                   content: [
                     {
                       type: "",
@@ -184,7 +170,7 @@ class SettingsActivity extends AppCompatActivity<Props, States> {
                     {
                       type: "",
                       icon: <Icon icon={GavelRounded} />,
-                      text: "Acknowledgements",
+                      text: string.acknowledgements,
                       onClick: (key, pushPage) => {
                         pushPage({
                           key: "acknowledgements",
@@ -195,7 +181,7 @@ class SettingsActivity extends AppCompatActivity<Props, States> {
                     {
                       type: "",
                       icon: <Icon icon={BugReportRounded} />,
-                      text: "Issues",
+                      text: string.issues,
                       onClick: (key, pushPage) => {
                         window.open("https://github.com/DerGoogler/DG-Repo/issues", "_blank");
                       },

@@ -1,29 +1,27 @@
-import Toolbar from "@Builders/ToolbarBuilder";
-import ContentBody from "@Components/ContentBody";
+import { ToolbarBuilder } from "@Builders/ToolbarBuilder";
 import ErrorBoundary from "@Components/ErrorBoundary";
-import Constants from "@Native/Constants";
 import { os } from "@Native/os";
 import SharedPreferences from "@Native/SharedPreferences";
-import { Context, createContext, CSSProperties } from "react";
-import { ActivityX, Page } from "react-onsenuix";
+import React, { CSSProperties } from "react";
+import { Page } from "react-onsenui";
 
-export const AppCompatActivityContext: Context<string> = createContext("null");
-
-class AppCompatActivity<P = {}, S = {}, SS = any> extends ActivityX<P, S, SS> {
-  public readonly isAndroid: bool = Constants.isAndroid;
+abstract class AppCompatActivity<P = {}, S = {}> extends React.Component<P, S> {
+  public pageStyle: React.CSSProperties = {};
 
   private darkColor: string = "#1f1f1f";
   private lightColor: string = "#4a148c";
-
-  public static contextType: Context<string> = AppCompatActivityContext;
 
   public constructor(props: P | Readonly<P>) {
     super(props);
     this.onlyAndroid();
 
+    window["onBackButton"] = new Event("onBackButton");
+
     this.onCreate = this.onCreate.bind(this);
     this.onCreateToolbar = this.onCreateToolbar.bind(this);
   }
+
+  public onBackButton(): void {}
 
   private onlyAndroid(): void {
     os.setStatusBarColor(this.setStatusbarColor(), false);
@@ -42,6 +40,7 @@ class AppCompatActivity<P = {}, S = {}, SS = any> extends ActivityX<P, S, SS> {
   public style: CSSProperties = {};
 
   public componentDidMount(): void {
+    os.addNativeEventListener("onBackButton", this.onBackButton);
     this.onlyAndroid();
   }
 
@@ -49,7 +48,9 @@ class AppCompatActivity<P = {}, S = {}, SS = any> extends ActivityX<P, S, SS> {
     this.onlyAndroid();
   }
 
-  public componentWillUnmount(): void {}
+  public componentWillUnmount(): void {
+    os.removeNativeEventListener("onBackButton", this.onBackButton);
+  }
 
   /**
    * Sets an custom status bar color for the activity
@@ -63,9 +64,41 @@ class AppCompatActivity<P = {}, S = {}, SS = any> extends ActivityX<P, S, SS> {
   }
 
   /**
+   * Creates the activity
+   */
+  public onCreate(): JSX.Element {
+    return <></>;
+  }
+
+  public onCreateModal(): JSX.Element {
+    return <></>;
+  }
+
+  public onCreateBottomToolbar(): JSX.Element {
+    return <></>;
+  }
+
+  public onCreateFAB(): JSX.Element {
+    return <></>;
+  }
+
+  public onInit(): void {}
+
+  public onShow(): void {}
+
+  public onHide(): void {}
+
+  public onInfiniteScroll(): void {}
+
+  //@ts-ignore
+  public get pageModifier(): string {
+    return "";
+  }
+
+  /**
    * Renders the Toolbar
    */
-  public onCreateToolbar(): Toolbar.Props | any {
+  public onCreateToolbar() {
     return {
       title: "Default",
     };
@@ -73,27 +106,24 @@ class AppCompatActivity<P = {}, S = {}, SS = any> extends ActivityX<P, S, SS> {
 
   public render = (): JSX.Element => {
     return (
-      <AppCompatActivityContext.Provider value="new null">
-        <ErrorBoundary logger={this.constructor.name}>
-          <Page
-            modifier={this.pageModifier}
-            renderBottomToolbar={this.onCreateBottomToolbar}
-            renderFixed={this.onCreateFAB}
-            renderModal={this.onCreateModal}
-            onInfiniteScroll={this.onInfiniteScroll}
-            onHide={this.onHide}
-            onShow={this.onShow}
-            onInit={this.onInit}
-            renderToolbar={() => {
-              return <Toolbar.Builder {...this.onCreateToolbar()} />;
-            }}
-          >
-            <ContentBody style={this.style}>
-              <this.onCreate p={this.props} s={this.state} />
-            </ContentBody>
-          </Page>
-        </ErrorBoundary>
-      </AppCompatActivityContext.Provider>
+      <ErrorBoundary logger={this.constructor.name}>
+        <Page
+          style={this.pageStyle}
+          modifier={this.pageModifier}
+          renderBottomToolbar={this.onCreateBottomToolbar}
+          renderFixed={this.onCreateFAB}
+          renderModal={this.onCreateModal}
+          onInfiniteScroll={this.onInfiniteScroll}
+          onHide={this.onHide}
+          onShow={this.onShow}
+          onInit={this.onInit}
+          renderToolbar={() => {
+            return <ToolbarBuilder {...this.onCreateToolbar()} />;
+          }}
+        >
+          <this.onCreate />
+        </Page>
+      </ErrorBoundary>
     );
   };
 }

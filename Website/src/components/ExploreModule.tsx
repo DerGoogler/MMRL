@@ -6,9 +6,11 @@ import ViewModuleActivity from "@Activitys/ViewModuleActivity";
 import Log from "@Native/Log";
 import { VerifiedRounded } from "@mui/icons-material";
 import { os } from "@Native/os";
-import { isTablet } from "react-device-detect";
-import { dom, link } from "googlers-tools";
-import { ViewX, ViewXRenderData } from "react-onsenuix";
+import { isDesktop, isTablet } from "react-device-detect";
+import { link } from "googlers-tools";
+import ViewX from "./ViewX";
+import { string } from "@Strings";
+import ModuleProps from "@Types/ModuleProps";
 
 interface Props {
   notesUrl?: string;
@@ -17,9 +19,10 @@ interface Props {
   moduleOptions: ModuleOptions[];
   stars?: int;
   last_update?: any;
+  fullItem: any;
   getId: any;
-  searchState?: string;
   propsUrl: string;
+  props: ModuleProps.PropUrl;
 }
 
 interface ModuleOptions {
@@ -29,22 +32,7 @@ interface ModuleOptions {
 }
 
 interface States {
-  props: {
-    id?: string;
-    name?: string;
-    version?: string;
-    versionCode?: int;
-    author?: string;
-    description?: string;
-    minApi?: int;
-    maxApi?: int;
-    minMagisk?: int;
-    needRamdisk?: boolean;
-    support?: string;
-    donate?: string;
-    config?: string;
-    changeBoot?: boolean;
-  };
+  props: Partial<ModuleProps.PropUrl>;
 }
 
 class ExploreModule extends ViewX<Props, States> {
@@ -63,36 +51,28 @@ class ExploreModule extends ViewX<Props, States> {
   }
 
   public componentDidMount = () => {
-    const { propsUrl } = this.props;
-    const { props } = this.state;
-    axios.get(propsUrl).then((response) => {
-      this.setState({
-        props: Properties.parseToProperties(response.data),
-      });
-    });
-  };
-
-  public componentDidUpdate() {
-    const { searchState } = this.props;
-    dom.findBy(this.cardName, (ref) => {
-      if (searchState != "") {
-        const search = ref.textContent || ref.innerText;
-        if (search.toLowerCase().indexOf(searchState) > -1) {
-          dom.findBy(this.searchedCard, (ref: HTMLElement) => {
-            ref.style.display = "";
-          });
-        } else {
-          dom.findBy(this.searchedCard, (ref: HTMLElement) => {
-            ref.style.display = "none";
-          });
-        }
-      } else {
-        dom.findBy(this.searchedCard, (ref: HTMLElement) => {
-          ref.style.display = "";
+    const { propsUrl, props } = this.props;
+    if (typeof props == "object") {
+      this.setState({ props: props });
+    } else {
+      axios.get(propsUrl as string).then((response) => {
+        let tmp = Properties.parseToProperties(response.data);
+        tmp.foxprops = {
+          minApi: null as any,
+          maxApi: null as any,
+          minMagisk: null as any,
+          needRamdisk: null as any,
+          support: null as any,
+          donate: null as any,
+          config: null as any,
+          changeBoot: null as any,
+        };
+        this.setState({
+          props: tmp,
         });
-      }
-    });
-  }
+      });
+    }
+  };
 
   private formatDate(date: Date) {
     var hours = date.getHours();
@@ -130,96 +110,92 @@ class ExploreModule extends ViewX<Props, States> {
     }
   }
 
-  public createView(data: ViewXRenderData<Props, States, HTMLElement>): JSX.Element {
-    const { notesUrl, downloadUrl, pushPage, moduleOptions, stars, last_update, getId } = data.p;
-    const { props } = data.s;
+  public createView(): JSX.Element {
+    const { notesUrl, downloadUrl, pushPage, moduleOptions, stars, last_update, getId, fullItem } = this.props;
+    const { props } = this.state;
     const isVerified = moduleOptions[getId]?.verified;
     const _display = moduleOptions[getId]?.display;
 
     return this.checkDeviceSize(
-      <>
-        <div
-          ref={this.openReadmeFromParam}
-          onClick={() => {
-            // Make an fake path. Note: The page should not refreshed!
-            link.setURL((set, currentPath) => {
-              set(`view_${props.id}`, `view_${props.id}`, `${currentPath}/?module=${props.id}`);
-            });
+      <div
+        ref={this.openReadmeFromParam}
+        onClick={() => {
+          // Make an fake path. Note: The page should not refreshed!
+          link.setURL((set, currentPath) => {
+            set(`view_${props.id}`, `view_${props.id}`, `${currentPath}/?module=${props.id}`);
+          });
 
-            pushPage({
-              key: `view_${props.id}`,
-              activity: ViewModuleActivity,
-              extra: {
-                name: props.name,
-                download: downloadUrl,
-                id: getId,
-                author: props.author,
-                notes: notesUrl,
-                stars: stars,
-                moduleOptions: {
-                  verified: isVerified,
-                },
-                moduleProps: {
-                  minMagisk: props.minMagisk,
-                  minApi: props.minApi,
-                  maxApi: props.maxApi,
-                  needRamdisk: props?.needRamdisk,
-                  changeBoot: props.changeBoot,
-                },
+          pushPage({
+            key: `view_${props.id}`,
+            activity: ViewModuleActivity,
+            extra: {
+              name: props.name,
+              download: downloadUrl,
+              id: getId,
+              author: props.author,
+              notes: notesUrl,
+              stars: stars,
+              moduleOptions: {
+                verified: isVerified,
               },
-            });
-          }}
-        >
-          {/*
+              moduleProps: props,
+            },
+          });
+        }}
+      >
+        {/*
         // @ts-ignore */}
-          <Card
-            id={getId}
-            ref={this.searchedCard}
-            key={getId}
-            //@ts-ignore
-            style={{ display: _display, marginTop: "4px", marginBottom: "4px" }}
-          >
-            <item-card-wrapper>
-              <item-title className="title">
-                <item-module-name ref={this.cardName}>
-                  <span
-                    style={{
-                      fontSize: "large",
-                      overflow: "hidden",
-                      textAlign: "start",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                      width: "100%",
-                    }}
-                  >
-                    {props.name}
+        <Card
+          id={getId}
+          ref={this.searchedCard}
+          key={getId}
+          //@ts-ignore
+          style={{ display: _display, marginTop: "4px", marginBottom: "4px" }}
+        >
+          <item-card-wrapper>
+            <item-title className="title">
+              <item-module-name ref={this.cardName}>
+                <span
+                  style={{
+                    fontSize: "large",
+                    overflow: "hidden",
+                    textAlign: "start",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                    width: "100%",
+                  }}
+                >
+                  {props.name}
 
-                    {(() => {
-                      if (isVerified) {
-                        return (
-                          <>
-                            {" "}
-                            <VerifiedRounded sx={{ fontSize: 16 }} />
-                          </>
-                        );
-                      } else {
-                        return null;
-                      }
-                    })()}
-                  </span>
-                </item-module-name>
-              </item-title>
-              <div className="content">
-                <item-version-author>
-                  {props.version} ({props.versionCode}) / {props.author}
-                </item-version-author>
-                <item-description>{props.description}</item-description>
-                <item-last-update>Last update: {this.formatDate(new Date(last_update))}</item-last-update>
-              </div>
-            </item-card-wrapper>
-          </Card>
-        </div>
-      </>
+                  {(() => {
+                    if (isVerified) {
+                      return (
+                        <>
+                          {" "}
+                          <VerifiedRounded sx={{ fontSize: 16 }} />
+                        </>
+                      );
+                    } else {
+                      return null;
+                    }
+                  })()}
+                </span>
+              </item-module-name>
+            </item-title>
+            <div className="content">
+              <item-version-author>
+                {props.version} ({props.versionCode}) / {props.author}
+              </item-version-author>
+              <item-description>{props.description}</item-description>
+              <item-last-update>
+                {string.formatString(string.last_updated, {
+                  date: this.formatDate(new Date(last_update)),
+                })}
+              </item-last-update>
+            </div>
+          </item-card-wrapper>
+        </Card>
+      </div>
     );
   }
 }

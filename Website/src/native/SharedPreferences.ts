@@ -5,14 +5,16 @@ export interface ISharedPreferences {
   setString(key: string, value: string): void;
   setBoolean(key: string, value: bool): void;
   setInt(key: string, value: int): void;
+  setJSON<T = any>(key: string, value: T): void;
   getString(key: string, defValue: string): string;
   getBoolean(key: string, defValue: boolean): boolean;
   getInt(key: string, defValue: int): int;
+  getJSON<T = any>(key: string, defValue: T): T;
   removePref(key: string): void;
   clearPrefs(): void;
 }
 
-declare const nsharedpreferences: ISharedPreferences;
+declare const nsharedpreferences: Record<string, (...args: any) => any>;
 
 /**
  * Simple class to manage the web local sotrage and the Android native preferences
@@ -45,6 +47,14 @@ class SharedPreferences implements ISharedPreferences {
       nsharedpreferences.setInt(key, value);
     } else {
       this.webStorage.setItem(key, String(value));
+    }
+  }
+
+  public setJSON<T = any>(key: string, value: T): void {
+    if (os.isAndroid) {
+      nsharedpreferences.setInt(key, JSON.stringify(value));
+    } else {
+      this.webStorage.setItem(key, JSON.stringify(value));
     }
   }
 
@@ -121,6 +131,19 @@ class SharedPreferences implements ISharedPreferences {
     }
   }
 
+  public getJSON<T = any>(key: string, defValue: T): T {
+    if (os.isAndroid) {
+      return JSON.parse(nsharedpreferences.getInt(key, JSON.stringify(defValue)));
+    } else {
+      const get = this.webStorage.getItem(key);
+      if (get === null) {
+        return defValue;
+      } else {
+        return JSON.parse(get);
+      }
+    }
+  }
+
   /**
    * Removes the key/value pair with the given key, if a key/value pair with the given key exists.
    *
@@ -175,7 +198,7 @@ class SharedPreferences implements ISharedPreferences {
    *
    * @throws ClassCastException
    */
-  public static getString(key: string, defValue: string): string | String {
+  public static getString(key: string, defValue: string): string {
     return this.s.getString(key, defValue);
   }
 
@@ -191,7 +214,7 @@ class SharedPreferences implements ISharedPreferences {
    *
    * @throws ClassCastException
    */
-  public static getBoolean(key: string, defValue: bool): boolean | Boolean {
+  public static getBoolean(key: string, defValue: bool): boolean {
     return this.s.getBoolean(key, defValue);
   }
 
@@ -205,7 +228,7 @@ class SharedPreferences implements ISharedPreferences {
    *
    * @throws ClassCastException
    */
-  public static getInt(key: string, defValue: int): number | Number {
+  public static getInt(key: string, defValue: int): number {
     return this.s.getInt(key, defValue);
   }
 

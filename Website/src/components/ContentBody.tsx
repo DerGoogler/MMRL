@@ -2,7 +2,7 @@ import { os } from "@Native/os";
 import SharedPreferences from "@Native/SharedPreferences";
 import { CSSProperties } from "react";
 import { isMobile } from "react-device-detect";
-import { ViewX, ViewXRenderData } from "react-onsenuix";
+import ViewX from "./ViewX";
 
 /**
  * ContentBody is an optional component, to make the view better on desktop
@@ -28,19 +28,19 @@ class ContentBody extends ViewX {
     }
   }
 
-  public createView(data: ViewXRenderData<{}, {}, HTMLElement>): JSX.Element {
+  public createView(): JSX.Element {
     return (
       <content-body
         className={
-          data.p.className === "markdownBody"
+          this.props.className === "markdownBody"
             ? SharedPreferences.getBoolean("enableDarkmode_switch", false)
               ? "markdown-body-dark"
               : "markdown-body-light"
-            : data.p.className
+            : this.props.className
         }
         style={this.checkDevice({ padding: isMobile ? "" : "16px" }, {})}
       >
-        <content-body-inner style={this.checkDevice(this.stlye, {})}>{data.p.children}</content-body-inner>
+        <content-body-inner style={this.checkDevice(this.stlye, {})}>{this.props.children}</content-body-inner>
       </content-body>
     );
   }
