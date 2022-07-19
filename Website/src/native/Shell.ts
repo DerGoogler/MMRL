@@ -1,65 +1,60 @@
 import Log from "@Native/Log";
 import { os } from "./os";
 
-type cmdReturn = Omit<IShell, "isAppGrantedRoot" | "cmd">;
+type CMD = Omit<ShellNative, "isAppGrantedRoot" | "cmd" | "command">;
 
-interface IShell {
-  cmd(cmd: string): cmdReturn;
+interface ShellNative {
+  command: string;
+  /**
+   * Runs an Android native shell cmd
+   * Should never used multiple
+   * @return {CMD}
+   */
+  cmd(cmd: string): CMD;
+  /**
+   * Executes an command without result
+   */
   exec(): void;
+  /**
+   * Executes an command with result
+   */
   result(): string;
   isAppGrantedRoot(): boolean;
 }
 
+const Logger = new Log("Shell");
+
 /**
  * Run Shell commands native on Android
- * @implements {IShell}
  */
-class ShellClass implements IShell {
-  private command: string;
-  private log: Log;
+type Shell = typeof Shell[keyof typeof Shell];
+const Shell: ShellNative = {
+  command: "",
 
-  public constructor() {
-    this.log = new Log(this.constructor.name);
-    this.command = "";
-  }
-
-  /**
-   * Runs an Android native shell cmd
-   * Should never used multiple
-   */
-  public cmd(cmd: string): cmdReturn {
+  cmd(cmd: string): CMD {
     this.command = cmd;
     return this;
-  }
+  },
 
-  /**
-   * Executes an command without result
-   */
-  public exec(): void {
+  exec(): void {
     if (os.isAndroid) {
       nshell.exec(this.command);
     } else {
-      this.log.i(this.command);
+      Logger.i(this.command);
     }
-  }
+  },
 
-  /**
-   * Executes an command with result
-   */
-  public result(): string {
+  result(): string {
     if (os.isAndroid) {
       return nshell.result(this.command);
     } else {
       return this.command;
     }
-  }
+  },
 
-  public isAppGrantedRoot(): boolean {
+  isAppGrantedRoot(): boolean {
     return nshell.isAppGrantedRoot();
-  }
-}
-
-const Shell: IShell = new ShellClass();
+  },
+} as const;
 
 export default Shell;
-export { ShellClass, IShell };

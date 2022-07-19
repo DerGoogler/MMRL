@@ -103,7 +103,7 @@ class ExploreModule extends ViewX<Props, States> {
   };
 
   private checkDeviceSize(element: JSX.Element): JSX.Element {
-    if (isTablet || isDesktop) {
+    if (isTablet) {
       return <Col style={{ width: "50%", height: "50%" }}>{element}</Col>;
     } else {
       return element;

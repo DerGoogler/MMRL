@@ -59,7 +59,7 @@
         "name": "googlers-tools",
         "description": "My own tools / scripts that i use.",
         "author": "Der_Googler <jimmyboehm@dergoogler.com>",
-        "version": "1.2.7",
+        "version": "1.2.8",
         "license": "GPL-3.0",
         "repository": "https://www.npmjs.com/package/googlers-tools"
     },
@@ -150,6 +150,14 @@
         "version": "2.2.2",
         "license": "MIT",
         "repository": "https://www.npmjs.com/package/react-device-detect"
+    },
+    {
+        "name": "react-disappear",
+        "description": "Detects if the inner children are visible",
+        "author": "Der_Googler",
+        "version": "1.0.0",
+        "license": "null",
+        "repository": "https://www.npmjs.com/package/react-disappear"
     },
     {
         "name": "react-dom",

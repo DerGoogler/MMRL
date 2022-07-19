@@ -4,6 +4,7 @@ import { SettingsRounded } from "@mui/icons-material";
 import { os } from "@Native/os";
 import SharedPreferences from "@Native/SharedPreferences";
 import { string } from "@Strings";
+import { Disappear } from "react-disappear";
 import { Tab, Tabbar, TabbarRenderTab, ToolbarButton } from "react-onsenui";
 import AppCompatActivity from "./AppCompatActivity";
 import DeviceModuleFragment from "./fragments/DeviceModuleFragment";
@@ -30,14 +31,16 @@ interface Props {
 }
 
 interface States {
-  fabDisplay: string;
+  toolbarShadow: string;
+  toolbarTitle: string;
 }
 
 class MainApplication extends AppCompatActivity<Props, States> {
   public constructor(props: Props | Readonly<Props>) {
     super(props);
     this.state = {
-      fabDisplay: "",
+      toolbarShadow: "noshadow",
+      toolbarTitle: "",
     };
 
     this.openSettings = this.openSettings.bind(this);
@@ -47,7 +50,8 @@ class MainApplication extends AppCompatActivity<Props, States> {
 
   public onCreateToolbar() {
     return {
-      title: "Magisk Module Repo Loader",
+      modifier: this.state.toolbarShadow,
+      title: this.state.toolbarTitle,
       addToolbarButtonPosition: "right",
       addToolbarButton: (
         <ToolbarButton className="back-button--material__icon" onClick={this.openSettings}>
@@ -95,7 +99,34 @@ class MainApplication extends AppCompatActivity<Props, States> {
             renderTabs={this.renderTabs}
           />
         ) : (
-          <ExploreModuleFragment pushPage={this.props.pushPage} />
+          <>
+            <Disappear
+              onDisappear={(visible) => {
+                this.setState({ toolbarShadow: visible ? "noshadow" : "" });
+              }}
+            >
+              <div
+                style={{
+                  padding: "50px",
+                  paddingTop: "6px",
+                  textAlign: "center",
+                  backgroundColor: SharedPreferences.getBoolean("enableDarkmode_switch", false) ? "rgb(31, 31, 31)" : "#4a148c",
+                  color: "white",
+                  fontSize: "30px",
+                  boxShadow: "rgba(0, 0, 0, 0.3) 0px 1px 5px",
+                }}
+              >
+                <Disappear
+                  onDisappear={(visible) => {
+                    this.setState({ toolbarTitle: visible ? "" : "Magisk Module Repo Loader" });
+                  }}
+                >
+                  <span>Magisk Module Repo Loader</span>
+                </Disappear>
+              </div>
+            </Disappear>
+            <ExploreModuleFragment pushPage={this.props.pushPage} />
+          </>
         )}
       </>
     );

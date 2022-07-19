@@ -143,7 +143,7 @@ class ExploreModuleFragment extends Component<Props, States> {
                   transform: "translate(-50%, -50%)",
                 }}
               />
-            ) : isTablet || isDesktop ? (
+            ) : isTablet ? (
               resultsRender
             ) : (
               this.cardRender(modulesIndex)
