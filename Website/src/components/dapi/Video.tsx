@@ -1,7 +1,7 @@
+import ViewX from "@Components/ViewX";
 import { util } from "googlers-tools";
 import { CSSProperties } from "react";
 import { isDesktop } from "react-device-detect";
-import { ViewX, ViewXRenderData } from "react-onsenuix";
 
 declare type Type = `video/${string}`;
 
@@ -19,8 +19,8 @@ interface State {}
 type E = HTMLVideoElement | HTMLIFrameElement;
 
 class Video extends ViewX<VideoProps, State, E> {
-  public createView(data: ViewXRenderData<VideoProps, {}, E>): JSX.Element {
-    const { src, type, controls, noSupportText, style, poster } = data.p;
+  public createView(): JSX.Element {
+    const { src, type, controls, noSupportText, style, poster } = this.props;
     const Style = {
       width: "100%",
       height: isDesktop ? "445px" : "181.500px",

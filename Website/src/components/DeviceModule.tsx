@@ -5,7 +5,7 @@ import Log from "@Native/Log";
 import { DeleteRounded, RefreshRounded } from "@mui/icons-material";
 import SharedPreferences from "@Native/SharedPreferences";
 import { string } from "@Strings";
-import { ViewX, ViewXRenderData } from "react-onsenuix";
+import ViewX from "./ViewX";
 
 interface Props {
   module: string;
@@ -66,18 +66,14 @@ class DeviceModule extends ViewX<Props, States> {
     }
   };
 
-  public createView(data: ViewXRenderData<Props, States, HTMLElement>): JSX.Element {
-    const module = data.p.module;
-    const { id, name, version, versionCode, author, description } = data.s.props;
-    const { isEnabled, isSwitchDisabled } = data.s;
+  public createView(): JSX.Element {
+    const module = this.props.module;
+    const { id, name, version, versionCode, author, description } = this.state.props;
+    const { isEnabled, isSwitchDisabled } = this.state;
     return (
       <>
         <div>
-          <Card
-            id={id}
-            key={id}
-            style={{ marginTop: "4px", marginBottom: "4px" }}
-          >
+          <Card id={id} key={id} style={{ marginTop: "4px", marginBottom: "4px" }}>
             <item-card-wrapper>
               <item-title className="title">
                 <item-module-name>

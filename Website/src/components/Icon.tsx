@@ -1,7 +1,7 @@
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { SvgIconProps, SvgIconTypeMap } from "@mui/material/SvgIcon";
 import SharedPreferences, { ISharedPreferences } from "@Native/SharedPreferences";
-import { ViewX, ViewXRenderData } from "react-onsenuix";
+import ViewX from "./ViewX";
 
 interface IProps extends SvgIconProps {
   icon: OverridableComponent<SvgIconTypeMap>;
@@ -26,14 +26,15 @@ class Icon extends ViewX<IProps, {}, SVGSVGElement> {
     this.createView = this.createView.bind(this);
   }
 
-  public createView(data: ViewXRenderData<IProps, {}, SVGSVGElement>): JSX.Element {
+  public createView(): JSX.Element {
+    const { keepLight, ...rest } = this.props;
     return (
       <this.props.icon
         sx={{
-          color: data.p.keepLight ? "rgba(255, 255, 255, 1)" : this.isDarkmode ? "rgba(255, 255, 255, 1)" : "rgba(0, 0, 0, 0.54)",
+          color: keepLight ? "rgba(255, 255, 255, 1)" : this.isDarkmode ? "rgba(255, 255, 255, 1)" : "rgba(0, 0, 0, 0.54)",
           verticalAlign: "baseline",
         }}
-        {...data.p}
+        {...rest}
       />
     );
   }

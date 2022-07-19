@@ -1,5 +1,5 @@
+import ViewX from "@Components/ViewX";
 import { SVGAttributes } from "react";
-import { ViewX } from "react-onsenuix";
 
 interface Props {
   size: string | int;

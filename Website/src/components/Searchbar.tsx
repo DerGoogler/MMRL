@@ -1,6 +1,6 @@
 import { SearchRounded } from "@mui/icons-material";
-import { SearchInput } from "react-onsenui";
-import { Button, ViewX, ViewXRenderData } from "react-onsenuix";
+import { Button, SearchInput } from "react-onsenui";
+import ViewX from "./ViewX";
 
 interface SearchbarProps {
   placeholder: string;
@@ -14,7 +14,9 @@ class Searchbar extends ViewX<SearchbarProps, {}, HTMLDivElement> {
     this.createView = this.createView.bind(this);
   }
 
-  public createView(data: ViewXRenderData<SearchbarProps, {}, HTMLElement>): JSX.Element {
+  public createView(): JSX.Element {
+    const { placeholder, onInputChange, onButtonClick } = this.props;
+
     return (
       <div
         style={{
@@ -26,16 +28,16 @@ class Searchbar extends ViewX<SearchbarProps, {}, HTMLDivElement> {
         }}
       >
         <SearchInput
-          placeholder={data.p.placeholder}
+          placeholder={placeholder}
           style={{
             borderRadius: "8px",
             width: "100%",
             marginRight: "4px",
           }}
-          onChange={data.p.onInputChange}
+          onChange={onInputChange}
         />
         <Button
-          onClick={data.p.onButtonClick}
+          onClick={onButtonClick}
           style={{
             textAlign: "center",
             display: "flex",

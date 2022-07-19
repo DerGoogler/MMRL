@@ -1,7 +1,6 @@
 import { Component } from "react";
 import DeviceModule from "@Components/DeviceModule";
 import { PushProps } from "@Activitys/MainActivity";
-import { Page } from "react-onsenuix";
 import File from "@Native/File";
 
 interface Props {

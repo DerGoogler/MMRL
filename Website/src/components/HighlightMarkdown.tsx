@@ -1,6 +1,6 @@
 import Markdown from "markdown-to-jsx";
 import { createRef, RefObject } from "react";
-import { ViewX, ViewXRenderData } from "react-onsenuix";
+import ViewX from "./ViewX";
 import Anchor from "./dapi/Anchor";
 import Video from "./dapi/Video";
 import DiscordWidget from "./dapi/DiscordWidget";
@@ -30,7 +30,7 @@ class HighlightedMarkdown extends ViewX<IProps> {
     });
   }
 
-  public createView(data: ViewXRenderData<IProps, {}, HTMLElement>): JSX.Element {
+  public createView(): JSX.Element {
     return (
       <div ref={this.ref}>
         <Markdown
@@ -58,7 +58,7 @@ class HighlightedMarkdown extends ViewX<IProps> {
               },
             },
           }}
-          children={data.p.children}
+          children={this.props.children}
         />
       </div>
     );

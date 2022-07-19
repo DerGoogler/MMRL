@@ -1,5 +1,5 @@
+import ViewX from "@Components/ViewX";
 import { util } from "googlers-tools";
-import { ViewX, ViewXRenderData } from "react-onsenuix";
 
 type Theme = "light" | "dark";
 
@@ -11,8 +11,8 @@ interface DiscordWidgetProps {
 }
 
 class DiscordWidget extends ViewX<DiscordWidgetProps> {
-  public createView(data: ViewXRenderData<DiscordWidgetProps, {}, HTMLElement>): JSX.Element {
-    const { token, width, height, theme } = data.p;
+  public createView(): JSX.Element {
+    const { token, width, height, theme } = this.props;
     return (
       <>
         <iframe

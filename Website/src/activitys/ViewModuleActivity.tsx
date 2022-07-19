@@ -1,5 +1,4 @@
-import { Toolbar as gae, Button, AlertDialog } from "react-onsenuix";
-import { Dialog } from "react-onsenui";
+import { Button, Dialog, ToolbarButton } from "react-onsenui";
 import ons from "onsenui";
 import axios from "axios";
 import { DownloadRounded, InfoRounded, InstallMobileRounded, VerifiedRounded } from "@mui/icons-material";
@@ -10,10 +9,10 @@ import Alert from "@mui/material/Alert";
 import AppCompatActivity from "./AppCompatActivity";
 import { string } from "@Strings";
 import Magisk from "@Native/Magisk";
-import Toolbar from "@Builders/ToolbarBuilder";
 import { CSSProperties } from "react";
 import { link, util } from "googlers-tools";
 import ModuleProps from "@Types/ModuleProps";
+import AlertDialog from "@Builders/AlertDialog";
 
 interface Props {
   extra: {
@@ -70,11 +69,11 @@ class ViewModuleActivity extends AppCompatActivity<Props, States> {
       builder.setMessage("This module target api is higher than your device api.");
       builder.setPositiveButton("Ok");
       builder.setCancelable(false);
-      builder.showAlert();
+      builder.show();
     }
   };
 
-  public onCreateToolbar = (): Toolbar.Props => {
+  public onCreateToolbar = () => {
     // Normal props
     const { name } = this.state.mProps;
     // FoxProps
@@ -90,9 +89,9 @@ class ViewModuleActivity extends AppCompatActivity<Props, States> {
             (needRamdisk && needRamdisk) ||
             (changeBoot && changeBoot)) != (null || undefined) ? (
             <div className="right">
-              <gae.Button style={{ padding: "0px 10px" }} className="back-button--material__icon" onClick={this.showDialog}>
+              <ToolbarButton style={{ padding: "0px 10px" }} className="back-button--material__icon" onClick={this.showDialog}>
                 <InfoRounded />
-              </gae.Button>
+              </ToolbarButton>
             </div>
           ) : null}
         </>

@@ -1,7 +1,9 @@
-import { Page, ViewX, ViewXRenderData } from "react-onsenuix";
+import { Page } from "react-onsenui";
+import ViewX from "./ViewX";
 
 interface Props {
-  element: JSX.Element;
+  element: React.ElementType;
+  props: any;
 }
 
 class TabWrapper extends ViewX<Props> {
@@ -9,8 +11,14 @@ class TabWrapper extends ViewX<Props> {
     super(props);
   }
 
-  public createView(data: ViewXRenderData<Props, {}, HTMLElement>): JSX.Element {
-    return <Page>{data.p.element}</Page>;
+  public createView(): JSX.Element {
+    const Element = this.props.element;
+    const props = this.props.props;
+    return (
+      <Page>
+        <Element {...props} />
+      </Page>
+    );
   }
 }
 

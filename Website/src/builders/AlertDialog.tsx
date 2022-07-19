@@ -2,44 +2,41 @@ import ons from "onsenui";
 import { isValidElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 
-namespace AlertDialog {
-  interface Alert {
-    title: string;
-    messageHTML: string | JSX.Element;
-    cancelable: boolean;
-    callback: Function;
-    buttons: AlertButtons;
-  }
+interface Alert {
+  title: string;
+  messageHTML: string | JSX.Element;
+  cancelable: boolean;
+  callback: Function;
+  buttons: AlertButtons;
+}
 
-  interface AlertButtons {
-    positive: AlertButton;
-    negative: AlertButton;
-  }
+interface AlertButtons {
+  positive: AlertButton;
+  negative: AlertButton;
+}
 
-  interface AlertButton {
-    title: string;
-    callback: Function | undefined;
-  }
+interface AlertButton {
+  title: string;
+  callback: Function | undefined;
+}
 
-  interface AlertOptions {
-    message?: string;
-    messageHTML?: string | JSX.Element;
-    buttonLabel?: string;
-    buttonLabels?: string[];
-    primaryButtonIndex?: number;
-    cancelable?: boolean;
-    animation?: string;
-    title?: string;
-    modifier?: string;
-    callback?: any;
-    id?: string;
-  }
+interface AlertOptions {
+  message?: string;
+  messageHTML?: string | JSX.Element;
+  buttonLabel?: string;
+  buttonLabels?: string[];
+  primaryButtonIndex?: number;
+  cancelable?: boolean;
+  animation?: string;
+  title?: string;
+  modifier?: string;
+  callback?: any;
+  id?: string;
+}
 
-  /**
-   * Building dialogs
-   */
-  export class Builder {
-    private dialog: Alert;
+abstract class AlertDialog {
+  public static Builder = class {
+    dialog: Alert;
 
     public constructor() {
       this.dialog = {
@@ -60,15 +57,12 @@ namespace AlertDialog {
       };
     }
 
-    /**
-     * @prompt Not supported
-     */
-    public setTitle(value: string): Builder {
+    public setTitle(value: string): this {
       this.dialog.title = value;
       return this;
     }
 
-    public setMessage(value: string | JSX.Element): Builder {
+    public setMessage(value: string | JSX.Element): this {
       if (isValidElement(value)) {
         this.dialog.messageHTML = renderToStaticMarkup(value);
       } else {
@@ -77,40 +71,24 @@ namespace AlertDialog {
       return this;
     }
 
-    /**
-     * @prompt Not supported
-     */
-    public setPositiveButton(title: string, callback?: Function): Builder {
+    public setPositiveButton(title: string, callback?: Function): this {
       this.dialog.buttons.positive.title = title;
       this.dialog.buttons.positive.callback = callback;
       return this;
     }
 
-    /**
-     * @prompt Not supported
-     */
-    public setNegativeButtom(title: string, callback?: Function): Builder {
+    public setNegativeButtom(title: string, callback?: Function): this {
       this.dialog.buttons.negative.title = title;
       this.dialog.buttons.negative.callback = callback;
       return this;
     }
 
-    /**
-     * Creates an custom callback for an prompt dialog
-     * @alert Not supported
-     * @deprecated
-     */
-    public setPromptCallback(callback: Function): Builder {
-      this.dialog.callback = callback;
-      return this;
-    }
-
-    public setCancelable(cancel: boolean): Builder {
+    public setCancelable(cancel: boolean): this {
       this.dialog.cancelable = cancel;
       return this;
     }
 
-    public showAlert(): Alert & Void {
+    public show(): void {
       const { positive, negative } = this.dialog.buttons;
       const { title, messageHTML } = this.dialog;
       const pla: AlertOptions = {
@@ -143,30 +121,7 @@ namespace AlertDialog {
       // @ts-ignore
       ons.notification.confirm(pla);
     }
-
-    public showPrompt(): Alert & Void {
-      const { positive, negative } = this.dialog.buttons;
-      const { title, callback, messageHTML, cancelable } = this.dialog;
-      ons.notification
-        .prompt({
-          // @ts-ignore
-          messageHTML: messageHTML,
-          buttonLabels: [negative.title, positive.title],
-          title: title,
-          // @ts-ignore
-          isPrompt: true,
-          // @ts-ignore
-          autofocus: true,
-          // @ts-ignore
-          submitOnEnter: true,
-        })
-        .then((input) => {
-          if (typeof positive.callback == "function") {
-            positive.callback(input);
-          }
-        });
-    }
-  }
+  };
 }
 
 export default AlertDialog;

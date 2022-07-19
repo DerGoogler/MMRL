@@ -168,14 +168,6 @@
         "repository": "https://github.com/OnsenUI/OnsenUI.git"
     },
     {
-        "name": "react-onsenuix",
-        "description": "React Onsen UI, but Typed!",
-        "author": "Der_Googler <jimmyboehm@dergoogler.com>",
-        "version": "1.0.6",
-        "license": "null",
-        "repository": "https://github.com/DerGoogler/react-onsenuix"
-    },
-    {
         "name": "react-syntax-highlighter",
         "description": "syntax highlighting component for react with prismjs or highlightjs ast using inline styles",
         "author": "Conor Hastings",

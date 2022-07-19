@@ -1,4 +1,3 @@
-import { ActivityXRenderData, AlertDialog, List, Toolbar } from "react-onsenuix";
 import AppCompatActivity from "./AppCompatActivity";
 import SharedPreferences, { ISharedPreferences } from "@Native/SharedPreferences";
 import {
@@ -13,7 +12,7 @@ import {
 import { link, util } from "googlers-tools";
 import ons from "onsenui";
 import Icon from "@Components/Icon";
-import { AlertDialog as Dialog, Input, Switch, ToolbarButton } from "react-onsenui";
+import { AlertDialog as Dialog, Input, List, ListHeader, ListItem, Switch, ToolbarButton } from "react-onsenui";
 import Toast from "@Native/Toast";
 import { os } from "@Native/os";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
@@ -22,6 +21,7 @@ import axios from "axios";
 import { string } from "@Strings";
 import { Fragment } from "react";
 import { Searchbar } from "@Components/Searchbar";
+import AlertDialog from "@Builders/AlertDialog";
 
 interface Props {
   pushPage: any;
@@ -151,7 +151,7 @@ class RepoActivity extends AppCompatActivity<Props, States> {
         SharedPreferences.setBoolean(_, true);
       });
       builder.setCancelable(true);
-      builder.showAlert();
+      builder.show();
     }
   }
 
@@ -225,9 +225,9 @@ class RepoActivity extends AppCompatActivity<Props, States> {
       onBackButton: this.props.popPage,
       addToolbarButtonPosition: "right",
       addToolbarButton: (
-        <Toolbar.Button className="back-button--material__icon" onClick={this.showAlertDialog}>
+        <ToolbarButton className="back-button--material__icon" onClick={this.showAlertDialog}>
           <Icon icon={Add} keepLight={true} />
-        </Toolbar.Button>
+        </ToolbarButton>
       ),
     };
   }
@@ -264,21 +264,18 @@ class RepoActivity extends AppCompatActivity<Props, States> {
   }
 
   // Some layout atr inspired from @Fox2Code
-  public onCreate(data: ActivityXRenderData<Props, States>): JSX.Element {
-    const ListItem = (props: ListItemProps) => {
+  public onCreate(): JSX.Element {
+    const MListItem = (props: ListItemProps) => {
       return (
         <>
           {props.part && (
-            <List.Item
-              // @ts-ignore
-              onClick={props.onClick}
-            >
+            <ListItem onClick={props.onClick}>
               <div className="left">
                 <Icon icon={props.icon} />
               </div>
 
               <div className="center">{props.text}</div>
-            </List.Item>
+            </ListItem>
           )}
         </>
       );
@@ -289,7 +286,7 @@ class RepoActivity extends AppCompatActivity<Props, States> {
     };
 
     const filteredRepos = roReposOption()
-      .concat(data.s.repos)
+      .concat(this.state.repos)
       .filter((item) => item.name.toLowerCase().includes(this.state.finalSearchValue.toLowerCase()));
 
     return (
@@ -298,11 +295,11 @@ class RepoActivity extends AppCompatActivity<Props, States> {
         <List>
           {filteredRepos.map((repo: RepoInterface, index: number) => (
             <Fragment key={index}>
-              <List.Header>
+              <ListHeader>
                 {repo.name}
                 {repo.readonly ? " (Read-Only)" : ""}
-              </List.Header>
-              <List.Item
+              </ListHeader>
+              <ListItem
                 // @ts-ignore
                 onClick={() => {}}
               >
@@ -330,8 +327,8 @@ class RepoActivity extends AppCompatActivity<Props, States> {
                     }}
                   />
                 </div>
-              </List.Item>
-              <ListItem
+              </ListItem>
+              <MListItem
                 part={repo.website}
                 icon={LanguageRounded}
                 text={string.website}
@@ -341,7 +338,7 @@ class RepoActivity extends AppCompatActivity<Props, States> {
                   }
                 }}
               />
-              <ListItem
+              <MListItem
                 part={repo.support}
                 icon={SupportRounded}
                 text={string.support}
@@ -351,7 +348,7 @@ class RepoActivity extends AppCompatActivity<Props, States> {
                   }
                 }}
               />
-              <ListItem
+              <MListItem
                 part={repo.donate}
                 icon={VolunteerActivismRounded}
                 text={string.donate}
@@ -361,7 +358,7 @@ class RepoActivity extends AppCompatActivity<Props, States> {
                   }
                 }}
               />
-              <ListItem
+              <MListItem
                 part={repo.submitModule}
                 icon={UploadFileRounded}
                 text={string.submit_module}
@@ -371,7 +368,7 @@ class RepoActivity extends AppCompatActivity<Props, States> {
                   }
                 }}
               />
-              <ListItem
+              <MListItem
                 part={!repo.readonly}
                 icon={DeleteRounded}
                 text={string.remove}

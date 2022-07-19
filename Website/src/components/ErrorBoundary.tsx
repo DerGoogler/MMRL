@@ -1,6 +1,7 @@
 import Log from "@Native/Log";
 import { ErrorInfo, ReactNode } from "react";
-import { Page, Toolbar, ViewX, ViewXRenderData } from "react-onsenuix";
+import { Page, Toolbar } from "react-onsenui";
+import ViewX from "./ViewX";
 
 interface Props {
   children: ReactNode;
@@ -47,21 +48,22 @@ class ErrorBoundary extends ViewX<Props, States> {
     );
   }
 
-  public createView(data: ViewXRenderData<Props, States, HTMLElement>): JSX.Element {
-    if (data.s.hasError) {
+  public createView(): JSX.Element {
+    const { hasError, errorInfo } = this.state;
+    if (hasError) {
       return (
         <Page
           renderToolbar={() => (
             <Toolbar>
-              <Toolbar.Center>Something went wrong</Toolbar.Center>
+              <div className="center">Something went wrong</div>
             </Toolbar>
           )}
         >
-          <p>{data.s.errorInfo?.componentStack}</p>
+          <p>{errorInfo?.componentStack}</p>
         </Page>
       );
     }
-    return data.p.children as any;
+    return this.props.children as any;
   }
 }
 

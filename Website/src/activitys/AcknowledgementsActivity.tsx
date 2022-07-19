@@ -1,6 +1,6 @@
-import Toolbar from "@Builders/ToolbarBuilder";
+
 import { string } from "@Strings";
-import { ActivityXRenderData, Card } from "react-onsenuix";
+import { Card } from "react-onsenui";
 import dep from "./../utils/licenses.json";
 import depNative from "./../utils/native-licenses.json";
 import AppCompatActivity from "./AppCompatActivity";
@@ -26,24 +26,23 @@ class AcknowledgementsActivity extends AppCompatActivity<Props, States> {
     this.setState({ libs: dep.concat(depNative) });
   };
 
-  public onCreateToolbar(): Toolbar.Props {
+  public onCreateToolbar() {
     return {
       title: string.acknowledgements,
       onBackButton: this.props.popPage,
     };
   }
 
-  public onCreate(data: ActivityXRenderData<Props, States>) {
+  public onCreate() {
     return (
       <lib-container
         style={{
           paddingBottom: "4px",
         }}
       >
-        {data.s.libs.map((item: any) => {
+        {this.state.libs.map((item: any) => {
           return (
             <Card
-              // @ts-ignore
               onClick={() => {
                 window.open(item.repository);
               }}
@@ -54,14 +53,14 @@ class AcknowledgementsActivity extends AppCompatActivity<Props, States> {
                   <license-card-name>{item.name}</license-card-name>
                   <license-card-author>{item.author}</license-card-author>
                 </license-card-title>
-                <Card.Content>
+                <div className="content">
                   <license-card-description>{item.description}</license-card-description>
                   <hr className="license-card-diver" />
                   <license-card-infos>
                     <license-card-version>{item.version}</license-card-version>
                     <license-card-license>{item.license}</license-card-license>
                   </license-card-infos>
-                </Card.Content>
+                </div>
               </license-card-wrapper>
             </Card>
           );

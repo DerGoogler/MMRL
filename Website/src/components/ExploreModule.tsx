@@ -8,7 +8,7 @@ import { VerifiedRounded } from "@mui/icons-material";
 import { os } from "@Native/os";
 import { isDesktop, isTablet } from "react-device-detect";
 import { dom, link } from "googlers-tools";
-import { ViewX, ViewXRenderData } from "react-onsenuix";
+import ViewX from "./ViewX";
 import { string } from "@Strings";
 import ModuleProps from "@Types/ModuleProps";
 
@@ -108,9 +108,9 @@ class ExploreModule extends ViewX<Props, States> {
     }
   }
 
-  public createView(data: ViewXRenderData<Props, States, HTMLElement>): JSX.Element {
-    const { notesUrl, downloadUrl, pushPage, moduleOptions, stars, last_update, getId } = data.p;
-    const { props } = data.s;
+  public createView(): JSX.Element {
+    const { notesUrl, downloadUrl, pushPage, moduleOptions, stars, last_update, getId } = this.props;
+    const { props } = this.state;
     const isVerified = moduleOptions[getId]?.verified;
     const _display = moduleOptions[getId]?.display;
 

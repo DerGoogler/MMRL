@@ -585,6 +585,7 @@ declare module "react-onsenui" {
 
   export class ListHeader extends Component<
     {
+      children?: React.ReactNode;
       modifier?: string | undefined;
     },
     any

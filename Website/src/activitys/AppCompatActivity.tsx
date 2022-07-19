@@ -1,14 +1,11 @@
-import Toolbar from "@Builders/ToolbarBuilder";
+import { ToolbarBuilder } from "@Builders/ToolbarBuilder";
 import ErrorBoundary from "@Components/ErrorBoundary";
-import Constants from "@Native/Constants";
 import { os } from "@Native/os";
 import SharedPreferences from "@Native/SharedPreferences";
-import React, { Context, createContext, CSSProperties } from "react";
-import { ActivityX, Page } from "react-onsenuix";
+import React, { CSSProperties } from "react";
+import { Page } from "react-onsenui";
 
-class AppCompatActivity<P = {}, S = {}, SS = any> extends ActivityX<P, S, SS> {
-  public readonly isAndroid: bool = Constants.isAndroid;
-
+abstract class AppCompatActivity<P = {}, S = {}> extends React.Component<P, S> {
   public pageStyle: React.CSSProperties = {};
 
   private darkColor: string = "#1f1f1f";
@@ -67,9 +64,41 @@ class AppCompatActivity<P = {}, S = {}, SS = any> extends ActivityX<P, S, SS> {
   }
 
   /**
+   * Creates the activity
+   */
+  public onCreate(): JSX.Element {
+    return <></>;
+  }
+
+  public onCreateModal(): JSX.Element {
+    return <></>;
+  }
+
+  public onCreateBottomToolbar(): JSX.Element {
+    return <></>;
+  }
+
+  public onCreateFAB(): JSX.Element {
+    return <></>;
+  }
+
+  public onInit(): void {}
+
+  public onShow(): void {}
+
+  public onHide(): void {}
+
+  public onInfiniteScroll(): void {}
+
+  //@ts-ignore
+  public get pageModifier(): string {
+    return "";
+  }
+
+  /**
    * Renders the Toolbar
    */
-  public onCreateToolbar(): Toolbar.Props | any {
+  public onCreateToolbar() {
     return {
       title: "Default",
     };
@@ -89,10 +118,10 @@ class AppCompatActivity<P = {}, S = {}, SS = any> extends ActivityX<P, S, SS> {
           onShow={this.onShow}
           onInit={this.onInit}
           renderToolbar={() => {
-            return <Toolbar.Builder {...this.onCreateToolbar()} />;
+            return <ToolbarBuilder {...this.onCreateToolbar()} />;
           }}
         >
-          <this.onCreate p={this.props} s={this.state} />
+          <this.onCreate />
         </Page>
       </ErrorBoundary>
     );

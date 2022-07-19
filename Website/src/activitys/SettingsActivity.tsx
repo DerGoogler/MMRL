@@ -1,13 +1,10 @@
-import { List } from "react-onsenuix";
 import ListViewBuilder from "@Builders/ListViewBuilder";
 import pkg from "@Package";
 import AppCompatActivity from "./AppCompatActivity";
 import { string } from "@Strings";
-import ons from "onsenui";
 import AcknowledgementsActivity from "@Activitys/AcknowledgementsActivity";
 import AlertDialog from "@Builders/AlertDialog";
 import SharedPreferences, { ISharedPreferences } from "@Native/SharedPreferences";
-import { link } from "googlers-tools";
 import {
   Brightness2Rounded,
   BugReportRounded,
@@ -21,9 +18,9 @@ import BuildConfig from "@Native/BuildConfig";
 import { os } from "@Native/os";
 import Icon from "@Components/Icon";
 import Magisk from "@Native/Magisk";
-import Toolbar from "@Builders/ToolbarBuilder";
 import RepoGeneratorActivity from "./RepoGeneratorActivity";
 import RepoActivity from "./RepoActivity";
+import { List } from "react-onsenui";
 
 interface Props {
   pushPage: any;
@@ -55,7 +52,7 @@ class SettingsActivity extends AppCompatActivity<Props, States> {
     this.setState({ libs: Object.keys(pkg.dependencies) });
   };
 
-  public onCreateToolbar(): Toolbar.Props {
+  public onCreateToolbar() {
     return {
       title: string.settings,
       onBackButton: this.props.popPage,
@@ -122,7 +119,7 @@ class SettingsActivity extends AppCompatActivity<Props, States> {
                           .setPositiveButton("Yes", (input: string) => {
                             keepDefaultFuntion;
                           })
-                          .showAlert();
+                          .show();
                       },
                     },
                     {

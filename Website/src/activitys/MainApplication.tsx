@@ -4,7 +4,7 @@ import { SettingsRounded } from "@mui/icons-material";
 import { os } from "@Native/os";
 import SharedPreferences from "@Native/SharedPreferences";
 import { string } from "@Strings";
-import { ActivityXRenderData, Tab, Tabbar, TabbarRenderTab, Toolbar } from "react-onsenuix";
+import { Tab, Tabbar, TabbarRenderTab, ToolbarButton } from "react-onsenui";
 import AppCompatActivity from "./AppCompatActivity";
 import DeviceModuleFragment from "./fragments/DeviceModuleFragment";
 import ExploreModuleFragment from "./fragments/ExploreModuleFragment";
@@ -50,9 +50,9 @@ class MainApplication extends AppCompatActivity<Props, States> {
       title: "Magisk Module Repo Loader",
       addToolbarButtonPosition: "right",
       addToolbarButton: (
-        <Toolbar.Button className="back-button--material__icon" onClick={this.openSettings}>
+        <ToolbarButton className="back-button--material__icon" onClick={this.openSettings}>
           <Icon icon={SettingsRounded} keepLight={true} />
-        </Toolbar.Button>
+        </ToolbarButton>
       ),
     };
   }
@@ -75,17 +75,17 @@ class MainApplication extends AppCompatActivity<Props, States> {
   private renderTabs(): TabbarRenderTab[] {
     return [
       {
-        content: <TabWrapper element={<ExploreModuleFragment pushPage={this.props.pushPage} />} />,
+        content: <TabWrapper element={ExploreModuleFragment} props={{ pushPage: this.props.pushPage }} />,
         tab: <Tab label={string.explore} />,
       },
       {
-        content: <TabWrapper element={<DeviceModuleFragment pushPage={this.props.pushPage} />} />,
+        content: <TabWrapper element={DeviceModuleFragment} props={{ pushPage: this.props.pushPage }} />,
         tab: <Tab label={string.installed} />,
       },
     ];
   }
 
-  public onCreate(data: ActivityXRenderData<Props, {}>) {
+  public onCreate() {
     return (
       <>
         {os.isAndroid ? (

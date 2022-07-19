@@ -1,7 +1,7 @@
 import SharedPreferences from "@Native/SharedPreferences";
 import { os } from "@Native/os";
-import { ViewX, ViewXRenderData } from "react-onsenuix";
 import { util } from "googlers-tools";
+import ViewX from "@Components/ViewX";
 
 interface AnchorProps {
   download?: any;
@@ -16,8 +16,8 @@ interface AnchorProps {
 }
 
 class Anchor extends ViewX<AnchorProps> {
-  public createView(data: ViewXRenderData<AnchorProps, {}, HTMLElement>): JSX.Element {
-    const { download, href, hrefLang, media, ping, rel, target, type, children } = data.p;
+  public createView(): JSX.Element {
+    const { download, href, hrefLang, media, ping, rel, target, type, children } = this.props;
     return (
       <>
         <a

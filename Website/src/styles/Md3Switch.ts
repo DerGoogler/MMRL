@@ -1,5 +1,3 @@
-import { UiXThemeType } from "react-onsenuix";
-
 type Color = `#${string}`;
 
 interface Md3SwitchStyles {
@@ -9,7 +7,7 @@ interface Md3SwitchStyles {
   checkedBgColor: Color;
 }
 
-export function Md3Switch(sx: Md3SwitchStyles): UiXThemeType {
+export function Md3Switch(sx: Md3SwitchStyles): any {
   return {
     ".switch--material3": {
       width: "36px",

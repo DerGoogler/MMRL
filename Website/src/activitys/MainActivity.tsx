@@ -1,6 +1,5 @@
 import { Component } from "react";
-import { RouterUtil } from "react-onsenui";
-import { Page, RouterNavigator } from "react-onsenui";
+import { Page, RouterNavigator, RouterUtil } from "react-onsenui";
 import MainApplication from "@Activitys/MainApplication";
 import Constants from "@Native/Constants";
 import NoRootActivity from "./NoRootActivity";
