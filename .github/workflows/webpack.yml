@@ -16,21 +16,21 @@ jobs:
 
     strategy:
       matrix:
-        bun-version: [ 16, 18 ]
+        node-version: [ 16, 18 ]
     
     steps:
     - uses: actions/checkout@v2
 
     - uses: actions/setup-node@v3
       with:
-        bun-version: ${{ matrix.bun-version }}
+        node-version: ${{ matrix.node-version }}
 
     - name: Build Development
       run: |
-        bun install --force
-        bun run dev
+        npm install --force
+        npm run web:dev
 
     - name: Build Production
       run: |
-        bun install --force
-        bun run prod
+        npm install --force
+        npm run web:prod
