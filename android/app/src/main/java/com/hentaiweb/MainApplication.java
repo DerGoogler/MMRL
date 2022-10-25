@@ -13,10 +13,12 @@ import com.dergoogler.mmrl.newarchitecture.MainApplicationReactNativeHost;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-import com.dergoogler.mmrl.modules.SuperUser.SuperUserModule;
-import com.dergoogler.mmrl.modules.SuperUser.SuperUserPackage;
+import com.dergoogler.mmrl.modules.NativeStorage.NativeStorageModule;
+import com.dergoogler.mmrl.modules.NativeStorage.NativeStoragePackage;
 import com.dergoogler.mmrl.modules.SuFile.SuFileModule;
 import com.dergoogler.mmrl.modules.SuFile.SuFilePackage;
+import com.dergoogler.mmrl.modules.SuperUser.SuperUserModule;
+import com.dergoogler.mmrl.modules.SuperUser.SuperUserPackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -32,8 +34,9 @@ public class MainApplication extends Application implements ReactApplication {
           @SuppressWarnings("UnnecessaryLocalVariable")
           List<ReactPackage> packages = new PackageList(this).getPackages();
           // Packages that cannot be autolinked yet can be added manually here, for example:
-          packages.add(new SuperUserPackage());
+          packages.add(new NativeStoragePackage());
           packages.add(new SuFilePackage());
+          packages.add(new SuperUserPackage());
           return packages;
         }
 

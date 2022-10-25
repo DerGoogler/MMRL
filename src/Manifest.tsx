@@ -40,7 +40,7 @@ export const useDarkmode = () => {
 };
 
 export const Manifest = () => {
-  const [isDarkmode, setIsDarkmode] = useNativeStorage('darkmode', false);
+  const [isDarkmode, setIsDarkmode] = useNativeStorage('darkmode', true);
   const initialTheme = isDarkmode ? MD3DarkTheme : MD3LightTheme;
   const [theme, setTheme] = React.useState(initialTheme);
 
