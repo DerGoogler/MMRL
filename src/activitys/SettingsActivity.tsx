@@ -1,14 +1,25 @@
 import * as React from 'react';
 import {ScrollView} from 'react-native';
 import {List, Switch} from 'react-native-paper';
-import {useDarkmode} from '../Manifest';
+import {Activity, useDarkmode} from '../Manifest';
 
-const SettingsActivity: React.FC = () => {
+const SettingsActivity: React.FC<Activity<'SettingsActivity'>> = ({
+  navigation,
+}) => {
   const {isDarkmode, setIsDarkmode} = useDarkmode();
 
   return (
     <React.Fragment>
       <ScrollView>
+        <List.Section>
+          <List.Subheader>Repositories</List.Subheader>
+          <List.Item
+            title="Manage your repositories"
+            onPress={() => {
+              navigation.navigate('RepoActivity');
+            }}
+          />
+        </List.Section>
         <List.Section>
           <List.Subheader>Appearance</List.Subheader>
           <List.Item

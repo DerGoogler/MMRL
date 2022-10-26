@@ -13,6 +13,7 @@ import {IconSource} from 'react-native-paper/lib/typescript/components/Icon';
 import {useNativeStorage} from './hooks/useNativeStorage';
 import DescriptionActivity from './activitys/DescriptionActivity';
 import RepoActivity from './activitys/RepoActivity';
+import {ReposProvider} from './hooks/useRepos';
 
 type RootStackParamList = {
   MainActivity: undefined;
@@ -54,47 +55,49 @@ export const Manifest = () => {
 
   return (
     <SafeAreaProvider>
-      <DarkmodeContext.Provider value={{isDarkmode, setIsDarkmode}}>
-        <PaperProvider theme={theme}>
-          <NavigationContainer theme={theme as any}>
-            <Stack.Navigator
-              screenOptions={{
-                // headerShown: false,
-                header: props => <CustomAppBar {...props} />,
-              }}
-              initialRouteName="MainActivity">
-              <Stack.Screen
-                options={{
-                  title: 'MMRL',
+      <ReposProvider>
+        <DarkmodeContext.Provider value={{isDarkmode, setIsDarkmode}}>
+          <PaperProvider theme={theme}>
+            <NavigationContainer theme={theme as any}>
+              <Stack.Navigator
+                screenOptions={{
+                  // headerShown: false,
+                  header: props => <CustomAppBar {...props} />,
                 }}
-                name="MainActivity"
-                component={MainActivity}
-              />
-              <Stack.Screen
-                options={{
-                  title: 'Settings',
-                }}
-                name="SettingsActivity"
-                component={SettingsActivity}
-              />
-              <Stack.Screen
-                options={{
-                  title: 'Sample name',
-                }}
-                name="DescriptionActivity"
-                component={DescriptionActivity}
-              />
-              <Stack.Screen
-                options={{
-                  title: 'Repositories',
-                }}
-                name="RepoActivity"
-                component={RepoActivity}
-              />
-            </Stack.Navigator>
-          </NavigationContainer>
-        </PaperProvider>
-      </DarkmodeContext.Provider>
+                initialRouteName="MainActivity">
+                <Stack.Screen
+                  options={{
+                    title: 'MMRL',
+                  }}
+                  name="MainActivity"
+                  component={MainActivity}
+                />
+                <Stack.Screen
+                  options={{
+                    title: 'Settings',
+                  }}
+                  name="SettingsActivity"
+                  component={SettingsActivity}
+                />
+                <Stack.Screen
+                  options={{
+                    title: 'Sample name',
+                  }}
+                  name="DescriptionActivity"
+                  component={DescriptionActivity}
+                />
+                <Stack.Screen
+                  options={{
+                    title: 'Repositories',
+                  }}
+                  name="RepoActivity"
+                  component={RepoActivity}
+                />
+              </Stack.Navigator>
+            </NavigationContainer>
+          </PaperProvider>
+        </DarkmodeContext.Provider>
+      </ReposProvider>
     </SafeAreaProvider>
   );
 };

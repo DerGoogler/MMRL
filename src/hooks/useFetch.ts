@@ -112,3 +112,7 @@ function useFetch<T = unknown, K extends Type = 'json'>(
 }
 
 export default useFetch;
+
+export function useMapFetch<T>(url: string[]) {
+  return url.map(u => useFetch<T>(u))[0]
+}

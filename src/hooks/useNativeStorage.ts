@@ -7,6 +7,7 @@ import {
   SetStateAction,
   useCallback,
   useEffect,
+  useReducer,
   useState,
 } from 'react';
 
@@ -24,7 +25,6 @@ export function useNativeStorage<T>(
   const readValue = useCallback((): T => {
     try {
       const item = nativeStorage.getItem(key);
-      console.log(item)
       return item ? (parseJSON(item) as T) : initialValue;
     } catch (error) {
       console.warn(`Error reading nativeStorage key “${key}”:`, error);
