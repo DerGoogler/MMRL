@@ -3,6 +3,7 @@ import {Linking, View} from 'react-native';
 import {Button, Card, Chip, Text} from 'react-native-paper';
 import useFetch from '../hooks/useFetch';
 import {Activity} from '../Manifest';
+import { MagiskModuleProps } from '../native/Magisk';
 import {formatDate} from '../utils/formatDate';
 import {readProps} from '../utils/readProps';
 import {window} from '../utils/window';
@@ -14,21 +15,6 @@ export interface RepoModule {
   prop_url: string;
   stars: number;
   zip_url: string;
-}
-
-export interface ModuleProps extends Object {
-  id: string;
-  name: string;
-  version: string;
-  versionCode: string;
-  author: string;
-  description: string;
-  updateJson?: string;
-  support?: string;
-  donate?: string;
-  minMagisk?: string;
-  minApi?: string;
-  maxApi?: string;
 }
 
 export interface ModuleCardProps {
@@ -53,7 +39,7 @@ export const ModuleCard: React.FC<ModuleCardProps> = props => {
     return null;
   }
 
-  const prop = readProps<ModuleProps>(data);
+  const prop = readProps<MagiskModuleProps>(data);
 
   return (
     <View style={{marginTop: 5, flex: 1}}>
