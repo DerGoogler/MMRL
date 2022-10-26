@@ -2,6 +2,7 @@ import * as React from 'react';
 import {ScrollView} from 'react-native';
 import {List, Switch} from 'react-native-paper';
 import {Activity, useDarkmode} from '../Manifest';
+import {window} from '../utils/window';
 
 const SettingsActivity: React.FC<Activity<'SettingsActivity'>> = ({
   navigation,
@@ -32,6 +33,19 @@ const SettingsActivity: React.FC<Activity<'SettingsActivity'>> = ({
                 onValueChange={state => setIsDarkmode(state)}
               />
             )}
+          />
+        </List.Section>
+        <List.Section>
+          <List.Subheader>Info</List.Subheader>
+          <List.Item
+            title="Source code"
+            onPress={() => window.open('https://github.com/DerGoogler/MMRL')}
+          />
+          <List.Item
+            title="Issues"
+            onPress={() =>
+              window.open('https://github.com/DerGoogler/MMRL/issues')
+            }
           />
         </List.Section>
       </ScrollView>
