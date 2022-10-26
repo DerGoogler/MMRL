@@ -3,14 +3,24 @@ import {ScrollView, StyleSheet, View} from 'react-native';
 import {ActivityIndicator, Text, useTheme} from 'react-native-paper';
 import useFetch from '../hooks/useFetch';
 import {Activity} from '../Manifest';
-import Markdown from 'react-native-markdown-display';
+// import Markdown from 'react-native-markdown-display';
+// @ts-ignore
+import Markdown from 'react-native-markdown-package';
 import {window} from '../utils/window';
+import { Content } from '../components/core/Content';
 
 const DescriptionActivity: React.FC<Activity<'DescriptionActivity'>> = ({
   route,
+  navigation,
 }) => {
   const style = useMarkdownStlye();
   const {data, error} = useFetch(route.params.notes_url, 'text');
+
+  React.useEffect(() => {
+    navigation.setOptions({
+      title: route.params.title,
+    });
+  });
 
   if (error) {
     return (
@@ -38,31 +48,27 @@ const DescriptionActivity: React.FC<Activity<'DescriptionActivity'>> = ({
 
   const onLinkPress = (url: string) => {
     window.open(url);
-    return false;
+    // return false;
   };
 
   return (
     <React.Fragment>
-      <ScrollView style={{padding: 8}}>
+      <Content style={{padding: 8,flex: 1}}>
         {/* @ts-ignore */}
-        <Markdown onLinkPress={onLinkPress} style={style}>
+        <Markdown onLink={onLinkPress} styles={style}>
           {data}
         </Markdown>
-      </ScrollView>
+      </Content>
     </React.Fragment>
   );
 };
 
-const useMarkdownStlye = (): StyleSheet.NamedStyles<any> => {
+const useMarkdownStlye = () => {
   const theme = useTheme();
 
-  return {
-    // The main container
-    body: {
-      fontSize: 14,
-    },
+  const textColor = theme.dark ? '#ffffff' : '#000000';
 
-    // Headings
+  return {
     heading1: {
       flexDirection: 'row',
       fontSize: 32,
@@ -103,14 +109,10 @@ const useMarkdownStlye = (): StyleSheet.NamedStyles<any> => {
       flexDirection: 'row',
       fontSize: 11,
     },
-
-    // Horizontal Rule
     hr: {
       borderColor: theme.colors.surfaceDisabled,
       height: 1,
     },
-
-    // Emphasis
     strong: {
       fontWeight: 'bold',
     },
@@ -120,133 +122,60 @@ const useMarkdownStlye = (): StyleSheet.NamedStyles<any> => {
     s: {
       textDecorationLine: 'line-through',
     },
-
-    // Blockquotes
-    blockquote: {
-      backgroundColor: theme.colors.backdrop,
-      borderColor: theme.colors.primary,
-      borderLeftWidth: 4,
-      marginLeft: 5,
-      paddingHorizontal: 5,
+    text: {
+      color: textColor,
     },
-
-    // Lists
-    bullet_list: {},
-    ordered_list: {},
-    list_item: {
+    blockQuoteText: {
+      color: 'grey',
+    },
+    blockQuoteSection: {
       flexDirection: 'row',
-      justifyContent: 'flex-start',
-    },
-    // @pseudo class, does not have a unique render rule
-    bullet_list_icon: {
-      marginLeft: 10,
-      marginRight: 10,
-    },
-    // @pseudo class, does not have a unique render rule
-    bullet_list_content: {
-      flex: 1,
-    },
-    // @pseudo class, does not have a unique render rule
-    ordered_list_icon: {
-      marginLeft: 10,
-      marginRight: 10,
-    },
-    // @pseudo class, does not have a unique render rule
-    ordered_list_content: {
-      flex: 1,
-    },
-
-    // Code
-    code_inline: {
-      borderWidth: 0,
-      // borderColor: '#CCCCCC',
       backgroundColor: theme.colors.backdrop,
-      padding: 10,
-      borderRadius: theme.roundness,
-      fontFamily: 'monospace',
-    },
-    code_block: {
-      borderWidth: 0,
-      // borderColor: '#CCCCCC',
-      backgroundColor: theme.colors.backdrop,
-      padding: 10,
-      borderRadius: theme.roundness,
-      fontFamily: 'monospace',
-    },
-    fence: {
-      borderWidth: 0,
-      // borderColor: '#CCCCCC',
-      backgroundColor: theme.colors.backdrop,
-      padding: 10,
-      borderRadius: 4,
-      fontFamily: 'monospace',
-    },
-
-    // Tables
-    table: {
-      borderWidth: 1,
-      borderColor: theme.colors.surfaceDisabled,
-      borderRadius: theme.roundness,
       marginTop: 0,
       marginBottom: 16,
+      textBreakStrategy: "simple"
     },
-    thead: {},
-    tbody: {},
-    th: {
-      flex: 1,
+    blockQuoteSectionBar: {
+      width: 3,
+      height: null,
+      backgroundColor: theme.colors.primary,
+      marginRight: 15,
+    },
+    tableHeader: {
+      backgroundColor: 'grey',
+    },
+    inlineCode: {
+      
+      borderWidth: 0,
+      backgroundColor: theme.colors.inverseOnSurface,
       padding: 5,
+      borderRadius: theme.roundness,
+      fontFamily: 'monospace',
     },
-    tr: {
-      borderBottomWidth: 1,
-      borderColor: theme.colors.surfaceDisabled,
-      flexDirection: 'row',
+    codeBlock: {
+      borderWidth: 0,
+      backgroundColor: theme.colors.backdrop,
+      padding: 10,
+      borderRadius: theme.roundness,
+      fontFamily: 'monospace',
     },
-    td: {
-      flex: 1,
-      padding: 5,
-    },
-
-    // Links
-    link: {
+    autolink: {
       color: theme.colors.primary,
       textDecorationLine: 'underline',
     },
-    blocklink: {
-      flex: 1,
-      borderColor: '#000000',
-      borderBottomWidth: 1,
-    },
-
-    // Images
     image: {
-      flex: 1,
+      // flex: 1,
       borderRadius: theme.roundness,
     },
-
-    // Text Output
-    text: {},
-    textgroup: {},
     paragraph: {
       marginTop: 0,
       marginBottom: 16,
-      // marginTop: 10,
-      // marginBottom: 10,
       flexWrap: 'wrap',
       flexDirection: 'row',
       alignItems: 'flex-start',
       justifyContent: 'flex-start',
       width: '100%',
     },
-    hardbreak: {
-      width: '100%',
-      height: 1,
-    },
-    softbreak: {},
-
-    // Believe these are never used but retained for completeness
-    pre: {},
-    inline: {},
-    span: {},
   };
 };
 

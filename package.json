@@ -19,6 +19,8 @@
     "react-native": "0.70.3",
     "react-native-gesture-handler": "^2.8.0",
     "react-native-markdown-display": "^7.0.0-alpha.2",
+    "react-native-markdown-package": "^1.8.2",
+    "react-native-markdown-view": "^1.1.4",
     "react-native-mmkv-storage": "^0.8.0",
     "react-native-pager-view": "^6.0.1",
     "react-native-paper": "^5.0.0-rc.8",

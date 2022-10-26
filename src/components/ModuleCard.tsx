@@ -77,6 +77,7 @@ export const ModuleCard: React.FC<ModuleCardProps> = props => {
             onPress={() =>
               navigation.navigate('DescriptionActivity', {
                 notes_url: notes_url,
+                title: prop.name,
               })
             }>
             Description

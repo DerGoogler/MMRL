@@ -21,6 +21,7 @@ type RootStackParamList = {
   RepoActivity: undefined;
   DescriptionActivity: {
     notes_url: string;
+    title: string
   };
 };
 
