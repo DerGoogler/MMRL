@@ -50,6 +50,10 @@ export class MagiskConstructor extends ShellConstructor {
     this.VERSION_CODE = Number(this.result('magisk -V'));
   }
 
+  public busybox(name: string, command: string) {
+    this.exec(`${this.SECURE_DIR}/magisk/busybox ${name} ${command}`);
+  }
+
   public readModuleProps(folder: string): MagiskModuleProps {
     const read = new SuFile(`${this.SECURE_DIR}/modules/${folder}/module.prop`);
     return this._readProps<MagiskModuleProps>(read.read());

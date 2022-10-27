@@ -5,6 +5,7 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.Callback;
 import java.util.Map;
 import java.util.HashMap;
 import java.io.BufferedInputStream;
@@ -41,7 +42,7 @@ public class SuFileModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod(isBlockingSynchronousMethod = true)
-    public String readFile(String path) {
+    public String readFile(String path, Callback onError) {
         try {
             try (BufferedReader br = new BufferedReader(new InputStreamReader(SuFileInputStream.open(path)))) {
                 StringBuilder sb = new StringBuilder();
@@ -53,6 +54,7 @@ public class SuFileModule extends ReactContextBaseJavaModule {
                 return sb.toString();
             }
         } catch (IOException e) {
+            onError.invoke(e.toString());
             e.printStackTrace();
             return "";
         }
@@ -110,12 +112,13 @@ public class SuFileModule extends ReactContextBaseJavaModule {
         }
     }
 
-    public void unpackZip(String path, String zipname) {
+    @ReactMethod(isBlockingSynchronousMethod = true)
+    public void unpackZip(String zipname, String output) {
         InputStream is;
         ZipInputStream zis;
         try {
             String filename;
-            is = SuFileInputStream.open(path + "/" + zipname);
+            is = SuFileInputStream.open(new SuFile(getDataDir() + "/Download/" + zipname));
             zis = new ZipInputStream(new BufferedInputStream(is));
             ZipEntry ze;
             byte[] buffer = new byte[1024];
@@ -123,11 +126,12 @@ public class SuFileModule extends ReactContextBaseJavaModule {
             while ((ze = zis.getNextEntry()) != null) {
                 filename = ze.getName();
                 if (ze.isDirectory()) {
-                    File fmd = new SuFile(path + filename);
+                    File fmd = new SuFile(getDataDir() + "/Download/" + filename);
                     fmd.mkdirs();
                     continue;
                 }
-                OutputStream fout = SuFileOutputStream.open(path + filename);
+                OutputStream fout = SuFileOutputStream
+                        .open(new SuFile(getDataDir() + "/Download/" + filename));
                 while ((count = zis.read(buffer)) != -1) {
                     fout.write(buffer, 0, count);
                 }

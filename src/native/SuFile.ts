@@ -5,14 +5,18 @@ const {SuFileModule} = NativeModules;
 export default class SuFile {
   private _file: string;
   private _module: typeof SuFileModule;
+  private static _module: typeof SuFileModule;
 
   public constructor(file: string) {
     this._module = SuFileModule;
     this._file = file;
+    SuFile._module = SuFileModule;
   }
 
   public read(): string {
-    return this._module.readFile(this._file);
+    return this._module.readFile(this._file, (msg: string) => {
+      console.log(msg);
+    });
   }
 
   public list(): string[] {
@@ -35,19 +39,19 @@ export default class SuFile {
     return this._module.existFile(this._file);
   }
 
-  public getExternalStorageDir(): string {
+  public static getExternalStorageDir(): string {
     return this._module.getExternalStorageDir();
   }
 
-  public getPackageDataDir(): string {
+  public static getPackageDataDir(): string {
     return this._module.getPackageDataDir();
   }
 
-  public getPublicDir(type: string): string {
+  public static getPublicDir(type: string): string {
     return this._module.getPublicDir(type);
   }
 
-  public getDataDir(): string {
+  public static getDataDir(): string {
     return this._module.getDataDir();
   }
 }

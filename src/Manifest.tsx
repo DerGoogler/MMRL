@@ -17,6 +17,7 @@ import {useNativeStorage} from './hooks/useNativeStorage';
 import DescriptionActivity from './activitys/DescriptionActivity';
 import RepoActivity from './activitys/RepoActivity';
 import {ReposProvider} from './hooks/useRepos';
+import {InstallerActivity} from './activitys/InstallerActivity';
 
 type RootStackParamList = {
   MainActivity: undefined;
@@ -26,6 +27,7 @@ type RootStackParamList = {
     notes_url: string;
     title: string;
   };
+  InstallerActivity: undefined;
 };
 
 export type Activity<
@@ -121,6 +123,13 @@ export const Manifest = () => {
                 name="RepoActivity"
                 component={RepoActivity}
               />
+              {/* <Stack.Screen
+                options={{
+                  title: 'Installer',
+                }}
+                name="InstallerActivity"
+                component={InstallerActivity}
+              /> */}
             </Stack.Navigator>
           </NavigationContainer>
         </PaperProvider>
