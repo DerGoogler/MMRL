@@ -15,51 +15,60 @@ export const RepoList: React.FC<RepoList> = props => {
 
   return (
     <React.Fragment>
-      <View style={{marginTop: 5, flex: 1}}>
-        <Card>
-          <Card.Title
-            title={repo.name}
-            rightStyle={{marginRight: 8, padding: 8}}
-            right={() => (
-              <Switch
-                value={repo.enabled}
-                onValueChange={state => {
-                  setRepos(prev => {
-                    prev[index].enabled = state;
-                    return prev;
-                  });
-                  //   props.frr();
-                  forceRender();
-                }}
-              />
-            )}
+      {/* <View style={{marginTop: 5, flex: 1}}> */}
+      <List.Section>
+        <List.Subheader>{repo.name}</List.Subheader>
+        <List.Item
+          title="Enabled"
+          left={props => <List.Icon {...props} icon="puzzle" />}
+          right={() => (
+            <Switch
+              value={repo.enabled}
+              onValueChange={state => {
+                setRepos(prev => {
+                  prev[index].enabled = state;
+                  return prev;
+                });
+                //   props.frr();
+                forceRender();
+              }}
+            />
+          )}
+        />
+
+        {repo.website && (
+          <List.Item
+            title="Website"
+            left={props => <List.Icon {...props} icon="web" />}
+            onPress={() => repo.website && window.open(repo.website)}
           />
-          <Card.Content>
-            {repo.website && (
-              <List.Item
-                title="Website"
-                onPress={() => repo.website && window.open(repo.website)}
-              />
-            )}
-            {repo.support && <List.Item title="Support" />}
-            {repo.donate && (
-              <List.Item
-                title="Donate"
-                onPress={() => repo.donate && window.open(repo.donate)}
-              />
-            )}
-            {repo.submitModule && (
-              <List.Item
-                title="Submit module"
-                onPress={() =>
-                  repo.submitModule && window.open(repo.submitModule)
-                }
-              />
-            )}
-            <List.Item title="Delete" />
-          </Card.Content>
-        </Card>
-      </View>
+        )}
+        {repo.support && (
+          <List.Item
+            title="Support"
+            left={props => <List.Icon {...props} icon="support" />}
+          />
+        )}
+        {repo.donate && (
+          <List.Item
+            title="Donate"
+            left={props => <List.Icon {...props} icon="cash" />}
+            onPress={() => repo.donate && window.open(repo.donate)}
+          />
+        )}
+        {repo.submitModule && (
+          <List.Item
+            title="Submit module"
+            left={props => <List.Icon {...props} icon="file-upload-outline" />}
+            onPress={() => repo.submitModule && window.open(repo.submitModule)}
+          />
+        )}
+        <List.Item
+          left={props => <List.Icon {...props} icon="delete" />}
+          title="Delete"
+        />
+      </List.Section>
+      {/* </View> */}
     </React.Fragment>
   );
 };

@@ -7,7 +7,6 @@ import {window} from '../utils/window';
 const SettingsActivity: React.FC<Activity<'SettingsActivity'>> = ({
   navigation,
 }) => {
-
   return (
     <React.Fragment>
       <ScrollView>
@@ -15,6 +14,7 @@ const SettingsActivity: React.FC<Activity<'SettingsActivity'>> = ({
           <List.Subheader>Repositories</List.Subheader>
           <List.Item
             title="Manage your repositories"
+            left={props => <List.Icon {...props} icon="puzzle" />}
             onPress={() => {
               navigation.navigate('RepoActivity');
             }}
@@ -38,10 +38,12 @@ const SettingsActivity: React.FC<Activity<'SettingsActivity'>> = ({
           <List.Subheader>Info</List.Subheader>
           <List.Item
             title="Source code"
+            left={props => <List.Icon {...props} icon="github" />}
             onPress={() => window.open('https://github.com/DerGoogler/MMRL')}
           />
           <List.Item
             title="Issues"
+            left={props => <List.Icon {...props} icon="bug" />}
             onPress={() =>
               window.open('https://github.com/DerGoogler/MMRL/issues')
             }

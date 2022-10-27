@@ -61,6 +61,7 @@ export const ModuleCard: React.FC<ModuleCardProps> = props => {
         </Card.Content>
         <Card.Actions>
           <Chip
+          icon="file-document"
             onPress={() =>
               navigation.navigate('DescriptionActivity', {
                 notes_url: notes_url,
@@ -70,7 +71,7 @@ export const ModuleCard: React.FC<ModuleCardProps> = props => {
             Description
           </Chip>
 
-          <Chip icon="camera" onPress={() => window.open(zip_url)}>
+          <Chip icon="download" onPress={() => window.open(zip_url)}>
             Download
           </Chip>
         </Card.Actions>

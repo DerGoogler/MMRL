@@ -27,7 +27,7 @@ export const CustomAppBar: React.FC<StackHeaderProps> = props => {
         <Appbar.Content title={props.options.title || 'MMRL'} />
         {props.route.name === 'MainActivity' && (
           <Appbar.Action
-            icon="camera"
+            icon="wrench"
             onPress={() => {
               props.navigation.navigate('SettingsActivity');
             }}
