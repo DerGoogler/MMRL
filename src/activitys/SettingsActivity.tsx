@@ -1,13 +1,12 @@
 import * as React from 'react';
 import {ScrollView} from 'react-native';
 import {List, Switch} from 'react-native-paper';
-import {Activity, useDarkmode} from '../Manifest';
+import {Activity} from '../Manifest';
 import {window} from '../utils/window';
 
 const SettingsActivity: React.FC<Activity<'SettingsActivity'>> = ({
   navigation,
 }) => {
-  const {isDarkmode, setIsDarkmode} = useDarkmode();
 
   return (
     <React.Fragment>
@@ -23,7 +22,7 @@ const SettingsActivity: React.FC<Activity<'SettingsActivity'>> = ({
         </List.Section>
         <List.Section>
           <List.Subheader>Appearance</List.Subheader>
-          <List.Item
+          {/* <List.Item
             title="Dark mode"
             left={props => <List.Icon {...props} icon="theme-light-dark" />}
             right={props => (
@@ -33,7 +32,7 @@ const SettingsActivity: React.FC<Activity<'SettingsActivity'>> = ({
                 onValueChange={state => setIsDarkmode(state)}
               />
             )}
-          />
+          /> */}
         </List.Section>
         <List.Section>
           <List.Subheader>Info</List.Subheader>

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Linking, View} from 'react-native';
-import {Button, Card, Chip, Text} from 'react-native-paper';
+import {Button, Card, Chip, Text, useTheme} from 'react-native-paper';
 import useFetch from '../hooks/useFetch';
 import {Activity} from '../Manifest';
 import { MagiskModuleProps } from '../native/Magisk';
@@ -27,6 +27,7 @@ export const ModuleCard: React.FC<ModuleCardProps> = props => {
   const {zip_url, prop_url, last_update, notes_url} = props.module;
   const {navigation} = props;
   const {data, error} = useFetch(prop_url, 'text');
+  const theme = useTheme()
 
   if (error) {
     console.error(
