@@ -2,16 +2,17 @@ import Icon from "@Components/Icon";
 import { TabWrapper } from "@Components/TabWrapper";
 import { SettingsRounded } from "@mui/icons-material";
 import { os } from "@Native/os";
-import SharedPreferences from "@Native/SharedPreferences";
 import { string } from "@Strings";
 import Constants from "@Utils/Constants";
-import { Disappear } from "react-disappear";
-import { Tab, Tabbar, TabbarRenderTab, ToolbarButton } from "react-onsenui";
-import AppCompatActivity from "./AppCompatActivity";
+import { Page, Tab, Tabbar, TabbarRenderTab, ToolbarButton } from "react-onsenui";
 import DeviceModuleFragment from "./fragments/DeviceModuleFragment";
 import ExploreModuleFragment from "./fragments/ExploreModuleFragment";
-import RepoActivity from "./RepoActivity";
 import SettingsActivity from "./SettingsActivity";
+import ToolbarBuilder from "@Builders/ToolbarBuilder";
+import React from "react";
+import { useDarkmode } from "@Hooks/useDarkmode";
+import { Disappear } from "react-disappear";
+import Fade from "@mui/material/Fade";
 
 interface Props {
   id: string;
@@ -31,107 +32,87 @@ interface Props {
   pushPage: any;
 }
 
-interface States {
-  toolbarShadow: string;
-  toolbarTitle: string;
-}
+const MainApplication = (props: Props) => {
+  const [toolbarShadow, setToolbarShadow] = React.useState("noshadow");
+  const [toolbarTitle, setToolbarTitle] = React.useState("");
+  const [titleShow, setTitleShow] = React.useState(true);
+  const isDarkmode = useDarkmode();
 
-class MainApplication extends AppCompatActivity<Props, States> {
-  public constructor(props: Props | Readonly<Props>) {
-    super(props);
-    this.state = {
-      toolbarShadow: "noshadow",
-      toolbarTitle: "",
-    };
-
-    this.openSettings = this.openSettings.bind(this);
-    this.renderTabs = this.renderTabs.bind(this);
-    this.onCreateFAB = this.onCreateFAB.bind(this);
-  }
-
-  public onCreateToolbar() {
-    return {
-      modifier: this.state.toolbarShadow,
-      title: os.isAndroid ? Constants.GlobalMMRLTitle : this.state.toolbarTitle,
-      addToolbarButtonPosition: "right",
-      addToolbarButton: (
-        <ToolbarButton className="back-button--material__icon" onClick={this.openSettings}>
-          <Icon icon={SettingsRounded} keepLight={true} />
-        </ToolbarButton>
-      ),
-    };
-  }
-
-  public onBackButton(): void {
-    os.close();
-  }
-
-  public componentDidUpdate() {
-    super.componentDidUpdate;
-  }
-
-  private openSettings() {
-    this.props.pushPage({
+  const openSettings = () => {
+    props.pushPage({
       key: "settings",
       activity: SettingsActivity,
     });
-  }
+  };
 
-  private renderTabs(): TabbarRenderTab[] {
+  const renderTabs = (): TabbarRenderTab[] => {
     return [
       {
-        content: <TabWrapper element={ExploreModuleFragment} props={{ pushPage: this.props.pushPage }} />,
+        content: <TabWrapper element={ExploreModuleFragment} props={{ pushPage: props.pushPage }} />,
         tab: <Tab label={string.explore} />,
       },
       {
-        content: <TabWrapper element={DeviceModuleFragment} props={{ pushPage: this.props.pushPage }} />,
+        content: <TabWrapper element={DeviceModuleFragment} props={{ pushPage: props.pushPage }} />,
         tab: <Tab label={string.installed} />,
       },
     ];
-  }
+  };
 
-  public onCreate() {
-    return (
-      <>
-        {os.isAndroid ? (
-          <Tabbar
-            swipeable={false}
-            position={SharedPreferences.getBoolean("enableBottomTabs_switch", false) ? "bottom" : "top"}
-            renderTabs={this.renderTabs}
+  return (
+    <Page
+      renderToolbar={() => {
+        return (
+          <ToolbarBuilder
+            modifier={toolbarShadow}
+            title={
+              <Fade in={titleShow}>
+                <span>{os.isAndroid ? Constants.GlobalMMRLTitle : toolbarTitle}</span>
+              </Fade>
+            }
+            addToolbarButtonPosition="right"
+            addToolbarButton={
+              <ToolbarButton className="back-button--material__icon" onClick={openSettings}>
+                <Icon icon={SettingsRounded} keepLight={true} />
+              </ToolbarButton>
+            }
           />
-        ) : (
-          <>
+        );
+      }}
+    >
+      {os.isAndroid ? (
+        <Tabbar swipeable={false} position={isDarkmode ? "bottom" : "top"} renderTabs={renderTabs} />
+      ) : (
+        <>
+          <Disappear
+            style={{
+              padding: "50px",
+              paddingTop: "6px",
+              textAlign: "center",
+              backgroundColor: isDarkmode ? "rgb(31, 31, 31)" : "#4a148c",
+              color: "white",
+              fontSize: "30px",
+              boxShadow: "rgba(0, 0, 0, 0.3) 0px 1px 5px",
+            }}
+            wrapper="div"
+            onDisappear={(visible) => {
+              setToolbarShadow(visible ? "noshadow" : "");
+            }}
+          >
             <Disappear
+              wrapper={"span"}
               onDisappear={(visible) => {
-                this.setState({ toolbarShadow: visible ? "noshadow" : "" });
+                setTitleShow(!visible);
+                setToolbarTitle(visible ? "" : Constants.GlobalMMRLTitle);
               }}
             >
-              <div
-                style={{
-                  padding: "50px",
-                  paddingTop: "6px",
-                  textAlign: "center",
-                  backgroundColor: SharedPreferences.getBoolean("enableDarkmode_switch", false) ? "rgb(31, 31, 31)" : "#4a148c",
-                  color: "white",
-                  fontSize: "30px",
-                  boxShadow: "rgba(0, 0, 0, 0.3) 0px 1px 5px",
-                }}
-              >
-                <Disappear
-                  onDisappear={(visible) => {
-                    this.setState({ toolbarTitle: visible ? "" : Constants.GlobalMMRLTitle });
-                  }}
-                >
-                  <span>{Constants.GlobalMMRLTitle}</span>
-                </Disappear>
-              </div>
+              {Constants.GlobalMMRLTitle}
             </Disappear>
-            <ExploreModuleFragment pushPage={this.props.pushPage} />
-          </>
-        )}
-      </>
-    );
-  }
-}
+          </Disappear>
+          <ExploreModuleFragment pushPage={props.pushPage} />
+        </>
+      )}
+    </Page>
+  );
+};
 
 export default MainApplication;

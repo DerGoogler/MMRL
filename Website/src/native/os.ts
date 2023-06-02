@@ -1,6 +1,3 @@
-import BuildConfig from "./BuildConfig";
-import Build from "./Build";
-import SharedPreferences from "./SharedPreferences";
 import ons from "onsenui";
 import { isValidElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
@@ -73,19 +70,19 @@ class os {
     }
   }
 
-  /**
-   * Getting theme color for Android devices that over Android 12
-   * @param id Get the monet color
-   * @param fallback Is used when the Android version is lower than 12
-   * @returns Current hex string of monet theme
-   */
-  public static getMonetColor(id: string, fallback: string): string {
-    if (os.isAndroid && SharedPreferences.getBoolean("enableMonet", false) && BuildConfig.VERSION.SDK_INT > Build.VERSION_CODES.S) {
-      return nos.getMonetColor(id);
-    } else {
-      return fallback;
-    }
-  }
+  // /**
+  //  * Getting theme color for Android devices that over Android 12
+  //  * @param id Get the monet color
+  //  * @param fallback Is used when the Android version is lower than 12
+  //  * @returns Current hex string of monet theme
+  //  */
+  // public static getMonetColor(id: string, fallback: string): string {
+  //   if (os.isAndroid && SharedPreferences.getBoolean("enableMonet", false) && BuildConfig.VERSION.SDK_INT > Build.VERSION_CODES.S) {
+  //     return nos.getMonetColor(id);
+  //   } else {
+  //     return fallback;
+  //   }
+  // }
 
   /**
    * Changes the status bar color

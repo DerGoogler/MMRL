@@ -1,6 +1,5 @@
-import { createRef, RefObject, ReactNode } from "react";
-import { dom } from "googlers-tools";
-import ViewX from "./ViewX";
+import { doc } from "googlers-tools";
+import React from "react";
 
 interface Props {
   event:
@@ -25,26 +24,20 @@ interface Props {
     | "pinchout"
     | "rotate";
   callback(...props: any): void;
-  children: ReactNode;
+  children: React.ReactNode;
 }
 
-class Gesture extends ViewX<Props, {}> {
-  private gerstureID: RefObject<HTMLDivElement>;
-  constructor(props: any) {
-    super(props);
-    this.gerstureID = createRef();
-  }
-  public componentDidMount() {
-    const { callback, event } = this.props;
+const Gesture = (props: Props) => {
+  const { callback, event, children } = props;
+  const gerstureID = React.useRef(null);
 
-    dom.findBy(this.gerstureID, (ref: HTMLDivElement) => {
+  React.useEffect(() => {
+    doc.findRef(gerstureID, (ref: HTMLDivElement) => {
       ref.addEventListener(event, callback);
     });
-  }
+  }, []);
 
-  public createView(): JSX.Element {
-    return <div ref={this.gerstureID}>{this.props.children}</div>;
-  }
-}
+  return <div ref={gerstureID}>{children}</div>;
+};
 
 export default Gesture;

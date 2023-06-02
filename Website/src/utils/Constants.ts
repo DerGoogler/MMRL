@@ -1,6 +1,6 @@
-enum Constants {
-  UserAgentAndroid = "MMRL",
-  GlobalMMRLTitle = "Magisk Module Repo Loader",
+const Constants = {
+  UserAgentAndroid: "MMRL",
+  GlobalMMRLTitle: "Magisk Module Repo Loader",
 }
 
 export default Constants;

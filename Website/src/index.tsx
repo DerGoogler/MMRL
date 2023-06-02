@@ -1,3 +1,5 @@
+
+import ReactDOM from 'react-dom/client';
 import MainActivity from "@Activitys/MainActivity";
 import { dom } from "googlers-tools";
 import ons from "onsenui";
@@ -7,7 +9,7 @@ import jss from "jss";
 import preset from "jss-preset-default";
 import light_theme from "@Styles/light_theme";
 import dark_theme from "@Styles/dark_theme";
-import SharedPreferences, { ISharedPreferences } from "@Native/SharedPreferences";
+import { SharedPreferences } from "@Native/SharedPreferences";
 import { string } from "./language/core";
 
 // Webpack CSS import
@@ -19,17 +21,15 @@ import "@Styles/markdown-dark.scss";
 
 class Bootloader {
   private log: Log;
-  private readonly pref: ISharedPreferences;
 
   constructor() {
-    this.pref = new SharedPreferences();
     this.log = new Log(this.constructor.name);
   }
 
   private loadStyle() {
     this.log.i("Setup theme");
     jss.setup(preset());
-    if (this.pref.getBoolean("enableDarkmode_switch", false)) {
+    if (SharedPreferences.getItem<boolean>("enableDarkmode_switch", false)) {
       jss.createStyleSheet(dark_theme).attach();
     } else {
       jss.createStyleSheet(light_theme).attach();
@@ -39,7 +39,11 @@ class Bootloader {
   private loadActivity() {
     "use strict";
     this.log.i("Loading MainActivty");
-    dom.renderAuto(MainActivity);
+    const app = document.createElement(this.constructor.name);
+    document.body.prepend(app);
+    const container = document.querySelector<Element>(this.constructor.name!);
+    const root = ReactDOM.createRoot(container!);
+    root.render(<MainActivity />);
   }
 
   public init() {
@@ -47,7 +51,7 @@ class Bootloader {
       os.requestStoargePermission();
     }
 
-    string.setLanguage(this.pref.getString("language_select", "en"));
+    string.setLanguage(SharedPreferences.getItem("language_select", "en"));
 
     // Prevent context menu on browsers.
     dom.preventer(["contextmenu"]);

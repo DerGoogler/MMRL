@@ -2,9 +2,10 @@ import { Component, isValidElement } from "react";
 import { ListItem, ListTitle, Select, Switch } from "react-onsenui";
 import ons from "onsenui";
 import Gesture from "@Components/Gesture";
-import SharedPreferences, { ISharedPreferences } from "@Native/SharedPreferences";
 import { PushProps } from "@Activitys/MainActivity";
 import { util } from "googlers-tools";
+import React from "react";
+import { useNativeStorage } from "@Hooks/useNativeStorage";
 
 interface IProps {
   data: IListInterface[];
@@ -80,131 +81,138 @@ export interface IListInterface {
   content: IListOptions[];
 }
 
-class ListViewBuilder extends Component<IProps> {
-  private pref: ISharedPreferences;
+const PushContext = React.createContext(() => {});
 
-  public constructor(props: IProps | Readonly<IProps>) {
-    super(props);
-    this.pref = new SharedPreferences();
-  }
+const Header = ({ header }: any) => {
+  return (
+    <>
+      <section id={header.id} className={header.className} style={header.style}>
+        <ListTitle>{header.title}</ListTitle>
+        <List header={header} />
+      </section>
+    </>
+  );
+};
 
-  public render() {
-    const { data, pushPage } = this.props;
+const List = ({ header }: any) => {
+  const pushPage = React.useContext(PushContext);
 
-    return data.map((header: IListInterface) => (
-      <>
-        <section id={header.id} className={header.className} style={header.style}>
-          <ListTitle>{header.title}</ListTitle>
-          {header.content.map((item: IListOptions) => (
-            <>
-              <ListItem
-                modifier={util.typeCheck(item.modifier, "")}
-                // @ts-ignore
-                tappable={util.typeCheck(item.tappable, false)}
-                id={item.key + "-ListItem"}
-                style={item.style}
-                onClick={() => {
-                  if (typeof item.onClick == "function") {
-                    const key = item.key;
-                    item.onClick(key, pushPage);
-                  }
-                }}
-              >
-                {item.icon === (null || "" || undefined) ? null : isValidElement(item.icon) ? (
-                  <div className="left">{item.icon}</div>
-                ) : null}
-                <Gesture
-                  event="hold"
-                  callback={() => {
-                    if (item.helper?.text) {
-                      ons.notification.alert({
-                        message: item.helper?.text,
-                        title: "Info",
-                        buttonLabels: ["Ok"],
-                        animation: "default",
-                        primaryButtonIndex: 1,
-                        cancelable: util.typeCheck(item.helper?.cancelable, true),
-                      });
-                    }
-                  }}
-                >
-                  <div className="center">
-                    {item.subtext === (null || "" || undefined) ? (
-                      item.text
-                    ) : (
+  return header.content.map((item: IListOptions) => (
+    <>
+      <ListItem
+        modifier={util.typeCheck(item.modifier, "")}
+        // @ts-ignore
+        tappable={util.typeCheck(item.tappable, false)}
+        id={item.key + "-ListItem"}
+        style={item.style}
+        onClick={() => {
+          if (typeof item.onClick == "function") {
+            const key = item.key;
+            item.onClick(key, pushPage);
+          }
+        }}
+      >
+        {item.icon === (null || "" || undefined) ? null : isValidElement(item.icon) ? <div className="left">{item.icon}</div> : null}
+        <Gesture
+          event="hold"
+          callback={() => {
+            if (item.helper?.text) {
+              ons.notification.alert({
+                message: item.helper?.text,
+                title: "Info",
+                buttonLabels: ["Ok"],
+                animation: "default",
+                primaryButtonIndex: 1,
+                cancelable: util.typeCheck(item.helper?.cancelable, true),
+              });
+            }
+          }}
+        >
+          <div className="center">
+            {item.subtext === (null || "" || undefined) ? (
+              item.text
+            ) : (
+              <>
+                <span className="list-item__title">{item.text}</span>
+                <span className="list-item__subtitle" style={{ display: "block" }}>
+                  {item.subtext}
+                </span>
+              </>
+            )}
+          </div>
+        </Gesture>
+        <div className="right">
+          {(() => {
+            const [switchState, setSwitchState] = useNativeStorage(`${item.key!}_switch`, false);
+            const [selectState, setSelectState] = useNativeStorage(`${item.key}_select`, item.selectDefaultValue);
+            switch (item.type) {
+              case "switch":
+                return (
+                  <Switch
+                    //@ts-ignore
+                    checked={switchState}
+                    disabled={item.disabled}
+                    onChange={(e: any) => {
+                      /**
+                       * This will keep the default funtion
+                       */
+                      const keepDefaultFuntion = (): void => setSwitchState(e.target.checked);
+                      if (typeof item.callback == "function") {
+                        const key = item.key;
+                        item.callback(e, key, keepDefaultFuntion());
+                      } else {
+                        keepDefaultFuntion();
+                      }
+                    }}
+                    modifier="material3"
+                  ></Switch>
+                );
+              case "select":
+                return (
+                  <Select
+                    disabled={item.disabled}
+                    // @ts-ignore --> Argument of type 'string | undefined' is not assignable to parameter of type 'string'. Type 'undefined' is not assignable to type 'string'.ts(2345)
+                    value={selectState}
+                    onChange={(e: any) => {
+                      const keepDefaultFuntion = () => setSelectState(e.target.value);
+                      if (typeof item.callback == "function") {
+                        const key = item.key;
+                        item.callback(e, key, keepDefaultFuntion());
+                      } else {
+                        keepDefaultFuntion();
+                      }
+                    }}
+                  >
+                    <option defaultValue={item.selectDefaultValue} selected disabled hidden>
+                      {item.selectDefaultText ? item.selectDefaultText : "Choose"}
+                    </option>
+                    {item.selectValue?.map((select: IListSelectValue) => (
                       <>
-                        <span className="list-item__title">{item.text}</span>
-                        <span className="list-item__subtitle" style={{ display: "block" }}>
-                          {item.subtext}
-                        </span>
+                        <option value={select.value} disabled={select.disabled}>
+                          {select.text}
+                        </option>
                       </>
-                    )}
-                  </div>
-                </Gesture>
-                <div className="right">
-                  {(() => {
-                    switch (item.type) {
-                      case "switch":
-                        return (
-                          <Switch
-                            //@ts-ignore
-                            checked={this.pref.getBoolean(`${item.key!}_switch`, false)}
-                            disabled={item.disabled}
-                            onChange={(e: any) => {
-                              /**
-                               * This will keep the default funtion
-                               */
-                              const keepDefaultFuntion = (): void => this.pref.setBoolean(`${item.key!}_switch`, e.target.checked);
-                              if (typeof item.callback == "function") {
-                                const key = item.key;
-                                item.callback(e, key, keepDefaultFuntion());
-                              } else {
-                                keepDefaultFuntion();
-                              }
-                            }}
-                            modifier="material3"
-                          ></Switch>
-                        );
-                      case "select":
-                        return (
-                          <Select
-                            disabled={item.disabled}
-                            // @ts-ignore --> Argument of type 'string | undefined' is not assignable to parameter of type 'string'. Type 'undefined' is not assignable to type 'string'.ts(2345)
-                            value={this.pref.getString(`${item.key}_select`, item.selectDefaultValue)}
-                            onChange={(e: any) => {
-                              const keepDefaultFuntion = () => this.pref.setString(`${item.key}_select`, e.target.value);
-                              if (typeof item.callback == "function") {
-                                const key = item.key;
-                                item.callback(e, key, keepDefaultFuntion());
-                              } else {
-                                keepDefaultFuntion();
-                              }
-                            }}
-                          >
-                            <option defaultValue={item.selectDefaultValue} selected disabled hidden>
-                              {item.selectDefaultText ? item.selectDefaultText : "Choose"}
-                            </option>
-                            {item.selectValue?.map((select: IListSelectValue) => (
-                              <>
-                                <option value={select.value} disabled={select.disabled}>
-                                  {select.text}
-                                </option>
-                              </>
-                            ))}
-                          </Select>
-                        );
-                      default:
-                        return;
-                    }
-                  })()}
-                </div>
-              </ListItem>
-            </>
-          ))}
-        </section>
-      </>
-    ));
-  }
-}
+                    ))}
+                  </Select>
+                );
+              default:
+                return;
+            }
+          })()}
+        </div>
+      </ListItem>
+    </>
+  ));
+};
+
+const ListViewBuilder = ({ data, pushPage }: IProps) => {
+  return (
+    <PushContext.Provider value={pushPage}>
+      {data.map((header: IListInterface) => (
+        <Header header={header} pushPage={pushPage} />
+      ))}
+    </PushContext.Provider>
+  );
+};
 
 export default ListViewBuilder;

@@ -3,8 +3,12 @@ import { Page, RouterNavigator, RouterUtil } from "react-onsenui";
 import MainApplication from "@Activitys/MainApplication";
 import NoRootActivity from "./NoRootActivity";
 import Shell from "@Native/Shell";
-import { link } from "googlers-tools";
 import { os } from "@Native/os";
+import { RepoProvider } from "@Hooks/useRepos";
+import { LanguageProvider } from "@Hooks/useLanguage";
+
+import german from "./../language/de.json";
+import english from "./../language/en.json";
 
 interface ModuleOptions {
   verified?: boolean;
@@ -73,17 +77,6 @@ class MainActivity extends Component<PushProps, States> {
       },
     };
 
-    // Make an fake path. Note: The page should not refreshed!
-    link.setURL((set, currentPath) => {
-      const acty = props.activity;
-      const getName = () => {
-        return acty.name.toLowerCase().replace("activity", "");
-      };
-      if (!acty.ignoreURL) {
-        set(props.key, props.key!, `/#${currentPath}/${getName()}`);
-      }
-    });
-
     let routeConfig = this.state.routeConfig;
 
     routeConfig = RouterUtil.push({
@@ -109,9 +102,6 @@ class MainActivity extends Component<PushProps, States> {
       },
     });
 
-    // Remove fake path
-    window.history.back();
-
     this.setState({ routeConfig, currentPage: "main" });
   };
 
@@ -130,19 +120,28 @@ class MainActivity extends Component<PushProps, States> {
     return <route.component {...props} />;
   };
 
+  private langs = {
+    de: german,
+    en: english,
+  };
+
   public render = () => {
     return (
       <>
-        <Page>
-          <RouterNavigator
-            swipeable={true}
-            swipePop={(options: any) => this.popPage(options)}
-            routeConfig={this.state.routeConfig}
-            renderPage={this.renderPage}
-            onPostPush={() => this.onPostPush()}
-            onPostPop={() => this.onPostPop()}
-          />
-        </Page>
+        <LanguageProvider langs={this.langs} defaultLang="en">
+          <RepoProvider>
+            <Page>
+              <RouterNavigator
+                swipeable={true}
+                swipePop={(options: any) => this.popPage(options)}
+                routeConfig={this.state.routeConfig}
+                renderPage={this.renderPage}
+                onPostPush={() => this.onPostPush()}
+                onPostPop={() => this.onPostPop()}
+              />
+            </Page>
+          </RepoProvider>
+        </LanguageProvider>
       </>
     );
   };

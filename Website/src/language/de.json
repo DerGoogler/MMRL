@@ -6,10 +6,8 @@
   "appearance": "Aussehen",
   "language": "Sprache",
   "dark_theme": "Dunkles Thema",
-  "bottom_navigation": {
-    "text": "Navigation unten",
-    "subtext": "Bewegt Tabs an den unteren Bildschirmrand."
-  },
+  "bottom_navigation_text": "Navigation unten",
+  "bottom_navigation_subtext": "Bewegt Tabs an den unteren Bildschirmrand.",
   "not_supported_in_web_version": "In der Web-Version nicht unterstuetzt",
   "source_code": "Quellcode",
   "acknowledgements": "Danksagungen/Lizenzen",

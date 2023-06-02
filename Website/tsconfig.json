@@ -19,6 +19,7 @@
     "baseUrl": "./src",
     "paths": {
       "@Native/*": ["native/*"],
+      "@Hooks/*": ["hooks/*"],
       "@Builders/*": ["builders/*"],
       "@Components/*": ["components/*"],
       "@Types/*": ["typings/*"],

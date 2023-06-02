@@ -1,17 +1,19 @@
 {
   "name": "com.dergoogler.mmrl.web",
-  "version": "1.4.2",
-  "versionCode": "142",
+  "version": "1.6.0",
+  "versionCode": "160",
   "description": "",
   "main": "index.tsx",
   "keywords": [],
   "author": "Der_Googler",
   "license": "ISC",
   "scripts": {
-    "web:dev": "bun run util:licenses && webpack --config webpack.dev.ts",
-    "web:prod": "bun run util:licenses && bun run dev && webpack --config webpack.prod.ts && rm ./../Android/app/src/main/assets/**/*.map",
-    "app:dev": "bun run web:dev && cd ../Android && ./gradlew installDebug",
-    "util:licenses": "bun license.ts > ./src/utils/licenses.json && cd ../Android && ./gradlew app:printSolvedDepsTreeInJson"
+    "start:dev": "webpack-dev-server --open --config webpack.dev.ts",
+    "start:prod": "webpack-dev-server --open --config webpack.prod.ts",
+    "web:dev": "webpack --config webpack.dev.ts",
+    "web:prod": "npm run dev && webpack --config webpack.prod.ts && rm ./../Android/app/src/main/assets/**/*.map",
+    "app:dev": "npm run web:dev && cd ../Android && ./gradlew installDebug",
+    "util:licenses": "npm license.ts > ./src/utils/licenses.json && cd ../Android && ./gradlew app:printSolvedDepsTreeInJson"
   },
   "typings": "types/onsenui.d.ts",
   "dependencies": {
@@ -37,7 +39,10 @@
     "react-disappear": "^1.0.0",
     "react-dom": "^18.2.0",
     "react-onsenui": "^1.12.0",
-    "react-syntax-highlighter": "^15.5.0"
+    "react-render-tools": "^1.0.1",
+    "react-syntax-highlighter": "^15.5.0",
+    "usehooks-ts": "^2.9.1",
+    "web-shared-preferences": "^1.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.16.5",
@@ -45,6 +50,7 @@
     "@babel/preset-react": "^7.16.5",
     "@types/node": "^18.0.6",
     "@types/object-assign": "^4.0.30",
+    "@types/react": "^18.2.8",
     "@types/react-dom": "^18.0.2",
     "@types/react-onsenui": "^2.9.17",
     "@types/react-syntax-highlighter": "^15.5.2",
@@ -70,6 +76,7 @@
     "vscode": "^1.1.37",
     "webpack": "^5.73.0",
     "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.15.0",
     "yaml-loader": "^0.8.0"
   }
 }

@@ -6,10 +6,8 @@
   "appearance": "Appearance",
   "language": "Language",
   "dark_theme": "Dark theme",
-  "bottom_navigation": {
-    "text": "Bottom navigation",
-    "subtext": "Moves tabs to the bottom of screen."
-  },
+  "bottom_navigation_text": "Bottom navigation",
+  "bottom_navigation_subtext": "Moves tabs to the bottom of screen.",
   "not_supported_in_web_version": "Not supported in web version",
   "source_code": "Source code",
   "acknowledgements": "Acknowledgements",

@@ -1,4 +1,3 @@
-import { RefObject, createRef } from "react";
 import axios from "axios";
 import Properties from "@js.properties/properties";
 import { Card, Col } from "react-onsenui";
@@ -8,9 +7,9 @@ import { VerifiedRounded } from "@mui/icons-material";
 import { os } from "@Native/os";
 import { isDesktop, isTablet } from "react-device-detect";
 import { link } from "googlers-tools";
-import ViewX from "./ViewX";
 import { string } from "@Strings";
 import ModuleProps from "@Types/ModuleProps";
+import React from "react";
 
 interface Props {
   notesUrl?: string;
@@ -35,25 +34,20 @@ interface States {
   props: Partial<ModuleProps.PropUrl>;
 }
 
-class ExploreModule extends ViewX<Props, States> {
-  private searchedCard: RefObject<Card>;
-  private cardName: RefObject<HTMLSpanElement>;
-  private log: Log;
+const ExploreModule = (props_: Props) => {
+  const { notesUrl, downloadUrl, pushPage, moduleOptions, stars, last_update, getId, fullItem, propsUrl, props } = props_;
+  const isVerified = moduleOptions[getId]?.verified;
+  const _display = moduleOptions[getId]?.display;
 
-  public constructor(props: Props | Readonly<Props>) {
-    super(props);
-    this.state = {
-      props: {},
-    };
-    this.searchedCard = createRef();
-    this.cardName = createRef();
-    this.log = new Log(this.constructor.name);
-  }
+  const [moduleProps, setModuleProps] = React.useState<any>({});
 
-  public componentDidMount = () => {
-    const { propsUrl, props } = this.props;
+  const searchedCard = React.useRef(null);
+  const cardName = React.useRef(null);
+  const log = new Log("ExploreModule");
+
+  React.useEffect(() => {
     if (typeof props == "object") {
-      this.setState({ props: props });
+      setModuleProps(props);
     } else {
       axios.get(propsUrl as string).then((response) => {
         let tmp = Properties.parseToProperties(response.data);
@@ -67,14 +61,12 @@ class ExploreModule extends ViewX<Props, States> {
           config: null as any,
           changeBoot: null as any,
         };
-        this.setState({
-          props: tmp,
-        });
+        setModuleProps(tmp);
       });
     }
-  };
+  }, []);
 
-  private formatDate(date: Date) {
+  const formatDate = (date: Date) => {
     var hours = date.getHours();
     var minutes = date.getMinutes();
     var ampm = hours >= 12 ? "pm" : "am";
@@ -84,120 +76,110 @@ class ExploreModule extends ViewX<Props, States> {
     minutes = minutes < 10 ? "0" + minutes : minutes;
     var strTime = hours + ":" + minutes + " " + ampm;
     return date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear() + " " + strTime;
-  }
-
-  private openReadmeFromParam = (e: any) => {
-    this.componentDidMount;
-    const { getId } = this.props;
-    try {
-      const modul = os.getSchemeParam("module");
-      if (modul == getId) {
-        setTimeout(() => {
-          this.log.i(`Module found! Open ${this.state.props.name}`);
-          e.click();
-        }, 2000);
-      }
-    } catch (error) {
-      this.log.w("Failed to open given module");
-    }
   };
 
-  private checkDeviceSize(element: JSX.Element): JSX.Element {
+  // const openReadmeFromParam = (e: any) => {
+  //   try {
+  //     const modul = os.getSchemeParam("module");
+  //     if (modul == getId) {
+  //       setTimeout(() => {
+  //         log.i(`Module found! Open ${moduleProps.name}`);
+  //         e.click();
+  //       }, 2000);
+  //     }
+  //   } catch (error) {
+  //     log.w("Failed to open given module");
+  //   }
+  // };
+
+  const checkDeviceSize = (element: JSX.Element): JSX.Element => {
     if (isTablet) {
       return <Col style={{ width: "50%", height: "50%" }}>{element}</Col>;
     } else {
       return element;
     }
-  }
+  };
 
-  public createView(): JSX.Element {
-    const { notesUrl, downloadUrl, pushPage, moduleOptions, stars, last_update, getId, fullItem } = this.props;
-    const { props } = this.state;
-    const isVerified = moduleOptions[getId]?.verified;
-    const _display = moduleOptions[getId]?.display;
+  return checkDeviceSize(
+    <div
+      // ref={openReadmeFromParam}
+      onClick={() => {
+        // Make an fake path. Note: The page should not refreshed!
+        // link.setURL((set, currentPath) => {
+        //   set(`view_${moduleProps.id}`, `view_${moduleProps.id}`, `${currentPath}/?module=${moduleProps.id}`);
+        // });
 
-    return this.checkDeviceSize(
-      <div
-        ref={this.openReadmeFromParam}
-        onClick={() => {
-          // Make an fake path. Note: The page should not refreshed!
-          link.setURL((set, currentPath) => {
-            set(`view_${props.id}`, `view_${props.id}`, `${currentPath}/?module=${props.id}`);
-          });
-
-          pushPage({
-            key: `view_${props.id}`,
-            activity: ViewModuleActivity,
-            extra: {
-              name: props.name,
-              download: downloadUrl,
-              id: getId,
-              author: props.author,
-              notes: notesUrl,
-              stars: stars,
-              moduleOptions: {
-                verified: isVerified,
-              },
-              moduleProps: props,
+        pushPage({
+          key: `view_${moduleProps.id}`,
+          activity: ViewModuleActivity,
+          extra: {
+            name: moduleProps.name,
+            download: downloadUrl,
+            id: getId,
+            author: moduleProps.author,
+            notes: notesUrl,
+            stars: stars,
+            moduleOptions: {
+              verified: isVerified,
             },
-          });
-        }}
+            moduleProps: moduleProps,
+          },
+        });
+      }}
+    >
+      {/*
+      // @ts-ignore */}
+      <Card
+        id={getId}
+        ref={searchedCard}
+        //@ts-ignore
+        style={{ display: _display, marginTop: "4px", marginBottom: "4px" }}
       >
-        {/*
-        // @ts-ignore */}
-        <Card
-          id={getId}
-          ref={this.searchedCard}
-          key={getId}
-          //@ts-ignore
-          style={{ display: _display, marginTop: "4px", marginBottom: "4px" }}
-        >
-          <item-card-wrapper>
-            <item-title className="title">
-              <item-module-name ref={this.cardName}>
-                <span
-                  style={{
-                    fontSize: "large",
-                    overflow: "hidden",
-                    textAlign: "start",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
-                    width: "100%",
-                  }}
-                >
-                  {props.name}
+        <item-card-wrapper>
+          <item-title className="title">
+            <item-module-name ref={cardName}>
+              <span
+                style={{
+                  fontSize: "large",
+                  overflow: "hidden",
+                  textAlign: "start",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                  width: "100%",
+                }}
+              >
+                {moduleProps.name}
 
-                  {(() => {
-                    if (isVerified) {
-                      return (
-                        <>
-                          {" "}
-                          <VerifiedRounded sx={{ fontSize: 16 }} />
-                        </>
-                      );
-                    } else {
-                      return null;
-                    }
-                  })()}
-                </span>
-              </item-module-name>
-            </item-title>
-            <div className="content">
-              <item-version-author>
-                {props.version} ({props.versionCode}) / {props.author}
-              </item-version-author>
-              <item-description>{props.description}</item-description>
-              <item-last-update>
-                {string.formatString(string.last_updated, {
-                  date: this.formatDate(new Date(last_update)),
-                })}
-              </item-last-update>
-            </div>
-          </item-card-wrapper>
-        </Card>
-      </div>
-    );
-  }
-}
+                {(() => {
+                  if (isVerified) {
+                    return (
+                      <>
+                        {" "}
+                        <VerifiedRounded sx={{ fontSize: 16 }} />
+                      </>
+                    );
+                  } else {
+                    return null;
+                  }
+                })()}
+              </span>
+            </item-module-name>
+          </item-title>
+          <div className="content">
+            <item-version-author>
+              {moduleProps.version} ({moduleProps.versionCode}) / {moduleProps.author}
+            </item-version-author>
+            <item-description>{moduleProps.description}</item-description>
+            <item-last-update>
+              {string.formatString(string.last_updated, {
+                date: formatDate(new Date(last_update)),
+              })}
+            </item-last-update>
+          </div>
+        </item-card-wrapper>
+      </Card>
+    </div>
+  );
+};
 
 export default ExploreModule;

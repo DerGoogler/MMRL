@@ -1,6 +1,5 @@
 import Markdown from "markdown-to-jsx";
-import { createRef, RefObject } from "react";
-import ViewX from "./ViewX";
+import * as React from "react";
 import Anchor from "./dapi/Anchor";
 import Video from "./dapi/Video";
 import DiscordWidget from "./dapi/DiscordWidget";
@@ -8,61 +7,55 @@ import Checkmark from "./icons/Checkmark";
 import Dangermark from "./icons/Dangermark";
 import Warnmark from "./icons/Warnmark";
 import hljs from "highlight.js";
-import { dom } from "googlers-tools";
+import { doc } from "googlers-tools";
 
 interface IProps {
   children: string;
+  style: React.CSSProperties;
 }
 
-class HighlightedMarkdown extends ViewX<IProps> {
-  private ref: RefObject<HTMLDivElement>;
-  public constructor(props: any) {
-    super(props);
+const HighlightedMarkdown = (props: IProps) => {
+  const ref = React.useRef<HTMLDivElement>(null);
 
-    this.ref = createRef();
-  }
-
-  public componentDidMount() {
-    dom.findBy(this.ref, (ref: HTMLDivElement) => {
+  React.useEffect(() => {
+    doc.findRef(ref, (ref) => {
       ref.querySelectorAll("pre code").forEach((block: any) => {
         hljs.highlightBlock(block);
       });
     });
-  }
+  });
 
-  public createView(): JSX.Element {
-    return (
-      <div ref={this.ref}>
-        <Markdown
-          style={this.props.style}
-          options={{
-            forceBlock: true,
-            overrides: {
-              a: {
-                component: Anchor,
-              },
-              video: {
-                component: Video,
-              },
-              discordwidget: {
-                component: DiscordWidget,
-              },
-              checkmark: {
-                component: Checkmark,
-              },
-              dangermark: {
-                component: Dangermark,
-              },
-              warnmark: {
-                component: Warnmark,
-              },
+  return (
+    <div ref={ref}>
+      <Markdown
+        style={props.style}
+        options={{
+          forceBlock: true,
+          overrides: {
+            a: {
+              component: Anchor,
             },
-          }}
-          children={this.props.children}
-        />
-      </div>
-    );
-  }
-}
+            video: {
+              component: Video,
+            },
+            discordwidget: {
+              component: DiscordWidget,
+            },
+            checkmark: {
+              component: Checkmark,
+            },
+            dangermark: {
+              component: Dangermark,
+            },
+            warnmark: {
+              component: Warnmark,
+            },
+          },
+        }}
+        children={props.children}
+      />
+    </div>
+  );
+};
 
 export { HighlightedMarkdown };

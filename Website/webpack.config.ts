@@ -1,5 +1,7 @@
 import { Configuration } from "webpack";
 import { resolve, join } from "path";
+// Keep that for typings
+import webpackDevServer from "webpack-dev-server";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
 import { defConfig } from "./webpack/defConfig";
@@ -74,6 +76,7 @@ const config: Configuration = {
       "@Builders": resolve(__dirname, "src/builders"),
       "@Components": resolve(__dirname, "src/components"),
       "@Native": resolve(__dirname, "src/native"),
+      "@Hooks": resolve(__dirname, "src/hooks"),
       "@Types": resolve(__dirname, "src/typings"),
       "@Utils": resolve(__dirname, "src/utils"),
       "@Bootloader": resolve(__dirname, "src/index.tsx"),
@@ -85,6 +88,18 @@ const config: Configuration = {
   },
   resolveLoader: {
     modules: ["node_modules", join(process.env.NPM_CONFIG_PREFIX || __dirname, "lib/node_modules")],
+  },
+  devServer: {
+    static: {
+      directory: join(__dirname, "./build/www"),
+    },
+    open: false,
+    compress: true,
+    historyApiFallback: true,
+    port: 9000,
+    client: {
+      overlay: false,
+    },
   },
 };
 

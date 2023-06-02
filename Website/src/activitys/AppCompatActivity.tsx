@@ -1,131 +1,84 @@
-import { ToolbarBuilder } from "@Builders/ToolbarBuilder";
-import ErrorBoundary from "@Components/ErrorBoundary";
-import { os } from "@Native/os";
-import SharedPreferences from "@Native/SharedPreferences";
-import React, { CSSProperties } from "react";
-import { Page } from "react-onsenui";
+// import ToolbarBuilder, { ToolbarBuilderProps } from "@Builders/ToolbarBuilder";
+// import { useDarkmode } from "@Hooks/useDarkmode";
+// import { useNativeStorage } from "@Hooks/useNativeStorage";
+// import { os } from "@Native/os";
+// import React from "react";
+// import { Page } from "react-onsenui";
 
-abstract class AppCompatActivity<P = {}, S = {}> extends React.Component<P, S> {
-  public pageStyle: React.CSSProperties = {};
+// interface CompatActivityOptions<P = {}> {
+//   props?: P;
+//   setToolbarState?: React.Dispatch<React.SetStateAction<ToolbarBuilderProps>>;
+// }
 
-  private darkColor: string = "#1f1f1f";
-  private lightColor: string = "#4a148c";
+// interface CompatActivity<P = {}> {
+//   /**
+//    * Creates the activity
+//    */
+//   onCreate(opt?: CompatActivityOptions<P>): JSX.Element;
+//   onCreateModal?(): JSX.Element;
+//   onCreateBottomToolbar?(): JSX.Element;
+//   onCreateToolbar: ToolbarBuilderProps;
+//   onCreateFAB?(): JSX.Element;
+//   onInit?(): void;
+//   onShow?(): void;
+//   onHide?(): void;
+//   onInfiniteScroll?(): void;
+//   pageModifier?: string;
+//   pageStyle?: React.CSSProperties;
+// }
 
-  public constructor(props: P | Readonly<P>) {
-    super(props);
-    this.onlyAndroid();
+// function CompatActivity<P = {}>(props: P, activity: CompatActivity<P>) {
+//   const OnCreate = activity.onCreate;
+//   const [toolbarStage, setToolbarStage] = React.useState<ToolbarBuilderProps>({
+//     title: "Defualt",
+//   });
 
-    window["onBackButton"] = new Event("onBackButton");
+//   // const [enabledBottomTabs, setEnabledBottomTabs] = useNativeStorage("enableBottomTabs_switch", false);
+//   // const isDarkmode = useDarkmode();
 
-    this.onCreate = this.onCreate.bind(this);
-    this.onCreateToolbar = this.onCreateToolbar.bind(this);
-  }
+//   // const darkColor: string = "#1f1f1f";
+//   // const lightColor: string = "#4a148c";
 
-  public onBackButton(): void {}
+//   // React.useEffect(() => {
+//   //   os.setStatusBarColor(isDarkmode ? darkColor : lightColor, false);
+//   //   if (enabledBottomTabs) {
+//   //     os.setNavigationBarColor(isDarkmode ? darkColor : lightColor);
+//   //   }
+//   // }, [isDarkmode, enabledBottomTabs]);
 
-  private onlyAndroid(): void {
-    os.setStatusBarColor(this.setStatusbarColor(), false);
-    if (SharedPreferences.getBoolean("enableBottomTabs_switch", false)) {
-      if (SharedPreferences.getBoolean("enableDarkmode_switch", false)) {
-        os.setNavigationBarColor(this.darkColor);
-      } else {
-        os.setNavigationBarColor(this.lightColor);
-      }
-    }
-  }
+//   return (
+//     <>
+//       <Page
+//         style={activity.pageStyle}
+//         modifier={activity.pageModifier}
+//         renderBottomToolbar={activity.onCreateBottomToolbar}
+//         renderFixed={activity.onCreateFAB}
+//         renderModal={activity.onCreateModal}
+//         onInfiniteScroll={activity.onInfiniteScroll}
+//         onHide={activity.onHide}
+//         onShow={activity.onShow}
+//         onInit={activity.onInit}
+//         renderToolbar={() => {
+//           return <ToolbarBuilder {...toolbarStage} />;
+//         }}
+//       >
+//         <OnCreate props={props} setToolbarState={setToolbarStage} />
+//       </Page>
+//     </>
+//   );
+// }
 
-  /**
-   * Set an custom style for centent-body
-   */
-  public style: CSSProperties = {};
+// // CompatActivity(
+// //   {},
+// //   {
+// //     onCreateToolbar: {
+// //       title: "fffff",
+// //     },
 
-  public componentDidMount(): void {
-    os.addNativeEventListener("onBackButton", this.onBackButton);
-    this.onlyAndroid();
-  }
+// //     onCreate(opt) {
+// //       return <></>;
+// //     },
+// //   }
+// // );
 
-  public componentDidUpdate(): void {
-    this.onlyAndroid();
-  }
-
-  public componentWillUnmount(): void {
-    os.removeNativeEventListener("onBackButton", this.onBackButton);
-  }
-
-  /**
-   * Sets an custom status bar color for the activity
-   */
-  public setStatusbarColor(): string {
-    if (SharedPreferences.getBoolean("enableDarkmode_switch", false)) {
-      return this.darkColor;
-    } else {
-      return this.lightColor;
-    }
-  }
-
-  /**
-   * Creates the activity
-   */
-  public onCreate(): JSX.Element {
-    return <></>;
-  }
-
-  public onCreateModal(): JSX.Element {
-    return <></>;
-  }
-
-  public onCreateBottomToolbar(): JSX.Element {
-    return <></>;
-  }
-
-  public onCreateFAB(): JSX.Element {
-    return <></>;
-  }
-
-  public onInit(): void {}
-
-  public onShow(): void {}
-
-  public onHide(): void {}
-
-  public onInfiniteScroll(): void {}
-
-  //@ts-ignore
-  public get pageModifier(): string {
-    return "";
-  }
-
-  /**
-   * Renders the Toolbar
-   */
-  public onCreateToolbar() {
-    return {
-      title: "Default",
-    };
-  }
-
-  public render = (): JSX.Element => {
-    return (
-      <ErrorBoundary logger={this.constructor.name}>
-        <Page
-          style={this.pageStyle}
-          modifier={this.pageModifier}
-          renderBottomToolbar={this.onCreateBottomToolbar}
-          renderFixed={this.onCreateFAB}
-          renderModal={this.onCreateModal}
-          onInfiniteScroll={this.onInfiniteScroll}
-          onHide={this.onHide}
-          onShow={this.onShow}
-          onInit={this.onInit}
-          renderToolbar={() => {
-            return <ToolbarBuilder {...this.onCreateToolbar()} />;
-          }}
-        >
-          <this.onCreate />
-        </Page>
-      </ErrorBoundary>
-    );
-  };
-}
-
-export default AppCompatActivity;
+// export default CompatActivity;
