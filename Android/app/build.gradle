@@ -5,23 +5,27 @@ import com.google.gson.*;
 apply plugin: 'com.android.application'
 apply plugin: 'com.github.node-gradle.node'
 
+def app_name = "MMRL"
+
 android {
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId 'com.dergoogler.mmrl'
         minSdk 26
-        targetSdk 32
-        versionName "1.4.1"
-        versionCode "141".toInteger()
+        targetSdk 33
+        versionName "1.6.0"
+        versionCode 160
     }
     buildTypes {
         release {
+            resValue "string", "app_name", "${app_name}"
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             multiDexEnabled true
         }
         debug {
+            resValue "string", "app_name", "${app_name} Debug"
             jniDebuggable true
             renderscriptDebuggable true
             minifyEnabled false
@@ -47,10 +51,10 @@ repositories {
 }
 
 dependencies {
-    implementation "androidx.browser:browser:1.4.0"
+    implementation "androidx.browser:browser:1.5.0"
     implementation "com.github.topjohnwu.libsu:core:5.0.2"
     implementation "com.github.topjohnwu.libsu:io:5.0.1"
-    implementation "androidx.appcompat:appcompat:1.4.2"
+    implementation "androidx.appcompat:appcompat:1.6.1"
    // implementation 'com.google.android.material:material:1.6.0'
 }
 

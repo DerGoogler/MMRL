@@ -5,47 +5,32 @@ import { DownloadRounded, InfoRounded, InstallMobileRounded, VerifiedRounded } f
 import { HighlightedMarkdown } from "@Components/HighlightMarkdown";
 import { os } from "@Native/os";
 import Alert from "@mui/material/Alert";
-import { string } from "@Strings";
 import Magisk from "@Native/Magisk";
-import ModuleProps from "@Types/ModuleProps";
 import AlertDialog from "@Builders/AlertDialog";
 import React from "react";
 import ToolbarBuilder from "@Builders/ToolbarBuilder";
 import { useDarkmode } from "@Hooks/useDarkmode";
+import { ModuleProps, useActivity } from "@Hooks/useActivity";
+import { Text, useText } from "@Hooks/useLanguage";
 
-interface Props {
-  extra: {
-    moduleProps: ModuleProps.PropUrl;
-    [x: string]: any;
-  };
-  popPage: any;
-}
+const ViewModuleActivity = () => {
+  const { context, extra } = useActivity<ModuleProps.Extra>();
+  const string = useText();
 
-interface States {
-  notes: string;
-  dialogShown: boolean;
-  mProps: ModuleProps.PropUrl;
-  mFoxProps: ModuleProps.FoxProps;
-}
-
-const ViewModuleActivity = (props: Props) => {
   const [notes, setNotes] = React.useState("");
   const [dialogShown, setDialogShown] = React.useState(false);
-  const [mProps, setMProps] = React.useState(props.extra.moduleProps);
-  const [mFoxProps, setMFoxProps] = React.useState(props.extra.moduleProps.foxprops);
+  const [mProps, setMProps] = React.useState(extra.module_props);
 
   const isDarkmode = useDarkmode();
+  console.log(extra.module_props);
 
-  // Normal props
-  const { name } = mProps;
-  // FoxProps
-  const { minMagisk, minApi, maxApi, needRamdisk, changeBoot } = mFoxProps;
-  const { download, id } = props.extra;
-  const { verified, low } = props.extra?.moduleOptions;
+  const { minMagisk, minApi, maxApi, needRamdisk, changeBoot } = mProps;
+  const { downloadUrl, id, name } = extra;
+  const { verified, low } = extra?.module_options;
 
   React.useEffect(() => {
     axios
-      .get(props.extra?.notes)
+      .get(extra?.notes)
       .then((response) => {
         setNotes(response.data);
       })
@@ -84,8 +69,9 @@ const ViewModuleActivity = (props: Props) => {
       renderToolbar={() => {
         return (
           <ToolbarBuilder
-            title={props.extra?.name}
-            onBackButton={props.popPage}
+            // @ts-ignore
+            title={name}
+            onBackButton={context.popPage}
             addToolbarButton={
               <>
                 {((minMagisk && minMagisk) ||
@@ -109,7 +95,7 @@ const ViewModuleActivity = (props: Props) => {
       <div style={{ padding: "8px", height: "100%" }} className={isDarkmode ? "markdown-body-dark" : "markdown-body-light"}>
         {verified && (
           <Alert key="verified-module" icon={<VerifiedRounded fontSize="inherit" />} severity="success">
-            {string.module_verified}
+            <Text string="module_verified" />
           </Alert>
         )}
         <HighlightedMarkdown style={{ marginBottom: "8px", height: "100%" }} children={notes} />
@@ -131,13 +117,13 @@ const ViewModuleActivity = (props: Props) => {
         <Button
           modifier="large"
           onClick={() => {
-            os.open(download);
+            os.open(downloadUrl!);
 
             // Toast.makeText(`Download ${id!}`, Toast.LENGTH_LONG).show();
             // fs.download(`${id!}.zip`, download);
           }}
         >
-          {string.download} <DownloadRounded sx={{ color: "white" }} />
+          <Text string="download" /> <DownloadRounded sx={{ color: "white" }} />
         </Button>
         <div style={{ padding: "4px", display: !os.isAndroid ? "none" : "" }}></div>
         <Button
@@ -150,7 +136,7 @@ const ViewModuleActivity = (props: Props) => {
             ons.notification.alert("The option will be available in the future");
           }}
         >
-          {string.install} <InstallMobileRounded sx={{ color: "white" }} />
+          <Text string="install" /> <InstallMobileRounded sx={{ color: "white" }} />
         </Button>
       </div>
       {/*

@@ -1,10 +1,10 @@
 import { Component } from "react";
 import DeviceModule from "@Components/DeviceModule";
-import { PushProps } from "@Activitys/MainActivity";
 import File from "@Native/File";
+import { PushPropsCore } from "@Hooks/useActivity";
 
 interface Props {
-  pushPage(...arg: any): PushProps;
+  pushPage(...arg: any): PushPropsCore;
 }
 
 interface States {

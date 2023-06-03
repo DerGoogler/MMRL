@@ -7,7 +7,6 @@ import {
   UploadFileRounded,
   VolunteerActivismRounded,
 } from "@mui/icons-material";
-import { link, util } from "googlers-tools";
 import ons from "onsenui";
 import Icon from "@Components/Icon";
 import { AlertDialog as Dialog, Input, List, ListHeader, ListItem, Page, Switch, ToolbarButton } from "react-onsenui";
@@ -15,8 +14,6 @@ import Toast from "@Native/Toast";
 import { os } from "@Native/os";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { SvgIconTypeMap } from "@mui/material/SvgIcon/SvgIcon";
-import axios from "axios";
-import { string } from "@Strings";
 import { Fragment } from "react";
 import { Searchbar } from "@Components/Searchbar";
 import AlertDialog from "@Builders/AlertDialog";
@@ -24,20 +21,8 @@ import { RepoInterface, useRepos, useRoRepos } from "@Hooks/useRepos";
 import React from "react";
 import ToolbarBuilder from "@Builders/ToolbarBuilder";
 import { useNativeStorage } from "@Hooks/useNativeStorage";
-
-interface Props {
-  pushPage: any;
-  popPage: any;
-}
-
-interface States {
-  repos: Array<any>;
-  alertDialogShown: boolean;
-  repoName: string;
-  repoLink: string;
-  searchValue: string;
-  finalSearchValue: string;
-}
+import { useActivity } from "@Hooks/useActivity";
+import { Text, useText } from "@Hooks/useLanguage";
 
 interface ListItemProps {
   part: any;
@@ -46,8 +31,10 @@ interface ListItemProps {
   onClick: () => void;
 }
 
-const RepoActivity = (props: Props) => {
+const RepoActivity = () => {
   const MAX_REPO_LENGTH: number = 5;
+  const { context } = useActivity();
+  const string = useText();
 
   const { readOnlyRepos, roRepoOpt } = useRoRepos();
 
@@ -169,7 +156,7 @@ const RepoActivity = (props: Props) => {
           return (
             <ToolbarBuilder
               title="Repos"
-              onBackButton={props.popPage}
+              onBackButton={context.popPage}
               addToolbarButtonPosition="right"
               addToolbarButton={
                 <ToolbarButton className="back-button--material__icon" onClick={showAlertDialog}>
@@ -180,7 +167,7 @@ const RepoActivity = (props: Props) => {
           );
         }}
       >
-        <Searchbar placeholder={string.search_modules} onButtonClick={() => {}} onInputChange={repoSearchFilter} />
+        <Searchbar placeholder={string("search_modules")} onButtonClick={() => {}} onInputChange={repoSearchFilter} />
         <List>
           {filteredRepos.map((repo: RepoInterface, index: number) => (
             <Fragment key={index}>
@@ -220,7 +207,7 @@ const RepoActivity = (props: Props) => {
               <MListItem
                 part={repo.website}
                 icon={LanguageRounded}
-                text={string.website}
+                text={string("website")}
                 onClick={() => {
                   if (repo.website) {
                     os.open(repo.website);
@@ -230,7 +217,7 @@ const RepoActivity = (props: Props) => {
               <MListItem
                 part={repo.support}
                 icon={SupportRounded}
-                text={string.support}
+                text={string("support")}
                 onClick={() => {
                   if (repo.support) {
                     os.open(repo.support);
@@ -240,7 +227,7 @@ const RepoActivity = (props: Props) => {
               <MListItem
                 part={repo.donate}
                 icon={VolunteerActivismRounded}
-                text={string.donate}
+                text={string("donate")}
                 onClick={() => {
                   if (repo.donate) {
                     os.open(repo.donate);
@@ -250,7 +237,7 @@ const RepoActivity = (props: Props) => {
               <MListItem
                 part={repo.submitModule}
                 icon={UploadFileRounded}
-                text={string.submit_module}
+                text={string("submit_module")}
                 onClick={() => {
                   if (repo.submitModule) {
                     os.open(repo.submitModule);
@@ -260,19 +247,13 @@ const RepoActivity = (props: Props) => {
               <MListItem
                 part={!repo.readonly}
                 icon={DeleteRounded}
-                text={string.remove}
+                text={string("remove")}
                 onClick={() => {
-                  ons.notification
-                    .confirm(
-                      string.formatString(string.confirm_repo_delete, {
-                        name: repo.name,
-                      }) as string
-                    )
-                    .then((g) => {
-                      if (g) {
-                        removeRepo(repo.id);
-                      }
-                    });
+                  ons.notification.confirm(string("confirm_repo_delete", [repo.name])).then((g) => {
+                    if (g) {
+                      removeRepo(repo.id);
+                    }
+                  });
                 }}
               />
             </Fragment>
@@ -280,7 +261,7 @@ const RepoActivity = (props: Props) => {
         </List>
         <>
           <Dialog isOpen={alertDialogShown} isCancelable={false}>
-            <div className="alert-dialog-title">{string.add_repo}</div>
+            <div className="alert-dialog-title">{string("add_repo")}</div>
             <div className="alert-dialog-content">
               <p>
                 <Input value={repoLink} onChange={handleRepoLinkChange} modifier="underbar" float placeholder="Repo link" />
@@ -288,10 +269,10 @@ const RepoActivity = (props: Props) => {
             </div>
             <div className="alert-dialog-footer">
               <button onClick={hideAlertDialog} className="alert-dialog-button">
-                {string.cancel}
+                <Text string="cancel" />
               </button>
               <button onClick={_addRepo} className="alert-dialog-button">
-                {string.add}
+                <Text string="add" />
               </button>
             </div>
           </Dialog>

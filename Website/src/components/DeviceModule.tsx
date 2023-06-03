@@ -3,9 +3,9 @@ import Properties from "@js.properties/properties";
 import File from "@Native/File";
 import Log from "@Native/Log";
 import { DeleteRounded, RefreshRounded } from "@mui/icons-material";
-import { string } from "@Strings";
 import React from "react";
 import { useDarkmode } from "@Hooks/useDarkmode";
+import { Text, useText } from "@Hooks/useLanguage";
 
 interface Props {
   module: string;
@@ -34,6 +34,7 @@ interface States {
 }
 
 const DeviceModule = (props: Props) => {
+  const string = useText();
   const [moduleProps, setModuleProps] = React.useState<any>({});
   const [dialogShown, setDialogShown] = React.useState(false);
   const [isEnabled, setIsEnabled] = React.useState(true);
@@ -65,7 +66,7 @@ const DeviceModule = (props: Props) => {
   return (
     <>
       <div>
-        <Card id={id} key={id} style={{ marginTop: "4px", marginBottom: "4px" }}>
+        <Card id={id} key={id} style={{ marginTop: "4px", marginBottom: "4px", padding: 16 }}>
           <item-card-wrapper>
             <item-title className="title">
               <item-module-name>
@@ -82,21 +83,13 @@ const DeviceModule = (props: Props) => {
                       if (checked) {
                         if (disable.exist()) {
                           if (disable.delete()) {
-                            log.i(
-                              string.formatString(string.module_enabled_LOG, {
-                                module: module,
-                              })
-                            );
+                            log.i(string("module_enabled_LOG", [module]));
                           }
                         }
                       } else {
                         if (!disable.exist()) {
                           if (disable.create()) {
-                            log.i(
-                              string.formatString(string.module_disabled_LOG, {
-                                module: module,
-                              })
-                            );
+                            log.i(string("module_disabled_LOG", [module]));
                           }
                         }
                       }
@@ -140,11 +133,13 @@ const DeviceModule = (props: Props) => {
                   <Ripple />
                   {isSwitchDisabled ? (
                     <>
-                      {string.restore} <RefreshRounded sx={{ color: iconColor }} />
+                      <Text string="restore" />
+                      <RefreshRounded sx={{ color: iconColor }} />
                     </>
                   ) : (
                     <>
-                      {string.remove} <DeleteRounded sx={{ color: iconColor }} />
+                      <Text string="remove" />
+                      <DeleteRounded sx={{ color: iconColor }} />
                     </>
                   )}
                 </item-module-button>

@@ -26,17 +26,26 @@ interface TextProps {
 
 export const useText = (): ((str: string, format?: Array<any>) => string) => {
   return (str: string, format = []) => {
-    const lang = React.useContext(LanguageContext);
-    const raw = lang.language[str];
-    return [format]?.reduce((p, c) => p.replace(/%s/, c), raw);
+    var regex = /%s/;
+    var _r = function (p: any, c: any) {
+      return p.replace(regex, c);
+    };
+    return format.reduce(_r, str);
   };
 };
 
 export const Text = (props: TextProps): JSX.Element => {
-  const { string, format } = props;
-  const lang = React.useContext(LanguageContext);
-  const raw = lang.language[string];
-  return <>{[format]?.reduce((p, c) => p.replace(/%s/, c), raw)}</>;
+  const { string, format = [] } = props;
+
+  var regex = /%s/;
+  var _r = function (p: any, c: any) {
+    return p.replace(regex, c);
+  };
+  return <>{format.reduce(_r, string)}</>;
+
+  // const lang = React.useContext(LanguageContext);
+  // const raw = lang.language[string];
+  // return <>{[format].reduce((p, c) => p.replace(/%s/, c), raw)}</>;
 };
 
 const useLanguage = () => {

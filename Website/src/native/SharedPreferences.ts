@@ -12,7 +12,7 @@ export interface CustomStorageImpl extends Omit<StorageImpl, "getItem"> {
  * @extends {Native}
  */
 function NativeStorage(): CustomStorageImpl {
-  const getInterface = window["sharedpreferences"];
+  const getInterface = window["nativeStorage"];
 
   return {
     get length(): number {

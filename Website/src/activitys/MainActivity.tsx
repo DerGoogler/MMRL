@@ -1,5 +1,5 @@
-import { Component } from "react";
-import { Page, RouterNavigator, RouterUtil } from "react-onsenui";
+import React from "react";
+import { Card, Page, RouterNavigator, RouterUtil } from "react-onsenui";
 import MainApplication from "@Activitys/MainApplication";
 import NoRootActivity from "./NoRootActivity";
 import Shell from "@Native/Shell";
@@ -9,142 +9,139 @@ import { LanguageProvider } from "@Hooks/useLanguage";
 
 import german from "./../language/de.json";
 import english from "./../language/en.json";
+import { Context, Extra, PushPropsCore } from "@Hooks/useActivity";
+import { obj } from "googlers-tools";
+import { ErrorBoundary } from "@Components/ErrorBoundary";
+import ToolbarBuilder from "@Builders/ToolbarBuilder";
 
-interface ModuleOptions {
-  verified?: boolean;
-  low?: boolean;
-}
-
-export interface ModuleProps {
-  minMagisk?: int;
-  minApi?: int;
-  maxApi?: int;
-  needRamdisk?: boolean;
-  changeBoot?: boolean;
-  alphaMMRLinstall?: boolean;
-}
-
-export interface PushProps {
-  activity?: any;
-  key?: string;
-  extra?: any;
-  moduleOptions?: ModuleOptions;
-  moduleProps?: ModuleProps;
-}
-
-interface States {
-  currentPage: string;
-  routeConfig: any;
-}
-
-class MainActivity extends Component<PushProps, States> {
-  public constructor(props: PushProps | Readonly<PushProps>) {
-    super(props);
-
-    const CheckRoot = () => {
-      if (os.isAndroid) {
-        if (Shell.isAppGrantedRoot()) {
-          return MainApplication;
-        } else {
-          return NoRootActivity;
-        }
-      } else {
+const MainActivity = () => {
+  const CheckRoot = () => {
+    if (os.isAndroid) {
+      if (Shell.isAppGrantedRoot()) {
         return MainApplication;
+      } else {
+        return NoRootActivity;
       }
-    };
+    } else {
+      return MainApplication;
+    }
+  };
 
-    const routeConfig = RouterUtil.init([
-      {
-        component: CheckRoot(),
-        props: {
-          key: "main",
-          pushPage: (...args: [props: PushProps]) => this.pushPage.apply(null, args),
+  const ignoreThat = RouterUtil.init([
+    {
+      component: CheckRoot(),
+      props: {
+        key: "main",
+        context: {
+          pushPage: (props: PushPropsCore) => pushPage(props),
         },
       },
-    ]);
+    },
+  ]);
 
-    this.state = { routeConfig, currentPage: "main" };
-  }
+  const [routeConfig, setRouteConfig] = React.useState(ignoreThat);
+  const [currentPage, setCurrentPage] = React.useState("main");
 
-  private pushPage = (props: PushProps): void & PushProps => {
+  const pushPage = (props: PushPropsCore): void => {
     const route = {
       component: props.activity,
       props: {
-        key: props.key,
-        extra: props?.extra,
-        popPage: () => this.popPage(),
-        pushPage: (...args: [props: PushProps]) => this.pushPage.apply(null, args),
+        key: props.props.key,
+        extra: props.props?.extra,
+        context: {
+          popPage: (options = {}) => popPage(options),
+          pushPage: (props: PushPropsCore) => pushPage(props),
+        },
       },
     };
 
-    let routeConfig = this.state.routeConfig;
+    const options = {};
 
-    routeConfig = RouterUtil.push({
-      routeConfig,
-      route,
-    });
-
-    this.setState({ routeConfig, currentPage: props.key! });
+    setRouteConfig((prev) =>
+      RouterUtil.push({
+        routeConfig: prev,
+        route: route,
+        options: options,
+        key: props.props.key,
+      })
+    );
+    setCurrentPage(props.props.key!);
   };
 
-  private popPage = (options = {}) => {
-    let routeConfig = this.state.routeConfig;
-
-    routeConfig = RouterUtil.pop({
-      routeConfig,
-      options: {
-        ...options,
-        animationOptions: {
-          duration: 0.2,
-          timing: "ease-in",
-          animation: "fade-md",
+  const popPage = (options = {}) => {
+    setRouteConfig((prev) =>
+      RouterUtil.pop({
+        routeConfig: prev,
+        options: {
+          ...options,
+          animationOptions: {
+            duration: 0.2,
+            timing: "ease-in",
+            animation: "fade-md",
+          },
         },
-      },
-    });
+      })
+    );
 
-    this.setState({ routeConfig, currentPage: "main" });
+    setCurrentPage("main");
   };
 
-  private onPostPush = () => {
-    const routeConfig = RouterUtil.postPush(this.state.routeConfig);
-    this.setState({ routeConfig });
+  const onPostPush = () => {
+    setRouteConfig((prev) => RouterUtil.postPush(prev));
   };
 
-  private onPostPop = () => {
-    const routeConfig = RouterUtil.postPop(this.state.routeConfig);
-    this.setState({ routeConfig });
+  const onPostPop = () => {
+    setRouteConfig((prev) => RouterUtil.postPop(prev));
   };
 
-  private renderPage = (route: any) => {
+  const renderPage = (route: any) => {
     const props = route.props || {};
-    return <route.component {...props} />;
+    const newProps = obj.omit(["extra", "context"], props);
+    return (
+      <LanguageProvider langs={langs} defaultLang="en">
+        <RepoProvider deps={[props.key + "_modules"]}>
+          <Extra.Provider key={props.key + "_extra"} value={props.extra}>
+            <Context.Provider key={props.key + "_context"} value={props.context}>
+              <route.component {...newProps} />
+            </Context.Provider>
+          </Extra.Provider>
+        </RepoProvider>
+      </LanguageProvider>
+    );
   };
 
-  private langs = {
+  const langs = {
     de: german,
     en: english,
   };
 
-  public render = () => {
-    return (
-      <>
-        <LanguageProvider langs={this.langs} defaultLang="en">
-          <RepoProvider>
-            <Page>
-              <RouterNavigator
-                swipeable={true}
-                swipePop={(options: any) => this.popPage(options)}
-                routeConfig={this.state.routeConfig}
-                renderPage={this.renderPage}
-                onPostPush={() => this.onPostPush()}
-                onPostPop={() => this.onPostPop()}
-              />
-            </Page>
-          </RepoProvider>
-        </LanguageProvider>
-      </>
-    );
-  };
-}
+  return (
+    <ErrorBoundary
+      fallback={(err, errInf) => {
+        return (
+          <Page
+            renderToolbar={() => {
+              return <ToolbarBuilder title="Crashed" />;
+            }}
+          >
+            <Card>{err.message}</Card>
+            <Card>{errInf.componentStack}</Card>
+          </Page>
+        );
+      }}
+    >
+      <Page>
+        <RouterNavigator
+          swipeable={true}
+          swipePop={(options: any) => popPage(options)}
+          routeConfig={routeConfig}
+          renderPage={renderPage}
+          onPostPush={() => onPostPush()}
+          onPostPop={() => onPostPop()}
+        />
+      </Page>
+    </ErrorBoundary>
+  );
+};
 
 export default MainActivity;

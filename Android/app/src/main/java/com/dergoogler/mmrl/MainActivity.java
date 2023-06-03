@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         view.addJavascriptInterface(new BuildNative(), "nbuild");
         view.addJavascriptInterface(new BuildConfigNative(), "nbuildconfig");
         view.addJavascriptInterface(new OSNative(this), "nos");
-        view.addJavascriptInterface(new SharedPreferencesNative(this), "nsharedpreferences");
+        view.addJavascriptInterface(new SharedPreferencesNative(this), "nativeStorage");
     }
 
     @Override

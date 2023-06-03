@@ -1,6 +1,5 @@
 import ListViewBuilder from "@Builders/ListViewBuilder";
-import pkg from "@Package";
-import { string } from "@Strings";
+// import pkg from "@Package";
 // import AcknowledgementsActivity from "@Activitys/AcknowledgementsActivity";
 import AlertDialog from "@Builders/AlertDialog";
 import {
@@ -16,24 +15,20 @@ import BuildConfig from "@Native/BuildConfig";
 import { os } from "@Native/os";
 import Icon from "@Components/Icon";
 import Magisk from "@Native/Magisk";
-// import RepoActivity from "./RepoActivity";
 import { List, Page } from "react-onsenui";
 import ToolbarBuilder from "@Builders/ToolbarBuilder";
 import RepoActivity from "./RepoActivity";
 import { useText } from "@Hooks/useLanguage";
+import { useActivity } from "@Hooks/useActivity";
 
-interface Props {
-  pushPage: any;
-  popPage: any;
-}
-
-const SettingsActivity = (props: Props) => {
+const SettingsActivity = () => {
   const string = useText();
+  const { context } = useActivity();
 
   return (
     <Page
       renderToolbar={() => {
-        return <ToolbarBuilder title={string("settings")} onBackButton={props.popPage} />;
+        return <ToolbarBuilder title={string("settings")} onBackButton={context.popPage} />;
       }}
     >
       <settings-container style={{ height: "100%" }} className="settings-dfjsklgdj">
@@ -48,10 +43,12 @@ const SettingsActivity = (props: Props) => {
                     text: "Repositories",
                     icon: <Icon icon={ExtensionRounded} />,
 
-                    onClick(key, pushPage) {
-                      pushPage({
-                        key: "repoactivity",
+                    onClick(key) {
+                      context.pushPage({
                         activity: RepoActivity,
+                        props: {
+                          key: "repoactivity",
+                        },
                       });
                     },
                   },
@@ -138,7 +135,7 @@ const SettingsActivity = (props: Props) => {
                     type: "",
                     icon: <Icon icon={BugReportRounded} />,
                     text: string("issues"),
-                    onClick: (key, pushPage) => {
+                    onClick: (key) => {
                       window.open("https://github.com/DerGoogler/DG-Repo/issues", "_blank");
                     },
                   },
@@ -158,7 +155,6 @@ const SettingsActivity = (props: Props) => {
                 ],
               },
             ]}
-            pushPage={props.pushPage}
           />
         </List>
       </settings-container>

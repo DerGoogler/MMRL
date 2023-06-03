@@ -11,7 +11,7 @@ export interface ToolbarBuilderProps {
    *
    * Remove the `onBackButton` attr or put `false` inside!
    */
-  onBackButton?: boolean;
+  onBackButton?: boolean | ((navigator?: Navigator | undefined) => void);
   addToolbarButton?: React.ReactNode;
   addToolbarButtonPosition?: "left" | "right";
   modifier?: string;

@@ -2,14 +2,13 @@ import { Component, isValidElement } from "react";
 import { ListItem, ListTitle, Select, Switch } from "react-onsenui";
 import ons from "onsenui";
 import Gesture from "@Components/Gesture";
-import { PushProps } from "@Activitys/MainActivity";
 import { util } from "googlers-tools";
 import React from "react";
 import { useNativeStorage } from "@Hooks/useNativeStorage";
+import { PushPropsCore } from "@Hooks/useActivity";
 
 interface IProps {
   data: IListInterface[];
-  pushPage: any;
 }
 
 export interface IListOptions {
@@ -40,7 +39,7 @@ export interface IListOptions {
    * Performs an onClick event to the current list item
    * @param key Get the key from the current list item
    */
-  onClick?(key: string | undefined, pushPage: (props: PushProps) => void): void;
+  onClick?(key?: string): void;
   selectValue?: IListSelectValue[];
   icon?: string | JSX.Element;
   selectDefaultValue?: string;
@@ -81,8 +80,6 @@ export interface IListInterface {
   content: IListOptions[];
 }
 
-const PushContext = React.createContext(() => {});
-
 const Header = ({ header }: any) => {
   return (
     <>
@@ -95,8 +92,6 @@ const Header = ({ header }: any) => {
 };
 
 const List = ({ header }: any) => {
-  const pushPage = React.useContext(PushContext);
-
   return header.content.map((item: IListOptions) => (
     <>
       <ListItem
@@ -108,7 +103,7 @@ const List = ({ header }: any) => {
         onClick={() => {
           if (typeof item.onClick == "function") {
             const key = item.key;
-            item.onClick(key, pushPage);
+            item.onClick(key);
           }
         }}
       >
@@ -205,13 +200,13 @@ const List = ({ header }: any) => {
   ));
 };
 
-const ListViewBuilder = ({ data, pushPage }: IProps) => {
+const ListViewBuilder = ({ data }: IProps) => {
   return (
-    <PushContext.Provider value={pushPage}>
+    <>
       {data.map((header: IListInterface) => (
-        <Header header={header} pushPage={pushPage} />
+        <Header header={header} />
       ))}
-    </PushContext.Provider>
+    </>
   );
 };
 

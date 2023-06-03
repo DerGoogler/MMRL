@@ -17,42 +17,26 @@ public class SharedPreferencesNative {
     }
 
     @JavascriptInterface
-    public String getString(String key, String defValue) {
-        return this.localstorage.getString(key, defValue);
+    public String getItem(String key) {
+        try {
+            return this.localstorage.getString(key, null);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @JavascriptInterface
-    public boolean getBoolean(String key, boolean defValue) {
-        return this.localstorage.getBoolean(key, defValue);
-    }
-
-    @JavascriptInterface
-    public int getInt(String key, int defValue) {
-        return this.localstorage.getInt(key, defValue);
-    }
-
-    @JavascriptInterface
-    public void setString(String key, String value) {
+    public void setItem(String key, String value) {
         this.localstorage.edit().putString(key, value).apply();
     }
 
     @JavascriptInterface
-    public void setBoolean(String key, boolean value) {
-        this.localstorage.edit().putBoolean(key, value).apply();
-    }
-
-    @JavascriptInterface
-    public void setInt(String key, int value) {
-        this.localstorage.edit().putInt(key, value).apply();
-    }
-
-    @JavascriptInterface
-    public void removePref(String key) {
+    public void removeItem(String key) {
         this.localstorage.edit().remove(key).apply();
     }
 
     @JavascriptInterface
-    public void clearPrefs() {
+    public void clear() {
         this.localstorage.edit().clear().apply();
     }
 

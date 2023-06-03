@@ -4,66 +4,53 @@ import { Card, Col } from "react-onsenui";
 import ViewModuleActivity from "@Activitys/ViewModuleActivity";
 import Log from "@Native/Log";
 import { VerifiedRounded } from "@mui/icons-material";
-import { os } from "@Native/os";
-import { isDesktop, isTablet } from "react-device-detect";
-import { link } from "googlers-tools";
-import { string } from "@Strings";
-import ModuleProps from "@Types/ModuleProps";
+import { isTablet } from "react-device-detect";
 import React from "react";
+import { ModuleProps, useActivity } from "@Hooks/useActivity";
+import { Text, useText } from "@Hooks/useLanguage";
 
 interface Props {
-  notesUrl?: string;
+  notesUrl: string;
   downloadUrl?: string;
-  pushPage?: any;
-  moduleOptions: ModuleOptions[];
+  moduleOptions: ModuleProps.Options[];
   stars?: int;
   last_update?: any;
   fullItem: any;
   getId: any;
   propsUrl: string;
-  props: ModuleProps.PropUrl;
-}
-
-interface ModuleOptions {
-  verified: boolean;
-  low: boolean;
-  display: string;
-}
-
-interface States {
-  props: Partial<ModuleProps.PropUrl>;
+  props?: ModuleProps.Props;
 }
 
 const ExploreModule = (props_: Props) => {
-  const { notesUrl, downloadUrl, pushPage, moduleOptions, stars, last_update, getId, fullItem, propsUrl, props } = props_;
+  const { context } = useActivity();
+  const string = useText();
+
+  const { notesUrl, downloadUrl, moduleOptions, stars, last_update, getId, fullItem, propsUrl, props } = props_;
   const isVerified = moduleOptions[getId]?.verified;
   const _display = moduleOptions[getId]?.display;
 
-  const [moduleProps, setModuleProps] = React.useState<any>({});
+  const [moduleProps, setModuleProps] = React.useState<Partial<ModuleProps.Props>>({});
 
   const searchedCard = React.useRef(null);
   const cardName = React.useRef(null);
   const log = new Log("ExploreModule");
 
   React.useEffect(() => {
-    if (typeof props == "object") {
-      setModuleProps(props);
-    } else {
-      axios.get(propsUrl as string).then((response) => {
-        let tmp = Properties.parseToProperties(response.data);
-        tmp.foxprops = {
-          minApi: null as any,
-          maxApi: null as any,
-          minMagisk: null as any,
-          needRamdisk: null as any,
-          support: null as any,
-          donate: null as any,
-          config: null as any,
-          changeBoot: null as any,
-        };
-        setModuleProps(tmp);
-      });
-    }
+    axios.get(propsUrl as string).then((response) => {
+      let tmp = Properties.parseToProperties(response.data);
+      tmp.foxprops = {
+        minApi: null as any,
+        maxApi: null as any,
+        minMagisk: null as any,
+        needRamdisk: null as any,
+        support: null as any,
+        donate: null as any,
+        config: null as any,
+        changeBoot: null as any,
+      };
+      // @ts-ignore
+      setModuleProps(tmp);
+    });
   }, []);
 
   const formatDate = (date: Date) => {
@@ -109,20 +96,22 @@ const ExploreModule = (props_: Props) => {
         //   set(`view_${moduleProps.id}`, `view_${moduleProps.id}`, `${currentPath}/?module=${moduleProps.id}`);
         // });
 
-        pushPage({
-          key: `view_${moduleProps.id}`,
+        context.pushPage<ModuleProps.Extra>({
           activity: ViewModuleActivity,
-          extra: {
-            name: moduleProps.name,
-            download: downloadUrl,
-            id: getId,
-            author: moduleProps.author,
-            notes: notesUrl,
-            stars: stars,
-            moduleOptions: {
-              verified: isVerified,
+          props: {
+            key: `view_${moduleProps.id}`,
+            extra: {
+              name: moduleProps.name,
+              downloadUrl: downloadUrl,
+              id: getId,
+              author: moduleProps.author,
+              notes: notesUrl,
+              stars: stars,
+              module_options: {
+                verified: isVerified,
+              },
+              module_props: moduleProps as any,
             },
-            moduleProps: moduleProps,
           },
         });
       }}
@@ -133,8 +122,10 @@ const ExploreModule = (props_: Props) => {
         id={getId}
         ref={searchedCard}
         //@ts-ignore
-        style={{ display: _display, marginTop: "4px", marginBottom: "4px" }}
+        style={{ display: _display, marginTop: "4px", marginBottom: "4px", padding: 0 }}
       >
+        {moduleProps.image && <img src={moduleProps.image} alt={""} style={{ width: "100%" }} />}
+
         <item-card-wrapper>
           <item-title className="title">
             <item-module-name ref={cardName}>
@@ -171,9 +162,7 @@ const ExploreModule = (props_: Props) => {
             </item-version-author>
             <item-description>{moduleProps.description}</item-description>
             <item-last-update>
-              {string.formatString(string.last_updated, {
-                date: formatDate(new Date(last_update)),
-              })}
+              <Text string="last_udated" format={[formatDate(new Date(last_update))]} />
             </item-last-update>
           </div>
         </item-card-wrapper>

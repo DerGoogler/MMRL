@@ -3,6 +3,7 @@ import { SetValue, useNativeStorage } from "./useNativeStorage";
 import Toast from "@Native/Toast";
 import axios from "axios";
 import { link, util } from "googlers-tools";
+import { ModuleProps } from "./useActivity";
 
 export interface RepoInterface {
   id: string;
@@ -33,29 +34,86 @@ export interface RepoInterface {
 interface RepoContextInterface {
   repos: Array<RepoInterface>;
   setRepos: SetValue<Array<RepoInterface>>;
+  featuredModules: Array<ModuleProps.RootObject>;
+  modulesIndex: Array<ModuleProps.RootObject>;
+  moduleOptions: Array<ModuleProps.Options>;
 }
 
-export const RepoContext = React.createContext<any>({ repos: [], setRepos: () => {} });
+export const RepoContext = React.createContext<RepoContextInterface>({
+  repos: [],
+  setRepos: () => {},
+  featuredModules: [],
+  modulesIndex: [],
+  moduleOptions: [],
+});
 
-// const LanguageProvider = (props: any) => {
-//   const { langs, defaultLang } = props;
-//   const [lang] = useNativeStorage("language_select", defaultLang);
-//   const language = langs[lang];
-//   return (
-//     <LanguageContext.Provider
-//       value={{
-//         defaultLang,
-//         language,
-//       }}
-//     >
-//       {props.children}
-//     </LanguageContext.Provider>
-//   );
+interface Props extends React.PropsWithChildren {
+  deps?: React.DependencyList | undefined;
+}
+
+// const useCustomFetch = (urls: Array<RepoInterface>): any => {
+//   try {
+//     return urls.map((url) => useFetch<any>(url.modules).data.modules);
+//   } catch {
+//     return [];
+//   }
 // };
 
-export const RepoProvider = (props: React.PropsWithChildren) => {
+const getRandom = (arr: any, n: any) => {
+  var result = new Array(n),
+    len = arr.length,
+    taken = new Array(len);
+  if (n > len) throw new RangeError("getRandom: more elements taken than available");
+  while (n--) {
+    var x = Math.floor(Math.random() * len);
+    result[n] = arr[x in taken ? taken[x] : x];
+    taken[x] = --len in taken ? taken[len] : len;
+  }
+  return result;
+};
+
+export const RepoProvider = (props: Props) => {
+  const { getRepos } = useRepos();
+  const { readOnlyRepos } = useRoRepos();
   const [repos, setRepos] = useNativeStorage<Array<RepoInterface>>("repos", []);
-  return <RepoContext.Provider value={{ repos, setRepos }} children={props.children} />;
+  const [featuredModules, setFeaturedModules] = useNativeStorage<Array<ModuleProps.RootObject>>("featured_modules", []);
+  const [featuredModulesDate, setFeaturedModulesDate] = useNativeStorage("featured_modules_date", "7/12/2017");
+
+  const [modulesIndex, setModulesIndex] = React.useState<Array<ModuleProps.RootObject>>([]);
+  const [moduleOptions, setModuleOptions] = React.useState<Array<ModuleProps.Options>>([]);
+
+  React.useEffect(() => {
+    Promise.all(
+      [...readOnlyRepos, ...getRepos].map((rep) =>
+        axios.get(rep.modules).then((resp) => {
+          const modules = resp.data.modules;
+          // console.log(modules);
+
+          setModulesIndex((prev) => {
+            const tmp = [...[...prev, ...modules]];
+            // get today's date. eg: "7/37/2007"
+            var date = new Date().toLocaleDateString();
+
+            if (featuredModulesDate !== date) {
+              setFeaturedModulesDate(date);
+
+              // if there's a date in localstorage and it's equal to the above:
+              // inferring a day has yet to pass since both dates are equal.
+
+              setFeaturedModules(getRandom(tmp, 5));
+            }
+            return tmp;
+          });
+        })
+      )
+    );
+
+    axios.get("https://raw.githubusercontent.com/Googlers-Repo/googlers-repo.github.io/master/moduleOptions.json").then((response) => {
+      setModuleOptions(response.data);
+    });
+  }, props.deps);
+
+  return <RepoContext.Provider value={{ repos, setRepos, featuredModules, modulesIndex, moduleOptions }} children={props.children} />;
 };
 
 export const useRoRepos = () => {
@@ -103,7 +161,7 @@ export const useRoRepos = () => {
 };
 
 export const useRepos = () => {
-  const { repos, setRepos }: RepoContextInterface = React.useContext(RepoContext);
+  const { repos, setRepos, featuredModules, modulesIndex, moduleOptions }: RepoContextInterface = React.useContext(RepoContext);
 
   const removeRepo = (id: string) => {
     setRepos((ary) => ary.filter((obj) => obj.id !== id));
@@ -159,5 +217,8 @@ export const useRepos = () => {
     addRepo,
     removeRepo,
     changeEnabledState,
+    featuredModules,
+    modulesIndex,
+    moduleOptions,
   };
 };

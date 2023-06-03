@@ -1,5 +1,4 @@
-
-import ReactDOM from 'react-dom/client';
+import ReactDOM from "react-dom/client";
 import MainActivity from "@Activitys/MainActivity";
 import { dom } from "googlers-tools";
 import ons from "onsenui";
@@ -10,7 +9,6 @@ import preset from "jss-preset-default";
 import light_theme from "@Styles/light_theme";
 import dark_theme from "@Styles/dark_theme";
 import { SharedPreferences } from "@Native/SharedPreferences";
-import { string } from "./language/core";
 
 // Webpack CSS import
 import "onsenui/css/onsenui-core.css";
@@ -50,8 +48,6 @@ class Bootloader {
     if (!os.hasStoragePermission()) {
       os.requestStoargePermission();
     }
-
-    string.setLanguage(SharedPreferences.getItem("language_select", "en"));
 
     // Prevent context menu on browsers.
     dom.preventer(["contextmenu"]);
