@@ -8,6 +8,7 @@ import { isTablet } from "react-device-detect";
 import React from "react";
 import { ModuleProps, useActivity } from "@Hooks/useActivity";
 import { Text, useText } from "@Hooks/useLanguage";
+import { os } from "@Native/os";
 
 interface Props {
   notesUrl: string;
@@ -65,19 +66,40 @@ const ExploreModule = (props_: Props) => {
     return date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear() + " " + strTime;
   };
 
-  // const openReadmeFromParam = (e: any) => {
-  //   try {
-  //     const modul = os.getSchemeParam("module");
-  //     if (modul == getId) {
-  //       setTimeout(() => {
-  //         log.i(`Module found! Open ${moduleProps.name}`);
-  //         e.click();
-  //       }, 2000);
-  //     }
-  //   } catch (error) {
-  //     log.w("Failed to open given module");
-  //   }
-  // };
+  const handleOpen = () => {
+    context.pushPage<ModuleProps.Extra>({
+      activity: ViewModuleActivity,
+      props: {
+        key: `view_${moduleProps.id}`,
+        extra: {
+          name: moduleProps.name,
+          downloadUrl: downloadUrl,
+          id: getId,
+          author: moduleProps.author,
+          notes: notesUrl,
+          stars: stars,
+          module_options: {
+            verified: isVerified,
+          },
+          module_props: moduleProps as any,
+        },
+      },
+    });
+  };
+
+  const modul = os.getSchemeParam("module");
+  React.useEffect(() => {
+    try {
+      if (modul == getId) {
+        setTimeout(() => {
+          log.i(`Module found! Open ${moduleProps.name}`);
+          handleOpen();
+        }, 2000);
+      }
+    } catch (error) {
+      log.w("Failed to open given module");
+    }
+  }, [modul]);
 
   const checkDeviceSize = (element: JSX.Element): JSX.Element => {
     if (isTablet) {
@@ -88,34 +110,7 @@ const ExploreModule = (props_: Props) => {
   };
 
   return checkDeviceSize(
-    <div
-      // ref={openReadmeFromParam}
-      onClick={() => {
-        // Make an fake path. Note: The page should not refreshed!
-        // link.setURL((set, currentPath) => {
-        //   set(`view_${moduleProps.id}`, `view_${moduleProps.id}`, `${currentPath}/?module=${moduleProps.id}`);
-        // });
-
-        context.pushPage<ModuleProps.Extra>({
-          activity: ViewModuleActivity,
-          props: {
-            key: `view_${moduleProps.id}`,
-            extra: {
-              name: moduleProps.name,
-              downloadUrl: downloadUrl,
-              id: getId,
-              author: moduleProps.author,
-              notes: notesUrl,
-              stars: stars,
-              module_options: {
-                verified: isVerified,
-              },
-              module_props: moduleProps as any,
-            },
-          },
-        });
-      }}
-    >
+    <div onClick={handleOpen}>
       {/*
       // @ts-ignore */}
       <Card

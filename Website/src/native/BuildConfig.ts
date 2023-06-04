@@ -42,50 +42,6 @@ class BuildConfig {
       }
     },
   };
-
-  /**
-   * @deprecated
-   */
-  public static readonly MAGISK = {
-    /**
-     * @deprecated
-     */
-    get VERSION_CODE(): number {
-      if (os.isAndroid) {
-        return parseInt(Shell.cmd("su -V").result());
-      } else {
-        return 0;
-      }
-    },
-
-    /**
-     * @deprecated
-     */
-    get VERSION_NAME(): string {
-      if (os.isAndroid) {
-        return Shell.cmd("su -v").result();
-      } else {
-        return "0:MAGISKSU";
-      }
-    },
-
-    /**
-     * @deprecated
-     */
-    PARSE_VERSION(version: string): number {
-      const i = version.indexOf(".");
-      if (i == -1) {
-        return parseInt(version);
-      } else {
-        return parseInt(version.substring(0, i)) * 1000 + parseInt(version.substring(i + 1)) * 100;
-      }
-    },
-  };
-
-  // public static readonly isMonetEnabled: boolean =
-  //   os.isAndroid && SharedPreferences.getBoolean("enableMonet", false) && BuildConfig.VERSION.SDK_INT > Build.VERSION_CODES.S
-  //     ? true
-  //     : false;
 }
 
 export default BuildConfig;

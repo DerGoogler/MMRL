@@ -3,7 +3,7 @@ import { Configuration } from "webpack";
 
 export enum Config {
   Blue,
-  AndroidOutputPath = "./../../Android/app/src/main/assets",
+  AndroidOutputPath = "./../../Android/app/src/main/assets/www",
   OutputFilename = "bundle/[name].bundle.js",
   AssetModuleFilename = "files/[name].[ext]",
   CssOutputFilename = "bundle/[name].bundle.css",

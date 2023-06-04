@@ -1,25 +1,27 @@
 package com.dergoogler.core;
 
-import android.content.Context;
 import android.webkit.JavascriptInterface;
+import android.webkit.WebView;
 
-import com.dergoogler.mmrl.R;
+import com.topjohnwu.superuser.CallbackList;
 import com.topjohnwu.superuser.Shell;
 import com.topjohnwu.superuser.ShellUtils;
 
-import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class ShellNative {
-    private final Context ctx;
+    private final WebView wv;
+    ArrayList<String> output = new ArrayList<>();
 
-    public ShellNative(Context ctx) {
-        this.ctx = ctx;
+    public ShellNative(WebView wv) {
+        this.wv = wv;
     }
 
     @JavascriptInterface
     public void exec(String command) {
-        InputStream bashrc = this.ctx.getResources().openRawResource(R.raw.bashrc);
-        Shell.cmd(bashrc).add(command).exec();
+        Shell.cmd(command).exec();
     }
 
     @JavascriptInterface
@@ -29,9 +31,8 @@ public class ShellNative {
 
     @JavascriptInterface
     public boolean isAppGrantedRoot() {
-        Boolean appGrantedRoot = Shell.isAppGrantedRoot();
-        if (appGrantedRoot == null) {
-            return false;
-        } else return appGrantedRoot;
+        return Shell.cmd("if grep ' / ' /proc/mounts | grep -q '/dev/root' &> /dev/null; " +
+                        "then echo true; else echo false; fi", "magisk -V", "magisk --path")
+                .to(output).exec().isSuccess();
     }
 }

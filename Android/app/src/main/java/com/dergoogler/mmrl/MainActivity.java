@@ -1,25 +1,10 @@
 package com.dergoogler.mmrl;
 
 import android.annotation.SuppressLint;
-import android.app.DownloadManager;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.webkit.CookieManager;
-import android.webkit.DownloadListener;
-import android.webkit.PermissionRequest;
-import android.webkit.URLUtil;
-import android.webkit.ValueCallback;
-import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.dergoogler.component.ModuleChromeClient;
-import com.dergoogler.component.ModuleView;
 import com.dergoogler.core.BuildConfigNative;
 import com.dergoogler.core.BuildNative;
 import com.dergoogler.core.FileSystemNative;
@@ -27,41 +12,55 @@ import com.dergoogler.core.OSNative;
 import com.dergoogler.core.SharedPreferencesNative;
 import com.dergoogler.core.ShellNative;
 
-public class MainActivity extends AppCompatActivity {
-    private ModuleView view;
-    private ValueCallback<Uri[]> fileChooserCallback;
+import org.apache.cordova.CordovaActivity;
+import org.apache.cordova.CordovaActivity;
+import org.apache.cordova.CordovaWebView;
+import org.apache.cordova.CordovaWebViewImpl;
+import org.apache.cordova.CoreAndroid;
+import org.apache.cordova.LOG;
+import org.apache.cordova.engine.SystemWebView;
+import org.apache.cordova.engine.SystemWebViewEngine;
 
+public class MainActivity extends CordovaActivity {
     @Override
     @SuppressLint("SetJavaScriptEnabled")
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        view = findViewById(R.id.mmrl_view);
+        appView = findViewById(R.id.mmrl_view);
+        super.init();
 
+        WebView wv = (WebView) appView.getEngine().getView();
+        // enable Cordova apps to be started in the background
+        Bundle extras = getIntent().getExtras();
+        if (extras != null && extras.getBoolean("cdvStartInBackground", false)) {
+            moveTaskToBack(true);
+        }
+
+        // Set by <content src="index.html" /> in config.xml
+        loadUrl(launchUrl);
+
+        WebSettings webViewSettings = wv.getSettings();
         // Options
-        view.setJavaScriptEnabled(true);
-        view.setAllowFileAccess(true);
-        view.setAllowContentAccess(true);
-        view.setAllowFileAccessFromFileURLs(true);
-        view.setAllowUniversalAccessFromFileURLs(true);
-        view.setDatabaseEnabled(true);
-        view.setDomStorageEnabled(false);
-        view.setUserAgentString("MMRL");
-
-        // Content
-        view.loadHTML("file:///android_asset/", new Page(this).load());
+        webViewSettings.setJavaScriptEnabled(true);
+        webViewSettings.setAllowFileAccess(true);
+        webViewSettings.setAllowContentAccess(true);
+        webViewSettings.setAllowFileAccessFromFileURLs(true);
+        webViewSettings.setAllowUniversalAccessFromFileURLs(true);
+        webViewSettings.setDatabaseEnabled(true);
+        webViewSettings.setDomStorageEnabled(false);
+        webViewSettings.setUserAgentString("MMRL");
+        webViewSettings.setAllowFileAccessFromFileURLs(false);
+        webViewSettings.setAllowUniversalAccessFromFileURLs(false);
+        webViewSettings.setAllowFileAccess(false);
+        webViewSettings.setAllowContentAccess(false);
 
         // Core
-        view.addJavascriptInterface(new FileSystemNative(this), "nfs");
-        view.addJavascriptInterface(new ShellNative(this), "nshell");
-        view.addJavascriptInterface(new BuildNative(), "nbuild");
-        view.addJavascriptInterface(new BuildConfigNative(), "nbuildconfig");
-        view.addJavascriptInterface(new OSNative(this), "nos");
-        view.addJavascriptInterface(new SharedPreferencesNative(this), "nativeStorage");
-    }
+        wv.addJavascriptInterface(new FileSystemNative(this), "nfs");
+        wv.addJavascriptInterface(new ShellNative(wv), "nshell");
+        wv.addJavascriptInterface(new BuildNative(), "nbuild");
+        wv.addJavascriptInterface(new BuildConfigNative(), "nbuildconfig");
+        wv.addJavascriptInterface(new OSNative(this), "nos");
+        wv.addJavascriptInterface(new SharedPreferencesNative(this), "nativeStorage");
 
-    @Override
-    public void onBackPressed() {
-        view.eventDispatcher("onBackButton");
     }
 }

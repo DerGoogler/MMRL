@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.dergoogler.mmrl" version="1.6.0">
+    <name>MMRL</name>
+    <description>No description</description>
+    <author email="boehmjimmy@dergoogler.com" href="https://dergoogler.com">
+        Der_Googler
+    </author>
+    <content src="index.html" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+</widget>

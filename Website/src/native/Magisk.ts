@@ -9,7 +9,7 @@ class Magisk {
    */
   public static get VERSION_CODE(): number {
     if (os.isAndroid) {
-      return parseInt(Shell.cmd("magisk -V").result());
+      return parseInt(Shell.result("magisk -V"));
     } else {
       return 0;
     }
@@ -17,7 +17,7 @@ class Magisk {
 
   public static get VERSION_NAME(): string {
     if (os.isAndroid) {
-      return Shell.cmd("magisk -v").result();
+      return Shell.result("magisk -v");
     } else {
       return "0:MAGISKSU";
     }
@@ -43,7 +43,7 @@ class Magisk {
    */
   public static INSTALL_MODULE(path: string): void {
     if (os.isAndroid) {
-      Shell.cmd(`magisk --install-module ${path}`).result();
+      Shell.exec(`magisk --install-module ${path}`);
     } else {
       this.log.e("Error installing Magisk module.");
     }
@@ -55,7 +55,7 @@ class Magisk {
    */
   private static REMOVE_MODULES(): void {
     if (os.isAndroid) {
-      Shell.cmd(`magisk --remove-modules`).exec();
+      Shell.exec(`magisk --remove-modules`);
     } else {
       this.log.e("Error removing Magisk modules.");
     }

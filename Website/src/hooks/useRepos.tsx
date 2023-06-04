@@ -4,6 +4,7 @@ import Toast from "@Native/Toast";
 import axios from "axios";
 import { link, util } from "googlers-tools";
 import { ModuleProps } from "./useActivity";
+import _, { map } from "underscore";
 
 export interface RepoInterface {
   id: string;
@@ -90,18 +91,17 @@ export const RepoProvider = (props: Props) => {
           // console.log(modules);
 
           setModulesIndex((prev) => {
-            const tmp = [...[...prev, ...modules]];
+            const tmp = [...prev, ...modules];
             // get today's date. eg: "7/37/2007"
             var date = new Date().toLocaleDateString();
 
             if (featuredModulesDate !== date) {
+              // setFeaturedModules([]);
               setFeaturedModulesDate(date);
 
-              // if there's a date in localstorage and it's equal to the above:
-              // inferring a day has yet to pass since both dates are equal.
-
-              setFeaturedModules(getRandom(tmp, 5));
+              setFeaturedModules(_.sample(tmp, 5));
             }
+            
             return tmp;
           });
         })

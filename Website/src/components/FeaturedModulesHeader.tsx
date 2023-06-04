@@ -29,83 +29,81 @@ const FeaturedModulesHeader = ({ item, index, setIndex, moduleOptions }: Props) 
   }, [index]);
 
   return (
-    <>
-      {/* @ts-ignore */}
-      <CarouselItem key={index}>
-        <Card
-          //@ts-ignore
-          style={{ display: _display, marginTop: "4px", marginBottom: "4px", height: 122, padding: 0 }}
-          onClick={() => {
-            context.pushPage<ModuleProps.Extra>({
-              activity: ViewModuleActivity,
-              props: {
-                key: `view_${moduleProps.id}_featured`,
-                extra: {
-                  name: moduleProps.name,
-                  downloadUrl: item.zip_url,
-                  id: item.id,
-                  author: moduleProps.author,
-                  notes: item.notes_url,
-                  // stars: stars,
-                  module_options: {
-                    verified: isVerified,
-                  },
-                  module_props: moduleProps as any,
+    // @ts-ignore
+    <CarouselItem key={index}>
+      <Card
+        //@ts-ignore
+        style={{ display: _display, marginTop: "4px", marginBottom: "4px", height: 122, padding: 0 }}
+        onClick={() => {
+          context.pushPage<ModuleProps.Extra>({
+            activity: ViewModuleActivity,
+            props: {
+              key: `view_${moduleProps.id}_featured`,
+              extra: {
+                name: moduleProps.name,
+                downloadUrl: item.zip_url,
+                id: item.id,
+                author: moduleProps.author,
+                notes: item.notes_url,
+                // stars: stars,
+                module_options: {
+                  verified: isVerified,
                 },
+                module_props: moduleProps as any,
               },
-            });
-          }}
-        >
-          <item-card-wrapper>
-            <item-title className="title">
-              <item-module-name>
-                <span
-                  style={{
-                    fontSize: "large",
-                    overflow: "hidden",
-                    textAlign: "start",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
-                    width: "100%",
-                  }}
-                >
-                  {moduleProps.name}
-
-                  {(() => {
-                    if (isVerified) {
-                      return (
-                        <>
-                          {" "}
-                          <VerifiedRounded sx={{ fontSize: 16 }} />
-                        </>
-                      );
-                    } else {
-                      return null;
-                    }
-                  })()}
-                </span>
-              </item-module-name>
-            </item-title>
-            <div className="content">
-              <item-version-author>
-                {moduleProps.version} ({moduleProps.versionCode}) / {moduleProps.author}
-              </item-version-author>
-              <item-description
+            },
+          });
+        }}
+      >
+        <item-card-wrapper>
+          <item-title className="title">
+            <item-module-name>
+              <span
                 style={{
-                  width: 300,
-                  display: "-webkit-box",
-                  WebkitBoxOrient: "vertical",
-                  WebkitLineClamp: 3,
+                  fontSize: "large",
                   overflow: "hidden",
+                  textAlign: "start",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                  width: "100%",
                 }}
               >
-                {moduleProps.description}
-              </item-description>
-            </div>
-          </item-card-wrapper>
-        </Card>
-      </CarouselItem>
-    </>
+                {moduleProps.name}
+
+                {(() => {
+                  if (isVerified) {
+                    return (
+                      <>
+                        {" "}
+                        <VerifiedRounded sx={{ fontSize: 16 }} />
+                      </>
+                    );
+                  } else {
+                    return null;
+                  }
+                })()}
+              </span>
+            </item-module-name>
+          </item-title>
+          <div className="content">
+            <item-version-author>
+              {moduleProps.version} ({moduleProps.versionCode}) / {moduleProps.author}
+            </item-version-author>
+            <item-description
+              style={{
+                width: 300,
+                display: "-webkit-box",
+                WebkitBoxOrient: "vertical",
+                WebkitLineClamp: 3,
+                overflow: "hidden",
+              }}
+            >
+              {moduleProps.description}
+            </item-description>
+          </div>
+        </item-card-wrapper>
+      </Card>
+    </CarouselItem>
   );
 };
 

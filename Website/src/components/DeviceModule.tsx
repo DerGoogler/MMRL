@@ -66,7 +66,7 @@ const DeviceModule = (props: Props) => {
   return (
     <>
       <div>
-        <Card id={id} key={id} style={{ marginTop: "4px", marginBottom: "4px", padding: 16 }}>
+        <Card id={id} key={id} style={{ marginTop: "4px", marginBottom: "4px", padding: 0 }}>
           <item-card-wrapper>
             <item-title className="title">
               <item-module-name>

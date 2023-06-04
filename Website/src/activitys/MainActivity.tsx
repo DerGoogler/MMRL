@@ -125,7 +125,18 @@ const MainActivity = () => {
             }}
           >
             <Card>{err.message}</Card>
-            <Card>{errInf.componentStack}</Card>
+            <pre
+              style={{
+                backgroundColor: "#f6f8fa",
+                borderRadius: 6,
+                lineHeight: 1.45,
+                overflow: "auto",
+                padding: 16,
+                margin: 16,
+              }}
+            >
+              <code>{errInf.componentStack}</code>
+            </pre>
           </Page>
         );
       }}

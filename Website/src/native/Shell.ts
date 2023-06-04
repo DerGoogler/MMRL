@@ -1,5 +1,6 @@
 import Log from "@Native/Log";
 import { os } from "./os";
+import { Native, NativeStatic } from "./Native";
 
 type CMD = Omit<ShellNative, "isAppGrantedRoot" | "cmd" | "command">;
 
@@ -27,34 +28,33 @@ const Logger = new Log("Shell");
 /**
  * Run Shell commands native on Android
  */
-type Shell = typeof Shell[keyof typeof Shell];
-const Shell: ShellNative = {
-  command: "",
 
-  cmd(cmd: string): CMD {
-    this.command = cmd;
-    return this;
-  },
+class Shell extends NativeStatic {
+  public static interface: string = "nshell";
 
-  exec(): void {
-    if (os.isAndroid) {
-      nshell.exec(this.command);
-    } else {
-      Logger.i(this.command);
+  public static exec(cmds: string | string[]): void {
+    if (this.isAndroid) {
+      if (cmds instanceof Array) {
+        cmds.forEach((cmd) => {
+          this.getInterface.exec(cmd);
+        });
+      } else {
+        this.getInterface.exec(cmds);
+      }
     }
-  },
+  }
 
-  result(): string {
-    if (os.isAndroid) {
-      return nshell.result(this.command);
+  public static result(cmd: string): string {
+    if (this.isAndroid) {
+      return this.getInterface.result(cmd);
     } else {
-      return this.command;
+      return cmd;
     }
-  },
+  }
 
-  isAppGrantedRoot(): boolean {
-    return nshell.isAppGrantedRoot();
-  },
-} as const;
+  public static isAppGrantedRoot(): boolean {
+    return this.getInterface.isAppGrantedRoot();
+  }
+}
 
 export default Shell;

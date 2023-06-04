@@ -11,7 +11,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.Settings;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.widget.Toast;
@@ -121,6 +123,23 @@ public class OSNative {
         } catch (PackageManager.NameNotFoundException e) {
             return false;
         }
+    }
+
+    @JavascriptInterface
+    public boolean isTablet() {
+        boolean isTablet = false;
+        Display display = ((Activity) ctx).getWindowManager().getDefaultDisplay();
+        DisplayMetrics metrics = new DisplayMetrics();
+        display.getMetrics(metrics);
+
+        float widthInches = metrics.widthPixels / metrics.xdpi;
+        float heightInches = metrics.heightPixels / metrics.ydpi;
+        double diagonalInches = Math.sqrt(Math.pow(widthInches, 2) + Math.pow(heightInches, 2));
+        if (diagonalInches >= 7.0) {
+            isTablet = true;
+        }
+
+        return isTablet;
     }
 
     @JavascriptInterface

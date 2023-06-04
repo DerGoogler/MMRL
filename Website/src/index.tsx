@@ -16,6 +16,8 @@ import "material-icons/iconfont/material-icons.css";
 import "@Styles/addtional.scss";
 import "@Styles/markdown-light.scss";
 import "@Styles/markdown-dark.scss";
+import Shell from "@Native/Shell";
+import NoRootActivity from "@Activitys/NoRootActivity";
 
 class Bootloader {
   private log: Log;
@@ -35,13 +37,15 @@ class Bootloader {
   }
 
   private loadActivity() {
-    "use strict";
     this.log.i("Loading MainActivty");
     const app = document.createElement(this.constructor.name);
     document.body.prepend(app);
     const container = document.querySelector<Element>(this.constructor.name!);
     const root = ReactDOM.createRoot(container!);
-    root.render(<MainActivity />);
+
+    ons.ready(() => {
+      root.render(<MainActivity />);
+    });
   }
 
   public init() {
@@ -56,6 +60,9 @@ class Bootloader {
     this.log.i(navigator.userAgent);
     ons.platform.select("android");
     this.loadStyle();
+
+    // console.log(nshell.result("echo lol"));
+
     this.loadActivity();
   }
 }

@@ -73,34 +73,34 @@ const ExploreModuleFragment = () => {
           flexDirection: "column",
         }}
       >
-        {featuredModules && (
-          <>
-            <Divider>
-              <h2>Featured</h2>
-            </Divider>
+        <>
+          <Divider>
+            <h2>Featured</h2>
+          </Divider>
 
-            <Carousel
-              // @ts-ignore
-              onPostChange={handleChange}
-              activeIndex={index}
-              swipeable
-              autoScroll
-              overscrollable
-              autoScrollRatio={0.2}
-              // onOverscroll={() => {
-              //   Toast.makeText("Sorry boi, there is the end", Toast.LENGTH_SHORT).show();
-              // }}
-            >
+          <Carousel
+            // @ts-ignore
+            onPostChange={handleChange}
+            activeIndex={index}
+            swipeable
+            autoScroll
+            overscrollable
+            autoScrollRatio={0.2}
+            // onOverscroll={() => {
+            //   Toast.makeText("Sorry boi, there is the end", Toast.LENGTH_SHORT).show();
+            // }}
+          >
+            <div>
               {featuredModules.map((item, index) => (
                 <FeaturedModulesHeader key={item.id + index} item={item} index={index} setIndex={setIndex} moduleOptions={moduleOptions} />
               ))}
-            </Carousel>
+            </div>
+          </Carousel>
 
-            <Divider>
-              <h2>Explore</h2>
-            </Divider>
-          </>
-        )}
+          <Divider>
+            <h2>Explore</h2>
+          </Divider>
+        </>
 
         <Searchbar placeholder={string("search_modules")} onButtonClick={triggerSearch} onInputChange={filter} />
         <module-container
