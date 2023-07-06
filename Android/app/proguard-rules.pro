@@ -15,3 +15,7 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+# These clases contain references to cordova webView
+-keep class org.apache.cordova.** {*; }
+-keep class org.apache.cordova.*

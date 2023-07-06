@@ -5,12 +5,9 @@ import DescriptionIcon from "@mui/icons-material/Description";
 import { Paper, PaperProps, styled } from "@mui/material";
 import { useSettings, useTheme } from "@Hooks/useSettings";
 import useShadeColor from "@Hooks/useShadeColor";
-import Properties from "@js.properties/properties";
-import React from "react";
-import axios from "axios";
 import DescriptonActivity from "@Activitys/DescriptonActivity";
 import { VerifiedRounded } from "@mui/icons-material";
-import { useFetch } from "@Hooks/useFetch";
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import { os } from "@Native/Os";
 
 interface Props {
@@ -60,6 +57,10 @@ export const ExploreModule = (props: Props) => {
     });
   };
 
+  const handleDownload = () => {
+    os.open(downloadUrl);
+  };
+
   return (
     <StyledCard elevation={0}>
       <Box sx={{ p: 2, display: "flex" }}>
@@ -98,6 +99,10 @@ export const ExploreModule = (props: Props) => {
 
           <StyledIconButton style={{ width: 30, height: 30 }} onClick={handleOpen}>
             <DescriptionIcon sx={{ fontSize: 14 }} />
+          </StyledIconButton>
+
+          <StyledIconButton style={{ width: 30, height: 30 }} onClick={handleDownload}>
+            <FileDownloadIcon sx={{ fontSize: 14 }} />
           </StyledIconButton>
         </Stack>
       </Stack>

@@ -5,7 +5,7 @@ declare type ContentMap = {
 interface PickerItemProps {
     id: string;
     contentMap: ContentMap[];
-    targetSetting: string;
+    targetSetting: "language" | "accent_scheme";
     title: string;
 }
 /**

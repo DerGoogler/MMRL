@@ -1,25 +1,21 @@
 import React from "react";
 import { Languages } from "./../language/languages";
 export declare namespace Settings {
-    type SetStateAction<S> = S | ((prevState: S) => S);
-    type Base = SetStateAction<Partial<Settings.Root>>;
+    type SetStateAction<T = Root> = Partial<T> | ((prevState: Partial<T>) => Partial<T>);
     interface Context {
         settings: Root;
-        setSettings: (state: ExtendedRoot, callback?: (state: Root) => void) => void;
+        setSettings<K extends keyof Root>(key: K, state: SetStateAction<Root[K]>, callback?: (state: Root[K]) => void): void;
+    }
+    interface Root {
+        darkmode: boolean;
+        language: Languages;
+        accent_scheme: Settings.AccentScheme;
+        eruda_console_enabled: boolean;
+        disabled_repos: string[];
     }
     type AccentScheme = {
         name: string;
         value: any;
-    };
-    interface Root {
-        darkmode: boolean;
-        language: Languages;
-        accent_scheme: AccentScheme;
-        eruda_console_enabled: boolean;
-        disabled_repos: string[];
-    }
-    type ExtendedRoot = {
-        [P in keyof Root]?: SetStateAction<Root>;
     };
 }
 export declare const accent_colors: Settings.AccentScheme[];

@@ -14,7 +14,7 @@ class BuildConfigClass extends Native {
     if (this.isAndroid) {
       return this.getInterface.VERSION_NAME();
     } else {
-      return pkg.version;
+      return pkg.config.version_name;
     }
   }
 

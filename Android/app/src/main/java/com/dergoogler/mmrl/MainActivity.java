@@ -28,12 +28,7 @@ public class MainActivity extends CordovaActivity {
             moveTaskToBack(true);
         }
 
-        // Set by <content src="index.html" /> in config.xml
-        if (BuildConfig.DEBUG) {
-            loadUrl("http://192.168.1.110:9000");
-        } else {
-            loadUrl(launchUrl);
-        }
+        loadUrl(launchUrl);
 
         WebSettings webViewSettings = wv.getSettings();
         // Options

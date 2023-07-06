@@ -1,9 +1,9 @@
 import React from "react";
 import { SetValue } from "./useNativeStorage";
-import { Settings } from "./useSettings";
 interface RepoContextInterface {
     repos: StoredRepo[];
     setRepos: SetValue<StoredRepo[]>;
+    modulesLoading: boolean | undefined;
     modules: Module[];
     moduleOptions: any[];
     actions: {
@@ -25,7 +25,8 @@ declare type RemoveRepoData = {
 };
 declare type SetRepoStateData = {
     id: string;
-    callback?: (state: Settings.Root) => void;
+    state: boolean;
+    callback?: (state: string[]) => void;
 };
 export declare const RepoProvider: (props: React.PropsWithChildren) => import("react/jsx-runtime").JSX.Element;
 export declare const useRepos: () => RepoContextInterface;
