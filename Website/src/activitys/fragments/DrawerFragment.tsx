@@ -61,7 +61,7 @@ export const DrawerFragment = (props: Props) => {
                 extra: {
                   request: {
                     use: true,
-                    url: "https://raw.githubusercontent.com/wiki/DerGoogler/LernKartei/License.md",
+                    url: "https://raw.githubusercontent.com/wiki/DerGoogler/MMRL/License.md",
                   },
                   title: "License",
                 },
@@ -81,7 +81,7 @@ export const DrawerFragment = (props: Props) => {
                 extra: {
                   request: {
                     use: true,
-                    url: "https://raw.githubusercontent.com/wiki/DerGoogler/LernKartei/Changelog.md",
+                    url: "https://raw.githubusercontent.com/wiki/DerGoogler/MMRL/Changelog.md",
                   },
                   title: "Changelog",
                 },
@@ -91,26 +91,6 @@ export const DrawerFragment = (props: Props) => {
           }}
         >
           <StyledListItemText primary={"Changelog"} />
-        </ListItemButton>
-        <ListItemButton
-          onClick={() => {
-            pushPage({
-              component: DescriptonActivity,
-              props: {
-                key: "privacy_policy",
-                extra: {
-                  request: {
-                    use: true,
-                    url: "https://raw.githubusercontent.com/wiki/DerGoogler/LernKartei/Privacy-Policy.md",
-                  },
-                  shortDesc: "Privacy Policy",
-                },
-              },
-            });
-            hide();
-          }}
-        >
-          <StyledListItemText primary={"Privacy Policy"} />
         </ListItemButton>
       </List>
       <Divider />

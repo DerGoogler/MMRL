@@ -13,6 +13,7 @@ import hljs from "highlight.js";
 import { doc } from "googlers-tools";
 import { Image } from "@Components/dapi/Image";
 import { StyledMarkdown } from "./StyledMarkdown";
+import { DiscordWidget } from "@Components/dapi/DiscordWidget";
 
 type Props = {
   children: string;
@@ -76,6 +77,9 @@ export const MarkdownOverrides: MarkdownToJSX.Overrides | undefined = {
   },
   warnmark: {
     component: Warnmark,
+  },
+  discordwidget: {
+    component: DiscordWidget,
   },
 };
 

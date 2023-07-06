@@ -2,7 +2,7 @@ import Markdown from "markdown-to-jsx";
 import * as React from "react";
 import Anchor from "./dapi/Anchor";
 import Video from "./dapi/Video";
-import DiscordWidget from "./dapi/DiscordWidget";
+import { DiscordWidget } from "./dapi/DiscordWidget";
 import Checkmark from "./icons/Checkmark";
 import Dangermark from "./icons/Dangermark";
 import Warnmark from "./icons/Warnmark";

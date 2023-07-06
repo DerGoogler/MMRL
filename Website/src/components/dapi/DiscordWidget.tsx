@@ -3,7 +3,7 @@ import { util } from "googlers-tools";
 type Theme = "light" | "dark";
 
 interface DiscordWidgetProps {
-  token?: string | number | undefined;
+  token: string | number;
   width?: string | number | undefined;
   height?: string | number | undefined;
   theme?: Theme | undefined;
@@ -32,4 +32,4 @@ const DiscordWidget = (props: DiscordWidgetProps) => {
   );
 };
 
-export default DiscordWidget;
+export { DiscordWidget };
