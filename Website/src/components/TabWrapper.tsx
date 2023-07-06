@@ -4,7 +4,6 @@ import { StyledSection } from "./StyledSection";
 
 interface Props {
   element: React.ElementType;
-  props: any;
 }
 
 const TabWrapper = (props: Props) => {
@@ -12,7 +11,7 @@ const TabWrapper = (props: Props) => {
   return (
     <Page>
       <StyledSection>
-        <Element {...props} />
+        <Element />
       </StyledSection>
     </Page>
   );

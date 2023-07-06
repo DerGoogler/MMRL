@@ -10,6 +10,7 @@ import { StringProvider } from "@Hooks/useStrings";
 import { Preventer, render } from "react-render-tools";
 import MainActivity from "@Activitys/MainActivity";
 import { os } from "@Native/Os";
+import { RepoProvider } from "@Hooks/useRepos";
 
 ons.platform.select("android");
 
@@ -25,11 +26,13 @@ const App = () => {
       <SettingsProvider>
         <Preventer prevent="contextmenu">
           <StringProvider>
-            <ConfirmProvider>
-              <CssBaseline />
-              <LightTheme />
-              <MainActivity />
-            </ConfirmProvider>
+            <RepoProvider>
+              <ConfirmProvider>
+                <CssBaseline />
+                <LightTheme />
+                <MainActivity />
+              </ConfirmProvider>
+            </RepoProvider>
           </StringProvider>
         </Preventer>
       </SettingsProvider>

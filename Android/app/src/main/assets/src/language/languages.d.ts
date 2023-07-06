@@ -2,6 +2,7 @@ export declare const languages: import("localized-strings").LocalizedStrings<{
     search_modules: string;
     settings: string;
     repository: string;
+    repositories: string;
     custom_repository: string;
     appearance: string;
     accent_color: string;
@@ -39,6 +40,7 @@ export declare const languages: import("localized-strings").LocalizedStrings<{
     search_modules: string;
     settings: string;
     repository: string;
+    repositories: string;
     custom_repository: string;
     accent_color: string;
     appearance: string;

@@ -52,13 +52,11 @@ interface ListItemProps {
 const RepoActivity = () => {
   const MAX_REPO_LENGTH: number = 5;
   const { context } = useActivity();
-  const { settings, setSettings } = useSettings();
   const { strings } = useStrings();
 
   const { repos, actions } = useRepos();
   const [repoLink, setRepoLink] = React.useState("");
   const [search, setSearch] = React.useState("");
-  const [, forceUpdate] = React.useReducer((x) => x + 1, 0);
 
   const [open, setOpen] = React.useState(false);
 
@@ -72,21 +70,6 @@ const RepoActivity = () => {
 
   const handleRepoLinkChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     setRepoLink(event.target.value);
-  };
-
-  const MListItem = (props: ListItemProps) => {
-    return (
-      <>
-        {props.part && (
-          <ListItemButton onClick={props.onClick}>
-            <ListItemIcon>
-              <Icon icon={props.icon} />
-            </ListItemIcon>
-            <StyledListItemText primary={props.text} />
-          </ListItemButton>
-        )}
-      </>
-    );
   };
 
   const filteredRepos = repos.filter((item) => item.name.toLowerCase().includes(search.toLowerCase()));
@@ -111,91 +94,7 @@ const RepoActivity = () => {
         {/* <Searchbar placeholder={string("search_modules")} onButtonClick={() => {}} onInputChange={repoSearchFilter} /> */}
 
         {filteredRepos.map((repo: StoredRepo, index: number) => (
-          <Fragment key={index}>
-            <List subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>{repo.name}</ListSubheader>}>
-              <ListItem>
-                <ListItemIcon>
-                  <Icon icon={ExtensionRounded} />
-                </ListItemIcon>
-                <StyledListItemText id="switch-list-label-eruda" primary="Enabled" />
-                <Android12Switch
-                  edge="end"
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-                    actions.setRepoEnabled({
-                      index: index,
-                      state: checked,
-                      callback: forceUpdate,
-                    });
-                  }}
-                  checked={repo.isOn}
-                  inputProps={{
-                    "aria-labelledby": "switch-list-label-eruda",
-                  }}
-                />
-              </ListItem>
-
-              <MListItem
-                part={repo.website}
-                icon={LanguageRounded}
-                text={strings.website}
-                onClick={() => {
-                  if (repo.website) {
-                    os.open(repo.website);
-                  }
-                }}
-              />
-              <MListItem
-                part={repo.support}
-                icon={SupportRounded}
-                text={strings.support}
-                onClick={() => {
-                  if (repo.support) {
-                    os.open(repo.support);
-                  }
-                }}
-              />
-              <MListItem
-                part={repo.donate}
-                icon={VolunteerActivismRounded}
-                text={strings.donate}
-                onClick={() => {
-                  if (repo.donate) {
-                    os.open(repo.donate);
-                  }
-                }}
-              />
-              <MListItem
-                part={repo.submitModule}
-                icon={UploadFileRounded}
-                text={strings.submit_module}
-                onClick={() => {
-                  if (repo.submitModule) {
-                    os.open(repo.submitModule);
-                  }
-                }}
-              />
-              <MListItem
-                part={true}
-                icon={DeleteRounded}
-                text={strings.remove}
-                onClick={() => {
-                  ons.notification
-                    .confirm(
-                      strings.formatString(strings.confirm_repo_delete, {
-                        name: repo.name,
-                      }) as string
-                    )
-                    .then((g) => {
-                      if (g) {
-                        actions.removeRepo({
-                          id: repo.id,
-                        });
-                      }
-                    });
-                }}
-              />
-            </List>
-          </Fragment>
+          <RenderRepos key={"repo_" + index} repo={repo} />
         ))}
         <Dialog open={open} onClose={handleClose}>
           <DialogTitle>Add Repository</DialogTitle>
@@ -241,3 +140,127 @@ const RepoActivity = () => {
 };
 
 export default RepoActivity;
+
+type RenderRepoProps = {
+  repo: StoredRepo;
+};
+
+const RenderRepos = (props: RenderRepoProps) => {
+  const { repo } = props;
+  const { strings } = useStrings();
+  const { settings, setSettings } = useSettings();
+  const { actions } = useRepos();
+  const [enabled, setEnabled] = React.useState(!settings.disabled_repos.includes(repo.id));
+  const [, forceUpdate] = React.useReducer((x) => x + 1, 0);
+
+  const MListItem = (props: ListItemProps) => {
+    return (
+      <>
+        {props.part && (
+          <ListItemButton onClick={props.onClick}>
+            <ListItemIcon>
+              <Icon icon={props.icon} />
+            </ListItemIcon>
+            <StyledListItemText primary={props.text} />
+          </ListItemButton>
+        )}
+      </>
+    );
+  };
+
+  return (
+    <Fragment>
+      <List subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>{repo.name}</ListSubheader>}>
+        <ListItem>
+          <ListItemIcon>
+            <Icon icon={ExtensionRounded} />
+          </ListItemIcon>
+          <StyledListItemText id="switch-list-label-eruda" primary="Enabled" />
+          <Android12Switch
+            edge="end"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+              setSettings(
+                "disabled_repos",
+                (prev) => {
+                  if (prev.some((elem) => elem === repo.id)) {
+                    return prev.filter((item) => item !== repo.id);
+                  } else {
+                    return [...prev, repo.id];
+                  }
+                },
+                (state) => {
+                  setEnabled(!state.some((elem) => elem === repo.id));
+                }
+              );
+            }}
+            checked={enabled}
+            inputProps={{
+              "aria-labelledby": "switch-list-label-eruda",
+            }}
+          />
+        </ListItem>
+
+        <MListItem
+          part={repo.website}
+          icon={LanguageRounded}
+          text={strings.website}
+          onClick={() => {
+            if (repo.website) {
+              os.open(repo.website);
+            }
+          }}
+        />
+        <MListItem
+          part={repo.support}
+          icon={SupportRounded}
+          text={strings.support}
+          onClick={() => {
+            if (repo.support) {
+              os.open(repo.support);
+            }
+          }}
+        />
+        <MListItem
+          part={repo.donate}
+          icon={VolunteerActivismRounded}
+          text={strings.donate}
+          onClick={() => {
+            if (repo.donate) {
+              os.open(repo.donate);
+            }
+          }}
+        />
+        <MListItem
+          part={repo.submitModule}
+          icon={UploadFileRounded}
+          text={strings.submit_module}
+          onClick={() => {
+            if (repo.submitModule) {
+              os.open(repo.submitModule);
+            }
+          }}
+        />
+        <MListItem
+          part={true}
+          icon={DeleteRounded}
+          text={strings.remove}
+          onClick={() => {
+            ons.notification
+              .confirm(
+                strings.formatString(strings.confirm_repo_delete, {
+                  name: repo.name,
+                }) as string
+              )
+              .then((g) => {
+                if (g) {
+                  actions.removeRepo({
+                    id: repo.id,
+                  });
+                }
+              });
+          }}
+        />
+      </List>
+    </Fragment>
+  );
+};

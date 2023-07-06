@@ -1,0 +1,1 @@
+export declare const Android12Switch: import("@emotion/styled").StyledComponent<import("@mui/material/Switch").SwitchProps & import("@mui/system").MUIStyledCommonProps<import("@mui/material/styles").Theme>, {}, {}>;

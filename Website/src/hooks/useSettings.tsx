@@ -6,26 +6,27 @@ import { defaultComposer } from "default-composer";
 import { useNativeStorage } from "./useNativeStorage";
 import { os } from "@Native/Os";
 import { Languages, languages_map } from "./../language/languages";
+import { useEventCallback } from "usehooks-ts";
 
 export namespace Settings {
+  export type SetStateAction<T = Root> = Partial<T> | ((prevState: Partial<T>) => Partial<T>);
+
   export interface Context {
     settings: Root;
-    setSettings: (state: Partial<Settings.Root>) => void;
+    setSettings<K extends keyof Root>(key: K, state: SetStateAction<Root[K]>, callback?: (state: Root[K]) => void): void;
+  }
+  export interface Root {
+    darkmode: boolean;
+    language: Languages;
+    accent_scheme: Settings.AccentScheme;
+    eruda_console_enabled: boolean;
+    disabled_repos: string[];
   }
 
   export type AccentScheme = {
     name: string;
     value: any;
   };
-
-  export interface Root {
-    darkmode: boolean;
-    language: Languages;
-    accent_scheme: AccentScheme;
-    eruda_console_enabled: boolean;
-    mmar_repo_enabled: boolean;
-    gmr_repo_enabled: boolean;
-  }
 }
 
 export const accent_colors: Settings.AccentScheme[] = [
@@ -118,8 +119,7 @@ export const INITIAL_SETTINGS: Settings.Root = {
   language: languages_map[0],
   accent_scheme: accent_colors[0],
   eruda_console_enabled: false,
-  mmar_repo_enabled: true,
-  gmr_repo_enabled: true,
+  disabled_repos: [],
 };
 
 const monet = {
@@ -161,7 +161,11 @@ export const colors = {
 
 export const SettingsContext = createContext<Settings.Context>({
   settings: INITIAL_SETTINGS,
-  setSettings: (state: Partial<Settings.Root>) => {},
+  setSettings<K extends keyof Settings.Root>(
+    key: K,
+    state: Settings.SetStateAction<Settings.Root[K]>,
+    callback?: (state: Settings.Root[K]) => void
+  ) {},
 });
 
 export const useSettings = () => {
@@ -231,12 +235,18 @@ export const SettingsProvider = (props: React.PropsWithChildren) => {
           <SettingsContext.Provider
             value={{
               settings: defaultComposer(INITIAL_SETTINGS, settings),
-              setSettings: (state: Partial<Settings.Root>) => {
-                setSettings((prev) => ({
-                  ...prev,
-                  ...state,
-                }));
-              },
+              setSettings: useEventCallback((name, state, callback) => {
+                setSettings(
+                  (prev) => {
+                    const newValue = state instanceof Function ? state(prev[name]) : state;
+                    return {
+                      ...prev,
+                      [name]: newValue,
+                    };
+                  },
+                  (state) => callback && callback(state[name])
+                );
+              }),
             }}
             children={props.children}
           />
@@ -245,3 +255,5 @@ export const SettingsProvider = (props: React.PropsWithChildren) => {
     </ThemeProvider>
   );
 };
+
+// function set<K extends keyof Root>(key: K, value: Root[K] | ((prevState: Root[K]) => Root[K])) {}

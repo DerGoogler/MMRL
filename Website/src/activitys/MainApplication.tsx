@@ -10,6 +10,8 @@ import { useStrings } from "@Hooks/useStrings";
 import { StyledSection } from "@Components/StyledSection";
 import { Tabbar, TabbarRenderTab } from "@Components/onsenui/Tabbar";
 import React from "react";
+import { useTheme } from "@Hooks/useSettings";
+import AutorenewIcon from "@mui/icons-material/Autorenew";
 
 interface Props {
   id: string;
@@ -31,20 +33,23 @@ interface Props {
 
 const MainApplication = (props: Props) => {
   const { strings } = useStrings();
-  const [, forceUpdate] = React.useReducer((x) => x + 1, 0);
 
   const { context } = useActivity();
 
   const renderTabs = (): TabbarRenderTab[] => {
     return [
       {
-        content: <TabWrapper element={ExploreModuleFragment} props={{ pushPage: props.pushPage }} />,
+        content: <TabWrapper element={ExploreModuleFragment} />,
         tab: <Tabbar.Tab label={strings.explore} />,
       },
-      {
-        content: <TabWrapper element={DeviceModuleFragment} props={{ pushPage: props.pushPage }} />,
-        tab: <Tabbar.Tab label={strings.installed} />,
-      },
+      ...(os.isAndroid
+        ? [
+            {
+              content: <TabWrapper element={DeviceModuleFragment} />,
+              tab: <Tabbar.Tab label={strings.installed} />,
+            },
+          ]
+        : []),
     ];
   };
 
@@ -66,15 +71,7 @@ const MainApplication = (props: Props) => {
 
   return (
     <Page modifier="noshadow" renderToolbar={renderToolbar}>
-      {os.isAndroid ? (
-        <>
-          <Tabbar modifier="noshadow" swipeable={false} position={"top"} renderTabs={renderTabs} />
-        </>
-      ) : (
-        <StyledSection>
-          <ExploreModuleFragment />
-        </StyledSection>
-      )}
+      <Tabbar modifier="noshadow" swipeable={false} position={"top"} renderTabs={renderTabs} />
     </Page>
   );
 };

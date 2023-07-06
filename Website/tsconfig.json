@@ -12,7 +12,7 @@
     "noImplicitReturns": false,
     "noImplicitAny": false,
     "module": "ES2022",
-    "lib": ["es2017", "dom"],
+    "lib": ["es2018", "dom"],
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
     "target": "es6",

@@ -9,7 +9,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import React from "react";
 
 import { ListItemButton } from "@mui/material";
-import { useSettings } from "@Hooks/useSettings";
+import { Settings, useSettings } from "@Hooks/useSettings";
 import { StyledListItemText } from "./StyledListItemText";
 
 type ContentMap = {
@@ -20,7 +20,7 @@ type ContentMap = {
 interface PickerItemProps {
   id: string;
   contentMap: ContentMap[];
-  targetSetting: string;
+  targetSetting: "language" | "accent_scheme";
   title: string;
 }
 
@@ -43,7 +43,7 @@ export function ListPickerItem(props: PickerItemProps) {
 
     if (val.name && val.value) {
       setValue(val);
-      setSettings({ [props.targetSetting]: val });
+      setSettings(props.targetSetting, val);
     }
   };
 

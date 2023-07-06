@@ -1,9 +1,11 @@
 import React from "react";
 import { Languages } from "./../language/languages";
 export declare namespace Settings {
+    type SetStateAction<S> = S | ((prevState: S) => S);
+    type Base = SetStateAction<Partial<Settings.Root>>;
     interface Context {
         settings: Root;
-        setSettings: (state: Partial<Settings.Root>) => void;
+        setSettings: (state: ExtendedRoot, callback?: (state: Root) => void) => void;
     }
     type AccentScheme = {
         name: string;
@@ -14,9 +16,11 @@ export declare namespace Settings {
         language: Languages;
         accent_scheme: AccentScheme;
         eruda_console_enabled: boolean;
-        mmar_repo_enabled: boolean;
-        gmr_repo_enabled: boolean;
+        disabled_repos: string[];
     }
+    type ExtendedRoot = {
+        [P in keyof Root]?: SetStateAction<Root>;
+    };
 }
 export declare const accent_colors: Settings.AccentScheme[];
 export declare const INITIAL_SETTINGS: Settings.Root;

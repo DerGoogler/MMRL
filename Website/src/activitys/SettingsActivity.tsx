@@ -42,7 +42,7 @@ function SettingsActivity() {
           <Android12Switch
             edge="end"
             onChange={(e: any) => {
-              setSettings({ darkmode: e.target.checked });
+              setSettings("darkmode", e.target.checked);
             }}
             checked={settings.darkmode}
             inputProps={{
@@ -64,7 +64,7 @@ function SettingsActivity() {
           <Android12Switch
             edge="end"
             onChange={(e: any) => {
-              setSettings({ eruda_console_enabled: e.target.checked });
+              setSettings("eruda_console_enabled", e.target.checked);
             }}
             checked={settings.eruda_console_enabled}
             inputProps={{

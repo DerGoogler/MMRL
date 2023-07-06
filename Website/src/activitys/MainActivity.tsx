@@ -1,6 +1,6 @@
 import { CloseRounded } from "@mui/icons-material";
 import { useState } from "react";
-import { Page, RouterUtil, Toolbar, ToolbarButton } from "react-onsenui";
+import { RouterUtil } from "react-onsenui";
 import { Context, Extra } from "../hooks/useActivity";
 import { obj } from "googlers-tools";
 import { useSettings } from "@Hooks/useSettings";
@@ -17,7 +17,8 @@ import { StyledSection } from "@Components/StyledSection";
 import { Splitter } from "@Components/onsenui/Splitter";
 import { RouterNavigator } from "@Components/onsenui/RouterNavigator";
 import { DrawerFragment } from "./fragments/DrawerFragment";
-import { RepoProvider } from "@Hooks/useRepos";
+import { Toolbar } from "@Components/onsenui/Toolbar";
+import { Page } from "@Components/onsenui/Page";
 
 const MainActivity = (): JSX.Element => {
   const { settings } = useSettings();
@@ -122,13 +123,11 @@ const MainActivity = (): JSX.Element => {
     const newProps = obj.omit(["extra", "context"], props);
     return (
       <ErrorBoundary fallback={fallback}>
-        <RepoProvider>
-          <Extra.Provider key={props.key + "_extra"} value={props.extra}>
-            <Context.Provider key={props.key + "_context"} value={props.context}>
-              <route.component {...newProps} />
-            </Context.Provider>
-          </Extra.Provider>
-        </RepoProvider>
+        <Extra.Provider key={props.key + "_extra"} value={props.extra}>
+          <Context.Provider key={props.key + "_context"} value={props.context}>
+            <route.component {...newProps} />
+          </Context.Provider>
+        </Extra.Provider>
       </ErrorBoundary>
     );
   };
@@ -137,12 +136,12 @@ const MainActivity = (): JSX.Element => {
     return (
       <>
         <Toolbar modifier="noshadow">
-          <div className="center">Kartei</div>
-          <div className="right">
-            <ToolbarButton onClick={hideSplitter}>
+          <Toolbar.Center>MMRL</Toolbar.Center>
+          <Toolbar.Right>
+            <Toolbar.Button onClick={hideSplitter}>
               <Icon icon={CloseRounded} keepLight />
-            </ToolbarButton>
-          </div>
+            </Toolbar.Button>
+          </Toolbar.Right>
         </Toolbar>
       </>
     );
@@ -172,7 +171,7 @@ const MainActivity = (): JSX.Element => {
         renderToolbar={() => {
           return (
             <Toolbar modifier="noshadow">
-              <div className="center">We hit a brick!</div>
+              <Toolbar.Center>We hit a brick!</Toolbar.Center>
             </Toolbar>
           );
         }}
