@@ -11,7 +11,7 @@ export class Native<I = any> implements INative<I> {
   private readonly userAgentAndroid = "MMRL";
   public readonly userAgent = window.navigator.userAgent;
   public readonly isAndroid = this.userAgentAndroid === this.userAgent || window.hasOwnProperty("cordova") ? true : false;
-  public readonly isTablet = this.IsTablet();
+  // public readonly isTablet = this.IsTablet();
   /**
    * This field is required, otherwise the comunacation between Android will not work
    * @required true
@@ -19,16 +19,16 @@ export class Native<I = any> implements INative<I> {
   public interface: keyof AndroidWindow<I> | undefined;
 
   public constructor() {
-    this.IsTablet = this.IsTablet.bind(this);
+    // this.IsTablet = this.IsTablet.bind(this);
   }
 
-  private IsTablet(): boolean {
-    if (this.isAndroid) {
-      return (window["os" as any] as any).isTablet();
-    } else {
-      return isTablet;
-    }
-  }
+  // private IsTablet(): boolean {
+  //   if (this.isAndroid) {
+  //     return (window["os" as any] as any).isTablet();
+  //   } else {
+  //     return isTablet;
+  //   }
+  // }
 
   public get getInterface(): I {
     if (this.interface) {

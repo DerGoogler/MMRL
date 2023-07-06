@@ -8,14 +8,13 @@ import com.topjohnwu.superuser.Shell;
 import com.topjohnwu.superuser.ShellUtils;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
-public class ShellNative {
+public class NativeShell {
     private final WebView wv;
     ArrayList<String> output = new ArrayList<>();
 
-    public ShellNative(WebView wv) {
+    public NativeShell(WebView wv) {
         this.wv = wv;
     }
 

@@ -76,6 +76,7 @@ const config: Configuration = {
         LENGTH_LONG: JSON.stringify("long"),
         LENGTH_SHORT: JSON.stringify("short"),
       },
+      NODE_ENV: JSON.stringify(process.env.NODE_ENV),
     }),
     new MiniCssExtractPlugin({
       filename: "bundle/[name].bundle.css",
@@ -97,6 +98,7 @@ const config: Configuration = {
       "@Styles": resolve(__dirname, "src/styles"),
       "@Activitys": resolve(__dirname, "src/activitys"),
       "@Strings": resolve(__dirname, "src/language/core/index.ts"),
+      "@Annotation": resolve(__dirname, "src/annotation"),
     },
     modules: ["node_modules", join(process.env.NPM_CONFIG_PREFIX || __dirname, "lib/node_modules")],
     extensions: [".js", ".jsx", ".ts", ".tsx", ".scss", ".sass", "css"],

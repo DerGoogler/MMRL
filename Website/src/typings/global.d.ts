@@ -53,6 +53,8 @@ declare global {
       "ons-splitter-content": HTMLAttributes<HTMLElement>;
       "ons-splitter-side": HTMLAttributes<HTMLElement>;
       "ons-navigator": HTMLAttributes<HTMLElement>;
+      "ons-tabbar": HTMLAttributes<HTMLElement>;
+      "ons-tab": HTMLAttributes<HTMLElement>;
     }
   }
 
@@ -90,6 +92,8 @@ declare global {
     LENGTH_LONG: "long";
     LENGTH_SHORT: "short";
   };
+
+  const NODE_ENV: string | undefined;
 
   interface PushPropsCore<E = {}> {
     component: React.ElementType;

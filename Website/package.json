@@ -3,6 +3,11 @@
   "version": "1.6.0",
   "versionCode": "160",
   "description": "",
+  "config": {
+    "application_id": "com.dergoogler.mmrl",
+    "version_name": "1.6.0",
+    "version_code": 160
+  },
   "main": "index.tsx",
   "keywords": [],
   "author": "Der_Googler",

@@ -15,7 +15,6 @@ import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -24,10 +23,10 @@ import java.net.URL;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-public class FileSystemNative {
+public class NativeFs {
     private final Context ctx;
 
-    public FileSystemNative(Context ctx) {
+    public NativeFs(Context ctx) {
         this.ctx = ctx;
     }
 

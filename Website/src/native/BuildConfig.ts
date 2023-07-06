@@ -10,14 +10,6 @@ class BuildConfigClass extends Native {
     this.interface = "__buildconfig__";
   }
 
-  public get APPLICATION_ID(): string {
-    if (this.isAndroid) {
-      return this.getInterface.APPLICATION_ID();
-    } else {
-      return pkg.name;
-    }
-  }
-
   public get VERSION_NAME(): string {
     if (this.isAndroid) {
       return this.getInterface.VERSION_NAME();
@@ -26,11 +18,34 @@ class BuildConfigClass extends Native {
     }
   }
 
-  public get VERSION_CODE(): int {
+  public get VERSION_CODE(): number {
     if (this.isAndroid) {
       return this.getInterface.VERSION_CODE();
     } else {
-      return Number(pkg.versionCode);
+      return pkg.config.version_code;
+    }
+  }
+
+  public get APPLICATION_ID(): string {
+    if (this.isAndroid) {
+      return this.getInterface.APPLICATION_ID();
+    } else {
+      return pkg.name;
+    }
+  }
+  public get DEBUG(): boolean {
+    if (this.isAndroid) {
+      return this.getInterface.DEBUG;
+    } else {
+      return NODE_ENV === "development";
+    }
+  }
+
+  public get BUILD_TYPE(): string {
+    if (this.isAndroid) {
+      return this.getInterface.BUILD_TYPE;
+    } else {
+      return "unknown";
     }
   }
 }

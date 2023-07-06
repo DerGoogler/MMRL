@@ -5,21 +5,13 @@ import android.os.Bundle;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
-import com.dergoogler.core.BuildConfigNative;
-import com.dergoogler.core.BuildNative;
-import com.dergoogler.core.FileSystemNative;
-import com.dergoogler.core.OSNative;
+import com.dergoogler.core.NativeFs;
+import com.dergoogler.core.NativeOS;
 import com.dergoogler.core.NativeStorage;
-import com.dergoogler.core.ShellNative;
+import com.dergoogler.core.NativeShell;
+import com.dergoogler.core.NativeBuildConfig;
 
 import org.apache.cordova.CordovaActivity;
-import org.apache.cordova.CordovaActivity;
-import org.apache.cordova.CordovaWebView;
-import org.apache.cordova.CordovaWebViewImpl;
-import org.apache.cordova.CoreAndroid;
-import org.apache.cordova.LOG;
-import org.apache.cordova.engine.SystemWebView;
-import org.apache.cordova.engine.SystemWebViewEngine;
 
 public class MainActivity extends CordovaActivity {
     @Override
@@ -37,7 +29,11 @@ public class MainActivity extends CordovaActivity {
         }
 
         // Set by <content src="index.html" /> in config.xml
-        loadUrl(launchUrl);
+        if (BuildConfig.DEBUG) {
+            loadUrl("http://192.168.1.110:9000");
+        } else {
+            loadUrl(launchUrl);
+        }
 
         WebSettings webViewSettings = wv.getSettings();
         // Options
@@ -55,10 +51,10 @@ public class MainActivity extends CordovaActivity {
         webViewSettings.setAllowContentAccess(false);
 
         // Core
-        wv.addJavascriptInterface(new FileSystemNative(this), "__fs__");
-        wv.addJavascriptInterface(new ShellNative(wv), "__shell__");
-        wv.addJavascriptInterface(new BuildConfigNative(), "__buildconfig__");
-        wv.addJavascriptInterface(new OSNative(this), "__os__");
+        wv.addJavascriptInterface(new NativeFs(this), "__fs__");
+        wv.addJavascriptInterface(new NativeShell(wv), "__shell__");
+        wv.addJavascriptInterface(new NativeBuildConfig(), "__buildconfig__");
+        wv.addJavascriptInterface(new NativeOS(this), "__os__");
         wv.addJavascriptInterface(new NativeStorage(this), "__nativeStorage__");
 
     }

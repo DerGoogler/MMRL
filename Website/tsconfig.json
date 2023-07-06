@@ -4,6 +4,7 @@
     "allowJs": true,
     "declaration": true,
     "emitDeclarationOnly": false,
+    "experimentalDecorators": true,
     "declarationMap": false,
     "typeRoots": ["src/typings/global.d.ts"],
     "sourceMap": true,
@@ -14,7 +15,6 @@
     "lib": ["es2017", "dom"],
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
-    "types": ["node"],
     "target": "es6",
     "resolveJsonModule": true,
     "esModuleInterop": true,
@@ -31,7 +31,8 @@
       "@Package": ["./../package.json"],
       "@Styles/*": ["styles/*"],
       "@Activitys/*": ["activitys/*"],
-      "@Strings": ["language/core/index.ts"]
+      "@Strings": ["language/core/index.ts"],
+      "@Annotation/*": ["annotation/*"]
     }
   },
   "ts-node": {

@@ -102,7 +102,7 @@ export const accent_colors: Settings.AccentScheme[] = [
   },
   // Only load if it is android platform and above android 12
   ...(os.isAndroid
-    ? os.androidSdk() >= 31
+    ? os.sdk >= 31
       ? [
           {
             name: "Monet (Android 12+)",
@@ -156,7 +156,7 @@ export const colors = {
   teal: kolors.teal,
   yellow: kolors.yellow,
   // Only load if it is android platform and above android 12
-  ...(os.isAndroid ? (os.androidSdk() >= 31 ? { monet: monet } : {}) : {}),
+  ...(os.isAndroid ? (os.sdk >= 31 ? { monet: monet } : {}) : {}),
 };
 
 export const SettingsContext = createContext<Settings.Context>({

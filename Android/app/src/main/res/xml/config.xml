@@ -1,11 +1,19 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.dergoogler.mmrl" version="1.6.0">
+<widget id="com.dergoogler.mmrl"
+    version="1.6.0"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <name>MMRL</name>
     <description>No description</description>
-    <author email="boehmjimmy@dergoogler.com" href="https://dergoogler.com">
+    <author email="bohmjimmy1@gmail.com" href="https://dergoogler.com">
         Der_Googler
     </author>
     <content src="index.html" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
+
+<!--    <platform name="android">-->
+<!--        <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">-->
+<!--            <application android:usesCleartextTraffic="true" />-->
+<!--        </edit-config>-->
+<!--    </platform>-->
 </widget>

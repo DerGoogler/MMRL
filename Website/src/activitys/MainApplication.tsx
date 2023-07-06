@@ -1,6 +1,5 @@
 import { TabWrapper } from "@Components/TabWrapper";
 import { Menu } from "@mui/icons-material";
-import { Tab, Tabbar, TabbarRenderTab } from "react-onsenui";
 import DeviceModuleFragment from "./fragments/DeviceModuleFragment";
 import ExploreModuleFragment from "./fragments/ExploreModuleFragment";
 import { useActivity } from "@Hooks/useActivity";
@@ -9,6 +8,7 @@ import { os } from "@Native/Os";
 import { Page } from "@Components/onsenui/Page";
 import { useStrings } from "@Hooks/useStrings";
 import { StyledSection } from "@Components/StyledSection";
+import { Tabbar, TabbarRenderTab } from "@Components/onsenui/Tabbar";
 
 interface Props {
   id: string;
@@ -38,11 +38,11 @@ const MainApplication = (props: Props) => {
     return [
       {
         content: <TabWrapper element={ExploreModuleFragment} props={{ pushPage: props.pushPage }} />,
-        tab: <Tab label={strings.explore} />,
+        tab: <Tabbar.Tab label={strings.explore} />,
       },
       {
         content: <TabWrapper element={DeviceModuleFragment} props={{ pushPage: props.pushPage }} />,
-        tab: <Tab label={strings.installed} />,
+        tab: <Tabbar.Tab label={strings.installed} />,
       },
     ];
   };
@@ -67,7 +67,7 @@ const MainApplication = (props: Props) => {
     <Page modifier="noshadow" renderToolbar={renderToolbar}>
       {os.isAndroid ? (
         <>
-          <Tabbar swipeable={false} position={"top"} renderTabs={renderTabs} />
+          <Tabbar modifier="noshadow" swipeable={false} position={"top"} renderTabs={renderTabs} />
         </>
       ) : (
         <StyledSection>
