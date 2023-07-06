@@ -1,11 +1,14 @@
 import { Card, Ripple, Switch } from "react-onsenui";
 import Properties from "@js.properties/properties";
 import File from "@Native/File";
-import {Log} from "@Native/Log";
+import { Log } from "@Native/Log";
 import { DeleteRounded, RefreshRounded } from "@mui/icons-material";
 import React from "react";
 import { useDarkmode } from "@Hooks/useDarkmode";
 import { useStrings } from "@Hooks/useStrings";
+import { Android12Switch } from "./Android12Switch";
+import { StyledCard, StyledIconButton } from "./ExploreModule";
+import { Box, Divider, Stack, Typography } from "@mui/material";
 
 interface Props {
   module: string;
@@ -35,127 +38,125 @@ interface States {
 
 const DeviceModule = (props: Props) => {
   const { strings } = useStrings();
-  const [moduleProps, setModuleProps] = React.useState<any>({});
+  const [moduleProps, setModuleProps] = React.useState<Partial<ModuleProps>>({});
   const [dialogShown, setDialogShown] = React.useState(false);
   const [isEnabled, setIsEnabled] = React.useState(true);
   const [isSwitchDisabled, setIsSwitchDisabled] = React.useState(false);
+  const [, forceUpdate] = React.useReducer((x) => x + 1, 0);
 
   const isDarkmode = useDarkmode();
-  const iconColor: string = isDarkmode ? "#bb86fc" : "#4a148c";
 
   const log = new Log("DeviceModule");
 
   const module = props.module;
+
   React.useEffect(() => {
     const readProps = File.read(`/data/adb/modules/${module}/module.prop`);
     setModuleProps(Properties.parseToProperties(readProps));
+  }, []);
 
-    const disable = new File(`/data/adb/modules/${module}/disable`);
-    if (disable.exist()) {
-      setIsEnabled(false);
-    }
-
+  React.useEffect(() => {
     const remove = new File(`/data/adb/modules/${module}/remove`);
-    if (remove.exist()) {
-      setIsSwitchDisabled(true);
-    }
-  }, [isEnabled, isSwitchDisabled]);
+
+    setIsSwitchDisabled(remove.exist());
+  }, [isSwitchDisabled]);
+
+  React.useEffect(() => {
+    const disable = new File(`/data/adb/modules/${module}/disable`);
+    setIsEnabled(!disable.exist());
+  }, [isEnabled]);
 
   const { id, name, version, versionCode, author, description } = moduleProps;
 
   return (
     <>
-      <div>
-        <Card id={id} key={id} style={{ marginTop: "4px", marginBottom: "4px", padding: 0 }}>
-          <item-card-wrapper>
-            <item-title className="title">
-              <item-module-name>
-                <item-name>{name}</item-name>
-                <item-switch>
-                  <Switch
-                    modifier="material3"
-                    checked={isEnabled}
-                    disabled={isSwitchDisabled}
-                    onChange={(e: any) => {
-                      const checked = e.target.checked;
-                      const disable = new File(`/data/adb/modules/${module}/disable`);
+      <StyledCard elevation={0}>
+        <Box sx={{ p: 2, display: "flex" }}>
+          <Stack spacing={0.5} style={{ flexGrow: 1 }}>
+            <Typography fontWeight={700} color="text.primary">
+              {name}
+            </Typography>{" "}
+            <Typography variant="caption" sx={{ fontSize: ".70rem" }} color="text.secondary">
+              {version} ({versionCode}) / {author}
+            </Typography>
+            <Typography variant="body1" color="text.secondary">
+              {description}
+            </Typography>
+          </Stack>
+        </Box>
+        <Divider />
+        <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ px: 2, py: 1 }}>
+          <Android12Switch
+            checked={isEnabled}
+            disabled={isSwitchDisabled}
+            onChange={(e) => {
+              const checked = e.target.checked;
+              const disable = new File(`/data/adb/modules/${module}/disable`);
 
-                      if (checked) {
-                        if (disable.exist()) {
-                          if (disable.delete()) {
-                            log.i(
-                              strings.formatString(strings.module_enabled_LOG, {
-                                name: module,
-                              })
-                            );
-                          }
-                        }
-                      } else {
-                        if (!disable.exist()) {
-                          if (disable.create()) {
-                            log.i(
-                              strings.formatString(strings.module_disabled_LOG, {
-                                name: module,
-                              })
-                            );
-                          }
-                        }
-                      }
-                    }}
-                  />
-                </item-switch>{" "}
-              </item-module-name>
-            </item-title>
-            <div className="content">
-              <item-version-author>
-                {version} ({versionCode}) / {author}
-              </item-version-author>
-              <item-description>{description}</item-description>
-              <item-module-button-wrapper>
-                <item-module-button
-                  style={{ color: iconColor }}
-                  onClick={() => {
-                    // Can be improved, but not now
-                    if (isSwitchDisabled) {
-                      const remove = new File(`/data/adb/modules/${module}/remove`);
-                      if (remove.exist()) {
-                        if (remove.delete()) {
-                          setIsSwitchDisabled(false);
-                          log.i(`${module} has been recovered`);
-                        } else {
-                          log.e(`Failed to restore ${module}`);
-                        }
-                      } else {
-                        log.e(`This remove file don't exists for ${module}`);
-                      }
+              if (checked) {
+                if (disable.exist()) {
+                  if (disable.delete()) {
+                    log.i(
+                      strings.formatString(strings.module_enabled_LOG, {
+                        name: module,
+                      })
+                    );
+                  }
+                }
+              } else {
+                if (!disable.exist()) {
+                  if (disable.create()) {
+                    log.i(
+                      strings.formatString(strings.module_disabled_LOG, {
+                        name: module,
+                      })
+                    );
+                  }
+                }
+              }
+              setIsEnabled(checked);
+            }}
+            inputProps={{ "aria-label": "controlled" }}
+          />
+
+          <Stack spacing={0.8} direction="row">
+            {isSwitchDisabled ? (
+              <StyledIconButton
+                style={{ width: 30, height: 30 }}
+                onClick={() => {
+                  const remove = new File(`/data/adb/modules/${module}/remove`);
+                  if (remove.exist()) {
+                    if (remove.delete()) {
+                      setIsSwitchDisabled(false);
+                      log.i(`${module} has been recovered`);
                     } else {
-                      const file = new File(`/data/adb/modules/${module}/remove`);
-                      if (file.create()) {
-                        setIsSwitchDisabled(true);
-                      } else {
-                        setIsSwitchDisabled(false);
-                      }
+                      log.e(`Failed to restore ${module}`);
                     }
-                  }}
-                >
-                  <Ripple />
-                  {isSwitchDisabled ? (
-                    <>
-                      {strings.restore}
-                      <RefreshRounded sx={{ color: iconColor }} />
-                    </>
-                  ) : (
-                    <>
-                      {strings.remove}
-                      <DeleteRounded sx={{ color: iconColor }} />
-                    </>
-                  )}
-                </item-module-button>
-              </item-module-button-wrapper>
-            </div>
-          </item-card-wrapper>
-        </Card>
-      </div>
+                  } else {
+                    log.e(`This remove file don't exists for ${module}`);
+                  }
+                }}
+              >
+                <RefreshRounded sx={{ fontSize: 14 }} />
+              </StyledIconButton>
+            ) : (
+              <StyledIconButton
+                style={{ width: 30, height: 30 }}
+                onClick={() => {
+                  const file = new File(`/data/adb/modules/${module}/remove`);
+                  if (file.create()) {
+                    setIsSwitchDisabled(true);
+                  } else {
+                    setIsSwitchDisabled(false);
+                  }
+                }}
+              >
+                <DeleteRounded sx={{ fontSize: 14 }} />
+              </StyledIconButton>
+            )}
+          </Stack>
+        </Stack>
+      </StyledCard>
     </>
   );
 };

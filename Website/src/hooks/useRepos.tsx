@@ -8,75 +8,67 @@ import { useSettings } from "./useSettings";
 import { os } from "@Native/Os";
 
 interface RepoContextInterface {
-  readOnlyRepos: Array<BuiltInRepo>;
-  repos: Array<BuiltInRepo>;
-  setRepos: SetValue<Array<BuiltInRepo>>;
-  modulesIndex: Array<any>;
-  moduleOptions: Array<any>;
+  repos: StoredRepo[];
+  setRepos: SetValue<StoredRepo[]>;
+  modules: Module[];
+  moduleOptions: any[];
+  actions: {
+    addRepo: (data: AddRepoData) => void;
+    removeRepo: (data: RemoveRepoData) => void;
+    setRepoEnabled: (data: SetRepoStateData) => void;
+    filterModules: (query: string) => Module[];
+  };
 }
 
 export const RepoContext = React.createContext<RepoContextInterface>({
-  readOnlyRepos: [],
   repos: [],
   setRepos: () => {},
-  modulesIndex: [],
+  modules: [],
   moduleOptions: [],
+  actions: {
+    addRepo: (data: AddRepoData) => {},
+    removeRepo: (data: RemoveRepoData) => {},
+    setRepoEnabled: (data: SetRepoStateData) => {},
+    filterModules: (query: string) => [],
+  },
 });
 
-interface Props extends React.PropsWithChildren {
-  deps?: React.DependencyList | undefined;
-}
+type AddRepoData = {
+  url: string;
+  callback?: (state: StoredRepo[]) => void;
+  error?: (error: any) => void;
+};
 
-export const RepoProvider = (props: Props) => {
-  const { settings } = useSettings();
-  const [repos, setRepos] = useNativeStorage<Array<BuiltInRepo>>("repos", []);
+type RemoveRepoData = {
+  id: string;
+  callback?: (state: StoredRepo[]) => void;
+};
 
-  const [modulesIndex, setModulesIndex] = React.useState<Module[]>([]);
-  const [moduleOptions, setModuleOptions] = React.useState<Array<any>>([]);
+type SetRepoStateData = {
+  index: number;
+  state: boolean;
+  callback?: (state: StoredRepo[]) => void;
+};
 
-  const readOnlyRepos: Array<BuiltInRepo> = [
-    {
-      id: "mmar",
-      name: "Magisk Modules Alternative Repository",
-      website: "https://github.com/Magisk-Modules-Alt-Repo",
-      support: undefined,
-      donate: undefined,
-      submitModule: "https://github.com/Magisk-Modules-Alt-Repo/submission",
-      last_update: undefined,
-      modules: "https://raw.githubusercontent.com/Magisk-Modules-Alt-Repo/json/main/modules.json",
-      readonly: true,
-      isOn: settings.mmar_repo_enabled,
-      built_in_type: "MMAR",
-    },
-    {
-      id: "gmr",
-      name: "Googlers Magisk Repo",
-      website: "https://github.com/Googlers-Magisk-Repo",
-      support: undefined,
-      donate: undefined,
-      submitModule: undefined,
-      last_update: undefined,
-      modules: "https://raw.githubusercontent.com/Googlers-Repo/googlers-repo.github.io/master/modules.json",
-      readonly: true,
-      isOn: settings.gmr_repo_enabled,
-      built_in_type: "GMR",
-    },
-  ];
+export const RepoProvider = (props: React.PropsWithChildren) => {
+  const [repos, setRepos] = useNativeStorage<StoredRepo[]>("repos", []);
+  const [modules, setModules] = React.useState<Module[]>([]);
+  const [moduleOptions, setModuleOptions] = React.useState<any[]>([]);
 
   React.useEffect(() => {
     Promise.all(
-      [...readOnlyRepos, ...repos].map(async (rep) => {
+      repos.map(async (rep) => {
         if (rep.isOn) {
-          const modules: Repo = await (await fetch(rep.modules)).json();
-          for (var i = 0; i < modules.modules.length; i++) {
-            modules.modules[i].prop_url = Properties.parseToProperties(
-              await (await fetch(modules.modules[i].prop_url as unknown as string)).text()
+          const modules_data: Repo = await (await fetch(rep.modules)).json();
+          for (var i = 0; i < modules_data.modules.length; i++) {
+            modules_data.modules[i].prop_url = Properties.parseToProperties(
+              await (await fetch(modules_data.modules[i].prop_url as unknown as string)).text()
             ) as unknown as ModuleProps;
           }
-          setModulesIndex((prev) => {
+          setModules((prev) => {
             // Preventing duplicates
             var ids = new Set(prev.map((d) => d.id));
-            var merged = [...prev, ...modules.modules.filter((d) => !ids.has(d.id))];
+            var merged = [...prev, ...modules_data.modules.filter((d) => !ids.has(d.id))];
             return merged;
           });
         }
@@ -86,70 +78,73 @@ export const RepoProvider = (props: Props) => {
     axios.get("https://raw.githubusercontent.com/Googlers-Repo/googlers-repo.github.io/master/moduleOptions.json").then((response) => {
       setModuleOptions(response.data);
     });
-  }, [settings.gmr_repo_enabled, settings.mmar_repo_enabled]);
+  }, []);
 
-  return <RepoContext.Provider value={{ readOnlyRepos, repos, setRepos, modulesIndex, moduleOptions }} children={props.children} />;
-};
-
-export const useRepos = () => {
-  const { readOnlyRepos, repos, setRepos, modulesIndex, moduleOptions }: RepoContextInterface = React.useContext(RepoContext);
-
-  const removeRepo = (id: string) => {
-    setRepos((ary) => ary.filter((obj) => obj.id !== id));
-  };
-
-  const changeEnabledState = (state: any) => {
-    setRepos((ary) => {
-      var item = ary.find((item: BuiltInRepo) => item.isOn === !state);
-      if (item) {
-        item.isOn = state;
-      }
-      return ary;
-    });
-  };
-
-  const addRepo = (repolink: string, callback: () => void, err: (error: any) => void) => {
-    if (link.validURL(repolink)) {
-      axios
-        .get(repolink)
+  const addRepo = (data: AddRepoData) => {
+    if (link.validURL(data.url)) {
+      fetch(data.url)
+        .then((response) => response.json())
         .then((response) => {
-          const data = response.data;
-
-          setRepos((ary) => [
-            ...ary,
-            {
-              id: "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
-                var r = (Math.random() * 16) | 0,
-                  v = c == "x" ? r : (r & 0x3) | 0x8;
-                return v.toString(16);
-              }),
-              name: data.name,
-              website: util.typeCheck<any>(link.validURL(data.website), null),
-              support: util.typeCheck<any>(link.validURL(data.support), null),
-              donate: util.typeCheck<any>(link.validURL(data.donate), null),
-              submitModule: util.typeCheck<any>(link.validURL(data.submitModule), null),
-              last_update: data.last_update,
-              modules: repolink,
-              readonly: false,
-              isOn: false,
-            },
-          ]);
-          callback();
+          setRepos(
+            (prev) => [
+              ...prev,
+              {
+                id: "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+                  var r = (Math.random() * 16) | 0,
+                    v = c == "x" ? r : (r & 0x3) | 0x8;
+                  return v.toString(16);
+                }),
+                name: response.name || "Unknown Repository",
+                website: response.website || null,
+                support: response.support || null,
+                donate: response.donate || null,
+                submitModule: response.submitModules || null,
+                last_update: response.website || 0,
+                modules: data.url,
+                isOn: false,
+              },
+            ],
+            data.callback
+          );
         })
-        .catch(err);
+        .catch(data.error);
     } else {
-      os.toast("The given link isn't valid.", "short");
+      os.toast("The given link isn't valid.", Toast.LENGTH_SHORT);
     }
   };
 
-  return {
-    readOnlyRepos,
-    getRepos: repos,
-    setRepos,
-    addRepo,
-    removeRepo,
-    changeEnabledState,
-    modulesIndex,
-    moduleOptions,
+  const removeRepo = (data: RemoveRepoData) => {
+    setRepos((tmp) => {
+      tmp = tmp.filter((remv) => remv.id != data.id);
+      return tmp;
+    }, data.callback);
   };
+
+  const setRepoEnabled = (data: SetRepoStateData) => {
+    setRepos((tmp) => {
+      tmp[data.index].isOn = data.state;
+      return tmp;
+    }, data.callback);
+  };
+
+  const filterModules = (query: string) => {
+    return modules.filter(
+      (module) =>
+        module.prop_url.id.toLowerCase().includes(query.toLowerCase()) ||
+        module.prop_url.name.toLowerCase().includes(query.toLowerCase()) ||
+        module.prop_url.author.toLowerCase().includes(query.toLowerCase()) ||
+        module.prop_url.description.toLowerCase().includes(query.toLowerCase())
+    );
+  };
+
+  return (
+    <RepoContext.Provider
+      value={{ repos, setRepos, modules, moduleOptions, actions: { addRepo, removeRepo, setRepoEnabled, filterModules } }}
+      children={props.children}
+    />
+  );
+};
+
+export const useRepos = () => {
+  return React.useContext(RepoContext);
 };

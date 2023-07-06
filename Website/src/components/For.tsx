@@ -4,14 +4,15 @@ export type ForProps<T, U extends JSX.Element> = {
   each: readonly T[];
   fallback: () => JSX.Element;
   catch: (e: Error | undefined) => JSX.Element;
-  children: (item: T, index: number) => U;
+  render: (item: T, index: number) => U;
+  renderTop?: () => JSX.Element;
 };
 
 export function For<T, U extends JSX.Element>(props: ForProps<T, U>) {
   const handler = () => {
     try {
       if (props.each.length !== 0) {
-        return props.each.map(props.children);
+        return props.each.map(props.render);
       } else {
         return props.fallback();
       }
@@ -24,5 +25,10 @@ export function For<T, U extends JSX.Element>(props: ForProps<T, U>) {
     }
   };
 
-  return <React.Fragment>{handler()}</React.Fragment>;
+  return (
+    <React.Fragment>
+      {props.each.length !== 0 && props.renderTop && props.renderTop()}
+      {handler()}
+    </React.Fragment>
+  );
 }

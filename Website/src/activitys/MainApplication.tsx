@@ -9,6 +9,7 @@ import { Page } from "@Components/onsenui/Page";
 import { useStrings } from "@Hooks/useStrings";
 import { StyledSection } from "@Components/StyledSection";
 import { Tabbar, TabbarRenderTab } from "@Components/onsenui/Tabbar";
+import React from "react";
 
 interface Props {
   id: string;
@@ -30,7 +31,7 @@ interface Props {
 
 const MainApplication = (props: Props) => {
   const { strings } = useStrings();
-  // const { scheme, theme } = useTheme();
+  const [, forceUpdate] = React.useReducer((x) => x + 1, 0);
 
   const { context } = useActivity();
 

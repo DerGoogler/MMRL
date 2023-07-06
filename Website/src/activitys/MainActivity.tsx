@@ -122,7 +122,7 @@ const MainActivity = (): JSX.Element => {
     const newProps = obj.omit(["extra", "context"], props);
     return (
       <ErrorBoundary fallback={fallback}>
-        <RepoProvider deps={[props.key + "_modules"]}>
+        <RepoProvider>
           <Extra.Provider key={props.key + "_extra"} value={props.extra}>
             <Context.Provider key={props.key + "_context"} value={props.context}>
               <route.component {...newProps} />

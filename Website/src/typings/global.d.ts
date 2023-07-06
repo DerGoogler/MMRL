@@ -132,14 +132,9 @@ declare global {
     };
   }
 
-  interface BuiltInRepo extends Omit<Repo, "modules"> {
+  interface StoredRepo extends Omit<Repo, "modules"> {
     modules: string;
-    /**
-     * The setting enabled by default if the repo is built-in
-     */
-    readonly: boolean;
     isOn: boolean;
-    built_in_type?: string;
   }
 
   interface Repo {

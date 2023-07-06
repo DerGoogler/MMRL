@@ -9,11 +9,25 @@ import {
 } from "@mui/icons-material";
 import ons from "onsenui";
 import Icon from "@Components/Icon";
-import { AlertDialog as Dialog, Input, List, ListHeader, ListItem, Page, Switch, ToolbarButton } from "react-onsenui";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { SvgIconTypeMap } from "@mui/material/SvgIcon/SvgIcon";
 import { Fragment } from "react";
-import { Searchbar } from "@Components/Searchbar";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Divider,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListSubheader,
+  Switch,
+  TextField,
+} from "@mui/material";
 import AlertDialog from "@Builders/AlertDialog";
 import { useRepos } from "@Hooks/useRepos";
 import React from "react";
@@ -24,9 +38,12 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { os } from "@Native/Os";
 import { useSettings } from "@Hooks/useSettings";
 import { useStrings } from "@Hooks/useStrings";
+import { Page } from "@Components/onsenui/Page";
+import { StyledListItemText } from "@Components/StyledListItemText";
+import { Android12Switch } from "@Components/Android12Switch";
 
 interface ListItemProps {
-  part: any;
+  part?: any;
   text: string;
   icon: OverridableComponent<SvgIconTypeMap<{}, "svg">>;
   onClick: () => void;
@@ -38,109 +55,41 @@ const RepoActivity = () => {
   const { settings, setSettings } = useSettings();
   const { strings } = useStrings();
 
-  const { readOnlyRepos } = useRepos();
-
-  const { getRepos, addRepo, removeRepo, changeEnabledState } = useRepos();
-  const [alertDialogShown, setAlertDialogShown] = React.useState(false);
+  const { repos, actions } = useRepos();
   const [repoLink, setRepoLink] = React.useState("");
-  const [searchValue, setSearchValue] = React.useState("");
-  const [finalSearchValue, setFinalSearchValue] = React.useState("");
+  const [search, setSearch] = React.useState("");
+  const [, forceUpdate] = React.useReducer((x) => x + 1, 0);
 
-  const [userAcceptNewRepos, setUserAcceptNewRepos] = useNativeStorage("userAcceptNewRepos", false);
+  const [open, setOpen] = React.useState(false);
 
-  const [enableHideReadonlyRepositories, setEnableHideReadonlyRepositories] = useNativeStorage(
-    "enableHideReadonlyRepositories_switch",
-    false
-  );
-
-  React.useEffect(() => {
-    if (!userAcceptNewRepos) {
-      const builder = AlertDialog.Builder;
-      builder.setTitle("Custom repositories!");
-      builder.setMessage(
-        <div>
-          MMRL introduces new <strong>repositories system</strong> with <em>1.6.0</em>. Now can you load every repo into MMRL (This can slow
-          down the app if to much repo at once are enabled)
-          <span style={{ fontSize: 10, display: "inline-block" }}>
-            Magisk Modules Alternative Repository is an read-only repo and can't be removed.
-          </span>
-        </div>
-      );
-      builder.setPositiveButton("Oaky!", () => {
-        setUserAcceptNewRepos(true);
-      });
-      builder.setCancelable(false);
-      builder.show();
-    }
-  }, [userAcceptNewRepos]);
-
-  //   public onCreateToolbar() {
-  //     return {
-  //       title: "Repos",
-  //       onBackButton: this.props.popPage,
-  //       addToolbarButtonPosition: "right",
-  //       addToolbarButton: (
-  //         <ToolbarButton className="back-button--material__icon" onClick={this.showAlertDialog}>
-  //           <Icon icon={Add} keepLight={true} />
-  //         </ToolbarButton>
-  //       ),
-  //     };
-  //   }
-
-  const showAlertDialog = () => {
-    if (getRepos.length === MAX_REPO_LENGTH) {
-      os.toast("You can't add more than 5 repositories (Read-Only Repos are not counted).", Toast.LENGTH_SHORT);
-    } else {
-      setAlertDialogShown(true);
-    }
+  const handleClickOpen = () => {
+    setOpen(true);
   };
 
-  const hideAlertDialog = () => {
-    setAlertDialogShown(false);
+  const handleClose = () => {
+    setOpen(false);
   };
 
-  const handleRepoLinkChange = (e: any) => {
-    setRepoLink(e.target.value);
-  };
-
-  const _addRepo = () => {
-    addRepo(
-      repoLink,
-      () => {
-        setRepoLink("");
-        hideAlertDialog();
-      },
-      (err) => {
-        setRepoLink("");
-        os.toast(err, Toast.LENGTH_SHORT);
-        hideAlertDialog();
-      }
-    );
+  const handleRepoLinkChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    setRepoLink(event.target.value);
   };
 
   const MListItem = (props: ListItemProps) => {
     return (
       <>
         {props.part && (
-          <ListItem onClick={props.onClick}>
-            <div className="left">
+          <ListItemButton onClick={props.onClick}>
+            <ListItemIcon>
               <Icon icon={props.icon} />
-            </div>
-
-            <div className="center">{props.text}</div>
-          </ListItem>
+            </ListItemIcon>
+            <StyledListItemText primary={props.text} />
+          </ListItemButton>
         )}
       </>
     );
   };
 
-  const roReposOption = (): Array<BuiltInRepo> => {
-    return !enableHideReadonlyRepositories ? readOnlyRepos : [];
-  };
-
-  const filteredRepos = roReposOption()
-    .concat(getRepos)
-    .filter((item) => item.name.toLowerCase().includes(searchValue.toLowerCase()));
+  const filteredRepos = repos.filter((item) => item.name.toLowerCase().includes(search.toLowerCase()));
 
   const renderToolbar = () => {
     return (
@@ -148,9 +97,9 @@ const RepoActivity = () => {
         <Toolbar.Left>
           <Toolbar.Button icon={ArrowBackIcon} onClick={context.popPage} />
         </Toolbar.Left>
-        <Toolbar.Center>Repos</Toolbar.Center>
+        <Toolbar.Center>{strings.repositories}</Toolbar.Center>
         <Toolbar.Right>
-          <Toolbar.Button icon={Add} onClick={showAlertDialog} />
+          <Toolbar.Button icon={Add} onClick={handleClickOpen} />
         </Toolbar.Right>
       </Toolbar>
     );
@@ -160,42 +109,31 @@ const RepoActivity = () => {
     <>
       <Page renderToolbar={renderToolbar}>
         {/* <Searchbar placeholder={string("search_modules")} onButtonClick={() => {}} onInputChange={repoSearchFilter} /> */}
-        <List>
-          {filteredRepos.map((repo: BuiltInRepo, index: number) => (
-            <Fragment key={index}>
-              <ListHeader>
-                {repo.name}
-                {repo.readonly ? " (Read-Only)" : ""}
-              </ListHeader>
-              <ListItem
-                // @ts-ignore
-                onClick={() => {}}
-              >
-                <div className="left">
-                  <Icon icon={ExtensionRounded} />
-                </div>
 
-                <div className="center">Enabled</div>
-                <div className="right">
-                  <Switch
-                    modifier="material3"
-                    checked={repo.isOn}
-                    onChange={(e: any) => {
-                      switch (repo.built_in_type) {
-                        case "MMAR":
-                          setSettings({ mmar_repo_enabled: e.target.checked });
-                          break;
-                        case "GMR":
-                          setSettings({ gmr_repo_enabled: e.target.checked });
-                          break;
-                        default:
-                          changeEnabledState(e.target.checked);
-                          break;
-                      }
-                    }}
-                  />
-                </div>
+        {filteredRepos.map((repo: StoredRepo, index: number) => (
+          <Fragment key={index}>
+            <List subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>{repo.name}</ListSubheader>}>
+              <ListItem>
+                <ListItemIcon>
+                  <Icon icon={ExtensionRounded} />
+                </ListItemIcon>
+                <StyledListItemText id="switch-list-label-eruda" primary="Enabled" />
+                <Android12Switch
+                  edge="end"
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+                    actions.setRepoEnabled({
+                      index: index,
+                      state: checked,
+                      callback: forceUpdate,
+                    });
+                  }}
+                  checked={repo.isOn}
+                  inputProps={{
+                    "aria-labelledby": "switch-list-label-eruda",
+                  }}
+                />
               </ListItem>
+
               <MListItem
                 part={repo.website}
                 icon={LanguageRounded}
@@ -237,7 +175,7 @@ const RepoActivity = () => {
                 }}
               />
               <MListItem
-                part={!repo.readonly}
+                part={true}
                 icon={DeleteRounded}
                 text={strings.remove}
                 onClick={() => {
@@ -249,32 +187,54 @@ const RepoActivity = () => {
                     )
                     .then((g) => {
                       if (g) {
-                        removeRepo(repo.id);
+                        actions.removeRepo({
+                          id: repo.id,
+                        });
                       }
                     });
                 }}
               />
-            </Fragment>
-          ))}
-        </List>
-        <>
-          <Dialog isOpen={alertDialogShown} isCancelable={false}>
-            <div className="alert-dialog-title">{strings.add_repo}</div>
-            <div className="alert-dialog-content">
-              <p>
-                <Input value={repoLink} onChange={handleRepoLinkChange} modifier="underbar" float placeholder="Repo link" />
-              </p>
-            </div>
-            <div className="alert-dialog-footer">
-              <button onClick={hideAlertDialog} className="alert-dialog-button">
-                {strings.cancel}
-              </button>
-              <button onClick={_addRepo} className="alert-dialog-button">
-                {strings.add}
-              </button>
-            </div>
-          </Dialog>
-        </>
+            </List>
+          </Fragment>
+        ))}
+        <Dialog open={open} onClose={handleClose}>
+          <DialogTitle>Add Repository</DialogTitle>
+          <DialogContent>
+            <DialogContentText>Add your repository or an repository from some other people</DialogContentText>
+            <TextField
+              autoFocus
+              name="repo_link"
+              fullWidth
+              margin="dense"
+              type="text"
+              label={"Modules link"}
+              value={repoLink}
+              variant="outlined"
+              onChange={handleRepoLinkChange}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button
+              onClick={() => {
+                actions.addRepo({
+                  url: repoLink,
+                  callback: (state) => {
+                    setRepoLink("");
+                    handleClose();
+                  },
+                  error: (error) => {
+                    setRepoLink("");
+                    os.toast(error, Toast.LENGTH_SHORT);
+                    handleClose();
+                  },
+                });
+              }}
+            >
+              Fetch
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Page>
     </>
   );

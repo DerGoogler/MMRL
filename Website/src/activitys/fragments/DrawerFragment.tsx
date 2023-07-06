@@ -47,7 +47,7 @@ export const DrawerFragment = (props: Props) => {
             hide();
           }}
         >
-          <StyledListItemText primary={strings.repository} />
+          <StyledListItemText primary={strings.repositories} />
         </ListItemButton>
       </List>
 

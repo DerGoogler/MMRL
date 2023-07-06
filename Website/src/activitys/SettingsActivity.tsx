@@ -12,6 +12,7 @@ import { StyledListItemText } from "@Components/StyledListItemText";
 import { ListPickerItem } from "@Components/ListPickerItem";
 import { languages_map } from "./../language/languages";
 import { os } from "@Native/Os";
+import { Android12Switch } from "@Components/Android12Switch";
 
 function SettingsActivity() {
   const { context } = useActivity();
@@ -38,7 +39,7 @@ function SettingsActivity() {
       <List subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>{strings.appearance}</ListSubheader>}>
         <ListItem>
           <StyledListItemText id="switch-list-label-wifi" primary={strings.dark_theme} />
-          <Switch
+          <Android12Switch
             edge="end"
             onChange={(e: any) => {
               setSettings({ darkmode: e.target.checked });
@@ -60,7 +61,7 @@ function SettingsActivity() {
       >
         <ListItem>
           <StyledListItemText id="switch-list-label-eruda" primary={"Eruda console"} secondary={"Useful for development and bugs"} />
-          <Switch
+          <Android12Switch
             edge="end"
             onChange={(e: any) => {
               setSettings({ eruda_console_enabled: e.target.checked });
