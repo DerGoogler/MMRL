@@ -4,7 +4,7 @@ import { BuildConfig } from "@Native/BuildConfig";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Page } from "@Components/onsenui/Page";
-import Magisk from "@Native/Magisk";
+import { Magisk } from "@Native/Magisk";
 import { useStrings } from "@Hooks/useStrings";
 import { useActivity } from "@Hooks/useActivity";
 import { accent_colors, useSettings } from "@Hooks/useSettings";

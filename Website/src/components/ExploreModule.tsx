@@ -11,6 +11,7 @@ import axios from "axios";
 import DescriptonActivity from "@Activitys/DescriptonActivity";
 import { VerifiedRounded } from "@mui/icons-material";
 import { useFetch } from "@Hooks/useFetch";
+import { os } from "@Native/Os";
 
 interface Props {
   index: number;
@@ -85,7 +86,12 @@ export const ExploreModule = (props: Props) => {
         />
         <Stack spacing={0.8} direction="row">
           {isVerified && (
-            <StyledIconButton style={{ width: 30, height: 30 }}>
+            <StyledIconButton
+              style={{ width: 30, height: 30 }}
+              onClick={() => {
+                os.toast(strings.module_verified, Toast.LENGTH_SHORT);
+              }}
+            >
               <VerifiedRounded sx={{ fontSize: 14 }} />
             </StyledIconButton>
           )}

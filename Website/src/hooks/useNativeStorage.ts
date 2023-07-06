@@ -16,7 +16,7 @@ declare global {
 
 export type SetValue<T> = Dispatch<SetStateAction<T>, T>;
 
-export const nativeStorage: Storage = os.isAndroid ? window["nativeStorage"] : window["localStorage"];
+export const nativeStorage = os.isAndroid ? window.__nativeStorage__ : window.localStorage;
 
 export function useNativeStorage<T>(key: string, initialValue: T): [T, SetValue<T>] {
   // Get from local storage then

@@ -1,42 +1,16 @@
 import React from "react";
 import { SetValue, useNativeStorage } from "./useNativeStorage";
-import Toast from "@Native/Toast";
 import axios from "axios";
 import { link, util } from "googlers-tools";
 import _, { map } from "underscore";
 import Properties from "@js.properties/properties";
 import { useSettings } from "./useSettings";
-
-export interface RepoInterface {
-  id: string;
-  /**
-   * An required filed, to disply the repository name
-   */
-  name: string;
-  /**
-   * An given website link for the repository
-   */
-  website?: string | undefined;
-  /**
-   * Given support link i.g. Telegram, Xda, GitHub or something
-   */
-  support?: string | undefined;
-  donate?: string | undefined;
-  submitModule?: string | undefined;
-  last_update?: string | number | undefined;
-  modules: string;
-  /**
-   * The setting enabled by default if the repo is built-in
-   */
-  readonly: boolean;
-  isOn: boolean;
-  built_in_type?: string;
-}
+import { os } from "@Native/Os";
 
 interface RepoContextInterface {
-  readOnlyRepos: Array<RepoInterface>;
-  repos: Array<RepoInterface>;
-  setRepos: SetValue<Array<RepoInterface>>;
+  readOnlyRepos: Array<BuiltInRepo>;
+  repos: Array<BuiltInRepo>;
+  setRepos: SetValue<Array<BuiltInRepo>>;
   modulesIndex: Array<any>;
   moduleOptions: Array<any>;
 }
@@ -55,12 +29,12 @@ interface Props extends React.PropsWithChildren {
 
 export const RepoProvider = (props: Props) => {
   const { settings } = useSettings();
-  const [repos, setRepos] = useNativeStorage<Array<RepoInterface>>("repos", []);
+  const [repos, setRepos] = useNativeStorage<Array<BuiltInRepo>>("repos", []);
 
-  const [modulesIndex, setModulesIndex] = React.useState<Array<any>>([]);
+  const [modulesIndex, setModulesIndex] = React.useState<Module[]>([]);
   const [moduleOptions, setModuleOptions] = React.useState<Array<any>>([]);
 
-  const readOnlyRepos: Array<RepoInterface> = [
+  const readOnlyRepos: Array<BuiltInRepo> = [
     {
       id: "mmar",
       name: "Magisk Modules Alternative Repository",
@@ -93,11 +67,14 @@ export const RepoProvider = (props: Props) => {
     Promise.all(
       [...readOnlyRepos, ...repos].map(async (rep) => {
         if (rep.isOn) {
-          const modules = await (await fetch(rep.modules)).json();
+          const modules: Repo = await (await fetch(rep.modules)).json();
           for (var i = 0; i < modules.modules.length; i++) {
-            modules.modules[i].prop_url = Properties.parseToProperties(await (await fetch(modules.modules[i].prop_url)).text());
+            modules.modules[i].prop_url = Properties.parseToProperties(
+              await (await fetch(modules.modules[i].prop_url as unknown as string)).text()
+            ) as unknown as ModuleProps;
           }
           setModulesIndex((prev) => {
+            // Preventing duplicates
             var ids = new Set(prev.map((d) => d.id));
             var merged = [...prev, ...modules.modules.filter((d) => !ids.has(d.id))];
             return merged;
@@ -123,7 +100,7 @@ export const useRepos = () => {
 
   const changeEnabledState = (state: any) => {
     setRepos((ary) => {
-      var item = ary.find((item: RepoInterface) => item.isOn === !state);
+      var item = ary.find((item: BuiltInRepo) => item.isOn === !state);
       if (item) {
         item.isOn = state;
       }
@@ -161,7 +138,7 @@ export const useRepos = () => {
         })
         .catch(err);
     } else {
-      Toast.makeText("The given link isn't valid.", Toast.LENGTH_SHORT).show();
+      os.toast("The given link isn't valid.", "short");
     }
   };
 

@@ -1,37 +1,29 @@
-import Log from "@Native/Log";
+import { Log } from "@Native/Log";
 import { Native } from "./Native";
 
-type CMD = Omit<ShellNative, "isAppGrantedRoot" | "cmd" | "command">;
-
-interface ShellNative {
-  command: string;
-  /**
-   * Runs an Android native shell cmd
-   * Should never used multiple
-   * @return {CMD}
-   */
-  cmd(cmd: string): CMD;
+interface IShell {
   /**
    * Executes an command without result
    */
-  exec(): void;
+  exec(command: string): void;
   /**
    * Executes an command with result
    */
-  result(): string;
+  result(command: string): string;
+  /**
+   * Checks if the app has been granted root privileges
+   */
   isAppGrantedRoot(): boolean;
 }
-
-const Logger = new Log("Shell");
 
 /**
  * Run Shell commands native on Android
  */
 
-class ShellClass extends Native {
+class ShellClass extends Native<IShell> {
   public constructor() {
     super();
-    this.interface = "shell";
+    this.interface = "__shell__";
   }
 
   public exec(cmds: string | string[]): void {

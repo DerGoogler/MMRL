@@ -1,22 +1,22 @@
-import Log from "./Log";
-import { os } from "./Os";
+import { Log } from "./Log";
+import { Native } from "./Native";
 import { Shell } from "./Shell";
 
-class Magisk {
-  private static log: Log = new Log(this.constructor.name);
+class MagiskClass extends Native {
+  private log: Log = new Log(this.constructor.name);
   /**
    * Get current installed Magisk version code
    */
-  public static get VERSION_CODE(): number {
-    if (os.isAndroid) {
+  public get VERSION_CODE(): number {
+    if (this.isAndroid) {
       return parseInt(Shell.result("magisk -V"));
     } else {
       return 0;
     }
   }
 
-  public static get VERSION_NAME(): string {
-    if (os.isAndroid) {
+  public get VERSION_NAME(): string {
+    if (this.isAndroid) {
       return Shell.result("magisk -v");
     } else {
       return "0:MAGISKSU";
@@ -28,7 +28,7 @@ class Magisk {
    * @param version
    * @returns
    */
-  public static PARSE_VERSION(version: string): number {
+  public PARSE_VERSION(version: string): number {
     const i = version.indexOf(".");
     if (i == -1) {
       return parseInt(version);
@@ -41,8 +41,8 @@ class Magisk {
    * Installs an Magisk module from path
    * @param path Directory path
    */
-  public static INSTALL_MODULE(path: string): void {
-    if (os.isAndroid) {
+  public INSTALL_MODULE(path: string): void {
+    if (this.isAndroid) {
       Shell.exec(`magisk --install-module ${path}`);
     } else {
       this.log.e("Error installing Magisk module.");
@@ -53,8 +53,8 @@ class Magisk {
    * Removes all Magisk modules and reboot
    * @warn Dangerus usage, keep it private!
    */
-  private static REMOVE_MODULES(): void {
-    if (os.isAndroid) {
+  private REMOVE_MODULES(): void {
+    if (this.isAndroid) {
       Shell.exec(`magisk --remove-modules`);
     } else {
       this.log.e("Error removing Magisk modules.");
@@ -62,4 +62,4 @@ class Magisk {
   }
 }
 
-export default Magisk;
+export const Magisk: MagiskClass = new MagiskClass();

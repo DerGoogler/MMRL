@@ -71,6 +71,12 @@ const config: Configuration = {
     maxAssetSize: 512000,
   },
   plugins: [
+    new DefinePlugin({
+      Toast: {
+        LENGTH_LONG: JSON.stringify("long"),
+        LENGTH_SHORT: JSON.stringify("short"),
+      },
+    }),
     new MiniCssExtractPlugin({
       filename: "bundle/[name].bundle.css",
     }),

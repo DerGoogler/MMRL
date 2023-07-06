@@ -139,7 +139,7 @@ export type OpenOptions = {
 class OsClass extends Native {
   public constructor() {
     super();
-    this.interface = "os";
+    this.interface = "__os__";
   }
 
   public open(url?: string | URL | undefined, options?: OpenOptions): Window | null {
@@ -152,7 +152,7 @@ class OsClass extends Native {
 
   public hasStoragePermission(): boolean {
     if (this.isAndroid) {
-      return nos.hasStoragePermission();
+      return this.getInterface.hasStoragePermission();
     } else {
       return true;
     }
@@ -160,7 +160,7 @@ class OsClass extends Native {
 
   public requestStoargePermission(): void {
     if (this.isAndroid) {
-      nos.requestStoargePermission();
+      this.getInterface.requestStoargePermission();
     } else {
       name;
     }

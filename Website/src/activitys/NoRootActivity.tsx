@@ -1,5 +1,5 @@
 import { useStrings } from "@Hooks/useStrings";
-import Toast from "@Native/Toast";
+import { os } from "@Native/Os";
 import { Button, Card } from "react-onsenui";
 
 const NoRootActivity = () => {
@@ -17,12 +17,12 @@ const NoRootActivity = () => {
         modifier="large"
         style={{ marginLeft: "8px", marginRight: "8px" }}
         onClick={() => {
-          if (nos.isPackageInstalled(magiskPackageName)) {
-            nos.launchAppByPackageName(magiskPackageName);
-          } else if (nos.isPackageInstalled(magiskDeltaPackageName)) {
-            nos.launchAppByPackageName(magiskDeltaPackageName);
+          if (window.__os__.isPackageInstalled(magiskPackageName)) {
+            window.__os__.launchAppByPackageName(magiskPackageName);
+          } else if (window.__os__.isPackageInstalled(magiskDeltaPackageName)) {
+            window.__os__.launchAppByPackageName(magiskDeltaPackageName);
           } else {
-            Toast.makeText("Magisk was not found.", Toast.LENGTH_LONG).show();
+            window.__os__.toast("Magisk was not found.", Toast.LENGTH_LONG).show();
           }
         }}
       >

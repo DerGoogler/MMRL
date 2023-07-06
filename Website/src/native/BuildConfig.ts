@@ -7,7 +7,7 @@ import { Native } from "./Native";
 class BuildConfigClass extends Native {
   public constructor() {
     super();
-    this.interface = "buildconfig";
+    this.interface = "__buildconfig__";
   }
 
   public get APPLICATION_ID(): string {

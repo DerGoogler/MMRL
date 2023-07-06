@@ -7,17 +7,19 @@ export interface INative<T = any> {
 /**
  * Core functions for native functions/interfaces
  */
-export class Native<T = any> implements INative<T> {
-  private readonly userAgentAndroid = "KARTEI";
+export class Native<I = any> implements INative<I> {
+  private readonly userAgentAndroid = "MMRL";
   public readonly userAgent = window.navigator.userAgent;
-  public readonly isAndroid =
-    this.userAgentAndroid === this.userAgent || window.hasOwnProperty("cordova") ? true : false;
+  public readonly isAndroid = this.userAgentAndroid === this.userAgent || window.hasOwnProperty("cordova") ? true : false;
   public readonly isTablet = this.IsTablet();
-  public interface: string;
+  /**
+   * This field is required, otherwise the comunacation between Android will not work
+   * @required true
+   */
+  public interface: keyof AndroidWindow<I> | undefined;
 
   public constructor() {
     this.IsTablet = this.IsTablet.bind(this);
-    this.interface = "";
   }
 
   private IsTablet(): boolean {
@@ -28,8 +30,11 @@ export class Native<T = any> implements INative<T> {
     }
   }
 
-  public get getInterface(): T {
-    // @ts-ignore
-    return window[this.interface];
+  public get getInterface(): I {
+    if (this.interface) {
+      return window[this.interface];
+    } else {
+      throw new Error("No interface defined");
+    }
   }
 }

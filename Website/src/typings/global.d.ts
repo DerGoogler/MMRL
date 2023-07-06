@@ -11,21 +11,6 @@ declare global {
   type Any = any;
   type bool = boolean;
 
-  interface Function {
-    readonly name: string;
-  }
-
-  interface Window {
-    [x: string]: any;
-    nshell: NShell;
-    nos: NOS;
-    nversion: NBuildConfig;
-  }
-
-  const nshell: NShell;
-  const nos: NOS;
-  const nbuildconfig: NBuildConfig;
-
   type HTMLAttributes<E, P = {}> = React.DetailedHTMLProps<React.HTMLAttributes<E> & P, E>;
   type AnchorHTMLAttributes<E, P = {}> = React.DetailedHTMLProps<React.AnchorHTMLAttributes<E> & P, E>;
 
@@ -71,6 +56,41 @@ declare global {
     }
   }
 
+  /**
+   * Native window properties for Android
+   */
+  interface AndroidWindow<I = any> {
+    /**
+     * This is an Android only window object
+     */
+    readonly __fs__: I;
+    /**
+     * This is an Android only window object
+     */
+    readonly __shell__: I;
+    /**
+     * This is an Android only window object
+     */
+    readonly __buildconfig__: I;
+    /**
+     * This is an Android only window object
+     */
+    readonly __os__: I;
+    /**
+     * `localStorage` like object to make support better with `useLocalStorage`.
+     *
+     * - This interface is not configurable
+     */
+    readonly __nativeStorage__: Pick<Storage, "getItem" | "setItem" | "removeItem" | "clear">;
+  }
+
+  interface Window extends AndroidWindow<any> {}
+
+  const Toast: {
+    LENGTH_LONG: "long";
+    LENGTH_SHORT: "short";
+  };
+
   interface PushPropsCore<E = {}> {
     component: React.ElementType;
     props: {
@@ -108,7 +128,62 @@ declare global {
     };
   }
 
-  interface Keep {
-    [x: string]: any;
+  interface BuiltInRepo extends Omit<Repo, "modules"> {
+    modules: string;
+    /**
+     * The setting enabled by default if the repo is built-in
+     */
+    readonly: boolean;
+    isOn: boolean;
+    built_in_type?: string;
+  }
+
+  interface Repo {
+    id: string;
+    /**
+     * An required filed, to disply the repository name
+     */
+    name: string;
+    /**
+     * An given website link for the repository
+     */
+    website?: string | undefined;
+    /**
+     * Given support link i.g. Telegram, Xda, GitHub or something
+     */
+    support?: string | undefined;
+    donate?: string | undefined;
+    submitModule?: string | undefined;
+    last_update?: string | number | undefined;
+    modules: Module[];
+  }
+
+  interface Module {
+    id: string;
+    last_update: number;
+    notes_url: string;
+    prop_url: ModuleProps;
+    stars: number;
+    zip_url: string;
+  }
+
+  interface ModuleProps {
+    // Magisk supported properties
+    id: string;
+    name: string;
+    version: string;
+    versionCode: number;
+    author: string;
+    description: string;
+    // Fox's Mmm supported properties
+    minApi?: number;
+    maxApi?: number;
+    minMagisk?: number;
+    needRamdisk?: boolean;
+    support?: string;
+    donate?: string;
+    config?: string;
+    changeBoot?: boolean;
+    mmtReborn?: boolean;
   }
 }

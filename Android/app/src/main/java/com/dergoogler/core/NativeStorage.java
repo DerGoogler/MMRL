@@ -3,16 +3,15 @@ package com.dergoogler.core;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 import android.webkit.JavascriptInterface;
 
 import androidx.annotation.NonNull;
 
 
-public class SharedPreferencesNative {
+public class NativeStorage {
     private final SharedPreferences localstorage;
 
-    public SharedPreferencesNative(@NonNull Context ctx) {
+    public NativeStorage(@NonNull Context ctx) {
         this.localstorage = ctx.getSharedPreferences("localstorage", Activity.MODE_PRIVATE);
     }
 

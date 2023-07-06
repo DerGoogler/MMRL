@@ -9,7 +9,7 @@ import com.dergoogler.core.BuildConfigNative;
 import com.dergoogler.core.BuildNative;
 import com.dergoogler.core.FileSystemNative;
 import com.dergoogler.core.OSNative;
-import com.dergoogler.core.SharedPreferencesNative;
+import com.dergoogler.core.NativeStorage;
 import com.dergoogler.core.ShellNative;
 
 import org.apache.cordova.CordovaActivity;
@@ -55,11 +55,11 @@ public class MainActivity extends CordovaActivity {
         webViewSettings.setAllowContentAccess(false);
 
         // Core
-        wv.addJavascriptInterface(new FileSystemNative(this), "fs");
-        wv.addJavascriptInterface(new ShellNative(wv), "shell");
-        wv.addJavascriptInterface(new BuildConfigNative(), "buildconfig");
-        wv.addJavascriptInterface(new OSNative(this), "os");
-        wv.addJavascriptInterface(new SharedPreferencesNative(this), "nativeStorage");
+        wv.addJavascriptInterface(new FileSystemNative(this), "__fs__");
+        wv.addJavascriptInterface(new ShellNative(wv), "__shell__");
+        wv.addJavascriptInterface(new BuildConfigNative(), "__buildconfig__");
+        wv.addJavascriptInterface(new OSNative(this), "__os__");
+        wv.addJavascriptInterface(new NativeStorage(this), "__nativeStorage__");
 
     }
 }

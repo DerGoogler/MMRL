@@ -1,36 +1,35 @@
-// import { Logger } from "googlers-tools";
-
-import { os } from "./Os";
+import { Native } from "./Native";
 
 /**
  * Custom logger for MMRL with Native Android logging support. It also support React/JSX element.
  */
-class Log /*extends Logger*/ {
+class Log extends Native {
   private tag: string;
   public constructor(tag: string) {
-    //super(tag);
+    super();
     this.tag = tag;
+    this.interface = "__os__";
   }
 
   public i(message: any) {
-    if (os.isAndroid) {
-      nos.logi(this.tag, message);
+    if (this.isAndroid) {
+      this.getInterface.logi(this.tag, message);
     } else {
       console.info(message);
     }
   }
 
   public w(message: any) {
-    if (os.isAndroid) {
-      nos.logw(this.tag, message);
+    if (this.isAndroid) {
+      this.getInterface.logw(this.tag, message);
     } else {
       console.warn(message);
     }
   }
 
   public e(message: any) {
-    if (os.isAndroid) {
-      nos.loge(this.tag, message);
+    if (this.isAndroid) {
+      this.getInterface.loge(this.tag, message);
     } else {
       console.error(message);
     }
@@ -49,4 +48,4 @@ class Log /*extends Logger*/ {
   }
 }
 
-export default Log;
+export { Log };

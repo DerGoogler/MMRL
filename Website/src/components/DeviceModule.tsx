@@ -1,7 +1,7 @@
 import { Card, Ripple, Switch } from "react-onsenui";
 import Properties from "@js.properties/properties";
 import File from "@Native/File";
-import Log from "@Native/Log";
+import {Log} from "@Native/Log";
 import { DeleteRounded, RefreshRounded } from "@mui/icons-material";
 import React from "react";
 import { useDarkmode } from "@Hooks/useDarkmode";

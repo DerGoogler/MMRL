@@ -10,13 +10,12 @@ import {
 import ons from "onsenui";
 import Icon from "@Components/Icon";
 import { AlertDialog as Dialog, Input, List, ListHeader, ListItem, Page, Switch, ToolbarButton } from "react-onsenui";
-import Toast from "@Native/Toast";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { SvgIconTypeMap } from "@mui/material/SvgIcon/SvgIcon";
 import { Fragment } from "react";
 import { Searchbar } from "@Components/Searchbar";
 import AlertDialog from "@Builders/AlertDialog";
-import { RepoInterface, useRepos } from "@Hooks/useRepos";
+import { useRepos } from "@Hooks/useRepos";
 import React from "react";
 import { useNativeStorage } from "@Hooks/useNativeStorage";
 import { useActivity } from "@Hooks/useActivity";
@@ -90,7 +89,7 @@ const RepoActivity = () => {
 
   const showAlertDialog = () => {
     if (getRepos.length === MAX_REPO_LENGTH) {
-      Toast.makeText("You can't add more than 5 repositories (Read-Only Repos are not counted).", Toast.LENGTH_SHORT).show();
+      os.toast("You can't add more than 5 repositories (Read-Only Repos are not counted).", Toast.LENGTH_SHORT);
     } else {
       setAlertDialogShown(true);
     }
@@ -104,15 +103,6 @@ const RepoActivity = () => {
     setRepoLink(e.target.value);
   };
 
-  const repoSearchFilter = (e: any) => {
-    setSearchValue(e.target.value);
-  };
-
-  //   const triggerRepoSearch = () => {
-  //     setFinalSearchValue((state) => (state.searchValue,
-  //     )};
-  //   };
-
   const _addRepo = () => {
     addRepo(
       repoLink,
@@ -122,7 +112,7 @@ const RepoActivity = () => {
       },
       (err) => {
         setRepoLink("");
-        Toast.makeText(err, Toast.LENGTH_SHORT).show();
+        os.toast(err, Toast.LENGTH_SHORT);
         hideAlertDialog();
       }
     );
@@ -144,7 +134,7 @@ const RepoActivity = () => {
     );
   };
 
-  const roReposOption = (): Array<RepoInterface> => {
+  const roReposOption = (): Array<BuiltInRepo> => {
     return !enableHideReadonlyRepositories ? readOnlyRepos : [];
   };
 
@@ -171,7 +161,7 @@ const RepoActivity = () => {
       <Page renderToolbar={renderToolbar}>
         {/* <Searchbar placeholder={string("search_modules")} onButtonClick={() => {}} onInputChange={repoSearchFilter} /> */}
         <List>
-          {filteredRepos.map((repo: RepoInterface, index: number) => (
+          {filteredRepos.map((repo: BuiltInRepo, index: number) => (
             <Fragment key={index}>
               <ListHeader>
                 {repo.name}
