@@ -1,5 +1,6 @@
-import { os } from "./os";
 // import { Logger } from "googlers-tools";
+
+import { os } from "./Os";
 
 /**
  * Custom logger for MMRL with Native Android logging support. It also support React/JSX element.

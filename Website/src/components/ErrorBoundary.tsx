@@ -1,7 +1,7 @@
 import React from "react";
 
 interface Props extends React.PropsWithChildren {
-  fallback: (error: Error, errorInfo: React.ErrorInfo) => JSX.Element;
+  fallback: (error: Error, errorInfo: React.ErrorInfo, resetErrorBoundary: () => void) => JSX.Element;
 }
 
 interface State {
@@ -10,23 +10,27 @@ interface State {
   errorInfo: React.ErrorInfo;
 }
 
+const initialState = {
+  hasError: false,
+  error: {
+    name: "string",
+    message: "string",
+    stack: "string",
+  },
+  errorInfo: {
+    /**
+     * Captures which component contained the exception, and its ancestors.
+     */
+    componentStack: "string",
+  },
+};
+
 export class ErrorBoundary extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = {
-      hasError: false,
-      error: {
-        name: "string",
-        message: "string",
-        stack: "string",
-      },
-      errorInfo: {
-        /**
-         * Captures which component contained the exception, and its ancestors.
-         */
-        componentStack: "string",
-      },
-    };
+
+    this.resetErrorBoundary = this.resetErrorBoundary.bind(this);
+    this.state = initialState;
   }
 
   static getDerivedStateFromError(error: any) {
@@ -37,10 +41,18 @@ export class ErrorBoundary extends React.Component<Props, State> {
     this.setState({ error, errorInfo });
   }
 
+  resetErrorBoundary() {
+    const { error } = this.state;
+
+    if (error !== null) {
+      this.setState(initialState);
+    }
+  }
+
   render() {
     if (this.state.hasError) {
       // You can render any custom fallback UI
-      return this.props.fallback(this.state.error, this.state.errorInfo);
+      return this.props.fallback(this.state.error, this.state.errorInfo, this.resetErrorBoundary);
     }
 
     return this.props.children;

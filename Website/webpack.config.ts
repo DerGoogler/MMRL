@@ -1,10 +1,18 @@
-import { Configuration } from "webpack";
-import { resolve, join } from "path";
+import path, { resolve, join } from "path";
+import { Configuration, DefinePlugin } from "webpack";
 // Keep that for typings
 import webpackDevServer from "webpack-dev-server";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
-import { defConfig } from "./webpack/defConfig";
+import * as fs from "fs";
+
+const defConfig: Configuration = {
+  output: {
+    filename: "bundle/[name].bundle.js",
+    path: resolve(__dirname, "./../Android/app/src/main/assets/www"),
+    assetModuleFilename: "files/[name].[ext]",
+  },
+};
 
 const config: Configuration = {
   entry: {
@@ -14,14 +22,17 @@ const config: Configuration = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
-        use: "babel-loader",
-        exclude: /node_modules/,
-      },
-      {
         test: /(d)?\.ts(x)?$/,
         loader: "ts-loader",
         exclude: /node_modules/,
+      },
+      {
+        test: /\.d.ts$/i,
+        use: "raw-loader",
+      },
+      {
+        test: /\.yaml$/,
+        use: "js-yaml-loader",
       },
       {
         test: /\.(scss|css)$/,
@@ -30,10 +41,6 @@ const config: Configuration = {
       {
         test: /\.(eot|woff|woff2|ttf|svg|png|jpe?g|gif)(\?\S*)?$/,
         type: "asset/resource",
-      },
-      {
-        test: /\.yaml$/,
-        use: "js-yaml-loader",
       },
     ],
   },
@@ -63,35 +70,35 @@ const config: Configuration = {
     maxEntrypointSize: 512000,
     maxAssetSize: 512000,
   },
-  plugins: [],
-  resolve: {
-    fallback: {
-      path: false,
-      fs: false,
-      util: false,
-    },
-    extensions: [".js", ".jsx", ".ts", ".tsx"],
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: "bundle/[name].bundle.css",
+    }),
+  ],
+  resolveLoader: {
     modules: ["node_modules", join(process.env.NPM_CONFIG_PREFIX || __dirname, "lib/node_modules")],
+  },
+  resolve: {
     alias: {
       "@Builders": resolve(__dirname, "src/builders"),
       "@Components": resolve(__dirname, "src/components"),
       "@Native": resolve(__dirname, "src/native"),
       "@Hooks": resolve(__dirname, "src/hooks"),
       "@Types": resolve(__dirname, "src/typings"),
-      "@Utils": resolve(__dirname, "src/utils"),
+      "@Util": resolve(__dirname, "src/util"),
       "@Bootloader": resolve(__dirname, "src/index.tsx"),
       "@Package": resolve(__dirname, "package.json"),
       "@Styles": resolve(__dirname, "src/styles"),
       "@Activitys": resolve(__dirname, "src/activitys"),
       "@Strings": resolve(__dirname, "src/language/core/index.ts"),
     },
-  },
-  resolveLoader: {
     modules: ["node_modules", join(process.env.NPM_CONFIG_PREFIX || __dirname, "lib/node_modules")],
+    extensions: [".js", ".jsx", ".ts", ".tsx", ".scss", ".sass", "css"],
   },
+
   devServer: {
     static: {
-      directory: join(__dirname, "./build/www"),
+      directory: join(__dirname, "./../Android/app/src/main/assets/www"),
     },
     open: false,
     compress: true,
@@ -103,4 +110,4 @@ const config: Configuration = {
   },
 };
 
-export default config;
+export { config, defConfig };

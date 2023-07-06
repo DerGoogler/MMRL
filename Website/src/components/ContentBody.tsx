@@ -1,4 +1,4 @@
-import { os } from "@Native/os";
+import { os } from "@Native/Os";
 import { useDarkmode } from "@Hooks/useDarkmode";
 import { CSSProperties } from "react";
 import { isMobile } from "react-device-detect";

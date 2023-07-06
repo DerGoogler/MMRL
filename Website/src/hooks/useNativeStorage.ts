@@ -2,10 +2,11 @@
  * FORK (https://usehooks-ts.com/react-hook/use-local-storage) to use our native storage
  */
 
-import { os } from "@Native/os";
-import { Dispatch, SetStateAction, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 
 import { useEventCallback, useEventListener } from "usehooks-ts";
+import { os } from "@Native/Os";
+import { Dispatch, SetStateAction, useStateCallback } from "./useStateCallback";
 
 declare global {
   interface WindowEventMap {
@@ -13,7 +14,7 @@ declare global {
   }
 }
 
-export type SetValue<T> = Dispatch<SetStateAction<T>>;
+export type SetValue<T> = Dispatch<SetStateAction<T>, T>;
 
 export const nativeStorage: Storage = os.isAndroid ? window["nativeStorage"] : window["localStorage"];
 
@@ -44,13 +45,13 @@ export function useNativeStorage<T>(key: string, initialValue: T): [T, SetValue<
 
   // Pass initial state function to useState so logic is only executed once
 
-  const [storedValue, setStoredValue] = useState<T>(readValue);
+  const [storedValue, setStoredValue] = useStateCallback<T>(readValue);
 
   // Return a wrapped version of useState's setter function that ...
 
   // ... persists the new value to localStorage.
 
-  const setValue: SetValue<T> = useEventCallback((value) => {
+  const setValue: SetValue<T> = useEventCallback((value, callback) => {
     // Prevent build error "window is undefined" but keeps working
 
     if (typeof window === "undefined") {
@@ -68,7 +69,7 @@ export function useNativeStorage<T>(key: string, initialValue: T): [T, SetValue<
 
       // Save state
 
-      setStoredValue(newValue);
+      setStoredValue(newValue, callback);
 
       // We dispatch a custom event so every useLocalStorage hook are notified
 
@@ -109,7 +110,7 @@ export function useNativeStorage<T>(key: string, initialValue: T): [T, SetValue<
 
 // A wrapper for "JSON.parse()"" to support "undefined" value
 
-export function parseJSON<T>(value: string | null): T | Error {
+function parseJSON<T>(value: string | null): T | Error {
   try {
     return value === "undefined" ? undefined : JSON.parse(value ?? "");
   } catch (e) {

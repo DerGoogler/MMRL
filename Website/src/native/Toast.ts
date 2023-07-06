@@ -1,5 +1,5 @@
 import ons from "onsenui";
-import { os } from "./os";
+import { os } from "./Os";
 
 type ToastReturn = Omit<IToast, "makeText">;
 

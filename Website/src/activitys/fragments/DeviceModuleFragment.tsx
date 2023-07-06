@@ -1,7 +1,6 @@
 import { Component } from "react";
 import DeviceModule from "@Components/DeviceModule";
 import File from "@Native/File";
-import { PushPropsCore } from "@Hooks/useActivity";
 
 interface Props {
   pushPage(...arg: any): PushPropsCore;
@@ -11,7 +10,7 @@ interface States {
   modules: any;
 }
 
-class DeviceModuleFragment extends Component<Props, States> {
+class DeviceModuleFragment extends Component<Props, States> { 
   public constructor(props: Props | Readonly<Props>) {
     super(props);
     this.state = {

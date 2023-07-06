@@ -1,20 +1,17 @@
+import { useStrings } from "@Hooks/useStrings";
 import Toast from "@Native/Toast";
 import { Button, Card } from "react-onsenui";
-import { Text, useText } from "@Hooks/useLanguage";
 
 const NoRootActivity = () => {
+  const { strings } = useStrings();
   const magiskPackageName: string = "com.topjohnwu.magisk";
   const magiskDeltaPackageName: string = "io.github.huskydg.magisk";
 
   return (
     <div style={{ padding: "8px" }}>
       <Card>
-        <div className="title">
-          <Text string="failed" />!
-        </div>
-        <div className="content">
-          <Text string="no_root_message" />
-        </div>
+        <div className="title">{strings.failed}!</div>
+        <div className="content">{strings.no_root_message}</div>
       </Card>
       <Button
         modifier="large"
@@ -29,7 +26,7 @@ const NoRootActivity = () => {
           }
         }}
       >
-        <Text string="open_magisk" />
+        {strings.open_magisk}
       </Button>
     </div>
   );

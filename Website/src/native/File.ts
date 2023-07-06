@@ -1,3 +1,5 @@
+import { Native } from "./Native";
+
 export interface FileSystemNative {
   read(): string;
   list(): string;
@@ -18,15 +20,17 @@ declare const nfs: any;
  * Class to read files on a native Android device
  * @implements {FileSystemNative}
  */
-class File implements FileSystemNative {
+class File extends Native {
   private path: string | undefined;
 
   public constructor(path?: string | undefined) {
+    super();
     this.path = path ? path : "";
+    this.interface = "fs";
   }
 
   public read(): string {
-    return nfs.readFile(this.path);
+    return this.getInterface.readFile(this.path);
   }
 
   /**
@@ -37,43 +41,43 @@ class File implements FileSystemNative {
    */
   public list(): string;
   public list(join?: string): string {
-    return nfs.listFiles(this.path);
+    return this.getInterface.listFiles(this.path);
   }
 
   public exist(): boolean {
-    return nfs.existFile(this.path);
+    return this.getInterface.existFile(this.path);
   }
 
   public delete(): boolean {
-    return nfs.deleteFile(this.path);
+    return this.getInterface.deleteFile(this.path);
   }
 
   public deleteRecursive(): void {
-    nfs.deleteRecursive(this.path);
+    this.getInterface.deleteRecursive(this.path);
   }
 
   public create(): boolean {
-    return nfs.createFile(this.path);
+    return this.getInterface.createFile(this.path);
   }
 
   public get getExternalStorageDir(): string {
-    return nfs.getExternalStorageDir();
+    return this.getInterface.getExternalStorageDir();
   }
 
   public get getPackageDataDir(): string {
-    return nfs.getPackageDataDir();
+    return this.getInterface.getPackageDataDir();
   }
 
   public getPublicDir(type: string): string {
-    return nfs.getPublicDir(type);
+    return this.getInterface.getPublicDir(type);
   }
 
   public get getDataDir(): string {
-    return nfs.getDataDir();
+    return this.getInterface.getDataDir();
   }
 
   public download(url: string): void {
-    return nfs.download(this.path, url);
+    return this.getInterface.download(this.path, url);
   }
 
   public static read(path: string): string {

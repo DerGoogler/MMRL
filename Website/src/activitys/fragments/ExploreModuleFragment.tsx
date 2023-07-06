@@ -1,79 +1,43 @@
-import { Carousel, ProgressCircular, Row } from "react-onsenui";
-import ExploreModule from "@Components/ExploreModule";
-import { isTablet } from "react-device-detect";
+import { ProgressCircular } from "react-onsenui";
+import { ExploreModule } from "@Components/ExploreModule";
 import { Searchbar } from "@Components/Searchbar";
 import React from "react";
-import { ModuleProps, useActivity } from "@Hooks/useActivity";
+import { useActivity } from "@Hooks/useActivity";
 import { useRepos } from "@Hooks/useRepos";
-import FeaturedModulesHeader from "@Components/FeaturedModulesHeader";
-import { Divider } from "@mui/material";
-import { useText } from "@Hooks/useLanguage";
+import { Box, Pagination, Stack } from "@mui/material";
+import { StyledSection } from "@Components/StyledSection";
+import { useStrings } from "@Hooks/useStrings";
+import { usePagination } from "@Hooks/usePagination";
+import { For } from "@Components/For";
 
 const ExploreModuleFragment = () => {
   const { context } = useActivity();
+  const { strings } = useStrings();
 
-  const string = useText();
+  const [search, setSearch] = React.useState("");
 
-  const [searchValue, setSearchValue] = React.useState("");
-  const [finalSearchValue, setFinalSearchValue] = React.useState("");
+  const { modulesIndex, moduleOptions } = useRepos();
 
-  const { modulesIndex, moduleOptions, featuredModules } = useRepos();
-  // Slider
-  const [index, setIndex] = React.useState(0);
+  const filteredModules = React.useMemo(
+    () =>
+      modulesIndex.filter(
+        (module) =>
+          module.prop_url.id.toLowerCase().includes(search.toLowerCase()) ||
+          module.prop_url.name.toLowerCase().includes(search.toLowerCase()) ||
+          module.prop_url.author.toLowerCase().includes(search.toLowerCase()) ||
+          module.prop_url.description.toLowerCase().includes(search.toLowerCase())
+      ),
+    [modulesIndex, search]
+  );
+  const [page, setPage] = React.useState(1);
 
-  const filter = (e: any) => {
-    setSearchValue(e.target.value);
-  };
-
-  const triggerSearch = () => {
-    setFinalSearchValue(searchValue);
-  };
-
-  const handleChange = (e: any) => {
-    setIndex(e.activeIndex);
-  };
-
-  const cardRender = (map: Array<ModuleProps.RootObject>) => {
-    const filteredModules = map.filter((item) => item.id.toLowerCase().includes(finalSearchValue.toLowerCase()));
-
-    return filteredModules
-      .sort((a, b) => (a.id > b.id ? 1 : -1))
-      .map((item, index) => {
-        return (
-          <ExploreModule
-            key={item.id + index}
-            fullItem={item}
-            getId={item.id}
-            propsUrl={item.prop_url}
-            props={item.props}
-            notesUrl={item.notes_url}
-            downloadUrl={item.zip_url}
-            moduleOptions={moduleOptions}
-            last_update={item.last_update}
-          />
-        );
-      });
-  };
-
-  const resultsRender: Array<any> = [];
-
-  for (var i = 0; i < modulesIndex.length; i += 2) {
-    resultsRender.push(<Row>{cardRender(modulesIndex.slice(i, i + 2))}</Row>);
-  }
+  const PER_PAGE = 20;
+  const count = React.useMemo(() => Math.ceil(filteredModules.length / PER_PAGE), [filteredModules, search]);
+  const _DATA = usePagination(filteredModules, PER_PAGE);
 
   return (
-    <>
-      <div
-        style={{
-          textAlign: "center",
-          display: "flex",
-          justifyContent: "center",
-          padding: "0px",
-          paddingBottom: "0px",
-          flexDirection: "column",
-        }}
-      >
-        <>
+    <StyledSection>
+      {/* <>
           <Divider>
             <h2>Featured</h2>
           </Divider>
@@ -100,33 +64,55 @@ const ExploreModuleFragment = () => {
           <Divider>
             <h2>Explore</h2>
           </Divider>
-        </>
+        </> */}
 
-        <Searchbar placeholder={string("search_modules")} onButtonClick={triggerSearch} onInputChange={filter} />
-        <module-container
-          style={{
-            paddingBottom: "4px",
+      <Searchbar placeholder={strings.search_modules} onChange={(e) => setSearch(e.target.value)} />
+
+      <Stack style={{ marginBottom: 8 }} direction="row" justifyContent="center" alignItems="center" spacing={2}>
+        <Pagination
+          count={count}
+          color="primary"
+          page={page}
+          variant="outlined"
+          shape="rounded"
+          onChange={(e, p) => {
+            setPage(p);
+            _DATA.jump(p);
           }}
-        >
-          {modulesIndex.length === 0 ? (
-            <ProgressCircular
-              indeterminate
-              style={{
-                position: "absolute",
-                left: "50%",
-                top: "50%",
-                WebkitTransform: "translate(-50%, -50%)",
-                transform: "translate(-50%, -50%)",
-              }}
-            />
-          ) : isTablet ? (
-            resultsRender
-          ) : (
-            cardRender(modulesIndex)
-          )}
-        </module-container>
-      </div>
-    </>
+        />
+      </Stack>
+
+      <For
+        each={_DATA.currentData()}
+        fallback={() => (
+          <ProgressCircular
+            indeterminate
+            style={{
+              position: "absolute",
+              left: "50%",
+              top: "50%",
+              WebkitTransform: "translate(-50%, -50%)",
+              transform: "translate(-50%, -50%)",
+            }}
+          />
+        )}
+        catch={(e: Error | undefined) => <Box sx={(theme) => ({ color: theme.palette.text.primary })}>ERROR: {e?.message}</Box>}
+      >
+        {(item, index) => (
+          <ExploreModule
+            index={index}
+            key={item.id + index}
+            fullItem={item}
+            getId={item.id}
+            propsUrl={item.prop_url}
+            notesUrl={item.notes_url}
+            downloadUrl={item.zip_url}
+            moduleOptions={moduleOptions}
+            last_update={item.last_update}
+          />
+        )}
+      </For>
+    </StyledSection>
   );
 };
 

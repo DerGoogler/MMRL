@@ -1,5 +1,5 @@
 import { useEffect, useReducer, useRef } from "react";
-
+// https://usehooks-ts.com/react-hook/use-fetch
 interface State<T> {
   data?: T;
   error?: Error;
@@ -7,10 +7,14 @@ interface State<T> {
 
 type Cache<T> = { [url: string]: T };
 
+type Options = RequestInit & {
+  fetchType?: string;
+};
+
 // discriminated union type
 type Action<T> = { type: "loading" } | { type: "fetched"; payload: T } | { type: "error"; payload: Error };
 
-function useFetch<T = unknown>(urls?: string[], options?: RequestInit): State<T> {
+export function useFetch<T = unknown>(url?: string, options?: Options): State<T> {
   const cache = useRef<Cache<T>>({});
 
   // Used to prevent state update if the component is unmounted
@@ -39,38 +43,35 @@ function useFetch<T = unknown>(urls?: string[], options?: RequestInit): State<T>
 
   useEffect(() => {
     // Do nothing if the url is not given
-    if (!urls) return;
+    if (!url) return;
 
     cancelRequest.current = false;
 
-    const fetchData = () => {
-      urls.forEach(async (url) => {
-        dispatch({ type: "loading" });
+    const fetchData = async () => {
+      dispatch({ type: "loading" });
 
-        // If a cache exists for this url, return it
-        if (cache.current[url]) {
-          dispatch({ type: "fetched", payload: cache.current[url] });
-          return;
+      // If a cache exists for this url, return it
+      if (cache.current[url]) {
+        dispatch({ type: "fetched", payload: cache.current[url] });
+        return;
+      }
+
+      try {
+        const response = await fetch(url, options);
+        if (!response.ok) {
+          throw new Error(response.statusText);
         }
 
-        try {
-          const response = await fetch(url, options);
+        const data = (options?.fetchType === "text" ? await response.text() : await response.json()) as T;
+        cache.current[url] = data;
+        if (cancelRequest.current) return;
 
-          if (!response.ok) {
-            throw new Error(response.statusText);
-          }
+        dispatch({ type: "fetched", payload: data });
+      } catch (error) {
+        if (cancelRequest.current) return;
 
-          const data = (await response.json()) as T;
-          cache.current[url] = data;
-          if (cancelRequest.current) return;
-
-          dispatch({ type: "fetched", payload: data });
-        } catch (error) {
-          if (cancelRequest.current) return;
-
-          dispatch({ type: "error", payload: error as Error });
-        }
-      });
+        dispatch({ type: "error", payload: error as Error });
+      }
     };
 
     void fetchData();
@@ -81,9 +82,7 @@ function useFetch<T = unknown>(urls?: string[], options?: RequestInit): State<T>
       cancelRequest.current = true;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [urls]);
+  }, [url]);
 
   return state;
 }
-
-export default useFetch;

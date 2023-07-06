@@ -4,6 +4,7 @@
   "repository": "Repository",
   "custom_repository": "Custom repository",
   "appearance": "Appearance",
+  "accent_color": "Accent color",
   "language": "Language",
   "dark_theme": "Dark theme",
   "bottom_navigation_text": "Bottom navigation",
@@ -19,13 +20,12 @@
   "installed": "Installed",
   "remove": "Remove",
   "restore": "Restore",
-  "module_enabled_LOG": "%s has been enabled",
-  "module_disabled_LOG": "%s has been disabled",
-  "last_updated": "Last update: %s",
+  "module_enabled_LOG": "{name has been enabled",
+  "module_disabled_LOG": "{name} has been disabled",
   "add": "Add",
   "cancel": "Cancel",
   "add_repo": "Add a repository",
-  "confirm_repo_delete": "Are you sure to remove %s repository?",
+  "confirm_repo_delete": "Are you sure to remove {name} repository?",
   "submit_module": "Submit a module",
   "donate": "Donate",
   "support": "Support",
@@ -33,5 +33,6 @@
   "no_root": "No Root",
   "failed": "Failed",
   "no_root_message": "Seems that you'e doesn't having root permissions? If you have Magisk (Delta) installed you can directly open it from here.",
-  "open_magisk": "Open Magisk"
+  "open_magisk": "Open Magisk",
+  "development": "Development"
 }

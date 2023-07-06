@@ -59,7 +59,53 @@ declare global {
       "license-card-infos": HTMLAttributes<HTMLDivElement>;
       "license-card-version": HTMLAttributes<HTMLSpanElement>;
       "license-card-license": HTMLAttributes<HTMLSpanElement>;
+
+      // Onsen Elements
+      "ons-toolbar-button": HTMLAttributes<HTMLElement>;
+      "ons-toolbar": HTMLAttributes<HTMLElement>;
+      "ons-page": HTMLAttributes<HTMLElement>;
+      "ons-splitter": HTMLAttributes<HTMLElement>;
+      "ons-splitter-content": HTMLAttributes<HTMLElement>;
+      "ons-splitter-side": HTMLAttributes<HTMLElement>;
+      "ons-navigator": HTMLAttributes<HTMLElement>;
     }
+  }
+
+  interface PushPropsCore<E = {}> {
+    component: React.ElementType;
+    props: {
+      key: string;
+      extra: E;
+      readonly popPage?: () => void;
+      readonly pushPage?: (...args: [props: PushPropsCore<E>]) => void; //
+    };
+  }
+
+  interface PushProps<E = {}> {
+    readonly extra: E;
+    // readonly context: {
+    readonly popPage: () => void;
+    readonly pushPage: <T>(props: PushPropsCore<T>) => void;
+    readonly splitter: {
+      readonly show: () => void;
+      readonly hide: () => void;
+      readonly state: boolean;
+    };
+    readonly onBackPressed: (handler: EventListener) => void;
+    readonly onResume: (handler: EventListener) => void;
+    // };
+  }
+
+  interface UseActivity<E = {}> {
+    readonly context: {
+      readonly popPage: () => void;
+      readonly pushPage: <T>(props: PushPropsCore<T>) => void;
+      readonly splitter: {
+        readonly show: () => void;
+        readonly hide: () => void;
+        readonly state: () => boolean;
+      };
+    };
   }
 
   interface Keep {

@@ -11,18 +11,20 @@ import ons from "onsenui";
 import Icon from "@Components/Icon";
 import { AlertDialog as Dialog, Input, List, ListHeader, ListItem, Page, Switch, ToolbarButton } from "react-onsenui";
 import Toast from "@Native/Toast";
-import { os } from "@Native/os";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { SvgIconTypeMap } from "@mui/material/SvgIcon/SvgIcon";
 import { Fragment } from "react";
 import { Searchbar } from "@Components/Searchbar";
 import AlertDialog from "@Builders/AlertDialog";
-import { RepoInterface, useRepos, useRoRepos } from "@Hooks/useRepos";
+import { RepoInterface, useRepos } from "@Hooks/useRepos";
 import React from "react";
-import ToolbarBuilder from "@Builders/ToolbarBuilder";
 import { useNativeStorage } from "@Hooks/useNativeStorage";
 import { useActivity } from "@Hooks/useActivity";
-import { Text, useText } from "@Hooks/useLanguage";
+import { Toolbar } from "@Components/onsenui/Toolbar";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { os } from "@Native/Os";
+import { useSettings } from "@Hooks/useSettings";
+import { useStrings } from "@Hooks/useStrings";
 
 interface ListItemProps {
   part: any;
@@ -34,9 +36,10 @@ interface ListItemProps {
 const RepoActivity = () => {
   const MAX_REPO_LENGTH: number = 5;
   const { context } = useActivity();
-  const string = useText();
+  const { settings, setSettings } = useSettings();
+  const { strings } = useStrings();
 
-  const { readOnlyRepos, roRepoOpt } = useRoRepos();
+  const { readOnlyRepos } = useRepos();
 
   const { getRepos, addRepo, removeRepo, changeEnabledState } = useRepos();
   const [alertDialogShown, setAlertDialogShown] = React.useState(false);
@@ -149,25 +152,24 @@ const RepoActivity = () => {
     .concat(getRepos)
     .filter((item) => item.name.toLowerCase().includes(searchValue.toLowerCase()));
 
+  const renderToolbar = () => {
+    return (
+      <Toolbar modifier="noshadow">
+        <Toolbar.Left>
+          <Toolbar.Button icon={ArrowBackIcon} onClick={context.popPage} />
+        </Toolbar.Left>
+        <Toolbar.Center>Repos</Toolbar.Center>
+        <Toolbar.Right>
+          <Toolbar.Button icon={Add} onClick={showAlertDialog} />
+        </Toolbar.Right>
+      </Toolbar>
+    );
+  };
+
   return (
     <>
-      <Page
-        renderToolbar={() => {
-          return (
-            <ToolbarBuilder
-              title="Repos"
-              onBackButton={context.popPage}
-              addToolbarButtonPosition="right"
-              addToolbarButton={
-                <ToolbarButton className="back-button--material__icon" onClick={showAlertDialog}>
-                  <Icon icon={Add} keepLight={true} />
-                </ToolbarButton>
-              }
-            />
-          );
-        }}
-      >
-        <Searchbar placeholder={string("search_modules")} onButtonClick={() => {}} onInputChange={repoSearchFilter} />
+      <Page renderToolbar={renderToolbar}>
+        {/* <Searchbar placeholder={string("search_modules")} onButtonClick={() => {}} onInputChange={repoSearchFilter} /> */}
         <List>
           {filteredRepos.map((repo: RepoInterface, index: number) => (
             <Fragment key={index}>
@@ -191,10 +193,10 @@ const RepoActivity = () => {
                     onChange={(e: any) => {
                       switch (repo.built_in_type) {
                         case "MMAR":
-                          roRepoOpt.setMMAREnabled(e.target.checked);
+                          setSettings({ mmar_repo_enabled: e.target.checked });
                           break;
                         case "GMR":
-                          roRepoOpt.setGMREnabled(e.target.checked);
+                          setSettings({ gmr_repo_enabled: e.target.checked });
                           break;
                         default:
                           changeEnabledState(e.target.checked);
@@ -207,7 +209,7 @@ const RepoActivity = () => {
               <MListItem
                 part={repo.website}
                 icon={LanguageRounded}
-                text={string("website")}
+                text={strings.website}
                 onClick={() => {
                   if (repo.website) {
                     os.open(repo.website);
@@ -217,7 +219,7 @@ const RepoActivity = () => {
               <MListItem
                 part={repo.support}
                 icon={SupportRounded}
-                text={string("support")}
+                text={strings.support}
                 onClick={() => {
                   if (repo.support) {
                     os.open(repo.support);
@@ -227,7 +229,7 @@ const RepoActivity = () => {
               <MListItem
                 part={repo.donate}
                 icon={VolunteerActivismRounded}
-                text={string("donate")}
+                text={strings.donate}
                 onClick={() => {
                   if (repo.donate) {
                     os.open(repo.donate);
@@ -237,7 +239,7 @@ const RepoActivity = () => {
               <MListItem
                 part={repo.submitModule}
                 icon={UploadFileRounded}
-                text={string("submit_module")}
+                text={strings.submit_module}
                 onClick={() => {
                   if (repo.submitModule) {
                     os.open(repo.submitModule);
@@ -247,13 +249,19 @@ const RepoActivity = () => {
               <MListItem
                 part={!repo.readonly}
                 icon={DeleteRounded}
-                text={string("remove")}
+                text={strings.remove}
                 onClick={() => {
-                  ons.notification.confirm(string("confirm_repo_delete", [repo.name])).then((g) => {
-                    if (g) {
-                      removeRepo(repo.id);
-                    }
-                  });
+                  ons.notification
+                    .confirm(
+                      strings.formatString(strings.confirm_repo_delete, {
+                        name: repo.name,
+                      }) as string
+                    )
+                    .then((g) => {
+                      if (g) {
+                        removeRepo(repo.id);
+                      }
+                    });
                 }}
               />
             </Fragment>
@@ -261,7 +269,7 @@ const RepoActivity = () => {
         </List>
         <>
           <Dialog isOpen={alertDialogShown} isCancelable={false}>
-            <div className="alert-dialog-title">{string("add_repo")}</div>
+            <div className="alert-dialog-title">{strings.add_repo}</div>
             <div className="alert-dialog-content">
               <p>
                 <Input value={repoLink} onChange={handleRepoLinkChange} modifier="underbar" float placeholder="Repo link" />
@@ -269,10 +277,10 @@ const RepoActivity = () => {
             </div>
             <div className="alert-dialog-footer">
               <button onClick={hideAlertDialog} className="alert-dialog-button">
-                <Text string="cancel" />
+                {strings.cancel}
               </button>
               <button onClick={_addRepo} className="alert-dialog-button">
-                <Text string="add" />
+                {strings.add}
               </button>
             </div>
           </Dialog>

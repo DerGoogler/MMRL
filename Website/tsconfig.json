@@ -1,20 +1,23 @@
 {
   "compilerOptions": {
     "outDir": "./../Android/app/src/main/assets",
-    "typeRoots": ["node_modules/@types"],
-    "sourceMap": false,
-    "experimentalDecorators": true,
-    "declaration": false,
+    "allowJs": true,
+    "declaration": true,
+    "emitDeclarationOnly": false,
+    "declarationMap": false,
+    "typeRoots": ["src/typings/global.d.ts"],
+    "sourceMap": true,
     "strict": true,
-    "noImplicitReturns": true,
-    "noImplicitAny": true,
-    "module": "es6",
+    "noImplicitReturns": false,
+    "noImplicitAny": false,
+    "module": "ES2022",
+    "lib": ["es2017", "dom"],
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
-    "target": "es5",
+    "types": ["node"],
+    "target": "es6",
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "allowJs": true,
     "jsx": "react-jsx",
     "baseUrl": "./src",
     "paths": {
@@ -23,14 +26,13 @@
       "@Builders/*": ["builders/*"],
       "@Components/*": ["components/*"],
       "@Types/*": ["typings/*"],
-      "@Utils/*": ["utils/*"],
+      "@Util/*": ["util/*"],
       "@Bootloader": ["index.tsx"],
       "@Package": ["./../package.json"],
       "@Styles/*": ["styles/*"],
       "@Activitys/*": ["activitys/*"],
       "@Strings": ["language/core/index.ts"]
-    },
-    "types": ["node"]
+    }
   },
   "ts-node": {
     "compilerOptions": {

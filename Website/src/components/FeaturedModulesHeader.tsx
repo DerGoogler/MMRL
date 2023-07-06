@@ -1,22 +1,22 @@
 import { Card, CarouselItem } from "react-onsenui";
 import React from "react";
 import { useDarkmode } from "@Hooks/useDarkmode";
-import { ModuleProps, useActivity } from "@Hooks/useActivity";
+import { useActivity } from "@Hooks/useActivity";
 import axios from "axios";
 import Properties from "@js.properties/properties";
 import { VerifiedRounded } from "@mui/icons-material";
-import ViewModuleActivity from "@Activitys/ViewModuleActivity";
+import ViewModuleActivity from "@Activitys/DescriptonActivity";
 
 interface Props {
-  item: ModuleProps.RootObject;
+  item: any;
   index: number;
   setIndex: React.Dispatch<React.SetStateAction<number>>;
-  moduleOptions: Array<ModuleProps.Options>;
+  moduleOptions: Array<any>;
 }
 
 const FeaturedModulesHeader = ({ item, index, setIndex, moduleOptions }: Props) => {
   const { context } = useActivity();
-  const [moduleProps, setModuleProps] = React.useState<Partial<ModuleProps.Props>>({});
+  const [moduleProps, setModuleProps] = React.useState<Partial<any>>({});
 
   const isVerified = moduleOptions[item.id as any]?.verified;
   const _display = moduleOptions[item.id as any]?.display;
@@ -35,8 +35,8 @@ const FeaturedModulesHeader = ({ item, index, setIndex, moduleOptions }: Props) 
         //@ts-ignore
         style={{ display: _display, marginTop: "4px", marginBottom: "4px", height: 122, padding: 0 }}
         onClick={() => {
-          context.pushPage<ModuleProps.Extra>({
-            activity: ViewModuleActivity,
+          context.pushPage<any>({
+            component: ViewModuleActivity,
             props: {
               key: `view_${moduleProps.id}_featured`,
               extra: {

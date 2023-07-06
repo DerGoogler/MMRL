@@ -5,7 +5,7 @@ import Log from "@Native/Log";
 import { DeleteRounded, RefreshRounded } from "@mui/icons-material";
 import React from "react";
 import { useDarkmode } from "@Hooks/useDarkmode";
-import { Text, useText } from "@Hooks/useLanguage";
+import { useStrings } from "@Hooks/useStrings";
 
 interface Props {
   module: string;
@@ -34,7 +34,7 @@ interface States {
 }
 
 const DeviceModule = (props: Props) => {
-  const string = useText();
+  const { strings } = useStrings();
   const [moduleProps, setModuleProps] = React.useState<any>({});
   const [dialogShown, setDialogShown] = React.useState(false);
   const [isEnabled, setIsEnabled] = React.useState(true);
@@ -83,13 +83,21 @@ const DeviceModule = (props: Props) => {
                       if (checked) {
                         if (disable.exist()) {
                           if (disable.delete()) {
-                            log.i(string("module_enabled_LOG", [module]));
+                            log.i(
+                              strings.formatString(strings.module_enabled_LOG, {
+                                name: module,
+                              })
+                            );
                           }
                         }
                       } else {
                         if (!disable.exist()) {
                           if (disable.create()) {
-                            log.i(string("module_disabled_LOG", [module]));
+                            log.i(
+                              strings.formatString(strings.module_disabled_LOG, {
+                                name: module,
+                              })
+                            );
                           }
                         }
                       }
@@ -133,12 +141,12 @@ const DeviceModule = (props: Props) => {
                   <Ripple />
                   {isSwitchDisabled ? (
                     <>
-                      <Text string="restore" />
+                      {strings.restore}
                       <RefreshRounded sx={{ color: iconColor }} />
                     </>
                   ) : (
                     <>
-                      <Text string="remove" />
+                      {strings.remove}
                       <DeleteRounded sx={{ color: iconColor }} />
                     </>
                   )}

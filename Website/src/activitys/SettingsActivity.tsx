@@ -1,165 +1,104 @@
-import ListViewBuilder from "@Builders/ListViewBuilder";
-// import pkg from "@Package";
-// import AcknowledgementsActivity from "@Activitys/AcknowledgementsActivity";
-import AlertDialog from "@Builders/AlertDialog";
-import {
-  Brightness2Rounded,
-  BugReportRounded,
-  ExtensionRounded,
-  GavelRounded,
-  HideSourceRounded,
-  PowerInputRounded,
-  SourceRounded,
-} from "@mui/icons-material";
-import BuildConfig from "@Native/BuildConfig";
-import { os } from "@Native/os";
-import Icon from "@Components/Icon";
+import { useTheme } from "@mui/system";
+import { Divider, List, ListItem, ListItemButton, ListItemIcon, ListSubheader, Switch } from "@mui/material";
+import { BuildConfig } from "@Native/BuildConfig";
+import { Toolbar } from "@Components/onsenui/Toolbar";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Page } from "@Components/onsenui/Page";
 import Magisk from "@Native/Magisk";
-import { List, Page } from "react-onsenui";
-import ToolbarBuilder from "@Builders/ToolbarBuilder";
-import RepoActivity from "./RepoActivity";
-import { useText } from "@Hooks/useLanguage";
+import { useStrings } from "@Hooks/useStrings";
 import { useActivity } from "@Hooks/useActivity";
+import { accent_colors, useSettings } from "@Hooks/useSettings";
+import { StyledListItemText } from "@Components/StyledListItemText";
+import { ListPickerItem } from "@Components/ListPickerItem";
+import { languages_map } from "./../language/languages";
+import { os } from "@Native/Os";
 
-const SettingsActivity = () => {
-  const string = useText();
+function SettingsActivity() {
   const { context } = useActivity();
+  const { strings } = useStrings();
+
+  const theme = useTheme();
+
+  // Prefs
+  const { settings, setSettings } = useSettings();
+
+  const renderToolbar = () => {
+    return (
+      <Toolbar modifier="noshadow">
+        <Toolbar.Left>
+          <Toolbar.Button icon={ArrowBackIcon} onClick={context.popPage} />
+        </Toolbar.Left>
+        <Toolbar.Center>{strings.settings}</Toolbar.Center>
+      </Toolbar>
+    );
+  };
 
   return (
-    <Page
-      renderToolbar={() => {
-        return <ToolbarBuilder title={string("settings")} onBackButton={context.popPage} />;
-      }}
-    >
-      <settings-container style={{ height: "100%" }} className="settings-dfjsklgdj">
-        <List>
-          <ListViewBuilder
-            data={[
-              {
-                title: string("repository"),
-                content: [
-                  {
-                    type: "",
-                    text: "Repositories",
-                    icon: <Icon icon={ExtensionRounded} />,
-
-                    onClick(key) {
-                      context.pushPage({
-                        activity: RepoActivity,
-                        props: {
-                          key: "repoactivity",
-                        },
-                      });
-                    },
-                  },
-                  {
-                    key: "enableHideReadonlyRepositories",
-                    type: "switch",
-                    icon: <Icon icon={HideSourceRounded} />,
-                    text: "Hide Readonly Repositories",
-                  },
-                ],
-              },
-              {
-                title: string("appearance"),
-                content: [
-                  {
-                    key: "language",
-                    icon: "language",
-                    type: "select",
-                    text: string("language"),
-                    selectDefaultValue: "en",
-                    selectValue: [
-                      {
-                        text: "English",
-                        value: "en",
-                      },
-                      {
-                        text: "German",
-                        value: "de",
-                      },
-                    ],
-                    callback: (e: Event, key: string, keepDefaultFuntion: void) => {
-                      const builder = AlertDialog.Builder;
-                      builder.setTitle("Sure?");
-                      builder.setMessage(
-                        <div>
-                          Do you wanna <span style={{ color: "red" }}>change</span> the language?
-                        </div>
-                      );
-                      builder.setPositiveButton("Yes", (input: string) => {
-                        keepDefaultFuntion;
-                      });
-                      builder.show();
-                    },
-                  },
-                  {
-                    key: "enableDarkmode",
-                    type: "switch",
-                    icon: <Icon icon={Brightness2Rounded} />,
-                    text: string("dark_theme"),
-                  },
-                  {
-                    key: "enableBottomTabs",
-                    type: "switch",
-                    icon: <Icon icon={PowerInputRounded} />,
-                    disabled: !os.isAndroid,
-                    text: string("bottom_navigation_text"),
-                    subtext: !os.isAndroid ? string("not_supported_in_web_version") : string("bottom_navigation_subtext"),
-                  },
-                ],
-              },
-              {
-                title: "Info",
-                content: [
-                  {
-                    type: "",
-                    icon: <Icon icon={SourceRounded} />,
-                    text: string("source_code"),
-                    onClick: () => {
-                      window.open("https://github.com/DerGoogler/MMRL/", "_blank");
-                    },
-                  },
-                  // {
-                  //   type: "",
-                  //   icon: <Icon icon={GavelRounded} />,
-                  //   text: string.acknowledgements,
-                  //   onClick: (key, pushPage) => {
-                  //     pushPage({
-                  //       key: "acknowledgements",
-                  //       activity: AcknowledgementsActivity,
-                  //     });
-                  //   },
-                  // },
-                  {
-                    type: "",
-                    icon: <Icon icon={BugReportRounded} />,
-                    text: string("issues"),
-                    onClick: (key) => {
-                      window.open("https://github.com/DerGoogler/DG-Repo/issues", "_blank");
-                    },
-                  },
-                  {
-                    type: "",
-                    text: (
-                      <span>
-                        {BuildConfig.APPLICATION_ID} v{BuildConfig.VERSION_NAME} ({BuildConfig.VERSION_CODE})<br />
-                        {os.isAndroid ? `${Magisk.VERSION_NAME} (${Magisk.VERSION_CODE})` : ""}
-                      </span>
-                    ),
-                    style: {
-                      color: "dimgray",
-                      fontSize: "15px",
-                    },
-                  },
-                ],
-              },
-            ]}
+    <Page renderToolbar={renderToolbar}>
+      <List subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>{strings.appearance}</ListSubheader>}>
+        <ListItem>
+          <StyledListItemText id="switch-list-label-wifi" primary={strings.dark_theme} />
+          <Switch
+            edge="end"
+            onChange={(e: any) => {
+              setSettings({ darkmode: e.target.checked });
+            }}
+            checked={settings.darkmode}
+            inputProps={{
+              "aria-labelledby": "switch-list-label-wifi",
+            }}
           />
-        </List>
-      </settings-container>
+        </ListItem>
+        <ListPickerItem id="accent-color" targetSetting="accent_scheme" title={strings.accent_color} contentMap={accent_colors} />
+        <ListPickerItem id="language" targetSetting="language" title={strings.language} contentMap={languages_map} />
+      </List>
+
+      <Divider />
+
+      <List
+        subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>{strings.development}</ListSubheader>}
+      >
+        <ListItem>
+          <StyledListItemText id="switch-list-label-eruda" primary={"Eruda console"} secondary={"Useful for development and bugs"} />
+          <Switch
+            edge="end"
+            onChange={(e: any) => {
+              setSettings({ eruda_console_enabled: e.target.checked });
+            }}
+            checked={settings.eruda_console_enabled}
+            inputProps={{
+              "aria-labelledby": "switch-list-label-eruda",
+            }}
+          />
+        </ListItem>
+        <ListItemButton
+          onClick={() => {
+            os.open("https://github.com/DerGoogler/MMRL/issues", {
+              target: "_blank",
+              features: {
+                color: theme.palette.primary.main,
+              },
+            });
+          }}
+        >
+          <StyledListItemText id="switch-list-label-wifi" primary="Issues" secondary="Track our issues" />
+        </ListItemButton>
+      </List>
+
+      <Divider />
+
+      <ListItem>
+        <StyledListItemText
+          primary={
+            <span>
+              {BuildConfig.APPLICATION_ID} v{BuildConfig.VERSION_NAME} ({BuildConfig.VERSION_CODE})<br />
+              {os.isAndroid ? `${Magisk.VERSION_NAME} (${Magisk.VERSION_CODE})` : ""}
+            </span>
+          }
+        />
+      </ListItem>
     </Page>
   );
-};
+}
 
 export default SettingsActivity;

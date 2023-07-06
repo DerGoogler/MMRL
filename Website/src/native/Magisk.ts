@@ -1,6 +1,6 @@
 import Log from "./Log";
-import { os } from "./os";
-import Shell from "./Shell";
+import { os } from "./Os";
+import { Shell } from "./Shell";
 
 class Magisk {
   private static log: Log = new Log(this.constructor.name);

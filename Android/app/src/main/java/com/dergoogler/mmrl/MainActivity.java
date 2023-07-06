@@ -55,11 +55,10 @@ public class MainActivity extends CordovaActivity {
         webViewSettings.setAllowContentAccess(false);
 
         // Core
-        wv.addJavascriptInterface(new FileSystemNative(this), "nfs");
-        wv.addJavascriptInterface(new ShellNative(wv), "nshell");
-        wv.addJavascriptInterface(new BuildNative(), "nbuild");
-        wv.addJavascriptInterface(new BuildConfigNative(), "nbuildconfig");
-        wv.addJavascriptInterface(new OSNative(this), "nos");
+        wv.addJavascriptInterface(new FileSystemNative(this), "fs");
+        wv.addJavascriptInterface(new ShellNative(wv), "shell");
+        wv.addJavascriptInterface(new BuildConfigNative(), "buildconfig");
+        wv.addJavascriptInterface(new OSNative(this), "os");
         wv.addJavascriptInterface(new SharedPreferencesNative(this), "nativeStorage");
 
     }
