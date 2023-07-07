@@ -174,6 +174,10 @@ declare global {
     versionCode: number;
     author: string;
     description: string;
+
+    // MMRL supported properties
+    mmrlConfig?: boolean;
+
     // Fox's Mmm supported properties
     minApi?: number;
     maxApi?: number;

@@ -14,6 +14,6 @@ export declare class ErrorBoundary extends React.Component<Props, State> {
     };
     componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void;
     resetErrorBoundary(): void;
-    render(): string | number | boolean | JSX.Element | React.ReactFragment | null | undefined;
+    render(): string | number | boolean | React.ReactFragment | JSX.Element | null | undefined;
 }
 export {};

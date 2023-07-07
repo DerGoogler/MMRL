@@ -44,6 +44,7 @@
     "react-device-detect": "^2.2.2",
     "react-disappear": "^1.0.0",
     "react-dom": "^18.2.0",
+    "react-from-json": "^0.7.2",
     "react-onsenui": "^1.13.2",
     "react-render-tools": "^1.0.1",
     "react-syntax-highlighter": "^15.5.0",

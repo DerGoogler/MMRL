@@ -1,4 +1,3 @@
-import { useTheme } from "@mui/system";
 import { Divider, List, ListItem, ListItemButton, ListItemIcon, ListSubheader, Switch } from "@mui/material";
 import { BuildConfig } from "@Native/BuildConfig";
 import { Toolbar } from "@Components/onsenui/Toolbar";
@@ -7,7 +6,7 @@ import { Page } from "@Components/onsenui/Page";
 import { Magisk } from "@Native/Magisk";
 import { useStrings } from "@Hooks/useStrings";
 import { useActivity } from "@Hooks/useActivity";
-import { accent_colors, useSettings } from "@Hooks/useSettings";
+import { accent_colors, useSettings, useTheme } from "@Hooks/useSettings";
 import { StyledListItemText } from "@Components/StyledListItemText";
 import { ListPickerItem } from "@Components/ListPickerItem";
 import { languages_map } from "./../language/languages";
@@ -18,7 +17,7 @@ function SettingsActivity() {
   const { context } = useActivity();
   const { strings } = useStrings();
 
-  const theme = useTheme();
+  const { theme } = useTheme();
 
   // Prefs
   const { settings, setSettings } = useSettings();
