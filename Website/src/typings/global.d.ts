@@ -176,18 +176,19 @@ declare global {
     description: string;
 
     // MMRL supported properties
-    mmrlConfig?: boolean;
+    mmrlConfig?: string;
     mmrlChangelog?: string;
+    mmrlNoComments?: string;
 
     // Fox's Mmm supported properties
     minApi?: number;
     maxApi?: number;
     minMagisk?: number;
-    needRamdisk?: boolean;
+    needRamdisk?: string;
     support?: string;
     donate?: string;
     config?: string;
-    changeBoot?: boolean;
-    mmtReborn?: boolean;
+    changeBoot?: string;
+    mmtReborn?: string;
   }
 }

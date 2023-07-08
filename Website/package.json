@@ -26,6 +26,7 @@
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
+    "@giscus/react": "^2.3.0",
     "@js.properties/properties": "^0.5.4",
     "@mui/icons-material": "^5.8.0",
     "@mui/lab": "^5.0.0-alpha.135",

@@ -2,20 +2,26 @@ import { ProgressCircular } from "react-onsenui";
 import { Markup } from "@Components/Markdown";
 import { useActivity } from "@Hooks/useActivity";
 import React from "react";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import { Page } from "@Components/onsenui/Page";
 import { StyledCard } from "@Components/StyledCard";
 import Stack from "@mui/material/Stack";
-
-import SettingsIcon from "@mui/icons-material/Settings";
-import { VerifiedRounded } from "@mui/icons-material";
 import { StyledSection } from "@Components/StyledSection";
-import UpdateIcon from "@mui/icons-material/Update";
 import { styled } from "@mui/material";
 import { useSettings, useTheme } from "@Hooks/useSettings";
 import useShadeColor from "@Hooks/useShadeColor";
 import ChangelogActivity from "./ChangelogActivity";
+import { CommentsActivity } from "./CommentsActivity";
+
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import VerifiedIcon from "@mui/icons-material/Verified";
+import SettingsIcon from "@mui/icons-material/Settings";
+import CommentIcon from "@mui/icons-material/Comment";
+import UpdateIcon from "@mui/icons-material/Update";
+import DataUsageIcon from "@mui/icons-material/DataUsage";
+import SupportIcon from "@mui/icons-material/Support";
+import { os } from "@Native/Os";
 
 type Extra = {
   title: string;
@@ -155,10 +161,31 @@ function DescriptonActivity() {
             }}
           >
             <Stack spacing={0.8} direction="row" alignItems="center" style={{ padding: 8 }}>
+              {!(prop_url.mmrlNoComments === "true") && (
+                <ViewModuleOptionsButton
+                  style={{ width: 39 }}
+                  onClick={() => {
+                    context.pushPage({
+                      component: CommentsActivity,
+                      props: {
+                        key: "comments_" + prop_url.id,
+                        extra: {
+                          id: prop_url.id,
+                        },
+                      },
+                    });
+                  }}
+                >
+                  <Stack spacing={0.8} direction="row" alignItems="center">
+                    <CommentIcon sx={{ fontSize: 14 }} />
+                  </Stack>
+                </ViewModuleOptionsButton>
+              )}
+
               {isVerified && (
                 <ViewModuleOptionsButton>
                   <Stack spacing={0.8} direction="row" alignItems="center">
-                    <VerifiedRounded sx={{ fontSize: 14 }} />
+                    <VerifiedIcon sx={{ fontSize: 14 }} />
                     <span style={{ fontSize: 14 }}>Verified</span>
                   </Stack>
                 </ViewModuleOptionsButton>
@@ -196,6 +223,42 @@ function DescriptonActivity() {
                   </Stack>
                 </ViewModuleOptionsButton>
               )}
+
+              {prop_url.changeBoot === "true" && (
+                <ViewModuleOptionsButton>
+                  <Stack spacing={0.8} direction="row" alignItems="center">
+                    <RestartAltIcon sx={{ fontSize: 14 }} />
+                    <span style={{ fontSize: 14 }}>Changes boot</span>
+                  </Stack>
+                </ViewModuleOptionsButton>
+              )}
+
+              {prop_url.needRamdisk === "true" && (
+                <ViewModuleOptionsButton>
+                  <Stack spacing={0.8} direction="row" alignItems="center">
+                    <DataUsageIcon sx={{ fontSize: 14 }} />
+                    <span style={{ fontSize: 14 }}>Needs Ramdisk</span>
+                  </Stack>
+                </ViewModuleOptionsButton>
+              )}
+
+              {prop_url.support && (
+                <ViewModuleOptionsButton
+                  onClick={() => {
+                    os.open(prop_url.support, {
+                      target: "_blank",
+                      features: {
+                        color: theme.palette.primary.main,
+                      },
+                    });
+                  }}
+                >
+                  <Stack spacing={0.8} direction="row" alignItems="center">
+                    <SupportIcon sx={{ fontSize: 14 }} />
+                    <span style={{ fontSize: 14 }}>Support</span>
+                  </Stack>
+                </ViewModuleOptionsButton>
+              )}
             </Stack>
           </div>
         </>
@@ -210,6 +273,8 @@ const ViewModuleOptionsButton = styled("span")(({ theme }) => {
   const shade = useShadeColor();
 
   return {
+    height: 39,
+
     // fontSize: "inherit",
     display: "flex",
     alignItems: "center",

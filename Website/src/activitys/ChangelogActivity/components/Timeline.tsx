@@ -3,7 +3,6 @@ import TimelineItem, { timelineItemClasses } from "@mui/lab/TimelineItem";
 import TimelineSeparator from "@mui/lab/TimelineSeparator";
 import TimelineConnector from "@mui/lab/TimelineConnector";
 import TimelineContent from "@mui/lab/TimelineContent";
-import TimelineOppositeContent, { timelineOppositeContentClasses } from "@mui/lab/TimelineOppositeContent";
 import TimelineDot from "@mui/lab/TimelineDot";
 import UpdateIcon from "@mui/icons-material/Update";
 import { Typography } from "@mui/material";
@@ -44,11 +43,7 @@ export const ChangelogTimeline = (props: ChangelogTimelineProps) => {
             <Typography variant="h6" component="span">
               {log.title}
             </Typography>
-            <Typography>
-              <ul style={{ padding: 0 }}>
-                {log.changes instanceof Array ? MarkUpCompile(log.changes.join()) : MarkUpCompile(log.changes)}
-              </ul>
-            </Typography>
+            <Typography>{log.changes instanceof Array ? MarkUpCompile(log.changes.join()) : MarkUpCompile(log.changes)}</Typography>
           </TimelineContent>
         </TimelineItem>
       ))}
