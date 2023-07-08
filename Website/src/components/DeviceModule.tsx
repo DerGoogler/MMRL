@@ -103,6 +103,25 @@ const DeviceModule = (props: Props) => {
           />
 
           <Stack spacing={0.8} direction="row">
+            {mmrlConfig && (
+              <StyledIconButton
+                style={{ width: 30, height: 30 }}
+                onClick={() => {
+                  context.pushPage({
+                    component: ConfigureActivity,
+                    props: {
+                      key: `${module}_configure`,
+                      extra: {
+                        modulename: module,
+                      },
+                    },
+                  });
+                }}
+              >
+                <SettingsIcon sx={{ fontSize: 14 }} />
+              </StyledIconButton>
+            )}
+
             {isSwitchDisabled ? (
               <StyledIconButton
                 style={{ width: 30, height: 30 }}
@@ -135,25 +154,6 @@ const DeviceModule = (props: Props) => {
                 }}
               >
                 <DeleteRounded sx={{ fontSize: 14 }} />
-              </StyledIconButton>
-            )}
-
-            {mmrlConfig && (
-              <StyledIconButton
-                style={{ width: 30, height: 30 }}
-                onClick={() => {
-                  context.pushPage({
-                    component: ConfigureActivity,
-                    props: {
-                      key: `${module}_configure`,
-                      extra: {
-                        modulename: module,
-                      },
-                    },
-                  });
-                }}
-              >
-                <SettingsIcon sx={{ fontSize: 14 }} />
               </StyledIconButton>
             )}
           </Stack>
