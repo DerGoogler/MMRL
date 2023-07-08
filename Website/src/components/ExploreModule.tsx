@@ -9,6 +9,8 @@ import DescriptonActivity from "@Activitys/DescriptonActivity";
 import { VerifiedRounded } from "@mui/icons-material";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import { os } from "@Native/Os";
+import { StyledCard } from "./StyledCard";
+import { StyledIconButton } from "./StyledIconButton";
 
 interface Props {
   index: number;
@@ -108,70 +110,4 @@ export const ExploreModule = (props: Props) => {
       </Stack>
     </StyledCard>
   );
-};
-
-export const StyledCard = (props: PaperProps): JSX.Element => {
-  const { settings } = useSettings();
-  const { scheme } = useTheme();
-  const shade = useShadeColor();
-
-  const C = styled(Paper)(({ theme }) => ({
-    margin: "8px 0px 0px",
-    "&.MuiPaper-root": {
-      borderRadius: theme.shape.borderRadius,
-      color: "rgb(26, 32, 39)",
-      backgroundImage: "none",
-      overflow: "hidden",
-      backgroundColor: settings.darkmode ? shade(scheme[900], -65) + "47" : "rgb(255, 255, 255)",
-      border: `1px solid ${theme.palette.divider}`,
-      transform: "translate(0px, -8px)",
-    },
-  }));
-
-  return <C {...props} />;
-};
-
-export const StyledIconButton = (props: IconButtonProps) => {
-  const { settings, setSettings } = useSettings();
-  const { scheme } = useTheme();
-  const shade = useShadeColor();
-
-  const C = styled(IconButton)(({ theme }) => ({
-    display: "inline-flex",
-    MozBoxAlign: "center",
-    alignItems: "center",
-    MozBoxPack: "center",
-    justifyContent: "center",
-    position: "relative",
-    boxSizing: "border-box",
-    backgroundColor: "transparent",
-    outline: "currentcolor none 0px",
-    margin: "0px",
-    cursor: "pointer",
-    userSelect: "none",
-    verticalAlign: "middle",
-    appearance: "none",
-    textDecoration: "none",
-    textAlign: "center",
-    flex: "0 0 auto",
-    fontSize: "1.5rem",
-    padding: "8px",
-    overflow: "visible",
-    transition: "background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
-    border: `1px solid ${theme.palette.divider}`,
-    // borderTopColor: theme.palette.divider,
-    // borderRightColor: theme.palette.divider,
-    // borderBottomColor: theme.palette.divider,
-    // borderLeftColor: theme.palette.divider,
-    color: !settings.darkmode ? "rgb(66, 66, 66)" : shade(scheme[700], -61),
-    borderRadius: theme.shape.borderRadius,
-    alignSelf: "flex-start",
-    ":hover": {
-      borderColor: theme.palette.primary.main,
-      color: theme.palette.primary.main,
-      backgroundColor: "rgba(0, 0, 0, 0.04)",
-    },
-  }));
-
-  return <C {...props} />;
 };

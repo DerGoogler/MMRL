@@ -10,8 +10,8 @@ export declare const useStrings: () => {
         repository: string;
         repositories: string;
         custom_repository: string;
-        appearance: string;
         accent_color: string;
+        appearance: string;
         language: string;
         dark_theme: string;
         bottom_navigation_text: string;
@@ -48,8 +48,8 @@ export declare const useStrings: () => {
         repository: string;
         repositories: string;
         custom_repository: string;
-        accent_color: string;
         appearance: string;
+        accent_color: string;
         language: string;
         dark_theme: string;
         bottom_navigation_text: string;

@@ -7,11 +7,12 @@ import React from "react";
 import { useDarkmode } from "@Hooks/useDarkmode";
 import { useStrings } from "@Hooks/useStrings";
 import { Android12Switch } from "./Android12Switch";
-import { StyledCard, StyledIconButton } from "./ExploreModule";
 import { Box, Divider, Stack, Typography } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { useActivity } from "@Hooks/useActivity";
 import { ConfigureActivity } from "@Activitys/ConfigureActivity";
+import { StyledCard } from "./StyledCard";
+import { StyledIconButton } from "./StyledIconButton";
 
 interface Props {
   module: string;

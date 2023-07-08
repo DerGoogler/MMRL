@@ -14,14 +14,8 @@ import { RepoProvider } from "@Hooks/useRepos";
 
 ons.platform.select("android");
 
-const App = () => {
-  React.useEffect(() => {
-    if (!os.hasStoragePermission()) {
-      os.requestStoargePermission();
-    }
-  }, []);
-
-  return (
+ons.ready(() => {
+  render(
     <React.StrictMode>
       <SettingsProvider>
         <Preventer prevent="contextmenu">
@@ -36,10 +30,7 @@ const App = () => {
           </StringProvider>
         </Preventer>
       </SettingsProvider>
-    </React.StrictMode>
+    </React.StrictMode>,
+    "app"
   );
-};
-
-ons.ready(() => {
-  render(<App />, "app");
 });

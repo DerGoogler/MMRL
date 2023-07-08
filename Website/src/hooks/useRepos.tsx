@@ -7,18 +7,20 @@ import Properties from "@js.properties/properties";
 import { Settings, useSettings } from "./useSettings";
 import { os } from "@Native/Os";
 
+export interface RepoContextActions {
+  addRepo: (data: AddRepoData) => void;
+  removeRepo: (data: RemoveRepoData) => void;
+  setRepoEnabled: (data: SetRepoStateData) => void;
+  filterModules: (query: string) => Module[];
+}
+
 interface RepoContextInterface {
   repos: StoredRepo[];
   setRepos: SetValue<StoredRepo[]>;
   modulesLoading: boolean | undefined;
   modules: Module[];
   moduleOptions: any[];
-  actions: {
-    addRepo: (data: AddRepoData) => void;
-    removeRepo: (data: RemoveRepoData) => void;
-    setRepoEnabled: (data: SetRepoStateData) => void;
-    filterModules: (query: string) => Module[];
-  };
+  actions: RepoContextActions;
 }
 
 export const RepoContext = React.createContext<RepoContextInterface>({

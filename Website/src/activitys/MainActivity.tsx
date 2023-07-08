@@ -33,6 +33,12 @@ const MainActivity = (): JSX.Element => {
     setIsSplitterOpen(true);
   };
 
+  React.useEffect(() => {
+    if (!os.hasStoragePermission()) {
+      os.requestStoargePermission();
+    }
+  }, []);
+
   const CheckRoot = () => {
     if (os.isAndroid) {
       if (Shell.isAppGrantedRoot()) {
