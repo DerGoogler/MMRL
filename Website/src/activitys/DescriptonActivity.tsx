@@ -5,10 +5,23 @@ import React from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import { Page } from "@Components/onsenui/Page";
+import { StyledCard } from "@Components/StyledCard";
+import Stack from "@mui/material/Stack";
+
+import SettingsIcon from "@mui/icons-material/Settings";
+import { VerifiedRounded } from "@mui/icons-material";
+import { StyledSection } from "@Components/StyledSection";
+import UpdateIcon from "@mui/icons-material/Update";
+import { styled } from "@mui/material";
+import { useSettings, useTheme } from "@Hooks/useSettings";
+import useShadeColor from "@Hooks/useShadeColor";
+import ChangelogActivity from "./ChangelogActivity";
 
 type Extra = {
   title: string;
   desc: string | undefined;
+  prop_url: ModuleProps;
+  module_options: any;
   request: { url: string } | undefined;
 };
 
@@ -21,7 +34,12 @@ type Action<T> = { type: "loading" } | { type: "fetched"; payload: T } | { type:
 
 function DescriptonActivity() {
   const { context, extra } = useActivity<Extra>();
-  const { desc, title, request } = extra;
+  const { theme } = useTheme();
+  const { desc, title, request, prop_url, module_options } = extra;
+
+  // Create better handler
+  const isVerified = module_options[prop_url.id]?.verified;
+  const _display = module_options[prop_url.id]?.display;
 
   const initialState: State<string> = {
     error: undefined,
@@ -121,10 +139,115 @@ function DescriptonActivity() {
           }}
         />
       ) : (
-        <Markup children={state.data} />
+        <>
+          <Markup children={state.data} style={{ marginBottom: 55 }} />
+
+          <div
+            style={{
+              // backgroundColor: theme.palette.background.default,
+              backdropFilter: "blur(10px)",
+              position: "fixed",
+              bottom: 0,
+              left: 0,
+              right: 0,
+              height: 55,
+              marginBottom: 0,
+            }}
+          >
+            <Stack spacing={0.8} direction="row" alignItems="center" style={{ padding: 8 }}>
+              {isVerified && (
+                <ViewModuleOptionsButton>
+                  <Stack spacing={0.8} direction="row" alignItems="center">
+                    <VerifiedRounded sx={{ fontSize: 14 }} />
+                    <span style={{ fontSize: 14 }}>Verified</span>
+                  </Stack>
+                </ViewModuleOptionsButton>
+              )}
+
+              {prop_url.mmrlChangelog && (
+                <ViewModuleOptionsButton
+                  onClick={() => {
+                    context.pushPage({
+                      component: ChangelogActivity,
+                      props: {
+                        key: "changelog" + prop_url.id,
+                        extra: {
+                          request: {
+                            url: prop_url.mmrlChangelog,
+                          },
+                          title: "Changelog",
+                        },
+                      },
+                    });
+                  }}
+                >
+                  <Stack spacing={0.8} direction="row" alignItems="center">
+                    <UpdateIcon sx={{ fontSize: 14 }} />
+                    <span style={{ fontSize: 14 }}>Changelog</span>
+                  </Stack>
+                </ViewModuleOptionsButton>
+              )}
+
+              {prop_url.mmrlConfig && (
+                <ViewModuleOptionsButton>
+                  <Stack spacing={0.8} direction="row" alignItems="center">
+                    <SettingsIcon sx={{ fontSize: 14 }} />
+                    <span style={{ fontSize: 14 }}>Configureable</span>
+                  </Stack>
+                </ViewModuleOptionsButton>
+              )}
+            </Stack>
+          </div>
+        </>
       )}
     </Page>
   );
 }
+
+const ViewModuleOptionsButton = styled("span")(({ theme }) => {
+  const { settings, setSettings } = useSettings();
+  const { scheme } = useTheme();
+  const shade = useShadeColor();
+
+  return {
+    // fontSize: "inherit",
+    display: "flex",
+    alignItems: "center",
+
+    MozBoxAlign: "center",
+    // alignItems: "center",
+    MozBoxPack: "center",
+    justifyContent: "center",
+    position: "relative",
+    boxSizing: "border-box",
+    backgroundColor: "transparent",
+    outline: "currentcolor none 0px",
+    margin: "0px",
+    cursor: "pointer",
+    userSelect: "none",
+    verticalAlign: "middle",
+    appearance: "none",
+    textDecoration: "none",
+    textAlign: "center",
+    flex: "0 0 auto",
+    fontSize: "1.5rem",
+    padding: "8px",
+    overflow: "visible",
+    transition: "background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+    border: `1px solid ${!settings.darkmode ? "rgb(66, 66, 66)" : shade(scheme[700], -61)}`,
+    // borderTopColor: theme.palette.divider,
+    // borderRightColor: theme.palette.divider,
+    // borderBottomColor: theme.palette.divider,
+    // borderLeftColor: theme.palette.divider,
+    color: !settings.darkmode ? "rgb(66, 66, 66)" : shade(scheme[700], -61),
+    borderRadius: theme.shape.borderRadius,
+    alignSelf: "flex-start",
+    ":hover": {
+      borderColor: theme.palette.primary.main,
+      color: theme.palette.primary.main,
+      backgroundColor: "rgba(0, 0, 0, 0.04)",
+    },
+  };
+});
 
 export default DescriptonActivity;

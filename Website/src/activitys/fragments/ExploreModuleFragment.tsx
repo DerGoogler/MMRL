@@ -97,18 +97,8 @@ const ExploreModuleFragment = () => {
               />
             </Stack>
           )}
-          render={(item, index) => (
-            <ExploreModule
-              index={index}
-              key={item.id + index}
-              fullItem={item}
-              getId={item.id}
-              propsUrl={item.prop_url}
-              notesUrl={item.notes_url}
-              downloadUrl={item.zip_url}
-              moduleOptions={moduleOptions}
-              last_update={item.last_update}
-            />
+          render={(module, index) => (
+            <ExploreModule index={index} key={module.id + index} moduleProps={module} moduleOptions={moduleOptions} />
           )}
         />
       </>

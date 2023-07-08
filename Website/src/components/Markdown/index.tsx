@@ -95,7 +95,7 @@ export const Markup = (props: Props) => {
   });
 
   return (
-    <StyledMarkdown ref={ref} style={{ display: "inline-block", padding: "8px", height: "100%", width: "100%", ...props.style }}>
+    <StyledMarkdown ref={ref} style={{ display: "inline-block", padding: "8px", width: "100%", ...props.style }}>
       <Markdown
         style={props.styleMd}
         options={{

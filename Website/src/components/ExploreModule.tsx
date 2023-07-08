@@ -14,22 +14,19 @@ import { StyledIconButton } from "./StyledIconButton";
 
 interface Props {
   index: number;
-  notesUrl: string;
-  downloadUrl?: string;
+  moduleProps: Module;
   moduleOptions: any;
-  stars?: int;
-  last_update?: any;
-  fullItem: any;
-  getId: any;
-  propsUrl: any;
 }
 export const ExploreModule = (props: Props) => {
   const { context } = useActivity();
   const { strings } = useStrings();
 
-  const { notesUrl, downloadUrl, moduleOptions, stars, last_update, getId, fullItem, propsUrl, index } = props;
-  const isVerified = moduleOptions[getId]?.verified;
-  const _display = moduleOptions[getId]?.display;
+  const { moduleOptions, index } = props;
+  const { id, notes_url, zip_url, last_update, prop_url } = props.moduleProps;
+
+  // Create better handler
+  const isVerified = moduleOptions[id]?.verified;
+  const _display = moduleOptions[id]?.display;
 
   const formatDate = (date: Date) => {
     var hours = date.getHours();
@@ -47,12 +44,14 @@ export const ExploreModule = (props: Props) => {
     context.pushPage<any>({
       component: DescriptonActivity,
       props: {
-        key: `view_${propsUrl.id}`,
+        key: `view_${prop_url.id}`,
         extra: {
-          title: propsUrl.name,
+          title: prop_url.name,
+          prop_url: prop_url,
+          module_options: props.moduleOptions,
           request: {
             tpe: "text",
-            url: notesUrl,
+            url: notes_url,
           },
         },
       },
@@ -60,7 +59,7 @@ export const ExploreModule = (props: Props) => {
   };
 
   const handleDownload = () => {
-    os.open(downloadUrl);
+    os.open(zip_url);
   };
 
   return (
@@ -68,13 +67,13 @@ export const ExploreModule = (props: Props) => {
       <Box sx={{ p: 2, display: "flex" }}>
         <Stack spacing={0.5} style={{ flexGrow: 1 }}>
           <Typography fontWeight={700} color="text.primary">
-            {propsUrl.name}
+            {prop_url.name}
           </Typography>{" "}
           <Typography variant="caption" sx={{ fontSize: ".70rem" }} color="text.secondary">
-            {propsUrl.version} ({propsUrl.versionCode}) / {propsUrl.author}
+            {prop_url.version} ({prop_url.versionCode}) / {prop_url.author}
           </Typography>
           <Typography variant="body1" color="text.secondary">
-            {propsUrl.description}
+            {prop_url.description}
           </Typography>
         </Stack>
       </Box>

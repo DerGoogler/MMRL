@@ -177,6 +177,7 @@ declare global {
 
     // MMRL supported properties
     mmrlConfig?: boolean;
+    mmrlChangelog?: string;
 
     // Fox's Mmm supported properties
     minApi?: number;
