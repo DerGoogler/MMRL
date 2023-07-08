@@ -10,7 +10,6 @@ import { StyledSection } from "@Components/StyledSection";
 import { styled } from "@mui/material";
 import { useSettings, useTheme } from "@Hooks/useSettings";
 import useShadeColor from "@Hooks/useShadeColor";
-import ChangelogActivity from "./ChangelogActivity";
 import { CommentsActivity } from "./CommentsActivity";
 
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
@@ -186,30 +185,6 @@ function DescriptonActivity() {
                   <Stack spacing={0.8} direction="row" alignItems="center">
                     <VerifiedIcon sx={{ fontSize: 14 }} />
                     <span style={{ fontSize: 14 }}>Verified</span>
-                  </Stack>
-                </ViewModuleOptionsButton>
-              )}
-
-              {prop_url.mmrlChangelog && (
-                <ViewModuleOptionsButton
-                  onClick={() => {
-                    context.pushPage({
-                      component: ChangelogActivity,
-                      props: {
-                        key: "changelog" + prop_url.id,
-                        extra: {
-                          request: {
-                            url: prop_url.mmrlChangelog,
-                          },
-                          title: "Changelog",
-                        },
-                      },
-                    });
-                  }}
-                >
-                  <Stack spacing={0.8} direction="row" alignItems="center">
-                    <UpdateIcon sx={{ fontSize: 14 }} />
-                    <span style={{ fontSize: 14 }}>Changelog</span>
                   </Stack>
                 </ViewModuleOptionsButton>
               )}

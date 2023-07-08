@@ -43,7 +43,6 @@ author=<string>
 description=<string>
 
 # MMRL supported properties
-mmrlChangelog=<url>
 mmrlConfig=<boolean>
 mmrlNoComments=<boolean>
 
