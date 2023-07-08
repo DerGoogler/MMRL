@@ -1,4 +1,4 @@
-import Markdown, { MarkdownToJSX } from "markdown-to-jsx";
+import Markdown, { MarkdownToJSX, compiler } from "markdown-to-jsx";
 import Anchor, { Open } from "../dapi/Anchor";
 import Video from "../dapi/Video";
 import Checkmark from "../icons/Checkmark";
@@ -105,4 +105,8 @@ export const Markup = (props: Props) => {
       />
     </StyledMarkdown>
   );
+};
+
+export const MarkUpCompile = (children: string) => {
+  return compiler(children, { overrides: MarkdownOverrides });
 };

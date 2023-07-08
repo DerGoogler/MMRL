@@ -51,7 +51,7 @@ export const ExploreModule = (props: Props) => {
         extra: {
           title: propsUrl.name,
           request: {
-            use: true,
+            tpe: "text",
             url: notesUrl,
           },
         },

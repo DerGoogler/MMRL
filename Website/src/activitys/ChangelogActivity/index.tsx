@@ -5,11 +5,36 @@ import React from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import { Page } from "@Components/onsenui/Page";
+import Ajv, { ErrorObject, JSONSchemaType } from "ajv";
+import { ChangelogSchema, ChangelogTimeline } from "./components/Timeline";
+
+const schema: JSONSchemaType<ChangelogSchema[]> = {
+  type: "array",
+  items: {
+    type: "object",
+    required: ["title", "version", "color", "changes"],
+    items: {
+      title: {
+        type: "string",
+      },
+      color: {
+        enum: ["inherit", "grey", "primary", "secondary", "error", "info", "success", "warning"],
+      },
+      version: {
+        type: "string",
+      },
+      changes: {
+        type: "array",
+      },
+    },
+  },
+  additionalProperties: false,
+};
 
 type Extra = {
   title: string;
   desc: string | undefined;
-  request: { url: string } | undefined;
+  request: { type: "text" | "json"; url: string } | undefined;
 };
 
 interface State<T> {
@@ -19,17 +44,17 @@ interface State<T> {
 type Cache<T> = { [url: string]: T };
 type Action<T> = { type: "loading" } | { type: "fetched"; payload: T } | { type: "error"; payload: Error };
 
-function DescriptonActivity() {
+function ChangelogActivity() {
   const { context, extra } = useActivity<Extra>();
   const { desc, title, request } = extra;
 
-  const initialState: State<string> = {
+  const initialState: State<ChangelogSchema[]> = {
     error: undefined,
-    data: desc,
+    data: [],
   };
 
   // Keep state logic separated
-  const fetchReducer = (state: State<string>, action: Action<string>): State<string> => {
+  const fetchReducer = (state: State<ChangelogSchema[]>, action: Action<ChangelogSchema[]>): State<ChangelogSchema[]> => {
     switch (action.type) {
       case "loading":
         return { ...initialState };
@@ -46,7 +71,7 @@ function DescriptonActivity() {
 
   if (request) {
     const url = request.url;
-    const cache = React.useRef<Cache<string>>({});
+    const cache = React.useRef<Cache<ChangelogSchema[]>>({});
 
     // Used to prevent state update if the component is unmounted
     const cancelRequest = React.useRef<boolean>(false);
@@ -72,10 +97,20 @@ function DescriptonActivity() {
             throw new Error(response.statusText);
           }
 
-          const data = (await response.text()) as string;
+          const data = (await response.json()) as ChangelogSchema[];
 
           cache.current[url] = data;
           if (cancelRequest.current) return;
+
+          if (request.type === "json") {
+            const ajv = new Ajv(); // options can be passed, e.g. {allErrors: true}
+            const validate = ajv.compile(schema);
+            const valid = validate(data) as boolean;
+
+            if (!valid) {
+              throw new Error((validate as any).errors);
+            }
+          }
 
           dispatch({ type: "fetched", payload: data });
         } catch (error) {
@@ -121,10 +156,10 @@ function DescriptonActivity() {
           }}
         />
       ) : (
-        <Markup children={state.data} />
+        <ChangelogTimeline data={state.data} />
       )}
     </Page>
   );
 }
 
-export default DescriptonActivity;
+export default ChangelogActivity;

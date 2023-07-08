@@ -1,3 +1,4 @@
+import ChangelogActivity from "@Activitys/ChangelogActivity";
 import DescriptonActivity from "@Activitys/DescriptonActivity";
 import RepoActivity from "@Activitys/RepoActivity";
 import SettingsActivity from "@Activitys/SettingsActivity";
@@ -75,13 +76,12 @@ export const DrawerFragment = (props: Props) => {
         <ListItemButton
           onClick={() => {
             pushPage({
-              component: DescriptonActivity,
+              component: ChangelogActivity,
               props: {
                 key: "changelog",
                 extra: {
                   request: {
-                    use: true,
-                    url: "https://raw.githubusercontent.com/wiki/DerGoogler/MMRL/Changelog.md",
+                    url: "https://raw.githubusercontent.com/wiki/DerGoogler/MMRL/JSON-ChangeLog.md",
                   },
                   title: "Changelog",
                 },
