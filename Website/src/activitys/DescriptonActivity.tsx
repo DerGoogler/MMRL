@@ -150,8 +150,7 @@ function DescriptonActivity() {
 
           <div
             style={{
-              // backgroundColor: theme.palette.background.default,
-              backdropFilter: "blur(10px)",
+              backgroundColor: theme.palette.background.default,
               position: "fixed",
               bottom: 0,
               left: 0,
@@ -299,7 +298,7 @@ const ViewModuleOptionsButton = styled("span")(({ theme }) => {
     padding: "8px",
     overflow: "visible",
     transition: "background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
-    border: `1px solid ${!settings.darkmode ? "rgb(66, 66, 66)" : shade(scheme[700], -61)}`,
+    border: `1px solid ${theme.palette.divider}`,
     // borderTopColor: theme.palette.divider,
     // borderRightColor: theme.palette.divider,
     // borderBottomColor: theme.palette.divider,
