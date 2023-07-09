@@ -7,7 +7,7 @@ import { Page } from "@Components/onsenui/Page";
 import { StyledCard } from "@Components/StyledCard";
 import Stack from "@mui/material/Stack";
 import { StyledSection } from "@Components/StyledSection";
-import { styled } from "@mui/material";
+import { Button, styled } from "@mui/material";
 import { useSettings, useTheme } from "@Hooks/useSettings";
 import useShadeColor from "@Hooks/useShadeColor";
 import { CommentsActivity } from "./CommentsActivity";
@@ -17,7 +17,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import SettingsIcon from "@mui/icons-material/Settings";
 import CommentIcon from "@mui/icons-material/Comment";
-import UpdateIcon from "@mui/icons-material/Update";
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import DataUsageIcon from "@mui/icons-material/DataUsage";
 import SupportIcon from "@mui/icons-material/Support";
 import { os } from "@Native/Os";
@@ -29,6 +29,7 @@ type Extra = {
   prop_url: ModuleProps;
   module_options: any;
   request: { url: string } | undefined;
+  zip_url: string;
 };
 
 interface State<T> {
@@ -132,6 +133,10 @@ function DescriptonActivity() {
     );
   };
 
+  const handleDownload = () => {
+    os.open(extra.zip_url);
+  };
+
   return (
     <Page renderToolbar={renderToolbar}>
       {!state.data ? (
@@ -147,19 +152,7 @@ function DescriptonActivity() {
         />
       ) : (
         <>
-          <Markup children={state.data} style={{ marginBottom: 55 }} />
-
-          <div
-            style={{
-              backgroundColor: theme.palette.background.default,
-              position: "fixed",
-              bottom: 0,
-              left: 0,
-              right: 0,
-              height: 55,
-              marginBottom: 0,
-            }}
-          >
+          <StyledCard elevation={0} style={{ margin: "16px 8px 0px 8px" }}>
             <Stack spacing={0.8} direction="row" alignItems="center" style={{ padding: 8 }}>
               {!(prop_url.mmrlNoComments === "true") && (
                 <ViewModuleOptionsButton
@@ -235,6 +228,29 @@ function DescriptonActivity() {
                   </Stack>
                 </ViewModuleOptionsButton>
               )}
+            </Stack>
+          </StyledCard>
+
+          <Markup children={state.data} style={{ marginBottom: 55 }} />
+
+          <div
+            style={{
+              backgroundColor: theme.palette.background.default,
+              position: "fixed",
+              bottom: 0,
+              left: 0,
+              right: 0,
+              height: 55,
+              marginBottom: 0,
+            }}
+          >
+            <Stack spacing={0.8} direction="row" alignItems="center" style={{ padding: 8 }}>
+              <Button fullWidth variant="contained" disableElevation onClick={handleDownload} endIcon={<FileDownloadIcon />}>
+                {strings.download}
+              </Button>
+              {/* <Button fullWidth variant="contained" disableElevation onClick={() => {}}>
+                {strings.install}
+              </Button> */}
             </Stack>
           </div>
         </>

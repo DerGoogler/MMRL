@@ -1,13 +1,8 @@
-import { Box, Chip, Divider, Stack, Typography, IconButton, IconButtonProps } from "@mui/material";
+import { Box, Chip, Divider, Stack, Typography } from "@mui/material";
 import { useActivity } from "@Hooks/useActivity";
 import { useStrings } from "@Hooks/useStrings";
-import DescriptionIcon from "@mui/icons-material/Description";
-import { Paper, PaperProps, styled } from "@mui/material";
-import { useSettings, useTheme } from "@Hooks/useSettings";
-import useShadeColor from "@Hooks/useShadeColor";
 import DescriptonActivity from "@Activitys/DescriptonActivity";
 import { VerifiedRounded } from "@mui/icons-material";
-import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import { os } from "@Native/Os";
 import { StyledCard } from "./StyledCard";
 import { StyledIconButton } from "./StyledIconButton";
@@ -52,14 +47,11 @@ export const ExploreModule = (props: Props) => {
           request: {
             tpe: "text",
             url: notes_url,
+            zip_url: zip_url,
           },
         },
       },
     });
-  };
-
-  const handleDownload = () => {
-    os.open(zip_url);
   };
 
   return (
@@ -97,10 +89,6 @@ export const ExploreModule = (props: Props) => {
               <VerifiedRounded sx={{ fontSize: 14 }} />
             </StyledIconButton>
           )}
-
-          <StyledIconButton style={{ width: 30, height: 30 }} onClick={handleDownload}>
-            <FileDownloadIcon sx={{ fontSize: 14 }} />
-          </StyledIconButton>
         </Stack>
       </Stack>
     </StyledCard>
