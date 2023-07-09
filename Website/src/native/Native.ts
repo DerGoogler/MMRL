@@ -16,7 +16,7 @@ export class Native<I = any> implements INative<I> {
    * This field is required, otherwise the comunacation between Android will not work
    * @required true
    */
-  public interface: keyof AndroidWindow<I> | undefined;
+  public interfaceName: keyof AndroidWindow<I> | undefined;
 
   public constructor() {
     // this.IsTablet = this.IsTablet.bind(this);
@@ -31,8 +31,8 @@ export class Native<I = any> implements INative<I> {
   // }
 
   public get getInterface(): I {
-    if (this.interface) {
-      return window[this.interface];
+    if (this.interfaceName) {
+      return window[this.interfaceName];
     } else {
       throw new Error("No interface defined");
     }

@@ -20,10 +20,11 @@
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
-        tools:targetApi="33">
+        tools:targetApi="q">
         <activity
             android:name="com.dergoogler.mmrl.MainActivity"
             android:configChanges="orientation|screenSize"
@@ -31,21 +32,6 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="mmrl" />
-
-                <data
-                    android:host="repo.dergoogler.com"
-                    android:scheme="https" />
-                <data
-                    android:host="repo.dergoogler.com"
-                    android:scheme="http" />
             </intent-filter>
         </activity>
     </application>

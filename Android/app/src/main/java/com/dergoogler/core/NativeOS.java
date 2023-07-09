@@ -7,24 +7,30 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.DisplayCutout;
 import android.view.View;
+import android.view.WindowInsets;
 import android.webkit.JavascriptInterface;
 import android.widget.Toast;
 
 import androidx.browser.customtabs.CustomTabColorSchemeParams;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.Insets;
+
+import com.dergoogler.mmrl.MainActivity;
 
 public class NativeOS {
-    private final Context ctx;
+    private final MainActivity ctx;
 
-    public NativeOS(Context ctx) {
+    public NativeOS(MainActivity ctx) {
         this.ctx = ctx;
     }
 
@@ -163,6 +169,52 @@ public class NativeOS {
             return String.format("#%06x", manipulateColor(ContextCompat.getColor(this.ctx, nameResourceID) & 0xffffff, 75));
         }
     }
+
+    @JavascriptInterface
+    public int getStatusBarHeight() {
+        Resources res = ctx.getApplicationContext().getResources();
+        int statusBarHeight;
+        int resourceId = res.getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            statusBarHeight = res.getDimensionPixelSize(resourceId);
+            return (int) (statusBarHeight / res.getDisplayMetrics().density);
+        } else {
+            return 0;
+        }
+    }
+
+    @JavascriptInterface
+    public int getSafeAreaInsets(String type) {
+        float leftInset = 0, rightInset = 0, topInset = 0, bottomInset = 0;
+        Resources res = ctx.getApplicationContext().getResources();
+        WindowInsets windowInsets = ctx.getWindow().getDecorView().getRootWindowInsets();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            if (windowInsets != null) {
+                final DisplayCutout cutout = windowInsets.getDisplayCutout();
+
+                leftInset = cutout != null ? cutout.getSafeInsetLeft() : 0;
+                rightInset = cutout != null ? cutout.getSafeInsetRight() : 0;
+                topInset = cutout != null ? cutout.getSafeInsetTop() : 0;
+                bottomInset = cutout != null ? cutout.getSafeInsetBottom() : 0;
+
+                @SuppressLint("RestrictedApi") Insets insets = Insets.wrap(windowInsets.getSystemWindowInsets());
+                leftInset = Math.max(leftInset, insets.left) / res.getDisplayMetrics().density;
+                rightInset = Math.max(rightInset, insets.right) / res.getDisplayMetrics().density;
+                topInset = Math.max(topInset, insets.top) / res.getDisplayMetrics().density;
+                bottomInset = Math.max(bottomInset, insets.bottom) / res.getDisplayMetrics().density;
+            }
+        }
+
+
+        if (type.equals("top")) {
+            return (int) topInset;
+        } else {
+
+            return (int) bottomInset;
+        }
+    }
+
 
     @JavascriptInterface
     public void setStatusBarColor(String color, boolean white) {

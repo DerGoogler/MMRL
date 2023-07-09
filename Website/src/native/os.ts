@@ -19,7 +19,7 @@ export type OpenOptions = {
 class OsClass extends Native {
   public constructor() {
     super();
-    this.interface = "__os__";
+    this.interfaceName = "__os__";
   }
 
   public open(url?: string | URL | undefined, options?: OpenOptions): Window | null {
@@ -86,6 +86,26 @@ class OsClass extends Native {
       return "#ffffff";
     }
   }
+
+  /**
+   * Get the current status bar height from the current device. Has an automatic fallback for browsers
+   * @returns
+   */
+  public getStatusBarHeight(): number {
+    if (this.isAndroid) {
+      return this.getInterface.getStatusBarHeight() / 2;
+    } else {
+      return 0;
+    }
+  }
+
+  // public getSafeAreaInsets(typr: "top" | "bottom"): number {
+  //   if (this.isAndroid) {
+  //     return this.getInterface.getSafeAreaInsets() / 2;
+  //   } else {
+  //     return 0;
+  //   }
+  // }
 
   /**
    * Changes the status bar color

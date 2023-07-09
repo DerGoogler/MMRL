@@ -26,7 +26,7 @@ class File extends Native {
   public constructor(path?: string | undefined) {
     super();
     this.path = path ? path : "";
-    this.interface = "__fs__";
+    this.interfaceName = "__fs__";
   }
 
   public read(): string {

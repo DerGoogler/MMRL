@@ -78,6 +78,7 @@ declare global {
      * This is an Android only window object
      */
     readonly __os__: I;
+    readonly __properties__: I;
     /**
      * `localStorage` like object to make support better with `useLocalStorage`.
      *

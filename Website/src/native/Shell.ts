@@ -23,7 +23,7 @@ interface IShell {
 class ShellClass extends Native<IShell> {
   public constructor() {
     super();
-    this.interface = "__shell__";
+    this.interfaceName = "__shell__";
   }
 
   public exec(cmds: string | string[]): void {

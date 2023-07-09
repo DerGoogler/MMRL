@@ -8,7 +8,7 @@ class Log extends Native {
   public constructor(tag: string) {
     super();
     this.tag = tag;
-    this.interface = "__os__";
+    this.interfaceName = "__os__";
   }
 
   public i(message: any) {

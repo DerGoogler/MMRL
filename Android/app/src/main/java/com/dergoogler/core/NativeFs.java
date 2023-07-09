@@ -1,7 +1,10 @@
 package com.dergoogler.core;
 
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.webkit.JavascriptInterface;
 
@@ -20,6 +23,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.URL;
+import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
