@@ -19,7 +19,7 @@ const ExploreModuleFragment = () => {
 
   const [search, setSearch] = React.useState("");
 
-  const { moduleOptions, actions, modulesLoading } = useRepos();
+  const { moduleOptions, actions, modulesLoading, repos } = useRepos();
 
   const filteredModules = actions.filterModules(search);
   const [page, setPage] = React.useState(1);
@@ -27,6 +27,41 @@ const ExploreModuleFragment = () => {
   const PER_PAGE = 20;
   const count = Math.ceil(filteredModules.length / PER_PAGE);
   const _DATA = usePagination(filteredModules, PER_PAGE);
+
+  if (repos.length === 0) {
+    return (
+      <h4
+        style={{
+          color: theme.palette.secondary.dark,
+          position: "absolute",
+          left: "50%",
+          top: "50%",
+          WebkitTransform: "translate(-50%, -50%)",
+          transform: "translate(-50%, -50%)",
+        }}
+      >
+        <span>
+          Looks empty here... Add an{" "}
+          <span
+            style={{
+              color: theme.palette.primary.dark,
+            }}
+            onClick={() => {
+              context.pushPage({
+                component: RepoActivity,
+                props: {
+                  key: "repos",
+                  extra: {},
+                },
+              });
+            }}
+          >
+            {strings.repository}
+          </span>
+        </span>
+      </h4>
+    );
+  }
 
   if (modulesLoading) {
     return (
@@ -46,61 +81,23 @@ const ExploreModuleFragment = () => {
       <>
         <Searchbar placeholder={strings.search_modules} onChange={(e) => setSearch(e.target.value)} />
 
-        <For
-          each={_DATA.currentData()}
-          fallback={() => (
-            <h4
-              style={{
-                color: theme.palette.secondary.dark,
-                position: "absolute",
-                left: "50%",
-                top: "50%",
-                textAlign: "center",
-                WebkitTransform: "translate(-50%, -50%)",
-                transform: "translate(-50%, -50%)",
-              }}
-            >
-              <span>
-                Looks empty here... Add an{" "}
-                <span
-                  style={{
-                    color: theme.palette.primary.dark,
-                  }}
-                  onClick={() => {
-                    context.pushPage({
-                      component: RepoActivity,
-                      props: {
-                        key: "repos",
-                        extra: {},
-                      },
-                    });
-                  }}
-                >
-                  {strings.repository}
-                </span>
-              </span>
-            </h4>
-          )}
-          catch={(e: Error | undefined) => <Box sx={(theme) => ({ color: theme.palette.text.primary })}>ERROR: {e?.message}</Box>}
-          renderTop={() => (
-            <Stack style={{ marginBottom: 8 }} direction="row" justifyContent="center" alignItems="center" spacing={2}>
-              <Pagination
-                count={count}
-                color="primary"
-                page={page}
-                variant="outlined"
-                shape="rounded"
-                onChange={(e, p) => {
-                  setPage(p);
-                  _DATA.jump(p);
-                }}
-              />
-            </Stack>
-          )}
-          render={(module, index) => (
-            <ExploreModule index={index} key={module.id + index} moduleProps={module} moduleOptions={moduleOptions} />
-          )}
-        />
+        <Stack style={{ marginBottom: 8 }} direction="row" justifyContent="center" alignItems="center" spacing={2}>
+          <Pagination
+            count={count}
+            color="primary"
+            page={page}
+            variant="outlined"
+            shape="rounded"
+            onChange={(e, p) => {
+              setPage(p);
+              _DATA.jump(p);
+            }}
+          />
+        </Stack>
+
+        {_DATA.currentData().map((module, index) => (
+          <ExploreModule index={index} key={module.id + index} moduleProps={module} moduleOptions={moduleOptions} />
+        ))}
       </>
     );
   }

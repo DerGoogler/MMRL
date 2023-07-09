@@ -9,7 +9,7 @@ import { useActivity } from "@Hooks/useActivity";
 import { accent_colors, useSettings, useTheme } from "@Hooks/useSettings";
 import { StyledListItemText } from "@Components/StyledListItemText";
 import { ListPickerItem } from "@Components/ListPickerItem";
-import { languages_map } from "./../language/languages";
+import { languages_map } from "../locales/languages";
 import { os } from "@Native/Os";
 import { Android12Switch } from "@Components/Android12Switch";
 
@@ -58,7 +58,7 @@ function SettingsActivity() {
       <List
         subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>{strings.development}</ListSubheader>}
       >
-        <ListItem>
+        {/* <ListItem>
           <StyledListItemText id="switch-list-label-eruda" primary={"Eruda console"} secondary={"Useful for development and bugs"} />
           <Android12Switch
             edge="end"
@@ -70,7 +70,7 @@ function SettingsActivity() {
               "aria-labelledby": "switch-list-label-eruda",
             }}
           />
-        </ListItem>
+        </ListItem> */}
         <ListItemButton
           onClick={() => {
             os.open("https://github.com/DerGoogler/MMRL/issues", {

@@ -35,5 +35,11 @@
   "failed": "Failed",
   "no_root_message": "Seems that you'e doesn't having root permissions? If you have Magisk (Delta) installed you can directly open it from here.",
   "open_magisk": "Open Magisk",
-  "development": "Development"
+  "development": "Development",
+  "enabled": "Enabled",
+  "comments": "Comments",
+  "verified": "Verified",
+  "configureable": "Configureable",
+  "change_boot": "Changes boot",
+  "need_ramdisk": "Needs Ramdisk"
 }

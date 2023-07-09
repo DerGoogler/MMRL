@@ -21,6 +21,7 @@ import UpdateIcon from "@mui/icons-material/Update";
 import DataUsageIcon from "@mui/icons-material/DataUsage";
 import SupportIcon from "@mui/icons-material/Support";
 import { os } from "@Native/Os";
+import { useStrings } from "@Hooks/useStrings";
 
 type Extra = {
   title: string;
@@ -39,6 +40,7 @@ type Action<T> = { type: "loading" } | { type: "fetched"; payload: T } | { type:
 
 function DescriptonActivity() {
   const { context, extra } = useActivity<Extra>();
+  const { strings } = useStrings();
   const { theme } = useTheme();
   const { desc, title, request, prop_url, module_options } = extra;
 
@@ -184,7 +186,7 @@ function DescriptonActivity() {
                 <ViewModuleOptionsButton>
                   <Stack spacing={0.8} direction="row" alignItems="center">
                     <VerifiedIcon sx={{ fontSize: 14 }} />
-                    <span style={{ fontSize: 14 }}>Verified</span>
+                    <span style={{ fontSize: 14 }}>{strings.verified}</span>
                   </Stack>
                 </ViewModuleOptionsButton>
               )}
@@ -193,7 +195,7 @@ function DescriptonActivity() {
                 <ViewModuleOptionsButton>
                   <Stack spacing={0.8} direction="row" alignItems="center">
                     <SettingsIcon sx={{ fontSize: 14 }} />
-                    <span style={{ fontSize: 14 }}>Configureable</span>
+                    <span style={{ fontSize: 14 }}>{strings.configureable}</span>
                   </Stack>
                 </ViewModuleOptionsButton>
               )}
@@ -202,7 +204,7 @@ function DescriptonActivity() {
                 <ViewModuleOptionsButton>
                   <Stack spacing={0.8} direction="row" alignItems="center">
                     <RestartAltIcon sx={{ fontSize: 14 }} />
-                    <span style={{ fontSize: 14 }}>Changes boot</span>
+                    <span style={{ fontSize: 14 }}>{strings.change_boot}</span>
                   </Stack>
                 </ViewModuleOptionsButton>
               )}
@@ -211,7 +213,7 @@ function DescriptonActivity() {
                 <ViewModuleOptionsButton>
                   <Stack spacing={0.8} direction="row" alignItems="center">
                     <DataUsageIcon sx={{ fontSize: 14 }} />
-                    <span style={{ fontSize: 14 }}>Needs Ramdisk</span>
+                    <span style={{ fontSize: 14 }}>{strings.need_ramdisk}</span>
                   </Stack>
                 </ViewModuleOptionsButton>
               )}

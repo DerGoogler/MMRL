@@ -5,7 +5,7 @@ import { UI } from "@Native/components/UI";
 import { defaultComposer } from "default-composer";
 import { useNativeStorage } from "./useNativeStorage";
 import { os } from "@Native/Os";
-import { Languages, languages_map } from "./../language/languages";
+import { Languages, languages_map } from "../locales/languages";
 import { useEventCallback } from "usehooks-ts";
 
 export namespace Settings {
