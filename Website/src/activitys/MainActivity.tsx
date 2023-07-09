@@ -231,4 +231,4 @@ const MainActivity = (): JSX.Element => {
   );
 };
 
-export default MainActivity;
+export { MainActivity };

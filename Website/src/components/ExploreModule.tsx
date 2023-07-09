@@ -65,7 +65,7 @@ export const ExploreModule = (props: Props) => {
   return (
     <StyledCard elevation={0}>
       <Box sx={{ p: 2, display: "flex" }}>
-        <Stack spacing={0.5} style={{ flexGrow: 1 }}>
+        <Stack spacing={0.5} style={{ flexGrow: 1 }} onClick={handleOpen}>
           <Typography fontWeight={700} color="text.primary">
             {prop_url.name}
           </Typography>{" "}
@@ -97,10 +97,6 @@ export const ExploreModule = (props: Props) => {
               <VerifiedRounded sx={{ fontSize: 14 }} />
             </StyledIconButton>
           )}
-
-          <StyledIconButton style={{ width: 30, height: 30 }} onClick={handleOpen}>
-            <DescriptionIcon sx={{ fontSize: 14 }} />
-          </StyledIconButton>
 
           <StyledIconButton style={{ width: 30, height: 30 }} onClick={handleDownload}>
             <FileDownloadIcon sx={{ fontSize: 14 }} />

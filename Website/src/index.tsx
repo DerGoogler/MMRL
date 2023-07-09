@@ -8,7 +8,7 @@ import { ConfirmProvider } from "material-ui-confirm";
 import { SettingsProvider } from "@Hooks/useSettings";
 import { StringProvider } from "@Hooks/useStrings";
 import { Preventer, render } from "react-render-tools";
-import MainActivity from "@Activitys/MainActivity";
+import { MainActivity } from "@Activitys/MainActivity";
 import { os } from "@Native/Os";
 import { RepoProvider } from "@Hooks/useRepos";
 
