@@ -160,10 +160,10 @@ declare global {
 
   interface Module {
     id: string;
-    last_update: number;
+    last_update: string;
     notes_url: string;
     prop_url: ModuleProps;
-    stars: number;
+    stars: string;
     zip_url: string;
   }
 
@@ -182,9 +182,9 @@ declare global {
     mmrlNoComments?: string;
 
     // Fox's Mmm supported properties
-    minApi?: number;
-    maxApi?: number;
-    minMagisk?: number;
+    minApi?: string;
+    maxApi?: string;
+    minMagisk?: string;
     needRamdisk?: string;
     support?: string;
     donate?: string;

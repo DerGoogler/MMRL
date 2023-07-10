@@ -11,6 +11,9 @@ import { Button, styled } from "@mui/material";
 import { useSettings, useTheme } from "@Hooks/useSettings";
 import useShadeColor from "@Hooks/useShadeColor";
 import { CommentsActivity } from "./CommentsActivity";
+import SupportIcon from "@mui/icons-material/Support";
+import { os } from "@Native/Os";
+import { useStrings } from "@Hooks/useStrings";
 
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -18,10 +21,9 @@ import VerifiedIcon from "@mui/icons-material/Verified";
 import SettingsIcon from "@mui/icons-material/Settings";
 import CommentIcon from "@mui/icons-material/Comment";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import DeviceUnknownIcon from "@mui/icons-material/DeviceUnknown";
 import DataUsageIcon from "@mui/icons-material/DataUsage";
-import SupportIcon from "@mui/icons-material/Support";
-import { os } from "@Native/Os";
-import { useStrings } from "@Hooks/useStrings";
+import ModuleSpecsActivity from "./ModuleSpecsActivity";
 
 type Extra = {
   title: string;
@@ -184,32 +186,24 @@ function DescriptonActivity() {
                 </ViewModuleOptionsButton>
               )}
 
-              {prop_url.mmrlConfig && (
-                <ViewModuleOptionsButton>
-                  <Stack spacing={0.8} direction="row" alignItems="center">
-                    <SettingsIcon sx={{ fontSize: 14 }} />
-                    <span style={{ fontSize: 14 }}>{strings.configureable}</span>
-                  </Stack>
-                </ViewModuleOptionsButton>
-              )}
-
-              {prop_url.changeBoot === "true" && (
-                <ViewModuleOptionsButton>
-                  <Stack spacing={0.8} direction="row" alignItems="center">
-                    <RestartAltIcon sx={{ fontSize: 14 }} />
-                    <span style={{ fontSize: 14 }}>{strings.change_boot}</span>
-                  </Stack>
-                </ViewModuleOptionsButton>
-              )}
-
-              {prop_url.needRamdisk === "true" && (
-                <ViewModuleOptionsButton>
-                  <Stack spacing={0.8} direction="row" alignItems="center">
-                    <DataUsageIcon sx={{ fontSize: 14 }} />
-                    <span style={{ fontSize: 14 }}>{strings.need_ramdisk}</span>
-                  </Stack>
-                </ViewModuleOptionsButton>
-              )}
+              <ViewModuleOptionsButton
+                onClick={() => {
+                  context.pushPage({
+                    component: ModuleSpecsActivity,
+                    props: {
+                      key: "comments_" + prop_url.id,
+                      extra: {
+                        prop_url: prop_url,
+                      },
+                    },
+                  });
+                }}
+              >
+                <Stack spacing={0.8} direction="row" alignItems="center">
+                  <DeviceUnknownIcon sx={{ fontSize: 14 }} />
+                  <span style={{ fontSize: 14 }}>Specs</span>
+                </Stack>
+              </ViewModuleOptionsButton>
 
               {prop_url.support && (
                 <ViewModuleOptionsButton
