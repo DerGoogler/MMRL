@@ -19,6 +19,10 @@ export type SetValue<T> = Dispatch<SetStateAction<T>, T>;
 
 export const nativeStorage = os.isAndroid ? window.__nativeStorage__ : window.localStorage;
 
+if (window.__nativeStorage__) {
+  window.__nativeStorage__.defineName("localstorage");
+}
+
 export function useNativeStorage<T>(key: string, initialValue: T): [T, SetValue<T>] {
   const log = useLog("useNativeStorage");
   // Get from local storage then

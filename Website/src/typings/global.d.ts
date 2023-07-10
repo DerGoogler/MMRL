@@ -85,7 +85,7 @@ declare global {
      *
      * - This interface is not configurable
      */
-    readonly __nativeStorage__: Pick<Storage, "getItem" | "setItem" | "removeItem" | "clear">;
+    readonly __nativeStorage__: Pick<Storage, "getItem" | "setItem" | "removeItem" | "clear"> & { defineName: (name: string) => void };
   }
 
   interface Window extends AndroidWindow<any> {}

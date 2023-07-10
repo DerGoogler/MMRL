@@ -40,28 +40,6 @@ public class NativeOS {
         Toast.makeText(this.ctx, content, duration).show();
     }
 
-    @Deprecated
-    @JavascriptInterface
-    public void log(String TAG, String message) {
-        Log.i(TAG, message);
-    }
-
-    @JavascriptInterface
-    public void logi(String TAG, String message) {
-        Log.i(TAG, message);
-    }
-
-    @JavascriptInterface
-    public void logw(String TAG, String message) {
-        Log.w(TAG, message);
-    }
-
-    @JavascriptInterface
-    public void loge(String TAG, String message) {
-        Log.e(TAG, message);
-    }
-
-
     @JavascriptInterface
     public String getSchemeParam(String param) {
         Intent intent = ((Activity) this.ctx).getIntent();
