@@ -6,6 +6,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import com.dergoogler.core.NativeFs;
+import com.dergoogler.core.NativeLog;
 import com.dergoogler.core.NativeOS;
 import com.dergoogler.core.NativeProperties;
 import com.dergoogler.core.NativeStorage;
@@ -53,6 +54,7 @@ public class MainActivity extends CordovaActivity {
         wv.addJavascriptInterface(new NativeOS(this), "__os__");
         wv.addJavascriptInterface(new NativeStorage(this), "__nativeStorage__");
         wv.addJavascriptInterface(new NativeProperties(), "__properties__");
+        wv.addJavascriptInterface(new NativeLog(), "__log__");
 
     }
 }

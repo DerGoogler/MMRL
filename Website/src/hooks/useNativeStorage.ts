@@ -7,6 +7,7 @@ import { useCallback, useEffect } from "react";
 import { useEventCallback, useEventListener } from "usehooks-ts";
 import { os } from "@Native/Os";
 import { Dispatch, SetStateAction, useStateCallback } from "./useStateCallback";
+import { useLog } from "./native/useLog";
 
 declare global {
   interface WindowEventMap {
@@ -19,6 +20,7 @@ export type SetValue<T> = Dispatch<SetStateAction<T>, T>;
 export const nativeStorage = os.isAndroid ? window.__nativeStorage__ : window.localStorage;
 
 export function useNativeStorage<T>(key: string, initialValue: T): [T, SetValue<T>] {
+  const log = useLog("useNativeStorage");
   // Get from local storage then
 
   // parse stored json or return initialValue
@@ -35,7 +37,7 @@ export function useNativeStorage<T>(key: string, initialValue: T): [T, SetValue<
 
       return item ? (parseJSON(item) as T) : initialValue;
     } catch (error) {
-      console.warn(`Error reading nativeStorage key “${key}”:`, error);
+      log.w(`Error reading nativeStorage key “${key}”: ${error}`);
 
       return initialValue;
     }
@@ -55,7 +57,7 @@ export function useNativeStorage<T>(key: string, initialValue: T): [T, SetValue<
     // Prevent build error "window is undefined" but keeps working
 
     if (typeof window === "undefined") {
-      console.warn(`Tried setting localStorage key “${key}” even though environment is not a client`);
+      log.w(`Tried setting localStorage key “${key}” even though environment is not a client`);
     }
 
     try {
@@ -75,7 +77,7 @@ export function useNativeStorage<T>(key: string, initialValue: T): [T, SetValue<
 
       // window.dispatchEvent(new Event("local-storage"));
     } catch (error) {
-      console.warn(`Error setting localStorage key “${key}”:`, error);
+      log.w(`Error setting localStorage key “${key}”: ${error}`);
     }
   });
 

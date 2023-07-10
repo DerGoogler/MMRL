@@ -11,5 +11,9 @@ cmake_minimum_required(VERSION 3.4.1)
 # and CMake builds them for you. When you build your app, Gradle
 # automatically packages shared libraries with your APK.
 
-add_library(native-lib SHARED
-            native.cpp)
+
+add_library(native-log-lib SHARED
+            log.cpp)
+
+add_library(native-properties-lib SHARED
+        properties.cpp)

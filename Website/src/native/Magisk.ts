@@ -1,9 +1,7 @@
-import { Log } from "./Log";
 import { Native } from "./Native";
 import { Shell } from "./Shell";
 
 class MagiskClass extends Native {
-  private log: Log = new Log(this.constructor.name);
   /**
    * Get current installed Magisk version code
    */
@@ -45,7 +43,7 @@ class MagiskClass extends Native {
     if (this.isAndroid) {
       Shell.exec(`magisk --install-module ${path}`);
     } else {
-      this.log.e("Error installing Magisk module.");
+      console.error("Error installing Magisk module.");
     }
   }
 
@@ -57,7 +55,7 @@ class MagiskClass extends Native {
     if (this.isAndroid) {
       Shell.exec(`magisk --remove-modules`);
     } else {
-      this.log.e("Error removing Magisk modules.");
+      console.error("Error removing Magisk modules.");
     }
   }
 }

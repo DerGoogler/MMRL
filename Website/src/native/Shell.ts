@@ -1,4 +1,3 @@
-import { Log } from "@Native/Log";
 import { Native } from "./Native";
 
 interface IShell {

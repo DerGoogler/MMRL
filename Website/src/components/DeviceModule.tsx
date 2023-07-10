@@ -1,7 +1,6 @@
 import { Card, Ripple, Switch } from "react-onsenui";
 import Properties from "@js.properties/properties";
 import File from "@Native/File";
-import { Log } from "@Native/Log";
 import { DeleteRounded, RefreshRounded } from "@mui/icons-material";
 import React from "react";
 import { useDarkmode } from "@Hooks/useDarkmode";
@@ -13,6 +12,7 @@ import { useActivity } from "@Hooks/useActivity";
 import { ConfigureActivity } from "@Activitys/ConfigureActivity";
 import { StyledCard } from "./StyledCard";
 import { StyledIconButton } from "./StyledIconButton";
+import { useLog } from "@Hooks/native/useLog";
 
 interface Props {
   module: string;
@@ -29,7 +29,7 @@ const DeviceModule = (props: Props) => {
 
   const isDarkmode = useDarkmode();
 
-  const log = new Log("DeviceModule");
+  const log = useLog("DeviceModule");
 
   const module = props.module;
 
@@ -82,7 +82,7 @@ const DeviceModule = (props: Props) => {
                     log.i(
                       strings.formatString(strings.module_enabled_LOG, {
                         name: module,
-                      })
+                      }) as string
                     );
                   }
                 }
@@ -92,7 +92,7 @@ const DeviceModule = (props: Props) => {
                     log.i(
                       strings.formatString(strings.module_disabled_LOG, {
                         name: module,
-                      })
+                      }) as string
                     );
                   }
                 }

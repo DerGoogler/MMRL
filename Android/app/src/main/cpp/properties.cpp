@@ -1,6 +1,7 @@
 #include <jni.h>
 #include <cstring>
 #include <sys/system_properties.h>
+//#include <cutils/properties.h>
 
 extern "C"
 JNIEXPORT jstring JNICALL

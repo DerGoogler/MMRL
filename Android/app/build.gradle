@@ -18,7 +18,7 @@ android {
         versionCode 160
         externalNativeBuild {
             cmake {
-                cppFlags ""
+                cppFlags "-llog"
                 arguments "-DANDROID_STL=c++_shared"
             }
         }

@@ -12,6 +12,7 @@ import { Android12Switch } from "@Components/Android12Switch";
 import ReactFromJSON from "react-from-json";
 import { os } from "@Native/Os";
 import { useTheme } from "@Hooks/useSettings";
+import { useLog } from "@Hooks/native/useLog";
 
 type Extra = {
   modulename: string;
@@ -70,6 +71,7 @@ namespace ConfigList {
 }
 
 const ConfigureActivity = () => {
+  const log = useLog("ConfigureActivity");
   const { strings } = useStrings();
   const { theme } = useTheme();
   const { context, extra } = useActivity<Extra>();
@@ -82,7 +84,7 @@ const ConfigureActivity = () => {
       try {
         return value === "undefined" ? undefined : JSON.parse(value ?? "");
       } catch (e) {
-        console.log("parsing error on", { value });
+        log.i("parsing error on " + value);
         return e as Error;
       }
     }
