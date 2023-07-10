@@ -13,10 +13,8 @@ bin/
 gen/
 *.cxx
 app/.cxx/*
-app/src/main/assets/www/*
-!app/src/main/assets/www/index.html
-!app/src/main/assets/www/cordova.js
-!app/src/main/assets/www/cordova_plugins.js
+app/src/main/assets/www/bundle/*
+app/src/main/assets/www/files/*
 
 # Local configuration file (sdk path, etc)
 local.properties

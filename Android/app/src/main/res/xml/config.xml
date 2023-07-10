@@ -11,9 +11,7 @@
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
 
-<!--    <platform name="android">-->
-<!--        <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">-->
-<!--            <application android:usesCleartextTraffic="true" />-->
-<!--        </edit-config>-->
-<!--    </platform>-->
+    <feature name="Terminal">
+        <param name="android-package" value="com.dergoogler.plugin.TerminalPlugin" />
+    </feature>
 </widget>

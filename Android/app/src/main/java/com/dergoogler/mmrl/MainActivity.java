@@ -13,7 +13,7 @@ import com.dergoogler.core.NativeStorage;
 import com.dergoogler.core.NativeShell;
 import com.dergoogler.core.NativeBuildConfig;
 
-import org.apache.cordova.CordovaActivity;
+import org.apache.cordova.*;
 
 public class MainActivity extends CordovaActivity {
     @Override

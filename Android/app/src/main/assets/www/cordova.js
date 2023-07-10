@@ -19,7 +19,7 @@
  under the License.
 */
 
-if (window["os"] != undefined) {
+if (window["__os__"] != undefined) {
   (function () {
     var PLATFORM_VERSION_BUILD_LABEL = "10.1.2";
     // file: src/scripts/require.js
