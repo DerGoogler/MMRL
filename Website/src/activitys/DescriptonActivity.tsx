@@ -7,7 +7,7 @@ import { Page } from "@Components/onsenui/Page";
 import { StyledCard } from "@Components/StyledCard";
 import Stack from "@mui/material/Stack";
 import { StyledSection } from "@Components/StyledSection";
-import { Button, styled } from "@mui/material";
+import { Alert, AlertTitle, Button, styled } from "@mui/material";
 import { useSettings, useTheme } from "@Hooks/useSettings";
 import useShadeColor from "@Hooks/useShadeColor";
 import { CommentsActivity } from "./CommentsActivity";
@@ -24,6 +24,7 @@ import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import DeviceUnknownIcon from "@mui/icons-material/DeviceUnknown";
 import DataUsageIcon from "@mui/icons-material/DataUsage";
 import ModuleSpecsActivity from "./ModuleSpecsActivity";
+import { parseAndroidVersion } from "@Util/parseAndroidVersion";
 
 type Extra = {
   title: string;
@@ -223,6 +224,13 @@ function DescriptonActivity() {
                 </ViewModuleOptionsButton>
               )}
             </Stack>
+
+            {prop_url.minApi && os.sdk <= Number(prop_url.minApi) && (
+              <Alert style={{ borderRadius: 0 }} severity="warning">
+                <AlertTitle>Unsupported</AlertTitle>
+                Module requires {parseAndroidVersion(prop_url.minApi)}
+              </Alert>
+            )}
           </StyledCard>
 
           <Markup children={state.data} style={{ marginBottom: 55 }} />

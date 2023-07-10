@@ -75,7 +75,7 @@ class OsClass extends Native {
     if (this.isAndroid) {
       return this.getInterface.sdk();
     } else {
-      return 0;
+      return 40;
     }
   }
 
