@@ -57,7 +57,7 @@ export function useNativeStorage<T>(key: string, initialValue: T): [T, SetValue<
 
   // ... persists the new value to localStorage.
 
-  const setValue: SetValue<T> = useEventCallback((value, callback) => {
+  const setValue: SetValue<T> = (value, callback) => {
     // Prevent build error "window is undefined" but keeps working
 
     if (typeof window === "undefined") {
@@ -83,7 +83,7 @@ export function useNativeStorage<T>(key: string, initialValue: T): [T, SetValue<
     } catch (error) {
       log.w(`Error setting localStorage key “${key}”: ${error}`);
     }
-  });
+  };
 
   useEffect(() => {
     setStoredValue(readValue());

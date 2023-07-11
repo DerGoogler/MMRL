@@ -4,12 +4,13 @@ import { StyledSection } from "./StyledSection";
 
 interface Props {
   element: React.ElementType;
+  renderFixed?(): void;
 }
 
 const TabWrapper = (props: Props) => {
   const Element = props.element;
   return (
-    <Page>
+    <Page renderFixed={props.renderFixed}>
       <StyledSection>
         <Element />
       </StyledSection>

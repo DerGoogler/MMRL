@@ -14,4 +14,8 @@
     <feature name="Terminal">
         <param name="android-package" value="com.dergoogler.plugin.TerminalPlugin" />
     </feature>
+
+    <feature name="Chooser">
+        <param name="android-package" value="com.dergoogler.plugin.ChooserPlugin" />
+    </feature>
 </widget>

@@ -1,9 +1,5 @@
 package com.dergoogler.plugin;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.util.Log;
 
 import com.topjohnwu.superuser.CallbackList;
@@ -11,7 +7,6 @@ import com.topjohnwu.superuser.Shell;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
-import org.apache.cordova.LOG;
 import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,19 +24,31 @@ public class TerminalPlugin extends CordovaPlugin {
             case "exec":
                 String cmd = data.getString(0);
 
-                List<String> callbackList = new CallbackList<String>() {
-                    @Override
-                    public void onAddElement(String s) {
-                        PluginResult result = new PluginResult(PluginResult.Status.OK, s);
-                        result.setKeepCallback(true);
-                        callbackContext.sendPluginResult(result);
+                cordova.getThreadPool().execute(() -> {
+                    List<String> callbackList = new CallbackList<String>() {
+                        @Override
+                        public void onAddElement(String s) {
+                            PluginResult result = new PluginResult(PluginResult.Status.OK, s);
+                            result.setKeepCallback(true);
+                            callbackContext.sendPluginResult(result);
 
-                    }
-                };
+                        }
+                    };
 
-                Shell.cmd(cmd)
-                        .to(callbackList)
-                        .submit();
+                    Shell.cmd(cmd)
+                            .to(callbackList)
+                            .submit(result -> {
+                                if (result.isSuccess()) {
+                                    callbackContext.error(1);
+                                } else {
+                                    callbackContext.error(0);
+                                }
+                            });
+
+                });
+
+                PluginResult pluginResult = new PluginResult(PluginResult.Status.NO_RESULT);
+                pluginResult.setKeepCallback(true); // Keep callback
 
                 return true;
 

@@ -19,6 +19,7 @@ import { RouterNavigator } from "@Components/onsenui/RouterNavigator";
 import { DrawerFragment } from "./fragments/DrawerFragment";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import { Page } from "@Components/onsenui/Page";
+import TerminalActivity from "./TerminalActivity";
 
 const MainActivity = (): JSX.Element => {
   const { settings } = useSettings();
@@ -54,6 +55,7 @@ const MainActivity = (): JSX.Element => {
   const ignoreThat = RouterUtil.init([
     {
       component: CheckRoot(),
+      // component: TerminalActivity,
       props: {
         key: "main",
         context: {

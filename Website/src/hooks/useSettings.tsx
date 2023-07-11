@@ -21,6 +21,7 @@ export namespace Settings {
     accent_scheme: Settings.AccentScheme;
     eruda_console_enabled: boolean;
     disabled_repos: string[];
+    __experimental_local_install: boolean;
   }
 
   export type AccentScheme = {
@@ -120,6 +121,7 @@ export const INITIAL_SETTINGS: Settings.Root = {
   accent_scheme: accent_colors[0],
   eruda_console_enabled: false,
   disabled_repos: [],
+  __experimental_local_install: false,
 };
 
 const monet = {
@@ -235,7 +237,7 @@ export const SettingsProvider = (props: React.PropsWithChildren) => {
           <SettingsContext.Provider
             value={{
               settings: defaultComposer(INITIAL_SETTINGS, settings),
-              setSettings: useEventCallback((name, state, callback) => {
+              setSettings: (name, state, callback) => {
                 setSettings(
                   (prev) => {
                     const newValue = state instanceof Function ? state(prev[name]) : state;
@@ -246,7 +248,7 @@ export const SettingsProvider = (props: React.PropsWithChildren) => {
                   },
                   (state) => callback && callback(state[name])
                 );
-              }),
+              },
             }}
             children={props.children}
           />

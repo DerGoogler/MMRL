@@ -5,8 +5,10 @@ cordova.define("cordova/plugin_list", function (require, exports, module) {
       id: "com.dergoogler.plugin.terminal",
       clobbers: ["Terminal"],
     },
+    {
+      file: "plugins/com.dergoogler.plugin/www/chooser.js",
+      id: "com.dergoogler.plugin.chooser",
+      clobbers: ["Chooser"],
+    },
   ];
-  module.exports.metadata = {
-    "cordova-plugin-terminal": "1.0.0",
-  };
 });
