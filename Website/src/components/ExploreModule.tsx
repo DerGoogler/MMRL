@@ -44,10 +44,9 @@ export const ExploreModule = (props: Props) => {
           title: prop_url.name,
           prop_url: prop_url,
           module_options: props.moduleOptions,
+          zip_url: zip_url,
           request: {
-            tpe: "text",
             url: notes_url,
-            zip_url: zip_url,
           },
         },
       },

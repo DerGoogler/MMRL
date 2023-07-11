@@ -2,16 +2,10 @@ import { Page } from "@Components/onsenui/Page";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import { useActivity } from "@Hooks/useActivity";
 import { useStrings } from "@Hooks/useStrings";
-import { Divider, List, ListItem, ListItemButton, ListSubheader } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import React from "react";
-import File from "@Native/File";
-import { StyledListItemText } from "@Components/StyledListItemText";
-import { Android12Switch } from "@Components/Android12Switch";
-import { os } from "@Native/Os";
 import { useSettings, useTheme } from "@Hooks/useSettings";
 import Giscus from "@giscus/react";
-import { StyledSection } from "@Components/StyledSection";
+import { RelativeStyledSection } from "@Components/StyledSection";
 
 type Extra = {
   id: string;
@@ -36,7 +30,7 @@ const CommentsActivity = () => {
 
   return (
     <Page renderToolbar={renderToolbar}>
-      <StyledSection>
+      <RelativeStyledSection>
         <Giscus
           repo="DerGoogler/MMRL"
           repoId="R_kgDOHO8GRQ"
@@ -52,7 +46,7 @@ const CommentsActivity = () => {
           lang={settings.language.value}
           loading="lazy"
         />
-      </StyledSection>
+      </RelativeStyledSection>
     </Page>
   );
 };

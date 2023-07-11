@@ -7,6 +7,7 @@ import { useStrings } from "@Hooks/useStrings";
 import { useActivity } from "@Hooks/useActivity";
 import { StyledListItemText } from "@Components/StyledListItemText";
 import { parseAndroidVersion } from "@Util/parseAndroidVersion";
+import { RelativeStyledSection } from "@Components/StyledSection";
 
 interface Extra {
   prop_url: ModuleProps;
@@ -29,41 +30,51 @@ function ModuleSpecsActivity() {
     );
   };
 
-  
-
   return (
     <Page renderToolbar={renderToolbar}>
-      <List subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>Default</ListSubheader>}>
-        <ListItem>
-          <StyledListItemText primary="Changes boot" secondary={prop_url.changeBoot === "true" ? "Yes" : "No"} />
-        </ListItem>
+      <RelativeStyledSection zeroMargin>
+        <List subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>Default</ListSubheader>}>
+          <ListItem>
+            <StyledListItemText primary="Changes boot" secondary={prop_url.changeBoot === "true" ? "Yes" : "No"} />
+          </ListItem>
 
-        <ListItem>
-          <StyledListItemText primary="Needs ramdisk" secondary={prop_url.needRamdisk === "true" ? "Yes" : "No"} />
-        </ListItem>
+          <ListItem>
+            <StyledListItemText primary="Needs ramdisk" secondary={prop_url.needRamdisk === "true" ? "Yes" : "No"} />
+          </ListItem>
 
-        <ListItem>
-          <StyledListItemText primary="MMT-Reborn" secondary={prop_url.mmtReborn === "true" ? "Yes" : "No"} />
-        </ListItem>
-      </List>
+          <ListItem>
+            <StyledListItemText primary="MMT-Reborn" secondary={prop_url.mmtReborn === "true" ? "Yes" : "No"} />
+          </ListItem>
+        </List>
 
-      <List subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>Minimum</ListSubheader>}>
-        <ListItem>
-          <StyledListItemText primary="Operating System" secondary={prop_url.minApi ? parseAndroidVersion(prop_url.minApi) : "Undefined"} />
-        </ListItem>
+        <Divider />
 
-        <ListItem>
-          <StyledListItemText primary="Magisk" secondary={prop_url.minMagisk ? Magisk.PARSE_VERSION(prop_url.minMagisk) : "Undefined"} />
-        </ListItem>
-      </List>
+        <List subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>Minimum</ListSubheader>}>
+          <ListItem>
+            <StyledListItemText
+              primary="Operating System"
+              secondary={prop_url.minApi ? parseAndroidVersion(prop_url.minApi) : "Undefined"}
+            />
+          </ListItem>
 
-      <List subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>Recommended</ListSubheader>}>
-        <ListItem>
-          <StyledListItemText primary="Operating System" secondary={prop_url.maxApi ? parseAndroidVersion(prop_url.maxApi) : "Undefined"} />
-        </ListItem>
-      </List>
+          <ListItem>
+            <StyledListItemText primary="Magisk" secondary={prop_url.minMagisk ? Magisk.PARSE_VERSION(prop_url.minMagisk) : "Undefined"} />
+          </ListItem>
+        </List>
 
-      <Divider />
+        <Divider />
+
+        <List subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>Recommended</ListSubheader>}>
+          <ListItem>
+            <StyledListItemText
+              primary="Operating System"
+              secondary={prop_url.maxApi ? parseAndroidVersion(prop_url.maxApi) : "Undefined"}
+            />
+          </ListItem>
+        </List>
+
+        <Divider />
+      </RelativeStyledSection>
     </Page>
   );
 }

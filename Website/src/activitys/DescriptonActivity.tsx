@@ -6,7 +6,7 @@ import { Toolbar } from "@Components/onsenui/Toolbar";
 import { Page } from "@Components/onsenui/Page";
 import { StyledCard } from "@Components/StyledCard";
 import Stack from "@mui/material/Stack";
-import { StyledSection } from "@Components/StyledSection";
+import { RelativeStyledSection, StyledSection } from "@Components/StyledSection";
 import { Alert, AlertTitle, Button, styled } from "@mui/material";
 import { useSettings, useTheme } from "@Hooks/useSettings";
 import useShadeColor from "@Hooks/useShadeColor";
@@ -29,10 +29,11 @@ import { parseAndroidVersion } from "@Util/parseAndroidVersion";
 type Extra = {
   title: string;
   desc: string | undefined;
-  prop_url: ModuleProps;
-  module_options: any;
-  request: { url: string } | undefined;
-  zip_url: string;
+  prop_url?: ModuleProps;
+  module_options?: any;
+  type: "module" | "request";
+  request?: { url: string } | undefined;
+  zip_url?: string;
 };
 
 interface State<T> {
@@ -46,11 +47,11 @@ function DescriptonActivity() {
   const { context, extra } = useActivity<Extra>();
   const { strings } = useStrings();
   const { theme } = useTheme();
-  const { desc, title, request, prop_url, module_options } = extra;
+  const { desc, title, request, prop_url, zip_url, module_options } = extra;
 
   // Create better handler
-  const isVerified = module_options[prop_url.id]?.verified;
-  const _display = module_options[prop_url.id]?.display;
+  const isVerified = prop_url && module_options[prop_url.id]?.verified;
+  const _display = prop_url && module_options[prop_url.id]?.display;
 
   const initialState: State<string> = {
     error: undefined,
@@ -136,127 +137,137 @@ function DescriptonActivity() {
     );
   };
 
-  const handleDownload = () => {
-    os.open(extra.zip_url);
-  };
-
   return (
     <Page renderToolbar={renderToolbar}>
-      {!state.data ? (
-        <ProgressCircular
-          indeterminate
-          style={{
-            position: "absolute",
-            left: "50%",
-            top: "50%",
-            WebkitTransform: "translate(-50%, -50%)",
-            transform: "translate(-50%, -50%)",
-          }}
-        />
-      ) : (
-        <>
-          <StyledCard elevation={0} style={{ margin: "16px 8px 0px 8px" }}>
-            <Stack spacing={0.8} direction="row" alignItems="center" style={{ padding: 8 }}>
-              {!(prop_url.mmrlNoComments === "true") && (
-                <ViewModuleOptionsButton
-                  style={{ width: 39 }}
-                  onClick={() => {
-                    context.pushPage({
-                      component: CommentsActivity,
-                      props: {
-                        key: "comments_" + prop_url.id,
-                        extra: {
-                          id: prop_url.id,
-                        },
-                      },
-                    });
-                  }}
-                >
-                  <Stack spacing={0.8} direction="row" alignItems="center">
-                    <CommentIcon sx={{ fontSize: 14 }} />
-                  </Stack>
-                </ViewModuleOptionsButton>
-              )}
-
-              {isVerified && (
-                <ViewModuleOptionsButton>
-                  <Stack spacing={0.8} direction="row" alignItems="center">
-                    <VerifiedIcon sx={{ fontSize: 14 }} />
-                    <span style={{ fontSize: 14 }}>{strings.verified}</span>
-                  </Stack>
-                </ViewModuleOptionsButton>
-              )}
-
-              <ViewModuleOptionsButton
-                onClick={() => {
-                  context.pushPage({
-                    component: ModuleSpecsActivity,
-                    props: {
-                      key: "comments_" + prop_url.id,
-                      extra: {
-                        prop_url: prop_url,
-                      },
-                    },
-                  });
-                }}
-              >
-                <Stack spacing={0.8} direction="row" alignItems="center">
-                  <DeviceUnknownIcon sx={{ fontSize: 14 }} />
-                  <span style={{ fontSize: 14 }}>Specs</span>
-                </Stack>
-              </ViewModuleOptionsButton>
-
-              {prop_url.support && (
-                <ViewModuleOptionsButton
-                  onClick={() => {
-                    os.open(prop_url.support, {
-                      target: "_blank",
-                      features: {
-                        color: theme.palette.primary.main,
-                      },
-                    });
-                  }}
-                >
-                  <Stack spacing={0.8} direction="row" alignItems="center">
-                    <SupportIcon sx={{ fontSize: 14 }} />
-                    <span style={{ fontSize: 14 }}>Support</span>
-                  </Stack>
-                </ViewModuleOptionsButton>
-              )}
-            </Stack>
-
-            {prop_url.minApi && os.sdk <= Number(prop_url.minApi) && (
-              <Alert style={{ borderRadius: 0 }} severity="warning">
-                <AlertTitle>Unsupported</AlertTitle>
-                Module requires {parseAndroidVersion(prop_url.minApi)}
-              </Alert>
-            )}
-          </StyledCard>
-
-          <Markup children={state.data} style={{ marginBottom: 55 }} />
-
-          <div
+      <RelativeStyledSection zeroMargin>
+        {!state.data ? (
+          <ProgressCircular
+            indeterminate
             style={{
-              backgroundColor: theme.palette.background.default,
-              position: "fixed",
-              bottom: 0,
-              left: 0,
-              right: 0,
-              height: 55,
-              marginBottom: 0,
+              position: "absolute",
+              left: "50%",
+              top: "50%",
+              WebkitTransform: "translate(-50%, -50%)",
+              transform: "translate(-50%, -50%)",
             }}
-          >
-            <Stack spacing={0.8} direction="row" alignItems="center" style={{ padding: 8 }}>
-              <Button fullWidth variant="contained" disableElevation onClick={handleDownload} endIcon={<FileDownloadIcon />}>
-                {strings.download}
-              </Button>
-              {/* <Button fullWidth variant="contained" disableElevation onClick={() => {}}>
+          />
+        ) : (
+          <>
+            {prop_url && (
+              <StyledCard elevation={0} style={{ margin: "16px 8px 0px 8px" }}>
+                <Stack spacing={0.8} direction="row" alignItems="center" style={{ padding: 8 }}>
+                  {!(prop_url.mmrlNoComments === "true") && (
+                    <ViewModuleOptionsButton
+                      style={{ width: 39 }}
+                      onClick={() => {
+                        context.pushPage({
+                          component: CommentsActivity,
+                          props: {
+                            key: "comments_" + prop_url.id,
+                            extra: {
+                              id: prop_url.id,
+                            },
+                          },
+                        });
+                      }}
+                    >
+                      <Stack spacing={0.8} direction="row" alignItems="center">
+                        <CommentIcon sx={{ fontSize: 14 }} />
+                      </Stack>
+                    </ViewModuleOptionsButton>
+                  )}
+
+                  {isVerified && (
+                    <ViewModuleOptionsButton>
+                      <Stack spacing={0.8} direction="row" alignItems="center">
+                        <VerifiedIcon sx={{ fontSize: 14 }} />
+                        <span style={{ fontSize: 14 }}>{strings.verified}</span>
+                      </Stack>
+                    </ViewModuleOptionsButton>
+                  )}
+
+                  <ViewModuleOptionsButton
+                    onClick={() => {
+                      context.pushPage({
+                        component: ModuleSpecsActivity,
+                        props: {
+                          key: "comments_" + prop_url.id,
+                          extra: {
+                            prop_url: prop_url,
+                          },
+                        },
+                      });
+                    }}
+                  >
+                    <Stack spacing={0.8} direction="row" alignItems="center">
+                      <DeviceUnknownIcon sx={{ fontSize: 14 }} />
+                      <span style={{ fontSize: 14 }}>Specs</span>
+                    </Stack>
+                  </ViewModuleOptionsButton>
+
+                  {prop_url.support && (
+                    <ViewModuleOptionsButton
+                      onClick={() => {
+                        os.open(prop_url.support, {
+                          target: "_blank",
+                          features: {
+                            color: theme.palette.primary.main,
+                          },
+                        });
+                      }}
+                    >
+                      <Stack spacing={0.8} direction="row" alignItems="center">
+                        <SupportIcon sx={{ fontSize: 14 }} />
+                        <span style={{ fontSize: 14 }}>Support</span>
+                      </Stack>
+                    </ViewModuleOptionsButton>
+                  )}
+                </Stack>
+
+                {prop_url.minApi && os.sdk <= Number(prop_url.minApi) && (
+                  <Alert style={{ borderRadius: 0 }} severity="warning">
+                    <AlertTitle>Unsupported</AlertTitle>
+                    Module requires {parseAndroidVersion(prop_url.minApi)}
+                  </Alert>
+                )}
+              </StyledCard>
+            )}
+
+            <Markup children={state.data} style={{ marginBottom: 55 }} />
+
+            <div
+              style={{
+                backgroundColor: theme.palette.background.default,
+                position: "fixed",
+                bottom: 0,
+                left: 0,
+                right: 0,
+                height: 55,
+                marginBottom: 0,
+              }}
+            >
+              {zip_url && (
+                <Stack spacing={0.8} direction="row" alignItems="center" style={{ padding: 8 }}>
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    disableElevation
+                    onClick={() => {
+                      os.open(zip_url);
+                    }}
+                    endIcon={<FileDownloadIcon />}
+                  >
+                    {strings.download}
+                  </Button>
+                  {/* <Button fullWidth variant="contained" disableElevation onClick={() => {}}>
                 {strings.install}
               </Button> */}
-            </Stack>
-          </div>
-        </>
-      )}
+                </Stack>
+              )}
+            </div>
+          </>
+        )}
+      </RelativeStyledSection>
     </Page>
   );
 }

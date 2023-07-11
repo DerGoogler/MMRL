@@ -43,7 +43,7 @@ const StyledSearchInput = (props: any) => {
 };
 
 export const Searchbar = ({ placeholder, onChange }: SearchbarProps) => {
-  const {scheme} = useTheme();
+  const { scheme } = useTheme();
   const shade = useShadeColor();
   const { settings } = useSettings();
 
@@ -64,7 +64,7 @@ export const Searchbar = ({ placeholder, onChange }: SearchbarProps) => {
           p: "2px 4px",
           display: "flex",
           alignItems: "center",
-          width: 400,
+          width: "100%",
           bgcolor: settings.darkmode ? shade(scheme[900], -70) : "rgb(255, 255, 255)",
         }}
       >
@@ -91,6 +91,7 @@ export const Searchbar = ({ placeholder, onChange }: SearchbarProps) => {
               // },
             }}
             onChange={onChange}
+            fullWidth
           />
         </FormControl>
       </Paper>

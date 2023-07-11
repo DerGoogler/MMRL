@@ -12,6 +12,7 @@ import { ListPickerItem } from "@Components/ListPickerItem";
 import { languages_map } from "../locales/languages";
 import { os } from "@Native/Os";
 import { Android12Switch } from "@Components/Android12Switch";
+import { RelativeStyledSection } from "@Components/StyledSection";
 
 function SettingsActivity() {
   const { context } = useActivity();
@@ -35,51 +36,54 @@ function SettingsActivity() {
 
   return (
     <Page renderToolbar={renderToolbar}>
-      <List subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>{strings.appearance}</ListSubheader>}>
-        <ListItem>
-          <StyledListItemText id="switch-list-label-wifi" primary={strings.dark_theme} />
-          <Android12Switch
-            edge="end"
-            onChange={(e: any) => {
-              setSettings("darkmode", e.target.checked);
-            }}
-            checked={settings.darkmode}
-            inputProps={{
-              "aria-labelledby": "switch-list-label-wifi",
-            }}
-          />
-        </ListItem>
-        <ListPickerItem id="accent-color" targetSetting="accent_scheme" title={strings.accent_color} contentMap={accent_colors} />
-        <ListPickerItem id="language" targetSetting="language" title={strings.language} contentMap={languages_map} />
-      </List>
+      <RelativeStyledSection zeroMargin>
+        <List
+          subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>{strings.appearance}</ListSubheader>}
+        >
+          <ListItem>
+            <StyledListItemText id="switch-list-label-wifi" primary={strings.dark_theme} />
+            <Android12Switch
+              edge="end"
+              onChange={(e: any) => {
+                setSettings("darkmode", e.target.checked);
+              }}
+              checked={settings.darkmode}
+              inputProps={{
+                "aria-labelledby": "switch-list-label-wifi",
+              }}
+            />
+          </ListItem>
+          <ListPickerItem id="accent-color" targetSetting="accent_scheme" title={strings.accent_color} contentMap={accent_colors} />
+          <ListPickerItem id="language" targetSetting="language" title={strings.language} contentMap={languages_map} />
+        </List>
 
-      <Divider />
-      <List subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>Experimental</ListSubheader>}>
-        <ListItem>
-          <StyledListItemText
-            id="switch-list-__experimental_local_install"
-            primary={"Enable local install"}
-            secondary="Allows you to install local *.zip files"
-          />
-          <Android12Switch
-            edge="end"
-            onChange={(e: any) => {
-              setSettings("__experimental_local_install", e.target.checked);
-            }}
-            checked={settings.__experimental_local_install}
-            inputProps={{
-              "aria-labelledby": "switch-list-__experimental_local_install",
-            }}
-          />
-        </ListItem>
-      </List>
+        <Divider />
+        <List subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>Experimental</ListSubheader>}>
+          <ListItem>
+            <StyledListItemText
+              id="switch-list-__experimental_local_install"
+              primary={"Enable local install"}
+              secondary="Allows you to install local *.zip files"
+            />
+            <Android12Switch
+              edge="end"
+              onChange={(e: any) => {
+                setSettings("__experimental_local_install", e.target.checked);
+              }}
+              checked={settings.__experimental_local_install}
+              inputProps={{
+                "aria-labelledby": "switch-list-__experimental_local_install",
+              }}
+            />
+          </ListItem>
+        </List>
 
-      <Divider />
+        <Divider />
 
-      <List
-        subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>{strings.development}</ListSubheader>}
-      >
-        {/* <ListItem>
+        <List
+          subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>{strings.development}</ListSubheader>}
+        >
+          {/* <ListItem>
           <StyledListItemText id="switch-list-label-eruda" primary={"Eruda console"} secondary={"Useful for development and bugs"} />
           <Android12Switch
             edge="end"
@@ -92,32 +96,33 @@ function SettingsActivity() {
             }}
           />
         </ListItem> */}
-        <ListItemButton
-          onClick={() => {
-            os.open("https://github.com/DerGoogler/MMRL/issues", {
-              target: "_blank",
-              features: {
-                color: theme.palette.primary.main,
-              },
-            });
-          }}
-        >
-          <StyledListItemText id="switch-list-label-wifi" primary="Issues" secondary="Track our issues" />
-        </ListItemButton>
-      </List>
+          <ListItemButton
+            onClick={() => {
+              os.open("https://github.com/DerGoogler/MMRL/issues", {
+                target: "_blank",
+                features: {
+                  color: theme.palette.primary.main,
+                },
+              });
+            }}
+          >
+            <StyledListItemText id="switch-list-label-wifi" primary="Issues" secondary="Track our issues" />
+          </ListItemButton>
+        </List>
 
-      <Divider />
+        <Divider />
 
-      <ListItem>
-        <StyledListItemText
-          primary={
-            <span>
-              {BuildConfig.APPLICATION_ID} v{BuildConfig.VERSION_NAME} ({BuildConfig.VERSION_CODE})<br />
-              {os.isAndroid ? `${Magisk.VERSION_NAME} (${Magisk.VERSION_CODE})` : ""}
-            </span>
-          }
-        />
-      </ListItem>
+        <ListItem>
+          <StyledListItemText
+            primary={
+              <span>
+                {BuildConfig.APPLICATION_ID} v{BuildConfig.VERSION_NAME} ({BuildConfig.VERSION_CODE})<br />
+                {os.isAndroid ? `${Magisk.VERSION_NAME} (${Magisk.VERSION_CODE})` : ""}
+              </span>
+            }
+          />
+        </ListItem>
+      </RelativeStyledSection>
     </Page>
   );
 }

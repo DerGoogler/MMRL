@@ -10,7 +10,7 @@ import { useStrings } from "@Hooks/useStrings";
 import { Page } from "@Components/onsenui/Page";
 import { For } from "@Components/For";
 import { RecommendedRepo } from "./components/RecommendedRepo";
-import { StyledSection } from "@Components/StyledSection";
+import { RelativeStyledSection, StyledSection } from "@Components/StyledSection";
 import { LocalRepository } from "./components/LocalRepository";
 
 const RepoActivity = () => {
@@ -68,23 +68,23 @@ const RepoActivity = () => {
   return (
     <>
       <Page renderToolbar={renderToolbar}>
-        {/* <Searchbar placeholder={string("search_modules")} onButtonClick={() => {}} onInputChange={repoSearchFilter} /> */}
-
-        <For
-          each={filteredRepos}
-          fallback={() => (
-            <StyledSection>
-              <Typography variant="h6" sx={{ fontWeight: "bold" }} gutterBottom>
-                Recommended Repos
-              </Typography>
-              {recommended_repos.map((repo) => (
-                <RecommendedRepo key={"recomm_" + repo.module_count} name={repo.name} moduleCount={repo.module_count} link={repo.link} />
-              ))}
-            </StyledSection>
-          )}
-          catch={(e: Error | undefined) => <Box sx={(theme) => ({ color: theme.palette.text.primary })}>ERROR: {e?.message}</Box>}
-          render={(repo, index) => <LocalRepository key={"repo_" + index} repo={repo} />}
-        />
+        <RelativeStyledSection zeroMargin>
+          <For
+            each={filteredRepos}
+            fallback={() => (
+              <StyledSection>
+                <Typography variant="h6" sx={{ fontWeight: "bold" }} gutterBottom>
+                  Recommended Repos
+                </Typography>
+                {recommended_repos.map((repo) => (
+                  <RecommendedRepo key={"recomm_" + repo.module_count} name={repo.name} moduleCount={repo.module_count} link={repo.link} />
+                ))}
+              </StyledSection>
+            )}
+            catch={(e: Error | undefined) => <Box sx={(theme) => ({ color: theme.palette.text.primary })}>ERROR: {e?.message}</Box>}
+            render={(repo, index) => <LocalRepository key={"repo_" + index} repo={repo} />}
+          />
+        </RelativeStyledSection>
         <Dialog open={open} onClose={handleClose}>
           <DialogTitle>Add Repository</DialogTitle>
           <DialogContent>
