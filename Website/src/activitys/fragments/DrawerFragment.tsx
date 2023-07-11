@@ -9,7 +9,7 @@ import { Page } from "react-onsenui";
 type Props = {
   renderToolbar: () => JSX.Element;
   hideSplitter: () => void;
-  pushPage: (props: PushPropsCore) => void;
+  pushPage: (props: PushPropsCore<any>) => void;
 };
 
 export const DrawerFragment = (props: Props) => {

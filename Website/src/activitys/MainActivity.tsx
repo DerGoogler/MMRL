@@ -19,7 +19,6 @@ import { RouterNavigator } from "@Components/onsenui/RouterNavigator";
 import { DrawerFragment } from "./fragments/DrawerFragment";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import { Page } from "@Components/onsenui/Page";
-import TerminalActivity from "./TerminalActivity";
 
 const MainActivity = (): JSX.Element => {
   const { settings } = useSettings();
@@ -33,6 +32,8 @@ const MainActivity = (): JSX.Element => {
   const showSplitter = () => {
     setIsSplitterOpen(true);
   };
+
+  const url = React.useMemo(() => new URL(window.location.href), [window.location.href]);
 
   React.useEffect(() => {
     if (!os.hasStoragePermission()) {
@@ -55,7 +56,6 @@ const MainActivity = (): JSX.Element => {
   const ignoreThat = RouterUtil.init([
     {
       component: CheckRoot(),
-      // component: TerminalActivity,
       props: {
         key: "main",
         context: {
@@ -73,8 +73,14 @@ const MainActivity = (): JSX.Element => {
   const [routeConfig, setRouteConfig] = useState<any>(ignoreThat);
 
   const popPage = (options = {}) => {
-    setRouteConfig((prev: any) =>
-      RouterUtil.pop({
+    setRouteConfig((prev: any) => {
+      console.log(prev);
+
+      // if (prev.props.extra?.param) {
+      //   url.searchParams.delete(prev.param.name);
+      //   window.history.replaceState(null, null as unknown as string, url);
+      // }
+      return RouterUtil.pop({
         routeConfig: prev,
         options: {
           ...options,
@@ -84,16 +90,18 @@ const MainActivity = (): JSX.Element => {
             animation: "fade-md",
           },
         },
-      })
-    );
+      });
+    });
   };
 
   const pushPage = (props: PushPropsCore): void => {
     const route = {
       component: props.component,
+
       props: {
         key: props.props.key,
-        extra: props.props?.extra,
+        extra: props.props.extra ? props.props.extra : {},
+
         context: {
           popPage: (options = {}) => popPage(options),
           pushPage: (props: PushPropsCore) => pushPage(props),
@@ -108,14 +116,19 @@ const MainActivity = (): JSX.Element => {
 
     const options = {};
 
-    setRouteConfig((prev: any) =>
-      RouterUtil.push({
+    setRouteConfig((prev: any) => {
+      if (props.props.extra?.param) {
+        url.searchParams.set(props.props.extra.param.name, props.props.extra.param.value);
+        window.history.replaceState(null, null as unknown as string, url);
+      }
+
+      return RouterUtil.push({
         routeConfig: prev,
         route: route,
         options: options,
         key: props.props.key,
-      })
-    );
+      });
+    });
   };
 
   const onPostPush = () => {

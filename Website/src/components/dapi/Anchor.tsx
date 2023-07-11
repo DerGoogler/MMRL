@@ -117,7 +117,7 @@ export function Open(props: OpenProps) {
               if (!props.url) {
                 os.toast("Missing Url!", "short");
               } else {
-                context.pushPage<{}>({
+                context.pushPage<any>({
                   component: DescriptonActivity,
                   props: {
                     key: `desc_open${Math.round(Math.random() * 56)}`,

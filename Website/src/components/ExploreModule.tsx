@@ -38,9 +38,14 @@ export const ExploreModule = (props: Props) => {
   const handleOpen = () => {
     context.pushPage<any>({
       component: DescriptonActivity,
+
       props: {
         key: `view_${prop_url.id}`,
         extra: {
+          param: {
+            name: "module",
+            value: prop_url.id,
+          },
           title: prop_url.name,
           prop_url: prop_url,
           module_options: props.moduleOptions,

@@ -97,18 +97,26 @@ declare global {
 
   const NODE_ENV: string | undefined;
 
+  type PushPropsExtra<E = {}> = E & {
+    param?: {
+      name: string;
+      value: string;
+    };
+  };
+
   interface PushPropsCore<E = {}> {
     component: React.ElementType;
+
     props: {
       key: string;
-      extra: E;
+      extra: PushPropsExtra<E>;
       readonly popPage?: () => void;
-      readonly pushPage?: (...args: [props: PushPropsCore<E>]) => void; //
+      readonly pushPage?: (...args: [props: PushPropsCore<PushPropsExtra<E>>]) => void; //
     };
   }
 
   interface PushProps<E = {}> {
-    readonly extra: E;
+    readonly extra: PushPropsExtra<E>;
     // readonly context: {
     readonly popPage: () => void;
     readonly pushPage: <T>(props: PushPropsCore<T>) => void;
