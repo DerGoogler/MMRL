@@ -16,10 +16,10 @@
     "web:dev": "webpack --config webpack.dev.ts",
     "web:prod": "webpack --config webpack.prod.ts && rm ./../Android/app/src/main/assets/**/*.map",
     "app:dev": "npm run web:dev && cd ../Android && ./gradlew installDebug",
-    "assetfix:android-build": "node assetsfix.js android --build",
-    "assetfix:android-clean": "node assetsfix.js android --clean",
-    "assetfix:web-build": "node assetsfix.js web --build",
-    "assetfix:web-clean": "node assetsfix.js web --clean"
+    "assetfix:android-build": "node assetfix.js android --build",
+    "assetfix:android-clean": "node assetfix.js android --clean",
+    "assetfix:web-build": "node assetfix.js web --build",
+    "assetfix:web-clean": "node assetfix.js web --clean"
   },
   "resolutions": {
     "react": "^18.2.0",
