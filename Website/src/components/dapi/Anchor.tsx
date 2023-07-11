@@ -9,6 +9,10 @@ import SettingsActivity from "@Activitys/SettingsActivity";
 import RepoActivity from "@Activitys/RepoActivity";
 import DescriptonActivity from "@Activitys/DescriptonActivity";
 
+interface AnchorProps {
+  noIcon?: boolean;
+}
+
 const StyledAnchor = styled("div")(({ theme }) => {
   const { scheme } = useTheme();
   const s = {
@@ -32,8 +36,8 @@ const StyledAnchor = styled("div")(({ theme }) => {
   };
 });
 
-function Anchor(props: JSX.IntrinsicElements["a"]) {
-  const { href, children, ...rest } = props;
+function Anchor(props: JSX.IntrinsicElements["a"] & AnchorProps) {
+  const { href, children, noIcon, ...rest } = props;
 
   const { theme, scheme } = useTheme();
 
@@ -54,27 +58,32 @@ function Anchor(props: JSX.IntrinsicElements["a"]) {
         }}
         {...rest}
       >
-        {children}{" "}
-        <Icon
-          icon={LaunchRoundedIcon}
-          sx={{
-            fontSize: 16,
-            marginLeft: "2px",
-          }}
-        />
+        {children}
+        {!noIcon && (
+          <>
+            {" "}
+            <Icon
+              icon={LaunchRoundedIcon}
+              sx={{
+                fontSize: 16,
+                marginLeft: "2px",
+              }}
+            />
+          </>
+        )}
       </div>
     </StyledAnchor>
   );
 }
 
-interface OpenProps extends React.PropsWithChildren {
+interface OpenProps extends React.PropsWithChildren, AnchorProps {
   page: string;
   url?: string;
   title?: string;
 }
 
 export function Open(props: OpenProps) {
-  const { page, children } = props;
+  const { page, children, noIcon } = props;
   const { context } = useActivity();
 
   return (
@@ -128,14 +137,19 @@ export function Open(props: OpenProps) {
           }
         }}
       >
-        {children}{" "}
-        <Icon
-          icon={NorthEastRoundedIcon}
-          sx={{
-            fontSize: 16,
-            marginLeft: "2px",
-          }}
-        />
+        {children}
+        {!noIcon && (
+          <>
+            {" "}
+            <Icon
+              icon={NorthEastRoundedIcon}
+              sx={{
+                fontSize: 16,
+                marginLeft: "2px",
+              }}
+            />
+          </>
+        )}
       </div>
     </StyledAnchor>
   );
