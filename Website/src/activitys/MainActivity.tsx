@@ -33,8 +33,6 @@ const MainActivity = (): JSX.Element => {
     setIsSplitterOpen(true);
   };
 
-  const url = React.useMemo(() => new URL(window.location.href), [window.location.href]);
-
   React.useEffect(() => {
     if (!os.hasStoragePermission()) {
       os.requestStoargePermission();
@@ -73,14 +71,8 @@ const MainActivity = (): JSX.Element => {
   const [routeConfig, setRouteConfig] = useState<any>(ignoreThat);
 
   const popPage = (options = {}) => {
-    setRouteConfig((prev: any) => {
-      console.log(prev);
-
-      // if (prev.props.extra?.param) {
-      //   url.searchParams.delete(prev.param.name);
-      //   window.history.replaceState(null, null as unknown as string, url);
-      // }
-      return RouterUtil.pop({
+    setRouteConfig((prev: any) =>
+      RouterUtil.pop({
         routeConfig: prev,
         options: {
           ...options,
@@ -90,8 +82,8 @@ const MainActivity = (): JSX.Element => {
             animation: "fade-md",
           },
         },
-      });
-    });
+      })
+    );
   };
 
   const pushPage = (props: PushPropsCore): void => {
@@ -116,19 +108,14 @@ const MainActivity = (): JSX.Element => {
 
     const options = {};
 
-    setRouteConfig((prev: any) => {
-      if (props.props.extra?.param) {
-        url.searchParams.set(props.props.extra.param.name, props.props.extra.param.value);
-        window.history.replaceState(null, null as unknown as string, url);
-      }
-
-      return RouterUtil.push({
+    setRouteConfig((prev: any) =>
+      RouterUtil.push({
         routeConfig: prev,
         route: route,
         options: options,
         key: props.props.key,
-      });
-    });
+      })
+    );
   };
 
   const onPostPush = () => {
