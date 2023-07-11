@@ -2,3 +2,7 @@ package.json
 package-lock.json
 node_modules/
 __pycache__/
+
+# Ignore www bundles
+www/bundle/*
+www/files/*

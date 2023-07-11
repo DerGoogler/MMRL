@@ -13,8 +13,8 @@ bin/
 gen/
 *.cxx
 app/.cxx/*
-app/src/main/assets/www/bundle/*
-app/src/main/assets/www/files/*
+app/src/main/assets/www/*
+!/app/src/main/assets/**/.gitkeep
 
 # Local configuration file (sdk path, etc)
 local.properties

@@ -6,10 +6,12 @@ import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
 import * as fs from "fs";
 
+const outputPath = "./../www";
+
 const defConfig: Configuration = {
   output: {
     filename: "bundle/[name].bundle.js",
-    path: resolve(__dirname, "./../Android/app/src/main/assets/www"),
+    path: resolve(__dirname, outputPath),
     assetModuleFilename: "files/[name].[ext]",
   },
 };
@@ -106,7 +108,7 @@ const config: Configuration = {
 
   devServer: {
     static: {
-      directory: join(__dirname, "./../Android/app/src/main/assets/www"),
+      directory: join(__dirname, outputPath),
     },
     open: false,
     compress: true,
