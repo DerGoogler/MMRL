@@ -1,4 +1,4 @@
-import { Divider, List, ListItem, ListItemButton, ListItemIcon, ListSubheader, Switch } from "@mui/material";
+import { Divider, List, ListItem, ListItemButton, ListSubheader } from "@mui/material";
 import { BuildConfig } from "@Native/BuildConfig";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -84,19 +84,19 @@ function SettingsActivity() {
         <List
           subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>{strings.development}</ListSubheader>}
         >
-          {/* <ListItem>
-          <StyledListItemText id="switch-list-label-eruda" primary={"Eruda console"} secondary={"Useful for development and bugs"} />
-          <Android12Switch
-            edge="end"
-            onChange={(e: any) => {
-              setSettings("eruda_console_enabled", e.target.checked);
-            }}
-            checked={settings.eruda_console_enabled}
-            inputProps={{
-              "aria-labelledby": "switch-list-label-eruda",
-            }}
-          />
-        </ListItem> */}
+          <ListItem>
+            <StyledListItemText id="switch-list-label-eruda" primary={"Eruda console"} secondary={"Useful for development and bugs"} />
+            <Android12Switch
+              edge="end"
+              onChange={(e: any) => {
+                setSettings("eruda_console_enabled", e.target.checked);
+              }}
+              checked={settings.eruda_console_enabled}
+              inputProps={{
+                "aria-labelledby": "switch-list-label-eruda",
+              }}
+            />
+          </ListItem>
           <ListItemButton
             onClick={() => {
               os.open("https://github.com/DerGoogler/MMRL/issues", {

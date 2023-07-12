@@ -4,6 +4,7 @@ import { defaultComposer } from "default-composer";
 import { useNativeStorage } from "./useNativeStorage";
 import { languages_map } from "../locales/languages";
 import { os } from "@Native/Os";
+import { SetStateAction } from "./useStateCallback";
 
 export const accent_colors: Picker<string, any>[] = [
   {
@@ -154,9 +155,22 @@ export const INITIAL_SETTINGS: StorageDeclaration = {
   test: [],
 };
 
-export const SettingsContext = createContext<any>({
+export interface Context {
+  settings: StorageDeclaration;
+  setSettings<K extends keyof StorageDeclaration>(
+    key: K,
+    state: SetStateAction<StorageDeclaration[K]>,
+    callback?: (state: StorageDeclaration[K]) => void
+  ): void;
+}
+
+export const SettingsContext = createContext<Context>({
   settings: INITIAL_SETTINGS,
-  setSettings(key: any, state: any, callback?: (state: any) => void) {},
+  setSettings<K extends keyof StorageDeclaration>(
+    key: K,
+    state: SetStateAction<StorageDeclaration[K]>,
+    callback?: (state: StorageDeclaration[K]) => void
+  ) {},
 });
 
 export const useSettings = () => {
@@ -177,7 +191,7 @@ export const SettingsProvider = (props: React.PropsWithChildren) => {
               return {
                 ...prev,
                 [name]: state,
-              }; 
+              };
             },
             (state) => callback && callback(state[name])
           );
