@@ -1,11 +1,14 @@
-import { Box, Chip, Divider, Stack, Typography } from "@mui/material";
+import { Alert, AlertTitle, Box, CardMedia, Chip, Divider, Stack, Typography } from "@mui/material";
 import { useActivity } from "@Hooks/useActivity";
 import { useStrings } from "@Hooks/useStrings";
 import DescriptonActivity from "@Activitys/DescriptonActivity";
 import { VerifiedRounded } from "@mui/icons-material";
 import { os } from "@Native/Os";
 import { StyledCard } from "./StyledCard";
+import { useLowQualityModule } from "@Hooks/useLowQualityModule";
 import { StyledIconButton } from "./StyledIconButton";
+import { useSettings } from "@Hooks/useSettings";
+import { isDesktop } from "react-device-detect";
 
 interface Props {
   index: number;
@@ -15,6 +18,7 @@ interface Props {
 export const ExploreModule = (props: Props) => {
   const { context } = useActivity();
   const { strings } = useStrings();
+  const { settings } = useSettings();
 
   const { moduleOptions, index } = props;
   const { id, notes_url, zip_url, last_update, prop_url } = props.moduleProps;
@@ -22,6 +26,8 @@ export const ExploreModule = (props: Props) => {
   // Create better handler
   const isVerified = moduleOptions[id]?.verified;
   const _display = moduleOptions[id]?.display;
+
+  const isLowQuality = useLowQualityModule(prop_url);
 
   const formatDate = (date: Date) => {
     var hours = date.getHours();
@@ -60,6 +66,16 @@ export const ExploreModule = (props: Props) => {
 
   return (
     <StyledCard elevation={0}>
+      {!settings._disable_module_covers && prop_url.mmrlCover && (
+        // @ts-ignore
+        <CardMedia
+          component="img"
+          style={{ objectFit: "unset" }}
+          height={isDesktop ? "445px" : "181.500px"}
+          image={prop_url.mmrlCover}
+          alt={prop_url.name}
+        />
+      )}
       <Box sx={{ p: 2, display: "flex" }}>
         <Stack spacing={0.5} style={{ flexGrow: 1 }} onClick={handleOpen}>
           <Typography fontWeight={700} color="text.primary">
@@ -95,6 +111,12 @@ export const ExploreModule = (props: Props) => {
           )}
         </Stack>
       </Stack>
+      {settings._low_quality_module && isLowQuality && (
+        <Alert style={{ borderRadius: 0 }} severity="warning">
+          <AlertTitle>Low Quality</AlertTitle>
+          Module meets not the requirements of its props
+        </Alert>
+      )}
     </StyledCard>
   );
 };

@@ -45,6 +45,7 @@ description=<string>
 # MMRL supported properties
 mmrlConfig=<boolean>
 mmrlNoComments=<boolean>
+mmrlCover=<url>
 
 # Fox's Mmm supported properties
 minApi=<int>

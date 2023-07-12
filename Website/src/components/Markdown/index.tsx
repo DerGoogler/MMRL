@@ -7,7 +7,22 @@ import Warnmark from "../icons/Warnmark";
 import Icon from "@mui/material/Icon";
 import Typography from "@mui/material/Typography";
 import React from "react";
-import { Box, Chip, Container, Divider, Grid, Paper, Stack } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Button,
+  Card,
+  CardActionArea,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Chip,
+  Container,
+  Divider,
+  Grid,
+  Paper,
+  Stack,
+} from "@mui/material";
 import styled from "@emotion/styled";
 import hljs from "highlight.js";
 import { doc } from "googlers-tools";
@@ -28,6 +43,15 @@ const StyledDivider = styled(Divider)({
 });
 
 export const MarkdownOverrides: MarkdownToJSX.Overrides | undefined = {
+  alert: {
+    component: (props) => {
+      return (
+        <Alert severity={props.info ? "info" : props.warning ? "warning" : props.error ? "error" : props.success ? "success" : "info"}>
+          {props.children}
+        </Alert>
+      );
+    },
+  },
   a: {
     component: Anchor,
   },
@@ -66,7 +90,7 @@ export const MarkdownOverrides: MarkdownToJSX.Overrides | undefined = {
       return <Icon {...props}>{props.i}</Icon>;
     },
   },
-  typography: {
+  p: {
     component: Typography,
   },
   checkmark: {

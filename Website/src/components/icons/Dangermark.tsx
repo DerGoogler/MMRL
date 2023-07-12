@@ -29,7 +29,7 @@ const Dangermark = ({ color, size, className }: Props) => {
 };
 
 Dangermark.defaultProps = {
-  size: "14",
+  size: "16",
   color: "#cf222e",
 };
 

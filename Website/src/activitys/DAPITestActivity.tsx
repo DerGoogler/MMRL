@@ -39,7 +39,7 @@ const DAPITestActivity = () => {
   const { context, extra } = useActivity();
   const { strings } = useStrings();
 
-  const [description, setDescription] = React.useState("# Hello, world!");
+  const [description, setDescription] = React.useState("# Extended D-API\n\nThere are more components, try it out!\n\n## Alerts within a box\n\n<paper style=\"padding:8px;\" elevation={1}>\n    <stack spacing>\n        <alert error>This is an error alert — check it out!</alert>\n        <alert warning>This is a warning alert — check it out!</alert>\n        <alert info>This is an info alert — check it out!</alert>\n        <alert success>This is a success alert — check it out!</alert>\n    </stack>\n</paper>\n\n### Code\n\n```html\n<paper style=\"padding:8px;\" elevation={1}>\n    <stack spacing>\n        <alert error>This is an error alert — check it out!</alert>\n        <alert warning>This is a warning alert — check it out!</alert>\n        <alert info>This is an info alert — check it out!</alert>\n        <alert success>This is a success alert — check it out!</alert>\n    </stack>\n</paper>\n```");
 
   const markdownRef = React.useRef<TextareaMarkdownRef>(null);
   const markdownRefAdvanced = React.useRef<AceEditor>(null);
@@ -191,7 +191,7 @@ const DAPITestActivity = () => {
               />
             </TextareaMarkdown.Wrapper>
             {!os.isAndroid && isDesktop && (
-              <Preview className="preview">
+              <Preview>
                 <Markup children={description} />
               </Preview>
             )}
@@ -225,6 +225,7 @@ const Preview = styled("div")(({ theme }) => ({
   borderStyle: "solid",
   borderWidth: "1px",
   minWidth: "0%",
+  overflow: "auto",
   borderColor: "rgba(0, 0, 0, 0.23)",
   article: {
     position: "absolute",

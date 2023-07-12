@@ -139,6 +139,8 @@ export interface StorageDeclaration {
   accent_scheme: Picker<string, any>;
   eruda_console_enabled: boolean;
   disabled_repos: string[];
+  _low_quality_module: boolean;
+  _disable_module_covers: boolean;
   __experimental_local_install: boolean;
   repos: StoredRepo[];
   test: any;
@@ -150,6 +152,8 @@ export const INITIAL_SETTINGS: StorageDeclaration = {
   accent_scheme: accent_colors[0],
   eruda_console_enabled: false,
   disabled_repos: [],
+  _low_quality_module: true,
+  _disable_module_covers: false,
   __experimental_local_install: false,
   repos: [],
   test: [],

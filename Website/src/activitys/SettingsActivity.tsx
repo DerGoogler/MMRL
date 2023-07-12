@@ -59,24 +59,60 @@ function SettingsActivity() {
         </List>
 
         <Divider />
-        <List subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>Experimental</ListSubheader>}>
+        <List subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>Module</ListSubheader>}>
           <ListItem>
             <StyledListItemText
-              id="switch-list-__experimental_local_install"
-              primary={"Enable local install"}
-              secondary="Allows you to install local *.zip files"
+              id="switch-list-_low_quality_module"
+              primary={"Low quality modules"}
+              secondary="Shows a alert below the module if it has a low quality"
             />
             <Android12Switch
               edge="end"
               onChange={(e: any) => {
-                setSettings("__experimental_local_install", e.target.checked);
+                setSettings("_low_quality_module", e.target.checked);
               }}
-              checked={settings.__experimental_local_install}
+              checked={settings._low_quality_module}
               inputProps={{
-                "aria-labelledby": "switch-list-__experimental_local_install",
+                "aria-labelledby": "switch-list-_low_quality_module",
               }}
             />
           </ListItem>
+          <ListItem>
+            <StyledListItemText
+              id="switch-list-_disable_module_covers"
+              primary={"Disable module covers"}
+              secondary="This may increase app performance"
+            />
+            <Android12Switch
+              edge="end"
+              onChange={(e: any) => {
+                setSettings("_disable_module_covers", e.target.checked);
+              }}
+              checked={settings._disable_module_covers}
+              inputProps={{
+                "aria-labelledby": "switch-list-_disable_module_covers",
+              }}
+            />
+          </ListItem>
+          {os.isAndroid && (
+            <ListItem>
+              <StyledListItemText
+                id="switch-list-__experimental_local_install"
+                primary={"Enable local install"}
+                secondary="Allows you to install local *.zip files (Experimental)"
+              />
+              <Android12Switch
+                edge="end"
+                onChange={(e: any) => {
+                  setSettings("__experimental_local_install", e.target.checked);
+                }}
+                checked={settings.__experimental_local_install}
+                inputProps={{
+                  "aria-labelledby": "switch-list-__experimental_local_install",
+                }}
+              />
+            </ListItem>
+          )}
         </List>
 
         <Divider />

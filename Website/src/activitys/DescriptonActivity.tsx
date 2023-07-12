@@ -26,6 +26,7 @@ import DataUsageIcon from "@mui/icons-material/DataUsage";
 import ModuleSpecsActivity from "./ModuleSpecsActivity";
 import { parseAndroidVersion } from "@Util/parseAndroidVersion";
 import { useTheme } from "@Hooks/useTheme";
+import { StyledIconButtonWithText } from "@Components/StyledIconButton";
 
 type Extra = {
   title: string;
@@ -158,7 +159,7 @@ function DescriptonActivity() {
               <StyledCard elevation={0} style={{ margin: "16px 8px 0px 8px" }}>
                 <Stack spacing={0.8} direction="row" alignItems="center" style={{ padding: 8 }}>
                   {!(prop_url.mmrlNoComments === "true") && (
-                    <ViewModuleOptionsButton
+                    <StyledIconButtonWithText
                       style={{ width: 39 }}
                       onClick={() => {
                         context.pushPage({
@@ -175,19 +176,19 @@ function DescriptonActivity() {
                       <Stack spacing={0.8} direction="row" alignItems="center">
                         <CommentIcon sx={{ fontSize: 14 }} />
                       </Stack>
-                    </ViewModuleOptionsButton>
+                    </StyledIconButtonWithText>
                   )}
 
                   {isVerified && (
-                    <ViewModuleOptionsButton>
+                    <StyledIconButtonWithText>
                       <Stack spacing={0.8} direction="row" alignItems="center">
                         <VerifiedIcon sx={{ fontSize: 14 }} />
                         <span style={{ fontSize: 14 }}>{strings.verified}</span>
                       </Stack>
-                    </ViewModuleOptionsButton>
+                    </StyledIconButtonWithText>
                   )}
 
-                  <ViewModuleOptionsButton
+                  <StyledIconButtonWithText
                     onClick={() => {
                       context.pushPage({
                         component: ModuleSpecsActivity,
@@ -204,10 +205,10 @@ function DescriptonActivity() {
                       <DeviceUnknownIcon sx={{ fontSize: 14 }} />
                       <span style={{ fontSize: 14 }}>Specs</span>
                     </Stack>
-                  </ViewModuleOptionsButton>
+                  </StyledIconButtonWithText>
 
                   {prop_url.support && (
-                    <ViewModuleOptionsButton
+                    <StyledIconButtonWithText
                       onClick={() => {
                         os.open(prop_url.support, {
                           target: "_blank",
@@ -221,7 +222,7 @@ function DescriptonActivity() {
                         <SupportIcon sx={{ fontSize: 14 }} />
                         <span style={{ fontSize: 14 }}>Support</span>
                       </Stack>
-                    </ViewModuleOptionsButton>
+                    </StyledIconButtonWithText>
                   )}
                 </Stack>
 
@@ -272,53 +273,5 @@ function DescriptonActivity() {
     </Page>
   );
 }
-
-const ViewModuleOptionsButton = styled("span")(({ theme }) => {
-  const { settings, setSettings } = useSettings();
-  const { scheme } = useTheme();
-  const shade = useShadeColor();
-
-  return {
-    height: 39,
-
-    // fontSize: "inherit",
-    display: "flex",
-    alignItems: "center",
-
-    MozBoxAlign: "center",
-    // alignItems: "center",
-    MozBoxPack: "center",
-    justifyContent: "center",
-    position: "relative",
-    boxSizing: "border-box",
-    backgroundColor: "transparent",
-    outline: "currentcolor none 0px",
-    margin: "0px",
-    cursor: "pointer",
-    userSelect: "none",
-    verticalAlign: "middle",
-    appearance: "none",
-    textDecoration: "none",
-    textAlign: "center",
-    flex: "0 0 auto",
-    fontSize: "1.5rem",
-    padding: "8px",
-    overflow: "visible",
-    transition: "background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
-    border: `1px solid ${theme.palette.divider}`,
-    // borderTopColor: theme.palette.divider,
-    // borderRightColor: theme.palette.divider,
-    // borderBottomColor: theme.palette.divider,
-    // borderLeftColor: theme.palette.divider,
-    color: !settings.darkmode ? "rgb(66, 66, 66)" : shade(scheme[700], -61),
-    borderRadius: theme.shape.borderRadius,
-    alignSelf: "flex-start",
-    ":hover": {
-      borderColor: theme.palette.primary.main,
-      color: theme.palette.primary.main,
-      backgroundColor: "rgba(0, 0, 0, 0.04)",
-    },
-  };
-});
 
 export default DescriptonActivity;

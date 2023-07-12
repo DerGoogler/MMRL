@@ -187,8 +187,8 @@ declare global {
 
     // MMRL supported properties
     mmrlConfig?: string;
-    mmrlChangelog?: string;
     mmrlNoComments?: string;
+    mmrlCover?: string;
 
     // Fox's Mmm supported properties
     minApi?: string;
