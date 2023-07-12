@@ -191,7 +191,7 @@ const DAPITestActivity = () => {
               />
             </TextareaMarkdown.Wrapper>
             {!os.isAndroid && isDesktop && (
-              <Preview className="preview">
+              <Preview>
                 <Markup children={description} />
               </Preview>
             )}
@@ -225,6 +225,7 @@ const Preview = styled("div")(({ theme }) => ({
   borderStyle: "solid",
   borderWidth: "1px",
   minWidth: "0%",
+  overflow: "auto",
   borderColor: "rgba(0, 0, 0, 0.23)",
   article: {
     position: "absolute",
