@@ -77,6 +77,23 @@ function SettingsActivity() {
               }}
             />
           </ListItem>
+          <ListItem>
+            <StyledListItemText
+              id="switch-list-_disable_module_covers"
+              primary={"Disable module covers"}
+              secondary="This may increase app performance"
+            />
+            <Android12Switch
+              edge="end"
+              onChange={(e: any) => {
+                setSettings("_disable_module_covers", e.target.checked);
+              }}
+              checked={settings._disable_module_covers}
+              inputProps={{
+                "aria-labelledby": "switch-list-_disable_module_covers",
+              }}
+            />
+          </ListItem>
           {os.isAndroid && (
             <ListItem>
               <StyledListItemText

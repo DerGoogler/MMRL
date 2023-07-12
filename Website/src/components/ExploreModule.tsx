@@ -1,4 +1,4 @@
-import { Alert, AlertTitle, Box, Chip, Divider, Stack, Typography } from "@mui/material";
+import { Alert, AlertTitle, Box, CardMedia, Chip, Divider, Stack, Typography } from "@mui/material";
 import { useActivity } from "@Hooks/useActivity";
 import { useStrings } from "@Hooks/useStrings";
 import DescriptonActivity from "@Activitys/DescriptonActivity";
@@ -8,6 +8,7 @@ import { StyledCard } from "./StyledCard";
 import { useLowQualityModule } from "@Hooks/useLowQualityModule";
 import { StyledIconButton } from "./StyledIconButton";
 import { useSettings } from "@Hooks/useSettings";
+import { isDesktop } from "react-device-detect";
 
 interface Props {
   index: number;
@@ -65,6 +66,16 @@ export const ExploreModule = (props: Props) => {
 
   return (
     <StyledCard elevation={0}>
+      {!settings._disable_module_covers && prop_url.mmrlCover && (
+        // @ts-ignore
+        <CardMedia
+          component="img"
+          style={{ objectFit: "unset" }}
+          height={isDesktop ? "445px" : "181.500px"}
+          image={prop_url.mmrlCover}
+          alt={prop_url.name}
+        />
+      )}
       <Box sx={{ p: 2, display: "flex" }}>
         <Stack spacing={0.5} style={{ flexGrow: 1 }} onClick={handleOpen}>
           <Typography fontWeight={700} color="text.primary">
