@@ -59,12 +59,29 @@ function SettingsActivity() {
         </List>
 
         <Divider />
-        <List subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>Experimental</ListSubheader>}>
+        <List subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>Module</ListSubheader>}>
+          <ListItem>
+            <StyledListItemText
+              id="switch-list-_low_quality_module"
+              primary={"Low quality modules"}
+              secondary="Shows a alert below the module if it has a low quality"
+            />
+            <Android12Switch
+              edge="end"
+              onChange={(e: any) => {
+                setSettings("_low_quality_module", e.target.checked);
+              }}
+              checked={settings._low_quality_module}
+              inputProps={{
+                "aria-labelledby": "switch-list-_low_quality_module",
+              }}
+            />
+          </ListItem>
           <ListItem>
             <StyledListItemText
               id="switch-list-__experimental_local_install"
               primary={"Enable local install"}
-              secondary="Allows you to install local *.zip files"
+              secondary="Allows you to install local *.zip files (Experimental)"
             />
             <Android12Switch
               edge="end"

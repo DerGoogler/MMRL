@@ -1,11 +1,13 @@
-import { Box, Chip, Divider, Stack, Typography } from "@mui/material";
+import { Alert, AlertTitle, Box, Chip, Divider, Stack, Typography } from "@mui/material";
 import { useActivity } from "@Hooks/useActivity";
 import { useStrings } from "@Hooks/useStrings";
 import DescriptonActivity from "@Activitys/DescriptonActivity";
 import { VerifiedRounded } from "@mui/icons-material";
 import { os } from "@Native/Os";
 import { StyledCard } from "./StyledCard";
+import { useLowQualityModule } from "@Hooks/useLowQualityModule";
 import { StyledIconButton } from "./StyledIconButton";
+import { useSettings } from "@Hooks/useSettings";
 
 interface Props {
   index: number;
@@ -15,6 +17,7 @@ interface Props {
 export const ExploreModule = (props: Props) => {
   const { context } = useActivity();
   const { strings } = useStrings();
+  const { settings } = useSettings();
 
   const { moduleOptions, index } = props;
   const { id, notes_url, zip_url, last_update, prop_url } = props.moduleProps;
@@ -22,6 +25,8 @@ export const ExploreModule = (props: Props) => {
   // Create better handler
   const isVerified = moduleOptions[id]?.verified;
   const _display = moduleOptions[id]?.display;
+
+  const isLowQuality = useLowQualityModule(prop_url);
 
   const formatDate = (date: Date) => {
     var hours = date.getHours();
@@ -95,6 +100,12 @@ export const ExploreModule = (props: Props) => {
           )}
         </Stack>
       </Stack>
+      {settings._low_quality_module && isLowQuality && (
+        <Alert style={{ borderRadius: 0 }} severity="warning">
+          <AlertTitle>Low Quality</AlertTitle>
+          Module meets not the requirements of its props
+        </Alert>
+      )}
     </StyledCard>
   );
 };
