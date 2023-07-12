@@ -6,3 +6,6 @@ __pycache__/
 # Ignore www bundles
 www/bundle/*
 www/files/*
+
+Browser/*
+!Browser/.gitkeep

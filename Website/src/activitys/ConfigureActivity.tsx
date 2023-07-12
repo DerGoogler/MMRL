@@ -8,44 +8,13 @@ import React from "react";
 import File from "@Native/File";
 import { StyledListItemText } from "@Components/StyledListItemText";
 import { Android12Switch } from "@Components/Android12Switch";
-
-import ReactFromJSON from "react-from-json";
 import { os } from "@Native/Os";
-import { useTheme } from "@Hooks/useSettings";
 import { useLog } from "@Hooks/native/useLog";
+import { useTheme } from "@Hooks/useTheme";
 
 type Extra = {
   modulename: string;
 };
-
-const CardConfig = [
-  {
-    component: "list",
-    primary: "Seaction",
-    children: [
-      {
-        component: "listitemtext",
-        primary: "Custom text",
-      },
-      {
-        component: "switch",
-      },
-    ],
-  },
-
-  { component: "divider" },
-
-  {
-    component: "list",
-    primary: "Support",
-    children: [
-      {
-        component: "listitemtext",
-        primary: "Issues",
-      },
-    ],
-  },
-];
 
 namespace ConfigList {
   export interface UseSwitch {

@@ -1,6 +1,5 @@
 import { Card, CarouselItem } from "react-onsenui";
 import React from "react";
-import { useDarkmode } from "@Hooks/useDarkmode";
 import { useActivity } from "@Hooks/useActivity";
 import axios from "axios";
 import Properties from "@js.properties/properties";
@@ -20,7 +19,6 @@ const FeaturedModulesHeader = ({ item, index, setIndex, moduleOptions }: Props) 
 
   const isVerified = moduleOptions[item.id as any]?.verified;
   const _display = moduleOptions[item.id as any]?.display;
-  const isDarkmode = useDarkmode();
 
   React.useEffect(() => {
     axios.get(item.prop_url).then((resp) => {

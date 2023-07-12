@@ -3,9 +3,10 @@ import { Toolbar } from "@Components/onsenui/Toolbar";
 import { useActivity } from "@Hooks/useActivity";
 import { useStrings } from "@Hooks/useStrings";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { useSettings, useTheme } from "@Hooks/useSettings";
+import { useSettings } from "@Hooks/useSettings";
 import Giscus from "@giscus/react";
 import { RelativeStyledSection } from "@Components/StyledSection";
+import { useTheme } from "@Hooks/useTheme";
 
 type Extra = {
   id: string;

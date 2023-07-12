@@ -1,5 +1,6 @@
-import { useSettings, useTheme } from "@Hooks/useSettings";
+import { useSettings } from "@Hooks/useSettings";
 import useShadeColor from "@Hooks/useShadeColor";
+import { useTheme } from "@Hooks/useTheme";
 import { styled } from "@mui/material";
 import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 

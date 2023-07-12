@@ -6,13 +6,14 @@ import { Page } from "@Components/onsenui/Page";
 import { Magisk } from "@Native/Magisk";
 import { useStrings } from "@Hooks/useStrings";
 import { useActivity } from "@Hooks/useActivity";
-import { accent_colors, useSettings, useTheme } from "@Hooks/useSettings";
+import { accent_colors, useSettings } from "@Hooks/useSettings";
 import { StyledListItemText } from "@Components/StyledListItemText";
 import { ListPickerItem } from "@Components/ListPickerItem";
 import { languages_map } from "../locales/languages";
 import { os } from "@Native/Os";
 import { Android12Switch } from "@Components/Android12Switch";
 import { RelativeStyledSection } from "@Components/StyledSection";
+import { useTheme } from "@Hooks/useTheme";
 
 function SettingsActivity() {
   const { context } = useActivity();

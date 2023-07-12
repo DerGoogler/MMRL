@@ -1,10 +1,9 @@
 import React from "react";
 import { SetValue, useNativeStorage } from "./useNativeStorage";
 import axios from "axios";
-import { link, util } from "googlers-tools";
-import _, { map } from "underscore";
-import Properties from "@js.properties/properties";
-import { Settings, useSettings } from "./useSettings";
+import { link } from "googlers-tools";
+import _ from "underscore";
+import { useSettings } from "./useSettings";
 import { os } from "@Native/Os";
 
 export interface RepoContextActions {

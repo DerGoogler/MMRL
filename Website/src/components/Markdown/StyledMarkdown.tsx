@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
-import { useTheme } from "@mui/material";
 import { Theme } from "@mui/material";
 import React from "react";
-import { colors, useSettings } from "../../hooks/useSettings";
+import { useSettings } from "../../hooks/useSettings";
 import useShadeColor from "../../hooks/useShadeColor";
+import { useTheme } from "@Hooks/useTheme";
 
 interface Props {
   children?: React.ReactNode;
@@ -15,7 +15,7 @@ interface T {
 }
 
 export const StyledMarkdown = React.forwardRef((props: Props, ref) => {
-  const theme = useTheme();
+  const { theme, scheme } = useTheme();
   const { settings, setSettings } = useSettings();
   const shade = useShadeColor();
 
@@ -161,7 +161,7 @@ export const StyledMarkdown = React.forwardRef((props: Props, ref) => {
         backgroundColor: theme.palette.background.default,
         borderTop: `thin solid ${theme.palette.divider}`,
         "&:nth-child(2n)": {
-          backgroundColor: settings.darkmode ? shade(colors[settings.accent_scheme.value][900], -85) : "#f6f8fa",
+          backgroundColor: settings.darkmode ? shade(scheme[900], -85) : "#f6f8fa",
         },
       },
       img: { backgroundColor: "transparent" },
@@ -268,7 +268,7 @@ export const StyledMarkdown = React.forwardRef((props: Props, ref) => {
       padding: "16px",
       overflow: "auto",
       lineHeight: 1.45,
-      backgroundColor: settings.darkmode ? shade(colors[settings.accent_scheme.value][900], -85) : "#f6f8fa",
+      backgroundColor: settings.darkmode ? shade(scheme[900], -85) : "#f6f8fa",
       borderRadius: theme.shape.borderRadius,
       "code,\n    tt": {
         display: "inline",

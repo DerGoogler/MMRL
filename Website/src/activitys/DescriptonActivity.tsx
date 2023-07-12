@@ -8,7 +8,7 @@ import { StyledCard } from "@Components/StyledCard";
 import Stack from "@mui/material/Stack";
 import { RelativeStyledSection, StyledSection } from "@Components/StyledSection";
 import { Alert, AlertTitle, Button, styled } from "@mui/material";
-import { useSettings, useTheme } from "@Hooks/useSettings";
+import { useSettings } from "@Hooks/useSettings";
 import useShadeColor from "@Hooks/useShadeColor";
 import { CommentsActivity } from "./CommentsActivity";
 import SupportIcon from "@mui/icons-material/Support";
@@ -25,6 +25,7 @@ import DeviceUnknownIcon from "@mui/icons-material/DeviceUnknown";
 import DataUsageIcon from "@mui/icons-material/DataUsage";
 import ModuleSpecsActivity from "./ModuleSpecsActivity";
 import { parseAndroidVersion } from "@Util/parseAndroidVersion";
+import { useTheme } from "@Hooks/useTheme";
 
 type Extra = {
   title: string;

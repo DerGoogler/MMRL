@@ -1,6 +1,6 @@
+import { useSettings } from "@Hooks/useSettings";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { SvgIconProps, SvgIconTypeMap } from "@mui/material/SvgIcon";
-import { useDarkmode } from "@Hooks/useDarkmode";
 
 interface IProps extends SvgIconProps {
   icon: OverridableComponent<SvgIconTypeMap>;
@@ -14,13 +14,13 @@ interface IProps extends SvgIconProps {
  * An icon wrapper for Material React icons
  */
 const Icon = (props: IProps) => {
-  const isDarkmode = useDarkmode();
+  const { settings } = useSettings();
 
   const { keepLight, ...rest } = props;
   return (
     <props.icon
       sx={{
-        color: keepLight ? "rgba(255, 255, 255, 1)" : isDarkmode ? "rgba(255, 255, 255, 1)" : "rgba(0, 0, 0, 0.54)",
+        color: keepLight ? "rgba(255, 255, 255, 1)" : settings.darkmode ? "rgba(255, 255, 255, 1)" : "rgba(0, 0, 0, 0.54)",
         verticalAlign: "baseline",
       }}
       {...rest}

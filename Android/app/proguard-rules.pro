@@ -19,3 +19,6 @@
 # These clases contain references to cordova webView
 -keep class org.apache.cordova.** {*; }
 -keep class org.apache.cordova.*
+
+-keep class org.apache.cordova.** { *; }
+-keep public class * extends org.apache.cordova.CordovaPlugin

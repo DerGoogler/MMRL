@@ -9,12 +9,13 @@ import { useStrings } from "@Hooks/useStrings";
 import { usePagination } from "@Hooks/usePagination";
 import { For } from "@Components/For";
 import RepoActivity from "@Activitys/RepoActivity";
-import { useSettings, useTheme } from "@Hooks/useSettings";
+import { useSettings } from "@Hooks/useSettings";
 import { ProgressCircular } from "react-onsenui";
 import DescriptonActivity from "@Activitys/DescriptonActivity";
 import { os } from "@Native/Os";
 import Properties from "@js.properties/properties";
 import { useStateCallback } from "@Hooks/useStateCallback";
+import { useTheme } from "@Hooks/useTheme";
 
 const ExploreModuleFragment = () => {
   const { context } = useActivity();

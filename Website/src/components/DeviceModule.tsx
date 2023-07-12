@@ -3,7 +3,6 @@ import Properties from "@js.properties/properties";
 import File from "@Native/File";
 import { DeleteRounded, RefreshRounded } from "@mui/icons-material";
 import React from "react";
-import { useDarkmode } from "@Hooks/useDarkmode";
 import { useStrings } from "@Hooks/useStrings";
 import { Android12Switch } from "./Android12Switch";
 import { Box, Divider, Stack, Typography } from "@mui/material";
@@ -22,12 +21,8 @@ const DeviceModule = (props: Props) => {
   const { strings } = useStrings();
   const { context, extra } = useActivity<any>();
   const [moduleProps, setModuleProps] = React.useState<Partial<ModuleProps>>({});
-  const [dialogShown, setDialogShown] = React.useState(false);
   const [isEnabled, setIsEnabled] = React.useState(true);
   const [isSwitchDisabled, setIsSwitchDisabled] = React.useState(false);
-  const [, forceUpdate] = React.useReducer((x) => x + 1, 0);
-
-  const isDarkmode = useDarkmode();
 
   const log = useLog("DeviceModule");
 

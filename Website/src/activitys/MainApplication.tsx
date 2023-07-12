@@ -7,14 +7,7 @@ import { Toolbar } from "@Components/onsenui/Toolbar";
 import { os } from "@Native/Os";
 import { Page } from "@Components/onsenui/Page";
 import { useStrings } from "@Hooks/useStrings";
-import { StyledSection } from "@Components/StyledSection";
 import { Tabbar, TabbarRenderTab } from "@Components/onsenui/Tabbar";
-import React from "react";
-import { useTheme } from "@Hooks/useSettings";
-import AutorenewIcon from "@mui/icons-material/Autorenew";
-import AddBoxIcon from "@mui/icons-material/AddBox";
-import { Fab } from "react-onsenui";
-import Icon from "@Components/Icon";
 
 interface Props {
   id: string;

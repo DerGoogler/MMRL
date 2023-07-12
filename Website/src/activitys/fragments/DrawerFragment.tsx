@@ -1,3 +1,4 @@
+import { DAPITestActivity } from "@Activitys/DAPITestActivity";
 import DescriptonActivity from "@Activitys/DescriptonActivity";
 import RepoActivity from "@Activitys/RepoActivity";
 import SettingsActivity from "@Activitys/SettingsActivity";
@@ -51,6 +52,27 @@ export const DrawerFragment = (props: Props) => {
         </ListItemButton>
       </List>
 
+      <Divider />
+
+      <List subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>Components</ListSubheader>}>
+        <ListItemButton
+          onClick={() => {
+            pushPage({
+              component: DAPITestActivity,
+              props: {
+                key: "dapitestActivity",
+                extra: {},
+              },
+            });
+            hide();
+          }}
+        >
+          <StyledListItemText primary={"D-API Tester"} />
+        </ListItemButton>
+      </List>
+
+      <Divider />
+
       <List subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>Other</ListSubheader>}>
         <ListItemButton
           onClick={() => {
@@ -92,7 +114,8 @@ export const DrawerFragment = (props: Props) => {
           <StyledListItemText primary={"Changelog"} />
         </ListItemButton>
       </List>
-      <Divider />
+
+      {/* <Divider /> */}
     </Page>
   );
 };

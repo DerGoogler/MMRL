@@ -1,4 +1,4 @@
-import { useTheme } from "@Hooks/useSettings";
+import { useTheme } from "@Hooks/useTheme";
 import { styled } from "@mui/material";
 import { useActivity } from "../../hooks/useActivity";
 import Icon from "@Components/Icon";

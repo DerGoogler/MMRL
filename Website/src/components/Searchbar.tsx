@@ -6,40 +6,12 @@ import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
-import { colors, useSettings, useTheme } from "../hooks/useSettings";
+import { useTheme } from "@Hooks/useTheme";
+import { useSettings } from "@Hooks/useSettings";
 
 type SearchbarProps = {
   onChange: React.ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>;
   placeholder: string;
-};
-
-const StyledButton = styled(Button)(({ theme }) => ({
-  textAlign: "center",
-  display: "flex",
-  justifyContent: "center",
-  "& > div": {
-    textAlign: "center",
-    height: "100%",
-    width: "100%",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-}));
-
-const StyledSearchInput = (props: any) => {
-  const C = styled(SearchInput)(({ theme }) => ({
-    width: "100%",
-    borderRight: "none",
-    "& .search-input--material": {
-      border: `1px solid ${theme.palette.divider}`,
-      borderRadius: `${theme.shape.borderRadius}px 0px 0px ${theme.shape.borderRadius}px`,
-      // backgroundColor: isDarkmode ? shadeColor(colors[default_scheme.value][900], -70) : "rgb(255, 255, 255)",
-    },
-  }));
-
-  return <C {...props} />;
 };
 
 export const Searchbar = ({ placeholder, onChange }: SearchbarProps) => {
