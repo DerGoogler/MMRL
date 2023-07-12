@@ -1,4 +1,4 @@
-import Markdown, { MarkdownToJSX } from "markdown-to-jsx";
+import Markdown, { MarkdownToJSX, compiler } from "markdown-to-jsx";
 import Anchor, { Open } from "../dapi/Anchor";
 import Video from "../dapi/Video";
 import Checkmark from "../icons/Checkmark";
@@ -95,7 +95,7 @@ export const Markup = (props: Props) => {
   });
 
   return (
-    <StyledMarkdown ref={ref} style={{ display: "inline-block", padding: "8px", height: "100%", width: "100%", ...props.style }}>
+    <StyledMarkdown ref={ref} style={{ display: "inline-block", padding: "8px", width: "100%", ...props.style }}>
       <Markdown
         style={props.styleMd}
         options={{
@@ -105,4 +105,8 @@ export const Markup = (props: Props) => {
       />
     </StyledMarkdown>
   );
+};
+
+export const MarkUpCompile = (children: string) => {
+  return compiler(children, { overrides: MarkdownOverrides });
 };

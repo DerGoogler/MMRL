@@ -31,6 +31,33 @@ Magisk Module Repo Loader (MMRL). Allows you to load custom repos with an simple
 <tr>
 </table>
 
+## Supported `module.prop` properties
+
+```properties
+# Magisk supported properties
+id=<string>
+name=<string>
+version=<string>
+versionCode=<int>
+author=<string>
+description=<string>
+
+# MMRL supported properties
+mmrlConfig=<boolean>
+mmrlNoComments=<boolean>
+
+# Fox's Mmm supported properties
+minApi=<int>
+maxApi=<int>
+minMagisk=<int>
+needRamdisk=<boolean>
+support=<url>
+donate=<url>
+config=<package>
+changeBoot=<boolean>
+mmtReborn=<boolean>
+```
+
 ## Supported `module.json` syntax
 
 > **Note** > `prop_url` should always an string otherwise MMRL can't manipulate it.

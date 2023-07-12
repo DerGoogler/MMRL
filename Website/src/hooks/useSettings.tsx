@@ -1,35 +1,12 @@
 import React, { createContext, useContext } from "react";
-import { colors as kolors, useTheme as useMom, createTheme, ThemeProvider } from "@mui/material";
-import useShadeColor from "./useShadeColor";
-import { UI } from "@Native/components/UI";
+import { colors as kolors } from "@mui/material";
 import { defaultComposer } from "default-composer";
 import { useNativeStorage } from "./useNativeStorage";
+import { languages_map } from "../locales/languages";
 import { os } from "@Native/Os";
-import { Languages, languages_map } from "./../language/languages";
-import { useEventCallback } from "usehooks-ts";
+import { SetStateAction } from "./useStateCallback";
 
-export namespace Settings {
-  export type SetStateAction<T = Root> = Partial<T> | ((prevState: Partial<T>) => Partial<T>);
-
-  export interface Context {
-    settings: Root;
-    setSettings<K extends keyof Root>(key: K, state: SetStateAction<Root[K]>, callback?: (state: Root[K]) => void): void;
-  }
-  export interface Root {
-    darkmode: boolean;
-    language: Languages;
-    accent_scheme: Settings.AccentScheme;
-    eruda_console_enabled: boolean;
-    disabled_repos: string[];
-  }
-
-  export type AccentScheme = {
-    name: string;
-    value: any;
-  };
-}
-
-export const accent_colors: Settings.AccentScheme[] = [
+export const accent_colors: Picker<string, any>[] = [
   {
     name: "Purple",
     value: "purple",
@@ -114,14 +91,6 @@ export const accent_colors: Settings.AccentScheme[] = [
     : []),
 ];
 
-export const INITIAL_SETTINGS: Settings.Root = {
-  darkmode: false,
-  language: languages_map[0],
-  accent_scheme: accent_colors[0],
-  eruda_console_enabled: false,
-  disabled_repos: [],
-};
-
 const monet = {
   50: os.getMonetColor("system_accent2_50"),
   100: os.getMonetColor("system_accent2_100"),
@@ -159,12 +128,48 @@ export const colors = {
   ...(os.isAndroid ? (os.sdk >= 31 ? { monet: monet } : {}) : {}),
 };
 
-export const SettingsContext = createContext<Settings.Context>({
-  settings: INITIAL_SETTINGS,
-  setSettings<K extends keyof Settings.Root>(
+export interface Picker<N, V> {
+  name: N;
+  value: V;
+}
+
+export interface StorageDeclaration {
+  darkmode: boolean;
+  language: Picker<string, string>;
+  accent_scheme: Picker<string, any>;
+  eruda_console_enabled: boolean;
+  disabled_repos: string[];
+  __experimental_local_install: boolean;
+  repos: StoredRepo[];
+  test: any;
+}
+
+export const INITIAL_SETTINGS: StorageDeclaration = {
+  darkmode: false,
+  language: languages_map[0],
+  accent_scheme: accent_colors[0],
+  eruda_console_enabled: false,
+  disabled_repos: [],
+  __experimental_local_install: false,
+  repos: [],
+  test: [],
+};
+
+export interface Context {
+  settings: StorageDeclaration;
+  setSettings<K extends keyof StorageDeclaration>(
     key: K,
-    state: Settings.SetStateAction<Settings.Root[K]>,
-    callback?: (state: Settings.Root[K]) => void
+    state: SetStateAction<StorageDeclaration[K]>,
+    callback?: (state: StorageDeclaration[K]) => void
+  ): void;
+}
+
+export const SettingsContext = createContext<Context>({
+  settings: INITIAL_SETTINGS,
+  setSettings<K extends keyof StorageDeclaration>(
+    key: K,
+    state: SetStateAction<StorageDeclaration[K]>,
+    callback?: (state: StorageDeclaration[K]) => void
   ) {},
 });
 
@@ -172,88 +177,27 @@ export const useSettings = () => {
   return useContext(SettingsContext);
 };
 
-export const useTheme = () => {
-  const theme = useMom();
-  const { settings } = useSettings();
-
-  return {
-    scheme: colors[settings.accent_scheme.value],
-    theme: theme,
-  };
-};
-
 export const SettingsProvider = (props: React.PropsWithChildren) => {
-  const [settings, setSettings] = useNativeStorage<Settings.Root>("settings", INITIAL_SETTINGS);
-  const shade = useShadeColor();
-
-  const theme = createTheme({
-    shape: {
-      borderRadius: 8,
-    },
-    palette: !settings.darkmode
-      ? {
-          mode: "light",
-          primary: {
-            light: colors[settings.accent_scheme.value][300],
-            main: colors[settings.accent_scheme.value][900],
-            // @ts-ignore
-            dark: colors[settings.accent_scheme.value][800],
-            // contrastText: colors.grey[900],
-          },
-          background: {
-            default: "#fafafa",
-          },
-          divider: "#e5e8ec",
-          secondary: {
-            main: "#e5e8ec",
-            light: "#eeeeee",
-          },
-        }
-      : {
-          mode: "dark",
-          primary: {
-            light: shade(colors[settings.accent_scheme.value][300], -10),
-            main: shade(colors[settings.accent_scheme.value][900], -29),
-            // dark: shadeColor(colors[settings.accent_scheme.value][800], -40),
-          },
-          background: {
-            default: shade(colors[settings.accent_scheme.value][800], -75),
-          },
-          divider: shade(colors[settings.accent_scheme.value][900], -81),
-          secondary: {
-            main: "#e5e8ec",
-            light: shade(colors[settings.accent_scheme.value][800], -66),
-            dark: shade(colors[settings.accent_scheme.value][800], -70),
-          },
-        },
-  });
+  const [settings, setSettings] = useNativeStorage("settings", INITIAL_SETTINGS);
 
   return (
-    <ThemeProvider theme={theme}>
-      <UI.Statusbar color={theme.palette.primary.main} white={false}>
-        <UI.Navigationbar color={theme.palette.background.default}>
-          <SettingsContext.Provider
-            value={{
-              settings: defaultComposer(INITIAL_SETTINGS, settings),
-              setSettings: useEventCallback((name, state, callback) => {
-                setSettings(
-                  (prev) => {
-                    const newValue = state instanceof Function ? state(prev[name]) : state;
-                    return {
-                      ...prev,
-                      [name]: newValue,
-                    };
-                  },
-                  (state) => callback && callback(state[name])
-                );
-              }),
-            }}
-            children={props.children}
-          />
-        </UI.Navigationbar>
-      </UI.Statusbar>
-    </ThemeProvider>
+    <SettingsContext.Provider
+      value={{
+        settings: defaultComposer(INITIAL_SETTINGS, settings),
+        setSettings: (name, state, callback) => {
+          setSettings(
+            (prev) => {
+              // const newValue = state instanceof Function ? state(prev[name]) : state;
+              return {
+                ...prev,
+                [name]: state,
+              };
+            },
+            (state) => callback && callback(state[name])
+          );
+        },
+      }}
+      children={props.children}
+    />
   );
 };
-
-// function set<K extends keyof Root>(key: K, value: Root[K] | ((prevState: Root[K]) => Root[K])) {}

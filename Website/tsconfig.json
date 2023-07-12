@@ -2,7 +2,7 @@
   "compilerOptions": {
     "outDir": "./../Android/app/src/main/assets",
     "allowJs": true,
-    "declaration": true,
+    "declaration": false,
     "emitDeclarationOnly": false,
     "experimentalDecorators": true,
     "declarationMap": false,

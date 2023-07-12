@@ -9,7 +9,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import React from "react";
 
 import { ListItemButton } from "@mui/material";
-import { Settings, useSettings } from "@Hooks/useSettings";
+import { useSettings } from "@Hooks/useSettings";
 import { StyledListItemText } from "./StyledListItemText";
 
 type ContentMap = {

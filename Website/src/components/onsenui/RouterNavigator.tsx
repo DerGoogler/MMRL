@@ -26,6 +26,7 @@ interface HTMLNavigatorClass extends HTMLNavigator {
 
 interface State {
   internalStack: any[];
+  currentStack: any;
 }
 
 type Noop = () => void;
@@ -39,6 +40,7 @@ class RouterNavigatorClass extends React.Component<HTMLNavigatorClass, State> {
   private onPostPush: (event: any) => any;
   private onPrePop: (event: any) => any;
   private onPostPop: (event: any) => any;
+  private _url: URL;
 
   public constructor(props: HTMLNavigatorClass | Readonly<HTMLNavigatorClass>) {
     super(props);
@@ -57,8 +59,11 @@ class RouterNavigatorClass extends React.Component<HTMLNavigatorClass, State> {
 
     this.ref = React.createRef();
 
+    this._url = new URL(window.location.href);
+
     this.state = {
       internalStack: [],
+      currentStack: {},
     };
   }
 
@@ -84,14 +89,18 @@ class RouterNavigatorClass extends React.Component<HTMLNavigatorClass, State> {
     });
   }
 
-  private pushPage(route: object, options = {}) {
+  private pushPage(route: any, options = {}) {
     if (this.isRunning()) {
       return;
     }
 
     const update = () => {
       return new Promise((resolve) => {
-        this.setState({ internalStack: [...this.state.internalStack, route] }, resolve as Noop);
+        if (route.props.extra?.param) {
+          this._url.searchParams.set(route.props.extra.param.name, route.props.extra.param.value);
+          window.history.replaceState(null, null as unknown as string, this._url);
+        }
+        this.setState({ internalStack: [...this.state.internalStack, route], currentStack: route }, resolve as Noop);
       });
     };
 
@@ -127,6 +136,11 @@ class RouterNavigatorClass extends React.Component<HTMLNavigatorClass, State> {
       return new Promise((resolve) => {
         ReactDOM.flushSync(() => {
           // prevents flickering caused by React 18 batching
+          const route = this.state.currentStack;
+          if (route.props.extra?.param) {
+            this._url.searchParams.delete(route.props.extra?.param.name);
+            window.history.replaceState(null, null as unknown as string, this._url);
+          }
           this.setState({ internalStack: this.state.internalStack.slice(0, -1) }, resolve as Noop);
         });
       });
@@ -241,9 +255,7 @@ class RouterNavigatorClass extends React.Component<HTMLNavigatorClass, State> {
   }
 }
 
-const _RouterNavigator = React.forwardRef<HTMLElement, HTMLNavigator>((props, ref) => (
-  <RouterNavigatorClass innerRef={ref} {...props} />
-));
+const _RouterNavigator = React.forwardRef<HTMLElement, HTMLNavigator>((props, ref) => <RouterNavigatorClass innerRef={ref} {...props} />);
 
 const RouterNavigator = Object.assign(_RouterNavigator, {});
 

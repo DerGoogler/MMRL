@@ -1,4 +1,4 @@
-import { useTheme } from "@Hooks/useSettings";
+import { useTheme } from "@Hooks/useTheme";
 import { styled } from "@mui/material";
 import { useActivity } from "../../hooks/useActivity";
 import Icon from "@Components/Icon";
@@ -8,6 +8,10 @@ import { os } from "@Native/Os";
 import SettingsActivity from "@Activitys/SettingsActivity";
 import RepoActivity from "@Activitys/RepoActivity";
 import DescriptonActivity from "@Activitys/DescriptonActivity";
+
+interface AnchorProps {
+  noIcon?: boolean;
+}
 
 const StyledAnchor = styled("div")(({ theme }) => {
   const { scheme } = useTheme();
@@ -32,8 +36,8 @@ const StyledAnchor = styled("div")(({ theme }) => {
   };
 });
 
-function Anchor(props: JSX.IntrinsicElements["a"]) {
-  const { href, children, ...rest } = props;
+function Anchor(props: JSX.IntrinsicElements["a"] & AnchorProps) {
+  const { href, children, noIcon, ...rest } = props;
 
   const { theme, scheme } = useTheme();
 
@@ -54,27 +58,32 @@ function Anchor(props: JSX.IntrinsicElements["a"]) {
         }}
         {...rest}
       >
-        {children}{" "}
-        <Icon
-          icon={LaunchRoundedIcon}
-          sx={{
-            fontSize: 16,
-            marginLeft: "2px",
-          }}
-        />
+        {children}
+        {!noIcon && (
+          <>
+            {" "}
+            <Icon
+              icon={LaunchRoundedIcon}
+              sx={{
+                fontSize: 16,
+                marginLeft: "2px",
+              }}
+            />
+          </>
+        )}
       </div>
     </StyledAnchor>
   );
 }
 
-interface OpenProps extends React.PropsWithChildren {
+interface OpenProps extends React.PropsWithChildren, AnchorProps {
   page: string;
   url?: string;
   title?: string;
 }
 
 export function Open(props: OpenProps) {
-  const { page, children } = props;
+  const { page, children, noIcon } = props;
   const { context } = useActivity();
 
   return (
@@ -108,7 +117,7 @@ export function Open(props: OpenProps) {
               if (!props.url) {
                 os.toast("Missing Url!", "short");
               } else {
-                context.pushPage<{}>({
+                context.pushPage<any>({
                   component: DescriptonActivity,
                   props: {
                     key: `desc_open${Math.round(Math.random() * 56)}`,
@@ -128,14 +137,19 @@ export function Open(props: OpenProps) {
           }
         }}
       >
-        {children}{" "}
-        <Icon
-          icon={NorthEastRoundedIcon}
-          sx={{
-            fontSize: 16,
-            marginLeft: "2px",
-          }}
-        />
+        {children}
+        {!noIcon && (
+          <>
+            {" "}
+            <Icon
+              icon={NorthEastRoundedIcon}
+              sx={{
+                fontSize: 16,
+                marginLeft: "2px",
+              }}
+            />
+          </>
+        )}
       </div>
     </StyledAnchor>
   );

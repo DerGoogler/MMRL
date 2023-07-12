@@ -5,41 +5,38 @@ import "@Styles/default.scss";
 import { CssBaseline } from "@mui/material";
 import { LightTheme } from "@Styles/light_theme";
 import { ConfirmProvider } from "material-ui-confirm";
-import { SettingsProvider } from "@Hooks/useSettings";
+import { ThemeProvider } from "@Hooks/useTheme";
 import { StringProvider } from "@Hooks/useStrings";
 import { Preventer, render } from "react-render-tools";
-import MainActivity from "@Activitys/MainActivity";
-import { os } from "@Native/Os";
+import { MainActivity } from "@Activitys/MainActivity";
 import { RepoProvider } from "@Hooks/useRepos";
+import { SettingsProvider } from "@Hooks/useSettings";
 
 ons.platform.select("android");
 
-const App = () => {
-  React.useEffect(() => {
-    if (!os.hasStoragePermission()) {
-      os.requestStoargePermission();
-    }
-  }, []);
+ons.ready(() => {
+  if (window.__nativeStorage__) {
+    window.__nativeStorage__.defineName("localstorage");
+  }
 
-  return (
+  render(
     <React.StrictMode>
       <SettingsProvider>
-        <Preventer prevent="contextmenu">
-          <StringProvider>
-            <RepoProvider>
-              <ConfirmProvider>
-                <CssBaseline />
-                <LightTheme />
-                <MainActivity />
-              </ConfirmProvider>
-            </RepoProvider>
-          </StringProvider>
-        </Preventer>
+        <StringProvider>
+          <ThemeProvider>
+            <Preventer prevent="contextmenu">
+              <RepoProvider>
+                <ConfirmProvider>
+                  <CssBaseline />
+                  <LightTheme />
+                  <MainActivity />
+                </ConfirmProvider>
+              </RepoProvider>
+            </Preventer>
+          </ThemeProvider>
+        </StringProvider>
       </SettingsProvider>
-    </React.StrictMode>
+    </React.StrictMode>,
+    "app"
   );
-};
-
-ons.ready(() => {
-  render(<App />, "app");
 });

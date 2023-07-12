@@ -1,5 +1,5 @@
 import { os } from "@Native/Os";
-import { useTheme } from "./useSettings";
+import { useTheme } from "./useTheme";
 
 export default function useShadeColor() {
   const { scheme } = useTheme();

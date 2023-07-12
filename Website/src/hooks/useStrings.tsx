@@ -1,6 +1,6 @@
 import React from "react";
 import { useSettings } from "./useSettings";
-import { languages } from "./../language/languages";
+import { languages } from "../locales/languages";
 
 const Strings = React.createContext({
   strings: languages,

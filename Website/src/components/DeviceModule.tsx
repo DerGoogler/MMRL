@@ -1,52 +1,30 @@
 import { Card, Ripple, Switch } from "react-onsenui";
 import Properties from "@js.properties/properties";
 import File from "@Native/File";
-import { Log } from "@Native/Log";
 import { DeleteRounded, RefreshRounded } from "@mui/icons-material";
 import React from "react";
-import { useDarkmode } from "@Hooks/useDarkmode";
 import { useStrings } from "@Hooks/useStrings";
 import { Android12Switch } from "./Android12Switch";
-import { StyledCard, StyledIconButton } from "./ExploreModule";
 import { Box, Divider, Stack, Typography } from "@mui/material";
+import SettingsIcon from "@mui/icons-material/Settings";
+import { useActivity } from "@Hooks/useActivity";
+import { ConfigureActivity } from "@Activitys/ConfigureActivity";
+import { StyledCard } from "./StyledCard";
+import { StyledIconButton } from "./StyledIconButton";
+import { useLog } from "@Hooks/native/useLog";
 
 interface Props {
   module: string;
 }
 
-interface States {
-  dialogShown: boolean;
-  isEnabled: boolean;
-  isSwitchDisabled: boolean;
-  props: {
-    id?: string;
-    name?: string;
-    version?: string;
-    versionCode?: int;
-    author?: string;
-    description?: string;
-    minApi?: int;
-    maxApi?: int;
-    minMagisk?: int;
-    needRamdisk?: boolean;
-    support?: string;
-    donate?: string;
-    config?: string;
-    changeBoot?: boolean;
-  };
-}
-
 const DeviceModule = (props: Props) => {
   const { strings } = useStrings();
+  const { context, extra } = useActivity<any>();
   const [moduleProps, setModuleProps] = React.useState<Partial<ModuleProps>>({});
-  const [dialogShown, setDialogShown] = React.useState(false);
   const [isEnabled, setIsEnabled] = React.useState(true);
   const [isSwitchDisabled, setIsSwitchDisabled] = React.useState(false);
-  const [, forceUpdate] = React.useReducer((x) => x + 1, 0);
 
-  const isDarkmode = useDarkmode();
-
-  const log = new Log("DeviceModule");
+  const log = useLog("DeviceModule");
 
   const module = props.module;
 
@@ -66,7 +44,7 @@ const DeviceModule = (props: Props) => {
     setIsEnabled(!disable.exist());
   }, [isEnabled]);
 
-  const { id, name, version, versionCode, author, description } = moduleProps;
+  const { id, name, version, versionCode, author, description, mmrlConfig } = moduleProps;
 
   return (
     <>
@@ -99,7 +77,7 @@ const DeviceModule = (props: Props) => {
                     log.i(
                       strings.formatString(strings.module_enabled_LOG, {
                         name: module,
-                      })
+                      }) as string
                     );
                   }
                 }
@@ -109,7 +87,7 @@ const DeviceModule = (props: Props) => {
                     log.i(
                       strings.formatString(strings.module_disabled_LOG, {
                         name: module,
-                      })
+                      }) as string
                     );
                   }
                 }
@@ -120,6 +98,25 @@ const DeviceModule = (props: Props) => {
           />
 
           <Stack spacing={0.8} direction="row">
+            {mmrlConfig && (
+              <StyledIconButton
+                style={{ width: 30, height: 30 }}
+                onClick={() => {
+                  context.pushPage({
+                    component: ConfigureActivity,
+                    props: {
+                      key: `${module}_configure`,
+                      extra: {
+                        modulename: module,
+                      },
+                    },
+                  });
+                }}
+              >
+                <SettingsIcon sx={{ fontSize: 14 }} />
+              </StyledIconButton>
+            )}
+
             {isSwitchDisabled ? (
               <StyledIconButton
                 style={{ width: 30, height: 30 }}

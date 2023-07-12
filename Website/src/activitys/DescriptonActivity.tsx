@@ -2,11 +2,41 @@ import { ProgressCircular } from "react-onsenui";
 import { Markup } from "@Components/Markdown";
 import { useActivity } from "@Hooks/useActivity";
 import React from "react";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import { Page } from "@Components/onsenui/Page";
+import { StyledCard } from "@Components/StyledCard";
+import Stack from "@mui/material/Stack";
+import { RelativeStyledSection, StyledSection } from "@Components/StyledSection";
+import { Alert, AlertTitle, Button, styled } from "@mui/material";
+import { useSettings } from "@Hooks/useSettings";
+import useShadeColor from "@Hooks/useShadeColor";
+import { CommentsActivity } from "./CommentsActivity";
+import SupportIcon from "@mui/icons-material/Support";
+import { os } from "@Native/Os";
+import { useStrings } from "@Hooks/useStrings";
 
-type Extra = { title: string; desc: string | undefined; request: { use: boolean; url: string } | undefined };
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import VerifiedIcon from "@mui/icons-material/Verified";
+import SettingsIcon from "@mui/icons-material/Settings";
+import CommentIcon from "@mui/icons-material/Comment";
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import DeviceUnknownIcon from "@mui/icons-material/DeviceUnknown";
+import DataUsageIcon from "@mui/icons-material/DataUsage";
+import ModuleSpecsActivity from "./ModuleSpecsActivity";
+import { parseAndroidVersion } from "@Util/parseAndroidVersion";
+import { useTheme } from "@Hooks/useTheme";
+
+type Extra = {
+  title: string;
+  desc: string | undefined;
+  prop_url?: ModuleProps;
+  module_options?: any;
+  type: "module" | "request";
+  request?: { url: string } | undefined;
+  zip_url?: string;
+};
+
 interface State<T> {
   data?: T;
   error?: Error;
@@ -16,7 +46,13 @@ type Action<T> = { type: "loading" } | { type: "fetched"; payload: T } | { type:
 
 function DescriptonActivity() {
   const { context, extra } = useActivity<Extra>();
-  const { desc, title, request } = extra;
+  const { strings } = useStrings();
+  const { theme } = useTheme();
+  const { desc, title, request, prop_url, zip_url, module_options } = extra;
+
+  // Create better handler
+  const isVerified = prop_url && module_options[prop_url.id]?.verified;
+  const _display = prop_url && module_options[prop_url.id]?.display;
 
   const initialState: State<string> = {
     error: undefined,
@@ -39,7 +75,7 @@ function DescriptonActivity() {
 
   const [state, dispatch] = React.useReducer(fetchReducer, initialState);
 
-  if (request?.use) {
+  if (request) {
     const url = request.url;
     const cache = React.useRef<Cache<string>>({});
 
@@ -68,6 +104,7 @@ function DescriptonActivity() {
           }
 
           const data = (await response.text()) as string;
+
           cache.current[url] = data;
           if (cancelRequest.current) return;
 
@@ -103,22 +140,185 @@ function DescriptonActivity() {
 
   return (
     <Page renderToolbar={renderToolbar}>
-      {!state.data ? (
-        <ProgressCircular
-          indeterminate
-          style={{
-            position: "absolute",
-            left: "50%",
-            top: "50%",
-            WebkitTransform: "translate(-50%, -50%)",
-            transform: "translate(-50%, -50%)",
-          }}
-        />
-      ) : (
-        <Markup children={state.data} />
-      )}
+      <RelativeStyledSection zeroMargin>
+        {!state.data ? (
+          <ProgressCircular
+            indeterminate
+            style={{
+              position: "absolute",
+              left: "50%",
+              top: "50%",
+              WebkitTransform: "translate(-50%, -50%)",
+              transform: "translate(-50%, -50%)",
+            }}
+          />
+        ) : (
+          <>
+            {prop_url && (
+              <StyledCard elevation={0} style={{ margin: "16px 8px 0px 8px" }}>
+                <Stack spacing={0.8} direction="row" alignItems="center" style={{ padding: 8 }}>
+                  {!(prop_url.mmrlNoComments === "true") && (
+                    <ViewModuleOptionsButton
+                      style={{ width: 39 }}
+                      onClick={() => {
+                        context.pushPage({
+                          component: CommentsActivity,
+                          props: {
+                            key: "comments_" + prop_url.id,
+                            extra: {
+                              id: prop_url.id,
+                            },
+                          },
+                        });
+                      }}
+                    >
+                      <Stack spacing={0.8} direction="row" alignItems="center">
+                        <CommentIcon sx={{ fontSize: 14 }} />
+                      </Stack>
+                    </ViewModuleOptionsButton>
+                  )}
+
+                  {isVerified && (
+                    <ViewModuleOptionsButton>
+                      <Stack spacing={0.8} direction="row" alignItems="center">
+                        <VerifiedIcon sx={{ fontSize: 14 }} />
+                        <span style={{ fontSize: 14 }}>{strings.verified}</span>
+                      </Stack>
+                    </ViewModuleOptionsButton>
+                  )}
+
+                  <ViewModuleOptionsButton
+                    onClick={() => {
+                      context.pushPage({
+                        component: ModuleSpecsActivity,
+                        props: {
+                          key: "comments_" + prop_url.id,
+                          extra: {
+                            prop_url: prop_url,
+                          },
+                        },
+                      });
+                    }}
+                  >
+                    <Stack spacing={0.8} direction="row" alignItems="center">
+                      <DeviceUnknownIcon sx={{ fontSize: 14 }} />
+                      <span style={{ fontSize: 14 }}>Specs</span>
+                    </Stack>
+                  </ViewModuleOptionsButton>
+
+                  {prop_url.support && (
+                    <ViewModuleOptionsButton
+                      onClick={() => {
+                        os.open(prop_url.support, {
+                          target: "_blank",
+                          features: {
+                            color: theme.palette.primary.main,
+                          },
+                        });
+                      }}
+                    >
+                      <Stack spacing={0.8} direction="row" alignItems="center">
+                        <SupportIcon sx={{ fontSize: 14 }} />
+                        <span style={{ fontSize: 14 }}>Support</span>
+                      </Stack>
+                    </ViewModuleOptionsButton>
+                  )}
+                </Stack>
+
+                {prop_url.minApi && os.sdk <= Number(prop_url.minApi) && (
+                  <Alert style={{ borderRadius: 0 }} severity="warning">
+                    <AlertTitle>Unsupported</AlertTitle>
+                    Module requires {parseAndroidVersion(prop_url.minApi)}
+                  </Alert>
+                )}
+              </StyledCard>
+            )}
+
+            <Markup children={state.data} style={{ marginBottom: 55 }} />
+
+            <div
+              style={{
+                backgroundColor: theme.palette.background.default,
+                position: "fixed",
+                bottom: 0,
+                left: 0,
+                right: 0,
+                height: 55,
+                marginBottom: 0,
+              }}
+            >
+              {zip_url && (
+                <Stack spacing={0.8} direction="row" alignItems="center" style={{ padding: 8 }}>
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    disableElevation
+                    onClick={() => {
+                      os.open(zip_url);
+                    }}
+                    endIcon={<FileDownloadIcon />}
+                  >
+                    {strings.download}
+                  </Button>
+                  {/* <Button fullWidth variant="contained" disableElevation onClick={() => {}}>
+                {strings.install}
+              </Button> */}
+                </Stack>
+              )}
+            </div>
+          </>
+        )}
+      </RelativeStyledSection>
     </Page>
   );
 }
+
+const ViewModuleOptionsButton = styled("span")(({ theme }) => {
+  const { settings, setSettings } = useSettings();
+  const { scheme } = useTheme();
+  const shade = useShadeColor();
+
+  return {
+    height: 39,
+
+    // fontSize: "inherit",
+    display: "flex",
+    alignItems: "center",
+
+    MozBoxAlign: "center",
+    // alignItems: "center",
+    MozBoxPack: "center",
+    justifyContent: "center",
+    position: "relative",
+    boxSizing: "border-box",
+    backgroundColor: "transparent",
+    outline: "currentcolor none 0px",
+    margin: "0px",
+    cursor: "pointer",
+    userSelect: "none",
+    verticalAlign: "middle",
+    appearance: "none",
+    textDecoration: "none",
+    textAlign: "center",
+    flex: "0 0 auto",
+    fontSize: "1.5rem",
+    padding: "8px",
+    overflow: "visible",
+    transition: "background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+    border: `1px solid ${theme.palette.divider}`,
+    // borderTopColor: theme.palette.divider,
+    // borderRightColor: theme.palette.divider,
+    // borderBottomColor: theme.palette.divider,
+    // borderLeftColor: theme.palette.divider,
+    color: !settings.darkmode ? "rgb(66, 66, 66)" : shade(scheme[700], -61),
+    borderRadius: theme.shape.borderRadius,
+    alignSelf: "flex-start",
+    ":hover": {
+      borderColor: theme.palette.primary.main,
+      color: theme.palette.primary.main,
+      backgroundColor: "rgba(0, 0, 0, 0.04)",
+    },
+  };
+});
 
 export default DescriptonActivity;

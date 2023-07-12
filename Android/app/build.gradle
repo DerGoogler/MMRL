@@ -14,8 +14,17 @@ android {
         applicationId 'com.dergoogler.mmrl'
         minSdk 26
         targetSdk 33
-        versionName "1.6.0"
-        versionCode 160
+        versionName '1.6.1'
+        versionCode 161
+        externalNativeBuild {
+            cmake {
+                cppFlags "-llog"
+                arguments "-DANDROID_STL=c++_shared"
+            }
+        }
+        ndk {
+            abiFilters "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
+        }
     }
     buildTypes {
         release {
@@ -34,11 +43,19 @@ android {
             buildConfigField "String", "BASE_URL", "\"leer\""
         }
     }
+    externalNativeBuild {
+        cmake {
+            path = file("src/main/cpp/CMakeLists.txt")
+        }
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
     packagingOptions {
+        jniLibs {
+            keepDebugSymbols += ['*/armeabi/*.so', '*/armeabi-v7a/*.so', '*/arm64-v8a/*.so', '*/mips/*.so', '*/mips64/*.so', '*/x86/*.so', '*/x86_64/*.so']
+        }
         resources {
             excludes += ['META-INF/DEPENDENCIES.txt', 'META-INF/DEPENDENCIES', 'META-INF/LICENSE', 'META-INF/LICENSE.txt', 'META-INF/MANIFEST.MF', 'META-INF/NOTICE', 'META-INF/NOTICE.txt', 'META-INF/ASL2.0']
         }

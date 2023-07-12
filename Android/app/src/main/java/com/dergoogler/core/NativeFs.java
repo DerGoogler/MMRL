@@ -1,12 +1,17 @@
 package com.dergoogler.core;
 
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.webkit.JavascriptInterface;
 
 import androidx.annotation.NonNull;
 
+import com.dergoogler.mmrl.MainActivity;
 import com.topjohnwu.superuser.io.SuFile;
 import com.topjohnwu.superuser.io.SuFileInputStream;
 import com.topjohnwu.superuser.io.SuFileOutputStream;
@@ -20,15 +25,28 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.URL;
+import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 public class NativeFs {
-    private final Context ctx;
+    private final MainActivity ctx;
 
-    public NativeFs(Context ctx) {
+    public NativeFs(MainActivity ctx) {
         this.ctx = ctx;
     }
+
+    @JavascriptInterface
+    public String chooseFile() {
+        Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
+        chooseFile.setType("*/*");
+        chooseFile = Intent.createChooser(chooseFile, "Choose a file");
+        ctx.startActivity(chooseFile);
+
+
+        return chooseFile.getData().getPath();
+    }
+
 
     @JavascriptInterface
     public String readFile(String path) {

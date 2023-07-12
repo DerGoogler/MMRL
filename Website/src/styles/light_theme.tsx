@@ -1,3 +1,4 @@
+import { os } from "@Native/Os";
 import { GlobalStyles, Theme } from "@mui/material";
 
 // export const LightTheme = (theme: Theme): any => ({
@@ -35,7 +36,7 @@ export const LightTheme = () => {
             webkitTapHighlightColor: "transparent",
             webkitTouchCallout: "none",
           },
-        "input, textarea, select": {
+        "input, textarea, select, pre, code": {
           webkitUserSelect: "auto",
           msUserSelect: "text",
           userSelect: "auto",
@@ -103,6 +104,11 @@ export const LightTheme = () => {
           webkitFontSmoothing: "antialiased",
           fontWeight: "400",
           backgroundColor: theme.palette.background.default,
+        },
+        // Android
+        ".page--wrapper": {
+          // marginTop: window.__os__.getSafeArea("top") / 2 + "px",
+          // marginTop: os.getStatusBarHeight() + "px",
         },
         ".page--material__content": {
           fontFamily: '"Roboto", "Noto", sans-serif',
@@ -278,8 +284,7 @@ export const LightTheme = () => {
           marginTop: "-5px",
           width: "20px",
           height: "20px",
-          boxShadow:
-            "0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12),\r\n    0 2px 4px -1px rgba(0, 0, 0, 0.4)",
+          boxShadow: "0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12),\r\n    0 2px 4px -1px rgba(0, 0, 0, 0.4)",
         },
         ":checked + .switch--material__toggle": {
           backgroundColor: "#7c43bd",
@@ -288,8 +293,7 @@ export const LightTheme = () => {
         ":checked + .switch--material__toggle > .switch--material__handle": {
           left: "16px",
           backgroundColor: theme.palette.primary.main,
-          boxShadow:
-            "0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12),\r\n    0 3px 1px -2px rgba(0, 0, 0, 0.2)",
+          boxShadow: "0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12),\r\n    0 3px 1px -2px rgba(0, 0, 0, 0.2)",
         },
         ":disabled + .switch--material__toggle": {
           opacity: "0.3",
@@ -517,12 +521,11 @@ export const LightTheme = () => {
             "-moz-radial-gradient(\r\n    circle farthest-corner,\r\n    #4a148c 0%,\r\n    #4a148c 6.6px,\r\n    transparent 7px\r\n  )",
           boxShadow: "none",
         },
-        ".range--material__input:active::-webkit-slider-thumb, .range--material__input.range__input--active::-webkit-slider-thumb":
-          {
-            webkitTransform: "scale(1.5)",
-            transform: "scale(1.5)",
-            transition: "transform 0.1s linear, -webkit-transform 0.1s linear",
-          },
+        ".range--material__input:active::-webkit-slider-thumb, .range--material__input.range__input--active::-webkit-slider-thumb": {
+          webkitTransform: "scale(1.5)",
+          transform: "scale(1.5)",
+          transition: "transform 0.1s linear, -webkit-transform 0.1s linear",
+        },
         ".range--disabled.range--material": {
           opacity: "1",
         },
@@ -676,10 +679,9 @@ export const LightTheme = () => {
           ".list-item--material.list-item--expandable": {
             backgroundImage: "linear-gradient(0deg, #eee, #eee 50%, transparent 50%)",
           },
-          ".list-item--material.list-item--longdivider, .list-item--material.list-item--expandable.list-item--longdivider":
-            {
-              backgroundImage: "linear-gradient(0deg, #eee, #eee 50%, transparent 50%)",
-            },
+          ".list-item--material.list-item--longdivider, .list-item--material.list-item--expandable.list-item--longdivider": {
+            backgroundImage: "linear-gradient(0deg, #eee, #eee 50%, transparent 50%)",
+          },
           ".list-header--material:not(:first-of-type)": {
             backgroundImage: "linear-gradient(180deg, #eee, #eee 50%, transparent 50%)",
           },
@@ -1780,8 +1782,7 @@ export const LightTheme = () => {
           background: "none",
           backgroundColor: theme.palette.primary.main,
           borderBottomWidth: "0",
-          boxShadow:
-            "0 4px 2px -2px rgba(0, 0, 0, 0.14), 0 3px 5px -2px rgba(0, 0, 0, 0.12),\r\n    0 5px 1px -4px rgba(0, 0, 0, 0.2)",
+          boxShadow: "0 4px 2px -2px rgba(0, 0, 0, 0.14), 0 3px 5px -2px rgba(0, 0, 0, 0.12),\r\n    0 5px 1px -4px rgba(0, 0, 0, 0.2)",
         },
         ".tabbar--material__button": {
           backgroundColor: "transparent",
@@ -2711,15 +2712,14 @@ export const LightTheme = () => {
           backgroundImage: `linear-gradient(0deg, ${theme.palette.divider}, ${theme.palette.divider} 100%)`,
           backgroundPositionX: "16px",
         },
-        ".list-item--material.list-item--longdivider, .list-item--material.list-item--expandable.list-item--longdivider":
-          {
-            borderBottom: "none",
+        ".list-item--material.list-item--longdivider, .list-item--material.list-item--expandable.list-item--longdivider": {
+          borderBottom: "none",
 
-            backgroundSize: "100% 1px",
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "bottom",
-            backgroundImage: `linear-gradient(0deg, ${theme.palette.divider}, ${theme.palette.divider} 100%)`,
-          },
+          backgroundSize: "100% 1px",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "bottom",
+          backgroundImage: `linear-gradient(0deg, ${theme.palette.divider}, ${theme.palette.divider} 100%)`,
+        },
         ".list-header--material": {
           background: theme.palette.background.default,
           border: "none",
@@ -3100,8 +3100,7 @@ export const LightTheme = () => {
           transition: "transform 0.1s ease-in, color 0.1s ease-in, -webkit-transform 0.1s ease-in",
         },
         ".text-input--material:focus": {
-          backgroundImage:
-            "linear-gradient(#3d5afe, #3d5afe),\r\n    linear-gradient(to top, transparent 1px, #afafaf 1px)",
+          backgroundImage: "linear-gradient(#3d5afe, #3d5afe),\r\n    linear-gradient(to top, transparent 1px, #afafaf 1px)",
           webkitAnimation: "material-text-input-animate 0.3s forwards",
           animation: "material-text-input-animate 0.3s forwards",
         },
@@ -3282,8 +3281,7 @@ export const LightTheme = () => {
           webkitFontSmoothing: "antialiased",
           fontWeight: "400",
           textAlign: "left",
-          boxShadow:
-            "0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12),\r\n    0 8px 10px -5px rgba(0, 0, 0, 0.4)",
+          boxShadow: "0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12),\r\n    0 8px 10px -5px rgba(0, 0, 0, 0.4)",
         },
         ".dialog-container--material": {
           borderRadius: "8px",
@@ -3435,8 +3433,7 @@ export const LightTheme = () => {
         ".alert-dialog-container--material": {
           borderRadius: "25px",
           padding: "22px 0 0 0",
-          boxShadow:
-            "0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12),\r\n    0 8px 10px -5px rgba(0, 0, 0, 0.4)",
+          boxShadow: "0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12),\r\n    0 8px 10px -5px rgba(0, 0, 0, 0.4)",
         },
         ".alert-dialog-title--material": {
           fontFamily: '"Roboto", "Noto", sans-serif',
@@ -3605,8 +3602,7 @@ export const LightTheme = () => {
           backgroundColor: "#fafafa",
           borderRadius: "2px",
           color: "#1f1f21",
-          boxShadow:
-            "0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12),\r\n    0 3px 1px -2px rgba(0, 0, 0, 0.2)",
+          boxShadow: "0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12),\r\n    0 3px 1px -2px rgba(0, 0, 0, 0.2)",
         },
         ".popover--material__arrow": {
           display: "none",
@@ -3774,10 +3770,9 @@ export const LightTheme = () => {
             strokeDashoffset: "-251.32%",
           },
         },
-        ".progress-circular--material__background, .progress-circular--material__primary, .progress-circular--material__secondary":
-          {
-            strokeWidth: "9%",
-          },
+        ".progress-circular--material__background, .progress-circular--material__primary, .progress-circular--material__secondary": {
+          strokeWidth: "9%",
+        },
         ".progress-circular--material__background": {
           stroke: "transparent",
         },
@@ -3879,13 +3874,11 @@ export const LightTheme = () => {
           backgroundColor: theme.palette.primary.main,
           // borderRadius: "50%",
           overflow: "hidden",
-          boxShadow:
-            "0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12),\r\n    0 2px 4px -1px rgba(0, 0, 0, 0.4)",
+          boxShadow: "0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12),\r\n    0 2px 4px -1px rgba(0, 0, 0, 0.4)",
           transition: "all 0.2s ease-in-out",
         },
         "ons-fab.fab--material:active, ons-speed-dial-item.fab--material:active, button.fab--material:active": {
-          boxShadow:
-            "0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12),\r\n    0 5px 5px -3px rgba(0, 0, 0, 0.4)",
+          boxShadow: "0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12),\r\n    0 5px 5px -3px rgba(0, 0, 0, 0.4)",
           backgroundColor: "rgba(255, 255, 255, 0.75)",
 
           transition: "all 0.2s ease",
@@ -4307,8 +4300,7 @@ export const LightTheme = () => {
           left: "0",
           right: "0",
           bottom: "0",
-          boxShadow:
-            "0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12),\r\n    0 8px 10px -5px rgba(0, 0, 0, 0.4)",
+          boxShadow: "0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12),\r\n    0 8px 10px -5px rgba(0, 0, 0, 0.4)",
         },
         ".action-sheet-title--material": {
           fontFamily: '"Roboto", "Noto", sans-serif',
@@ -4402,8 +4394,7 @@ export const LightTheme = () => {
         ".card--material": {
           backgroundColor: "white",
           borderRadius: "8px",
-          boxShadow:
-            "0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12),\r\n    0 3px 1px -2px rgba(0, 0, 0, 0.2)",
+          boxShadow: "0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12),\r\n    0 3px 1px -2px rgba(0, 0, 0, 0.2)",
           fontFamily: '"Roboto", "Noto", sans-serif',
           webkitFontSmoothing: "antialiased",
           fontWeight: "400",
@@ -4532,11 +4523,10 @@ export const LightTheme = () => {
             bottom: "0",
             paddingBottom: "21px",
           },
-          "html[onsflag-iphonex-landscape] .dialog .page__content, html[onsflag-iphonex-landscape] .modal .page__content":
-            {
-              paddingLeft: "0",
-              paddingRight: "0",
-            },
+          "html[onsflag-iphonex-landscape] .dialog .page__content, html[onsflag-iphonex-landscape] .modal .page__content": {
+            paddingLeft: "0",
+            paddingRight: "0",
+          },
           "html[onsflag-iphonex-landscape] .toolbar__left": {
             paddingLeft: "44px",
           },
@@ -4619,10 +4609,9 @@ export const LightTheme = () => {
           "html[onsflag-iphonex-landscape] .page__content > .list:not(.list--inset) > .list-item": {
             paddingLeft: "58px",
           },
-          "html[onsflag-iphonex-landscape]\r\n    .page__content\r\n    > .list:not(.list--inset)\r\n    > .list-item--chevron:before":
-            {
-              right: "60px",
-            },
+          "html[onsflag-iphonex-landscape]\r\n    .page__content\r\n    > .list:not(.list--inset)\r\n    > .list-item--chevron:before": {
+            right: "60px",
+          },
           "html[onsflag-iphonex-landscape]\r\n    .page__content\r\n    > .list:not(.list--inset)\r\n    > .list-item\r\n    > .list-item__center:last-child":
             {
               paddingRight: "50px",

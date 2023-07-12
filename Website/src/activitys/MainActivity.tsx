@@ -19,6 +19,7 @@ import { RouterNavigator } from "@Components/onsenui/RouterNavigator";
 import { DrawerFragment } from "./fragments/DrawerFragment";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import { Page } from "@Components/onsenui/Page";
+import eruda from "eruda";
 
 const MainActivity = (): JSX.Element => {
   const { settings } = useSettings();
@@ -32,6 +33,22 @@ const MainActivity = (): JSX.Element => {
   const showSplitter = () => {
     setIsSplitterOpen(true);
   };
+
+  React.useEffect(() => {
+    if (settings.eruda_console_enabled) {
+      eruda.init();
+    } else {
+      if ((window as any).eruda) {
+        eruda.destroy();
+      }
+    }
+  }, [settings.eruda_console_enabled]);
+
+  React.useEffect(() => {
+    if (!os.hasStoragePermission()) {
+      os.requestStoargePermission();
+    }
+  }, []);
 
   const CheckRoot = () => {
     if (os.isAndroid) {
@@ -83,9 +100,11 @@ const MainActivity = (): JSX.Element => {
   const pushPage = (props: PushPropsCore): void => {
     const route = {
       component: props.component,
+
       props: {
         key: props.props.key,
-        extra: props.props?.extra,
+        extra: props.props.extra ? props.props.extra : {},
+
         context: {
           popPage: (options = {}) => popPage(options),
           pushPage: (props: PushPropsCore) => pushPage(props),
@@ -225,4 +244,4 @@ const MainActivity = (): JSX.Element => {
   );
 };
 
-export default MainActivity;
+export { MainActivity };

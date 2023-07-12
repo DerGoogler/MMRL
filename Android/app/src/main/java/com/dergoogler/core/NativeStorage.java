@@ -9,16 +9,22 @@ import androidx.annotation.NonNull;
 
 
 public class NativeStorage {
-    private final SharedPreferences localstorage;
+    private final SharedPreferences localStorage;
+    private String localStorageName;
 
     public NativeStorage(@NonNull Context ctx) {
-        this.localstorage = ctx.getSharedPreferences("localstorage", Activity.MODE_PRIVATE);
+        this.localStorage = ctx.getSharedPreferences(localStorageName, Activity.MODE_PRIVATE);
+    }
+
+    @JavascriptInterface
+    public void defineName(String name) {
+        this.localStorageName = name;
     }
 
     @JavascriptInterface
     public String getItem(String key) {
         try {
-            return this.localstorage.getString(key, null);
+            return this.localStorage.getString(key, null);
         } catch (Exception e) {
             return null;
         }
@@ -26,17 +32,17 @@ public class NativeStorage {
 
     @JavascriptInterface
     public void setItem(String key, String value) {
-        this.localstorage.edit().putString(key, value).apply();
+        this.localStorage.edit().putString(key, value).apply();
     }
 
     @JavascriptInterface
     public void removeItem(String key) {
-        this.localstorage.edit().remove(key).apply();
+        this.localStorage.edit().remove(key).apply();
     }
 
     @JavascriptInterface
     public void clear() {
-        this.localstorage.edit().clear().apply();
+        this.localStorage.edit().clear().apply();
     }
 
 }

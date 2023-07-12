@@ -1,3 +1,4 @@
+import { DAPITestActivity } from "@Activitys/DAPITestActivity";
 import DescriptonActivity from "@Activitys/DescriptonActivity";
 import RepoActivity from "@Activitys/RepoActivity";
 import SettingsActivity from "@Activitys/SettingsActivity";
@@ -9,7 +10,7 @@ import { Page } from "react-onsenui";
 type Props = {
   renderToolbar: () => JSX.Element;
   hideSplitter: () => void;
-  pushPage: (props: PushPropsCore) => void;
+  pushPage: (props: PushPropsCore<any>) => void;
 };
 
 export const DrawerFragment = (props: Props) => {
@@ -51,6 +52,27 @@ export const DrawerFragment = (props: Props) => {
         </ListItemButton>
       </List>
 
+      <Divider />
+
+      <List subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>Components</ListSubheader>}>
+        <ListItemButton
+          onClick={() => {
+            pushPage({
+              component: DAPITestActivity,
+              props: {
+                key: "dapitestActivity",
+                extra: {},
+              },
+            });
+            hide();
+          }}
+        >
+          <StyledListItemText primary={"D-API Tester"} />
+        </ListItemButton>
+      </List>
+
+      <Divider />
+
       <List subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>Other</ListSubheader>}>
         <ListItemButton
           onClick={() => {
@@ -80,7 +102,6 @@ export const DrawerFragment = (props: Props) => {
                 key: "changelog",
                 extra: {
                   request: {
-                    use: true,
                     url: "https://raw.githubusercontent.com/wiki/DerGoogler/MMRL/Changelog.md",
                   },
                   title: "Changelog",
@@ -93,7 +114,8 @@ export const DrawerFragment = (props: Props) => {
           <StyledListItemText primary={"Changelog"} />
         </ListItemButton>
       </List>
-      <Divider />
+
+      {/* <Divider /> */}
     </Page>
   );
 };

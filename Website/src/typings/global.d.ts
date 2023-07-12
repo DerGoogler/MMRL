@@ -78,12 +78,14 @@ declare global {
      * This is an Android only window object
      */
     readonly __os__: I;
+    readonly __log__: I;
+    readonly __properties__: I;
     /**
      * `localStorage` like object to make support better with `useLocalStorage`.
      *
      * - This interface is not configurable
      */
-    readonly __nativeStorage__: Pick<Storage, "getItem" | "setItem" | "removeItem" | "clear">;
+    readonly __nativeStorage__: Pick<Storage, "getItem" | "setItem" | "removeItem" | "clear"> & { defineName: (name: string) => void };
   }
 
   interface Window extends AndroidWindow<any> {}
@@ -95,18 +97,26 @@ declare global {
 
   const NODE_ENV: string | undefined;
 
+  type PushPropsExtra<E = {}> = E & {
+    param?: {
+      name: string;
+      value: string;
+    };
+  };
+
   interface PushPropsCore<E = {}> {
     component: React.ElementType;
+
     props: {
       key: string;
-      extra: E;
+      extra: PushPropsExtra<E>;
       readonly popPage?: () => void;
-      readonly pushPage?: (...args: [props: PushPropsCore<E>]) => void; //
+      readonly pushPage?: (...args: [props: PushPropsCore<PushPropsExtra<E>>]) => void; //
     };
   }
 
   interface PushProps<E = {}> {
-    readonly extra: E;
+    readonly extra: PushPropsExtra<E>;
     // readonly context: {
     readonly popPage: () => void;
     readonly pushPage: <T>(props: PushPropsCore<T>) => void;
@@ -159,10 +169,10 @@ declare global {
 
   interface Module {
     id: string;
-    last_update: number;
+    last_update: string;
     notes_url: string;
     prop_url: ModuleProps;
-    stars: number;
+    stars: string;
     zip_url: string;
   }
 
@@ -174,15 +184,21 @@ declare global {
     versionCode: number;
     author: string;
     description: string;
+
+    // MMRL supported properties
+    mmrlConfig?: string;
+    mmrlChangelog?: string;
+    mmrlNoComments?: string;
+
     // Fox's Mmm supported properties
-    minApi?: number;
-    maxApi?: number;
-    minMagisk?: number;
-    needRamdisk?: boolean;
+    minApi?: string;
+    maxApi?: string;
+    minMagisk?: string;
+    needRamdisk?: string;
     support?: string;
     donate?: string;
     config?: string;
-    changeBoot?: boolean;
-    mmtReborn?: boolean;
+    changeBoot?: string;
+    mmtReborn?: string;
   }
 }

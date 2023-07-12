@@ -6,5 +6,8 @@
 
         <item name="android:colorPrimary">#4a148c</item>
         <item name="android:colorPrimaryDark">#4a148c</item>
+
+<!--        <item name="android:windowTranslucentStatus">true</item>-->
+<!--        <item name="android:windowTranslucentNavigation">true</item>-->
     </style>
 </resources>
