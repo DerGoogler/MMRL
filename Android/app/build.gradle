@@ -14,8 +14,8 @@ android {
         applicationId 'com.dergoogler.mmrl'
         minSdk 26
         targetSdk 33
-        versionName "1.6.0"
-        versionCode 160
+        versionName '1.6.1'
+        versionCode 161
         externalNativeBuild {
             cmake {
                 cppFlags "-llog"
