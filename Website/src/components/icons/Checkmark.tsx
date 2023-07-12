@@ -29,7 +29,7 @@ const Checkmark = ({ color, size, className }: Props) => {
 };
 
 Checkmark.defaultProps = {
-  size: "14",
+  size: "16",
   color: "#1a7f37",
 };
 

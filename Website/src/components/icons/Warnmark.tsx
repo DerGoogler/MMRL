@@ -30,7 +30,7 @@ const Warnmark = ({ color, size, className }: Props) => {
 };
 
 Warnmark.defaultProps = {
-  size: "14",
+  size: "16",
   color: "#d29922",
 };
 
