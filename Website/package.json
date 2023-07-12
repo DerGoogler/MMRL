@@ -3,8 +3,8 @@
   "description": "",
   "config": {
     "application_id": "com.dergoogler.mmrl",
-    "version_name": "1.6.1",
-    "version_code": 161
+    "version_name": "1.6.2",
+    "version_code": 162
   },
   "main": "index.tsx",
   "keywords": [],
