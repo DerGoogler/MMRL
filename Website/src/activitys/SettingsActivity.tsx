@@ -77,23 +77,25 @@ function SettingsActivity() {
               }}
             />
           </ListItem>
-          <ListItem>
-            <StyledListItemText
-              id="switch-list-__experimental_local_install"
-              primary={"Enable local install"}
-              secondary="Allows you to install local *.zip files (Experimental)"
-            />
-            <Android12Switch
-              edge="end"
-              onChange={(e: any) => {
-                setSettings("__experimental_local_install", e.target.checked);
-              }}
-              checked={settings.__experimental_local_install}
-              inputProps={{
-                "aria-labelledby": "switch-list-__experimental_local_install",
-              }}
-            />
-          </ListItem>
+          {os.isAndroid && (
+            <ListItem>
+              <StyledListItemText
+                id="switch-list-__experimental_local_install"
+                primary={"Enable local install"}
+                secondary="Allows you to install local *.zip files (Experimental)"
+              />
+              <Android12Switch
+                edge="end"
+                onChange={(e: any) => {
+                  setSettings("__experimental_local_install", e.target.checked);
+                }}
+                checked={settings.__experimental_local_install}
+                inputProps={{
+                  "aria-labelledby": "switch-list-__experimental_local_install",
+                }}
+              />
+            </ListItem>
+          )}
         </List>
 
         <Divider />
