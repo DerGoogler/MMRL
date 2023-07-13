@@ -61,6 +61,12 @@ export const LightTheme = () => {
         "h4, h5, h6": {
           fontSize: "18px",
         },
+        "pre, code": {
+          userSelect: "text",
+          span: {
+            userSelect: "text",
+          },
+        },
         ".page": {
           fontFamily: '-apple-system, "Helvetica Neue", "Helvetica", "Arial", "Lucida Grande", sans-serif',
           webkitFontSmoothing: "antialiased",
