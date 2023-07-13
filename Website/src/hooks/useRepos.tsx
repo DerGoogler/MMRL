@@ -17,7 +17,12 @@ interface RepoContextInterface {
   setRepos: SetValue<StoredRepo[]>;
   modulesLoading: boolean | undefined;
   modules: Module[];
-  moduleOptions: any[];
+  moduleOptions: {
+    [name: string]: {
+      verified?: boolean;
+      hidden?: boolean;
+    };
+  }[];
   actions: RepoContextActions;
 }
 

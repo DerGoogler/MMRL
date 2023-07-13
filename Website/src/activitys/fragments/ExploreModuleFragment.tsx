@@ -128,7 +128,6 @@ const ExploreModuleFragment = () => {
                     extra: {
                       title: m.prop_url.name,
                       prop_url: m.prop_url,
-                      module_options: moduleOptions,
                       zip_url: m.zip_url,
                       request: {
                         url: m.notes_url,
@@ -214,7 +213,7 @@ const ExploreModuleFragment = () => {
       </Stack>
 
       {_DATA.currentData().map((module, index) => (
-        <ExploreModule index={index} key={module.id + index} moduleProps={module} moduleOptions={moduleOptions} />
+        <ExploreModule index={index} key={module.id + index} moduleProps={module} />
       ))}
     </>
   );

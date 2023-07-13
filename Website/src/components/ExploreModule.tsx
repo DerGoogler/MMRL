@@ -8,26 +8,24 @@ import { StyledCard } from "./StyledCard";
 import { useLowQualityModule } from "@Hooks/useLowQualityModule";
 import { StyledIconButton } from "./StyledIconButton";
 import { useSettings } from "@Hooks/useSettings";
-import { isDesktop } from "react-device-detect";
+import { isMobile } from "react-device-detect";
+import { useFormatDate } from "@Hooks/useFormatDate";
+import { useModuleOptions } from "@Hooks/useModuleOptions";
 
 interface Props {
   index: number;
   moduleProps: Module;
-  moduleOptions: any;
 }
 export const ExploreModule = (props: Props) => {
   const { context } = useActivity();
   const { strings } = useStrings();
   const { settings } = useSettings();
 
-  const { moduleOptions, index } = props;
   const { id, notes_url, zip_url, last_update, prop_url } = props.moduleProps;
 
-  // Create better handler
-  const isVerified = moduleOptions[id]?.verified;
-  const _display = moduleOptions[id]?.display;
-
+  const { isVerified, isHidden } = useModuleOptions(id);
   const isLowQuality = useLowQualityModule(prop_url);
+  const formatLastUpdate = useFormatDate(new Date(last_update));
 
   const formatDate = (date: Date) => {
     var hours = date.getHours();
@@ -54,7 +52,6 @@ export const ExploreModule = (props: Props) => {
           },
           title: prop_url.name,
           prop_url: prop_url,
-          module_options: props.moduleOptions,
           zip_url: zip_url,
           request: {
             url: notes_url,
@@ -71,7 +68,7 @@ export const ExploreModule = (props: Props) => {
         <CardMedia
           component="img"
           style={{ objectFit: "unset" }}
-          height={isDesktop ? "445px" : "181.500px"}
+          height={os.isAndroid || isMobile ? "181.500px" : "445px"}
           image={prop_url.mmrlCover}
           alt={prop_url.name}
         />
@@ -96,7 +93,7 @@ export const ExploreModule = (props: Props) => {
           sx={(theme) => ({
             bgcolor: theme.palette.secondary.light,
           })}
-          label={formatDate(new Date(last_update))}
+          label={formatLastUpdate}
         />
         <Stack spacing={0.8} direction="row">
           {isVerified && (

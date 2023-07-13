@@ -27,6 +27,7 @@ import ModuleSpecsActivity from "./ModuleSpecsActivity";
 import { parseAndroidVersion } from "@Util/parseAndroidVersion";
 import { useTheme } from "@Hooks/useTheme";
 import { StyledIconButtonWithText } from "@Components/StyledIconButton";
+import { useModuleOptions } from "@Hooks/useModuleOptions";
 
 type Extra = {
   title: string;
@@ -51,9 +52,7 @@ function DescriptonActivity() {
   const { theme } = useTheme();
   const { desc, title, request, prop_url, zip_url, module_options } = extra;
 
-  // Create better handler
-  const isVerified = prop_url && module_options[prop_url.id]?.verified;
-  const _display = prop_url && module_options[prop_url.id]?.display;
+  const { isVerified, isHidden } = useModuleOptions(prop_url?.id);
 
   const initialState: State<string> = {
     error: undefined,
