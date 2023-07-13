@@ -63,29 +63,40 @@ export const ExploreModule = (props: Props) => {
 
   return (
     <StyledCard elevation={0}>
-      {!settings._disable_module_covers && prop_url.mmrlCover && (
-        // @ts-ignore
-        <CardMedia
-          component="img"
-          style={{ objectFit: "unset" }}
-          height={os.isAndroid || isMobile ? "181.500px" : "445px"}
-          image={prop_url.mmrlCover}
-          alt={prop_url.name}
-        />
-      )}
-      <Box sx={{ p: 2, display: "flex" }}>
-        <Stack spacing={0.5} style={{ flexGrow: 1 }} onClick={handleOpen}>
-          <Typography fontWeight={700} color="text.primary">
-            {prop_url.name}
-          </Typography>{" "}
-          <Typography variant="caption" sx={{ fontSize: ".70rem" }} color="text.secondary">
-            {prop_url.version} ({prop_url.versionCode}) / {prop_url.author}
-          </Typography>
-          <Typography variant="body1" color="text.secondary">
-            {prop_url.description}
-          </Typography>
-        </Stack>
-      </Box>
+      <div
+        onClick={handleOpen}
+        style={{
+          cursor: "pointer",
+        }}
+      >
+        {!settings._disable_module_covers && prop_url.mmrlCover && (
+          // @ts-ignore
+          <CardMedia
+            component="img"
+            style={{
+              minHeight: os.isAndroid || isMobile ? 179 : 465,
+              height: "100%",
+              objectFit: "cover",
+            }}
+            height={os.isAndroid || isMobile ? "181.500px" : "445px"}
+            image={prop_url.mmrlCover}
+            alt={prop_url.name}
+          />
+        )}
+        <Box sx={{ p: 2, display: "flex" }}>
+          <Stack spacing={0.5} style={{ flexGrow: 1 }}>
+            <Typography fontWeight={700} color="text.primary">
+              {prop_url.name}
+            </Typography>{" "}
+            <Typography variant="caption" sx={{ fontSize: ".70rem" }} color="text.secondary">
+              {prop_url.version} ({prop_url.versionCode}) / {prop_url.author}
+            </Typography>
+            <Typography variant="body1" color="text.secondary">
+              {prop_url.description}
+            </Typography>
+          </Stack>
+        </Box>
+      </div>
       <Divider />
       <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ px: 2, py: 1 }}>
         <Chip
