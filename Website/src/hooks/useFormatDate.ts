@@ -1,13 +1,16 @@
-import { useRef } from "react";
+import { useMemo } from "react";
+import { useSettings } from "./useSettings";
 
-export const useFormatDate = (date: Date) => {
-  // Don't use state it causes to many re-renders
-  const hours = useRef<number>(date.getHours());
-  const minutes = useRef<number | string>(date.getMinutes());
-  const ampm = hours.current >= 12 ? "pm" : "am";
-  hours.current = hours.current % 12;
-  hours.current = hours.current ? hours.current : 12;
-  minutes.current = (minutes.current as number) < 10 ? "0" + minutes.current : minutes.current;
-  const strTime = hours.current + ":" + minutes.current + " " + ampm;
-  return date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear() + " " + strTime;
+export const useFormatDate = (date: string) => {
+  const { settings } = useSettings();
+
+  return useMemo(
+    () =>
+      Intl.DateTimeFormat(settings.language.value, {
+        year: "numeric",
+        day: "2-digit",
+        month: "long",
+      }).format(new Date(Number(date))),
+    [date]
+  );
 };

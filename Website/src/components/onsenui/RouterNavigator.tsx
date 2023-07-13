@@ -96,11 +96,17 @@ class RouterNavigatorClass extends React.Component<HTMLNavigatorClass, State> {
 
     const update = () => {
       return new Promise((resolve) => {
-        if (route.props.extra?.param) {
-          this._url.searchParams.set(route.props.extra.param.name, route.props.extra.param.value);
-          window.history.replaceState(null, null as unknown as string, this._url);
-        }
-        this.setState({ internalStack: [...this.state.internalStack, route], currentStack: route }, resolve as Noop);
+        this.setState(
+          (prevState) => {
+            if (route.props.extra?.param) {
+              this._url.searchParams.set(route.props.extra.param.name, route.props.extra.param.value);
+              window.history.replaceState(null, null as unknown as string, this._url);
+            }
+            return { internalStack: [...prevState.internalStack, route], currentStack: route };
+          },
+
+          resolve as Noop
+        );
       });
     };
 
@@ -118,12 +124,16 @@ class RouterNavigatorClass extends React.Component<HTMLNavigatorClass, State> {
 
     const update = () => {
       return new Promise((resolve) => {
-        this.setState({ internalStack: [...this.state.internalStack, route] }, resolve as Noop);
+        this.setState((prevState) => {
+          return { internalStack: [...prevState.internalStack, route] };
+        }, resolve as Noop);
       });
     };
 
     return this.ref.current._pushPage(options, update).then(() => {
-      this.setState({ internalStack: [...this.state.internalStack.slice(0, -2), route] });
+      this.setState((prevState) => {
+        return { internalStack: [...prevState.internalStack.slice(0, -2), route] };
+      });
     });
   }
 
@@ -136,12 +146,15 @@ class RouterNavigatorClass extends React.Component<HTMLNavigatorClass, State> {
       return new Promise((resolve) => {
         ReactDOM.flushSync(() => {
           // prevents flickering caused by React 18 batching
-          const route = this.state.currentStack;
-          if (route.props.extra?.param) {
-            this._url.searchParams.delete(route.props.extra?.param.name);
-            window.history.replaceState(null, null as unknown as string, this._url);
-          }
-          this.setState({ internalStack: this.state.internalStack.slice(0, -1) }, resolve as Noop);
+
+          this.setState((prevState) => {
+            const route = prevState.currentStack;
+            if (route.props.extra?.param) {
+              this._url.searchParams.delete(route.props.extra?.param.name);
+              window.history.replaceState(null, null as unknown as string, this._url);
+            }
+            return { internalStack: prevState.internalStack.slice(0, -1) };
+          }, resolve as Noop);
         });
       });
     };
