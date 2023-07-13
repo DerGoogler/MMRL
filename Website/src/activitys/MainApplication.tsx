@@ -67,7 +67,7 @@ const MainApplication = (props: Props) => {
 
   return (
     <Page modifier="noshadow" renderToolbar={renderToolbar}>
-      <Tabbar modifier="noshadow" swipeable={false} position={"top"} renderTabs={renderTabs} />
+      <Tabbar modifier="noshadow" hideTabs={!os.isAndroid} swipeable={false} position={"top"} renderTabs={renderTabs} />
     </Page>
   );
 };

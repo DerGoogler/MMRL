@@ -647,6 +647,11 @@ export const LightTheme = () => {
           ".tabbar__button": {
             borderTop: "none",
           },
+          ".tabbar--noshadow": {
+            boxShadow: "none",
+            backgroundImage: "none",
+            borderBottom: "none",
+          },
           ".tabbar--top": {
             borderBottom: "none",
             backgroundSize: "100% 1px",
@@ -1782,7 +1787,7 @@ export const LightTheme = () => {
           background: "none",
           backgroundColor: theme.palette.primary.main,
           borderBottomWidth: "0",
-          boxShadow: "0 4px 2px -2px rgba(0, 0, 0, 0.14), 0 3px 5px -2px rgba(0, 0, 0, 0.12),\r\n    0 5px 1px -4px rgba(0, 0, 0, 0.2)",
+          // boxShadow: "0 4px 2px -2px rgba(0, 0, 0, 0.14), 0 3px 5px -2px rgba(0, 0, 0, 0.12),\r\n    0 5px 1px -4px rgba(0, 0, 0, 0.2)",
         },
         ".tabbar--material__button": {
           backgroundColor: "transparent",
