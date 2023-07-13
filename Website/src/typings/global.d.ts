@@ -144,7 +144,6 @@ declare global {
 
   interface StoredRepo extends Omit<Repo, "modules"> {
     modules: string;
-    isOn: boolean;
   }
 
   interface Repo {

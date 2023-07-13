@@ -5,6 +5,7 @@ import { link } from "googlers-tools";
 import _ from "underscore";
 import { useSettings } from "./useSettings";
 import { os } from "@Native/Os";
+import Ajv, { JSONSchemaType } from "ajv";
 
 export interface RepoContextActions {
   addRepo: (data: AddRepoData) => void;
@@ -56,6 +57,60 @@ type SetRepoStateData = {
   callback?: (state: string[]) => void;
 };
 
+const repo_schema = {
+  type: "object",
+  additionalProperties: true,
+  required: ["last_update", "name", "modules"],
+  properties: {
+    last_update: {
+      type: "number",
+    },
+    name: {
+      type: "string",
+    },
+    website: {
+      type: "array",
+      nullable: true,
+    },
+    support: {
+      type: "string",
+      nullable: true,
+    },
+    donate: {
+      type: "string",
+      nullable: true,
+    },
+    submitModule: {
+      type: "string",
+      nullable: true,
+    },
+    modules: {
+      type: "array",
+      items: {
+        type: "object",
+        required: ["id", "last_update", "prop_url", "zip_url", "notes_url"],
+        properties: {
+          id: {
+            type: "string",
+          },
+          last_update: {
+            type: "number",
+          },
+          prop_url: {
+            type: "string",
+          },
+          zip_url: {
+            type: "string",
+          },
+          notes_url: {
+            type: "string",
+          },
+        },
+      },
+    },
+  },
+};
+
 export const RepoProvider = (props: React.PropsWithChildren) => {
   const [repos, setRepos] = useNativeStorage<StoredRepo[]>("repos", []);
   const { settings, setSettings } = useSettings();
@@ -75,29 +130,37 @@ export const RepoProvider = (props: React.PropsWithChildren) => {
       fetch(data.url)
         .then((response) => response.json())
         .then((response) => {
-          setRepos(
-            (prev) => [
-              ...prev,
-              {
-                id: "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
-                  var r = (Math.random() * 16) | 0,
-                    v = c == "x" ? r : (r & 0x3) | 0x8;
-                  return v.toString(16);
-                }),
-                name: response.name || "Unknown Repository",
-                website: response.website || null,
-                support: response.support || null,
-                donate: response.donate || null,
-                submitModule: response.submitModules || null,
-                last_update: response.website || 0,
-                modules: data.url,
-                isOn: false,
-              },
-            ],
-            data.callback
-          );
+          const ajv = new Ajv(); // options can be passed, e.g. {allErrors: true}
+          const validate = ajv.compile(repo_schema);
+          const valid = validate(response) as boolean;
+
+          if (valid) {
+            setRepos(
+              (prev) => [
+                ...prev,
+                {
+                  id: "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+                    var r = (Math.random() * 16) | 0,
+                      v = c == "x" ? r : (r & 0x3) | 0x8;
+                    return v.toString(16);
+                  }),
+                  name: response.name || "Unknown Repository",
+                  website: response.website || null,
+                  support: response.support || null,
+                  donate: response.donate || null,
+                  submitModule: response.submitModules || null,
+                  last_update: response.website || 0,
+                  modules: data.url,
+                  isOn: false,
+                },
+              ],
+              data.callback
+            );
+          } else {
+            os.toast("Repository schema does not match", Toast.LENGTH_SHORT);
+          }
         })
-        .catch(data.error);
+        .catch((e) => (data.callback ? data.callback(e) : console.log(e)));
     } else {
       os.toast("The given link isn't valid.", Toast.LENGTH_SHORT);
     }
