@@ -1,34 +1,15 @@
 import Markdown, { MarkdownToJSX, compiler } from "markdown-to-jsx";
 import Anchor, { Open } from "../dapi/Anchor";
 import Video from "../dapi/Video";
-import Checkmark from "../icons/Checkmark";
-import Dangermark from "../icons/Dangermark";
-import Warnmark from "../icons/Warnmark";
-import Icon from "@mui/material/Icon";
-import Typography from "@mui/material/Typography";
 import React from "react";
-import {
-  Alert,
-  Box,
-  Button,
-  Card,
-  CardActionArea,
-  CardActions,
-  CardContent,
-  CardMedia,
-  Chip,
-  Container,
-  Divider,
-  Grid,
-  Paper,
-  Stack,
-} from "@mui/material";
+import { Alert, Divider, Paper, Stack } from "@mui/material";
 import styled from "@emotion/styled";
 import hljs from "highlight.js";
 import { doc } from "googlers-tools";
 import { Image } from "@Components/dapi/Image";
 import { StyledMarkdown } from "./StyledMarkdown";
 import { DiscordWidget } from "@Components/dapi/DiscordWidget";
+import { AlertIcon, BugIcon, CheckIcon, IssueClosedIcon, IssueOpenedIcon, IssueReopenedIcon, XIcon } from "@primer/octicons-react";
 
 type Props = {
   children: string;
@@ -43,6 +24,28 @@ const StyledDivider = styled(Divider)({
 });
 
 export const MarkdownOverrides: MarkdownToJSX.Overrides | undefined = {
+  // Icons
+  BugIcon: {
+    component: BugIcon,
+  },
+  IssueOpenedIcon: {
+    component: IssueOpenedIcon,
+  },
+  IssueClosedIcon: {
+    component: IssueClosedIcon,
+  },
+  IssueReopenedIcon: {
+    component: IssueReopenedIcon,
+  },
+  CheckIcon: {
+    component: CheckIcon,
+  },
+  XIcon: {
+    component: XIcon,
+  },
+  AlertIcon: {
+    component: AlertIcon,
+  },
   alert: {
     component: (props) => {
       return (
@@ -67,41 +70,13 @@ export const MarkdownOverrides: MarkdownToJSX.Overrides | undefined = {
   divider: {
     component: StyledDivider,
   },
-  grid: {
-    component: Grid,
-  },
-  chip: {
-    component: Chip,
-  },
   paper: {
     component: Paper,
-  },
-  box: {
-    component: Box,
-  },
-  container: {
-    component: Container,
   },
   stack: {
     component: Stack,
   },
-  icon: {
-    component: (props: { i: string }) => {
-      return <Icon {...props}>{props.i}</Icon>;
-    },
-  },
-  p: {
-    component: Typography,
-  },
-  checkmark: {
-    component: Checkmark,
-  },
-  dangermark: {
-    component: Dangermark,
-  },
-  warnmark: {
-    component: Warnmark,
-  },
+
   discordwidget: {
     component: DiscordWidget,
   },

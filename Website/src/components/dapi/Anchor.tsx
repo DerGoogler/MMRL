@@ -20,10 +20,6 @@ const StyledAnchor = styled("div")(({ theme }) => {
     color: scheme[300],
     display: "flex",
     alignItems: "center",
-    // "& abbr[title]": {
-    //   textDecoration: "none",
-    //   cursor: "pointer",
-    // },
     ":hover": {
       textDecoration: "underline",
     },

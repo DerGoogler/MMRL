@@ -39,7 +39,9 @@ const DAPITestActivity = () => {
   const { context, extra } = useActivity();
   const { strings } = useStrings();
 
-  const [description, setDescription] = React.useState("# Extended D-API\n\nThere are more components, try it out!\n\n## Alerts within a box\n\n<paper style=\"padding:8px;\" elevation={1}>\n    <stack spacing>\n        <alert error>This is an error alert — check it out!</alert>\n        <alert warning>This is a warning alert — check it out!</alert>\n        <alert info>This is an info alert — check it out!</alert>\n        <alert success>This is a success alert — check it out!</alert>\n    </stack>\n</paper>\n\n### Code\n\n```html\n<paper style=\"padding:8px;\" elevation={1}>\n    <stack spacing>\n        <alert error>This is an error alert — check it out!</alert>\n        <alert warning>This is a warning alert — check it out!</alert>\n        <alert info>This is an info alert — check it out!</alert>\n        <alert success>This is a success alert — check it out!</alert>\n    </stack>\n</paper>\n```");
+  const [description, setDescription] = React.useState(
+    '# Extended D-API\n\nThere are more components, try it out!\n\n## Alerts within a box\n\n<paper style="padding:8px;" elevation={1}>\n    <stack spacing>\n        <alert error>This is an error alert — check it out!</alert>\n        <alert warning>This is a warning alert — check it out!</alert>\n        <alert info>This is an info alert — check it out!</alert>\n        <alert success>This is a success alert — check it out!</alert>\n    </stack>\n</paper>\n\n### Code\n\n```html\n<paper style="padding:8px;" elevation={1}>\n    <stack spacing>\n        <alert error>This is an error alert — check it out!</alert>\n        <alert warning>This is a warning alert — check it out!</alert>\n        <alert info>This is an info alert — check it out!</alert>\n        <alert success>This is a success alert — check it out!</alert>\n    </stack>\n</paper>\n```'
+  );
 
   const markdownRef = React.useRef<TextareaMarkdownRef>(null);
   const markdownRefAdvanced = React.useRef<AceEditor>(null);
@@ -100,7 +102,7 @@ const DAPITestActivity = () => {
         color: "#1a7f37",
       },
       handler: ({ cursor }) => {
-        cursor.insert(`${cursor.MARKER}<checkmark/>${cursor.MARKER}`);
+        cursor.insert(`${cursor.MARKER}<CheckIcon/>${cursor.MARKER}`);
       },
     },
     {
@@ -110,7 +112,7 @@ const DAPITestActivity = () => {
         color: "#d29922",
       },
       handler: ({ cursor }) => {
-        cursor.insert(`${cursor.MARKER}<warnmark/>${cursor.MARKER}`);
+        cursor.insert(`${cursor.MARKER}<AlertIcon/>${cursor.MARKER}`);
       },
     },
     {
@@ -120,7 +122,7 @@ const DAPITestActivity = () => {
         color: "#cf222e",
       },
       handler: ({ cursor }) => {
-        cursor.insert(`${cursor.MARKER}<dangermark/>${cursor.MARKER}`);
+        cursor.insert(`${cursor.MARKER}<XIcon/>${cursor.MARKER}`);
       },
     },
   ];
