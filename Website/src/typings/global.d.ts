@@ -118,7 +118,7 @@ declare global {
   interface PushProps<E = {}> {
     readonly extra: PushPropsExtra<E>;
     // readonly context: {
-    readonly popPage: () => void;
+    readonly popPage: (options?: any) => void;
     readonly pushPage: <T>(props: PushPropsCore<T>) => void;
     readonly splitter: {
       readonly show: () => void;
@@ -132,7 +132,7 @@ declare global {
 
   interface UseActivity<E = {}> {
     readonly context: {
-      readonly popPage: () => void;
+      readonly popPage: (options?: any) => void;
       readonly pushPage: <T>(props: PushPropsCore<T>) => void;
       readonly splitter: {
         readonly show: () => void;

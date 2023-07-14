@@ -56,6 +56,11 @@ function DescriptonActivity() {
     data: desc,
   };
 
+  const overrideBackButton = () => {
+    // Removes param from url
+    context.popPage({ popParam: "module" });
+  };
+
   // Keep state logic separated
   const fetchReducer = (state: State<string>, action: Action<string>): State<string> => {
     switch (action.type) {
@@ -128,7 +133,7 @@ function DescriptonActivity() {
     return (
       <Toolbar modifier="noshadow">
         <Toolbar.Left>
-          <Toolbar.Button icon={ArrowBackIcon} onClick={context.popPage} />
+          <Toolbar.Button icon={ArrowBackIcon} onClick={overrideBackButton} />
         </Toolbar.Left>
         <Toolbar.Center>{title}</Toolbar.Center>
       </Toolbar>
@@ -136,7 +141,7 @@ function DescriptonActivity() {
   };
 
   return (
-    <Page renderToolbar={renderToolbar}>
+    <Page renderToolbar={renderToolbar} onDeviceBackButton={overrideBackButton}>
       <RelativeStyledSection zeroMargin>
         {!state.data ? (
           <ProgressCircular

@@ -81,7 +81,7 @@ const MainActivity = (): JSX.Element => {
 
   const [routeConfig, setRouteConfig] = useState<any>(ignoreThat);
 
-  const popPage = (options = {}) => {
+  const popPage = (options?: any) => {
     setRouteConfig((prev: any) =>
       RouterUtil.pop({
         routeConfig: prev,
