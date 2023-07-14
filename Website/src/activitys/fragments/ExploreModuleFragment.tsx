@@ -13,7 +13,7 @@ import { useSettings } from "@Hooks/useSettings";
 import { ProgressCircular } from "react-onsenui";
 import DescriptonActivity from "@Activitys/DescriptonActivity";
 import { os } from "@Native/Os";
-import Properties from "@js.properties/properties";
+import { Properties } from "properties-file";
 import { useStateCallback } from "@Hooks/useStateCallback";
 import { useTheme } from "@Hooks/useTheme";
 
@@ -86,7 +86,7 @@ const ExploreModuleFragment = () => {
                   return res.text();
                 })
                 .then((prop) => {
-                  module_s.prop_url = Properties.parseToProperties(prop) as unknown as ModuleProps;
+                  module_s.prop_url = new Properties(prop).toObject() as unknown as ModuleProps;
                 });
             }
           })
@@ -107,7 +107,7 @@ const ExploreModuleFragment = () => {
 
           const dataProp = await propResponse.text();
 
-          module_s.prop_url = Properties.parseToProperties(dataProp) as unknown as ModuleProps;
+          module_s.prop_url = new Properties(dataProp).toObject() as unknown as ModuleProps;
         }
 
         setModules(

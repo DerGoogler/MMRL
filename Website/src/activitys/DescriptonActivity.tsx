@@ -6,28 +6,23 @@ import { Toolbar } from "@Components/onsenui/Toolbar";
 import { Page } from "@Components/onsenui/Page";
 import { StyledCard } from "@Components/StyledCard";
 import Stack from "@mui/material/Stack";
-import { RelativeStyledSection, StyledSection } from "@Components/StyledSection";
-import { Alert, AlertTitle, Button, styled } from "@mui/material";
-import { useSettings } from "@Hooks/useSettings";
-import useShadeColor from "@Hooks/useShadeColor";
+import { RelativeStyledSection } from "@Components/StyledSection";
+import { Alert, AlertTitle, Button } from "@mui/material";
 import { CommentsActivity } from "./CommentsActivity";
-import SupportIcon from "@mui/icons-material/Support";
 import { os } from "@Native/Os";
 import { useStrings } from "@Hooks/useStrings";
 
-import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import VerifiedIcon from "@mui/icons-material/Verified";
-import SettingsIcon from "@mui/icons-material/Settings";
 import CommentIcon from "@mui/icons-material/Comment";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import DeviceUnknownIcon from "@mui/icons-material/DeviceUnknown";
-import DataUsageIcon from "@mui/icons-material/DataUsage";
 import ModuleSpecsActivity from "./ModuleSpecsActivity";
 import { parseAndroidVersion } from "@Util/parseAndroidVersion";
 import { useTheme } from "@Hooks/useTheme";
 import { StyledIconButtonWithText } from "@Components/StyledIconButton";
 import { useModuleOptions } from "@Hooks/useModuleOptions";
+import { useSupportIconForUrl } from "@Hooks/useSupportIconForUrl";
 
 type Extra = {
   title: string;
@@ -53,6 +48,8 @@ function DescriptonActivity() {
   const { desc, title, request, prop_url, zip_url, module_options } = extra;
 
   const { isVerified, isHidden } = useModuleOptions(prop_url?.id);
+
+  const SupportIcon = useSupportIconForUrl(prop_url?.support);
 
   const initialState: State<string> = {
     error: undefined,

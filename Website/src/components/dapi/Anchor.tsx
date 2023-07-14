@@ -8,6 +8,7 @@ import { os } from "@Native/Os";
 import SettingsActivity from "@Activitys/SettingsActivity";
 import RepoActivity from "@Activitys/RepoActivity";
 import DescriptonActivity from "@Activitys/DescriptonActivity";
+import { useSettings } from "@Hooks/useSettings";
 
 interface AnchorProps {
   noIcon?: boolean;
@@ -15,9 +16,12 @@ interface AnchorProps {
 
 const StyledAnchor = styled("div")(({ theme }) => {
   const { scheme } = useTheme();
+  const { settings } = useSettings();
+
   const s = {
     cursor: "pointer",
-    color: scheme[300],
+    color: scheme[700],
+    // color: !settings.darkmode ? "rgb(66, 66, 66)" : scheme[700],
     display: "flex",
     alignItems: "center",
     ":hover": {

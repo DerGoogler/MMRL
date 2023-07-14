@@ -6,6 +6,7 @@ import _ from "underscore";
 import { useSettings } from "./useSettings";
 import { os } from "@Native/Os";
 import Ajv, { JSONSchemaType } from "ajv";
+import { useLog } from "./native/useLog";
 
 export interface RepoContextActions {
   addRepo: (data: AddRepoData) => void;
@@ -69,7 +70,7 @@ const repo_schema = {
       type: "string",
     },
     website: {
-      type: "array",
+      type: "string",
       nullable: true,
     },
     support: {
@@ -112,6 +113,7 @@ const repo_schema = {
 };
 
 export const RepoProvider = (props: React.PropsWithChildren) => {
+  const log = useLog("RepoProvider");
   const [repos, setRepos] = useNativeStorage<StoredRepo[]>("repos", []);
   const { settings, setSettings } = useSettings();
   const [modules, setModules] = React.useState<Module[]>([]);
@@ -157,10 +159,11 @@ export const RepoProvider = (props: React.PropsWithChildren) => {
               data.callback
             );
           } else {
+            log.e(JSON.stringify(validate.errors, null, 4));
             os.toast("Repository schema does not match", Toast.LENGTH_SHORT);
           }
         })
-        .catch((e) => (data.callback ? data.callback(e) : console.log(e)));
+        .catch((e) => (data.callback ? data.callback(e) : log.e(e)));
     } else {
       os.toast("The given link isn't valid.", Toast.LENGTH_SHORT);
     }

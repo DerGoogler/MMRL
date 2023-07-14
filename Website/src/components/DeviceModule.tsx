@@ -1,5 +1,3 @@
-import { Card, Ripple, Switch } from "react-onsenui";
-import Properties from "@js.properties/properties";
 import File from "@Native/File";
 import { DeleteRounded, RefreshRounded } from "@mui/icons-material";
 import React from "react";
@@ -12,6 +10,7 @@ import { ConfigureActivity } from "@Activitys/ConfigureActivity";
 import { StyledCard } from "./StyledCard";
 import { StyledIconButton } from "./StyledIconButton";
 import { useLog } from "@Hooks/native/useLog";
+import { Properties } from "properties-file";
 
 interface Props {
   module: string;
@@ -30,7 +29,7 @@ const DeviceModule = (props: Props) => {
 
   React.useEffect(() => {
     const readProps = File.read(`/data/adb/modules/${module}/module.prop`);
-    setModuleProps(Properties.parseToProperties(readProps));
+    setModuleProps(new Properties(readProps).toObject());
   }, []);
 
   React.useEffect(() => {
