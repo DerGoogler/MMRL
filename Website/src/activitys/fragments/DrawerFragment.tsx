@@ -67,7 +67,7 @@ export const DrawerFragment = (props: Props) => {
             hide();
           }}
         >
-          <StyledListItemText primary={"D-API Tester"} />
+          <StyledListItemText primary={"DAPI Tester"} />
         </ListItemButton>
       </List>
 

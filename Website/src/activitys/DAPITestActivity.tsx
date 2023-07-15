@@ -133,7 +133,7 @@ const DAPITestActivity = () => {
         <Toolbar.Left>
           <Toolbar.Button icon={ArrowBackIcon} onClick={context.popPage} />
         </Toolbar.Left>
-        <Toolbar.Center>D-API Tester</Toolbar.Center>
+        <Toolbar.Center>DAPI Tester</Toolbar.Center>
       </Toolbar>
     );
   };

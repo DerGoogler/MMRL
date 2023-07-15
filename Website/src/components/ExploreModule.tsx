@@ -70,7 +70,6 @@ export const ExploreModule = (props: Props) => {
               height: "100%",
               objectFit: "cover",
             }}
-            height={os.isAndroid || isMobile ? "181.500px" : "445px"}
             image={prop_url.mmrlCover}
             alt={prop_url.name}
           />
