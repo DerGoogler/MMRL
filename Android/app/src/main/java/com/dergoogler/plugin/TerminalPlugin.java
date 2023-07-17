@@ -44,7 +44,7 @@ public class TerminalPlugin extends CordovaPlugin {
 
                 });
 
-    
+
 
                 return true;
 

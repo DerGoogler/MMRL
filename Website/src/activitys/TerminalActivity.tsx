@@ -29,24 +29,21 @@ const TerminalActivity = () => {
   const [lines, setLines] = React.useState<string[]>([]);
 
   const ref = React.useRef<HTMLDivElement>(null);
-  const isVisible = useOnScreen(ref);
 
-  React.useEffect(() => {
-    if (isVisible) {
-      // @ts-ignore
-      Terminal.exec(
-        `magisk --install-module "${extra.path}"`,
-        (r) => {
-          setLines((prev) => [...prev, r]);
-        },
-        (code) => {
-          if (code) {
-            setActive(false);
-          }
+  const install = () => {
+    // @ts-ignore
+    Terminal.exec(
+      `magisk --install-module "${extra.path}"`,
+      (r) => {
+        setLines((prev) => [...prev, r]);
+      },
+      (code) => {
+        if (code) {
+          setActive(false);
         }
-      );
-    }
-  }, [isVisible]);
+      }
+    );
+  };
 
   const renderToolbar = () => {
     return (
@@ -58,13 +55,12 @@ const TerminalActivity = () => {
   };
 
   return (
-    <Page modifier="noshadow" renderToolbar={renderToolbar}>
+    <Page onShow={install} modifier="noshadow" renderToolbar={renderToolbar}>
       <div
         ref={ref}
         style={{
           display: "flex",
           flexWrap: "wrap",
-          height: "100%",
         }}
       >
         <Stack
