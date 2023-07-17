@@ -16,7 +16,7 @@ import java.util.List;
 
 public class TerminalPlugin extends CordovaPlugin {
     private static final String LOG_TAG = "TerminalPlugin";
-
+    private CallbackContext terminalCallbackContext = null;
 
     @Override
     public boolean execute(String action, JSONArray data, CallbackContext callbackContext) throws JSONException {
@@ -24,19 +24,16 @@ public class TerminalPlugin extends CordovaPlugin {
             case "exec":
                 String cmd = data.getString(0);
 
+                this.terminalCallbackContext = callbackContext;
+
                 cordova.getThreadPool().execute(() -> {
-                    List<String> callbackList = new CallbackList<String>() {
-                        @Override
-                        public void onAddElement(String s) {
-                            PluginResult result = new PluginResult(PluginResult.Status.OK, s);
-                            result.setKeepCallback(true);
-                            callbackContext.sendPluginResult(result);
-
-                        }
-                    };
-
                     Shell.cmd(cmd)
-                            .to(callbackList)
+                            .to(new CallbackList<String>() {
+                                @Override
+                                public void onAddElement(String s) {
+                                    updateTerminal(s);
+                                }
+                            })
                             .submit(result -> {
                                 if (result.isSuccess()) {
                                     callbackContext.error(1);
@@ -47,8 +44,7 @@ public class TerminalPlugin extends CordovaPlugin {
 
                 });
 
-                PluginResult pluginResult = new PluginResult(PluginResult.Status.NO_RESULT);
-                pluginResult.setKeepCallback(true); // Keep callback
+    
 
                 return true;
 
@@ -61,6 +57,18 @@ public class TerminalPlugin extends CordovaPlugin {
                 return false;
         }
 
+    }
+
+    private void updateTerminal(String line) {
+        sendUpdate(line, true);
+    }
+
+    private void sendUpdate(String line, boolean keepCallback) {
+        if (this.terminalCallbackContext != null) {
+            PluginResult result = new PluginResult(PluginResult.Status.OK, line);
+            result.setKeepCallback(keepCallback);
+            this.terminalCallbackContext.sendPluginResult(result);
+        }
     }
 
 }

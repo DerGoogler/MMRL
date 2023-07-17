@@ -11,6 +11,7 @@ import { useSettings } from "@Hooks/useSettings";
 import { isMobile } from "react-device-detect";
 import { useFormatDate } from "@Hooks/useFormatDate";
 import { useModuleOptions } from "@Hooks/useModuleOptions";
+import { GestureDetector } from "./onsenui/GestureDetector";
 
 interface Props {
   index: number;
@@ -55,10 +56,10 @@ export const ExploreModule = (props: Props) => {
 
   return (
     <StyledCard elevation={0}>
-      <div
-        onClick={handleOpen}
-        style={{
-          cursor: "pointer",
+      <GestureDetector
+        onTap={handleOpen}
+        onHold={() => {
+          os.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
         }}
       >
         {!settings._disable_module_covers && prop_url.mmrlCover && (
@@ -87,7 +88,7 @@ export const ExploreModule = (props: Props) => {
             </Typography>
           </Stack>
         </Box>
-      </div>
+      </GestureDetector>
       <Divider />
       <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ px: 2, py: 1 }}>
         <Chip
