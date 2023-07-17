@@ -13,7 +13,6 @@ import NoRootActivity from "./NoRootActivity";
 import { ErrorBoundary } from "@Components/ErrorBoundary";
 import Icon from "@Components/Icon";
 import SettingsActivity from "./SettingsActivity";
-import { StyledSection } from "@Components/StyledSection";
 import { Splitter } from "@Components/onsenui/Splitter";
 import { RouterNavigator } from "@Components/onsenui/RouterNavigator";
 import { DrawerFragment } from "./fragments/DrawerFragment";
@@ -195,7 +194,7 @@ const MainActivity = (): JSX.Element => {
           );
         }}
       >
-        <StyledSection>
+        <Page.RelativeContent>
           <pre style={style}>
             <span>{error.message}</span>
           </pre>
@@ -210,7 +209,7 @@ const MainActivity = (): JSX.Element => {
           <pre style={style}>
             <code>{errorInfo.componentStack}</code>
           </pre>
-        </StyledSection>
+        </Page.RelativeContent>
       </Page>
     );
   };

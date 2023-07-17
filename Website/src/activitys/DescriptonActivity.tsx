@@ -6,7 +6,6 @@ import { Toolbar } from "@Components/onsenui/Toolbar";
 import { Page } from "@Components/onsenui/Page";
 import { StyledCard } from "@Components/StyledCard";
 import Stack from "@mui/material/Stack";
-import { RelativeStyledSection } from "@Components/StyledSection";
 import { Alert, AlertTitle, Button } from "@mui/material";
 import { CommentsActivity } from "./CommentsActivity";
 import { os } from "@Native/Os";
@@ -142,7 +141,7 @@ function DescriptonActivity() {
 
   return (
     <Page renderToolbar={renderToolbar} onDeviceBackButton={overrideBackButton}>
-      <RelativeStyledSection zeroMargin>
+      <Page.RelativeContent zeroMargin>
         {!state.data ? (
           <ProgressCircular
             indeterminate
@@ -270,7 +269,7 @@ function DescriptonActivity() {
             </div>
           </>
         )}
-      </RelativeStyledSection>
+      </Page.RelativeContent>
     </Page>
   );
 }

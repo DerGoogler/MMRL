@@ -7,7 +7,6 @@ import { useStrings } from "@Hooks/useStrings";
 import { useActivity } from "@Hooks/useActivity";
 import { StyledListItemText } from "@Components/StyledListItemText";
 import { parseAndroidVersion } from "@Util/parseAndroidVersion";
-import { RelativeStyledSection } from "@Components/StyledSection";
 
 interface Extra {
   prop_url: ModuleProps;
@@ -32,7 +31,7 @@ function ModuleSpecsActivity() {
 
   return (
     <Page renderToolbar={renderToolbar}>
-      <RelativeStyledSection zeroMargin>
+      <Page.RelativeContent zeroMargin>
         <List subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>Default</ListSubheader>}>
           <ListItem>
             <StyledListItemText primary="Changes boot" secondary={prop_url.changeBoot === "true" ? "Yes" : "No"} />
@@ -74,7 +73,7 @@ function ModuleSpecsActivity() {
         </List>
 
         <Divider />
-      </RelativeStyledSection>
+      </Page.RelativeContent>
     </Page>
   );
 }

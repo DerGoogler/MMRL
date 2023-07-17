@@ -1,8 +1,6 @@
 import React from "react";
 import { colors as kolors, useTheme as useMom, createTheme, ThemeProvider as MumProvider } from "@mui/material";
 import useShadeColor from "./useShadeColor";
-import { UI } from "@Native/components/UI";
-import { os } from "@Native/Os";
 import { colors, useSettings } from "./useSettings";
 
 export const useTheme = () => {
@@ -64,11 +62,5 @@ export const ThemeProvider = (props: React.PropsWithChildren) => {
     [settings.darkmode, settings.accent_scheme]
   );
 
-  return (
-    <MumProvider theme={theme}>
-      <UI.Statusbar color={theme.palette.primary.main} white={false}>
-        <UI.Navigationbar color={theme.palette.background.default} children={props.children} />
-      </UI.Statusbar>
-    </MumProvider>
-  );
+  return <MumProvider theme={theme} children={props.children} />;
 };

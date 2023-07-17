@@ -1,19 +1,18 @@
 import * as React from "react";
-import { Page } from "react-onsenui";
-import { RelativeStyledSection } from "./StyledSection";
+import { Page, RenderFunction } from "./onsenui/Page";
 
 interface Props {
   element: React.ElementType;
-  renderFixed?(): void;
+  renderFixed?: RenderFunction;
 }
 
 const TabWrapper = (props: Props) => {
   const Element = props.element;
   return (
     <Page renderFixed={props.renderFixed}>
-      <RelativeStyledSection>
+      <Page.RelativeContent>
         <Element />
-      </RelativeStyledSection>
+      </Page.RelativeContent>
     </Page>
   );
 };

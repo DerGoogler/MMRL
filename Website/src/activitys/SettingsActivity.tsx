@@ -12,7 +12,6 @@ import { ListPickerItem } from "@Components/ListPickerItem";
 import { languages_map } from "../locales/languages";
 import { os } from "@Native/Os";
 import { Android12Switch } from "@Components/Android12Switch";
-import { RelativeStyledSection } from "@Components/StyledSection";
 import { useTheme } from "@Hooks/useTheme";
 
 function SettingsActivity() {
@@ -37,7 +36,7 @@ function SettingsActivity() {
 
   return (
     <Page renderToolbar={renderToolbar}>
-      <RelativeStyledSection zeroMargin>
+      <Page.RelativeContent zeroMargin>
         <List
           subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>{strings.appearance}</ListSubheader>}
         >
@@ -159,7 +158,7 @@ function SettingsActivity() {
             }
           />
         </ListItem>
-      </RelativeStyledSection>
+      </Page.RelativeContent>
     </Page>
   );
 }

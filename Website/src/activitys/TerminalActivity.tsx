@@ -1,15 +1,11 @@
-import { StyledSection } from "@Components/StyledSection";
 import { Page } from "@Components/onsenui/Page";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import { useActivity } from "@Hooks/useActivity";
-import { useStrings } from "@Hooks/useStrings";
 import { styled } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import Ansi from "ansi-to-react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import React from "react";
-import { Button, Card } from "react-onsenui";
-import { useOnScreen } from "@Hooks/useOnScreen";
 
 function useOnceCall(effect: React.EffectCallback, deps?: React.DependencyList | undefined) {
   const isCalledRef = React.useRef(false);
