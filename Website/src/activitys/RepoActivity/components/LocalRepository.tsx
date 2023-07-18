@@ -60,7 +60,7 @@ export const LocalRepository = (props: LocalRepositoryProps) => {
           <ListItemIcon>
             <Icon icon={ExtensionRounded} />
           </ListItemIcon>
-          <StyledListItemText id="switch-list-label-eruda" primary="Enabled" />
+          <StyledListItemText id="switch-list-label-eruda" primary={strings.enabled} />
           <Android12Switch
             edge="end"
             onChange={(e: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
@@ -74,6 +74,7 @@ export const LocalRepository = (props: LocalRepositoryProps) => {
                   }
                 },
                 (state) => {
+                  console.log(state);
                   setEnabled(!state.some((elem) => elem === repo.id));
                 }
               );

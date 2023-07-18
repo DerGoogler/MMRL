@@ -191,10 +191,10 @@ export const SettingsProvider = (props: React.PropsWithChildren) => {
         setSettings: (name, state, callback) => {
           setSettings(
             (prev) => {
-              // const newValue = state instanceof Function ? state(prev[name]) : state;
+              const newValue = state instanceof Function ? state(prev[name]) : state;
               return {
                 ...prev,
-                [name]: state,
+                [name]: newValue,
               };
             },
             (state) => callback && callback(state[name])

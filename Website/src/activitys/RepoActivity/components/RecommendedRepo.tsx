@@ -6,6 +6,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { StyledCard } from "@Components/StyledCard";
 import { useRepos } from "@Hooks/useRepos";
 import { os } from "@Native/Os";
+import { ListItem, ListItemText } from "@mui/material";
 
 interface RecommendedRepoProps {
   name: string;
@@ -17,33 +18,11 @@ export const RecommendedRepo = (props: RecommendedRepoProps) => {
   const { actions } = useRepos();
 
   return (
-    <StyledCard elevation={0}>
-      <Box
-        sx={{
-          p: 2,
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-          }}
-        >
-          <Box>
-            <Typography variant="h6">{props.name}</Typography>
-            <Typography variant="body1" color="text.secondary">
-              More than {props.moduleCount.toString()}+ modules
-            </Typography>
-          </Box>
-        </Box>
+    <ListItem
+      secondaryAction={
         <IconButton
-          aria-label="next"
-          size="large"
+          edge="end"
+          aria-label="add"
           onClick={() => {
             actions.addRepo({
               url: props.link,
@@ -54,9 +33,11 @@ export const RecommendedRepo = (props: RecommendedRepoProps) => {
             });
           }}
         >
-          <Icon icon={AddIcon} />
+          <AddIcon />
         </IconButton>
-      </Box>
-    </StyledCard>
+      }
+    >
+      <ListItemText primary={props.name} secondary={`More than ${props.moduleCount.toString()}+ modules`} />
+    </ListItem>
   );
 };

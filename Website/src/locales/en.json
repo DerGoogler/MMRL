@@ -3,7 +3,6 @@
   "settings": "Settings",
   "repository": "Repository",
   "repositories": "Repositories",
-  "custom_repository": "Custom repository",
   "appearance": "Appearance",
   "accent_color": "Accent color",
   "language": "Language",
@@ -25,7 +24,6 @@
   "module_disabled_LOG": "{name} has been disabled",
   "add": "Add",
   "cancel": "Cancel",
-  "add_repo": "Add a repository",
   "confirm_repo_delete": "Are you sure to remove {name} repository?",
   "submit_module": "Submit a module",
   "donate": "Donate",
@@ -41,5 +39,8 @@
   "verified": "Verified",
   "configureable": "Configureable",
   "change_boot": "Changes boot",
-  "need_ramdisk": "Needs Ramdisk"
+  "need_ramdisk": "Needs Ramdisk",
+  "add_repository": "Add Repository",
+  "add_repository_description": "Add your repository or an repository from some else.",
+  "explore_repositories": "Explore Repositories"
 }
