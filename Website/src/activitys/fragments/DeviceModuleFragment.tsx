@@ -1,6 +1,5 @@
-import { Component } from "react";
 import DeviceModule from "@Components/DeviceModule";
-import File from "@Native/File";
+import { SuFile } from "@Native/SuFile";
 import { StyledCard } from "@Components/StyledCard";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
@@ -17,7 +16,7 @@ const DeviceModuleFragment = () => {
   const [modules, setModules] = React.useState<string[]>([]);
 
   React.useEffect(() => {
-    setModules(File.list("/data/adb/modules").split(","));
+    setModules(SuFile.list("/data/adb/modules").split(","));
   }, []);
 
   return (

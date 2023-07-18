@@ -1,4 +1,4 @@
-import File from "@Native/File";
+import { SuFile } from "@Native/SuFile";
 import { DeleteRounded, RefreshRounded } from "@mui/icons-material";
 import React from "react";
 import { useStrings } from "@Hooks/useStrings";
@@ -28,18 +28,18 @@ const DeviceModule = (props: Props) => {
   const module = props.module;
 
   React.useEffect(() => {
-    const readProps = File.read(`/data/adb/modules/${module}/module.prop`);
+    const readProps = SuFile.read(`/data/adb/modules/${module}/module.prop`);
     setModuleProps(new Properties(readProps).toObject());
   }, []);
 
   React.useEffect(() => {
-    const remove = new File(`/data/adb/modules/${module}/remove`);
+    const remove = new SuFile(`/data/adb/modules/${module}/remove`);
 
     setIsSwitchDisabled(remove.exist());
   }, [isSwitchDisabled]);
 
   React.useEffect(() => {
-    const disable = new File(`/data/adb/modules/${module}/disable`);
+    const disable = new SuFile(`/data/adb/modules/${module}/disable`);
     setIsEnabled(!disable.exist());
   }, [isEnabled]);
 
@@ -68,7 +68,7 @@ const DeviceModule = (props: Props) => {
             disabled={isSwitchDisabled}
             onChange={(e) => {
               const checked = e.target.checked;
-              const disable = new File(`/data/adb/modules/${module}/disable`);
+              const disable = new SuFile(`/data/adb/modules/${module}/disable`);
 
               if (checked) {
                 if (disable.exist()) {
@@ -120,7 +120,7 @@ const DeviceModule = (props: Props) => {
               <StyledIconButton
                 style={{ width: 30, height: 30 }}
                 onClick={() => {
-                  const remove = new File(`/data/adb/modules/${module}/remove`);
+                  const remove = new SuFile(`/data/adb/modules/${module}/remove`);
                   if (remove.exist()) {
                     if (remove.delete()) {
                       setIsSwitchDisabled(false);
@@ -139,7 +139,7 @@ const DeviceModule = (props: Props) => {
               <StyledIconButton
                 style={{ width: 30, height: 30 }}
                 onClick={() => {
-                  const file = new File(`/data/adb/modules/${module}/remove`);
+                  const file = new SuFile(`/data/adb/modules/${module}/remove`);
                   if (file.create()) {
                     setIsSwitchDisabled(true);
                   } else {

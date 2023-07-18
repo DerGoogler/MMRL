@@ -5,7 +5,7 @@ import { useStrings } from "@Hooks/useStrings";
 import { Divider, List, ListItem, ListItemButton, ListSubheader } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import React from "react";
-import File from "@Native/File";
+import { SuFile } from "@Native/SuFile";
 import { StyledListItemText } from "@Components/StyledListItemText";
 import { Android12Switch } from "@Components/Android12Switch";
 import { os } from "@Native/Os";
@@ -46,7 +46,7 @@ const ConfigureActivity = () => {
   const { context, extra } = useActivity<Extra>();
 
   const config: ConfigList.Base[] = React.useMemo(() => {
-    const file = new File(`/data/adb/modules/${extra.modulename}/mmrl-config.json`);
+    const file = new SuFile(`/data/adb/modules/${extra.modulename}/mmrl-config.json`);
 
     if (file.exist()) {
       const value = file.read();

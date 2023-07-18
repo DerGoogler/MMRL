@@ -66,7 +66,11 @@ declare global {
     /**
      * This is an Android only window object
      */
-    readonly __fs__: I;
+    readonly __sufile__: I;
+    /**
+     * This is an Android only window object
+     */
+    readonly __environment__: I;
     /**
      * This is an Android only window object
      */

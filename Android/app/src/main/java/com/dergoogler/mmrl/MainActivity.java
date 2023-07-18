@@ -5,7 +5,8 @@ import android.os.Bundle;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
-import com.dergoogler.core.NativeFs;
+import com.dergoogler.core.NativeEnvironment;
+import com.dergoogler.core.NativeSuFile;
 import com.dergoogler.core.NativeLog;
 import com.dergoogler.core.NativeOS;
 import com.dergoogler.core.NativeProperties;
@@ -48,7 +49,8 @@ public class MainActivity extends CordovaActivity {
         webViewSettings.setAllowContentAccess(false);
 
         // Core
-        wv.addJavascriptInterface(new NativeFs(this), "__fs__");
+        wv.addJavascriptInterface(new NativeSuFile(this), "__sufile__");
+        wv.addJavascriptInterface(new NativeEnvironment(this), "__environment__");
         wv.addJavascriptInterface(new NativeShell(wv), "__shell__");
         wv.addJavascriptInterface(new NativeBuildConfig(), "__buildconfig__");
         wv.addJavascriptInterface(new NativeOS(this), "__os__");
