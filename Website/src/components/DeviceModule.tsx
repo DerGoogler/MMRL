@@ -29,7 +29,7 @@ const DeviceModule = (props: Props) => {
 
   React.useEffect(() => {
     const readProps = SuFile.read(`/data/adb/modules/${module}/module.prop`);
-    setModuleProps(new Properties(readProps).toObject());
+    setModuleProps(new Properties(readProps).toObject()); 
   }, []);
 
   React.useEffect(() => {

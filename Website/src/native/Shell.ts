@@ -1,6 +1,6 @@
 import { Native } from "./Native";
 
-interface IShell {
+interface NativeShell {
   /**
    * Executes an command without result
    */
@@ -15,33 +15,39 @@ interface IShell {
   isAppGrantedRoot(): boolean;
 }
 
+interface IShell {
+  exec(): void;
+  result(): string;
+}
+
 /**
  * Run Shell commands native on Android
  */
 
-class ShellClass extends Native<IShell> {
+class ShellClass extends Native<NativeShell> {
+  private _command: string;
   public constructor() {
     super();
+    this._command = "";
     this.interfaceName = "__shell__";
   }
 
-  public exec(cmds: string | string[]): void {
+  public cmd(cmd: string): this {
+    this._command = cmd;
+    return this;
+  }
+
+  public exec(): void {
     if (this.isAndroid) {
-      if (cmds instanceof Array) {
-        cmds.forEach((cmd) => {
-          this.getInterface.exec(cmd);
-        });
-      } else {
-        this.getInterface.exec(cmds);
-      }
+      this.getInterface.exec(this._command);
     }
   }
 
-  public result(cmd: string): string {
+  public result(): string {
     if (this.isAndroid) {
-      return this.getInterface.result(cmd);
+      return this.getInterface.result(this._command);
     } else {
-      return cmd;
+      return this._command;
     }
   }
 
