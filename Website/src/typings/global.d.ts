@@ -100,7 +100,7 @@ declare global {
     LENGTH_SHORT: "short";
   };
 
-  const NODE_ENV: string | undefined;
+  const __webpack__mode__: "production" | "development";
 
   type PushPropsExtra<E = {}> = E & {
     param?: {

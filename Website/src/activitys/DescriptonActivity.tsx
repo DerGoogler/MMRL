@@ -22,6 +22,7 @@ import { useTheme } from "@Hooks/useTheme";
 import { StyledIconButtonWithText } from "@Components/StyledIconButton";
 import { useModuleOptions } from "@Hooks/useModuleOptions";
 import { useSupportIconForUrl } from "@Hooks/useSupportIconForUrl";
+import TerminalActivity from "./TerminalActivity";
 
 type Extra = {
   title: string;
@@ -257,13 +258,31 @@ function DescriptonActivity() {
                     onClick={() => {
                       os.open(zip_url);
                     }}
-                    endIcon={<FileDownloadIcon />}
+                    startIcon={<FileDownloadIcon />}
                   >
                     {strings.download}
                   </Button>
-                  {/* <Button fullWidth variant="contained" disableElevation onClick={() => {}}>
-                {strings.install}
-              </Button> */}
+                  {/* {os.isAndroid && (
+                    <Button
+                      fullWidth
+                      variant="contained"
+                      disableElevation
+                      onClick={() => {
+                        context.pushPage({
+                          component: TerminalActivity,
+                          props: {
+                            key: "explore_install",
+                            extra: {
+                              exploreInstall: true,
+                              path: zip_url,
+                            },
+                          },
+                        });
+                      }}
+                    >
+                      {strings.install}
+                    </Button>
+                  )} */}
                 </Stack>
               )}
             </div>

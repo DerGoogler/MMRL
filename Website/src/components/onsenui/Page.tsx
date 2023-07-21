@@ -14,6 +14,7 @@ interface NativeUIColors {
 
 interface HTMLPage {
   contentStyle?: React.CSSProperties;
+  backgroundStyle?: React.CSSProperties;
   modifier?: string;
   renderModal?: RenderFunction;
   renderToolbar?: RenderFunction;
@@ -52,7 +53,7 @@ const _Page = React.forwardRef<HTMLElement, HTMLPage>((props, ref) => {
   return (
     <HTMLPage {...rest} ref={ref}>
       {renderToolbar && renderToolbar(ref)}
-      <div className="page__background"> </div>
+      <div className="page__background" style={props.backgroundStyle}></div>
       <div className="page__content" style={contentStyle}>
         {children}
       </div>

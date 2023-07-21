@@ -37,7 +37,7 @@ class BuildConfigClass extends Native {
     if (this.isAndroid) {
       return this.getInterface.DEBUG;
     } else {
-      return NODE_ENV === "development";
+      return __webpack__mode__ === "development";
     }
   }
 
