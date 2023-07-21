@@ -11,6 +11,9 @@
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
 
+    <allow-navigation href="https://giscus.app/*" />
+    <allow-navigation href="https://dergoogler.com/*" />
+
     <feature name="Terminal">
         <param name="android-package" value="com.dergoogler.plugin.TerminalPlugin" />
     </feature>
