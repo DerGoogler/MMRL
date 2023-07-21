@@ -9,25 +9,7 @@ import { Page } from "@Components/onsenui/Page";
 import { useStrings } from "@Hooks/useStrings";
 import { Tabbar, TabbarRenderTab } from "@Components/onsenui/Tabbar";
 
-interface Props {
-  id: string;
-  name: string;
-  version: string;
-  versionCode: int;
-  author: string;
-  description: string;
-  minApi?: int;
-  maxApi?: int;
-  minMagisk?: int;
-  needRamdisk?: boolean;
-  support?: string;
-  donate?: string;
-  config?: string;
-  changeBoot?: boolean;
-  pushPage: any;
-}
-
-const MainApplication = (props: Props) => {
+const MainApplication = () => {
   const { strings } = useStrings();
 
   const { context } = useActivity();

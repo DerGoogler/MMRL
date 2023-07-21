@@ -1,6 +1,7 @@
 package com.dergoogler.mmrl;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Bundle;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -42,7 +43,7 @@ public class MainActivity extends CordovaActivity {
         webViewSettings.setAllowUniversalAccessFromFileURLs(true);
         webViewSettings.setDatabaseEnabled(true);
         webViewSettings.setDomStorageEnabled(false);
-        webViewSettings.setUserAgentString("MMRL");
+        webViewSettings.setUserAgentString(this.mmrlUserAgent());
         webViewSettings.setAllowFileAccessFromFileURLs(false);
         webViewSettings.setAllowUniversalAccessFromFileURLs(false);
         webViewSettings.setAllowFileAccess(false);
@@ -58,5 +59,9 @@ public class MainActivity extends CordovaActivity {
         wv.addJavascriptInterface(new NativeProperties(), "__properties__");
         wv.addJavascriptInterface(new NativeLog(), "__log__");
 
+    }
+
+    private String mmrlUserAgent() {
+        return "MMRL/" + BuildConfig.VERSION_NAME + " (Linux; Android " + Build.VERSION.RELEASE + "; " + Build.MODEL + " Build/" + Build.DISPLAY + ")";
     }
 }
