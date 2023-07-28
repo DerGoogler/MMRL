@@ -194,23 +194,37 @@ const ExploreModuleFragment = () => {
     <>
       <Searchbar placeholder={strings.search_modules} onChange={(e) => setSearch(e.target.value)} />
 
-      <Stack style={{ marginBottom: 8 }} direction="row" justifyContent="center" alignItems="center" spacing={2}>
-        <Pagination
-          count={count}
-          color="primary"
-          page={page}
-          variant="outlined"
-          shape="rounded"
-          onChange={(e, p) => {
-            setPage(p);
-            _DATA.jump(p);
-          }}
-        />
-      </Stack>
-
-      {_DATA.currentData().map((module, index) => (
-        <ExploreModule index={index} key={module.id + index} moduleProps={module} />
-      ))}
+      <div style={{ marginBottom: 48 }}>
+        {_DATA.currentData().map((module, index) => (
+          <ExploreModule index={index} key={module.id + index} moduleProps={module} />
+        ))}
+      </div>
+      
+      <div
+        style={{
+          backgroundColor: theme.palette.background.default,
+          position: "fixed",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: 48,
+          marginBottom: 0,
+        }}
+      >
+        <Stack justifyContent="center" spacing={0.8} direction="row" alignItems="center" style={{ padding: 8 }}>
+          <Pagination
+            count={count}
+            color="primary"
+            page={page}
+            variant="outlined"
+            shape="rounded"
+            onChange={(e, p) => {
+              setPage(p);
+              _DATA.jump(p);
+            }}
+          />
+        </Stack>
+      </div>
     </>
   );
   // }

@@ -277,7 +277,7 @@ function DescriptonActivity() {
                               path: zip_url,
                             },
                           },
-                        });
+                        }); 
                       }}
                     >
                       {strings.install}
