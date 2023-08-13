@@ -6,10 +6,14 @@ import { Toolbar } from "@Components/onsenui/Toolbar";
 import { Page } from "@Components/onsenui/Page";
 import { StyledCard } from "@Components/StyledCard";
 import Stack from "@mui/material/Stack";
-import { Alert, AlertTitle, Button } from "@mui/material";
+import { Alert, AlertTitle, Avatar, Button } from "@mui/material";
 import { CommentsActivity } from "./CommentsActivity";
 import { os } from "@Native/Os";
 import { useStrings } from "@Hooks/useStrings";
+
+import { getDatabase, set, ref, update, onValue, get, query } from "firebase/database";
+import { getAuth } from "firebase/auth";
+import { firebaseApp } from "@Util/firebase";
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import VerifiedIcon from "@mui/icons-material/Verified";
@@ -41,6 +45,9 @@ interface State<T> {
 }
 type Cache<T> = { [url: string]: T };
 type Action<T> = { type: "loading" } | { type: "fetched"; payload: T } | { type: "error"; payload: Error };
+
+const auth = getAuth(firebaseApp);
+const db = getDatabase(firebaseApp);
 
 function DescriptonActivity() {
   const { context, extra } = useActivity<Extra>();
@@ -130,6 +137,19 @@ function DescriptonActivity() {
     }, [url]);
   }
 
+  const [authorData, setAuthorData] = React.useState<any>({});
+
+  React.useEffect(() => {
+    if (prop_url?.mmrlAuthor) {
+      const dbRef = ref(db, "users/" + prop_url.mmrlAuthor);
+      onValue(query(dbRef), (snapshot) => {
+        setAuthorData(snapshot.val());
+      });
+    } else {
+      setAuthorData(undefined);
+    }
+  }, []);
+
   const renderToolbar = () => {
     return (
       <Toolbar modifier="noshadow">
@@ -202,81 +222,100 @@ function DescriptonActivity() {
           <>
             {prop_url && (
               <StyledCard elevation={0} style={{ margin: "16px 8px 0px 8px" }}>
-                <Stack spacing={0.8} direction="row" alignItems="center" style={{ padding: 8 }}>
-                  {!(prop_url.mmrlNoComments === "true") && (
+                <Stack direction="column" justifyContent="center" alignItems="flex-start" spacing={2}>
+                  <Stack spacing={0.8} direction="row" alignItems="center" style={{ padding: authorData ? "8px 8px 0px 8px" : "8px" }}>
+                    {!(prop_url.mmrlNoComments === "true") && (
+                      <StyledIconButtonWithText
+                        style={{ width: 39 }}
+                        onClick={() => {
+                          context.pushPage({
+                            component: CommentsActivity,
+                            props: {
+                              key: "comments_" + prop_url.id,
+                              extra: {
+                                id: prop_url.id,
+                              },
+                            },
+                          });
+                        }}
+                      >
+                        <Stack spacing={0.8} direction="row" alignItems="center">
+                          <CommentIcon sx={{ fontSize: 14 }} />
+                        </Stack>
+                      </StyledIconButtonWithText>
+                    )}
+
+                    {isVerified && (
+                      <StyledIconButtonWithText>
+                        <Stack spacing={0.8} direction="row" alignItems="center">
+                          <VerifiedIcon sx={{ fontSize: 14 }} />
+                          <span style={{ fontSize: 14 }}>{strings.verified}</span>
+                        </Stack>
+                      </StyledIconButtonWithText>
+                    )}
+
                     <StyledIconButtonWithText
-                      style={{ width: 39 }}
                       onClick={() => {
                         context.pushPage({
-                          component: CommentsActivity,
+                          component: ModuleSpecsActivity,
                           props: {
                             key: "comments_" + prop_url.id,
                             extra: {
-                              id: prop_url.id,
+                              prop_url: prop_url,
                             },
                           },
                         });
                       }}
                     >
                       <Stack spacing={0.8} direction="row" alignItems="center">
-                        <CommentIcon sx={{ fontSize: 14 }} />
+                        <DeviceUnknownIcon sx={{ fontSize: 14 }} />
+                        <span style={{ fontSize: 14 }}>Specs</span>
                       </Stack>
                     </StyledIconButtonWithText>
+
+                    {prop_url.support && (
+                      <StyledIconButtonWithText
+                        onClick={() => {
+                          os.open(prop_url.support, {
+                            target: "_blank",
+                            features: {
+                              color: theme.palette.primary.main,
+                            },
+                          });
+                        }}
+                      >
+                        <Stack spacing={0.8} direction="row" alignItems="center">
+                          <SupportIcon sx={{ fontSize: 14 }} />
+                          <span style={{ fontSize: 14 }}>Support</span>
+                        </Stack>
+                      </StyledIconButtonWithText>
+                    )}
+                  </Stack>
+
+                  {prop_url.minApi && os.sdk <= Number(prop_url.minApi) && (
+                    <Alert style={{ borderRadius: 0, width: "100%" }} severity="warning">
+                      <AlertTitle>Unsupported</AlertTitle>
+                      Module requires {parseAndroidVersion(prop_url.minApi)}
+                    </Alert>
                   )}
 
-                  {isVerified && (
-                    <StyledIconButtonWithText>
-                      <Stack spacing={0.8} direction="row" alignItems="center">
-                        <VerifiedIcon sx={{ fontSize: 14 }} />
-                        <span style={{ fontSize: 14 }}>{strings.verified}</span>
-                      </Stack>
-                    </StyledIconButtonWithText>
-                  )}
-
-                  <StyledIconButtonWithText
-                    onClick={() => {
-                      context.pushPage({
-                        component: ModuleSpecsActivity,
-                        props: {
-                          key: "comments_" + prop_url.id,
-                          extra: {
-                            prop_url: prop_url,
-                          },
-                        },
-                      });
-                    }}
-                  >
-                    <Stack spacing={0.8} direction="row" alignItems="center">
-                      <DeviceUnknownIcon sx={{ fontSize: 14 }} />
-                      <span style={{ fontSize: 14 }}>Specs</span>
-                    </Stack>
-                  </StyledIconButtonWithText>
-
-                  {prop_url.support && (
-                    <StyledIconButtonWithText
-                      onClick={() => {
-                        os.open(prop_url.support, {
-                          target: "_blank",
-                          features: {
-                            color: theme.palette.primary.main,
-                          },
-                        });
-                      }}
+                  {/* User info */}
+                  {authorData && (
+                    <Stack
+                      style={{ padding: "0px 8px 8px 8px" }}
+                      direction="row"
+                      justifyContent="flex-start"
+                      alignItems="center"
+                      spacing={1}
                     >
-                      <Stack spacing={0.8} direction="row" alignItems="center">
-                        <SupportIcon sx={{ fontSize: 14 }} />
-                        <span style={{ fontSize: 14 }}>Support</span>
+                      <Avatar alt={authorData.username} src={authorData.picurl} sx={{ width: 24, height: 24 }} />
+                      <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={0.5}>
+                        <span style={{ fontSize: 14 }}>{authorData.username}</span>
+                        {authorData.options?.verified && <VerifiedIcon sx={{ fontSize: 14 }} />}
                       </Stack>
-                    </StyledIconButtonWithText>
+                    </Stack>
                   )}
                 </Stack>
-
-                {prop_url.minApi && os.sdk <= Number(prop_url.minApi) && (
-                  <Alert style={{ borderRadius: 0 }} severity="warning">
-                    <AlertTitle>Unsupported</AlertTitle>
-                    Module requires {parseAndroidVersion(prop_url.minApi)}
-                  </Alert>
-                )}
               </StyledCard>
             )}
 

@@ -194,6 +194,7 @@ declare global {
     mmrlConfig?: string;
     mmrlNoComments?: string;
     mmrlCover?: string;
+    mmrlAuthor?: string;
 
     // Fox's Mmm supported properties
     minApi?: string;

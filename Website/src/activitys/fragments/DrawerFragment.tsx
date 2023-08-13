@@ -2,16 +2,22 @@ import { DAPITestActivity } from "@Activitys/DAPITestActivity";
 import DescriptonActivity from "@Activitys/DescriptonActivity";
 import RepoActivity from "@Activitys/RepoActivity";
 import SettingsActivity from "@Activitys/SettingsActivity";
+import NoAccountActivty from "@Activitys/account/NoAccountActivity";
 import { StyledListItemText } from "@Components/StyledListItemText";
 import { useStrings } from "@Hooks/useStrings";
 import { Divider, List, ListItemButton, ListSubheader } from "@mui/material";
 import { Page } from "react-onsenui";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { firebaseApp } from "@Util/firebase";
+import AccountActivty from "@Activitys/account/AccountActivity";
 
 type Props = {
   renderToolbar: () => JSX.Element;
   hideSplitter: () => void;
   pushPage: (props: PushPropsCore<any>) => void;
 };
+
+const auth = getAuth(firebaseApp);
 
 export const DrawerFragment = (props: Props) => {
   const hide = props.hideSplitter;
@@ -22,6 +28,31 @@ export const DrawerFragment = (props: Props) => {
   return (
     <Page renderToolbar={props.renderToolbar}>
       <List subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>App</ListSubheader>}>
+        <ListItemButton
+          onClick={() => {
+            if (auth.currentUser) {
+              pushPage({
+                component: AccountActivty,
+                props: {
+                  key: "acc",
+                  extra: {},
+                },
+              });
+            } else {
+              pushPage({
+                component: NoAccountActivty,
+                props: {
+                  key: "no_acc",
+                  extra: {},
+                },
+              });
+            }
+            hide();
+          }}
+        >
+          <StyledListItemText primary={"Account"} />
+        </ListItemButton>
+
         <ListItemButton
           onClick={() => {
             pushPage({

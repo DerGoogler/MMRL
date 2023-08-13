@@ -3,15 +3,22 @@ import { useActivity } from "@Hooks/useActivity";
 import { useStrings } from "@Hooks/useStrings";
 import DescriptonActivity from "@Activitys/DescriptonActivity";
 import { VerifiedRounded } from "@mui/icons-material";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import { os } from "@Native/Os";
 import { StyledCard } from "./StyledCard";
 import { useLowQualityModule } from "@Hooks/useLowQualityModule";
-import { StyledIconButton } from "./StyledIconButton";
+import { StyledIconButton, StyledIconButtonWithText } from "./StyledIconButton";
 import { useSettings } from "@Hooks/useSettings";
 import { isMobile } from "react-device-detect";
 import { useFormatDate } from "@Hooks/useFormatDate";
 import { useModuleOptions } from "@Hooks/useModuleOptions";
 import { GestureDetector } from "./onsenui/GestureDetector";
+
+import { getDatabase, set, ref, update, onValue } from "firebase/database";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { firebaseApp } from "@Util/firebase";
+const auth = getAuth(firebaseApp);
+const db = getDatabase(firebaseApp);
 
 interface Props {
   index: number;
@@ -99,9 +106,19 @@ export const ExploreModule = (props: Props) => {
           label={formatLastUpdate}
         />
         <Stack spacing={0.8} direction="row">
+          {/* <StyledIconButtonWithText
+            onClick={() => {
+              set(ref(db, `modules/${prop_url.id}/likes/${auth.currentUser.uid}`), true);
+            }}
+          >
+            <Stack spacing={0.8} direction="row" alignItems="center">
+              <ThumbUpIcon sx={{ fontSize: 14 }} />
+              <span style={{ fontSize: 14 }}>0</span>
+            </Stack>
+          </StyledIconButtonWithText> */}
           {isVerified && (
             <StyledIconButton
-              style={{ width: 30, height: 30 }}
+              style={{ width: 39, height: 39 }}
               onClick={() => {
                 os.toast(strings.module_verified, Toast.LENGTH_SHORT);
               }}
