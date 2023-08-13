@@ -1,4 +1,3 @@
-import { TabWrapper } from "@Components/TabWrapper";
 import { Menu } from "@mui/icons-material";
 import DeviceModuleFragment from "./fragments/DeviceModuleFragment";
 import ExploreModuleFragment from "./fragments/ExploreModuleFragment";

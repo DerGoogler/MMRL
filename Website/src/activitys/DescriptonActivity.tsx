@@ -23,6 +23,7 @@ import { StyledIconButtonWithText } from "@Components/StyledIconButton";
 import { useModuleOptions } from "@Hooks/useModuleOptions";
 import { useSupportIconForUrl } from "@Hooks/useSupportIconForUrl";
 import TerminalActivity from "./TerminalActivity";
+import { BottomToolbar } from "@Components/onsenui/BottomToolbar";
 
 type Extra = {
   title: string;
@@ -141,7 +142,50 @@ function DescriptonActivity() {
   };
 
   return (
-    <Page renderToolbar={renderToolbar} onDeviceBackButton={overrideBackButton}>
+    <Page
+      renderToolbar={renderToolbar}
+      onDeviceBackButton={overrideBackButton}
+      renderBottomToolbar={() => {
+        return zip_url ? (
+          <BottomToolbar modifier="transparent" style={{ padding: 8 }}>
+            <Stack spacing={0.8} direction="row" alignItems="center" style={{ height: "100%" }}>
+              <Button
+                fullWidth
+                variant="contained"
+                disableElevation
+                onClick={() => {
+                  os.open(zip_url);
+                }}
+                startIcon={<FileDownloadIcon />}
+              >
+                {strings.download}
+              </Button>
+              {/* {os.isAndroid && (
+                    <Button
+                      fullWidth
+                      variant="contained"
+                      disableElevation
+                      onClick={() => {
+                        context.pushPage({
+                          component: TerminalActivity,
+                          props: {
+                            key: "explore_install",
+                            extra: {
+                              exploreInstall: true,
+                              path: zip_url,
+                            },
+                          },
+                        }); 
+                      }}
+                    >
+                      {strings.install}
+                    </Button>
+                  )} */}
+            </Stack>
+          </BottomToolbar>
+        ) : null;
+      }}
+    >
       <Page.RelativeContent zeroMargin>
         {!state.data ? (
           <ProgressCircular
@@ -236,56 +280,7 @@ function DescriptonActivity() {
               </StyledCard>
             )}
 
-            <Markup children={state.data} style={{ marginBottom: 55 }} />
-
-            <div
-              style={{
-                backgroundColor: theme.palette.background.default,
-                position: "fixed",
-                bottom: 0,
-                left: 0,
-                right: 0,
-                height: 55,
-                marginBottom: 0,
-              }}
-            >
-              {zip_url && (
-                <Stack spacing={0.8} direction="row" alignItems="center" style={{ padding: 8 }}>
-                  <Button
-                    fullWidth
-                    variant="contained"
-                    disableElevation
-                    onClick={() => {
-                      os.open(zip_url);
-                    }}
-                    startIcon={<FileDownloadIcon />}
-                  >
-                    {strings.download}
-                  </Button>
-                  {/* {os.isAndroid && (
-                    <Button
-                      fullWidth
-                      variant="contained"
-                      disableElevation
-                      onClick={() => {
-                        context.pushPage({
-                          component: TerminalActivity,
-                          props: {
-                            key: "explore_install",
-                            extra: {
-                              exploreInstall: true,
-                              path: zip_url,
-                            },
-                          },
-                        }); 
-                      }}
-                    >
-                      {strings.install}
-                    </Button>
-                  )} */}
-                </Stack>
-              )}
-            </div>
+            <Markup children={state.data} />
           </>
         )}
       </Page.RelativeContent>

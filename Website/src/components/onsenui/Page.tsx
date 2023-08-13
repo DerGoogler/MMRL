@@ -5,7 +5,7 @@ import { styled } from "@mui/material";
 import { os } from "@Native/Os";
 import { useTheme } from "@Hooks/useTheme";
 
-export type RenderFunction = (ref?: React.ForwardedRef<HTMLElement>) => JSX.Element;
+export type RenderFunction = (ref?: React.ForwardedRef<HTMLElement>) => JSX.Element | null;
 
 interface NativeUIColors {
   mount: string;
