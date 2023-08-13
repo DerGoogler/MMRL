@@ -4,6 +4,7 @@ import { useStrings } from "@Hooks/useStrings";
 import DescriptonActivity from "@Activitys/DescriptonActivity";
 import { VerifiedRounded } from "@mui/icons-material";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import VerifiedIcon from "@mui/icons-material/Verified";
 import { os } from "@Native/Os";
 import { StyledCard } from "./StyledCard";
 import { useLowQualityModule } from "@Hooks/useLowQualityModule";
@@ -14,10 +15,10 @@ import { useFormatDate } from "@Hooks/useFormatDate";
 import { useModuleOptions } from "@Hooks/useModuleOptions";
 import { GestureDetector } from "./onsenui/GestureDetector";
 
-import { getDatabase, set, ref, update, onValue } from "firebase/database";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getDatabase, ref, onValue, query } from "firebase/database";
 import { firebaseApp } from "@Util/firebase";
-const auth = getAuth(firebaseApp);
+import React from "react";
+
 const db = getDatabase(firebaseApp);
 
 interface Props {
@@ -39,6 +40,19 @@ export const ExploreModule = (props: Props) => {
     return null;
   }
 
+  const [authorData, setAuthorData] = React.useState<any>({});
+
+  React.useEffect(() => {
+    if (prop_url?.mmrlAuthor) {
+      const dbRef = ref(db, "users/" + prop_url.mmrlAuthor);
+      onValue(query(dbRef), (snapshot) => {
+        setAuthorData(snapshot.val());
+      });
+    } else {
+      setAuthorData(undefined);
+    }
+  }, []);
+
   const handleOpen = () => {
     context.pushPage<any>({
       component: DescriptonActivity,
@@ -53,6 +67,7 @@ export const ExploreModule = (props: Props) => {
           title: prop_url.name,
           prop_url: prop_url,
           zip_url: zip_url,
+          authorData: authorData,
           request: {
             url: notes_url,
           },
@@ -88,7 +103,17 @@ export const ExploreModule = (props: Props) => {
               {prop_url.name}
             </Typography>{" "}
             <Typography variant="caption" sx={{ fontSize: ".70rem" }} color="text.secondary">
-              {prop_url.version} ({prop_url.versionCode}) / {prop_url.author}
+              <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={0.5}>
+                <span>
+                  {prop_url.version} ({prop_url.versionCode}) /
+                </span>
+                {prop_url.mmrlAuthor ? (
+                  <span>{authorData.username ? authorData.username : prop_url.author}</span>
+                ) : (
+                  <span>{prop_url.author}</span>
+                )}
+                {authorData?.options?.verified && <VerifiedIcon sx={{ fontSize: ".70rem" }} />}
+              </Stack>
             </Typography>
             <Typography variant="body1" color="text.secondary">
               {prop_url.description}

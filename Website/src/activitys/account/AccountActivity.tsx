@@ -22,6 +22,8 @@ import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
 import Avatar from "@mui/material/Avatar";
 import { os } from "@Native/Os";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
 
 const auth = getAuth(firebaseApp);
 const db = getDatabase(firebaseApp);
@@ -88,7 +90,15 @@ const AccountActivty = () => {
           <Avatar alt={username} src={picurl} />
         </Stack>
 
-        <Stack direction="column" justifyContent="flex-start" alignItems="flex-start" spacing={2}>
+        {verified && (
+          <Alert severity="info">
+            <AlertTitle>Verified</AlertTitle>
+            You're a verified user/creator, this means that single module veification won't affect your modules. Single module verification
+            symbol won't show while you're verified.
+          </Alert>
+        )}
+
+        <Stack direction="column" style={{ marginTop: verified ? 18 : 0 }} justifyContent="flex-start" alignItems="flex-start" spacing={2}>
           <FormControl fullWidth variant="outlined">
             <InputLabel htmlFor="outlined-adornment-username">Username</InputLabel>
             <OutlinedInput

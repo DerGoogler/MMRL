@@ -11,10 +11,6 @@ import { CommentsActivity } from "./CommentsActivity";
 import { os } from "@Native/Os";
 import { useStrings } from "@Hooks/useStrings";
 
-import { getDatabase, set, ref, update, onValue, get, query } from "firebase/database";
-import { getAuth } from "firebase/auth";
-import { firebaseApp } from "@Util/firebase";
-
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import CommentIcon from "@mui/icons-material/Comment";
@@ -37,6 +33,7 @@ type Extra = {
   type: "module" | "request";
   request?: { url: string } | undefined;
   zip_url?: string;
+  authorData?: any;
 };
 
 interface State<T> {
@@ -46,14 +43,11 @@ interface State<T> {
 type Cache<T> = { [url: string]: T };
 type Action<T> = { type: "loading" } | { type: "fetched"; payload: T } | { type: "error"; payload: Error };
 
-const auth = getAuth(firebaseApp);
-const db = getDatabase(firebaseApp);
-
 function DescriptonActivity() {
   const { context, extra } = useActivity<Extra>();
   const { strings } = useStrings();
   const { theme } = useTheme();
-  const { desc, title, request, prop_url, zip_url, module_options } = extra;
+  const { desc, title, request, prop_url, zip_url, module_options, authorData } = extra;
 
   const { isVerified, isHidden } = useModuleOptions(prop_url?.id);
 
@@ -136,19 +130,6 @@ function DescriptonActivity() {
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [url]);
   }
-
-  const [authorData, setAuthorData] = React.useState<any>({});
-
-  React.useEffect(() => {
-    if (prop_url?.mmrlAuthor) {
-      const dbRef = ref(db, "users/" + prop_url.mmrlAuthor);
-      onValue(query(dbRef), (snapshot) => {
-        setAuthorData(snapshot.val());
-      });
-    } else {
-      setAuthorData(undefined);
-    }
-  }, []);
 
   const renderToolbar = () => {
     return (
