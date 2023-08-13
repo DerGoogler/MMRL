@@ -12,6 +12,7 @@ import DescriptonActivity from "@Activitys/DescriptonActivity";
 import { Properties } from "properties-file";
 import { useStateCallback } from "@Hooks/useStateCallback";
 import { useTheme } from "@Hooks/useTheme";
+import { Page } from "@Components/onsenui/Page";
 
 const ExploreModuleFragment = () => {
   const { context } = useActivity();
@@ -191,41 +192,43 @@ const ExploreModuleFragment = () => {
   //   );
   // } else {
   return (
-    <>
-      <Searchbar placeholder={strings.search_modules} onChange={(e) => setSearch(e.target.value)} />
+    <Page>
+      <Page.RelativeContent>
+        <Searchbar placeholder={strings.search_modules} onChange={(e) => setSearch(e.target.value)} />
 
-      <div style={{ marginBottom: 48 }}>
-        {_DATA.currentData().map((module, index) => (
-          <ExploreModule index={index} key={module.id + index} moduleProps={module} />
-        ))}
-      </div>
-      
-      <div
-        style={{
-          backgroundColor: theme.palette.background.default,
-          position: "fixed",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          height: 48,
-          marginBottom: 0,
-        }}
-      >
-        <Stack justifyContent="center" spacing={0.8} direction="row" alignItems="center" style={{ padding: 8 }}>
-          <Pagination
-            count={count}
-            color="primary"
-            page={page}
-            variant="outlined"
-            shape="rounded"
-            onChange={(e, p) => {
-              setPage(p);
-              _DATA.jump(p);
-            }}
-          />
-        </Stack>
-      </div>
-    </>
+        <div style={{ marginBottom: 48 }}>
+          {_DATA.currentData().map((module, index) => (
+            <ExploreModule index={index} key={module.id + index} moduleProps={module} />
+          ))}
+        </div>
+
+        <div
+          style={{
+            backgroundColor: theme.palette.background.default,
+            position: "fixed",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: 48,
+            marginBottom: 0,
+          }}
+        >
+          <Stack justifyContent="center" spacing={0.8} direction="row" alignItems="center" style={{ padding: 8 }}>
+            <Pagination
+              count={count}
+              color="primary"
+              page={page}
+              variant="outlined"
+              shape="rounded"
+              onChange={(e, p) => {
+                setPage(p);
+                _DATA.jump(p);
+              }}
+            />
+          </Stack>
+        </div>
+      </Page.RelativeContent>
+    </Page>
   );
   // }
 };

@@ -9,6 +9,7 @@ import React from "react";
 import { useActivity } from "@Hooks/useActivity";
 import TerminalActivity from "@Activitys/TerminalActivity";
 import { useSettings } from "@Hooks/useSettings";
+import { Page } from "@Components/onsenui/Page";
 
 const DeviceModuleFragment = () => {
   const { context } = useActivity();
@@ -20,45 +21,47 @@ const DeviceModuleFragment = () => {
   }, []);
 
   return (
-    <>
-      {settings.__experimental_local_install && (
-        <StyledCard
-          elevation={0}
-          onClick={() => {
-            // @ts-ignore
-            Chooser.getFile(
-              "application/zip",
-              (file) => {
-                if (file) {
-                  context.pushPage({
-                    component: TerminalActivity,
-                    props: {
-                      key: "local_install",
-                      extra: {
-                        path: file.path,
+    <Page>
+      <Page.RelativeContent>
+        {settings.__experimental_local_install && (
+          <StyledCard
+            elevation={0}
+            onClick={() => {
+              // @ts-ignore
+              Chooser.getFile(
+                "application/zip",
+                (file) => {
+                  if (file) {
+                    context.pushPage({
+                      component: TerminalActivity,
+                      props: {
+                        key: "local_install",
+                        extra: {
+                          path: file.path,
+                        },
                       },
-                    },
-                  });
-                }
-              },
-              null
-            );
-          }}
-        >
-          <Box sx={{ p: 2, display: "flex" }}>
-            <Stack spacing={0.5} style={{ flexGrow: 1 }}>
-              <Typography fontWeight={700} color="text.primary">
-                Install from local
-              </Typography>
-            </Stack>
-          </Box>
-        </StyledCard>
-      )}
+                    });
+                  }
+                },
+                null
+              );
+            }}
+          >
+            <Box sx={{ p: 2, display: "flex" }}>
+              <Stack spacing={0.5} style={{ flexGrow: 1 }}>
+                <Typography fontWeight={700} color="text.primary">
+                  Install from local
+                </Typography>
+              </Stack>
+            </Box>
+          </StyledCard>
+        )}
 
-      {modules.map((module) => (
-        <DeviceModule module={module} />
-      ))}
-    </>
+        {modules.map((module) => (
+          <DeviceModule module={module} />
+        ))}
+      </Page.RelativeContent>
+    </Page>
   );
 };
 

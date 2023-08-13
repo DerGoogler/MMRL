@@ -17,13 +17,13 @@ const MainApplication = () => {
   const renderTabs = (): TabbarRenderTab[] => {
     return [
       {
-        content: <TabWrapper element={ExploreModuleFragment} />,
+        content: <ExploreModuleFragment />,
         tab: <Tabbar.Tab label={strings.explore} />,
       },
       ...(os.isAndroid
         ? [
             {
-              content: <TabWrapper element={DeviceModuleFragment} />,
+              content: <DeviceModuleFragment />,
               tab: <Tabbar.Tab label={strings.installed} />,
             },
           ]
@@ -49,7 +49,7 @@ const MainApplication = () => {
 
   return (
     <Page modifier="noshadow" renderToolbar={renderToolbar}>
-      <Tabbar modifier="noshadow" /* hideTabs={!os.isAndroid}*/ swipeable={false} position={"top"} renderTabs={renderTabs} />
+      <Tabbar modifier="noshadow" hideTabs={!os.isAndroid} swipeable={false} position={"top"} renderTabs={renderTabs} />
     </Page>
   );
 };
