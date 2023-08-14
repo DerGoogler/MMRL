@@ -7,6 +7,7 @@ import { useSettings } from "./useSettings";
 import { os } from "@Native/Os";
 import Ajv, { JSONSchemaType } from "ajv";
 import { useLog } from "./native/useLog";
+import { Properties } from "properties-file";
 
 export interface RepoContextActions {
   addRepo: (data: AddRepoData) => void;
@@ -189,6 +190,68 @@ export const RepoProvider = (props: React.PropsWithChildren) => {
       data.callback
     );
   };
+
+  React.useEffect(() => {
+    // Needs an another solution
+    setModules([]);
+    const fetchData = async () => {
+      for (const repo of repos) {
+        if (settings.disabled_repos.includes(repo.id)) continue;
+
+        fetch(repo.modules)
+          .then((res) => {
+            if (!res.ok) {
+              throw new Error(res.statusText);
+            }
+
+            return res.json();
+          })
+          .then((data: Repo) => {
+            for (const module_s of data.modules) {
+              fetch(module_s.prop_url as unknown as string)
+                .then((res) => {
+                  if (!res.ok) {
+                    throw new Error(res.statusText);
+                  }
+
+                  return res.text();
+                })
+                .then((prop) => {
+                  module_s.prop_url = new Properties(prop).toObject() as unknown as ModuleProps;
+                });
+            }
+          })
+          .catch((err) => {
+            throw new Error(err);
+          });
+
+        const response = await fetch(repo.modules);
+
+        if (!response.ok) {
+          throw new Error(response.statusText);
+        }
+
+        const data = (await response.json()) as Repo;
+
+        for (const module_s of data.modules) {
+          const propResponse = await fetch(module_s.prop_url as unknown as string);
+
+          const dataProp = await propResponse.text();
+
+          module_s.prop_url = new Properties(dataProp).toObject() as unknown as ModuleProps;
+        }
+
+        setModules((prev) => {
+          // Preventing duplicates
+          var ids = new Set(prev.map((d) => d.id));
+          var merged = [...prev, ...data.modules.filter((d) => !ids.has(d.id))];
+          return merged;
+        });
+      }
+    };
+
+    void fetchData();
+  }, [repos, settings]);
 
   return (
     <RepoContext.Provider

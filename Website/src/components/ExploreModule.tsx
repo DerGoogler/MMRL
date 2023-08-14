@@ -24,6 +24,7 @@ const db = getDatabase(firebaseApp);
 interface Props {
   index: number;
   moduleProps: Module;
+  disableLowQuality?: boolean;
 }
 export const ExploreModule = (props: Props) => {
   const { context } = useActivity();
@@ -33,7 +34,7 @@ export const ExploreModule = (props: Props) => {
   const { id, notes_url, zip_url, last_update, prop_url } = props.moduleProps;
 
   const { isVerified, isHidden } = useModuleOptions(id);
-  const isLowQuality = useLowQualityModule(prop_url);
+  const isLowQuality = useLowQualityModule(prop_url, props.disableLowQuality);
   const formatLastUpdate = useFormatDate(last_update);
 
   if (isHidden) {
@@ -60,10 +61,10 @@ export const ExploreModule = (props: Props) => {
       props: {
         key: `view_${prop_url.id}`,
         extra: {
-          param: {
-            name: "module",
-            value: prop_url.id,
-          },
+          // param: {
+          //   name: "module",
+          //   value: prop_url.id,
+          // },
           title: prop_url.name,
           prop_url: prop_url,
           zip_url: zip_url,
@@ -112,7 +113,7 @@ export const ExploreModule = (props: Props) => {
                 ) : (
                   <span>{prop_url.author}</span>
                 )}
-                {authorData?.options?.verified && <VerifiedIcon sx={{ fontSize: ".70rem" }} />}
+                {authorData?.options?.roles?.verified && <VerifiedIcon sx={{ fontSize: ".70rem" }} />}
               </Stack>
             </Typography>
             <Typography variant="body1" color="text.secondary">

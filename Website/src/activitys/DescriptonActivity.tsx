@@ -6,10 +6,15 @@ import { Toolbar } from "@Components/onsenui/Toolbar";
 import { Page } from "@Components/onsenui/Page";
 import { StyledCard } from "@Components/StyledCard";
 import Stack from "@mui/material/Stack";
-import { Alert, AlertTitle, Avatar, Button } from "@mui/material";
+import { Alert, AlertTitle, Avatar, Box, Button, CardMedia, Paper, SxProps, Theme, Typography } from "@mui/material";
 import { CommentsActivity } from "./CommentsActivity";
 import { os } from "@Native/Os";
 import { useStrings } from "@Hooks/useStrings";
+
+import SecurityIcon from "@mui/icons-material/Security";
+import BugReportIcon from "@mui/icons-material/BugReport";
+import LocalPoliceIcon from "@mui/icons-material/LocalPolice";
+import { colors } from "@Hooks/useSettings";
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import VerifiedIcon from "@mui/icons-material/Verified";
@@ -43,6 +48,18 @@ interface State<T> {
 type Cache<T> = { [url: string]: T };
 type Action<T> = { type: "loading" } | { type: "fetched"; payload: T } | { type: "error"; payload: Error };
 
+const badgeStyle: (color: (typeof colors)["blue" | "teal" | "red" | "orange"]) => SxProps<Theme> = (color) => {
+  return {
+    px: 1,
+    py: 0.5,
+    borderRadius: 1,
+    display: "flex",
+    typography: "caption",
+    bgcolor: (theme) => (theme.palette.mode === "dark" ? color[900] : color[50]),
+    color: (theme) => (theme.palette.mode === "dark" ? "#fff" : color[700]),
+  };
+};
+
 function DescriptonActivity() {
   const { context, extra } = useActivity<Extra>();
   const { strings } = useStrings();
@@ -56,11 +73,6 @@ function DescriptonActivity() {
   const initialState: State<string> = {
     error: undefined,
     data: desc,
-  };
-
-  const overrideBackButton = () => {
-    // Removes param from url
-    context.popPage({ popParam: "module" });
   };
 
   // Keep state logic separated
@@ -135,7 +147,7 @@ function DescriptonActivity() {
     return (
       <Toolbar modifier="noshadow">
         <Toolbar.Left>
-          <Toolbar.Button icon={ArrowBackIcon} onClick={overrideBackButton} />
+          <Toolbar.Button icon={ArrowBackIcon} onClick={context.popPage} />
         </Toolbar.Left>
         <Toolbar.Center>{title}</Toolbar.Center>
       </Toolbar>
@@ -145,7 +157,6 @@ function DescriptonActivity() {
   return (
     <Page
       renderToolbar={renderToolbar}
-      onDeviceBackButton={overrideBackButton}
       renderBottomToolbar={() => {
         return zip_url ? (
           <BottomToolbar modifier="transparent" style={{ padding: 8 }}>
@@ -282,7 +293,75 @@ function DescriptonActivity() {
 
                   {/* User info */}
                   {authorData && (
-                    <Stack
+                    <Paper
+                      elevation={0}
+                      sx={{
+                        display: "flex",
+                        p: 1,
+                        flexDirection: {
+                          // xs: "column", // mobile
+                          xs: "row", // mobile
+                          sm: "row", // tablet and up
+                        },
+                      }}
+                    >
+                      <CardMedia
+                        component="img"
+                        width="56.69"
+                        height="56.69"
+                        alt={authorData.username}
+                        src={authorData.picurl}
+                        sx={{
+                          borderRadius: 0.5,
+                          width: { xs: 56.69, sm: 56.69 },
+                          mr: 1.5,
+                        }}
+                      />
+                      <Box sx={{ alignSelf: "center", ml: 1, width: "100%" }}>
+                        <Typography component="div" sx={{ fontSize: ".95rem" }} fontWeight="bold">
+                          {authorData.username}
+                        </Typography>
+                        <Stack
+                          direction="row"
+                          justifyContent="flex-start"
+                          alignItems="center"
+                          sx={{
+                            mt: 0.75,
+                          }}
+                          spacing={0.5}
+                        >
+                          {authorData?.options?.roles?.verified && (
+                            <Box sx={badgeStyle(colors.blue)}>
+                              <VerifiedIcon sx={{ fontSize: 16, mr: 0.5, mt: "1px" }} />
+                              Verified
+                            </Box>
+                          )}
+                          {authorData?.options?.roles?.mod && (
+                            <Box sx={badgeStyle(colors.orange)}>
+                              <LocalPoliceIcon sx={{ fontSize: 16, mr: 0.5, mt: "1px" }} />
+                              MMRL Moderator
+                            </Box>
+                          )}
+                          {authorData?.options?.roles?.admin && (
+                            <Box sx={badgeStyle(colors.red)}>
+                              <SecurityIcon sx={{ fontSize: 16, mr: 0.5, mt: "1px" }} />
+                              MMRL Admin
+                            </Box>
+                          )}
+                          {authorData?.options?.roles?.bughunter && (
+                            <Box sx={badgeStyle(colors.teal)}>
+                              <BugReportIcon sx={{ fontSize: 16, mr: 0.5, mt: "1px" }} />
+                              Bug Hunter
+                            </Box>
+                          )}
+                        </Stack>
+                      </Box>
+                    </Paper>
+                  )}
+                </Stack>
+              </StyledCard>
+            )}
+            {/* <Stack
                       style={{ padding: "0px 8px 8px 8px" }}
                       direction="row"
                       justifyContent="flex-start"
@@ -294,11 +373,7 @@ function DescriptonActivity() {
                         <span style={{ fontSize: 14 }}>{authorData.username}</span>
                         {authorData.options?.verified && <VerifiedIcon sx={{ fontSize: 14 }} />}
                       </Stack>
-                    </Stack>
-                  )}
-                </Stack>
-              </StyledCard>
-            )}
+                    </Stack> */}
 
             <Markup children={state.data} />
           </>

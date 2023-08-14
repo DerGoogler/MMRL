@@ -24,9 +24,32 @@ import Avatar from "@mui/material/Avatar";
 import { os } from "@Native/Os";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
+import { CardMedia, Box, Typography, Card, SxProps, Theme, Paper, List, ListItem, ListItemText, CardContent } from "@mui/material";
+import { useTheme } from "@Hooks/useTheme";
+
+import SecurityIcon from "@mui/icons-material/Security";
+import BugReportIcon from "@mui/icons-material/BugReport";
+import LocalPoliceIcon from "@mui/icons-material/LocalPolice";
+import { colors } from "@Hooks/useSettings";
+import { useFormatDate } from "@Hooks/useFormatDate";
+import { useRepos } from "@Hooks/useRepos";
+import { ExploreModule } from "@Components/ExploreModule";
 
 const auth = getAuth(firebaseApp);
 const db = getDatabase(firebaseApp);
+
+const badgeStyle: (color: (typeof colors)["blue" | "teal" | "red" | "orange"]) => SxProps<Theme> = (color) => {
+  return {
+    ml: -1,
+    px: 1,
+    py: 0.5,
+    borderRadius: 1,
+    display: "flex",
+    typography: "caption",
+    bgcolor: (theme) => (theme.palette.mode === "dark" ? color[900] : color[50]),
+    color: (theme) => (theme.palette.mode === "dark" ? "#fff" : color[700]),
+  };
+};
 
 const AccountActivty = () => {
   const { strings } = useStrings();
@@ -35,8 +58,8 @@ const AccountActivty = () => {
   const [editUsername, setEditUsername] = React.useState(false);
   const [editPicurl, setEditPicurl] = React.useState(false);
   const [username, setUsername] = React.useState("");
-  const [verified, setVerified] = React.useState(false);
   const [picurl, setPicurl] = React.useState("");
+  const [options, setOptions] = React.useState<any>({});
 
   React.useEffect(() => {
     const dbRef = ref(db, "users/" + auth.currentUser.uid);
@@ -44,7 +67,8 @@ const AccountActivty = () => {
       const snap = snapshot.val();
       setUsername(snap.username);
       setPicurl(snap.picurl);
-      setVerified(snap.options?.verified);
+      console.log(snap.options);
+      setOptions(snap.options);
     });
   }, []);
 
@@ -80,110 +104,212 @@ const AccountActivty = () => {
     event.preventDefault();
   };
 
+  const { modules } = useRepos();
+
+  const filteredModules = modules.filter((module) => module.prop_url?.mmrlAuthor?.includes(auth.currentUser.uid));
+
   return (
     <Page modifier="noshadow" renderToolbar={renderToolbar}>
       <Page.RelativeContent>
-        <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
-          <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
-            <h3>{username}</h3> {verified && <VerifiedIcon />}
-          </Stack>
-          <Avatar alt={username} src={picurl} />
-        </Stack>
+        <Card
+          variant="outlined"
+          sx={{
+            p: 1,
+          }}
+        >
+          <Paper
+            elevation={0}
+            sx={{
+              display: "flex",
 
-        {verified && (
-          <Alert severity="info">
-            <AlertTitle>Verified</AlertTitle>
-            You're a verified user/creator, this means that single module veification won't affect your modules. Single module verification
-            symbol won't show while you're verified.
-          </Alert>
-        )}
-
-        <Stack direction="column" style={{ marginTop: verified ? 18 : 0 }} justifyContent="flex-start" alignItems="flex-start" spacing={2}>
-          <FormControl fullWidth variant="outlined">
-            <InputLabel htmlFor="outlined-adornment-username">Username</InputLabel>
-            <OutlinedInput
-              disabled={!editUsername}
-              fullWidth
-              onChange={(event) => {
-                setUsername(event.target.value);
+              flexDirection: {
+                xs: "column", // mobile
+                sm: "row", // tablet and up
+              },
+            }}
+          >
+            <CardMedia
+              component="img"
+              width="100"
+              height="100"
+              alt={username}
+              src={picurl}
+              sx={{
+                borderRadius: 0.5,
+                width: { xs: "100%", sm: 100 },
+                mr: { sm: 1.5 },
+                mb: { xs: 1.5, sm: 0 },
               }}
-              value={username}
-              id="outlined-adornment-username"
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowUsername}
-                    onMouseDown={handleMouseDownUsername}
-                    edge="end"
-                  >
-                    {editUsername ? (
-                      <SaveIcon
-                        onClick={() => {
-                          update(ref(db, `users/${auth.currentUser.uid}`), {
-                            username: username,
-                          });
-                        }}
-                      />
-                    ) : (
-                      <EditIcon />
-                    )}
-                  </IconButton>
-                </InputAdornment>
-              }
-              label="Username"
             />
-          </FormControl>
+            <Box sx={{ alignSelf: "center", ml: 2, width: "100%" }}>
+              <Typography component="div" fontWeight="bold">
+                {username}
+              </Typography>
+              <Stack
+                direction="row"
+                justifyContent="flex-start"
+                alignItems="center"
+                sx={{
+                  mt: 0.75,
+                }}
+                spacing={0.5}
+              >
+                {options?.roles?.verified && (
+                  <Box sx={badgeStyle(colors.blue)}>
+                    <VerifiedIcon sx={{ fontSize: 16, mr: 0.5, mt: "1px" }} />
+                    Verified
+                  </Box>
+                )}
+                {options?.roles?.mod && (
+                  <Box sx={badgeStyle(colors.orange)}>
+                    <LocalPoliceIcon sx={{ fontSize: 16, mr: 0.5, mt: "1px" }} />
+                    MMRL Moderator
+                  </Box>
+                )}
+                {options?.roles?.admin && (
+                  <Box sx={badgeStyle(colors.red)}>
+                    <SecurityIcon sx={{ fontSize: 16, mr: 0.5, mt: "1px" }} />
+                    MMRL Admin
+                  </Box>
+                )}
+                {options?.roles?.bughunter && (
+                  <Box sx={badgeStyle(colors.teal)}>
+                    <BugReportIcon sx={{ fontSize: 16, mr: 0.5, mt: "1px" }} />
+                    Bug Hunter
+                  </Box>
+                )}
+              </Stack>
+            </Box>
+          </Paper>
 
-          <FormControl fullWidth variant="outlined">
-            <InputLabel htmlFor="outlined-adornment-picurl">Picture URL</InputLabel>
-            <OutlinedInput
-              disabled={!editPicurl}
-              fullWidth
-              onChange={(event) => {
-                setPicurl(event.target.value);
-              }}
-              value={picurl}
-              id="outlined-adornment-picurl"
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPicurl}
-                    onMouseDown={handleMouseDownUsername}
-                    edge="end"
-                  >
-                    {editPicurl ? (
-                      <SaveIcon
-                        onClick={() => {
-                          update(ref(db, `users/${auth.currentUser.uid}`), {
-                            picurl: picurl,
-                          });
-                        }}
-                      />
-                    ) : (
-                      <EditIcon />
-                    )}
-                  </IconButton>
-                </InputAdornment>
-              }
-              label="Picture URL"
-            />
-          </FormControl>
+          <Paper
+            elevation={0}
+            sx={{
+              mt: 3,
+            }}
+          >
+            <Stack direction="column" justifyContent="flex-start" alignItems="flex-start" spacing={2}>
+              <FormControl fullWidth variant="outlined">
+                <InputLabel htmlFor="outlined-adornment-username">Username</InputLabel>
+                <OutlinedInput
+                  disabled={!editUsername}
+                  fullWidth
+                  onChange={(event) => {
+                    setUsername(event.target.value);
+                  }}
+                  value={username}
+                  id="outlined-adornment-username"
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowUsername}
+                        onMouseDown={handleMouseDownUsername}
+                        edge="end"
+                      >
+                        {editUsername ? (
+                          <SaveIcon
+                            onClick={() => {
+                              update(ref(db, `users/${auth.currentUser.uid}`), {
+                                username: username,
+                              });
+                            }}
+                          />
+                        ) : (
+                          <EditIcon />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  label="Username"
+                />
+              </FormControl>
 
-          <TextField
-            disabled
-            label="E-Mail"
-            placeholder="Edit your email"
-            type="email"
-            variant="outlined"
-            value={auth.currentUser.email}
-            fullWidth
-          />
-          <TextField disabled label="UID" variant="outlined" value={auth.currentUser.uid} fullWidth />
-        </Stack>
+              <FormControl fullWidth variant="outlined">
+                <InputLabel htmlFor="outlined-adornment-picurl">Picture URL</InputLabel>
+                <OutlinedInput
+                  disabled={!editPicurl}
+                  fullWidth
+                  onChange={(event) => {
+                    setPicurl(event.target.value);
+                  }}
+                  value={picurl}
+                  id="outlined-adornment-picurl"
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPicurl}
+                        onMouseDown={handleMouseDownUsername}
+                        edge="end"
+                      >
+                        {editPicurl ? (
+                          <SaveIcon
+                            onClick={() => {
+                              update(ref(db, `users/${auth.currentUser.uid}`), {
+                                picurl: picurl,
+                              });
+                            }}
+                          />
+                        ) : (
+                          <EditIcon />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  label="Picture URL"
+                />
+              </FormControl>
+
+              <TextField
+                disabled
+                label="E-Mail"
+                placeholder="Edit your email"
+                type="email"
+                variant="outlined"
+                value={auth.currentUser.email}
+                fullWidth
+              />
+              <TextField disabled label="UID" variant="outlined" value={auth.currentUser.uid} fullWidth />
+            </Stack>
+          </Paper>
+        </Card>
+
+        <Card
+          variant="outlined"
+          sx={{
+            mt: 1,
+            p: 1,
+          }}
+        >
+          <CardContent>
+            <Typography variant="h5" component="div">
+              Participating
+            </Typography>
+          </CardContent>
+
+          <List>
+            {filteredModules.map((module, i) => (
+              <ExploreModule index={i} moduleProps={module} disableLowQuality />
+            ))}
+          </List>
+        </Card>
       </Page.RelativeContent>
     </Page>
+  );
+};
+
+interface ParModuleProps {
+  module: Module;
+}
+
+const ParModule = (props: ParModuleProps) => {
+  const formatLastUpdate = useFormatDate(props.module.last_update);
+
+  return (
+    <ListItem>
+      <ListItemText primary={props.module.prop_url.name} secondary={formatLastUpdate} />
+    </ListItem>
   );
 };
 
