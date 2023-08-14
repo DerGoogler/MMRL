@@ -25,6 +25,7 @@ interface Props {
   index: number;
   moduleProps: Module;
   disableLowQuality?: boolean;
+  disableCovers?: boolean;
 }
 export const ExploreModule = (props: Props) => {
   const { context } = useActivity();
@@ -77,6 +78,46 @@ export const ExploreModule = (props: Props) => {
     });
   };
 
+  const CoverHandler = () => {
+    if (props.disableCovers) {
+      return null;
+    }
+
+    if (!settings._disable_module_covers && prop_url.mmrlCover) {
+      return (
+        <CardMedia
+          component="img"
+          style={{
+            minHeight: os.isAndroid || isMobile ? 179 : 465,
+            height: "100%",
+            objectFit: "cover",
+          }}
+          image={prop_url.mmrlCover}
+          alt={prop_url.name}
+        />
+      );
+    }
+
+    return null;
+  };
+
+  const LegacyVerified = () => {
+    if (!authorData?.options?.roles?.verified && isVerified) {
+      return (
+        <StyledIconButton
+          style={{ width: 39, height: 39 }}
+          onClick={() => {
+            os.toast(strings.module_verified, Toast.LENGTH_SHORT);
+          }}
+        >
+          <VerifiedRounded sx={{ fontSize: 14 }} />
+        </StyledIconButton>
+      );
+    }
+
+    return null;
+  };
+
   return (
     <StyledCard elevation={0}>
       <GestureDetector
@@ -85,19 +126,7 @@ export const ExploreModule = (props: Props) => {
           os.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
         }}
       >
-        {!settings._disable_module_covers && prop_url.mmrlCover && (
-          // @ts-ignore
-          <CardMedia
-            component="img"
-            style={{
-              minHeight: os.isAndroid || isMobile ? 179 : 465,
-              height: "100%",
-              objectFit: "cover",
-            }}
-            image={prop_url.mmrlCover}
-            alt={prop_url.name}
-          />
-        )}
+        <CoverHandler />
         <Box sx={{ p: 2, display: "flex" }}>
           <Stack spacing={0.5} style={{ flexGrow: 1 }}>
             <Typography fontWeight={700} color="text.primary">
@@ -142,16 +171,7 @@ export const ExploreModule = (props: Props) => {
               <span style={{ fontSize: 14 }}>0</span>
             </Stack>
           </StyledIconButtonWithText> */}
-          {isVerified && (
-            <StyledIconButton
-              style={{ width: 39, height: 39 }}
-              onClick={() => {
-                os.toast(strings.module_verified, Toast.LENGTH_SHORT);
-              }}
-            >
-              <VerifiedRounded sx={{ fontSize: 14 }} />
-            </StyledIconButton>
-          )}
+          <LegacyVerified />
         </Stack>
       </Stack>
       {settings._low_quality_module && isLowQuality && (

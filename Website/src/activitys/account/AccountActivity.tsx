@@ -288,28 +288,19 @@ const AccountActivty = () => {
             </Typography>
           </CardContent>
 
-          <List>
-            {filteredModules.map((module, i) => (
-              <ExploreModule index={i} moduleProps={module} disableLowQuality />
-            ))}
-          </List>
+          <Box sx={{ flexGrow: 1 }}>
+            {/* @ts-ignore */}
+            <Grid container justify="center" spacing={2}>
+              {filteredModules.map((module, i) => (
+                <Grid key={i} item {...{ xs: 12, sm: 6, md: 4, lg: 3 }}>
+                  <ExploreModule index={i} moduleProps={module} disableLowQuality disableCovers />
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
         </Card>
       </Page.RelativeContent>
     </Page>
-  );
-};
-
-interface ParModuleProps {
-  module: Module;
-}
-
-const ParModule = (props: ParModuleProps) => {
-  const formatLastUpdate = useFormatDate(props.module.last_update);
-
-  return (
-    <ListItem>
-      <ListItemText primary={props.module.prop_url.name} secondary={formatLastUpdate} />
-    </ListItem>
   );
 };
 
