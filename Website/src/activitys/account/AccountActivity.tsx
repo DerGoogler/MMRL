@@ -5,7 +5,7 @@ import { useStrings } from "@Hooks/useStrings";
 import Stack from "@mui/material/Stack";
 
 import { getDatabase, set, ref, update, onValue, get, query } from "firebase/database";
-import { getAuth, signOut } from "firebase/auth";
+import { getAuth, signOut, sendEmailVerification } from "firebase/auth";
 import { firebaseApp } from "@Util/firebase";
 
 import EditIcon from "@mui/icons-material/Edit";
@@ -24,7 +24,7 @@ import Avatar from "@mui/material/Avatar";
 import { os } from "@Native/Os";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
-import { CardMedia, Box, Typography, Card, SxProps, Theme, Paper, List, ListItem, ListItemText, CardContent } from "@mui/material";
+import { CardMedia, Box, Typography, Card, SxProps, Theme, Paper, List, ListItem, ListItemText, CardContent, Button } from "@mui/material";
 import { useTheme } from "@Hooks/useTheme";
 
 import SecurityIcon from "@mui/icons-material/Security";
@@ -34,6 +34,7 @@ import { colors } from "@Hooks/useSettings";
 import { useFormatDate } from "@Hooks/useFormatDate";
 import { useRepos } from "@Hooks/useRepos";
 import { ExploreModule } from "@Components/ExploreModule";
+import { CustomTextField } from "@Components/TextField";
 
 const auth = getAuth(firebaseApp);
 const db = getDatabase(firebaseApp);
@@ -182,6 +183,32 @@ const AccountActivty = () => {
             </Box>
           </Paper>
 
+          {!auth.currentUser.emailVerified && (
+            <Alert
+              severity="warning"
+              sx={{ mt: 3 }}
+              action={
+                <Button
+                  onClick={() => {
+                    sendEmailVerification(auth.currentUser)
+                      .then(() => {
+                        os.toast("E-Mail has been sent", Toast.LENGTH_SHORT);
+                      })
+                      .catch((error) => {
+                        os.toast(error.message, Toast.LENGTH_SHORT);
+                      });
+                  }}
+                  color="inherit"
+                  size="small"
+                >
+                  VERIFY
+                </Button>
+              }
+            >
+              Your email haven't been verified yet. You won't able to edit your profile information
+            </Alert>
+          )}
+
           <Paper
             elevation={0}
             sx={{
@@ -189,17 +216,21 @@ const AccountActivty = () => {
             }}
           >
             <Stack direction="column" justifyContent="flex-start" alignItems="flex-start" spacing={2}>
-              <FormControl fullWidth variant="outlined">
-                <InputLabel htmlFor="outlined-adornment-username">Username</InputLabel>
-                <OutlinedInput
-                  disabled={!editUsername}
-                  fullWidth
-                  onChange={(event) => {
-                    setUsername(event.target.value);
-                  }}
-                  value={username}
-                  id="outlined-adornment-username"
-                  endAdornment={
+              <CustomTextField
+                disabled={!editUsername}
+                fullWidth
+                counter
+                onChange={(event) => {
+                  setUsername(event.target.value);
+                }}
+                inputProps={{
+                  maxLength: 20,
+                }}
+                type="text"
+                value={username}
+                label="Username"
+                InputProps={{
+                  endAdornment: (
                     <InputAdornment position="end">
                       <IconButton
                         aria-label="toggle password visibility"
@@ -220,10 +251,10 @@ const AccountActivty = () => {
                         )}
                       </IconButton>
                     </InputAdornment>
-                  }
-                  label="Username"
-                />
-              </FormControl>
+                  ),
+                }}
+                variant="outlined"
+              />
 
               <FormControl fullWidth variant="outlined">
                 <InputLabel htmlFor="outlined-adornment-picurl">Picture URL</InputLabel>
