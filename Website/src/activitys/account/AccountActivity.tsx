@@ -41,7 +41,6 @@ const db = getDatabase(firebaseApp);
 
 const badgeStyle: (color: (typeof colors)["blue" | "teal" | "red" | "orange"]) => SxProps<Theme> = (color) => {
   return {
-    ml: -1,
     px: 1,
     py: 0.5,
     borderRadius: 1,
@@ -122,7 +121,6 @@ const AccountActivty = () => {
             elevation={0}
             sx={{
               display: "flex",
-
               flexDirection: {
                 xs: "column", // mobile
                 sm: "row", // tablet and up
@@ -138,7 +136,6 @@ const AccountActivty = () => {
               sx={{
                 borderRadius: 0.5,
                 width: { xs: "100%", sm: 100 },
-                mr: { sm: 1.5 },
                 mb: { xs: 1.5, sm: 0 },
               }}
             />

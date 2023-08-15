@@ -314,7 +314,6 @@ function DescriptonActivity() {
                         sx={{
                           borderRadius: 0.5,
                           width: { xs: 56.69, sm: 56.69 },
-                          mr: 1.5,
                         }}
                       />
                       <Box sx={{ alignSelf: "center", ml: 1, width: "100%" }}>
