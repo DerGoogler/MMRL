@@ -158,6 +158,7 @@ declare global {
      * An required filed, to disply the repository name
      */
     name: string;
+    mmrlOwner?: string;
     /**
      * An given website link for the repository
      */
@@ -168,7 +169,7 @@ declare global {
     support?: string | undefined;
     donate?: string | undefined;
     submitModule?: string | undefined;
-    last_update?: string | number | undefined;
+    last_update: string | number;
     modules: Module[];
   }
 

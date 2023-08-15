@@ -148,11 +148,12 @@ export const RepoProvider = (props: React.PropsWithChildren) => {
                     return v.toString(16);
                   }),
                   name: response.name || "Unknown Repository",
+                  mmrlOwner: response.mmrlOwner || null,
                   website: response.website || null,
                   support: response.support || null,
                   donate: response.donate || null,
                   submitModule: response.submitModules || null,
-                  last_update: response.website || 0,
+                  last_update: response.last_update || 0,
                   modules: data.url,
                   isOn: false,
                 },
