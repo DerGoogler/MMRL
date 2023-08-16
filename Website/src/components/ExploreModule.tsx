@@ -120,7 +120,13 @@ export const ExploreModule = (props: Props) => {
 
   return (
     <StyledCard elevation={0}>
-      <GestureDetector
+      <Box
+        component={GestureDetector}
+        sx={{
+          ":hover": {
+            cursor: "pointer",
+          },
+        }}
         onTap={handleOpen}
         onHold={() => {
           os.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
@@ -137,7 +143,7 @@ export const ExploreModule = (props: Props) => {
                 <span>
                   {prop_url.version} ({prop_url.versionCode}) /
                 </span>
-                {prop_url.mmrlAuthor ? (
+                {prop_url.mmrlAuthor && authorData ? (
                   <span>{authorData.username ? authorData.username : prop_url.author}</span>
                 ) : (
                   <span>{prop_url.author}</span>
@@ -150,7 +156,7 @@ export const ExploreModule = (props: Props) => {
             </Typography>
           </Stack>
         </Box>
-      </GestureDetector>
+      </Box>
       <Divider />
       <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ px: 2, py: 1 }}>
         <Chip

@@ -13,10 +13,12 @@ import { languages_map } from "../locales/languages";
 import { os } from "@Native/Os";
 import { Android12Switch } from "@Components/Android12Switch";
 import { useTheme } from "@Hooks/useTheme";
+import { useRepos } from "@Hooks/useRepos";
 
 function SettingsActivity() {
   const { context } = useActivity();
   const { strings } = useStrings();
+  const { setRepos } = useRepos();
 
   const { theme } = useTheme();
 
@@ -143,6 +145,19 @@ function SettingsActivity() {
             }}
           >
             <StyledListItemText id="switch-list-label-wifi" primary="Issues" secondary="Track our issues" />
+          </ListItemButton>
+        </List>
+
+        <Divider />
+
+        <List subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>{"Storage"}</ListSubheader>}>
+          {" "}
+          <ListItemButton
+            onClick={() => {
+              setRepos([]);
+            }}
+          >
+            <StyledListItemText id="switch-list-label-wifi" primary="Clear repositories" />
           </ListItemButton>
         </List>
 

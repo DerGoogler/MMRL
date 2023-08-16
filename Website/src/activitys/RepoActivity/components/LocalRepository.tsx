@@ -55,7 +55,7 @@ export const LocalRepository = (props: LocalRepositoryProps) => {
           <StyledIconButtonWithText onClick={props.onClick}>
             <Stack spacing={0.8} direction="row" alignItems="center">
               <props.icon sx={{ fontSize: 14 }} />
-              <span style={{ fontSize: 14 }}>{props.text}</span>
+              {/* <span style={{ fontSize: 14 }}>{props.text}</span> */}
             </Stack>
           </StyledIconButtonWithText>
         )}
