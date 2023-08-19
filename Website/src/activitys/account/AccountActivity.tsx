@@ -4,9 +4,8 @@ import { Page } from "@Components/onsenui/Page";
 import { useStrings } from "@Hooks/useStrings";
 import Stack from "@mui/material/Stack";
 
-import { getDatabase, set, ref, update, onValue, get, query } from "firebase/database";
-import { getAuth, signOut, sendEmailVerification } from "firebase/auth";
-import { firebaseApp } from "@Util/firebase";
+import { set, ref, update, onValue, get, query } from "firebase/database";
+import { signOut, sendEmailVerification } from "firebase/auth";
 
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
@@ -35,9 +34,7 @@ import { useFormatDate } from "@Hooks/useFormatDate";
 import { useRepos } from "@Hooks/useRepos";
 import { ExploreModule } from "@Components/ExploreModule";
 import { CustomTextField } from "@Components/TextField";
-
-const auth = getAuth(firebaseApp);
-const db = getDatabase(firebaseApp);
+import { useFirebase } from "@Hooks/useFirebase";
 
 const badgeStyle: (color: (typeof colors)["blue" | "teal" | "red" | "orange"]) => SxProps<Theme> = (color) => {
   return {
@@ -54,6 +51,7 @@ const badgeStyle: (color: (typeof colors)["blue" | "teal" | "red" | "orange"]) =
 const AccountActivty = () => {
   const { strings } = useStrings();
   const { context, extra } = useActivity<any>();
+  const { auth, firebaseVoid } = useFirebase();
 
   const [editUsername, setEditUsername] = React.useState(false);
   const [editPicurl, setEditPicurl] = React.useState(false);
@@ -62,13 +60,15 @@ const AccountActivty = () => {
   const [options, setOptions] = React.useState<any>({});
 
   React.useEffect(() => {
-    const dbRef = ref(db, "users/" + auth.currentUser.uid);
-    onValue(query(dbRef), (snapshot) => {
-      const snap = snapshot.val();
-      setUsername(snap.username);
-      setPicurl(snap.picurl);
-      console.log(snap.options);
-      setOptions(snap.options);
+    firebaseVoid((auth, db) => {
+      const dbRef = ref(db, "users/" + auth.currentUser?.uid);
+      onValue(query(dbRef), (snapshot) => {
+        const snap = snapshot.val();
+        setUsername(snap.username);
+        setPicurl(snap.picurl);
+        console.log(snap.options);
+        setOptions(snap.options);
+      });
     });
   }, []);
 
@@ -83,13 +83,15 @@ const AccountActivty = () => {
           <Toolbar.Button
             icon={ExitToAppIcon}
             onClick={() => {
-              signOut(auth)
-                .then(() => {
-                  context.popPage();
-                })
-                .catch((error) => {
-                  os.toast(error, Toast.LENGTH_SHORT);
-                });
+              firebaseVoid((auth) => {
+                signOut(auth)
+                  .then(() => {
+                    context.popPage();
+                  })
+                  .catch((error) => {
+                    os.toast(error, Toast.LENGTH_SHORT);
+                  });
+              });
             }}
           />
         </Toolbar.Right>
@@ -106,7 +108,7 @@ const AccountActivty = () => {
 
   const { modules } = useRepos();
 
-  const filteredModules = modules.filter((module) => module.prop_url?.mmrlAuthor?.includes(auth.currentUser.uid));
+  const filteredModules = modules.filter((module) => module.prop_url?.mmrlAuthor?.includes(auth?.currentUser?.uid as any));
 
   return (
     <Page modifier="noshadow" renderToolbar={renderToolbar}>
@@ -180,20 +182,22 @@ const AccountActivty = () => {
             </Box>
           </Paper>
 
-          {!auth.currentUser.emailVerified && (
+          {!auth?.currentUser?.emailVerified && (
             <Alert
               severity="warning"
               sx={{ mt: 3 }}
               action={
                 <Button
                   onClick={() => {
-                    sendEmailVerification(auth.currentUser)
-                      .then(() => {
-                        os.toast("E-Mail has been sent", Toast.LENGTH_SHORT);
-                      })
-                      .catch((error) => {
-                        os.toast(error.message, Toast.LENGTH_SHORT);
-                      });
+                    firebaseVoid((auth) => {
+                      sendEmailVerification(auth.currentUser as any)
+                        .then(() => {
+                          os.toast("E-Mail has been sent", Toast.LENGTH_SHORT);
+                        })
+                        .catch((error) => {
+                          os.toast(error.message, Toast.LENGTH_SHORT);
+                        });
+                    });
                   }}
                   color="inherit"
                   size="small"
@@ -238,8 +242,10 @@ const AccountActivty = () => {
                         {editUsername ? (
                           <SaveIcon
                             onClick={() => {
-                              update(ref(db, `users/${auth.currentUser.uid}`), {
-                                username: username,
+                              firebaseVoid((auth, db) => {
+                                update(ref(db, `users/${auth.currentUser?.uid}`), {
+                                  username: username,
+                                });
                               });
                             }}
                           />
@@ -274,8 +280,10 @@ const AccountActivty = () => {
                         {editPicurl ? (
                           <SaveIcon
                             onClick={() => {
-                              update(ref(db, `users/${auth.currentUser.uid}`), {
-                                picurl: picurl,
+                              firebaseVoid((auth, db) => {
+                                update(ref(db, `users/${auth.currentUser?.uid}`), {
+                                  picurl: picurl,
+                                });
                               });
                             }}
                           />
@@ -295,10 +303,10 @@ const AccountActivty = () => {
                 placeholder="Edit your email"
                 type="email"
                 variant="outlined"
-                value={auth.currentUser.email}
+                value={auth?.currentUser?.email}
                 fullWidth
               />
-              <TextField disabled label="UID" variant="outlined" value={auth.currentUser.uid} fullWidth />
+              <TextField disabled label="UID" variant="outlined" value={auth?.currentUser?.uid} fullWidth />
             </Stack>
           </Paper>
         </Card>

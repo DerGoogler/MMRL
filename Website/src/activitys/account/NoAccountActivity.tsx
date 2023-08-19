@@ -5,8 +5,8 @@ import { os } from "@Native/Os";
 import { Page } from "@Components/onsenui/Page";
 import { useStrings } from "@Hooks/useStrings";
 import { Tabbar, TabbarRenderTab } from "@Components/onsenui/Tabbar";
-import Signup from "./fragments/Signup";
-import Signin from "./fragments/Signin";
+import Register from "./fragments/Register";
+import Login from "./fragments/Login";
 
 const NoAccountActivty = () => {
   const { strings } = useStrings();
@@ -15,12 +15,12 @@ const NoAccountActivty = () => {
   const renderTabs = (): TabbarRenderTab[] => {
     return [
       {
-        content: <Signup />,
-        tab: <Tabbar.Tab label={"Sign up"} />,
+        content: <Login />,
+        tab: <Tabbar.Tab label={"Login"} />,
       },
       {
-        content: <Signin />,
-        tab: <Tabbar.Tab label={"Sign in"} />,
+        content: <Register />,
+        tab: <Tabbar.Tab label={"Register"} />,
       },
     ];
   };

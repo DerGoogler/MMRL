@@ -14,12 +14,9 @@ import { isMobile } from "react-device-detect";
 import { useFormatDate } from "@Hooks/useFormatDate";
 import { useModuleOptions } from "@Hooks/useModuleOptions";
 import { GestureDetector } from "./onsenui/GestureDetector";
-
-import { getDatabase, ref, onValue, query } from "firebase/database";
-import { firebaseApp } from "@Util/firebase";
+import { ref, onValue, query } from "firebase/database";
 import React from "react";
-
-const db = getDatabase(firebaseApp);
+import { useFirebase } from "@Hooks/useFirebase";
 
 interface Props {
   index: number;
@@ -31,6 +28,7 @@ export const ExploreModule = (props: Props) => {
   const { context } = useActivity();
   const { strings } = useStrings();
   const { settings } = useSettings();
+  const { auth, firebaseVoid } = useFirebase();
 
   const { id, notes_url, zip_url, last_update, prop_url } = props.moduleProps;
 
@@ -46,9 +44,11 @@ export const ExploreModule = (props: Props) => {
 
   React.useEffect(() => {
     if (prop_url?.mmrlAuthor) {
-      const dbRef = ref(db, "users/" + prop_url.mmrlAuthor);
-      onValue(query(dbRef), (snapshot) => {
-        setAuthorData(snapshot.val());
+      firebaseVoid((auth, db) => {
+        const dbRef = ref(db, "users/" + prop_url.mmrlAuthor);
+        onValue(query(dbRef), (snapshot) => {
+          setAuthorData(snapshot.val());
+        });
       });
     } else {
       setAuthorData(undefined);

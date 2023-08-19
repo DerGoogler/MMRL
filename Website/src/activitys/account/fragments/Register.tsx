@@ -8,22 +8,18 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
-
 import LockOutlined from "@mui/icons-material/LockOutlined";
-
-import { getDatabase, set, ref, update, onValue } from "firebase/database";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { firebaseApp } from "@Util/firebase";
-const auth = getAuth(firebaseApp);
-const db = getDatabase(firebaseApp);
-
 import React from "react";
 import { useTheme } from "@Hooks/useTheme";
 import { os } from "@Native/Os";
+import { useFirebase } from "@Hooks/useFirebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { ref, set } from "firebase/database";
 
-const Signup = () => {
+const Register = () => {
   const { context } = useActivity();
   const { settings } = useSettings();
+  const { firebaseVoid } = useFirebase();
 
   const { scheme } = useTheme();
 
@@ -49,15 +45,6 @@ const Signup = () => {
   //   return "MMRU_" + idstr;
   // }, []);
 
-  const username = React.useMemo(() => {
-    const a = ["Small", "Blue", "Ugly"];
-    const b = ["Bear", "Dog", "Banana"];
-
-    const rA = Math.floor(Math.random() * a.length);
-    const rB = Math.floor(Math.random() * b.length);
-    return a[rA] + b[rB];
-  }, []);
-
   return (
     <Page>
       <Page.Content>
@@ -66,7 +53,7 @@ const Signup = () => {
             <Avatar style={avatarStyle}>
               <LockOutlined />
             </Avatar>
-            <h2>Sign up</h2>
+            <h2>Register</h2>
           </Grid>
           <TextField
             onChange={(event) => {
@@ -96,16 +83,18 @@ const Signup = () => {
           <FormControlLabel control={<Checkbox disabled name="checkedB" color="primary" />} label="Remember me" />
           <Button
             onClick={() => {
-              createUserWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                  set(ref(db, `users/${userCredential.user.uid}`), {
-                    username: username,
+              firebaseVoid((auth, db) => {
+                createUserWithEmailAndPassword(auth, email, password)
+                  .then((userCredential) => {
+                    set(ref(db, `users/${userCredential.user.uid}`), {
+                      username: "Unknown",
+                    });
+                    context.popPage();
+                  })
+                  .catch((error) => {
+                    os.toast(error.message, Toast.LENGTH_SHORT);
                   });
-                  context.popPage();
-                })
-                .catch((error) => {
-                  os.toast(error.message, Toast.LENGTH_SHORT);
-                });
+              });
             }}
             type="submit"
             color="primary"
@@ -113,7 +102,7 @@ const Signup = () => {
             style={btnstyle}
             fullWidth
           >
-            Sign up
+            Register
           </Button>
           {/*
                 <Typography >
@@ -128,4 +117,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Register;

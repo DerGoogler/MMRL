@@ -22,11 +22,8 @@ import ons from "onsenui";
 import { StyledIconButton, StyledIconButtonWithText } from "@Components/StyledIconButton";
 import { StyledCard } from "@Components/StyledCard";
 import { useFormatDate } from "@Hooks/useFormatDate";
-
-import { getDatabase, ref, onValue, query } from "firebase/database";
-import { firebaseApp } from "@Util/firebase";
-
-const db = getDatabase(firebaseApp);
+import { ref, onValue, query } from "firebase/database";
+import { useFirebase } from "@Hooks/useFirebase";
 
 interface ListItemProps {
   part?: any;
@@ -43,6 +40,8 @@ export const LocalRepository = (props: LocalRepositoryProps) => {
   const { repo } = props;
   const { strings } = useStrings();
   const { settings, setSettings } = useSettings();
+
+  const { auth, firebaseVoid } = useFirebase();
   const { actions } = useRepos();
   const [enabled, setEnabled] = React.useState(!settings.disabled_repos.includes(repo.id));
 
@@ -68,10 +67,12 @@ export const LocalRepository = (props: LocalRepositoryProps) => {
   React.useEffect(() => {
     console.log(repo);
     if (repo?.mmrlOwner) {
-      const dbRef = ref(db, "users/" + repo.mmrlOwner);
-      onValue(query(dbRef), (snapshot) => {
-        setAuthorData(snapshot.val());
-        console.log(snapshot.val());
+      firebaseVoid((auth, db) => {
+        const dbRef = ref(db, "users/" + repo.mmrlOwner);
+        onValue(query(dbRef), (snapshot) => {
+          setAuthorData(snapshot.val());
+          console.log(snapshot.val());
+        });
       });
     } else {
       setAuthorData(undefined);

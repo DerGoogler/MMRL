@@ -7,9 +7,8 @@ import { StyledListItemText } from "@Components/StyledListItemText";
 import { useStrings } from "@Hooks/useStrings";
 import { Divider, List, ListItemButton, ListSubheader } from "@mui/material";
 import { Page } from "react-onsenui";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { firebaseApp } from "@Util/firebase";
 import AccountActivty from "@Activitys/account/AccountActivity";
+import { useFirebase } from "@Hooks/useFirebase";
 
 type Props = {
   renderToolbar: () => JSX.Element;
@@ -17,11 +16,10 @@ type Props = {
   pushPage: (props: PushPropsCore<any>) => void;
 };
 
-const auth = getAuth(firebaseApp);
-
 export const DrawerFragment = (props: Props) => {
   const hide = props.hideSplitter;
   const pushPage = props.pushPage;
+  const { auth } = useFirebase();
 
   const { strings } = useStrings();
 
@@ -30,7 +28,7 @@ export const DrawerFragment = (props: Props) => {
       <List subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>App</ListSubheader>}>
         <ListItemButton
           onClick={() => {
-            if (auth.currentUser) {
+            if (auth?.currentUser) {
               pushPage({
                 component: AccountActivty,
                 props: {

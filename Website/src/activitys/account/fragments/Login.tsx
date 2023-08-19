@@ -8,21 +8,17 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
-
 import LockOutlined from "@mui/icons-material/LockOutlined";
-
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-
+import { signInWithEmailAndPassword } from "firebase/auth";
 import React from "react";
 import { useTheme } from "@Hooks/useTheme";
-import { firebaseApp } from "@Util/firebase";
 import { os } from "@Native/Os";
+import { useFirebase } from "@Hooks/useFirebase";
 
-const auth = getAuth(firebaseApp);
-
-const Signin = () => {
+const Login = () => {
   const { context } = useActivity();
   const { settings } = useSettings();
+  const { firebaseVoid } = useFirebase();
 
   const { scheme } = useTheme();
 
@@ -41,7 +37,7 @@ const Signin = () => {
             <Avatar style={avatarStyle}>
               <LockOutlined />
             </Avatar>
-            <h2>Sign in</h2>
+            <h2>Login</h2>
           </Grid>
           <TextField
             onChange={(event) => {
@@ -71,13 +67,15 @@ const Signin = () => {
           <FormControlLabel control={<Checkbox disabled name="checkedB" color="primary" />} label="Remember me" />
           <Button
             onClick={() => {
-              signInWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                  context.popPage();
-                })
-                .catch((error) => {
-                  os.toast(error.message, Toast.LENGTH_SHORT);
-                });
+              firebaseVoid((auth) => {
+                signInWithEmailAndPassword(auth, email, password)
+                  .then((userCredential) => {
+                    context.popPage();
+                  })
+                  .catch((error) => {
+                    os.toast(error.message, Toast.LENGTH_SHORT);
+                  });
+              });
             }}
             type="submit"
             color="primary"
@@ -85,7 +83,7 @@ const Signin = () => {
             style={btnstyle}
             fullWidth
           >
-            Sign in
+            Login
           </Button>
           {/*
                 <Typography >
@@ -100,4 +98,4 @@ const Signin = () => {
   );
 };
 
-export default Signin;
+export default Login;
