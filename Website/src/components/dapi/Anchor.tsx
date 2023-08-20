@@ -97,20 +97,14 @@ export function Open(props: OpenProps) {
             case "settings":
               context.pushPage({
                 component: SettingsActivity,
-                props: {
-                  key: "settings",
-                  extra: {},
-                },
+                key: "settings",
               });
               break;
 
             case "repos":
               context.pushPage({
                 component: RepoActivity,
-                props: {
-                  key: "repo",
-                  extra: {},
-                },
+                key: "repo",
               });
               break;
             case "request":
@@ -119,15 +113,13 @@ export function Open(props: OpenProps) {
               } else {
                 context.pushPage({
                   component: DescriptonActivity,
-                  props: {
-                    key: `desc_open${Math.round(Math.random() * 56)}`,
-                    extra: {
-                      request: {
-                        use: true,
-                        url: props.url,
-                      },
-                      shortDesc: props.title,
+                  key: `desc_open${Math.round(Math.random() * 56)}`,
+                  extra: {
+                    request: {
+                      use: true,
+                      url: props.url,
                     },
+                    shortDesc: props.title,
                   },
                 });
               }

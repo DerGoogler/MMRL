@@ -57,10 +57,7 @@ const ExploreModuleFragment = (props: ExploreModuleProps) => {
             onClick={() => {
               context.pushPage({
                 component: RepoActivity,
-                props: {
-                  key: "repos",
-                  extra: {},
-                },
+                key: "repos",
               });
             }}
           >

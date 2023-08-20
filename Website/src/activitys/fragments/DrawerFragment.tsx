@@ -9,11 +9,12 @@ import { Divider, List, ListItemButton, ListSubheader } from "@mui/material";
 import { Page } from "react-onsenui";
 import AccountActivty from "@Activitys/account/AccountActivity";
 import { useFirebase } from "@Hooks/useFirebase";
+import { IntentPusher } from "@Hooks/useActivity";
 
 type Props = {
   renderToolbar: () => JSX.Element;
   hideSplitter: () => void;
-  pushPage: (props: PushPropsCore<any>) => void;
+  pushPage: (props: IntentPusher) => void;
 };
 
 export const DrawerFragment = (props: Props) => {
@@ -31,18 +32,14 @@ export const DrawerFragment = (props: Props) => {
             if (auth?.currentUser) {
               pushPage({
                 component: AccountActivty,
-                props: {
-                  key: "acc",
-                  extra: {},
-                },
+                key: "acc",
+                props: {},
+                extra: {},
               });
             } else {
               pushPage({
                 component: NoAccountActivty,
-                props: {
-                  key: "no_acc",
-                  extra: {},
-                },
+                key: "no_acc",
               });
             }
             hide();
@@ -55,10 +52,7 @@ export const DrawerFragment = (props: Props) => {
           onClick={() => {
             pushPage({
               component: SettingsActivity,
-              props: {
-                key: "settings",
-                extra: {},
-              },
+              key: "settings",
             });
             hide();
           }}
@@ -69,10 +63,7 @@ export const DrawerFragment = (props: Props) => {
           onClick={() => {
             pushPage({
               component: RepoActivity,
-              props: {
-                key: "repos",
-                extra: {},
-              },
+              key: "repos",
             });
             hide();
           }}
@@ -88,10 +79,7 @@ export const DrawerFragment = (props: Props) => {
           onClick={() => {
             pushPage({
               component: DAPITestActivity,
-              props: {
-                key: "dapitestActivity",
-                extra: {},
-              },
+              key: "dapitestActivity",
             });
             hide();
           }}
@@ -107,15 +95,13 @@ export const DrawerFragment = (props: Props) => {
           onClick={() => {
             pushPage({
               component: DescriptonActivity,
-              props: {
-                key: "license",
-                extra: {
-                  request: {
-                    use: true,
-                    url: "https://raw.githubusercontent.com/wiki/DerGoogler/MMRL/License.md",
-                  },
-                  title: "License",
+              key: "license",
+              extra: {
+                request: {
+                  use: true,
+                  url: "https://raw.githubusercontent.com/wiki/DerGoogler/MMRL/License.md",
                 },
+                title: "License",
               },
             });
             hide();
@@ -127,14 +113,12 @@ export const DrawerFragment = (props: Props) => {
           onClick={() => {
             pushPage({
               component: DescriptonActivity,
-              props: {
-                key: "changelog",
-                extra: {
-                  request: {
-                    url: "https://raw.githubusercontent.com/wiki/DerGoogler/MMRL/Changelog.md",
-                  },
-                  title: "Changelog",
+              key: "changelog",
+              extra: {
+                request: {
+                  url: "https://raw.githubusercontent.com/wiki/DerGoogler/MMRL/Changelog.md",
                 },
+                title: "Changelog",
               },
             });
             hide();

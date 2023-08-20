@@ -1,7 +1,7 @@
 import { CloseRounded } from "@mui/icons-material";
 import { useState } from "react";
-import { RouterUtil } from "react-onsenui";
-import { Context, Extra } from "../hooks/useActivity";
+import { RouterUtil } from "@Util/RouterUtil";
+import { Context, Extra, IntentPusher } from "../hooks/useActivity";
 import { obj } from "googlers-tools";
 import { useSettings } from "@Hooks/useSettings";
 import React from "react";
@@ -61,20 +61,29 @@ const MainActivity = (): JSX.Element => {
     }
   };
 
+  const pushContext = {
+    pushPage: (props: IntentPusher) => pushPage(props),
+    popPage: (options?: any) => popPage(options),
+    splitter: {
+      show: () => showSplitter(),
+      hide: () => hideSplitter(),
+      state: isSplitterOpen,
+    },
+  };
+
   const ignoreThat = RouterUtil.init([
     {
-      component: CheckRoot(),
-      props: {
-        key: "main",
-        context: {
-          pushPage: (props: PushPropsCore) => pushPage(props),
-          splitter: {
-            show: () => showSplitter(),
-            hide: () => hideSplitter(),
-            state: isSplitterOpen,
-          },
+      route: {
+        component: CheckRoot(),
+        props: {
+          key: "main",
         },
       },
+      key: "main",
+      props: {
+        key: "main",
+      },
+      context: pushContext,
     },
   ]);
 
@@ -84,6 +93,7 @@ const MainActivity = (): JSX.Element => {
     setRouteConfig((prev: any) =>
       RouterUtil.pop({
         routeConfig: prev,
+        key: prev.key,
         options: {
           ...options,
           animationOptions: {
@@ -92,27 +102,15 @@ const MainActivity = (): JSX.Element => {
             animation: "fade-md",
           },
         },
-      })
+      } as any)
     );
   };
 
-  const pushPage = (props: PushPropsCore): void => {
+  const pushPage = (props: IntentPusher): void => {
     const route = {
       component: props.component,
-
       props: {
-        key: props.props.key,
-        extra: props.props.extra ? props.props.extra : {},
-
-        context: {
-          popPage: (options = {}) => popPage(options),
-          pushPage: (props: PushPropsCore) => pushPage(props),
-          splitter: {
-            show: () => showSplitter(),
-            hide: () => hideSplitter(),
-            state: isSplitterOpen,
-          },
-        },
+        key: props.component.name || props.key,
       },
     };
 
@@ -123,7 +121,10 @@ const MainActivity = (): JSX.Element => {
         routeConfig: prev,
         route: route,
         options: options,
-        key: props.props,
+        key: props.component.name || props.key,
+        props: props.props,
+        context: pushContext,
+        extra: props.extra ? props.extra : {},
       })
     );
   };
@@ -136,17 +137,10 @@ const MainActivity = (): JSX.Element => {
     setRouteConfig((prev: any) => RouterUtil.postPop(prev));
   };
 
-  const renderPage = (route: any) => {
-    const props = route.props || {};
-    const newProps = obj.omit(["extra", "context"], props);
-    console.log(newProps);
+  const renderPage = (route: any, props: any) => {
     return (
       <ErrorBoundary fallback={fallback}>
-        <Extra.Provider key={props.key + "_extra"} value={props.extra}>
-          <Context.Provider key={props.key + "_context"} value={props.context}>
-            <route.component {...newProps} />
-          </Context.Provider>
-        </Extra.Provider>
+        <route.component {...props} />
       </ErrorBoundary>
     );
   };
@@ -178,10 +172,7 @@ const MainActivity = (): JSX.Element => {
     const handleOpenSettings = () => {
       pushPage({
         component: SettingsActivity,
-        props: {
-          key: "settings",
-          extra: {},
-        },
+        key: "settings",
       });
     };
 

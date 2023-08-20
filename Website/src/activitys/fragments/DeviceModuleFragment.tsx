@@ -34,11 +34,9 @@ const DeviceModuleFragment = () => {
                   if (file) {
                     context.pushPage({
                       component: TerminalActivity,
-                      props: {
-                        key: "local_install",
-                        extra: {
-                          path: file.path,
-                        },
+                      key: "local_install",
+                      extra: {
+                        path: file.path,
                       },
                     });
                   }

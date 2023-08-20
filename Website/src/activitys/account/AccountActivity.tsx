@@ -226,13 +226,11 @@ const AccountActivty = () => {
                 onClick={() => {
                   context.pushPage({
                     component: ProfileDetailsActivity,
-                    props: {
-                      key: "profile_details_1",
-                      extra: {
-                        username: username,
-                        picurl: picurl,
-                        options: options,
-                      },
+                    key: "profile_details_1",
+                    extra: {
+                      username: username,
+                      picurl: picurl,
+                      options: options,
                     },
                   });
                 }}
@@ -248,6 +246,7 @@ const AccountActivty = () => {
                 onClick={() => {
                   context.pushPage<{}, ExploreModuleProps>({
                     component: ExploreModuleFragment,
+                    key: "participating_modules_3",
                     props: {
                       renderToolbar: (ref, ctx) => (
                         <Toolbar modifier="noshadow">
@@ -259,8 +258,6 @@ const AccountActivty = () => {
                       ),
                       applyFilter: (modules, search) =>
                         modules.filter((module) => module.prop_url?.mmrlAuthor?.includes(auth?.currentUser?.uid as any)),
-                      key: "profile_details_1",
-                      extra: {},
                     },
                   });
                 }}

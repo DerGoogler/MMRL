@@ -2,9 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "onsenui/esm/elements/ons-navigator";
 import onsCustomElement from "@Util/onsCustomElement";
+import { Context, Extra } from "@Hooks/useActivity";
 
 interface HTMLNavigator {
-  renderPage: (route: object) => JSX.Element;
+  renderPage: (route: object, props: any) => JSX.Element;
   routeConfig: {
     routeStack: any[];
     processStack: any[];
@@ -25,8 +26,7 @@ interface HTMLNavigatorClass extends HTMLNavigator {
 }
 
 interface State {
-  internalStack: any[];
-  currentStack: any;
+  internalStack: { route: any; props?: any; context?: any; extra?: any }[];
 }
 
 type Noop = () => void;
@@ -63,7 +63,6 @@ class RouterNavigatorClass extends React.Component<HTMLNavigatorClass, State> {
 
     this.state = {
       internalStack: [],
-      currentStack: {},
     };
   }
 
@@ -73,23 +72,23 @@ class RouterNavigatorClass extends React.Component<HTMLNavigatorClass, State> {
     }
   }
 
-  private resetPageStack(routes: object[], options = {}) {
+  private resetPageStack(routes: object[], options = {}, props = {}) {
     if (this.isRunning()) {
       return;
     }
 
     const update = () => {
       return new Promise((resolve) => {
-        this.setState({ internalStack: [...this.state.internalStack, routes[routes.length - 1]] }, resolve as Noop);
+        this.setState({ internalStack: [...this.state.internalStack, { route: routes[routes.length - 1] }] }, resolve as Noop);
       });
     };
 
     return this.ref.current._pushPage(options, update).then(() => {
-      this.setState({ internalStack: [...routes] });
+      this.setState({ internalStack: [{ route: [...routes] }] });
     });
   }
 
-  private pushPage(route: any, options = {}) {
+  private pushPage(route: any, options = {}, props = {}, context = {}, extra = {}) {
     if (this.isRunning()) {
       return;
     }
@@ -98,11 +97,7 @@ class RouterNavigatorClass extends React.Component<HTMLNavigatorClass, State> {
       return new Promise((resolve) => {
         this.setState(
           (prevState) => {
-            if (route.props.extra?.param) {
-              this._url.searchParams.set(route.props.extra.param.name, route.props.extra.param.value);
-              window.history.replaceState(null, null as unknown as string, this._url);
-            }
-            return { internalStack: [...prevState.internalStack, route], currentStack: route };
+            return { internalStack: [...prevState.internalStack, { route: route, props: props, context: context, extra: extra }] };
           },
 
           resolve as Noop
@@ -125,14 +120,14 @@ class RouterNavigatorClass extends React.Component<HTMLNavigatorClass, State> {
     const update = () => {
       return new Promise((resolve) => {
         this.setState((prevState) => {
-          return { internalStack: [...prevState.internalStack, route] };
+          return { internalStack: [...prevState.internalStack, { route: route }] };
         }, resolve as Noop);
       });
     };
 
     return this.ref.current._pushPage(options, update).then(() => {
       this.setState((prevState) => {
-        return { internalStack: [...prevState.internalStack.slice(0, -2), route] };
+        return { internalStack: [...prevState.internalStack.slice(0, -2), { route: route }] };
       });
     });
   }
@@ -147,10 +142,6 @@ class RouterNavigatorClass extends React.Component<HTMLNavigatorClass, State> {
         ReactDOM.flushSync(() => {
           // prevents flickering caused by React 18 batching
           this.setState((prevState) => {
-            if (options.popParam) {
-              this._url.searchParams.delete(options.popParam);
-              window.history.replaceState(null, null as unknown as string, this._url);
-            }
             return { internalStack: prevState.internalStack.slice(0, -1) };
           }, resolve as Noop);
         });
@@ -215,11 +206,10 @@ class RouterNavigatorClass extends React.Component<HTMLNavigatorClass, State> {
     }
 
     if (processStack.length > 0) {
-      const { type, route, options } = processStack[0];
-
+      const { type, route, options, props, context, extra } = processStack[0];
       switch (type) {
         case "push":
-          this.pushPage(route, options);
+          this.pushPage(route, options, props, context, extra);
           break;
         case "pop":
           this.popPage(options);
@@ -256,7 +246,15 @@ class RouterNavigatorClass extends React.Component<HTMLNavigatorClass, State> {
       ...rest
     } = this.props;
 
-    const pagesToRender = this.state.internalStack.map((route) => renderPage(route));
+    const pagesToRender = this.state.internalStack.map((item) => {
+      return (
+        <Extra.Provider key={item.props.key + "_extra"} value={item.extra}>
+          <Context.Provider key={item.props.key + "_context"} value={item.context}>
+            {renderPage(item.route, item.props)}
+          </Context.Provider>
+        </Extra.Provider>
+      );
+    });
 
     if (innerRef && innerRef !== this.ref) {
       this.ref = innerRef;

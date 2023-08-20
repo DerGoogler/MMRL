@@ -5,7 +5,7 @@ import { styled } from "@mui/material";
 import { os } from "@Native/Os";
 import { useTheme } from "@Hooks/useTheme";
 
-export type RenderFunction = (ref: React.ForwardedRef<HTMLElement>, context: PushProps<{}>) => JSX.Element | null;
+export type RenderFunction = (ref: React.ForwardedRef<HTMLElement>, context: ActivityContext) => JSX.Element | null;
 
 interface NativeUIColors {
   mount: string;
@@ -68,7 +68,7 @@ const _Page = React.forwardRef<HTMLElement, HTMLPage>((props, ref) => {
 });
 
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { useActivity } from "@Hooks/useActivity";
+import { ActivityContext, useActivity } from "@Hooks/useActivity";
 
 interface ContentProps {
   /**

@@ -141,13 +141,10 @@ const DAPITestActivity = () => {
   const handlePreview = () => {
     context.pushPage({
       component: DescriptonActivity,
-
-      props: {
-        key: "dapi-preview",
-        extra: {
-          title: "Preview",
-          desc: description,
-        },
+      key: "dapi-preview",
+      extra: {
+        title: "Preview",
+        desc: description,
       },
     });
   };

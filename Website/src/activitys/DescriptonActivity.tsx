@@ -222,11 +222,9 @@ function DescriptonActivity() {
                         onClick={() => {
                           context.pushPage({
                             component: CommentsActivity,
-                            props: {
-                              key: "comments_" + prop_url.id,
-                              extra: {
-                                id: prop_url.id,
-                              },
+                            key: "comments_" + prop_url.id,
+                            extra: {
+                              id: prop_url.id,
                             },
                           });
                         }}
@@ -250,11 +248,9 @@ function DescriptonActivity() {
                       onClick={() => {
                         context.pushPage({
                           component: ModuleSpecsActivity,
-                          props: {
-                            key: "comments_" + prop_url.id,
-                            extra: {
-                              prop_url: prop_url,
-                            },
+                          key: "comments_" + prop_url.id,
+                          extra: {
+                            prop_url: prop_url,
                           },
                         });
                       }}
