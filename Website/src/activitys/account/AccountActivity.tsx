@@ -3,11 +3,12 @@ import { Toolbar } from "@Components/onsenui/Toolbar";
 import { Page } from "@Components/onsenui/Page";
 import { useStrings } from "@Hooks/useStrings";
 import Stack from "@mui/material/Stack";
-
 import { set, ref, update, onValue, get, query } from "firebase/database";
 import { signOut, sendEmailVerification } from "firebase/auth";
-
 import EditIcon from "@mui/icons-material/Edit";
+import PersonIcon from "@mui/icons-material/Person";
+import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
+import PasswordIcon from "@mui/icons-material/Password";
 import SaveIcon from "@mui/icons-material/Save";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
@@ -23,7 +24,23 @@ import Avatar from "@mui/material/Avatar";
 import { os } from "@Native/Os";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
-import { CardMedia, Box, Typography, Card, SxProps, Theme, Paper, List, ListItem, ListItemText, CardContent, Button } from "@mui/material";
+import {
+  CardMedia,
+  Box,
+  Typography,
+  Card,
+  SxProps,
+  Theme,
+  Paper,
+  List,
+  ListItem,
+  ListItemText,
+  CardContent,
+  Button,
+  ListSubheader,
+  ListItemIcon,
+  ListItemButton,
+} from "@mui/material";
 import { useTheme } from "@Hooks/useTheme";
 
 import SecurityIcon from "@mui/icons-material/Security";
@@ -35,6 +52,8 @@ import { useRepos } from "@Hooks/useRepos";
 import { ExploreModule } from "@Components/ExploreModule";
 import { CustomTextField } from "@Components/TextField";
 import { useFirebase } from "@Hooks/useFirebase";
+import ProfileDetailsActivity from "./ProfileDetailsActivity";
+import ChangeEmailActivity from "./ChangeEmailActivity";
 
 const badgeStyle: (color: (typeof colors)["blue" | "teal" | "red" | "orange"]) => SxProps<Theme> = (color) => {
   return {
@@ -53,8 +72,6 @@ const AccountActivty = () => {
   const { context, extra } = useActivity<any>();
   const { auth, firebaseVoid } = useFirebase();
 
-  const [editUsername, setEditUsername] = React.useState(false);
-  const [editPicurl, setEditPicurl] = React.useState(false);
   const [username, setUsername] = React.useState("");
   const [picurl, setPicurl] = React.useState("");
   const [options, setOptions] = React.useState<any>({});
@@ -97,13 +114,6 @@ const AccountActivty = () => {
         </Toolbar.Right>
       </Toolbar>
     );
-  };
-
-  const handleClickShowUsername = () => setEditUsername((state) => !state);
-  const handleClickShowPicurl = () => setEditPicurl((state) => !state);
-
-  const handleMouseDownUsername = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
   };
 
   const { modules } = useRepos();
@@ -210,7 +220,62 @@ const AccountActivty = () => {
             </Alert>
           )}
 
-          <Paper
+          <List sx={{ mt: 2 }} subheader={<ListSubheader>{"Account"}</ListSubheader>}>
+            <ListItem disablePadding>
+              <ListItemButton
+                onClick={() => {
+                  context.pushPage({
+                    component: ProfileDetailsActivity,
+                    props: {
+                      key: "profile_details_1",
+                      extra: {
+                        username: username,
+                        picurl: picurl,
+                        options: options,
+                      },
+                    },
+                  });
+                }}
+              >
+                <ListItemIcon>
+                  <PersonIcon />
+                </ListItemIcon>
+                <ListItemText primary="Profile details" />
+              </ListItemButton>
+            </ListItem>
+          </List>
+
+          <List subheader={<ListSubheader>{"Account"}</ListSubheader>}>
+            <ListItem disablePadding>
+              <ListItemButton
+                onClick={() => {
+                  // context.pushPage({
+                  //   component: ChangeEmailActivity,
+                  //   props: {
+                  //     key: "change_email_0",
+                  //     extra: {},
+                  //   },
+                  // });
+                }}
+              >
+                <ListItemIcon>
+                  <AlternateEmailIcon />
+                </ListItemIcon>
+                <ListItemText primary="Change email" />
+              </ListItemButton>
+            </ListItem>
+
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  <PasswordIcon />
+                </ListItemIcon>
+                <ListItemText primary="Reset password" />
+              </ListItemButton>
+            </ListItem>
+          </List>
+
+          {/* <Paper
             elevation={0}
             sx={{
               mt: 3,
@@ -218,45 +283,7 @@ const AccountActivty = () => {
           >
             <Stack direction="column" justifyContent="flex-start" alignItems="flex-start" spacing={2}>
               <CustomTextField
-                disabled={!editUsername}
-                fullWidth
-                counter
-                onChange={(event) => {
-                  setUsername(event.target.value);
-                }}
-                inputProps={{
-                  maxLength: 20,
-                }}
-                type="text"
-                value={username}
-                label="Username"
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowUsername}
-                        onMouseDown={handleMouseDownUsername}
-                        edge="end"
-                      >
-                        {editUsername ? (
-                          <SaveIcon
-                            onClick={() => {
-                              firebaseVoid((auth, db) => {
-                                update(ref(db, `users/${auth.currentUser?.uid}`), {
-                                  username: username,
-                                });
-                              });
-                            }}
-                          />
-                        ) : (
-                          <EditIcon />
-                        )}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-                variant="outlined"
+                
               />
 
               <FormControl fullWidth variant="outlined">
@@ -325,7 +352,6 @@ const AccountActivty = () => {
           </CardContent>
 
           <Box sx={{ flexGrow: 1 }}>
-            {/* @ts-ignore */}
             <Grid container justify="center" spacing={2}>
               {filteredModules.map((module, i) => (
                 <Grid key={i} item {...{ xs: 12, sm: 6, md: 4, lg: 3 }}>
@@ -333,7 +359,7 @@ const AccountActivty = () => {
                 </Grid>
               ))}
             </Grid>
-          </Box>
+          </Box>*/}
         </Card>
       </Page.RelativeContent>
     </Page>

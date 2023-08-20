@@ -24,6 +24,7 @@ import { StyledCard } from "@Components/StyledCard";
 import { useFormatDate } from "@Hooks/useFormatDate";
 import { ref, onValue, query } from "firebase/database";
 import { useFirebase } from "@Hooks/useFirebase";
+import { useConfirm } from "material-ui-confirm";
 
 interface ListItemProps {
   part?: any;
@@ -40,7 +41,7 @@ export const LocalRepository = (props: LocalRepositoryProps) => {
   const { repo } = props;
   const { strings } = useStrings();
   const { settings, setSettings } = useSettings();
-
+  const confirm = useConfirm();
   const { auth, firebaseVoid } = useFirebase();
   const { actions } = useRepos();
   const [enabled, setEnabled] = React.useState(!settings.disabled_repos.includes(repo.id));
@@ -168,19 +169,17 @@ export const LocalRepository = (props: LocalRepositoryProps) => {
               icon={DeleteRounded}
               text={strings.remove}
               onClick={() => {
-                ons.notification
-                  .confirm(
-                    strings.formatString(strings.confirm_repo_delete, {
-                      name: repo.name,
-                    }) as string
-                  )
-                  .then((g) => {
-                    if (g) {
-                      actions.removeRepo({
-                        id: repo.id,
-                      });
-                    }
+                confirm({
+                  title: "Delete?",
+                  confirmationText: "Sure",
+                  description: strings.formatString(strings.confirm_repo_delete, {
+                    name: repo.name,
+                  }),
+                }).then(() => {
+                  actions.removeRepo({
+                    id: repo.id,
                   });
+                });
               }}
             />
           </Stack>
