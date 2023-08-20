@@ -257,7 +257,15 @@ const AccountActivty = () => {
                         </Toolbar>
                       ),
                       applyFilter: (modules, search) =>
-                        modules.filter((module) => module.prop_url?.mmrlAuthor?.includes(auth?.currentUser?.uid as any)),
+                        modules
+                          .filter((m) => m.prop_url?.mmrlAuthor?.includes(auth?.currentUser?.uid as any))
+                          .filter(
+                            (module) =>
+                              module.prop_url.id.toLowerCase().includes(search.toLowerCase()) ||
+                              module.prop_url.name.toLowerCase().includes(search.toLowerCase()) ||
+                              module.prop_url.author.toLowerCase().includes(search.toLowerCase()) ||
+                              module.prop_url.description.toLowerCase().includes(search.toLowerCase())
+                          ),
                     },
                   });
                 }}
