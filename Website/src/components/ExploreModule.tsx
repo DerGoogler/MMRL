@@ -56,7 +56,7 @@ export const ExploreModule = (props: Props) => {
   }, []);
 
   const handleOpen = () => {
-    context.pushPage<any>({
+    context.pushPage({
       component: DescriptonActivity,
 
       props: {

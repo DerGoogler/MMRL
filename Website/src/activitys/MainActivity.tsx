@@ -123,7 +123,7 @@ const MainActivity = (): JSX.Element => {
         routeConfig: prev,
         route: route,
         options: options,
-        key: props.props.key,
+        key: props.props,
       })
     );
   };
@@ -139,6 +139,7 @@ const MainActivity = (): JSX.Element => {
   const renderPage = (route: any) => {
     const props = route.props || {};
     const newProps = obj.omit(["extra", "context"], props);
+    console.log(newProps);
     return (
       <ErrorBoundary fallback={fallback}>
         <Extra.Provider key={props.key + "_extra"} value={props.extra}>

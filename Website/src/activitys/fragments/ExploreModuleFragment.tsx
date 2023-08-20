@@ -12,33 +12,29 @@ import DescriptonActivity from "@Activitys/DescriptonActivity";
 import { Properties } from "properties-file";
 import { useStateCallback } from "@Hooks/useStateCallback";
 import { useTheme } from "@Hooks/useTheme";
-import { Page } from "@Components/onsenui/Page";
+import { Page, RenderFunction } from "@Components/onsenui/Page";
 import { BottomToolbar } from "@Components/onsenui/BottomToolbar";
 
-const ExploreModuleFragment = () => {
+export interface ExploreModuleProps {
+  renderToolbar?: RenderFunction;
+  applyFilter: (modules: Module[], search: string) => Module[];
+}
+
+const ExploreModuleFragment = (props: ExploreModuleProps) => {
   const { context } = useActivity();
   const { strings } = useStrings();
   const { settings } = useSettings();
   const { scheme, theme } = useTheme();
-
+  const { modules, repos } = useRepos();
   const [search, setSearch] = React.useState("");
-  const { modules } = useRepos();
 
-  const { moduleOptions, modulesLoading, repos } = useRepos();
-
-  const filteredModules = modules.filter(
-    (module) =>
-      module.prop_url.id.toLowerCase().includes(search.toLowerCase()) ||
-      module.prop_url.name.toLowerCase().includes(search.toLowerCase()) ||
-      module.prop_url.author.toLowerCase().includes(search.toLowerCase()) ||
-      module.prop_url.description.toLowerCase().includes(search.toLowerCase())
-  );
+  const applyFilter = props.applyFilter(modules, search);
 
   const [page, setPage] = React.useState(1);
 
   const PER_PAGE = 20;
-  const count = Math.ceil(filteredModules.length / PER_PAGE);
-  const _DATA = usePagination(filteredModules, PER_PAGE);
+  const count = Math.ceil(applyFilter.length / PER_PAGE);
+  const _DATA = usePagination(applyFilter, PER_PAGE);
 
   if (repos.length === 0) {
     return (
@@ -91,6 +87,7 @@ const ExploreModuleFragment = () => {
   // } else {
   return (
     <Page
+      renderToolbar={props.renderToolbar}
       renderBottomToolbar={() => {
         return (
           <BottomToolbar modifier="transparent">

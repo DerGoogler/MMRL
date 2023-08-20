@@ -12,6 +12,7 @@ import PasswordIcon from "@mui/icons-material/Password";
 import SaveIcon from "@mui/icons-material/Save";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import ViewModuleIcon from "@mui/icons-material/ViewModule";
 import React from "react";
 import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
@@ -54,6 +55,7 @@ import { CustomTextField } from "@Components/TextField";
 import { useFirebase } from "@Hooks/useFirebase";
 import ProfileDetailsActivity from "./ProfileDetailsActivity";
 import ChangeEmailActivity from "./ChangeEmailActivity";
+import ExploreModuleFragment, { ExploreModuleProps } from "@Activitys/fragments/ExploreModuleFragment";
 
 const badgeStyle: (color: (typeof colors)["blue" | "teal" | "red" | "orange"]) => SxProps<Theme> = (color) => {
   return {
@@ -116,111 +118,109 @@ const AccountActivty = () => {
     );
   };
 
-  const { modules } = useRepos();
-
-  const filteredModules = modules.filter((module) => module.prop_url?.mmrlAuthor?.includes(auth?.currentUser?.uid as any));
-
   return (
     <Page modifier="noshadow" renderToolbar={renderToolbar}>
       <Page.RelativeContent>
-        <Card
-          variant="outlined"
-          sx={{
-            p: 1,
-          }}
-        >
+        <Card variant="outlined">
           <Paper
             elevation={0}
             sx={{
-              display: "flex",
-              flexDirection: {
-                xs: "column", // mobile
-                sm: "row", // tablet and up
-              },
+              p: 1,
             }}
           >
-            <CardMedia
-              component="img"
-              width="100"
-              height="100"
-              alt={username}
-              src={picurl}
+            <Paper
+              elevation={0}
               sx={{
-                borderRadius: 0.5,
-                width: { xs: "100%", sm: 100 },
-                mb: { xs: 1.5, sm: 0 },
+                display: "flex",
+                flexDirection: {
+                  xs: "column", // mobile
+                  sm: "row", // tablet and up
+                },
               }}
-            />
-            <Box sx={{ alignSelf: "center", ml: 2, width: "100%" }}>
-              <Typography component="div" fontWeight="bold">
-                {username}
-              </Typography>
-              <Stack
-                direction="row"
-                justifyContent="flex-start"
-                alignItems="center"
+            >
+              <CardMedia
+                component="img"
+                width="100"
+                height="100"
+                alt={username}
+                src={picurl}
                 sx={{
-                  mt: 0.75,
+                  borderRadius: 0.5,
+                  width: { xs: "100%", sm: 100 },
+                  mb: { xs: 1.5, sm: 0 },
                 }}
-                spacing={0.5}
+              />
+              <Box sx={{ alignSelf: "center", ml: 2, width: "100%" }}>
+                <Typography component="div" fontWeight="bold">
+                  {username}
+                </Typography>
+                <Stack
+                  direction="row"
+                  justifyContent="flex-start"
+                  alignItems="center"
+                  sx={{
+                    mt: 0.75,
+                  }}
+                  spacing={0.5}
+                >
+                  {options?.roles?.verified && (
+                    <Box sx={badgeStyle(colors.blue)}>
+                      <VerifiedIcon sx={{ fontSize: 16, mr: 0.5, mt: "1px" }} />
+                      Verified
+                    </Box>
+                  )}
+                  {options?.roles?.mod && (
+                    <Box sx={badgeStyle(colors.orange)}>
+                      <LocalPoliceIcon sx={{ fontSize: 16, mr: 0.5, mt: "1px" }} />
+                      MMRL Moderator
+                    </Box>
+                  )}
+                  {options?.roles?.admin && (
+                    <Box sx={badgeStyle(colors.red)}>
+                      <SecurityIcon sx={{ fontSize: 16, mr: 0.5, mt: "1px" }} />
+                      MMRL Admin
+                    </Box>
+                  )}
+                  {options?.roles?.bughunter && (
+                    <Box sx={badgeStyle(colors.teal)}>
+                      <BugReportIcon sx={{ fontSize: 16, mr: 0.5, mt: "1px" }} />
+                      Bug Hunter
+                    </Box>
+                  )}
+                </Stack>
+              </Box>
+            </Paper>
+
+            {!auth?.currentUser?.emailVerified && (
+              <Alert
+                severity="warning"
+                sx={{ mt: 3 }}
+                action={
+                  <Button
+                    onClick={() => {
+                      firebaseVoid((auth) => {
+                        sendEmailVerification(auth.currentUser as any)
+                          .then(() => {
+                            os.toast("E-Mail has been sent", Toast.LENGTH_SHORT);
+                          })
+                          .catch((error) => {
+                            os.toast(error.message, Toast.LENGTH_SHORT);
+                          });
+                      });
+                    }}
+                    color="inherit"
+                    size="small"
+                  >
+                    VERIFY
+                  </Button>
+                }
               >
-                {options?.roles?.verified && (
-                  <Box sx={badgeStyle(colors.blue)}>
-                    <VerifiedIcon sx={{ fontSize: 16, mr: 0.5, mt: "1px" }} />
-                    Verified
-                  </Box>
-                )}
-                {options?.roles?.mod && (
-                  <Box sx={badgeStyle(colors.orange)}>
-                    <LocalPoliceIcon sx={{ fontSize: 16, mr: 0.5, mt: "1px" }} />
-                    MMRL Moderator
-                  </Box>
-                )}
-                {options?.roles?.admin && (
-                  <Box sx={badgeStyle(colors.red)}>
-                    <SecurityIcon sx={{ fontSize: 16, mr: 0.5, mt: "1px" }} />
-                    MMRL Admin
-                  </Box>
-                )}
-                {options?.roles?.bughunter && (
-                  <Box sx={badgeStyle(colors.teal)}>
-                    <BugReportIcon sx={{ fontSize: 16, mr: 0.5, mt: "1px" }} />
-                    Bug Hunter
-                  </Box>
-                )}
-              </Stack>
-            </Box>
+                Your email haven't been verified yet. You won't able to edit your profile information
+              </Alert>
+            )}
           </Paper>
 
-          {!auth?.currentUser?.emailVerified && (
-            <Alert
-              severity="warning"
-              sx={{ mt: 3 }}
-              action={
-                <Button
-                  onClick={() => {
-                    firebaseVoid((auth) => {
-                      sendEmailVerification(auth.currentUser as any)
-                        .then(() => {
-                          os.toast("E-Mail has been sent", Toast.LENGTH_SHORT);
-                        })
-                        .catch((error) => {
-                          os.toast(error.message, Toast.LENGTH_SHORT);
-                        });
-                    });
-                  }}
-                  color="inherit"
-                  size="small"
-                >
-                  VERIFY
-                </Button>
-              }
-            >
-              Your email haven't been verified yet. You won't able to edit your profile information
-            </Alert>
-          )}
-
-          <List sx={{ mt: 2 }} subheader={<ListSubheader>{"Account"}</ListSubheader>}>
+          <List subheader={<ListSubheader>{"Account"}</ListSubheader>}>
             <ListItem disablePadding>
               <ListItemButton
                 onClick={() => {
@@ -241,6 +241,34 @@ const AccountActivty = () => {
                   <PersonIcon />
                 </ListItemIcon>
                 <ListItemText primary="Profile details" />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton
+                onClick={() => {
+                  context.pushPage<{}, ExploreModuleProps>({
+                    component: ExploreModuleFragment,
+                    props: {
+                      renderToolbar: (ref, ctx) => (
+                        <Toolbar modifier="noshadow">
+                          <Toolbar.Left>
+                            <Toolbar.BackButton onClick={ctx.popPage} />
+                          </Toolbar.Left>
+                          <Toolbar.Center>Participating</Toolbar.Center>
+                        </Toolbar>
+                      ),
+                      applyFilter: (modules, search) =>
+                        modules.filter((module) => module.prop_url?.mmrlAuthor?.includes(auth?.currentUser?.uid as any)),
+                      key: "profile_details_1",
+                      extra: {},
+                    },
+                  });
+                }}
+              >
+                <ListItemIcon>
+                  <ViewModuleIcon />
+                </ListItemIcon>
+                <ListItemText primary="Participating modules" />
               </ListItemButton>
             </ListItem>
           </List>

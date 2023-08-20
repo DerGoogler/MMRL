@@ -7,16 +7,25 @@ import { os } from "@Native/Os";
 import { Page } from "@Components/onsenui/Page";
 import { useStrings } from "@Hooks/useStrings";
 import { Tabbar, TabbarRenderTab } from "@Components/onsenui/Tabbar";
+import { useRepos } from "@Hooks/useRepos";
 
 const MainApplication = () => {
   const { strings } = useStrings();
-
   const { context } = useActivity();
+
+  const filteredModules = (modules: Module[], search: string) =>
+    modules.filter(
+      (module) =>
+        module.prop_url.id.toLowerCase().includes(search.toLowerCase()) ||
+        module.prop_url.name.toLowerCase().includes(search.toLowerCase()) ||
+        module.prop_url.author.toLowerCase().includes(search.toLowerCase()) ||
+        module.prop_url.description.toLowerCase().includes(search.toLowerCase())
+    );
 
   const renderTabs = (): TabbarRenderTab[] => {
     return [
       {
-        content: <ExploreModuleFragment />,
+        content: <ExploreModuleFragment applyFilter={filteredModules} />,
         tab: <Tabbar.Tab label={strings.explore} />,
       },
       ...(os.isAndroid

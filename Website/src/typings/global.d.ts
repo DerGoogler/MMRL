@@ -110,10 +110,10 @@ declare global {
     };
   };
 
-  interface PushPropsCore<E = {}> {
+  interface PushPropsCore<E = {}, P = {}> {
     component: React.ElementType;
 
-    props: {
+    props: P & {
       key: string;
       extra: PushPropsExtra<E>;
       readonly popPage?: () => void;
@@ -125,7 +125,7 @@ declare global {
     readonly extra: PushPropsExtra<E>;
     // readonly context: {
     readonly popPage: (options?: any) => void;
-    readonly pushPage: <T>(props: PushPropsCore<T>) => void;
+    readonly pushPage: <E, P>(props: PushPropsCore<E, P>) => void;
     readonly splitter: {
       readonly show: () => void;
       readonly hide: () => void;

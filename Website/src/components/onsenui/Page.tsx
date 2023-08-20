@@ -5,7 +5,7 @@ import { styled } from "@mui/material";
 import { os } from "@Native/Os";
 import { useTheme } from "@Hooks/useTheme";
 
-export type RenderFunction = (ref?: React.ForwardedRef<HTMLElement>) => JSX.Element | null;
+export type RenderFunction = (ref: React.ForwardedRef<HTMLElement>, context: PushProps<{}>) => JSX.Element | null;
 
 interface NativeUIColors {
   mount: string;
@@ -37,6 +37,7 @@ const HTMLPage = onsCustomElement<HTMLElement, HTMLPage>("ons-page", {
 
 const _Page = React.forwardRef<HTMLElement, HTMLPage>((props, ref) => {
   const { theme } = useTheme();
+  const { context } = useActivity();
   const { renderToolbar, renderBottomToolbar, renderModal, renderFixed, contentStyle, children, ...rest } = props;
 
   const setStatusBarColor = (color: string | undefined) => os.setStatusBarColor(color ? color : theme.palette.primary.main, false);
@@ -52,21 +53,22 @@ const _Page = React.forwardRef<HTMLElement, HTMLPage>((props, ref) => {
 
   return (
     <HTMLPage {...rest} ref={ref}>
-      {renderToolbar && renderToolbar(ref)}
+      {renderToolbar && renderToolbar(ref, context)}
       <div className="page__background" style={props.backgroundStyle}></div>
       <div className="page__content" style={contentStyle}>
         {children}
       </div>
       <div className="page__extra" style={{ zIndex: 10001 }}>
-        {renderModal && renderModal(ref)}
+        {renderModal && renderModal(ref, context)}
       </div>
-      {renderFixed && renderFixed(ref)}
-      {renderBottomToolbar && renderBottomToolbar(ref)}
+      {renderFixed && renderFixed(ref, context)}
+      {renderBottomToolbar && renderBottomToolbar(ref, context)}
     </HTMLPage>
   );
 });
 
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { useActivity } from "@Hooks/useActivity";
 
 interface ContentProps {
   /**

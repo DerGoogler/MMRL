@@ -95,7 +95,7 @@ export function Open(props: OpenProps) {
         onClick={() => {
           switch (page) {
             case "settings":
-              context.pushPage<{}>({
+              context.pushPage({
                 component: SettingsActivity,
                 props: {
                   key: "settings",
@@ -105,7 +105,7 @@ export function Open(props: OpenProps) {
               break;
 
             case "repos":
-              context.pushPage<{}>({
+              context.pushPage({
                 component: RepoActivity,
                 props: {
                   key: "repo",
@@ -117,7 +117,7 @@ export function Open(props: OpenProps) {
               if (!props.url) {
                 os.toast("Missing Url!", "short");
               } else {
-                context.pushPage<any>({
+                context.pushPage({
                   component: DescriptonActivity,
                   props: {
                     key: `desc_open${Math.round(Math.random() * 56)}`,

@@ -139,7 +139,7 @@ const DAPITestActivity = () => {
   };
 
   const handlePreview = () => {
-    context.pushPage<any>({
+    context.pushPage({
       component: DescriptonActivity,
 
       props: {
