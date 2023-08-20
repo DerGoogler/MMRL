@@ -29,6 +29,7 @@ import { useModuleOptions } from "@Hooks/useModuleOptions";
 import { useSupportIconForUrl } from "@Hooks/useSupportIconForUrl";
 import TerminalActivity from "./TerminalActivity";
 import { BottomToolbar } from "@Components/onsenui/BottomToolbar";
+import ProfileActivty from "./account/ProfileActivity";
 
 type Extra = {
   title: string;
@@ -290,8 +291,21 @@ function DescriptonActivity() {
                   {/* User info */}
                   {authorData && (
                     <Paper
+                      onClick={() => {
+                        context.pushPage({
+                          component: ProfileActivty,
+                          key: "",
+                          extra: {
+                            uid: prop_url.mmrlAuthor,
+                          },
+                        });
+                      }}
                       elevation={0}
                       sx={{
+                        ":hover": {
+                          cursor: "pointer",
+                        },
+                        width: "100%",
                         display: "flex",
                         p: 1,
                         flexDirection: {

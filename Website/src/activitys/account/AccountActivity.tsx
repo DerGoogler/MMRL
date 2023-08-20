@@ -76,6 +76,7 @@ const AccountActivty = () => {
 
   const [username, setUsername] = React.useState("");
   const [picurl, setPicurl] = React.useState("");
+  const [bio, setBio] = React.useState("");
   const [options, setOptions] = React.useState<any>({});
 
   React.useEffect(() => {
@@ -84,6 +85,7 @@ const AccountActivty = () => {
       onValue(query(dbRef), (snapshot) => {
         const snap = snapshot.val();
         setUsername(snap.username);
+        setBio(snap.bio);
         setPicurl(snap.picurl);
         console.log(snap.options);
         setOptions(snap.options);
@@ -230,6 +232,7 @@ const AccountActivty = () => {
                     extra: {
                       username: username,
                       picurl: picurl,
+                      bio: bio,
                       options: options,
                     },
                   });
@@ -294,7 +297,13 @@ const AccountActivty = () => {
                 <ListItemIcon>
                   <AlternateEmailIcon />
                 </ListItemIcon>
-                <ListItemText primary="Change email" />
+                <ListItemText
+                  primary={
+                    <Box sx={{ display: "flex", alignItems: "center", justifyItems: "center" }}>
+                      Change email <Box sx={{ ...badgeStyle(colors.orange), ml: 0.5 }}>Soon</Box>
+                    </Box>
+                  }
+                />
               </ListItemButton>
             </ListItem>
 
@@ -303,7 +312,13 @@ const AccountActivty = () => {
                 <ListItemIcon>
                   <PasswordIcon />
                 </ListItemIcon>
-                <ListItemText primary="Reset password" />
+                <ListItemText
+                  primary={
+                    <Box sx={{ display: "flex", alignItems: "center", justifyItems: "center" }}>
+                      Reset password <Box sx={{ ...badgeStyle(colors.orange), ml: 0.5 }}>Soon</Box>
+                    </Box>
+                  }
+                />
               </ListItemButton>
             </ListItem>
           </List>

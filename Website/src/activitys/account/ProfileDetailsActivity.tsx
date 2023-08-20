@@ -23,6 +23,7 @@ const ProfileDetailsActivity = () => {
 
   const [username, setUsername] = React.useState(extra.username);
   const [picurl, setPicurl] = React.useState(extra.picurl);
+  const [bio, setBio] = React.useState(extra.bio);
   const [options, setOptions] = React.useState<any>(extra.options);
 
   const renderToolbar = () => {
@@ -90,7 +91,7 @@ const ProfileDetailsActivity = () => {
               type="text"
               margin="dense"
               fullWidth
-              value={""}
+              value={bio}
               disabled
               label="Description"
               multiline
