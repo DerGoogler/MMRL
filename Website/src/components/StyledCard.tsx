@@ -15,8 +15,8 @@ export const StyledCard = (props: PaperProps): JSX.Element => {
       color: "rgb(26, 32, 39)",
       backgroundImage: "none",
       overflow: "hidden",
-      backgroundColor: settings.darkmode ? shade(scheme[900], -65) + "47" : "rgb(255, 255, 255)",
-      border: `1px solid ${theme.palette.divider}`,
+      backgroundColor: settings.darkmode ? shade(scheme[500], -45) + "47" : "rgb(255, 255, 255)",
+      border: `1px solid ${settings.darkmode ? shade(scheme[500], -56) : theme.palette.divider}`,
       transform: "translate(0px, -8px)",
     },
   }));

@@ -7,6 +7,7 @@ import { StyledCard } from "@Components/StyledCard";
 import { useRepos } from "@Hooks/useRepos";
 import { os } from "@Native/Os";
 import { ListItem, ListItemText } from "@mui/material";
+import { StyledListItemText } from "@Components/StyledListItemText";
 
 interface RecommendedRepoProps {
   name: string;
@@ -37,7 +38,7 @@ export const RecommendedRepo = (props: RecommendedRepoProps) => {
         </IconButton>
       }
     >
-      <ListItemText primary={props.name} secondary={`More than ${props.moduleCount.toString()}+ modules`} />
+      <StyledListItemText primary={props.name} secondary={`More than ${props.moduleCount.toString()}+ modules`} />
     </ListItem>
   );
 };

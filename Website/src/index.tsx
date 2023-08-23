@@ -9,13 +9,11 @@ import { Preventer, render } from "react-render-tools";
 import { MainActivity } from "@Activitys/MainActivity";
 import { RepoProvider } from "@Hooks/useRepos";
 import { SettingsProvider } from "@Hooks/useSettings";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { MMRLApp } from "./custom-elements/app";
 
 import "onsenui/css/onsenui.css";
 import "@Styles/default.scss";
-import { DownloadActivity } from "@Activitys/DownloadActivity/DownloadActivity";
 import { FirebaseProvider } from "@Hooks/useFirebase";
 
 ons.platform.select("android");
@@ -26,17 +24,6 @@ ons.ready(() => {
   }
 
   customElements.define("mmrl-app", MMRLApp);
-
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <MainActivity />,
-    },
-    {
-      path: "/download",
-      element: <DownloadActivity />,
-    },
-  ]);
 
   render(
     <React.StrictMode>
@@ -49,7 +36,7 @@ ons.ready(() => {
                   <ConfirmProvider>
                     <CssBaseline />
                     <LightTheme />
-                    <RouterProvider router={router} />
+                    <MainActivity />
                   </ConfirmProvider>
                 </RepoProvider>
               </Preventer>

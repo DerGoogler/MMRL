@@ -90,16 +90,18 @@ const RepoActivity = () => {
             <LocalRepository key={"repo_" + index} repo={repo} />
           ))}
         </Page.RelativeContent>
-        {filteredRepos.length !== 0 && <Divider />}
-        <List
-          subheader={
-            <ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>{strings.explore_repositories}</ListSubheader>
-          }
-        >
-          {recommended_repos.map((repo) => (
-            <RecommendedRepo key={"recomm_" + repo.module_count} name={repo.name} moduleCount={repo.module_count} link={repo.link} />
-          ))}
-        </List>
+        <Page.RelativeContent zeroMargin>
+          {filteredRepos.length !== 0 && <Divider />}
+          <List
+            subheader={
+              <ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>{strings.explore_repositories}</ListSubheader>
+            }
+          >
+            {recommended_repos.map((repo) => (
+              <RecommendedRepo key={"recomm_" + repo.module_count} name={repo.name} moduleCount={repo.module_count} link={repo.link} />
+            ))}
+          </List>
+        </Page.RelativeContent>
 
         <Dialog open={open} onClose={handleClose}>
           <DialogTitle>{strings.add_repository}</DialogTitle>

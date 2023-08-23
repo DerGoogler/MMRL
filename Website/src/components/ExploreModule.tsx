@@ -17,6 +17,8 @@ import { GestureDetector } from "./onsenui/GestureDetector";
 import { ref, onValue, query } from "firebase/database";
 import React from "react";
 import { useFirebase } from "@Hooks/useFirebase";
+import { useTheme } from "@Hooks/useTheme";
+import useShadeColor from "@Hooks/useShadeColor";
 
 interface Props {
   index: number;
@@ -28,6 +30,8 @@ export const ExploreModule = (props: Props) => {
   const { context } = useActivity();
   const { strings } = useStrings();
   const { settings } = useSettings();
+  const { theme, scheme } = useTheme();
+  const shade = useShadeColor();
   const { auth, firebaseVoid } = useFirebase();
 
   const { id, notes_url, zip_url, last_update, prop_url } = props.moduleProps;
@@ -150,12 +154,16 @@ export const ExploreModule = (props: Props) => {
           </Stack>
         </Box>
       </Box>
-      <Divider />
+      <Divider
+        sx={{
+          borderColor: settings.darkmode ? shade(scheme[500], -56) : theme.palette.divider,
+        }}
+      />
       <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ px: 2, py: 1 }}>
         <Chip
           size="small"
           sx={(theme) => ({
-            bgcolor: theme.palette.secondary.light,
+            bgcolor: settings.darkmode ? shade(scheme[500], -56) : theme.palette.secondary.light,
           })}
           label={formatLastUpdate}
         />
