@@ -222,8 +222,8 @@ export const StyledMarkdown = React.forwardRef((props: Props, ref) => {
     blockquote: {
       margin: "0",
       padding: "0 1em",
-      color: "#57606a",
-      borderLeft: "0.25em solid #d0d7de",
+      color: settings.darkmode ? shade(scheme[200], -9.2) : "#57606a",
+      borderLeft: `0.25em solid ${settings.darkmode ? shade(scheme[200], -9.2) : "#57606a"}`,
     },
     ul: {
       marginTop: "0",
@@ -268,7 +268,7 @@ export const StyledMarkdown = React.forwardRef((props: Props, ref) => {
       padding: "16px",
       overflow: "auto",
       lineHeight: 1.45,
-      backgroundColor: settings.darkmode ? shade(scheme[900], -85) : "#f6f8fa",
+      backgroundColor: settings.darkmode ? theme.palette.secondary.light + "46" : "#f6f8fa",
       borderRadius: theme.shape.borderRadius,
       "code,\n    tt": {
         display: "inline",

@@ -85,16 +85,17 @@ export const MarkdownOverrides: MarkdownToJSX.Overrides | undefined = {
 export const Markup = (props: Props) => {
   const ref = React.useRef<HTMLDivElement>(null);
 
-  React.useEffect(() => {
-    doc.findRef(ref, (ref) => {
-      ref.querySelectorAll("pre code").forEach((block: any) => {
-        hljs.highlightBlock(block);
-      });
-    });
-  });
+  // Disabled due lack of darkmode support
+  // React.useEffect(() => {
+  //   doc.findRef(ref, (ref) => {
+  //     ref.querySelectorAll("pre code").forEach((block: any) => {
+  //       hljs.highlightBlock(block);
+  //     });
+  //   });
+  // });
 
   return (
-    <StyledMarkdown ref={ref} style={{ display: "inline-block", padding: "8px", width: "100%", ...props.style }}>
+    <StyledMarkdown ref={ref} style={{ display: "inline-block", width: "100%", ...props.style }}>
       <Markdown
         style={props.styleMd}
         options={{

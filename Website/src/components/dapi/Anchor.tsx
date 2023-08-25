@@ -20,7 +20,7 @@ const StyledAnchor = styled("div")(({ theme }) => {
 
   const s = {
     cursor: "pointer",
-    color: scheme[700],
+    color: settings.darkmode ? scheme[200] : scheme[700],
     // color: !settings.darkmode ? "rgb(66, 66, 66)" : scheme[700],
     display: "flex",
     alignItems: "center",

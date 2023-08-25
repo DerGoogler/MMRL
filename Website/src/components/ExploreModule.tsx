@@ -19,6 +19,7 @@ import React from "react";
 import { useFirebase } from "@Hooks/useFirebase";
 import { useTheme } from "@Hooks/useTheme";
 import useShadeColor from "@Hooks/useShadeColor";
+import ModuleViewActivity from "@Activitys/ModuleViewActivity";
 
 interface Props {
   index: number;
@@ -60,17 +61,28 @@ export const ExploreModule = (props: Props) => {
   }, []);
 
   const handleOpen = () => {
+    // context.pushPage({
+    //   component: DescriptonActivity,
+    //   key: `view_${prop_url.id}`,
+    //   extra: {
+    //     title: prop_url.name,
+    //     prop_url: prop_url,
+    //     zip_url: zip_url,
+    //     authorData: authorData,
+    //     request: {
+    //       url: notes_url,
+    //     },
+    //   },
+    // });
+
     context.pushPage({
-      component: DescriptonActivity,
-      key: `view_${prop_url.id}`,
+      component: ModuleViewActivity,
+      key: "",
       extra: {
-        title: prop_url.name,
-        prop_url: prop_url,
         zip_url: zip_url,
         authorData: authorData,
-        request: {
-          url: notes_url,
-        },
+        notes_url: notes_url,
+        module: prop_url,
       },
     });
   };
