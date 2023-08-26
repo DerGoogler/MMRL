@@ -3,7 +3,7 @@ import { DeleteRounded, RefreshRounded } from "@mui/icons-material";
 import React from "react";
 import { useStrings } from "@Hooks/useStrings";
 import { Android12Switch } from "./Android12Switch";
-import { Box, Divider, Stack, Typography } from "@mui/material";
+import { Box, Card, Divider, Stack, Typography } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { useActivity } from "@Hooks/useActivity";
 import { ConfigureActivity } from "@Activitys/ConfigureActivity";
@@ -47,7 +47,13 @@ const DeviceModule = (props: Props) => {
 
   return (
     <>
-      <StyledCard elevation={0}>
+      <Card
+        sx={{
+          mt: 1,
+          boxShadow: "none",
+          //          boxShadow: "0 -1px 5px rgba(0,0,0,.09), 0 3px 5px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.3), 0 1px 3px rgba(0,0,0,.15)",
+        }}
+      >
         <Box sx={{ p: 2, display: "flex" }}>
           <Stack spacing={0.5} style={{ flexGrow: 1 }}>
             <Typography fontWeight={700} color="text.primary">
@@ -150,7 +156,7 @@ const DeviceModule = (props: Props) => {
             )}
           </Stack>
         </Stack>
-      </StyledCard>
+      </Card>
     </>
   );
 };
