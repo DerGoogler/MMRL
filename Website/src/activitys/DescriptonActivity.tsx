@@ -274,7 +274,7 @@ function DescriptonActivity() {
                         }}
                       >
                         <Stack spacing={0.8} direction="row" alignItems="center">
-                          <SupportIcon sx={{ fontSize: 14 }} />
+                          {/* <SupportIcon sx={{ fontSize: 14 }} /> */}
                           <span style={{ fontSize: 14 }}>Support</span>
                         </Stack>
                       </StyledIconButtonWithText>

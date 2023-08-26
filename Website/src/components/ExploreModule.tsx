@@ -79,6 +79,7 @@ export const ExploreModule = (props: Props) => {
       component: ModuleViewActivity,
       key: "",
       extra: {
+        last_update: last_update,
         zip_url: zip_url,
         authorData: authorData,
         notes_url: notes_url,
@@ -92,7 +93,7 @@ export const ExploreModule = (props: Props) => {
       return null;
     }
 
-    if (!settings._disable_module_covers && prop_url.mmrlCover) {
+    if (prop_url.mmrlCover) {
       return (
         <CardMedia
           component="img"
@@ -107,23 +108,6 @@ export const ExploreModule = (props: Props) => {
           image={prop_url.mmrlCover}
           alt={prop_url.name}
         />
-      );
-    }
-
-    return null;
-  };
-
-  const LegacyVerified = () => {
-    if (!authorData?.options?.roles?.verified && isVerified) {
-      return (
-        <StyledIconButton
-          style={{ width: 39, height: 39 }}
-          onClick={() => {
-            os.toast(strings.module_verified, Toast.LENGTH_SHORT);
-          }}
-        >
-          <VerifiedRounded sx={{ fontSize: 14 }} />
-        </StyledIconButton>
       );
     }
 
@@ -181,23 +165,13 @@ export const ExploreModule = (props: Props) => {
           <Chip
             size="small"
             sx={(theme) => ({
-              bgcolor: `${settings.darkmode ? shade(scheme[200], -56) : theme.palette.secondary.light}46`,
+              bgcolor: `${settings.darkmode ? shade(scheme[100], -36) : theme.palette.secondary.light}46`,
             })}
             label={formatLastUpdate}
           />
-          <Stack spacing={0.8} direction="row">
-            {/* <StyledIconButtonWithText
-            onClick={() => {
-              set(ref(db, `modules/${prop_url.id}/likes/${auth.currentUser.uid}`), true);
-            }}
-          >
-            <Stack spacing={0.8} direction="row" alignItems="center">
-              <ThumbUpIcon sx={{ fontSize: 14 }} />
-              <span style={{ fontSize: 14 }}>0</span>
-            </Stack>
-          </StyledIconButtonWithText> */}
-            <LegacyVerified />
-          </Stack>
+          {/* <Stack spacing={0.8} direction="row">
+Keep for update modules           
+          </Stack> */}
         </Stack>
         {settings._low_quality_module && isLowQuality && (
           <Alert style={{ borderRadius: 0 }} severity="warning">

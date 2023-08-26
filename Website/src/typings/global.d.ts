@@ -199,7 +199,7 @@ declare global {
     mmrlLogo?: string;
     mmrlScreenshots?: string;
     // Developers that points "Gaming" won't have a change to get verified. Magisk isn't made for Gaming purposes.
-    mmrlCaregory?: string;
+    mmrlCategory?: string;
 
     // Fox's Mmm supported properties
     minApi?: string;

@@ -38,13 +38,22 @@ import { os } from "@Native/Os";
 import { Markup } from "@Components/Markdown";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
-import { useCategory } from "@Hooks/useCategory";
+import { useFilterCategory } from "@Hooks/useCategory";
+import { useFormatDate } from "@Hooks/useFormatDate";
+import Chip from "@mui/material/Chip";
+import CodeRoundedIcon from "@mui/icons-material/CodeRounded";
+import Icon from "@Components/Icon";
+import CardMedia from "@mui/material/CardMedia";
+import DevicesIcon from "@mui/icons-material/Devices";
+import ButtonGroup from "@mui/material/ButtonGroup";
+import { useSupportIconForUrl } from "@Hooks/useSupportIconForUrl";
 
 type Extra = {
   module: ModuleProps;
   notes_url: string;
   zip_url: string;
   authorData?: any;
+  last_update: string;
 };
 
 const ModuleViewActivity = () => {
@@ -55,7 +64,7 @@ const ModuleViewActivity = () => {
   const [open, setOpen] = React.useState(false);
   const [scroll, setScroll] = React.useState<DialogProps["scroll"]>("paper");
 
-  const { notes_url, zip_url, authorData } = extra;
+  const { notes_url, zip_url, authorData, last_update } = extra;
   const {
     name,
     author,
@@ -69,14 +78,16 @@ const ModuleViewActivity = () => {
     minMagisk,
     minApi,
     maxApi,
+    mmrlCover,
     needRamdisk,
-    mmrlCaregory,
+    mmrlCategory,
     changeBoot,
   } = extra.module;
 
-  const { category, validCategory } = useCategory(mmrlCaregory);
-
+  const categories = useFilterCategory(mmrlCategory);
   const { data } = useFetch<string>(notes_url);
+  const formatLastUpdate = useFormatDate(last_update);
+  const { SupportIcon, supportText } = useSupportIconForUrl(support);
 
   const handleClickOpen = (scrollType: DialogProps["scroll"]) => () => {
     setOpen(true);
@@ -87,13 +98,30 @@ const ModuleViewActivity = () => {
     setOpen(false);
   };
 
+  console.log(categories);
+
   const renderToolbar = () => {
     return (
       <Toolbar modifier="noshadow">
-        <Toolbar.Center>
-          <Fade in={titleShow}>
-            <span>{name}</span>
-          </Fade>
+        <Toolbar.Center
+          sx={{
+            display: "flex",
+            justifyContent: "left",
+            alignItems: "center",
+          }}
+        >
+          <Typography
+            sx={{
+              display: "flex",
+              justifyContent: "left",
+              alignItems: "center",
+              fontSize: 20,
+            }}
+            component="span"
+          >
+            <CodeRoundedIcon sx={{ mr: 1 }} />
+            MMRL
+          </Typography>
         </Toolbar.Center>
         <Toolbar.Left>
           <Toolbar.BackButton onClick={context.popPage} />
@@ -105,53 +133,132 @@ const ModuleViewActivity = () => {
   return (
     <Page modifier="noshadow" renderToolbar={renderToolbar}>
       <Box
-        component={Disappear}
+        component="div"
         sx={(theme) => ({
-          pt: 0,
-          pl: 2,
-          pr: 2,
-          pb: 2,
+          // pt: 0,
+          // pl: 2,
+          // pr: 2,
+          // pb: 2,
+          position: "relative",
+          zIndex: 9,
           backgroundColor: theme.palette.primary.main,
           color: "white",
-          display: "flex",
+          // display: "flex",
         })}
-        wrapper="div"
-        onDisappear={(visible) => {
-          setTitleShow(!visible);
-        }}
       >
-        <Avatar
-          alt={name}
+        {mmrlCover && (
+          <Box
+            sx={(theme) => ({
+              //background: '-webkit-gradient(linear,left bottom,left top,from(rgb(32,33,36)),color-stop(56%,rgba(0,0,0,0)))',
+              //background: '-webkit-linear-gradient(bottom,rgb(32,33,36) 0,rgba(0,0,0,0) 56%)',
+              background: `linear-gradient(to top,${theme.palette.primary.main} 0,rgba(0,0,0,0) 56%)`,
+            })}
+          >
+            <CardMedia
+              component="img"
+              sx={(theme) => ({
+                zIndex: -1,
+                display: "block",
+                position: "relative",
+                height: "calc(calc(100vw - 48px)*9/16)",
+                objectFit: "cover",
+                // width: "calc(100% - 16px)",
+              })}
+              image={mmrlCover}
+              alt={name}
+            />
+          </Box>
+        )}
+
+        <Box
           sx={(theme) => ({
-            bgcolor: scheme[300],
-            width: 100,
-            height: 100,
-            boxShadow: "0 -1px 5px rgba(0,0,0,.09), 0 3px 5px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.3), 0 1px 3px rgba(0,0,0,.15)",
-            borderRadius: theme.shape.borderRadius,
-            mr: 1.5,
-            fontSize: 50,
+            pt: mmrlCover ? 0 : 2,
+            pl: 2,
+            pr: 2,
+            pb: 2,
+            backgroundColor: theme.palette.primary.main,
+            color: "white",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start",
           })}
-          src={mmrlLogo}
         >
-          {name.charAt(0).toUpperCase()}
-        </Avatar>
+          <Box
+            sx={{
+              display: "flex",
+              width: "100%",
+            }}
+          >
+            <Avatar
+              alt={name}
+              sx={(theme) => ({
+                bgcolor: scheme[300],
+                width: 100,
+                height: 100,
+                boxShadow: "0 -1px 5px rgba(0,0,0,.09), 0 3px 5px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.3), 0 1px 3px rgba(0,0,0,.15)",
+                borderRadius: "20%",
+                mr: 1.5,
+                fontSize: 50,
+              })}
+              src={mmrlLogo}
+            >
+              {name.charAt(0).toUpperCase()}
+            </Avatar>
 
-        <Box sx={{ alignSelf: "center", ml: 0.5, mr: 0.5, width: "100%" }}>
-          <Typography variant="body1" fontWeight="bold">
-            {name}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {mmrlAuthor && authorData ? <span>{authorData.username ? authorData.username : author}</span> : <span>{author}</span>}
-            {authorData?.options?.roles?.verified && <VerifiedIcon sx={{ ml: 0.5, fontSize: ".70rem" }} />}
-          </Typography>
-          <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={1}>
-            <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={1}>
-              <Typography variant="subtitle2" color="text.secondary" noWrap>
-                {version} ({versionCode})
+            <Box sx={{ alignSelf: "center", ml: 0.5, mr: 0.5, width: "100%" }}>
+              <Typography variant="body1" fontWeight="bold">
+                {name}
               </Typography>
-            </Stack>
+              <Typography variant="body2" color="text.secondary">
+                {mmrlAuthor && authorData ? <span>{authorData.username ? authorData.username : author}</span> : <span>{author}</span>}
+                {authorData?.options?.roles?.verified && <VerifiedIcon sx={{ ml: 0.5, fontSize: ".70rem" }} />}
+              </Typography>
+            </Box>
+          </Box>
 
-            <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={1}>
+          <Stack
+            sx={{
+              mt: 3,
+              display: "flex",
+              width: "100%",
+            }}
+            direction={{ xs: "column", sm: "row" }}
+            justifyContent="space-between"
+            spacing={1}
+          >
+            <Typography sx={{ display: "flex", justifyContent: "flex-start", alignItems: "center" }} color="text.secondary">
+              {version} ({versionCode})
+            </Typography>
+
+            <Stack direction={{ xs: "column", sm: "row" }} spacing={1}>
+              {support && (
+                <Button
+                  sx={{
+                    color: scheme[100],
+                    border: `1px solid ${scheme[100]}80`,
+                    minWidth: 160,
+                    width: { sm: "unset", xs: "100%" },
+                    alignSelf: "flex-end",
+                    ":hover": {
+                      color: scheme[200],
+                      border: `1px solid ${scheme[200]}80`,
+                    },
+                  }}
+                  variant="outlined"
+                  startIcon={<SupportIcon />}
+                  onClick={() => {
+                    os.open(support, {
+                      target: "_blank",
+                      features: {
+                        color: theme.palette.primary.main,
+                      },
+                    });
+                  }}
+                >
+                  {supportText}
+                </Button>
+              )}
+
               <Button
                 disabled={!zip_url}
                 onClick={() => {
@@ -162,7 +269,7 @@ const ModuleViewActivity = () => {
                     },
                   });
                 }}
-                sx={{ alignItems: "right", bgcolor: scheme[400] }}
+                sx={{ bgcolor: scheme[400], minWidth: 160, width: { sm: "unset", xs: "100%" }, alignSelf: "flex-end" }}
                 variant="contained"
                 disableElevation
               >
@@ -224,21 +331,24 @@ const ModuleViewActivity = () => {
         {data ? (
           <Card sx={{ mt: 1, boxShadow: "none" }}>
             <CardContent>
-              <Typography
-                gutterBottom
+              <Stack
+                component={Typography}
                 sx={{
-                  display: "flex",
-                  justifyContent: "left",
                   alignItems: "center",
                 }}
-                variant="h5"
-                component="div"
+                direction="row"
+                justifyContent={{ xs: "space-between", sm: "row" }}
+                spacing={1}
+                gutterBottom
               >
-                About this module
+                <Typography variant="h5" component="div">
+                  About this module
+                </Typography>
                 <IconButton onClick={handleClickOpen("paper")} sx={{ ml: 0.5 }} aria-label="Example">
                   <ArrowForwardIcon />
                 </IconButton>
-              </Typography>
+              </Stack>
+
               <Typography
                 component={Markdown}
                 sx={{
@@ -279,71 +389,37 @@ const ModuleViewActivity = () => {
                     audio: {
                       component: "p",
                     },
+                    a: {
+                      component: "p",
+                    },
                   },
                 }}
               >
                 {data}
               </Typography>
+              <Typography sx={{ mt: 3 }} variant="h6" component="div">
+                Updated on
+                <Typography sx={{ fontSize: "0.875rem" }} variant="body2" component="div" color="text.secondary">
+                  {formatLastUpdate}
+                </Typography>
+              </Typography>
+              {categories.length !== 0 && (
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    gap: "16px 12px",
+                    mt: 3.5,
+                  }}
+                >
+                  {categories.map((category) => (
+                    <Chip label={category} variant="outlined" />
+                  ))}
+                </Box>
+              )}
             </CardContent>
           </Card>
         ) : null}
-
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: {
-              xs: "column", // mobile
-              sm: "row", // tablet and up
-            },
-          }}
-        >
-          {support && (
-            <Card sx={{ width: { xs: "100%" }, mr: validCategory ? { sm: 0.5, xs: 0 } : 0, mt: 1, boxShadow: "none" }}>
-              <CardContent>
-                <Typography
-                  variant="h5"
-                  component="div"
-                  sx={{
-                    display: "flex",
-                    justifyContent: "left",
-                    alignItems: "center",
-                  }}
-                >
-                  Trobules? Get help!
-                  <IconButton
-                    onClick={() => {
-                      support &&
-                        os.open(support, {
-                          target: "_blank",
-                          features: {
-                            color: theme.palette.primary.main,
-                          },
-                        });
-                    }}
-                    sx={{ ml: 0.5 }}
-                  >
-                    <LaunchIcon />
-                  </IconButton>
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Will open an erternal link e.g. GitHub or XDA
-                </Typography>
-              </CardContent>
-            </Card>
-          )}
-          {validCategory && (
-            <Card sx={{ width: { xs: "100%" }, ml: support ? { sm: 0.5, xs: 0 } : 0, mt: 1, boxShadow: "none" }}>
-              <CardContent>
-                <Typography variant="h5" component="div">
-                  Category
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {category}
-                </Typography>
-              </CardContent>
-            </Card>
-          )}
-        </Box>
 
         <Card
           sx={{
@@ -400,6 +476,11 @@ const ModuleViewActivity = () => {
       </Page.RelativeContent>
 
       <Dialog
+        sx={{
+          "& .MuiDialog-paper": {
+            m: 2,
+          },
+        }}
         open={open}
         onClose={handleClose}
         scroll={scroll}
@@ -428,7 +509,7 @@ const ModuleViewActivity = () => {
                 width: 56,
                 height: 56,
                 boxShadow: "0 -1px 5px rgba(0,0,0,.09), 0 3px 5px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.3), 0 1px 3px rgba(0,0,0,.15)",
-                borderRadius: theme.shape.borderRadius,
+                borderRadius: "20%",
                 mr: 1.5,
                 fontSize: 25,
               })}

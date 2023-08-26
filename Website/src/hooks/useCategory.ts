@@ -1,15 +1,9 @@
-export function useCategory(input?: string) {
+export function useFilterCategory(input?: string) {
   const categories = ["Tools", "Boot", "manegment", "System", "Coding", "Apps", "Gaming", "Other"];
-
-  if (!input) {
-    return {
-      category: "Other",
-      validCategory: false,
-    };
+  const input_array = input?.split(",");
+  if (input_array) {
+    return categories.filter((i) => input_array.indexOf(i) !== -1);
+  } else {
+    return [];
   }
-
-  return {
-    category: categories.indexOf(input) > -1 ? input : "Other",
-    validCategory: categories.indexOf(input) > -1,
-  };
 }
