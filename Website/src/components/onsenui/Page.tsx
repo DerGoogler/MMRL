@@ -40,17 +40,6 @@ const _Page = React.forwardRef<HTMLElement, HTMLPage>((props, ref) => {
   const { context } = useActivity();
   const { renderToolbar, renderBottomToolbar, renderModal, renderFixed, contentStyle, children, ...rest } = props;
 
-  const setStatusBarColor = (color: string | undefined) => os.setStatusBarColor(color ? color : theme.palette.primary.main, false);
-  const setNavigationBarColor = (color: string | undefined) => os.setNavigationBarColor(color ? color : theme.palette.background.default);
-
-  React.useLayoutEffect(() => {
-    setStatusBarColor(props.setStatusBarColor);
-  }, [props.setStatusBarColor]);
-
-  React.useLayoutEffect(() => {
-    setNavigationBarColor(props.setNavigationBarColor);
-  }, [props.setNavigationBarColor]);
-
   return (
     <HTMLPage {...rest} ref={ref}>
       {renderToolbar && renderToolbar(ref, context)}

@@ -2,6 +2,7 @@ import React from "react";
 import { colors as kolors, useTheme as useMom, createTheme, ThemeProvider as MumProvider } from "@mui/material";
 import useShadeColor from "./useShadeColor";
 import { colors, useSettings } from "./useSettings";
+import { os } from "@Native/Os";
 
 export const useTheme = () => {
   const theme = useMom();
@@ -62,6 +63,11 @@ export const ThemeProvider = (props: React.PropsWithChildren) => {
       }),
     [settings.darkmode, settings.accent_scheme]
   );
+
+  React.useEffect(() => {
+    os.setStatusBarColor(theme.palette.primary.main, false);
+    os.setNavigationBarColor(theme.palette.background.default);
+  }, [theme]);
 
   return <MumProvider theme={theme} children={props.children} />;
 };
