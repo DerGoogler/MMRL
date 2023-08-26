@@ -1,5 +1,4 @@
-import styled from "@emotion/styled";
-import { Theme } from "@mui/material";
+import { Theme, styled } from "@mui/material";
 import React from "react";
 import { useSettings } from "../../hooks/useSettings";
 import useShadeColor from "../../hooks/useShadeColor";
@@ -10,16 +9,12 @@ interface Props {
   style?: React.CSSProperties;
 }
 
-interface T {
-  theme: Theme;
-}
-
-export const StyledMarkdown = React.forwardRef((props: Props, ref) => {
+export const StyledMarkdown = styled("article")(() => {
   const { theme, scheme } = useTheme();
   const { settings, setSettings } = useSettings();
   const shade = useShadeColor();
 
-  const Article = styled.article(({ theme }: T) => ({
+  return {
     msTextSizeAdjust: "100%",
     WebkitTextSizeAdjust: "100%",
     margin: "0",
@@ -560,7 +555,5 @@ export const StyledMarkdown = React.forwardRef((props: Props, ref) => {
     ".hljs-addition": { color: "#22863a", backgroundColor: "#f0fff4" },
     ".hljs-deletion": { color: "#b31d28", backgroundColor: "#ffeef0" },
     ".hljs-char.escape_,\n  .hljs-link,\n  .hljs-params,\n  .hljs-property,\n  .hljs-punctuation,\n  .hljs-tag": {},
-  }));
-
-  return <Article ref={ref as any} theme={theme} style={props.style} children={props.children} />;
+  };
 });

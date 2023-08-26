@@ -75,6 +75,8 @@ interface ContentProps {
    * This property affects only small screens
    */
   zeroMargin?: boolean;
+  minWidth?: number;
+  maxWidth?: number;
 }
 
 interface IntrinsicElements extends Omit<React.JSX.IntrinsicElements, "section"> {
@@ -92,8 +94,8 @@ const RelativeContent = styled(Content)((props: ContentProps) => {
 
   return {
     boxSizing: "border-box",
-    minWidth: "200px",
-    maxWidth: "980px",
+    minWidth: props.minWidth ? props.minWidth : 200,
+    maxWidth: props.maxWidth ? props.maxWidth : 980,
     margin: "0 auto",
     ...(matches ? { padding: props.zeroMargin ? 0 : 8 } : { padding: 45 }),
   };

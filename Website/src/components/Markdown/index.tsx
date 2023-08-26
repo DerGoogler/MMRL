@@ -2,7 +2,7 @@ import Markdown, { MarkdownToJSX, compiler } from "markdown-to-jsx";
 import Anchor, { Open } from "../dapi/Anchor";
 import Video from "../dapi/Video";
 import React from "react";
-import { Alert, Divider, Paper, Stack } from "@mui/material";
+import { Alert, Divider, Paper, Stack, SxProps, Theme } from "@mui/material";
 import styled from "@emotion/styled";
 import hljs from "highlight.js";
 import { doc } from "googlers-tools";
@@ -13,7 +13,7 @@ import { AlertIcon, BugIcon, CheckIcon, IssueClosedIcon, IssueOpenedIcon, IssueR
 
 type Props = {
   children: string;
-  style?: React.CSSProperties;
+  sx?: SxProps<Theme>;
   styleMd?: React.CSSProperties;
 };
 
@@ -83,7 +83,7 @@ export const MarkdownOverrides: MarkdownToJSX.Overrides | undefined = {
 };
 
 export const Markup = (props: Props) => {
-  const ref = React.useRef<HTMLDivElement>(null);
+  // const ref = React.useRef<HTMLDivElement>(null);
 
   // Disabled due lack of darkmode support
   // React.useEffect(() => {
@@ -95,7 +95,7 @@ export const Markup = (props: Props) => {
   // });
 
   return (
-    <StyledMarkdown ref={ref} style={{ display: "inline-block", width: "100%", ...props.style }}>
+    <StyledMarkdown sx={props.sx}>
       <Markdown
         style={props.styleMd}
         options={{
