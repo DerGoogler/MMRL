@@ -46,6 +46,11 @@ description=<string>
 mmrlConfig=<boolean>
 mmrlNoComments=<boolean>
 mmrlCover=<url>
+mmrlAuthor=<uid>
+mmrlLogo=<url>
+mmrlScreenshots=<url>,<url>,<url> ...
+# Developers that points "Gaming" won't have a change to get verified. Magisk isn't made for gaming purposes.
+mmrlCategory=<string>,<string>,<string> ...
 
 # Fox's Mmm supported properties
 minApi=<int>
