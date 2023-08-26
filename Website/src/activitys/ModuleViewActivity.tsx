@@ -3,6 +3,7 @@ import { Toolbar } from "@Components/onsenui/Toolbar";
 import { useStrings } from "@Hooks/useStrings";
 import { Disappear } from "react-disappear";
 import VerifiedIcon from "@mui/icons-material/Verified";
+import LaunchIcon from "@mui/icons-material/Launch";
 import Box from "@mui/material/Box";
 import React from "react";
 import Fade from "@mui/material/Fade";
@@ -37,6 +38,7 @@ import { os } from "@Native/Os";
 import { Markup } from "@Components/Markdown";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
+import { useCategory } from "@Hooks/useCategory";
 
 type Extra = {
   module: ModuleProps;
@@ -63,12 +65,16 @@ const ModuleViewActivity = () => {
     version,
     versionCode,
     mmtReborn,
+    support,
     minMagisk,
     minApi,
     maxApi,
     needRamdisk,
+    mmrlCaregory,
     changeBoot,
   } = extra.module;
+
+  const { category, validCategory } = useCategory(mmrlCaregory);
 
   const { data } = useFetch<string>(notes_url);
 
@@ -281,6 +287,63 @@ const ModuleViewActivity = () => {
             </CardContent>
           </Card>
         ) : null}
+
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: {
+              xs: "column", // mobile
+              sm: "row", // tablet and up
+            },
+          }}
+        >
+          {support && (
+            <Card sx={{ width: { xs: "100%" }, mr: validCategory ? { sm: 0.5, xs: 0 } : 0, mt: 1, boxShadow: "none" }}>
+              <CardContent>
+                <Typography
+                  variant="h5"
+                  component="div"
+                  sx={{
+                    display: "flex",
+                    justifyContent: "left",
+                    alignItems: "center",
+                  }}
+                >
+                  Trobules? Get help!
+                  <IconButton
+                    onClick={() => {
+                      support &&
+                        os.open(support, {
+                          target: "_blank",
+                          features: {
+                            color: theme.palette.primary.main,
+                          },
+                        });
+                    }}
+                    sx={{ ml: 0.5 }}
+                  >
+                    <LaunchIcon />
+                  </IconButton>
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Will open an erternal link e.g. GitHub or XDA
+                </Typography>
+              </CardContent>
+            </Card>
+          )}
+          {validCategory && (
+            <Card sx={{ width: { xs: "100%" }, ml: support ? { sm: 0.5, xs: 0 } : 0, mt: 1, boxShadow: "none" }}>
+              <CardContent>
+                <Typography variant="h5" component="div">
+                  Category
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {category}
+                </Typography>
+              </CardContent>
+            </Card>
+          )}
+        </Box>
 
         <Card
           sx={{

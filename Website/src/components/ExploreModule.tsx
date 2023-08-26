@@ -1,4 +1,4 @@
-import { Alert, AlertTitle, Box, CardMedia, Chip, Divider, Stack, Typography } from "@mui/material";
+import { Alert, AlertTitle, Box, Card, CardMedia, Chip, Divider, Stack, Typography } from "@mui/material";
 import { useActivity } from "@Hooks/useActivity";
 import { useStrings } from "@Hooks/useStrings";
 import DescriptonActivity from "@Activitys/DescriptonActivity";
@@ -96,11 +96,14 @@ export const ExploreModule = (props: Props) => {
       return (
         <CardMedia
           component="img"
-          style={{
-            minHeight: os.isAndroid || isMobile ? 179 : 465,
-            height: "100%",
+          sx={(theme) => ({
+            height: "calc(calc(100vw - 48px)*9/16)",
             objectFit: "cover",
-          }}
+            m: 1,
+            borderRadius: theme.shape.borderRadius / 8,
+            boxShadow: "0 1px 2px 0 rgba(60,64,67,.3), 0 1px 10px 1px rgba(60,64,67,.15)",
+            width: "calc(100% - 16px)",
+          })}
           image={prop_url.mmrlCover}
           alt={prop_url.name}
         />
@@ -128,17 +131,26 @@ export const ExploreModule = (props: Props) => {
   };
 
   return (
-    <StyledCard elevation={0}>
-      <Box
-        component={GestureDetector}
+    <Box
+      component={GestureDetector}
+      sx={(theme) => ({
+        ":hover": {
+          cursor: "pointer",
+        },
+      })}
+      onTap={handleOpen}
+      onHold={() => {
+        os.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+      }}
+    >
+      <Card
         sx={{
           ":hover": {
-            cursor: "pointer",
+            bgcolor: shade(theme.palette.secondary.light, -0.15),
           },
-        }}
-        onTap={handleOpen}
-        onHold={() => {
-          os.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+          mt: 1,
+          boxShadow: "none",
+          //          boxShadow: "0 -1px 5px rgba(0,0,0,.09), 0 3px 5px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.3), 0 1px 3px rgba(0,0,0,.15)",
         }}
       >
         <CoverHandler />
@@ -165,22 +177,16 @@ export const ExploreModule = (props: Props) => {
             </Typography>
           </Stack>
         </Box>
-      </Box>
-      <Divider
-        sx={{
-          borderColor: settings.darkmode ? shade(scheme[500], -56) : theme.palette.divider,
-        }}
-      />
-      <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ px: 2, py: 1 }}>
-        <Chip
-          size="small"
-          sx={(theme) => ({
-            bgcolor: settings.darkmode ? shade(scheme[500], -56) : theme.palette.secondary.light,
-          })}
-          label={formatLastUpdate}
-        />
-        <Stack spacing={0.8} direction="row">
-          {/* <StyledIconButtonWithText
+        <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ px: 2, py: 1 }}>
+          <Chip
+            size="small"
+            sx={(theme) => ({
+              bgcolor: `${settings.darkmode ? shade(scheme[200], -56) : theme.palette.secondary.light}46`,
+            })}
+            label={formatLastUpdate}
+          />
+          <Stack spacing={0.8} direction="row">
+            {/* <StyledIconButtonWithText
             onClick={() => {
               set(ref(db, `modules/${prop_url.id}/likes/${auth.currentUser.uid}`), true);
             }}
@@ -190,15 +196,16 @@ export const ExploreModule = (props: Props) => {
               <span style={{ fontSize: 14 }}>0</span>
             </Stack>
           </StyledIconButtonWithText> */}
-          <LegacyVerified />
+            <LegacyVerified />
+          </Stack>
         </Stack>
-      </Stack>
-      {settings._low_quality_module && isLowQuality && (
-        <Alert style={{ borderRadius: 0 }} severity="warning">
-          <AlertTitle>Low Quality</AlertTitle>
-          Module meets not the requirements of its props
-        </Alert>
-      )}
-    </StyledCard>
+        {settings._low_quality_module && isLowQuality && (
+          <Alert style={{ borderRadius: 0 }} severity="warning">
+            <AlertTitle>Low Quality</AlertTitle>
+            Module meets not the requirements of its props
+          </Alert>
+        )}
+      </Card>
+    </Box>
   );
 };
