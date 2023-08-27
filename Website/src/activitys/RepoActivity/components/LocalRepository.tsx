@@ -3,7 +3,23 @@ import { StyledListItemText } from "@Components/StyledListItemText";
 import { useRepos } from "@Hooks/useRepos";
 import { useSettings } from "@Hooks/useSettings";
 import { useStrings } from "@Hooks/useStrings";
-import { Box, Divider, List, ListItem, ListItemButton, ListItemIcon, ListSubheader, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Card,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  IconButton,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListSubheader,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { SvgIconTypeMap } from "@mui/material/SvgIcon/SvgIcon";
 import VerifiedIcon from "@mui/icons-material/Verified";
@@ -25,6 +41,9 @@ import { useFormatDate } from "@Hooks/useFormatDate";
 import { ref, onValue, query } from "firebase/database";
 import { useFirebase } from "@Hooks/useFirebase";
 import { useConfirm } from "material-ui-confirm";
+import { useTheme } from "@Hooks/useTheme";
+import CloseIcon from "@mui/icons-material/Close";
+import useShadeColor from "@Hooks/useShadeColor";
 
 interface ListItemProps {
   part?: any;
@@ -45,6 +64,8 @@ export const LocalRepository = (props: LocalRepositoryProps) => {
   const { auth, firebaseVoid } = useFirebase();
   const { actions } = useRepos();
   const [enabled, setEnabled] = React.useState(!settings.disabled_repos.includes(repo.id));
+  const { theme, scheme } = useTheme();
+  const shade = useShadeColor();
 
   const formatLastUpdate = useFormatDate(repo.last_update as string);
 
@@ -52,12 +73,12 @@ export const LocalRepository = (props: LocalRepositoryProps) => {
     return (
       <>
         {props.part && (
-          <StyledIconButtonWithText onClick={props.onClick}>
-            <Stack spacing={0.8} direction="row" alignItems="center">
-              <props.icon sx={{ fontSize: 14 }} />
-              {/* <span style={{ fontSize: 14 }}>{props.text}</span> */}
-            </Stack>
-          </StyledIconButtonWithText>
+          <ListItemButton onClick={props.onClick}>
+            <ListItemIcon>
+              <props.icon />
+            </ListItemIcon>
+            <StyledListItemText primary={props.text} />
+          </ListItemButton>
         )}
       </>
     );
@@ -80,9 +101,23 @@ export const LocalRepository = (props: LocalRepositoryProps) => {
     }
   }, []);
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <React.Fragment>
-      <StyledCard elevation={0}>
+      <Card
+        sx={{
+          width: "100%",
+          boxShadow: "none",
+        }}
+      >
         <Box sx={{ p: 2, display: "flex" }}>
           <Stack spacing={0.5} style={{ flexGrow: 1 }}>
             <Typography fontWeight={700} color="text.primary">
@@ -118,12 +153,38 @@ export const LocalRepository = (props: LocalRepositoryProps) => {
               );
             }}
             checked={enabled}
-            inputProps={{
-              "aria-labelledby": "switch-list-label-eruda",
-            }}
           />
 
           <Stack spacing={0.8} direction="row">
+            <Button onClick={handleClickOpen} variant="text">
+              More
+            </Button>
+          </Stack>
+        </Stack>
+      </Card>
+
+      <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
+        <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+          {repo.name}
+        </DialogTitle>
+        <IconButton
+          aria-label="close"
+          onClick={handleClose}
+          sx={{
+            position: "absolute",
+            right: 8,
+            top: 8,
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+        <DialogContent dividers>
+          <Typography gutterBottom>
+            Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus,
+            porta ac consectetur ac, vestibulum at eros.
+          </Typography>
+          <List component="nav" subheader={<ListSubheader sx={{ bgcolor: "transparent" }}>About this repo</ListSubheader>}>
             <MListItem
               part={repo.website}
               icon={LanguageRounded}
@@ -182,9 +243,9 @@ export const LocalRepository = (props: LocalRepositoryProps) => {
                 });
               }}
             />
-          </Stack>
-        </Stack>
-      </StyledCard>
+          </List>
+        </DialogContent>
+      </Dialog>
     </React.Fragment>
   );
 };

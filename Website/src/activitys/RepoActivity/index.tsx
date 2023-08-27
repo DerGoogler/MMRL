@@ -10,6 +10,7 @@ import {
   Divider,
   List,
   ListSubheader,
+  Stack,
   TextField,
   Typography,
 } from "@mui/material";
@@ -86,9 +87,11 @@ const RepoActivity = () => {
     <>
       <Page renderToolbar={renderToolbar}>
         <Page.RelativeContent>
-          {filteredRepos.map((repo, index) => (
-            <LocalRepository key={"repo_" + index} repo={repo} />
-          ))}
+          <Stack direction="column" justifyContent="flex-start" alignItems="center" spacing={1}>
+            {filteredRepos.map((repo, index) => (
+              <LocalRepository key={"repo_" + index} repo={repo} />
+            ))}
+          </Stack>
         </Page.RelativeContent>
         <Page.RelativeContent zeroMargin>
           {filteredRepos.length !== 0 && <Divider />}

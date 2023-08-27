@@ -48,6 +48,16 @@ import DevicesIcon from "@mui/icons-material/Devices";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import { useSupportIconForUrl } from "@Hooks/useSupportIconForUrl";
 import { useRepos } from "@Hooks/useRepos";
+import { useStateCallback } from "@Hooks/useStateCallback";
+import { Tabbar } from "@Components/onsenui/Tabbar";
+import PermDeviceInformationIcon from "@mui/icons-material/PermDeviceInformation";
+import DescriptionIcon from "@mui/icons-material/Description";
+import BottomNavigation from "@mui/material/BottomNavigation";
+import BottomNavigationAction from "@mui/material/BottomNavigationAction";
+import Paper from "@mui/material/Paper";
+import { BottomToolbar } from "@Components/onsenui/BottomToolbar";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useBaseDialog } from "@Hooks/useBaseDialog";
 
 type Extra = {
   module: ModuleProps;
@@ -68,9 +78,10 @@ const ModuleViewActivity = () => {
   const { strings } = useStrings();
   const { theme, scheme } = useTheme();
   const { context, extra } = useActivity<Extra>();
-  const [titleShow, setTitleShow] = React.useState(false);
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useStateCallback(false);
   const [scroll, setScroll] = React.useState<DialogProps["scroll"]>("paper");
+
+  const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
 
   const { modules } = useRepos();
 
@@ -296,161 +307,60 @@ const ModuleViewActivity = () => {
       </Box>
 
       <Page.RelativeContent>
-        <Stack direction={{ xs: "column", sm: "row" }} spacing={1} justifyContent="center">
-          <Stack direction="column" justifyContent="center" alignItems="flex-start" spacing={1}>
-            {minApi && os.sdk <= Number(minApi) && (
-              <Alert
+        <Stack direction="column" justifyContent="center" alignItems="flex-start" spacing={1}>
+          {minApi && os.sdk <= Number(minApi) && (
+            <Alert
+              sx={{
+                width: "100%",
+              }}
+              severity="warning"
+            >
+              <AlertTitle>Unsupported</AlertTitle>
+              Module requires {parseAndroidVersion(minApi)}
+            </Alert>
+          )}
+
+          {mmrlScreenshots && (
+            <Card sx={{ boxShadow: "none", /*width: { xs: "100%", sm: "100vh" },*/ width: "100%" }}>
+              <CardContent>
+                <Typography variant="h5" component="div">
+                  Images
+                </Typography>
+              </CardContent>
+
+              <ImageList
                 sx={{
-                  width: "100%",
-                }}
-                severity="warning"
-              >
-                <AlertTitle>Unsupported</AlertTitle>
-                Module requires {parseAndroidVersion(minApi)}
-              </Alert>
-            )}
-
-            {mmrlScreenshots && (
-              <Card sx={{ boxShadow: "none", /*width: { xs: "100%", sm: "100vh" },*/ width: "100%" }}>
-                <CardContent>
-                  <Typography variant="h5" component="div">
-                    Images
-                  </Typography>
-                </CardContent>
-
-                <ImageList
-                  sx={{
-                    pt: 0,
-                    p: 1,
-                    overflow: "auto",
-                    whiteSpace: "nowrap",
-                    gridAutoFlow: "column",
-                    gridTemplateColumns: "repeat(auto-fill,minmax(160px,1fr)) !important",
-                    gridAutoColumns: "minmax(160px, 1fr)",
-                  }}
-                >
-                  {mmrlScreenshots.split(",").map((image, i) => (
-                    <ImageListItem
-                      sx={(theme) => ({
-                        ml: 1,
-                        mr: 1,
-                      })}
-                    >
-                      <Box
-                        component="img"
-                        src={image}
-                        sx={(theme) => ({
-                          boxShadow: "0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15)",
-                          borderRadius: theme.shape.borderRadius / theme.shape.borderRadius,
-                        })}
-                      />
-                    </ImageListItem>
-                  ))}
-                </ImageList>
-              </Card>
-            )}
-
-            {data ? (
-              <Card
-                sx={{
-                  // width: { xs: "100%", sm: "100vh" },
-
-                  width: "100%",
-                  boxShadow: "none",
+                  pt: 0,
+                  p: 1,
+                  overflow: "auto",
+                  whiteSpace: "nowrap",
+                  gridAutoFlow: "column",
+                  gridTemplateColumns: "repeat(auto-fill,minmax(160px,1fr)) !important",
+                  gridAutoColumns: "minmax(160px, 1fr)",
                 }}
               >
-                <CardContent>
-                  <Stack
-                    component={Typography}
-                    sx={{
-                      alignItems: "center",
-                    }}
-                    direction="row"
-                    justifyContent={{ xs: "space-between", sm: "row" }}
-                    spacing={1}
-                    gutterBottom
+                {mmrlScreenshots.split(",").map((image, i) => (
+                  <ImageListItem
+                    sx={(theme) => ({
+                      ml: 1,
+                      mr: 1,
+                    })}
                   >
-                    <Typography variant="h5" component="div">
-                      About this module
-                    </Typography>
-                    <IconButton onClick={handleClickOpen("paper")} sx={{ ml: 0.5 }} aria-label="Example">
-                      <ArrowForwardIcon />
-                    </IconButton>
-                  </Stack>
-
-                  <Typography
-                    component={Markdown}
-                    sx={{
-                      width: { xs: "50vh" },
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      display: "-webkit-box",
-                      WebkitLineClamp: 5,
-                      WebkitBoxOrient: "vertical",
-                    }}
-                    variant="body2"
-                    color="text.secondary"
-                    options={{
-                      overrides: {
-                        h1: {
-                          component: "p",
-                        },
-                        h2: {
-                          component: "p",
-                        },
-                        h3: {
-                          component: "p",
-                        },
-                        h4: {
-                          component: "p",
-                        },
-                        h5: {
-                          component: "p",
-                        },
-                        h6: {
-                          component: "p",
-                        },
-                        img: {
-                          component: "p",
-                        },
-                        video: {
-                          component: "p",
-                        },
-                        audio: {
-                          component: "p",
-                        },
-                        a: {
-                          component: "p",
-                        },
-                      },
-                    }}
-                  >
-                    {data}
-                  </Typography>
-                  <Typography sx={{ mt: 3 }} variant="h6" component="div">
-                    Updated on
-                    <Typography sx={{ fontSize: "0.875rem" }} variant="body2" component="div" color="text.secondary">
-                      {formatLastUpdate}
-                    </Typography>
-                  </Typography>
-                  {categories.length !== 0 && (
                     <Box
-                      sx={{
-                        display: "flex",
-                        flexWrap: "wrap",
-                        gap: "16px 12px",
-                        mt: 3.5,
-                      }}
-                    >
-                      {categories.map((category) => (
-                        <Chip label={category} variant="outlined" />
-                      ))}
-                    </Box>
-                  )}
-                </CardContent>
-              </Card>
-            ) : null}
+                      component="img"
+                      src={image}
+                      sx={(theme) => ({
+                        boxShadow: "0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15)",
+                        borderRadius: theme.shape.borderRadius / theme.shape.borderRadius,
+                      })}
+                    />
+                  </ImageListItem>
+                ))}
+              </ImageList>
+            </Card>
+          )}
 
+          {data ? (
             <Card
               sx={{
                 // width: { xs: "100%", sm: "100vh" },
@@ -460,134 +370,159 @@ const ModuleViewActivity = () => {
               }}
             >
               <CardContent>
-                <Typography variant="h5" component="div">
-                  Requirements
-                </Typography>
-              </CardContent>
+                <Stack
+                  component={Typography}
+                  sx={{
+                    alignItems: "center",
+                  }}
+                  direction="row"
+                  justifyContent={{ xs: "space-between", sm: "row" }}
+                  spacing={1}
+                  gutterBottom
+                >
+                  <Typography variant="h5" component="div">
+                    About this module
+                  </Typography>
+                  <IconButton onClick={handleClickOpen("paper")} sx={{ ml: 0.5 }} aria-label="Example">
+                    <ArrowForwardIcon />
+                  </IconButton>
+                </Stack>
 
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: {
-                    xs: "column", // mobile
-                    sm: "row", // tablet and up
-                  },
-                }}
-              >
-                <List sx={{ width: { xs: "100%" } }} subheader={<ListSubheader sx={{ bgcolor: "transparent" }}>Access</ListSubheader>}>
-                  <ListItem>
-                    <StyledListItemText primary="Changes boot" secondary={changeBoot === "true" ? "Yes" : "No"} />
-                  </ListItem>
-
-                  <ListItem>
-                    <StyledListItemText primary="Needs ramdisk" secondary={needRamdisk === "true" ? "Yes" : "No"} />
-                  </ListItem>
-
-                  <ListItem>
-                    <StyledListItemText primary="MMT-Reborn" secondary={mmtReborn === "true" ? "Yes" : "No"} />
-                  </ListItem>
-                </List>
-
-                <List sx={{ width: { xs: "100%" } }} subheader={<ListSubheader sx={{ bgcolor: "transparent" }}>Minimum</ListSubheader>}>
-                  <ListItem>
-                    <StyledListItemText primary="Operating System" secondary={minApi ? parseAndroidVersion(minApi) : "Undefined"} />
-                  </ListItem>
-
-                  <ListItem>
-                    <StyledListItemText primary="Magisk" secondary={minMagisk ? Magisk.PARSE_VERSION(minMagisk) : "Undefined"} />
-                  </ListItem>
-                </List>
-
-                <List sx={{ width: { xs: "100%" } }} subheader={<ListSubheader sx={{ bgcolor: "transparent" }}>Recommended</ListSubheader>}>
-                  <ListItem>
-                    <StyledListItemText primary="Operating System" secondary={maxApi ? parseAndroidVersion(maxApi) : "Undefined"} />
-                  </ListItem>
-                </List>
-              </Box>
-            </Card>
-          </Stack>
-
-          <Box>
-            <Card
-              sx={{
-                // width: { xs: "100%", sm: "50vh" },
-                width: "100%",
-                boxShadow: "none",
-              }}
-            >
-              <CardContent>
-                <Typography variant="h5" component="div">
-                  More modules
-                </Typography>
-              </CardContent>
-
-              <Stack sx={{ p: 1 }} direction="column" justifyContent="center" alignItems="center" spacing={1}>
-                {more_modules.map((module) => (
-                  <Card
-                    onClick={() => {
-                      context.pushPage({
-                        component: ModuleViewActivity,
-                        key: "",
-                        extra: {
-                          last_update: module.last_update,
-                          zip_url: module.zip_url,
-                          notes_url: module.notes_url,
-                          module: module.prop_url,
-                        },
-                      });
-                    }}
-                    sx={{
-                      ":hover": {
-                        cursor: "pointer",
-                        bgcolor: shade(theme.palette.secondary.light, -0.15),
+                <Typography
+                  component={Markdown}
+                  sx={{
+                    width: { xs: "50vh" },
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    display: "-webkit-box",
+                    WebkitLineClamp: 5,
+                    WebkitBoxOrient: "vertical",
+                  }}
+                  variant="body2"
+                  color="text.secondary"
+                  options={{
+                    overrides: {
+                      h1: {
+                        component: "p",
                       },
-                      p: 1,
-                      width: "calc(100% - 16px)",
+                      h2: {
+                        component: "p",
+                      },
+                      h3: {
+                        component: "p",
+                      },
+                      h4: {
+                        component: "p",
+                      },
+                      h5: {
+                        component: "p",
+                      },
+                      h6: {
+                        component: "p",
+                      },
+                      img: {
+                        component: "p",
+                      },
+                      video: {
+                        component: "p",
+                      },
+                      audio: {
+                        component: "p",
+                      },
+                      a: {
+                        component: "p",
+                      },
+                    },
+                  }}
+                >
+                  {data}
+                </Typography>
+                <Typography sx={{ mt: 3 }} variant="h6" component="div">
+                  Updated on
+                  <Typography sx={{ fontSize: "0.875rem" }} variant="body2" component="div" color="text.secondary">
+                    {formatLastUpdate}
+                  </Typography>
+                </Typography>
+                {categories.length !== 0 && (
+                  <Box
+                    sx={{
                       display: "flex",
-                      flexDirection: "row",
-                      boxShadow: "none",
+                      flexWrap: "wrap",
+                      gap: "16px 12px",
+                      mt: 3.5,
                     }}
                   >
-                    <Avatar
-                      alt={name}
-                      sx={(theme) => ({
-                        bgcolor: scheme[300],
-                        width: { xs: 80, sm: 56 },
-                        height: { xs: 80, sm: 56 },
-                        boxShadow:
-                          "0 -1px 5px rgba(0,0,0,.09), 0 3px 5px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.3), 0 1px 3px rgba(0,0,0,.15)",
-                        borderRadius: "20%",
-                        fontSize: 25,
-                      })}
-                      src={module.prop_url.mmrlLogo}
-                    >
-                      {module.prop_url.name.charAt(0).toUpperCase()}
-                    </Avatar>
-                    <Box sx={{ alignSelf: "center", ml: 2 }}>
-                      <Typography component="div" noWrap>
-                        {module.prop_url.name}
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary" noWrap>
-                        {module.prop_url.author}
-                      </Typography>
-                    </Box>
-                  </Card>
-                ))}
-              </Stack>
+                    {categories.map((category) => (
+                      <Chip label={category} variant="outlined" />
+                    ))}
+                  </Box>
+                )}
+              </CardContent>
             </Card>
-          </Box>
+          ) : null}
+
+          <Card
+            sx={{
+              // width: { xs: "100%", sm: "100vh" },
+
+              width: "100%",
+              boxShadow: "none",
+            }}
+          >
+            <CardContent>
+              <Typography variant="h5" component="div">
+                Requirements
+              </Typography>
+            </CardContent>
+
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: {
+                  xs: "column", // mobile
+                  sm: "row", // tablet and up
+                },
+              }}
+            >
+              <List sx={{ width: { xs: "100%" } }} subheader={<ListSubheader sx={{ bgcolor: "transparent" }}>Access</ListSubheader>}>
+                <ListItem>
+                  <StyledListItemText primary="Changes boot" secondary={changeBoot === "true" ? "Yes" : "No"} />
+                </ListItem>
+
+                <ListItem>
+                  <StyledListItemText primary="Needs ramdisk" secondary={needRamdisk === "true" ? "Yes" : "No"} />
+                </ListItem>
+
+                <ListItem>
+                  <StyledListItemText primary="MMT-Reborn" secondary={mmtReborn === "true" ? "Yes" : "No"} />
+                </ListItem>
+              </List>
+
+              <List sx={{ width: { xs: "100%" } }} subheader={<ListSubheader sx={{ bgcolor: "transparent" }}>Minimum</ListSubheader>}>
+                <ListItem>
+                  <StyledListItemText primary="Operating System" secondary={minApi ? parseAndroidVersion(minApi) : "Undefined"} />
+                </ListItem>
+
+                <ListItem>
+                  <StyledListItemText primary="Magisk" secondary={minMagisk ? Magisk.PARSE_VERSION(minMagisk) : "Undefined"} />
+                </ListItem>
+              </List>
+
+              <List sx={{ width: { xs: "100%" } }} subheader={<ListSubheader sx={{ bgcolor: "transparent" }}>Recommended</ListSubheader>}>
+                <ListItem>
+                  <StyledListItemText primary="Operating System" secondary={maxApi ? parseAndroidVersion(maxApi) : "Undefined"} />
+                </ListItem>
+              </List>
+            </Box>
+          </Card>
         </Stack>
       </Page.RelativeContent>
 
       <Dialog
-        sx={{
-          "& .MuiDialog-paper": {
-            m: 2,
-          },
-        }}
         open={open}
         onClose={handleClose}
         scroll={scroll}
+        fullScreen={fullScreen}
         aria-labelledby="scroll-dialog-title"
         aria-describedby="scroll-dialog-description"
       >
