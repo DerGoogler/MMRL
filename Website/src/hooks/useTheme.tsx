@@ -29,10 +29,12 @@ export const ThemeProvider = (props: React.PropsWithChildren) => {
               mode: "light",
               primary: {
                 light: colors[settings.accent_scheme.value][300],
-                main: colors[settings.accent_scheme.value][900],
-                // @ts-ignore
-                dark: colors[settings.accent_scheme.value][800],
-                // contrastText: colors.grey[900],
+                main: colors[settings.accent_scheme.value][500],
+                dark: colors[settings.accent_scheme.value][700],
+
+                // light: colors[settings.accent_scheme.value][300],
+                // main: colors[settings.accent_scheme.value][900],
+                // dark: colors[settings.accent_scheme.value][800],
               },
               background: {
                 default: "#fafafa",
@@ -46,18 +48,25 @@ export const ThemeProvider = (props: React.PropsWithChildren) => {
           : {
               mode: "dark",
               primary: {
-                light: shade(colors[settings.accent_scheme.value][300], -10),
-                main: shade(colors[settings.accent_scheme.value][500], -29),
+                main: shade(colors[settings.accent_scheme.value][200], -29),
+                light: shade(colors[settings.accent_scheme.value][100], -29),
+                dark: shade(colors[settings.accent_scheme.value][400], -29),
+                // light: shade(colors[settings.accent_scheme.value][300], -10),
+                // main: shade(colors[settings.accent_scheme.value][500], -29),
               },
               background: {
-                paper: shade(colors[settings.accent_scheme.value][500], -65),
-                default: shade(colors[settings.accent_scheme.value][800], -75),
+                paper: shade(colors[settings.accent_scheme.value][600], -65),
+                default: shade(colors[settings.accent_scheme.value][700], -75),
               },
               divider: shade(colors[settings.accent_scheme.value][900], -81),
               secondary: {
-                main: "#e5e8ec",
-                light: shade(colors[settings.accent_scheme.value][800], -66),
-                dark: shade(colors[settings.accent_scheme.value][800], -70),
+                main: shade(colors[settings.accent_scheme.value][200], -29),
+                light: shade(colors[settings.accent_scheme.value][100], -29),
+                dark: shade(colors[settings.accent_scheme.value][400], -29),
+
+                //main: "#e5e8ec",
+                //light: shade(colors[settings.accent_scheme.value][800], -66),
+                //dark: shade(colors[settings.accent_scheme.value][800], -70),
               },
             },
       }),

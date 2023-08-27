@@ -20,53 +20,42 @@ export const Searchbar = ({ placeholder, onChange }: SearchbarProps) => {
   const { settings } = useSettings();
 
   return (
-    <div
-      style={{
-        textAlign: "center",
-        display: "inline-flex",
-        justifyContent: "center",
-        padding: "0px 0px 8px",
+    <Paper
+      component="form"
+      elevation={0}
+      sx={{
+        p: "2px 4px",
+        display: "flex",
+        alignItems: "center",
         width: "100%",
       }}
     >
-      <Paper
-        component="form"
-        variant="outlined"
-        sx={{
-          p: "2px 4px",
-          display: "flex",
-          alignItems: "center",
-          width: "100%",
-          bgcolor: settings.darkmode ? shade(scheme[900], -70) : "rgb(255, 255, 255)",
-        }}
+      <IconButton
+        // onClick={() => {
+        //   onSearch(value);
+        // }}
+        sx={{ p: "10px" }}
+        aria-label="menu"
       >
-        <IconButton
-          // onClick={() => {
-          //   onSearch(value);
-          // }}
-          sx={{ p: "10px" }}
-          aria-label="menu"
-        >
-          <SearchIcon />
-        </IconButton>
-        <FormControl>
-          <InputBase
-            sx={{ ml: 1, flex: 1 }}
-            placeholder={placeholder}
-            inputProps={{
-              "aria-label": placeholder,
-              // onKeyDown: (e: any) => {
-              //   if (e.key === "Enter") {
-              //     e.preventDefault();
-              //     onSearch(value);
-              //   }
-              // },
-            }}
-            onChange={onChange}
-            fullWidth
-          />
-        </FormControl>
-      </Paper>
-    </div>
+        <SearchIcon />
+      </IconButton>
+      <FormControl fullWidth>
+        <InputBase
+          sx={{ ml: 1, flex: 1 }}
+          placeholder={placeholder}
+          inputProps={{
+            "aria-label": placeholder,
+            // onKeyDown: (e: any) => {
+            //   if (e.key === "Enter") {
+            //     e.preventDefault();
+            //     onSearch(value);
+            //   }
+            // },
+          }}
+          onChange={onChange}
+          fullWidth
+        />
+      </FormControl>
+    </Paper>
   );
 };

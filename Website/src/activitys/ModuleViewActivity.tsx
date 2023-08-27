@@ -218,7 +218,7 @@ const ModuleViewActivity = () => {
             <Avatar
               alt={name}
               sx={(theme) => ({
-                bgcolor: scheme[300],
+                bgcolor: theme.palette.primary.light,
                 width: 100,
                 height: 100,
                 boxShadow: "0 -1px 5px rgba(0,0,0,.09), 0 3px 5px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.3), 0 1px 3px rgba(0,0,0,.15)",
@@ -295,7 +295,15 @@ const ModuleViewActivity = () => {
                     },
                   });
                 }}
-                sx={{ bgcolor: scheme[400], minWidth: 160, width: { sm: "unset", xs: "100%" }, alignSelf: "flex-end" }}
+                sx={(theme) => ({
+                  bgcolor: scheme[100],
+                  ":hover": {
+                    bgcolor: scheme[200],
+                  },
+                  minWidth: 160,
+                  width: { sm: "unset", xs: "100%" },
+                  alignSelf: "flex-end",
+                })}
                 variant="contained"
                 disableElevation
               >
@@ -544,7 +552,7 @@ const ModuleViewActivity = () => {
             <Avatar
               alt={name}
               sx={(theme) => ({
-                bgcolor: scheme[300],
+                bgcolor: theme.palette.primary.light,
                 width: 56,
                 height: 56,
                 boxShadow: "0 -1px 5px rgba(0,0,0,.09), 0 3px 5px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.3), 0 1px 3px rgba(0,0,0,.15)",

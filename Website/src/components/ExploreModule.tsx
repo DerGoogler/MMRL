@@ -115,71 +115,60 @@ export const ExploreModule = (props: Props) => {
   };
 
   return (
-    <Box
+    <Card
+      onTap={handleOpen}
       component={GestureDetector}
-      sx={(theme) => ({
+      sx={{
         ":hover": {
           cursor: "pointer",
+          bgcolor: shade(theme.palette.secondary.dark, -42),
         },
-      })}
-      onTap={handleOpen}
-      onHold={() => {
-        os.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+        mt: 1,
+        boxShadow: "none",
       }}
     >
-      <Card
-        sx={{
-          ":hover": {
-            bgcolor: shade(theme.palette.secondary.light, -0.15),
-          },
-          mt: 1,
-          boxShadow: "none",
-          //          boxShadow: "0 -1px 5px rgba(0,0,0,.09), 0 3px 5px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.3), 0 1px 3px rgba(0,0,0,.15)",
-        }}
-      >
-        <CoverHandler />
-        <Box sx={{ p: 2, display: "flex" }}>
-          <Stack spacing={0.5} style={{ flexGrow: 1 }}>
-            <Typography fontWeight={700} color="text.primary">
-              {prop_url.name}
-            </Typography>{" "}
-            <Typography variant="caption" sx={{ fontSize: ".70rem" }} color="text.secondary">
-              <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={0.5}>
-                <span>
-                  {prop_url.version} ({prop_url.versionCode}) /
-                </span>
-                {prop_url.mmrlAuthor && authorData ? (
-                  <span>{authorData.username ? authorData.username : prop_url.author}</span>
-                ) : (
-                  <span>{prop_url.author}</span>
-                )}
-                {authorData?.options?.roles?.verified && <VerifiedIcon sx={{ fontSize: ".70rem" }} />}
-              </Stack>
-            </Typography>
-            <Typography variant="body1" color="text.secondary">
-              {prop_url.description}
-            </Typography>
-          </Stack>
-        </Box>
-        <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ px: 2, py: 1 }}>
-          <Chip
-            size="small"
-            sx={(theme) => ({
-              bgcolor: `${settings.darkmode ? shade(scheme[100], -36) : theme.palette.secondary.light}46`,
-            })}
-            label={formatLastUpdate}
-          />
-          {/* <Stack spacing={0.8} direction="row">
+      <CoverHandler />
+      <Box sx={{ p: 2, display: "flex" }}>
+        <Stack spacing={0.5} style={{ flexGrow: 1 }}>
+          <Typography fontWeight={700} color="text.primary">
+            {prop_url.name}
+          </Typography>{" "}
+          <Typography variant="caption" sx={{ fontSize: ".70rem" }} color="text.secondary">
+            <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={0.5}>
+              <span>
+                {prop_url.version} ({prop_url.versionCode}) /
+              </span>
+              {prop_url.mmrlAuthor && authorData ? (
+                <span>{authorData.username ? authorData.username : prop_url.author}</span>
+              ) : (
+                <span>{prop_url.author}</span>
+              )}
+              {authorData?.options?.roles?.verified && <VerifiedIcon sx={{ fontSize: ".70rem" }} />}
+            </Stack>
+          </Typography>
+          <Typography variant="body1" color="text.secondary">
+            {prop_url.description}
+          </Typography>
+        </Stack>
+      </Box>
+      <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ px: 2, py: 1 }}>
+        <Chip
+          size="small"
+          sx={(theme) => ({
+            bgcolor: `${settings.darkmode ? shade(scheme[100], -36) : theme.palette.secondary.light}46`,
+          })}
+          label={formatLastUpdate}
+        />
+        {/* <Stack spacing={0.8} direction="row">
 Keep for update modules           
           </Stack> */}
-        </Stack>
-        {settings._low_quality_module && isLowQuality && (
-          <Alert style={{ borderRadius: 0 }} severity="warning">
-            <AlertTitle>Low Quality</AlertTitle>
-            Module meets not the requirements of its props
-          </Alert>
-        )}
-      </Card>
-    </Box>
+      </Stack>
+      {settings._low_quality_module && isLowQuality && (
+        <Alert style={{ borderRadius: 0 }} severity="warning">
+          <AlertTitle>Low Quality</AlertTitle>
+          Module meets not the requirements of its props
+        </Alert>
+      )}
+    </Card>
   );
 };
