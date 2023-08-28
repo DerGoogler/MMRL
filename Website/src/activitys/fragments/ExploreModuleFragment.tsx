@@ -108,9 +108,11 @@ const ExploreModuleFragment = (props: ExploreModuleProps) => {
       <Page.RelativeContent>
         <Searchbar placeholder={strings.search_modules} onChange={(e) => setSearch(e.target.value)} />
 
-        {_DATA.currentData().map((module, index) => (
-          <ExploreModule index={index} key={module.id + index} moduleProps={module} />
-        ))}
+        <Stack sx={{ mt: 1 }} direction="column" justifyContent="flex-start" alignItems="center" spacing={1}>
+          {_DATA.currentData().map((module, index) => (
+            <ExploreModule index={index} key={module.id + index} moduleProps={module} />
+          ))}
+        </Stack>
       </Page.RelativeContent>
     </Page>
   );

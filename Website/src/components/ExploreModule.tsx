@@ -123,7 +123,7 @@ export const ExploreModule = (props: Props) => {
           cursor: "pointer",
           bgcolor: shade(theme.palette.secondary.dark, -42),
         },
-        mt: 1,
+        width: "100%",
         boxShadow: "none",
       }}
     >

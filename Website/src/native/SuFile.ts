@@ -23,7 +23,11 @@ class SuFile extends Native<NativeSuFile> {
   }
 
   public read(): string {
-    return this.getInterface.readFile(this.path);
+    if (this.isAndroid) {
+      return this.getInterface.readFile(this.path);
+    } else {
+      return "";
+    }
   }
 
   /**
@@ -34,23 +38,41 @@ class SuFile extends Native<NativeSuFile> {
    */
   public list(): string;
   public list(join?: string): string {
-    return this.getInterface.listFiles(this.path);
+    if (this.isAndroid) {
+      return this.getInterface.listFiles(this.path);
+    } else {
+      return "";
+    }
   }
 
   public exist(): boolean {
-    return this.getInterface.existFile(this.path);
+    if (this.isAndroid) {
+      return this.getInterface.existFile(this.path);
+    } else {
+      return false;
+    }
   }
 
   public delete(): boolean {
-    return this.getInterface.deleteFile(this.path);
+    if (this.isAndroid) {
+      return this.getInterface.deleteFile(this.path);
+    } else {
+      return false;
+    }
   }
 
   public deleteRecursive(): void {
-    this.getInterface.deleteRecursive(this.path);
+    if (this.isAndroid) {
+      this.getInterface.deleteRecursive(this.path);
+    }
   }
 
   public create(): boolean {
-    return this.getInterface.createFile(this.path);
+    if (this.isAndroid) {
+      return this.getInterface.createFile(this.path);
+    } else {
+      return false;
+    }
   }
 
   public static read(path: string): string {

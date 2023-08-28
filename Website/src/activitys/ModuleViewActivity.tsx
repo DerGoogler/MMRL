@@ -3,6 +3,7 @@ import { Toolbar } from "@Components/onsenui/Toolbar";
 import { useStrings } from "@Hooks/useStrings";
 import { Disappear } from "react-disappear";
 import VerifiedIcon from "@mui/icons-material/Verified";
+import { DeleteRounded, RefreshRounded } from "@mui/icons-material";
 import LaunchIcon from "@mui/icons-material/Launch";
 import Box from "@mui/material/Box";
 import React from "react";
@@ -58,6 +59,8 @@ import Paper from "@mui/material/Paper";
 import { BottomToolbar } from "@Components/onsenui/BottomToolbar";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useBaseDialog } from "@Hooks/useBaseDialog";
+import { useLog } from "@Hooks/native/useLog";
+import { SuFile } from "@Native/SuFile";
 
 type Extra = {
   module: ModuleProps;
@@ -81,6 +84,8 @@ const ModuleViewActivity = () => {
   const [open, setOpen] = useStateCallback(false);
   const [scroll, setScroll] = React.useState<DialogProps["scroll"]>("paper");
 
+  const log = useLog("ModuleViewActivity");
+
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
 
   const { modules } = useRepos();
@@ -89,6 +94,7 @@ const ModuleViewActivity = () => {
 
   const { notes_url, zip_url, authorData, last_update } = extra;
   const {
+    id,
     name,
     author,
     mmrlAuthor,
@@ -106,6 +112,11 @@ const ModuleViewActivity = () => {
     mmrlCategory,
     changeBoot,
   } = extra.module;
+
+  const remove = new SuFile(`/data/adb/modules/${id}/remove`);
+  const moduleInstalled = new SuFile(`/data/adb/modules/${id}/module.prop`);
+
+  const [moduleRemoved, setModuleRemoved] = React.useState(remove.exist());
 
   const categories = useFilterCategory(mmrlCategory);
   const { data } = useFetch<string>(notes_url);
@@ -285,30 +296,59 @@ const ModuleViewActivity = () => {
                 </Button>
               )}
 
-              <Button
-                disabled={!zip_url}
-                onClick={() => {
-                  os.open(zip_url, {
-                    target: "_blank",
-                    features: {
-                      color: theme.palette.primary.main,
+              <Stack direction="row" justifyContent="center" alignItems="center" spacing={1}>
+                {/* {os.isAndroid && moduleInstalled.exist() && (
+                  <Button
+                    sx={{
+                      color: scheme[100],
+                      border: `1px solid ${scheme[100]}80`,
+                      minWidth: 160,
+                      width: { sm: "unset", xs: "100%" },
+                      alignSelf: "flex-end",
+                      ":hover": {
+                        color: scheme[200],
+                        border: `1px solid ${scheme[200]}80`,
+                      },
+                    }}
+                    variant="outlined"
+                    startIcon={moduleRemoved ? <RefreshRounded /> : <DeleteRounded />}
+                    onClick={() => {
+                      if (remove.exist()) {
+                        setModuleRemoved(remove.delete());
+                      } else {
+                        setModuleRemoved(!remove.create());
+                      }
+                    }}
+                  >
+                    {moduleRemoved ? "Restore" : "Remove"}
+                  </Button>
+                )} */}
+
+                <Button
+                  disabled={!zip_url}
+                  onClick={() => {
+                    os.open(zip_url, {
+                      target: "_blank",
+                      features: {
+                        color: theme.palette.primary.main,
+                      },
+                    });
+                  }}
+                  sx={(theme) => ({
+                    bgcolor: scheme[100],
+                    ":hover": {
+                      bgcolor: scheme[200],
                     },
-                  });
-                }}
-                sx={(theme) => ({
-                  bgcolor: scheme[100],
-                  ":hover": {
-                    bgcolor: scheme[200],
-                  },
-                  minWidth: 160,
-                  width: { sm: "unset", xs: "100%" },
-                  alignSelf: "flex-end",
-                })}
-                variant="contained"
-                disableElevation
-              >
-                Download
-              </Button>
+                    minWidth: 160,
+                    width: { sm: "unset", xs: "100%" },
+                    alignSelf: "flex-end",
+                  })}
+                  variant="contained"
+                  disableElevation
+                >
+                  Download
+                </Button>
+              </Stack>
             </Stack>
           </Stack>
         </Box>
