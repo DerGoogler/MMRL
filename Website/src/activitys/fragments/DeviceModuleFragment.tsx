@@ -4,6 +4,7 @@ import React from "react";
 import { useActivity } from "@Hooks/useActivity";
 import { useSettings } from "@Hooks/useSettings";
 import { Page } from "@Components/onsenui/Page";
+import Stack from "@mui/material/Stack";
 
 const DeviceModuleFragment = () => {
   const { context } = useActivity();
@@ -62,10 +63,11 @@ const DeviceModuleFragment = () => {
             </Box>
           </StyledCard>
         )} */}
-
-        {modules.map((module) => (
-          <DeviceModule module={module} />
-        ))}
+        <Stack sx={{ mt: 1 }} direction="column" justifyContent="flex-start" alignItems="center" spacing={1}>
+          {modules.map((module) => (
+            <DeviceModule module={module} />
+          ))}
+        </Stack>
       </Page.RelativeContent>
     </Page>
   );

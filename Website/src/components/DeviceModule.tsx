@@ -3,14 +3,26 @@ import { DeleteRounded, RefreshRounded } from "@mui/icons-material";
 import React from "react";
 import { useStrings } from "@Hooks/useStrings";
 import { Android12Switch } from "./Android12Switch";
-import { Box, Card, Divider, Stack, Typography } from "@mui/material";
+import { Box, Card, Divider, Stack, SxProps, Theme, Typography } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { useActivity } from "@Hooks/useActivity";
 import { ConfigureActivity } from "@Activitys/ConfigureActivity";
 import { StyledIconButton } from "./StyledIconButton";
 import { useLog } from "@Hooks/native/useLog";
 import { Properties } from "properties-file";
-import { useSettings } from "@Hooks/useSettings";
+import { colors, useSettings } from "@Hooks/useSettings";
+
+const badgeStyle: (color: (typeof colors)["blue" | "teal" | "red" | "orange"]) => SxProps<Theme> = (color) => {
+  return {
+    px: 1,
+    py: 0.5,
+    borderRadius: 1,
+    display: "flex",
+    typography: "caption",
+    bgcolor: (theme) => (theme.palette.mode === "dark" ? color[900] : color[50]),
+    color: (theme) => (theme.palette.mode === "dark" ? "#fff" : color[700]),
+  };
+};
 
 interface Props {
   module: string;
@@ -46,12 +58,17 @@ const DeviceModule = (props: Props) => {
 
   const { id, name, version, versionCode, author, description, mmrlConfig } = moduleProps;
 
+  const post_service = SuFile.exist(`${settings.def_mod_path}/${module}/post-fs-data.sh`);
+  const late_service = SuFile.exist(`${settings.def_mod_path}/${module}/service.sh`);
+  const post_mount = SuFile.exist(`${settings.def_mod_path}/${module}/post-mount.sh`);
+  const boot_complete = SuFile.exist(`${settings.def_mod_path}/${module}/boot-completed.sh`);
+
   return (
     <>
       <Card
+        elevation={0}
         sx={{
-          mt: 1,
-          boxShadow: "none",
+          width: "100%",
           //          boxShadow: "0 -1px 5px rgba(0,0,0,.09), 0 3px 5px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.3), 0 1px 3px rgba(0,0,0,.15)",
         }}
       >
@@ -68,8 +85,17 @@ const DeviceModule = (props: Props) => {
             </Typography>
           </Stack>
         </Box>
+
+        <Stack direction="row" justifyContent="flex-start" alignItems="center" sx={{ px: 2, pt: 0, pb: 2 }} spacing={1}>
+          {post_service && <Box sx={badgeStyle(colors.red)}>Post service</Box>}
+          {late_service && <Box sx={badgeStyle(colors.blue)}>Late service</Box>}
+          {post_mount && <Box sx={badgeStyle(colors.blue)}>Post mount</Box>}
+          {boot_complete && <Box sx={badgeStyle(colors.teal)}>On boot completed</Box>}
+        </Stack>
+
         <Divider />
-        <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ px: 2, py: 1 }}>
+
+        <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ p: 1 }}>
           <Android12Switch
             checked={isEnabled}
             disabled={isSwitchDisabled}
