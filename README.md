@@ -21,6 +21,13 @@ Magisk Module Repo Loader (MMRL). Allows you to load custom repos with an simple
 - [x] Enable/Disable installed modules
 - [ ] Module install
 - [x] Monet theming
+- [x] Filtering installed modules with regex
+
+#### Root Manager (Android)
+
+- [x] Magisk
+- [x] Magisk Delta
+- [x] KernelSU
 
 ## Screenshots
 
@@ -104,7 +111,7 @@ The MMRL has an own hidding system. This means that bad modules can hidden from 
 
 ### How to get an verified module?
 
-This depends on the general module quality. Not all modules get an verified badge.
+**Updated soon**
 
 # Credits & Thanks
 

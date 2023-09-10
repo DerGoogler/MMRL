@@ -9,9 +9,13 @@ import SettingsActivity from "@Activitys/SettingsActivity";
 import RepoActivity from "@Activitys/RepoActivity";
 import DescriptonActivity from "@Activitys/DescriptonActivity";
 import { useSettings } from "@Hooks/useSettings";
+import ModuleViewActivity from "@Activitys/ModuleViewActivity";
+import ExtensionIcon from "@mui/icons-material/Extension";
+import { useRepos } from "@Hooks/useRepos";
 
 interface AnchorProps {
   noIcon?: boolean;
+  module?: string;
 }
 
 const StyledAnchor = styled("div")(({ theme }) => {
@@ -37,36 +41,56 @@ const StyledAnchor = styled("div")(({ theme }) => {
 });
 
 function Anchor(props: JSX.IntrinsicElements["a"] & AnchorProps) {
-  const { href, children, noIcon, ...rest } = props;
+  const { href, children, noIcon, module, ...rest } = props;
 
   const { theme, scheme } = useTheme();
+
+  const { modules } = useRepos();
+  const { context } = useActivity();
 
   return (
     <StyledAnchor>
       <div
-        href={href}
+        href={!module ? href : module}
         // @ts-ignore
         onClick={() => {
-          href
-            ? os.open(href, {
+          if (module) {
+            const m_ = modules.find((m) => m.id === module);
+
+            if (m_) {
+              context.pushPage({
+                component: ModuleViewActivity,
+                key: "",
+                extra: {
+                  last_update: m_.last_update,
+                  zip_url: m_.zip_url,
+                  authorData: null,
+                  notes_url: m_.notes_url,
+                  module: m_.prop_url,
+                },
+              });
+            }
+          } else {
+            if (href) {
+              os.open(href, {
                 target: "_blank",
                 features: {
                   color: theme.palette.primary.main,
                 },
-              })
-            : null;
+              });
+            }
+          }
         }}
         {...rest}
       >
         {children}
         {!noIcon && (
           <>
-            {" "}
             <Icon
-              icon={LaunchRoundedIcon}
+              icon={!module ? LaunchRoundedIcon : ExtensionIcon}
               sx={{
                 fontSize: 16,
-                marginLeft: "2px",
+                marginLeft: "3.7px",
               }}
             />
           </>

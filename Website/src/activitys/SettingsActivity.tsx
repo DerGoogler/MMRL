@@ -82,33 +82,38 @@ function SettingsActivity() {
               }}
             />
           </ListItem>
-          {/* {os.isAndroid && ( */}
-          <ListItemButton
-            onClick={() => {
-              context.pushPage({
-                component: ModuleFilterConfActivity,
-                key: "",
-                extra: {},
-              });
-            }}
-          >
-            <StyledListItemText primary="Customize device module filters" secondary="Hide modules on device with regex filters" />
-          </ListItemButton>
+          {os.isAndroid && (
+            <>
+              <ListItemButton
+                onClick={() => {
+                  context.pushPage({
+                    component: ModuleFilterConfActivity,
+                    key: "",
+                    extra: {},
+                  });
+                }}
+              >
+                <StyledListItemText primary="Customize device module filters" secondary="Hide modules on device with regex filters" />
+              </ListItemButton>
 
-          <DialogEditTextListItem
-            inputLabel="Modules path"
-            title="Change module path"
-            initialValue={settings.def_mod_path}
-            description="If any root manger uses other path, change it here"
-            onSuccess={(value) => {
-              if (value) {
-                setSettings("def_mod_path", value);
-              }
-            }}
-          >
-            <StyledListItemText primary="Customize default module path" secondary="If any root manger uses other path, change it here" />
-          </DialogEditTextListItem>
-          {/* )} */}
+              <DialogEditTextListItem
+                inputLabel="Modules path"
+                title="Change module path"
+                initialValue={settings.def_mod_path}
+                description="If any root manger uses other path, change it here"
+                onSuccess={(value) => {
+                  if (value) {
+                    setSettings("def_mod_path", value);
+                  }
+                }}
+              >
+                <StyledListItemText
+                  primary="Customize default module path"
+                  secondary="If any root manger uses other path, change it here"
+                />
+              </DialogEditTextListItem>
+            </>
+          )}
           {os.isAndroid && (
             <ListItem>
               <StyledListItemText
