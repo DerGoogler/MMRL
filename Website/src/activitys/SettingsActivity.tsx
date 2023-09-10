@@ -15,11 +15,14 @@ import { Android12Switch } from "@Components/Android12Switch";
 import { useTheme } from "@Hooks/useTheme";
 import { useRepos } from "@Hooks/useRepos";
 import { Shell } from "@Native/Shell";
+import ModuleFilterConfActivity from "./ModuleFilterConfActivity";
+import { DialogEditTextListItem } from "@Components/DialogEditTextListItem";
 
 function SettingsActivity() {
   const { context } = useActivity();
   const { strings } = useStrings();
   const { setRepos } = useRepos();
+  const { patchSettings } = useSettings();
 
   const { theme } = useTheme();
 
@@ -79,6 +82,33 @@ function SettingsActivity() {
               }}
             />
           </ListItem>
+          {/* {os.isAndroid && ( */}
+          <ListItemButton
+            onClick={() => {
+              context.pushPage({
+                component: ModuleFilterConfActivity,
+                key: "",
+                extra: {},
+              });
+            }}
+          >
+            <StyledListItemText primary="Customize device module filters" secondary="Hide modules on device with regex filters" />
+          </ListItemButton>
+
+          <DialogEditTextListItem
+            inputLabel="Modules path"
+            title="Change module path"
+            initialValue={settings.def_mod_path}
+            description="If any root manger uses other path, change it here"
+            onSuccess={(value) => {
+              if (value) {
+                setSettings("def_mod_path", value);
+              }
+            }}
+          >
+            <StyledListItemText primary="Customize default module path" secondary="If any root manger uses other path, change it here" />
+          </DialogEditTextListItem>
+          {/* )} */}
           {os.isAndroid && (
             <ListItem>
               <StyledListItemText
@@ -140,13 +170,19 @@ function SettingsActivity() {
         <Divider />
 
         <List subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>{"Storage"}</ListSubheader>}>
-          {" "}
           <ListItemButton
             onClick={() => {
               setRepos([]);
             }}
           >
-            <StyledListItemText id="switch-list-label-wifi" primary="Clear repositories" />
+            <StyledListItemText primary="Clear repositories" />
+          </ListItemButton>{" "}
+          <ListItemButton
+            onClick={() => {
+              patchSettings();
+            }}
+          >
+            <StyledListItemText primary="Patch settings" secondary="Adds missing settings keys" />
           </ListItemButton>
         </List>
 

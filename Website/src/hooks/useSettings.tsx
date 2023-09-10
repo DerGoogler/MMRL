@@ -1,7 +1,7 @@
 import React, { createContext, useContext } from "react";
 import { colors as kolors } from "@mui/material";
 import { defaultComposer } from "default-composer";
-import { useNativeStorage } from "./useNativeStorage";
+import { SetValue, useNativeStorage } from "./useNativeStorage";
 import { languages_map } from "../locales/languages";
 import { os } from "@Native/Os";
 import { SetStateAction } from "./useStateCallback";
@@ -144,6 +144,10 @@ export interface StorageDeclaration {
   __experimental_local_install: boolean;
   repos: StoredRepo[];
   test: any;
+
+  // Android only
+  def_mod_path: string;
+  mod_filt: string[];
 }
 
 export const INITIAL_SETTINGS: StorageDeclaration = {
@@ -157,9 +161,14 @@ export const INITIAL_SETTINGS: StorageDeclaration = {
   __experimental_local_install: false,
   repos: [],
   test: [],
+
+  // Android only
+  def_mod_path: "/data/adb/modules",
+  mod_filt: ["lost\\+found"],
 };
 
 export interface Context {
+  patchSettings: () => void;
   settings: StorageDeclaration;
   setSettings<K extends keyof StorageDeclaration>(
     key: K,
@@ -169,6 +178,7 @@ export interface Context {
 }
 
 export const SettingsContext = createContext<Context>({
+  patchSettings: () => {},
   settings: INITIAL_SETTINGS,
   setSettings<K extends keyof StorageDeclaration>(
     key: K,
@@ -187,6 +197,9 @@ export const SettingsProvider = (props: React.PropsWithChildren) => {
   return (
     <SettingsContext.Provider
       value={{
+        patchSettings: () => {
+          setSettings(defaultComposer(INITIAL_SETTINGS, settings));
+        },
         settings: defaultComposer(INITIAL_SETTINGS, settings),
         setSettings: (name, state, callback) => {
           setSettings(

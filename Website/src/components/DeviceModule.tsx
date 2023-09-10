@@ -7,10 +7,10 @@ import { Box, Card, Divider, Stack, Typography } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { useActivity } from "@Hooks/useActivity";
 import { ConfigureActivity } from "@Activitys/ConfigureActivity";
-import { StyledCard } from "./StyledCard";
 import { StyledIconButton } from "./StyledIconButton";
 import { useLog } from "@Hooks/native/useLog";
 import { Properties } from "properties-file";
+import { useSettings } from "@Hooks/useSettings";
 
 interface Props {
   module: string;
@@ -18,6 +18,7 @@ interface Props {
 
 const DeviceModule = (props: Props) => {
   const { strings } = useStrings();
+  const { settings } = useSettings();
   const { context, extra } = useActivity<any>();
   const [moduleProps, setModuleProps] = React.useState<Partial<ModuleProps>>({});
   const [isEnabled, setIsEnabled] = React.useState(true);
@@ -28,18 +29,18 @@ const DeviceModule = (props: Props) => {
   const module = props.module;
 
   React.useEffect(() => {
-    const readProps = SuFile.read(`/data/adb/modules/${module}/module.prop`);
+    const readProps = SuFile.read(`${settings.def_mod_path}/${module}/module.prop`);
     setModuleProps(new Properties(readProps).toObject());
   }, []);
 
   React.useEffect(() => {
-    const remove = new SuFile(`/data/adb/modules/${module}/remove`);
+    const remove = new SuFile(`${settings.def_mod_path}/${module}/remove`);
 
     setIsSwitchDisabled(remove.exist());
   }, [isSwitchDisabled]);
 
   React.useEffect(() => {
-    const disable = new SuFile(`/data/adb/modules/${module}/disable`);
+    const disable = new SuFile(`${settings.def_mod_path}/${module}/disable`);
     setIsEnabled(!disable.exist());
   }, [isEnabled]);
 
@@ -74,7 +75,7 @@ const DeviceModule = (props: Props) => {
             disabled={isSwitchDisabled}
             onChange={(e) => {
               const checked = e.target.checked;
-              const disable = new SuFile(`/data/adb/modules/${module}/disable`);
+              const disable = new SuFile(`${settings.def_mod_path}/${module}/disable`);
 
               if (checked) {
                 if (disable.exist()) {
@@ -124,7 +125,7 @@ const DeviceModule = (props: Props) => {
               <StyledIconButton
                 style={{ width: 30, height: 30 }}
                 onClick={() => {
-                  const remove = new SuFile(`/data/adb/modules/${module}/remove`);
+                  const remove = new SuFile(`${settings.def_mod_path}/${module}/remove`);
                   if (remove.exist()) {
                     if (remove.delete()) {
                       setIsSwitchDisabled(false);
@@ -143,7 +144,7 @@ const DeviceModule = (props: Props) => {
               <StyledIconButton
                 style={{ width: 30, height: 30 }}
                 onClick={() => {
-                  const file = new SuFile(`/data/adb/modules/${module}/remove`);
+                  const file = new SuFile(`${settings.def_mod_path}/${module}/remove`);
                   if (file.create()) {
                     setIsSwitchDisabled(true);
                   } else {

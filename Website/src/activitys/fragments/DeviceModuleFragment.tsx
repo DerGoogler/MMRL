@@ -1,13 +1,7 @@
 import DeviceModule from "@Components/DeviceModule";
 import { SuFile } from "@Native/SuFile";
-import { StyledCard } from "@Components/StyledCard";
-import Box from "@mui/material/Box";
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
-import { os } from "@Native/Os";
 import React from "react";
 import { useActivity } from "@Hooks/useActivity";
-import TerminalActivity from "@Activitys/TerminalActivity";
 import { useSettings } from "@Hooks/useSettings";
 import { Page } from "@Components/onsenui/Page";
 
@@ -17,8 +11,22 @@ const DeviceModuleFragment = () => {
   const [modules, setModules] = React.useState<string[]>([]);
 
   React.useEffect(() => {
-    setModules(SuFile.list("/data/adb/modules").split(","));
-  }, []);
+    const dir = SuFile.list(settings.def_mod_path).split(",");
+
+    const regex = settings.mod_filt.map(function (re) {
+      return new RegExp("\\b" + re + "\\b", "i");
+    });
+
+    setModules(
+      dir.filter(function (t) {
+        return (
+          regex.filter(function (re) {
+            return re.test(t);
+          }).length === 0
+        );
+      })
+    );
+  }, [settings.def_mod_path, settings.mod_filt]);
 
   return (
     <Page>

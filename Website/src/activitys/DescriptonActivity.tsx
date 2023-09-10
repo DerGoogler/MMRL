@@ -21,7 +21,7 @@ import VerifiedIcon from "@mui/icons-material/Verified";
 import CommentIcon from "@mui/icons-material/Comment";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import DeviceUnknownIcon from "@mui/icons-material/DeviceUnknown";
-import ModuleSpecsActivity from "./ModuleSpecsActivity";
+import ModuleFilterConfActivity from "./ModuleFilterConfActivity";
 import { parseAndroidVersion } from "@Util/parseAndroidVersion";
 import { useTheme } from "@Hooks/useTheme";
 import { StyledIconButtonWithText } from "@Components/StyledIconButton";
@@ -248,7 +248,7 @@ function DescriptonActivity() {
                     <StyledIconButtonWithText
                       onClick={() => {
                         context.pushPage({
-                          component: ModuleSpecsActivity,
+                          component: ModuleFilterConfActivity,
                           key: "comments_" + prop_url.id,
                           extra: {
                             prop_url: prop_url,
