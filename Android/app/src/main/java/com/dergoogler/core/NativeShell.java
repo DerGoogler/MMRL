@@ -7,6 +7,7 @@ import com.topjohnwu.superuser.CallbackList;
 import com.topjohnwu.superuser.Shell;
 import com.topjohnwu.superuser.ShellUtils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -26,6 +27,27 @@ public class NativeShell {
     @JavascriptInterface
     public String result(String command) {
         return ShellUtils.fastCmd(command);
+    }
+
+    @JavascriptInterface
+    public void isSuccess(String command) {
+        Shell.cmd(command).exec().isSuccess();
+    }
+
+    @JavascriptInterface
+    public void getCode(String command) {
+        Shell.cmd(command).exec().getCode();
+    }
+
+    @JavascriptInterface
+    public boolean isSuAvailable() {
+        try {
+            Runtime.getRuntime().exec("su --version");
+            return true;
+        } catch (IOException e) {
+            // java.io.IOException: Cannot run program "su": error=2, No such file or directory
+            return false;
+        }
     }
 
     @JavascriptInterface

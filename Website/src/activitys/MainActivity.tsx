@@ -51,7 +51,8 @@ const MainActivity = (): JSX.Element => {
 
   const CheckRoot = () => {
     if (os.isAndroid) {
-      if (Shell.isAppGrantedRoot()) {
+      // Shell.isAppGrantedRoot() doesn't work on KSU
+      if (Shell.isSuAvailable()) {
         return MainApplication;
       } else {
         return NoRootActivity;

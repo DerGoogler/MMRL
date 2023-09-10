@@ -9,10 +9,17 @@ interface NativeShell {
    * Executes an command with result
    */
   result(command: string): string;
+  isSuccess(command: string): boolean;
+  getCode(command: string): number;
+  /**
+   * Checks if the app has been granted root privileges
+   * @deprecated Use `Shell.isSuAvailable()` instead
+   */
+  isAppGrantedRoot(): boolean;
   /**
    * Checks if the app has been granted root privileges
    */
-  isAppGrantedRoot(): boolean;
+  isSuAvailable(): boolean;
 }
 
 interface IShell {
@@ -51,8 +58,53 @@ class ShellClass extends Native<NativeShell> {
     }
   }
 
+  public isSuccess(): boolean {
+    if (this.isAndroid) {
+      return this.getInterface.isSuccess(this._command);
+    } else {
+      return false;
+    }
+  }
+
+  public getCode(): number {
+    if (this.isAndroid) {
+      return this.getInterface.getCode(this._command);
+    } else {
+      return 1;
+    }
+  }
+  /**
+   * Checks if the app has been granted root privileges
+   * @deprecated Use `Shell.isSuAvailable()` instead
+   */
   public isAppGrantedRoot(): boolean {
     return this.getInterface.isAppGrantedRoot();
+  }
+
+  /**
+   * Checks if the app has been granted root privileges
+   */
+  public isSuAvailable(): boolean {
+    return this.getInterface.isSuAvailable();
+  }
+
+  /**
+   * Get current installed Superuser version code
+   */
+  public VERSION_CODE(): number {
+    if (this.isAndroid) {
+      return parseInt(this.getInterface.result("su -V"));
+    } else {
+      return 0;
+    }
+  }
+
+  public VERSION_NAME(): string {
+    if (this.isAndroid) {
+      return this.getInterface.result("su -v");
+    } else {
+      return "0:SU";
+    }
   }
 }
 

@@ -36,4 +36,7 @@ class MagiskClass extends Native {
   }
 }
 
+/**
+ * @deprecated Use `Shell` instead
+ */
 export const Magisk: MagiskClass = new MagiskClass();

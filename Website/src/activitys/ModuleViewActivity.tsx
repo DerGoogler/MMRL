@@ -137,7 +137,7 @@ const ModuleViewActivity = () => {
   const renderToolbar = () => {
     return (
       <Toolbar modifier="noshadow">
-        <Toolbar.Center
+        {/* <Toolbar.Center
           sx={{
             display: "flex",
             justifyContent: "left",
@@ -156,7 +156,8 @@ const ModuleViewActivity = () => {
             <CodeRoundedIcon sx={{ mr: 1 }} />
             MMRL
           </Typography>
-        </Toolbar.Center>
+        </Toolbar.Center> */}
+        <Toolbar.Center></Toolbar.Center>
         <Toolbar.Left>
           <Toolbar.BackButton onClick={context.popPage} />
         </Toolbar.Left>

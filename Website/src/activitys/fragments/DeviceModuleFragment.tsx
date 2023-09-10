@@ -23,7 +23,7 @@ const DeviceModuleFragment = () => {
   return (
     <Page>
       <Page.RelativeContent>
-        {settings.__experimental_local_install && (
+        {/* {settings.__experimental_local_install && (
           <StyledCard
             elevation={0}
             onClick={() => {
@@ -53,7 +53,7 @@ const DeviceModuleFragment = () => {
               </Stack>
             </Box>
           </StyledCard>
-        )}
+        )} */}
 
         {modules.map((module) => (
           <DeviceModule module={module} />

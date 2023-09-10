@@ -14,6 +14,7 @@ import { os } from "@Native/Os";
 import { Android12Switch } from "@Components/Android12Switch";
 import { useTheme } from "@Hooks/useTheme";
 import { useRepos } from "@Hooks/useRepos";
+import { Shell } from "@Native/Shell";
 
 function SettingsActivity() {
   const { context } = useActivity();
@@ -78,32 +79,20 @@ function SettingsActivity() {
               }}
             />
           </ListItem>
-          <ListItem>
-            <StyledListItemText
-              id="switch-list-_disable_module_covers"
-              primary={"Disable module covers"}
-              secondary="This may increase app performance"
-            />
-            <Android12Switch
-              edge="end"
-              onChange={(e: any) => {
-                setSettings("_disable_module_covers", e.target.checked);
-              }}
-              checked={settings._disable_module_covers}
-              inputProps={{
-                "aria-labelledby": "switch-list-_disable_module_covers",
-              }}
-            />
-          </ListItem>
           {os.isAndroid && (
             <ListItem>
               <StyledListItemText
                 id="switch-list-__experimental_local_install"
                 primary={"Enable local install"}
-                secondary="Allows you to install local *.zip files (Experimental)"
+                secondary={
+                  <>
+                    Allows you to install local *.zip files (Experimental). <strong>Disabled due KernelSU support.</strong>
+                  </>
+                }
               />
               <Android12Switch
                 edge="end"
+                disabled
                 onChange={(e: any) => {
                   setSettings("__experimental_local_install", e.target.checked);
                 }}
@@ -168,7 +157,7 @@ function SettingsActivity() {
             primary={
               <span>
                 {BuildConfig.APPLICATION_ID} v{BuildConfig.VERSION_NAME} ({BuildConfig.VERSION_CODE})<br />
-                {os.isAndroid ? `${Magisk.VERSION_NAME} (${Magisk.VERSION_CODE})` : ""}
+                {os.isAndroid ? `${Shell.VERSION_NAME()} (${Shell.VERSION_CODE()})` : ""}
               </span>
             }
           />
