@@ -12,6 +12,7 @@ import { useSettings } from "@Hooks/useSettings";
 import ModuleViewActivity from "@Activitys/ModuleViewActivity";
 import ExtensionIcon from "@mui/icons-material/Extension";
 import { useRepos } from "@Hooks/useRepos";
+import FetchTextActivity from "@Activitys/FetchTextActivity";
 
 interface AnchorProps {
   noIcon?: boolean;
@@ -136,14 +137,11 @@ export function Open(props: OpenProps) {
                 os.toast("Missing Url!", "short");
               } else {
                 context.pushPage({
-                  component: DescriptonActivity,
+                  component: FetchTextActivity,
                   key: `desc_open${Math.round(Math.random() * 56)}`,
                   extra: {
-                    request: {
-                      use: true,
-                      url: props.url,
-                    },
-                    shortDesc: props.title,
+                    url: props.url,
+                    title: props.title,
                   },
                 });
               }

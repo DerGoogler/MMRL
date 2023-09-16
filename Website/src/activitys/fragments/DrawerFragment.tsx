@@ -1,5 +1,4 @@
 import { DAPITestActivity } from "@Activitys/DAPITestActivity";
-import DescriptonActivity from "@Activitys/DescriptonActivity";
 import RepoActivity from "@Activitys/RepoActivity";
 import SettingsActivity from "@Activitys/SettingsActivity";
 import { StyledListItemText } from "@Components/StyledListItemText";
@@ -7,6 +6,7 @@ import { useStrings } from "@Hooks/useStrings";
 import { Divider, List, ListItemButton, ListSubheader } from "@mui/material";
 import { Page } from "react-onsenui";
 import { IntentPusher } from "@Hooks/useActivity";
+import FetchTextActivity from "@Activitys/FetchTextActivity";
 
 type Props = {
   renderToolbar: () => JSX.Element;
@@ -69,14 +69,11 @@ export const DrawerFragment = (props: Props) => {
         <ListItemButton
           onClick={() => {
             pushPage({
-              component: DescriptonActivity,
+              component: FetchTextActivity,
               key: "license",
               extra: {
-                request: {
-                  use: true,
-                  url: "https://raw.githubusercontent.com/wiki/DerGoogler/MMRL/License.md",
-                },
                 title: "License",
+                url: "https://raw.githubusercontent.com/wiki/DerGoogler/MMRL/License.md",
               },
             });
             hide();
@@ -87,12 +84,10 @@ export const DrawerFragment = (props: Props) => {
         <ListItemButton
           onClick={() => {
             pushPage({
-              component: DescriptonActivity,
+              component: FetchTextActivity,
               key: "changelog",
               extra: {
-                request: {
-                  url: "https://raw.githubusercontent.com/wiki/DerGoogler/MMRL/Changelog.md",
-                },
+                url: "https://raw.githubusercontent.com/wiki/DerGoogler/MMRL/Changelog.md",
                 title: "Changelog",
               },
             });
