@@ -31,7 +31,7 @@ const HTMLTabbar = onsCustomElement<HTMLElement, Partial<HTMLTabbar>>("ons-tabba
   deprecated: {
     index: "activeIndex",
   },
-});
+})({});
 
 const _Tabbar = React.forwardRef<HTMLElement, HTMLTabbar>((props, ref) => {
   const { visible, hideTabs, renderTabs, ...rest } = props;
@@ -70,7 +70,7 @@ interface HTMLTab {
   badge?: string;
 }
 
-const HTMLTab = onsCustomElement<HTMLElement, HTMLTab>("ons-tab");
+const HTMLTab = onsCustomElement<HTMLElement, HTMLTab>("ons-tab")({});
 
 const Tabbar = Object.assign(_Tabbar, {
   Tab: HTMLTab,

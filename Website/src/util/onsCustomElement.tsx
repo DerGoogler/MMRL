@@ -1,4 +1,5 @@
 // https://github.com/OnsenUI/OnsenUI/blob/90c0aeb2b2acadfefb66a3da038b6b09cfb5b9c8/react-onsenui/src/onsCustomElement.jsx
+import { styled } from "@mui/material";
 import React, { useRef, useEffect } from "react";
 const kebabize = (camelString: string) => camelString.replace(/([a-zA-Z])([A-Z])/g, "$1-$2").toLowerCase();
 
@@ -69,16 +70,18 @@ export default function onsCustomElement<E = HTMLElement, P = {}>(
   WrappedComponent: React.ComponentType<any> | keyof JSX.IntrinsicElements,
   options?: CustomElementOptions
 ) {
-  return React.forwardRef<E, React.DetailedHTMLProps<React.HTMLAttributes<P>, P> & P>((props, _ref) => {
-    const ref = _ref || useRef<E>();
+  return styled(
+    React.forwardRef<E, React.DetailedHTMLProps<React.HTMLAttributes<P>, P> & P>((props, _ref) => {
+      const ref = _ref || useRef<E>();
 
-    const { children, style, ...rest } = props;
-    const { properties } = useCustomElement<Omit<React.DetailedHTMLProps<React.HTMLAttributes<P>, P>, "style" | "children">>(
-      rest,
-      options,
-      ref
-    );
+      const { children, style, ...rest } = props;
+      const { properties } = useCustomElement<Omit<React.DetailedHTMLProps<React.HTMLAttributes<P>, P>, "style" | "children">>(
+        rest,
+        options,
+        ref
+      );
 
-    return <WrappedComponent ref={ref} style={style} children={children} {...properties} />;
-  });
+      return <WrappedComponent ref={ref} style={style} children={children} {...properties} />;
+    })
+  );
 }

@@ -33,7 +33,7 @@ interface HTMLPage {
 
 const HTMLPage = onsCustomElement<HTMLElement, HTMLPage>("ons-page", {
   notAttributes: ["onInfiniteScroll", "onDeviceBackButton"],
-});
+})({});
 
 const _Page = React.forwardRef<HTMLElement, HTMLPage>((props, ref) => {
   const { theme } = useTheme();

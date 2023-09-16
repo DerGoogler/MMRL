@@ -24,4 +24,4 @@ interface HTMLGestureDetector extends React.PropsWithChildren {
   onRotate?: () => void;
 }
 
-export const GestureDetector = onsCustomElement<HTMLElement, HTMLGestureDetector>("ons-gesture-detector");
+export const GestureDetector = onsCustomElement<HTMLElement, HTMLGestureDetector>("ons-gesture-detector")({});

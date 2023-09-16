@@ -1,7 +1,6 @@
 import { Page } from "@Components/onsenui/Page";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import { useStrings } from "@Hooks/useStrings";
-import { Disappear } from "react-disappear";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import { DeleteRounded, RefreshRounded } from "@mui/icons-material";
 import LaunchIcon from "@mui/icons-material/Launch";
@@ -33,8 +32,6 @@ import { parseAndroidVersion } from "@Util/parseAndroidVersion";
 import { Magisk } from "@Native/Magisk";
 import { useTheme } from "@Hooks/useTheme";
 import useShadeColor from "@Hooks/useShadeColor";
-import { useSettings } from "@Hooks/useSettings";
-import { StyledMarkdown } from "@Components/Markdown/StyledMarkdown";
 import { os } from "@Native/Os";
 import { Markup } from "@Components/Markdown";
 import Alert from "@mui/material/Alert";
@@ -42,25 +39,14 @@ import AlertTitle from "@mui/material/AlertTitle";
 import { useFilterCategory } from "@Hooks/useCategory";
 import { useFormatDate } from "@Hooks/useFormatDate";
 import Chip from "@mui/material/Chip";
-import CodeRoundedIcon from "@mui/icons-material/CodeRounded";
-import Icon from "@Components/Icon";
 import CardMedia from "@mui/material/CardMedia";
-import DevicesIcon from "@mui/icons-material/Devices";
-import ButtonGroup from "@mui/material/ButtonGroup";
 import { useSupportIconForUrl } from "@Hooks/useSupportIconForUrl";
 import { useRepos } from "@Hooks/useRepos";
 import { useStateCallback } from "@Hooks/useStateCallback";
-import { Tabbar } from "@Components/onsenui/Tabbar";
-import PermDeviceInformationIcon from "@mui/icons-material/PermDeviceInformation";
-import DescriptionIcon from "@mui/icons-material/Description";
-import BottomNavigation from "@mui/material/BottomNavigation";
-import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import Paper from "@mui/material/Paper";
-import { BottomToolbar } from "@Components/onsenui/BottomToolbar";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { useBaseDialog } from "@Hooks/useBaseDialog";
 import { useLog } from "@Hooks/native/useLog";
 import { SuFile } from "@Native/SuFile";
+import DescriptonActivity from "./DescriptonActivity";
 
 type Extra = {
   module: ModuleProps;
@@ -248,8 +234,7 @@ const ModuleViewActivity = () => {
                 {name}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                {mmrlAuthor && authorData ? <span>{authorData.username ? authorData.username : author}</span> : <span>{author}</span>}
-                {authorData?.options?.roles?.verified && <VerifiedIcon sx={{ ml: 0.5, fontSize: ".70rem" }} />}
+                <span>{author}</span>
               </Typography>
             </Box>
           </Box>
@@ -432,7 +417,21 @@ const ModuleViewActivity = () => {
                   <Typography variant="h5" component="div">
                     About this module
                   </Typography>
-                  <IconButton onClick={handleClickOpen("paper")} sx={{ ml: 0.5 }} aria-label="Example">
+                  <IconButton
+                    onClick={() => {
+                      context.pushPage({
+                        component: DescriptonActivity,
+                        key: "",
+                        extra: {
+                          desc: data,
+                          name: name,
+                          logo: mmrlLogo,
+                        },
+                      });
+                    }}
+                    sx={{ ml: 0.5 }}
+                    aria-label="Example"
+                  >
                     <ArrowForwardIcon />
                   </IconButton>
                 </Stack>
@@ -566,74 +565,6 @@ const ModuleViewActivity = () => {
           </Card>
         </Stack>
       </Page.RelativeContent>
-
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        scroll={scroll}
-        fullScreen={fullScreen}
-        aria-labelledby="scroll-dialog-title"
-        aria-describedby="scroll-dialog-description"
-      >
-        <DialogTitle
-          sx={{
-            m: 0,
-            p: 2,
-            display: "flex",
-            justifyContent: "left",
-            alignItems: "center",
-          }}
-          id="customized-dialog-title"
-        >
-          <Box
-            sx={{
-              display: "flex",
-            }}
-          >
-            <Avatar
-              alt={name}
-              sx={(theme) => ({
-                bgcolor: theme.palette.primary.light,
-                width: 56,
-                height: 56,
-                boxShadow: "0 -1px 5px rgba(0,0,0,.09), 0 3px 5px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.3), 0 1px 3px rgba(0,0,0,.15)",
-                borderRadius: "20%",
-                mr: 1.5,
-                fontSize: 25,
-              })}
-              src={mmrlLogo}
-            >
-              {name.charAt(0).toUpperCase()}
-            </Avatar>
-
-            <Box sx={{ alignSelf: "center", ml: 0.5, mr: 0.5, width: "100%" }}>
-              <Typography variant="body1" fontWeight="bold" noWrap>
-                {name}
-              </Typography>
-              <Typography variant="body2" color="text.secondary" noWrap>
-                About this module
-              </Typography>
-            </Box>
-          </Box>
-          <IconButton
-            aria-label="close"
-            onClick={handleClose}
-            sx={{
-              position: "absolute",
-              right: 8,
-              color: (theme) => theme.palette.grey[500],
-            }}
-          >
-            <CloseIcon />
-          </IconButton>
-        </DialogTitle>
-
-        <DialogContent dividers={scroll === "paper"}>
-          <DialogContentText id="scroll-dialog-description" tabIndex={-1}>
-            <Markup>{data ? data : "Unable to fetch data"}</Markup>
-          </DialogContentText>
-        </DialogContent>
-      </Dialog>
     </Page>
   );
 };

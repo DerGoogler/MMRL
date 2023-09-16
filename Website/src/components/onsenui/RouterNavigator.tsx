@@ -31,7 +31,7 @@ interface State {
 
 type Noop = () => void;
 
-const HTMLNavigator = onsCustomElement<HTMLElement, Partial<HTMLNavigator>>("ons-navigator");
+const HTMLNavigator = onsCustomElement<HTMLElement, Partial<HTMLNavigator>>("ons-navigator")({});
 
 class RouterNavigatorClass extends React.Component<HTMLNavigatorClass, State> {
   private cancelUpdate: boolean;

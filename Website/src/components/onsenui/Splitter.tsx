@@ -30,15 +30,15 @@ interface HTMLSplitterSide {
 
 const HTMLSplitter = onsCustomElement<HTMLElement, HTMLSplitter>("ons-splitter", {
   notAttributes: ["onDeviceBackButton"],
-});
-const HTMLSplitterContent = onsCustomElement<HTMLElement, HTMLSplitterContent>("ons-splitter-content");
+})({});
+const HTMLSplitterContent = onsCustomElement<HTMLElement, HTMLSplitterContent>("ons-splitter-content")({});
 const HTMLSplitterSide = onsCustomElement<HTMLElement, HTMLSplitterSide>("ons-splitter-side", {
   deprecated: {
     onOpen: "onPostOpen",
     onClose: "onPostClose",
   },
   notAttributes: ["isOpen"],
-});
+})({});
 
 const _SplitterSide = React.forwardRef<HTMLElement, HTMLSplitterSide>((props, ref) => {
   const { width, ...rest } = props;
