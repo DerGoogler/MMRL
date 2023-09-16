@@ -14,7 +14,6 @@ import { MMRLApp } from "./custom-elements/app";
 
 import "onsenui/css/onsenui.css";
 import "@Styles/default.scss";
-import { FirebaseProvider } from "@Hooks/useFirebase";
 
 ons.platform.select("android");
 
@@ -27,23 +26,21 @@ ons.ready(() => {
 
   render(
     <React.StrictMode>
-      <FirebaseProvider>
-        <SettingsProvider>
-          <StringProvider>
-            <ThemeProvider>
-              <Preventer prevent="contextmenu">
-                <RepoProvider>
-                  <ConfirmProvider>
-                    <CssBaseline />
-                    <LightTheme />
-                    <MainActivity />
-                  </ConfirmProvider>
-                </RepoProvider>
-              </Preventer>
-            </ThemeProvider>
-          </StringProvider>
-        </SettingsProvider>
-      </FirebaseProvider>
+      <SettingsProvider>
+        <StringProvider>
+          <ThemeProvider>
+            <Preventer prevent="contextmenu">
+              <RepoProvider>
+                <ConfirmProvider>
+                  <CssBaseline />
+                  <LightTheme />
+                  <MainActivity />
+                </ConfirmProvider>
+              </RepoProvider>
+            </Preventer>
+          </ThemeProvider>
+        </StringProvider>
+      </SettingsProvider>
     </React.StrictMode>,
     "mmrl-app"
   );

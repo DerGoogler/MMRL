@@ -38,8 +38,6 @@ import ons from "onsenui";
 import { StyledIconButton, StyledIconButtonWithText } from "@Components/StyledIconButton";
 import { StyledCard } from "@Components/StyledCard";
 import { useFormatDate } from "@Hooks/useFormatDate";
-import { ref, onValue, query } from "firebase/database";
-import { useFirebase } from "@Hooks/useFirebase";
 import { useConfirm } from "material-ui-confirm";
 import { useTheme } from "@Hooks/useTheme";
 import CloseIcon from "@mui/icons-material/Close";
@@ -61,7 +59,6 @@ export const LocalRepository = (props: LocalRepositoryProps) => {
   const { strings } = useStrings();
   const { settings, setSettings } = useSettings();
   const confirm = useConfirm();
-  const { auth, firebaseVoid } = useFirebase();
   const { actions } = useRepos();
   const [enabled, setEnabled] = React.useState(!settings.disabled_repos.includes(repo.id));
   const { theme, scheme } = useTheme();
@@ -86,21 +83,6 @@ export const LocalRepository = (props: LocalRepositoryProps) => {
 
   const [authorData, setAuthorData] = React.useState<any>({});
 
-  React.useEffect(() => {
-    console.log(repo);
-    if (repo?.mmrlOwner) {
-      firebaseVoid((auth, db) => {
-        const dbRef = ref(db, "users/" + repo.mmrlOwner);
-        onValue(query(dbRef), (snapshot) => {
-          setAuthorData(snapshot.val());
-          console.log(snapshot.val());
-        });
-      });
-    } else {
-      setAuthorData(undefined);
-    }
-  }, []);
-
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -124,8 +106,7 @@ export const LocalRepository = (props: LocalRepositoryProps) => {
               {repo.name}
             </Typography>{" "}
             <Typography variant="caption" sx={{ fontSize: ".70rem" }} color="text.secondary">
-              {repo.mmrlOwner ? <span>{authorData.username ? authorData.username : "Unknown owner"}</span> : <span>Unknown owner</span>}
-              {authorData?.options?.roles?.verified && <VerifiedIcon sx={{ fontSize: ".70rem" }} />}
+              <span>Unknown owner</span>
             </Typography>
             <Typography variant="body1" color="text.secondary">
               {formatLastUpdate}

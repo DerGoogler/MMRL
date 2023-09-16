@@ -16,7 +16,6 @@ import { useModuleOptions } from "@Hooks/useModuleOptions";
 import { GestureDetector } from "./onsenui/GestureDetector";
 import { ref, onValue, query } from "firebase/database";
 import React from "react";
-import { useFirebase } from "@Hooks/useFirebase";
 import { useTheme } from "@Hooks/useTheme";
 import useShadeColor from "@Hooks/useShadeColor";
 import ModuleViewActivity from "@Activitys/ModuleViewActivity";
@@ -33,7 +32,6 @@ export const ExploreModule = (props: Props) => {
   const { settings } = useSettings();
   const { theme, scheme } = useTheme();
   const shade = useShadeColor();
-  const { auth, firebaseVoid } = useFirebase();
 
   const { id, notes_url, zip_url, last_update, prop_url } = props.moduleProps;
 
@@ -44,21 +42,6 @@ export const ExploreModule = (props: Props) => {
   if (isHidden) {
     return null;
   }
-
-  const [authorData, setAuthorData] = React.useState<any>({});
-
-  React.useEffect(() => {
-    if (prop_url?.mmrlAuthor) {
-      firebaseVoid((auth, db) => {
-        const dbRef = ref(db, "users/" + prop_url.mmrlAuthor);
-        onValue(query(dbRef), (snapshot) => {
-          setAuthorData(snapshot.val());
-        });
-      });
-    } else {
-      setAuthorData(undefined);
-    }
-  }, []);
 
   const handleOpen = () => {
     // context.pushPage({
@@ -81,7 +64,6 @@ export const ExploreModule = (props: Props) => {
       extra: {
         last_update: last_update,
         zip_url: zip_url,
-        authorData: authorData,
         notes_url: notes_url,
         module: prop_url,
       },
@@ -138,12 +120,7 @@ export const ExploreModule = (props: Props) => {
               <span>
                 {prop_url.version} ({prop_url.versionCode}) /
               </span>
-              {prop_url.mmrlAuthor && authorData ? (
-                <span>{authorData.username ? authorData.username : prop_url.author}</span>
-              ) : (
-                <span>{prop_url.author}</span>
-              )}
-              {authorData?.options?.roles?.verified && <VerifiedIcon sx={{ fontSize: ".70rem" }} />}
+              <span>{prop_url.author}</span>
             </Stack>
           </Typography>
           <Typography variant="body1" color="text.secondary">
