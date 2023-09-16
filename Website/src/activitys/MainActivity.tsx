@@ -33,9 +33,14 @@ const MainActivity = (): JSX.Element => {
     setIsSplitterOpen(true);
   };
 
+  const erudaRef = React.useRef<HTMLElement | null>(null);
+
   React.useEffect(() => {
     if (settings.eruda_console_enabled) {
-      eruda.init();
+      eruda.init({
+        container: erudaRef.current as HTMLElement,
+        tool: ["console", "elements", "resources", "info"],
+      });
     } else {
       if ((window as any).eruda) {
         eruda.destroy();
@@ -179,6 +184,7 @@ const MainActivity = (): JSX.Element => {
 
     return (
       <Page
+        ref={erudaRef}
         renderToolbar={() => {
           return (
             <Toolbar modifier="noshadow">

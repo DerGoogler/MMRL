@@ -106,6 +106,20 @@ class ShellClass extends Native<NativeShell> {
       return "0:SU";
     }
   }
+
+  /**
+   * Determine if MMRL runs with KernelSU
+   */
+  public get isKernelSU(): boolean {
+    return /(\d+\.\d+\.\d+):KernelSU/i.test(this.VERSION_NAME()) ? true : false;
+  }
+
+  /**
+   * Determine if MMRL runs with Magisk
+   */
+  public get isMagisk(): boolean {
+    return /(\d+\.\d+):MAGISKSU/i.test(this.VERSION_NAME()) ? true : false;
+  }
 }
 
 export const Shell: ShellClass = new ShellClass();

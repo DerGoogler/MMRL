@@ -5,6 +5,9 @@ import { useActivity } from "@Hooks/useActivity";
 import { useSettings } from "@Hooks/useSettings";
 import { Page } from "@Components/onsenui/Page";
 import Stack from "@mui/material/Stack";
+import { Shell } from "@Native/Shell";
+import { Box, Card, Typography } from "@mui/material";
+import TerminalActivity from "@Activitys/TerminalActivity";
 
 const DeviceModuleFragment = () => {
   const { context } = useActivity();
@@ -15,7 +18,7 @@ const DeviceModuleFragment = () => {
     const dir = SuFile.list(settings.def_mod_path).split(",");
 
     const regex = settings.mod_filt.map(function (re) {
-      return new RegExp("\\b" + re + "\\b", "i");
+      return new RegExp("\\b" + re + "\\b", "gmi");
     });
 
     setModules(
@@ -32,9 +35,9 @@ const DeviceModuleFragment = () => {
   return (
     <Page>
       <Page.RelativeContent>
-        {/* {settings.__experimental_local_install && (
-          <StyledCard
-            elevation={0}
+        {settings.__experimental_local_install && Shell.isMagisk && (
+          <Card
+            variant="outlined"
             onClick={() => {
               // @ts-ignore
               Chooser.getFile(
@@ -61,8 +64,8 @@ const DeviceModuleFragment = () => {
                 </Typography>
               </Stack>
             </Box>
-          </StyledCard>
-        )} */}
+          </Card>
+        )}
         <Stack sx={{ mt: 1 }} direction="column" justifyContent="flex-start" alignItems="center" spacing={1}>
           {modules.map((module) => (
             <DeviceModule module={module} />

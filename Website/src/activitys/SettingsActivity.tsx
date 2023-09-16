@@ -141,14 +141,12 @@ function SettingsActivity() {
                 id="switch-list-__experimental_local_install"
                 primary={"Enable local install"}
                 secondary={
-                  <>
-                    Allows you to install local *.zip files (Experimental). <strong>Disabled due KernelSU support.</strong>
-                  </>
+                  <>Allows you to install local *.zip files (Experimental). {Shell.isKernelSU && <strong>Disabled due KernelSU.</strong>}</>
                 }
               />
               <Android12Switch
                 edge="end"
-                disabled
+                disabled={Shell.isKernelSU}
                 onChange={(e: any) => {
                   setSettings("__experimental_local_install", e.target.checked);
                 }}
