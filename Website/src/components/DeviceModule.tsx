@@ -66,10 +66,9 @@ const DeviceModule = (props: Props) => {
   return (
     <>
       <Card
-        elevation={0}
+        variant="outlined"
         sx={{
           width: "100%",
-          //          boxShadow: "0 -1px 5px rgba(0,0,0,.09), 0 3px 5px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.3), 0 1px 3px rgba(0,0,0,.15)",
         }}
       >
         <Box sx={{ p: 2, display: "flex" }}>

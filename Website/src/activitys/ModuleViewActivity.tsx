@@ -42,11 +42,10 @@ import Chip from "@mui/material/Chip";
 import CardMedia from "@mui/material/CardMedia";
 import { useSupportIconForUrl } from "@Hooks/useSupportIconForUrl";
 import { useRepos } from "@Hooks/useRepos";
-import { useStateCallback } from "@Hooks/useStateCallback";
-import useMediaQuery from "@mui/material/useMediaQuery";
 import { useLog } from "@Hooks/native/useLog";
 import { SuFile } from "@Native/SuFile";
 import DescriptonActivity from "./DescriptonActivity";
+import { useSettings } from "@Hooks/useSettings";
 
 type Extra = {
   module: ModuleProps;
@@ -56,27 +55,15 @@ type Extra = {
   last_update: string;
 };
 
-function useMultipleRandom<T>(arr: T[], num: number): T[] {
-  const ref = React.useRef<T[]>([...arr].sort(() => 0.5 - Math.random()));
-
-  return ref.current.slice(0, num);
-}
-
 const ModuleViewActivity = () => {
-  const shade = useShadeColor();
   const { strings } = useStrings();
-  const { theme, scheme } = useTheme();
+  const { settings } = useSettings();
+  const { theme, scheme, shade } = useTheme();
   const { context, extra } = useActivity<Extra>();
-  const [open, setOpen] = useStateCallback(false);
-  const [scroll, setScroll] = React.useState<DialogProps["scroll"]>("paper");
 
   const log = useLog("ModuleViewActivity");
 
-  const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
-
   const { modules } = useRepos();
-
-  const more_modules = useMultipleRandom<Module>(modules, 6);
 
   const { notes_url, zip_url, authorData, last_update } = extra;
   const {
@@ -109,40 +96,9 @@ const ModuleViewActivity = () => {
   const formatLastUpdate = useFormatDate(last_update);
   const { SupportIcon, supportText } = useSupportIconForUrl(support);
 
-  const handleClickOpen = (scrollType: DialogProps["scroll"]) => () => {
-    setOpen(true);
-    setScroll(scrollType);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  console.log(categories);
-
   const renderToolbar = () => {
     return (
       <Toolbar modifier="noshadow">
-        {/* <Toolbar.Center
-          sx={{
-            display: "flex",
-            justifyContent: "left",
-            alignItems: "center",
-          }}
-        >
-          <Typography
-            sx={{
-              display: "flex",
-              justifyContent: "left",
-              alignItems: "center",
-              fontSize: 20,
-            }}
-            component="span"
-          >
-            <CodeRoundedIcon sx={{ mr: 1 }} />
-            MMRL
-          </Typography>
-        </Toolbar.Center> */}
         <Toolbar.Center></Toolbar.Center>
         <Toolbar.Left>
           <Toolbar.BackButton onClick={context.popPage} />
@@ -320,15 +276,16 @@ const ModuleViewActivity = () => {
                       },
                     });
                   }}
-                  sx={(theme) => ({
-                    bgcolor: scheme[100],
+                  sx={{
+                    color: !settings.darkmode ? scheme[600] : "unset",
+                    bgcolor: !settings.darkmode ? scheme[100] : "unset",
                     ":hover": {
                       bgcolor: scheme[200],
                     },
                     minWidth: 160,
                     width: { sm: "unset", xs: "100%" },
                     alignSelf: "flex-end",
-                  })}
+                  }}
                   variant="contained"
                   disableElevation
                 >
@@ -355,7 +312,7 @@ const ModuleViewActivity = () => {
           )}
 
           {mmrlScreenshots && (
-            <Card sx={{ boxShadow: "none", /*width: { xs: "100%", sm: "100vh" },*/ width: "100%" }}>
+            <Card variant="outlined" sx={{ /*width: { xs: "100%", sm: "100vh" },*/ width: "100%" }}>
               <CardContent>
                 <Typography variant="h5" component="div">
                   Images
@@ -396,11 +353,9 @@ const ModuleViewActivity = () => {
 
           {data ? (
             <Card
+              variant="outlined"
               sx={{
-                // width: { xs: "100%", sm: "100vh" },
-
                 width: "100%",
-                boxShadow: "none",
               }}
             >
               <CardContent>
@@ -510,11 +465,11 @@ const ModuleViewActivity = () => {
           ) : null}
 
           <Card
+            variant="outlined"
             sx={{
               // width: { xs: "100%", sm: "100vh" },
 
               width: "100%",
-              boxShadow: "none",
             }}
           >
             <CardContent>

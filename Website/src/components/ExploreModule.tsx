@@ -1,23 +1,12 @@
-import { Alert, AlertTitle, Box, Card, CardMedia, Chip, Divider, Stack, Typography } from "@mui/material";
+import { Alert, AlertTitle, Box, Card, CardMedia, Chip, Stack, Typography } from "@mui/material";
 import { useActivity } from "@Hooks/useActivity";
 import { useStrings } from "@Hooks/useStrings";
-import DescriptonActivity from "@Activitys/DescriptonActivity";
-import { VerifiedRounded } from "@mui/icons-material";
-import ThumbUpIcon from "@mui/icons-material/ThumbUp";
-import VerifiedIcon from "@mui/icons-material/Verified";
-import { os } from "@Native/Os";
-import { StyledCard } from "./StyledCard";
 import { useLowQualityModule } from "@Hooks/useLowQualityModule";
-import { StyledIconButton, StyledIconButtonWithText } from "./StyledIconButton";
-import { useSettings } from "@Hooks/useSettings";
-import { isMobile } from "react-device-detect";
+import { colors, useSettings } from "@Hooks/useSettings";
 import { useFormatDate } from "@Hooks/useFormatDate";
 import { useModuleOptions } from "@Hooks/useModuleOptions";
 import { GestureDetector } from "./onsenui/GestureDetector";
-import { ref, onValue, query } from "firebase/database";
-import React from "react";
 import { useTheme } from "@Hooks/useTheme";
-import useShadeColor from "@Hooks/useShadeColor";
 import ModuleViewActivity from "@Activitys/ModuleViewActivity";
 
 interface Props {
@@ -30,8 +19,7 @@ export const ExploreModule = (props: Props) => {
   const { context } = useActivity();
   const { strings } = useStrings();
   const { settings } = useSettings();
-  const { theme, scheme } = useTheme();
-  const shade = useShadeColor();
+  const { theme, scheme, shade } = useTheme();
 
   const { id, notes_url, zip_url, last_update, prop_url } = props.moduleProps;
 
@@ -98,15 +86,15 @@ export const ExploreModule = (props: Props) => {
 
   return (
     <Card
+      variant="outlined"
       onTap={handleOpen}
       component={GestureDetector}
       sx={{
         ":hover": {
           cursor: "pointer",
-          bgcolor: shade(theme.palette.secondary.dark, -42),
+          bgcolor: !settings.darkmode ? shade(colors[settings.accent_scheme.value][100], 7.6) : "unset",
         },
         width: "100%",
-        boxShadow: "none",
       }}
     >
       <CoverHandler />

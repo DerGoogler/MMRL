@@ -22,7 +22,7 @@ export const Searchbar = ({ placeholder, onChange }: SearchbarProps) => {
   return (
     <Paper
       component="form"
-      elevation={0}
+      variant="outlined"
       sx={{
         p: "2px 4px",
         display: "flex",

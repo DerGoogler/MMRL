@@ -24,6 +24,10 @@ export const accent_colors: Picker<string, any>[] = [
     value: "blueGrey",
   },
   {
+    name: "Dark & Grey",
+    value: "darkGrey",
+  },
+  {
     name: "Cyan",
     value: "cyan",
   },
@@ -104,10 +108,24 @@ const monet = {
   900: os.getMonetColor("system_accent2_900"),
 };
 
+const darkGrey = {
+  50: "#bcc8d4",
+  100: "#a9b4be",
+  200: "#96a0a9",
+  300: "#838c94",
+  400: "#70787f",
+  500: "#5e646a",
+  600: "#4b5054",
+  700: "#383c3f",
+  800: "#25282a",
+  900: "#121415",
+};
+
 export const colors = {
   amber: kolors.amber,
   blue: kolors.blue,
   blueGrey: kolors.blueGrey,
+  darkGrey: darkGrey,
   brown: kolors.brown,
   cyan: kolors.cyan,
   deepOrange: kolors.deepOrange,

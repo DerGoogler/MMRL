@@ -95,9 +95,9 @@ export const LocalRepository = (props: LocalRepositoryProps) => {
   return (
     <React.Fragment>
       <Card
+        variant="outlined"
         sx={{
           width: "100%",
-          boxShadow: "none",
         }}
       >
         <Box sx={{ p: 2, display: "flex" }}>
