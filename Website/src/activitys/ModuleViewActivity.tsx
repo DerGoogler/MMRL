@@ -213,15 +213,15 @@ const ModuleViewActivity = () => {
               {support && (
                 <Button
                   sx={{
-                    color: scheme[100],
-                    border: `1px solid ${scheme[100]}80`,
+                    color: settings.darkmode ? scheme[700] : shade(scheme[200], settings.shade_value),
+                    border: settings.darkmode ? `1px solid ${scheme[500]}` : `1px solid ${shade(scheme[600], settings.shade_value)}`,
+                    ":hover": {
+                      color: settings.darkmode ? scheme[700] : shade(scheme[200], settings.shade_value),
+                      border: settings.darkmode ? `1px solid ${scheme[700]}` : `1px solid ${shade(scheme[200], settings.shade_value)}`,
+                    },
                     minWidth: 160,
                     width: { sm: "unset", xs: "100%" },
                     alignSelf: "flex-end",
-                    ":hover": {
-                      color: scheme[200],
-                      border: `1px solid ${scheme[200]}80`,
-                    },
                   }}
                   variant="outlined"
                   startIcon={<SupportIcon />}
@@ -277,10 +277,10 @@ const ModuleViewActivity = () => {
                     });
                   }}
                   sx={{
-                    color: !settings.darkmode ? scheme[600] : "unset",
-                    bgcolor: !settings.darkmode ? scheme[100] : "unset",
+                    color: settings.darkmode ? scheme[900] : scheme[600],
+                    bgcolor: settings.darkmode ? scheme[500] : shade(scheme[600], settings.shade_value),
                     ":hover": {
-                      bgcolor: scheme[200],
+                      bgcolor: settings.darkmode ? scheme[700] : shade(scheme[200], settings.shade_value),
                     },
                     minWidth: 160,
                     width: { sm: "unset", xs: "100%" },

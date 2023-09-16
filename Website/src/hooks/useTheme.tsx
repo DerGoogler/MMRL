@@ -76,26 +76,17 @@ export const ThemeProvider = (props: React.PropsWithChildren) => {
           : {
               mode: "dark",
               primary: {
-                main: shade(colors[settings.accent_scheme.value][200], -29),
-                light: shade(colors[settings.accent_scheme.value][100], -29),
-                dark: shade(colors[settings.accent_scheme.value][400], -29),
+                main: shade(colors[settings.accent_scheme.value][200], settings.shade_value),
+                light: shade(colors[settings.accent_scheme.value][100], settings.shade_value),
+                dark: shade(colors[settings.accent_scheme.value][400], settings.shade_value),
                 // light: shade(colors[settings.accent_scheme.value][300], -10),
                 // main: shade(colors[settings.accent_scheme.value][500], -29),
               },
               background: {
-                paper: shade(colors[settings.accent_scheme.value][600], -65),
-                default: shade(colors[settings.accent_scheme.value][700], -75),
+                paper: shade(colors[settings.accent_scheme.value][600], settings.shade_value),
+                default: shade(colors[settings.accent_scheme.value][700], settings.shade_value),
               },
-              divider: shade(colors[settings.accent_scheme.value][900], -81),
-              secondary: {
-                main: shade(colors[settings.accent_scheme.value][200], -29),
-                light: shade(colors[settings.accent_scheme.value][100], -29),
-                dark: shade(colors[settings.accent_scheme.value][400], -29),
-
-                //main: "#e5e8ec",
-                //light: shade(colors[settings.accent_scheme.value][800], -66),
-                //dark: shade(colors[settings.accent_scheme.value][800], -70),
-              },
+              divider: shade(colors[settings.accent_scheme.value][900], settings.shade_value),
             },
       }),
     [settings.darkmode, settings.accent_scheme]

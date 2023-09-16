@@ -1,7 +1,6 @@
 import { Theme, styled } from "@mui/material";
 import React from "react";
 import { useSettings } from "../../hooks/useSettings";
-import useShadeColor from "../../hooks/useShadeColor";
 import { useTheme } from "@Hooks/useTheme";
 
 interface Props {
@@ -10,9 +9,8 @@ interface Props {
 }
 
 export const StyledMarkdown = styled("article")(() => {
-  const { theme, scheme } = useTheme();
-  const { settings, setSettings } = useSettings();
-  const shade = useShadeColor();
+  const { theme, scheme, shade } = useTheme();
+  const { settings } = useSettings();
 
   return {
     msTextSizeAdjust: "100%",
@@ -263,7 +261,7 @@ export const StyledMarkdown = styled("article")(() => {
       padding: "16px",
       overflow: "auto",
       lineHeight: 1.45,
-      backgroundColor: settings.darkmode ? theme.palette.secondary.light + "46" : "#f6f8fa",
+      backgroundColor: !settings.darkmode ? scheme[100] + "46" : shade(scheme[600], settings.shade_value),
       borderRadius: theme.shape.borderRadius,
       "code,\n    tt": {
         display: "inline",
@@ -450,7 +448,7 @@ export const StyledMarkdown = styled("article")(() => {
       padding: "0.2em 0.4em",
       margin: "0",
       fontSize: "85%",
-      backgroundColor: "rgba(175, 184, 193, 0.2)",
+      backgroundColor: !settings.darkmode ? scheme[100] + "46" : shade(scheme[600], settings.shade_value),
       borderRadius: "6px",
     },
     "code br,\n  tt br": { display: "none" },
@@ -464,7 +462,7 @@ export const StyledMarkdown = styled("article")(() => {
         overflow: "auto",
         fontSize: "85%",
         lineHeight: 1.45,
-        backgroundColor: "#f6f8fa",
+        backgroundColor: !settings.darkmode ? scheme[100] + "46" : shade(scheme[600], settings.shade_value),
         borderRadius: "6px",
       },
     },

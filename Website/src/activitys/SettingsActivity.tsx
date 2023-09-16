@@ -1,4 +1,4 @@
-import { Divider, List, ListItem, ListItemButton, ListSubheader } from "@mui/material";
+import { Divider, InputAdornment, List, ListItem, ListItemButton, ListSubheader } from "@mui/material";
 import { BuildConfig } from "@Native/BuildConfig";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -59,6 +59,26 @@ function SettingsActivity() {
               }}
             />
           </ListItem>
+          {settings.darkmode && (
+            <DialogEditTextListItem
+              InputProps={{
+                startAdornment: <InputAdornment position="start">-</InputAdornment>,
+              }}
+              inputLabel="Shading"
+              type="number"
+              title="Apply custom shading"
+              initialValue={settings.shade_value.toString().replace("-", "")}
+              description="Use with care, if to dark you may not able to see the UI anymore."
+              onSuccess={(value) => {
+                if (value) {
+                  setSettings("shade_value", Number("-" + value));
+                }
+              }}
+            >
+              <StyledListItemText primary="Apply custom shade" />
+            </DialogEditTextListItem>
+          )}
+
           <ListPickerItem id="accent-color" targetSetting="accent_scheme" title={strings.accent_color} contentMap={accent_colors} />
           <ListPickerItem id="language" targetSetting="language" title={strings.language} contentMap={languages_map} />
         </List>
@@ -98,6 +118,7 @@ function SettingsActivity() {
 
               <DialogEditTextListItem
                 inputLabel="Modules path"
+                type="text"
                 title="Change module path"
                 initialValue={settings.def_mod_path}
                 description="If any root manger uses other path, change it here"

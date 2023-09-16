@@ -137,7 +137,13 @@ export const LocalRepository = (props: LocalRepositoryProps) => {
           />
 
           <Stack spacing={0.8} direction="row">
-            <Button onClick={handleClickOpen} variant="text">
+            <Button
+              sx={{
+                color: scheme[500],
+              }}
+              onClick={handleClickOpen}
+              variant="text"
+            >
               More
             </Button>
           </Stack>

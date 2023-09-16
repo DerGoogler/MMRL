@@ -161,7 +161,7 @@ export interface StorageDeclaration {
   _disable_module_covers: boolean;
   __experimental_local_install: boolean;
   repos: StoredRepo[];
-  test: any;
+  shade_value: number;
 
   // Android only
   def_mod_path: string;
@@ -178,7 +178,7 @@ export const INITIAL_SETTINGS: StorageDeclaration = {
   _disable_module_covers: false,
   __experimental_local_install: false,
   repos: [],
-  test: [],
+  shade_value: -80,
 
   // Android only
   def_mod_path: "/data/adb/modules",
