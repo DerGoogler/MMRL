@@ -8,10 +8,12 @@ import { Page } from "@Components/onsenui/Page";
 import { useStrings } from "@Hooks/useStrings";
 import { Tabbar, TabbarRenderTab } from "@Components/onsenui/Tabbar";
 import { useRepos } from "@Hooks/useRepos";
+import React from "react";
 
 const MainApplication = () => {
   const { strings } = useStrings();
   const { context } = useActivity();
+  const [index, setIndex] = React.useState(0);
 
   const filteredModules = (modules: Module[], search: string) =>
     modules.filter(
@@ -57,7 +59,19 @@ const MainApplication = () => {
 
   return (
     <Page modifier="noshadow" renderToolbar={renderToolbar}>
-      <Tabbar modifier="noshadow" hideTabs={!os.isAndroid} swipeable={false} position={"top"} renderTabs={renderTabs} />
+      <Tabbar
+        modifier="noshadow"
+        hideTabs={!os.isAndroid}
+        swipeable={false}
+        position={"top"}
+        index={index}
+        onPreChange={(event) => {
+          if (event.index != index) {
+            setIndex(event.index);
+          }
+        }}
+        renderTabs={renderTabs}
+      />
     </Page>
   );
 };

@@ -129,45 +129,49 @@ export const RepoProvider = (props: React.PropsWithChildren) => {
   }, []);
 
   const addRepo = (data: AddRepoData) => {
-    if (link.validURL(data.url)) {
-      fetch(data.url)
-        .then((response) => response.json())
-        .then((response) => {
-          const ajv = new Ajv(); // options can be passed, e.g. {allErrors: true}
-          const validate = ajv.compile(repo_schema);
-          const valid = validate(response) as boolean;
+    if (repos.length <= 5) {
+      if (link.validURL(data.url)) {
+        fetch(data.url)
+          .then((response) => response.json())
+          .then((response) => {
+            const ajv = new Ajv(); // options can be passed, e.g. {allErrors: true}
+            const validate = ajv.compile(repo_schema);
+            const valid = validate(response) as boolean;
 
-          if (valid) {
-            setRepos(
-              (prev) => [
-                ...prev,
-                {
-                  id: "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
-                    var r = (Math.random() * 16) | 0,
-                      v = c == "x" ? r : (r & 0x3) | 0x8;
-                    return v.toString(16);
-                  }),
-                  name: response.name || "Unknown Repository",
-                  mmrlOwner: response.mmrlOwner || null,
-                  website: response.website || null,
-                  support: response.support || null,
-                  donate: response.donate || null,
-                  submitModule: response.submitModules || null,
-                  last_update: response.last_update || 0,
-                  modules: data.url,
-                  isOn: false,
-                },
-              ],
-              data.callback
-            );
-          } else {
-            log.e(JSON.stringify(validate.errors, null, 4));
-            os.toast("Repository schema does not match", Toast.LENGTH_SHORT);
-          }
-        })
-        .catch((e) => (data.callback ? data.callback(e) : log.e(e)));
+            if (valid) {
+              setRepos(
+                (prev) => [
+                  ...prev,
+                  {
+                    id: "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+                      var r = (Math.random() * 16) | 0,
+                        v = c == "x" ? r : (r & 0x3) | 0x8;
+                      return v.toString(16);
+                    }),
+                    name: response.name || "Unknown Repository",
+                    mmrlOwner: response.mmrlOwner || null,
+                    website: response.website || null,
+                    support: response.support || null,
+                    donate: response.donate || null,
+                    submitModule: response.submitModules || null,
+                    last_update: response.last_update || 0,
+                    modules: data.url,
+                    isOn: false,
+                  },
+                ],
+                data.callback
+              );
+            } else {
+              log.e(JSON.stringify(validate.errors, null, 4));
+              os.toast("Repository schema does not match", Toast.LENGTH_SHORT);
+            }
+          })
+          .catch((e) => (data.callback ? data.callback(e) : log.e(e)));
+      } else {
+        os.toast("The given link isn't valid", Toast.LENGTH_SHORT);
+      }
     } else {
-      os.toast("The given link isn't valid.", Toast.LENGTH_SHORT);
+      os.toast("You can't add more than five repos", Toast.LENGTH_SHORT);
     }
   };
 

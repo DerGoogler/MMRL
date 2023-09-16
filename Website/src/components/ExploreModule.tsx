@@ -120,7 +120,7 @@ export const ExploreModule = (props: Props) => {
         <Chip
           size="small"
           sx={(theme) => ({
-            bgcolor: `${settings.darkmode ? shade(scheme[100], -36) : theme.palette.secondary.light}46`,
+            bgcolor: `${settings.darkmode ? shade(scheme[200], -24.5) : shade(scheme[300], 49)}46`,
           })}
           label={formatLastUpdate}
         />

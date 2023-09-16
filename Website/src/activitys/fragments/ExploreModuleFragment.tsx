@@ -3,17 +3,18 @@ import { Searchbar } from "@Components/Searchbar";
 import React from "react";
 import { useActivity } from "@Hooks/useActivity";
 import { useRepos } from "@Hooks/useRepos";
-import { Pagination, Stack } from "@mui/material";
+import { Box, Pagination, Stack, Typography } from "@mui/material";
 import { useStrings } from "@Hooks/useStrings";
 import { usePagination } from "@Hooks/usePagination";
 import RepoActivity from "@Activitys/RepoActivity";
 import { useSettings } from "@Hooks/useSettings";
-import DescriptonActivity from "@Activitys/DescriptonActivity";
-import { Properties } from "properties-file";
-import { useStateCallback } from "@Hooks/useStateCallback";
+import NorthEastRoundedIcon from "@mui/icons-material/NorthEastRounded";
 import { useTheme } from "@Hooks/useTheme";
 import { Page, RenderFunction } from "@Components/onsenui/Page";
 import { BottomToolbar } from "@Components/onsenui/BottomToolbar";
+import Icon from "@Components/Icon";
+import { MissingInternet } from "@Components/MissingInternet";
+import { useNetwork } from "@Hooks/useNetwork";
 
 export interface ExploreModuleProps {
   renderToolbar?: RenderFunction;
@@ -26,6 +27,7 @@ const ExploreModuleFragment = (props: ExploreModuleProps) => {
   const { settings } = useSettings();
   const { scheme, theme } = useTheme();
   const { modules, repos } = useRepos();
+  const { isNetworkAvailable } = useNetwork();
   const [search, setSearch] = React.useState("");
 
   const applyFilter = props.applyFilter(modules, search);
@@ -36,35 +38,60 @@ const ExploreModuleFragment = (props: ExploreModuleProps) => {
   const count = Math.ceil(applyFilter.length / PER_PAGE);
   const _DATA = usePagination(applyFilter, PER_PAGE);
 
+  if (!isNetworkAvailable) {
+    return (
+      <Page>
+        <MissingInternet />
+      </Page>
+    );
+  }
+
   if (repos.length === 0) {
     return (
-      <h4
-        style={{
-          color: theme.palette.secondary.dark,
-          position: "absolute",
-          left: "50%",
-          top: "50%",
-          WebkitTransform: "translate(-50%, -50%)",
-          transform: "translate(-50%, -50%)",
-        }}
-      >
-        <span>
-          Looks empty here... Add an{" "}
-          <span
-            style={{
+      <Page>
+        <Stack
+          component="h4"
+          sx={{
+            color: theme.palette.secondary.dark,
+            width: "100%",
+            height: "100%",
+            m: "unset",
+          }}
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+          spacing={1}
+        >
+          <Box>Looks empty here... Add an</Box>
+          <Stack
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+            spacing={0.5}
+            sx={{
               color: theme.palette.primary.dark,
+              ":hover": {
+                cursor: "pointer",
+              },
             }}
             onClick={() => {
               context.pushPage({
                 component: RepoActivity,
                 key: "repos",
+                extra: {},
               });
             }}
           >
-            {strings.repository}
-          </span>
-        </span>
-      </h4>
+            <Box>{strings.repository}</Box>
+            <Icon
+              icon={NorthEastRoundedIcon}
+              sx={{
+                fontSize: 18,
+              }}
+            />
+          </Stack>
+        </Stack>
+      </Page>
     );
   }
 

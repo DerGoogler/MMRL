@@ -22,12 +22,12 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { os } from "@Native/Os";
 import { useStrings } from "@Hooks/useStrings";
 import { Page } from "@Components/onsenui/Page";
-import { For } from "@Components/For";
 import { RecommendedRepo } from "./components/RecommendedRepo";
 import { LocalRepository } from "./components/LocalRepository";
+import { useNetwork } from "@Hooks/useNetwork";
 
 const RepoActivity = () => {
-  const MAX_REPO_LENGTH: number = 5;
+  const { isNetworkAvailable } = useNetwork();
   const { context } = useActivity();
   const { strings } = useStrings();
 
@@ -38,7 +38,11 @@ const RepoActivity = () => {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
-    setOpen(true);
+    if (isNetworkAvailable) {
+      setOpen(true);
+    } else {
+      os.toast("Please chack your internet connection", Toast.LENGTH_SHORT);
+    }
   };
 
   const handleClose = () => {
@@ -92,18 +96,23 @@ const RepoActivity = () => {
               <LocalRepository key={"repo_" + index} repo={repo} />
             ))}
           </Stack>
-        </Page.RelativeContent>
-        <Page.RelativeContent zeroMargin>
-          {filteredRepos.length !== 0 && <Divider />}
-          <List
-            subheader={
-              <ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>{strings.explore_repositories}</ListSubheader>
-            }
-          >
-            {recommended_repos.map((repo) => (
-              <RecommendedRepo key={"recomm_" + repo.module_count} name={repo.name} moduleCount={repo.module_count} link={repo.link} />
-            ))}
-          </List>
+
+          {isNetworkAvailable && (
+            <>
+              {filteredRepos.length !== 0 && <Divider />}
+              <List
+                subheader={
+                  <ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>
+                    {strings.explore_repositories}
+                  </ListSubheader>
+                }
+              >
+                {recommended_repos.map((repo) => (
+                  <RecommendedRepo key={"recomm_" + repo.module_count} name={repo.name} moduleCount={repo.module_count} link={repo.link} />
+                ))}
+              </List>
+            </>
+          )}
         </Page.RelativeContent>
 
         <Dialog open={open} onClose={handleClose}>

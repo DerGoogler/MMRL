@@ -111,7 +111,7 @@ const MainActivity = (): JSX.Element => {
     const route = {
       component: props.component,
       props: {
-        key: props.component.name || props.key,
+        key: props.key || props.component.name,
       },
     };
 

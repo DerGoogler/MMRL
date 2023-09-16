@@ -83,6 +83,7 @@ const RelativeContent = styled(Content)((props: ContentProps) => {
 
   return {
     boxSizing: "border-box",
+    height: "100%",
     minWidth: props.minWidth ? props.minWidth : 200,
     maxWidth: props.maxWidth ? props.maxWidth : 980,
     margin: "0 auto",

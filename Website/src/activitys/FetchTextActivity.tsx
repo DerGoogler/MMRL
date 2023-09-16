@@ -4,8 +4,11 @@ import { useActivity } from "@Hooks/useActivity";
 import React from "react";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import { Page } from "@Components/onsenui/Page";
-import { useStrings } from "@Hooks/useStrings";
-import { useTheme } from "@Hooks/useTheme";
+import Stack from "@mui/material/Stack";
+import Box from "@mui/material/Box";
+import Icon from "@Components/Icon";
+import { useNetwork } from "@Hooks/useNetwork";
+import { MissingInternet } from "@Components/MissingInternet";
 
 type FetchTextActivityExtra = {
   title: string;
@@ -22,8 +25,7 @@ type Action<T> = { type: "loading" } | { type: "fetched"; payload: T } | { type:
 
 function FetchTextActivity() {
   const { context, extra } = useActivity<FetchTextActivityExtra>();
-  const { strings } = useStrings();
-  const { theme } = useTheme();
+  const { isNetworkAvailable } = useNetwork();
   const { title, url } = extra;
 
   const initialState: State<string> = {
@@ -54,7 +56,7 @@ function FetchTextActivity() {
 
   React.useEffect(() => {
     // Do nothing if the url is not given
-    if (!url) return;
+    if (!url || !isNetworkAvailable) return;
 
     cancelRequest.current = false;
 
@@ -107,34 +109,35 @@ function FetchTextActivity() {
     );
   };
 
+  if (!isNetworkAvailable) {
+    return (
+      <Page renderToolbar={renderToolbar}>
+        <MissingInternet />
+      </Page>
+    );
+  }
+
+  if (!state.data) {
+    return (
+      <Page renderToolbar={renderToolbar}>
+        <ProgressCircular
+          indeterminate
+          style={{
+            position: "absolute",
+            left: "50%",
+            top: "50%",
+            WebkitTransform: "translate(-50%, -50%)",
+            transform: "translate(-50%, -50%)",
+          }}
+        />
+      </Page>
+    );
+  }
+
   return (
     <Page renderToolbar={renderToolbar}>
-      <Page.RelativeContent zeroMargin>
-        {!state.data ? (
-          <ProgressCircular
-            indeterminate
-            style={{
-              position: "absolute",
-              left: "50%",
-              top: "50%",
-              WebkitTransform: "translate(-50%, -50%)",
-              transform: "translate(-50%, -50%)",
-            }}
-          />
-        ) : (
-          <>
-            <Markup
-              sx={{
-                p: {
-                  xs: 1,
-                  sm: 1,
-                  md: 0,
-                },
-              }}
-              children={state.data}
-            />
-          </>
-        )}
+      <Page.RelativeContent>
+        <Markup children={state.data} />
       </Page.RelativeContent>
     </Page>
   );
