@@ -163,9 +163,22 @@ export interface StorageDeclaration {
   repos: StoredRepo[];
   shade_value: number;
 
-  // Android only
-  def_mod_path: string;
-  mod_filt: string[];
+  // default paths
+  mod_tree: string;
+  mod_prop: string;
+  mod_system: string;
+  mod_sepolicy: string;
+
+  // service paths
+  mod_late_service: string;
+  mod_post_service: string;
+  mod_mounted: string;
+  mod_boot: string;
+
+  // status paths
+  mod_s_mount: string;
+  mod_disable: string;
+  mod_remove: string;
 }
 
 export const INITIAL_SETTINGS: StorageDeclaration = {
@@ -180,9 +193,22 @@ export const INITIAL_SETTINGS: StorageDeclaration = {
   repos: [],
   shade_value: -80,
 
-  // Android only
-  def_mod_path: "/data/adb/modules",
-  mod_filt: ["lost\\+found"],
+  // default paths
+  mod_tree: "/data/adb/modules",
+  mod_prop: "module.prop",
+  mod_system: "system.prop",
+  mod_sepolicy: "sepolicy.rule",
+
+  // service paths
+  mod_late_service: "service.sh",
+  mod_post_service: "post-fs-data.sh",
+  mod_mounted: "post-mount.sh",
+  mod_boot: "boot-completed.sh",
+
+  // status paths
+  mod_s_mount: "skip_mount",
+  mod_disable: "disable",
+  mod_remove: "remove",
 };
 
 export interface Context {

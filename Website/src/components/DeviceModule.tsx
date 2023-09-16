@@ -12,7 +12,7 @@ import { useLog } from "@Hooks/native/useLog";
 import { Properties } from "properties-file";
 import { colors, useSettings } from "@Hooks/useSettings";
 
-const badgeStyle: (color: (typeof colors)["blue" | "teal" | "red" | "orange"]) => SxProps<Theme> = (color) => {
+export const badgeStyle: (color: (typeof colors)["blue" | "teal" | "red" | "orange"]) => SxProps<Theme> = (color) => {
   return {
     px: 1,
     py: 0.5,
@@ -40,28 +40,34 @@ const DeviceModule = (props: Props) => {
 
   const module = props.module;
 
+  const readProps = new SuFile(`${settings.mod_tree}/${module}/${settings.mod_prop}`);
   React.useEffect(() => {
-    const readProps = SuFile.read(`${settings.def_mod_path}/${module}/module.prop`);
-    setModuleProps(new Properties(readProps).toObject());
+    if (readProps.exist()) {
+      setModuleProps(new Properties(readProps.read()).toObject());
+    }
   }, []);
 
   React.useEffect(() => {
-    const remove = new SuFile(`${settings.def_mod_path}/${module}/remove`);
+    const remove = new SuFile(`${settings.mod_tree}/${module}/${settings.mod_remove}`);
 
     setIsSwitchDisabled(remove.exist());
   }, [isSwitchDisabled]);
 
   React.useEffect(() => {
-    const disable = new SuFile(`${settings.def_mod_path}/${module}/disable`);
+    const disable = new SuFile(`${settings.mod_tree}/${module}/${settings.mod_remove}`);
     setIsEnabled(!disable.exist());
   }, [isEnabled]);
 
   const { id, name, version, versionCode, author, description, mmrlConfig } = moduleProps;
 
-  const post_service = SuFile.exist(`${settings.def_mod_path}/${module}/post-fs-data.sh`);
-  const late_service = SuFile.exist(`${settings.def_mod_path}/${module}/service.sh`);
-  const post_mount = SuFile.exist(`${settings.def_mod_path}/${module}/post-mount.sh`);
-  const boot_complete = SuFile.exist(`${settings.def_mod_path}/${module}/boot-completed.sh`);
+  const post_service = SuFile.exist(`${settings.mod_tree}/${module}/${settings.mod_post_service}`);
+  const late_service = SuFile.exist(`${settings.mod_tree}/${module}/${settings.mod_late_service}`);
+  const post_mount = SuFile.exist(`${settings.mod_tree}/${module}/${settings.mod_mounted}`);
+  const boot_complete = SuFile.exist(`${settings.mod_tree}/${module}/${settings.mod_boot}`);
+
+  if (!readProps.exist()) {
+    return null;
+  }
 
   return (
     <>
@@ -100,7 +106,7 @@ const DeviceModule = (props: Props) => {
             disabled={isSwitchDisabled}
             onChange={(e) => {
               const checked = e.target.checked;
-              const disable = new SuFile(`${settings.def_mod_path}/${module}/disable`);
+              const disable = new SuFile(`${settings.mod_tree}/${module}/${settings.mod_disable}`);
 
               if (checked) {
                 if (disable.exist()) {
@@ -150,7 +156,7 @@ const DeviceModule = (props: Props) => {
               <StyledIconButton
                 style={{ width: 30, height: 30 }}
                 onClick={() => {
-                  const remove = new SuFile(`${settings.def_mod_path}/${module}/remove`);
+                  const remove = new SuFile(`${settings.mod_tree}/${module}/${settings.mod_remove}`);
                   if (remove.exist()) {
                     if (remove.delete()) {
                       setIsSwitchDisabled(false);
@@ -169,7 +175,7 @@ const DeviceModule = (props: Props) => {
               <StyledIconButton
                 style={{ width: 30, height: 30 }}
                 onClick={() => {
-                  const file = new SuFile(`${settings.def_mod_path}/${module}/remove`);
+                  const file = new SuFile(`${settings.mod_tree}/${module}/${settings.mod_remove}`);
                   if (file.create()) {
                     setIsSwitchDisabled(true);
                   } else {

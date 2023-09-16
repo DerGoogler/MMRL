@@ -12,8 +12,9 @@ import TextField from "@mui/material/TextField";
 import React from "react";
 
 interface DialogEditTextListItemProps extends React.PropsWithChildren {
-  inputLabel: string;
+  inputLabel: React.ReactNode;
   title: string;
+  disabled?: boolean;
   initialValue: string;
   description?: string;
   type?: React.HTMLInputTypeAttribute;
@@ -42,7 +43,9 @@ export const DialogEditTextListItem = (props: DialogEditTextListItemProps) => {
 
   return (
     <>
-      <ListItemButton onClick={handleClickOpen}>{props.children}</ListItemButton>
+      <ListItemButton disabled={props.disabled} onClick={handleClickOpen}>
+        {props.children}
+      </ListItemButton>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{props.title}</DialogTitle>
         <DialogContent>

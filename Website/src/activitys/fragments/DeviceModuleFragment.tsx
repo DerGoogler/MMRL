@@ -15,22 +15,8 @@ const DeviceModuleFragment = () => {
   const [modules, setModules] = React.useState<string[]>([]);
 
   React.useEffect(() => {
-    const dir = SuFile.list(settings.def_mod_path).split(",");
-
-    const regex = settings.mod_filt.map(function (re) {
-      return new RegExp("\\b" + re + "\\b", "gmi");
-    });
-
-    setModules(
-      dir.filter(function (t) {
-        return (
-          regex.filter(function (re) {
-            return re.test(t);
-          }).length === 0
-        );
-      })
-    );
-  }, [settings.def_mod_path, settings.mod_filt]);
+    setModules(SuFile.list(settings.mod_tree).split(","));
+  }, [settings]);
 
   return (
     <Page>
