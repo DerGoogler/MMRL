@@ -10,8 +10,9 @@ import { InputBaseProps } from "@mui/material/InputBase";
 import ListItemButton from "@mui/material/ListItemButton";
 import TextField from "@mui/material/TextField";
 import React from "react";
+import { CustomTextField } from "./TextField";
 
-interface DialogEditTextListItemProps extends React.PropsWithChildren {
+export interface DialogEditTextListItemProps extends React.PropsWithChildren {
   inputLabel: React.ReactNode;
   title: string;
   disabled?: boolean;
@@ -20,6 +21,9 @@ interface DialogEditTextListItemProps extends React.PropsWithChildren {
   type?: React.HTMLInputTypeAttribute;
   onSuccess: (value: string) => void;
   InputProps?: Partial<InputBaseProps>;
+  counter?: boolean;
+  helperText?: string;
+  maxLength?: number;
 }
 
 export const DialogEditTextListItem = (props: DialogEditTextListItemProps) => {
@@ -51,16 +55,19 @@ export const DialogEditTextListItem = (props: DialogEditTextListItemProps) => {
         <DialogContent>
           {props.description && <DialogContentText>{props.description}</DialogContentText>}
 
-          <TextField
+          <CustomTextField
             autoFocus
             fullWidth
             margin="dense"
-            type={props.type}
+            type={props.type || "text"}
             label={props.inputLabel}
             value={textInput}
             variant="outlined"
             onChange={handleRepoLinkChange}
             InputProps={props.InputProps}
+            counter={props.counter}
+            helperText={props.helperText}
+            inputProps={{ maxLength: props.maxLength }}
           />
         </DialogContent>
         <DialogActions>

@@ -143,6 +143,7 @@ const DeviceModule = (props: Props) => {
                     component: ConfigureActivity,
                     key: `${module}_configure`,
                     extra: {
+                      configFile: mmrlConfig,
                       modulename: module,
                     },
                   });

@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import { InputBaseProps } from "@mui/material/InputBase";
 
-const CustomTextField = React.forwardRef<HTMLInputElement, MuiTextFieldProps & { counter?: boolean }>((props: any, ref) => {
+const CustomTextField = React.forwardRef<HTMLInputElement, MuiTextFieldProps & { counter?: boolean }>((props, ref) => {
   const { counter = false, helperText, ...other } = props;
 
   if (counter && !props.inputProps?.maxLength) {
@@ -21,7 +21,7 @@ const CustomTextField = React.forwardRef<HTMLInputElement, MuiTextFieldProps & {
       helperText={
         <Box component="span" sx={{ display: "flex", justifyContent: "space-between" }}>
           <span>{helperText}</span>
-          {counter && <span>{`${(props.value as string).length} / ${props.inputProps.maxLength}`}</span>}
+          {counter && <span>{`${(props.value as string).length} / ${props.inputProps?.maxLength}`}</span>}
         </Box>
       }
     />
