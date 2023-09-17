@@ -5,20 +5,17 @@ import useShadeColor from "../hooks/useShadeColor";
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import IconButton from "@mui/material/IconButton";
-import SearchIcon from "@mui/icons-material/Search";
 import { useTheme } from "@Hooks/useTheme";
 import { useSettings } from "@Hooks/useSettings";
+import FilterListIcon from "@mui/icons-material/FilterList";
 
 type SearchbarProps = {
+  onFilterClick?: React.MouseEventHandler<HTMLButtonElement>;
   onChange: React.ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>;
   placeholder: string;
 };
 
-export const Searchbar = ({ placeholder, onChange }: SearchbarProps) => {
-  const { scheme } = useTheme();
-  const shade = useShadeColor();
-  const { settings } = useSettings();
-
+export const Searchbar = ({ placeholder, onChange, onFilterClick }: SearchbarProps) => {
   return (
     <Paper
       component="form"
@@ -30,14 +27,8 @@ export const Searchbar = ({ placeholder, onChange }: SearchbarProps) => {
         width: "100%",
       }}
     >
-      <IconButton
-        // onClick={() => {
-        //   onSearch(value);
-        // }}
-        sx={{ p: "10px" }}
-        aria-label="menu"
-      >
-        <SearchIcon />
+      <IconButton onClick={onFilterClick} sx={{ p: "10px" }} aria-label="menu">
+        <FilterListIcon />
       </IconButton>
       <FormControl fullWidth>
         <InputBase
