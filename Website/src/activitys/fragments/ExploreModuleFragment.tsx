@@ -3,7 +3,19 @@ import { Searchbar } from "@Components/Searchbar";
 import React from "react";
 import { useActivity } from "@Hooks/useActivity";
 import { useRepos } from "@Hooks/useRepos";
-import { Box, Pagination, Stack, Typography } from "@mui/material";
+import Stack from "@mui/material/Stack";
+import Pagination from "@mui/material/Pagination";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import InputLabel from "@mui/material/InputLabel";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { useStrings } from "@Hooks/useStrings";
 import { usePagination } from "@Hooks/usePagination";
 import RepoActivity from "@Activitys/RepoActivity";
@@ -30,13 +42,39 @@ const ExploreModuleFragment = (props: ExploreModuleProps) => {
   const { isNetworkAvailable } = useNetwork();
   const [search, setSearch] = React.useState("");
 
-  const applyFilter = props.applyFilter(modules, search);
+  const [open, setOpen] = React.useState(false);
+  const [exploreFilter, setExploreFilter] = React.useState<number | string>("none");
+
+  const filterSystem = () => {
+    const applyFilter = props.applyFilter(modules, search);
+
+    switch (exploreFilter) {
+      case "none":
+        return applyFilter;
+      case "date_oldest":
+        return applyFilter.sort(function (a, b) {
+          var da = new Date(a.last_update).getTime();
+          var db = new Date(b.last_update).getTime();
+
+          return da - db;
+        });
+      case "date_newest":
+        return applyFilter.sort(function (a, b) {
+          var da = new Date(a.last_update).getTime();
+          var db = new Date(b.last_update).getTime();
+
+          return db - da;
+        });
+      default:
+        return applyFilter;
+    }
+  };
 
   const [page, setPage] = React.useState(1);
 
   const PER_PAGE = 20;
-  const count = Math.ceil(applyFilter.length / PER_PAGE);
-  const _DATA = usePagination(applyFilter, PER_PAGE);
+  const count = Math.ceil(filterSystem().length / PER_PAGE);
+  const _DATA = usePagination(filterSystem(), PER_PAGE);
 
   if (!isNetworkAvailable) {
     return (
@@ -95,20 +133,20 @@ const ExploreModuleFragment = (props: ExploreModuleProps) => {
     );
   }
 
-  // if (modulesLoading) {
-  //   return (
-  //     <ProgressCircular
-  //       indeterminate
-  //       style={{
-  //         position: "absolute",
-  //         left: "50%",
-  //         top: "50%",
-  //         WebkitTransform: "translate(-50%, -50%)",
-  //         transform: "translate(-50%, -50%)",
-  //       }}
-  //     />
-  //   );
-  // } else {
+  const handleChange = (event: SelectChangeEvent<typeof exploreFilter>) => {
+    setExploreFilter(event.target.value);
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event: React.SyntheticEvent<unknown>, reason?: string) => {
+    if (reason !== "backdropClick") {
+      setOpen(false);
+    }
+  };
+
   return (
     <Page
       renderToolbar={props.renderToolbar}
@@ -133,7 +171,7 @@ const ExploreModuleFragment = (props: ExploreModuleProps) => {
       }}
     >
       <Page.RelativeContent>
-        <Searchbar placeholder={strings.search_modules} onChange={(e) => setSearch(e.target.value)} />
+        <Searchbar onFilterClick={handleClickOpen} placeholder={strings.search_modules} onChange={(e) => setSearch(e.target.value)} />
 
         <Stack sx={{ mt: 1 }} direction="column" justifyContent="flex-start" alignItems="center" spacing={1}>
           {_DATA.currentData().map((module, index) => (
@@ -141,9 +179,50 @@ const ExploreModuleFragment = (props: ExploreModuleProps) => {
           ))}
         </Stack>
       </Page.RelativeContent>
+
+      <Dialog disableEscapeKeyDown open={open} onClose={handleClose}>
+        <DialogTitle>Apply a filter</DialogTitle>
+        <DialogContent>
+          <Box component="form" sx={{ display: "flex", flexWrap: "wrap" }}>
+            <FormControl sx={{ m: 1, minWidth: 120 }}>
+              <InputLabel id="demo-dialog-select-label">Filter</InputLabel>
+              <Select
+                labelId="demo-dialog-select-label"
+                id="demo-dialog-select"
+                value={exploreFilter}
+                onChange={handleChange}
+                input={<OutlinedInput label="Filter" />}
+              >
+                <MenuItem value="none">
+                  <em>No filter</em>
+                </MenuItem>
+                <MenuItem value="date_oldest">By date (oldest)</MenuItem>
+                <MenuItem value="date_newest">By date (newest)</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            sx={{
+              color: scheme[500],
+            }}
+            onClick={handleClose}
+          >
+            Cancel
+          </Button>
+          <Button
+            sx={{
+              color: scheme[500],
+            }}
+            onClick={handleClose}
+          >
+            Apply
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Page>
   );
-  // }
 };
 
 export default ExploreModuleFragment;
