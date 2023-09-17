@@ -27,8 +27,8 @@ import { Page } from "@Components/onsenui/Page";
 import { os } from "@Native/Os";
 import { useActivity } from "@Hooks/useActivity";
 import { useStrings } from "@Hooks/useStrings";
-import DescriptonActivity from "./DescriptonActivity";
 import { Markup } from "@Components/Markdown";
+import FetchTextActivity from "./FetchTextActivity";
 
 interface CustomCommand extends Command {
   icon: React.ElementType;
@@ -140,11 +140,11 @@ const DAPITestActivity = () => {
 
   const handlePreview = () => {
     context.pushPage({
-      component: DescriptonActivity,
+      component: FetchTextActivity,
       key: "dapi-preview",
       extra: {
         title: "Preview",
-        desc: description,
+        data: description,
       },
     });
   };

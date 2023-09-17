@@ -12,6 +12,7 @@ import { MissingInternet } from "@Components/MissingInternet";
 
 type FetchTextActivityExtra = {
   title: string;
+  data: string;
   url: string;
 };
 
@@ -30,7 +31,7 @@ function FetchTextActivity() {
 
   const initialState: State<string> = {
     error: undefined,
-    data: undefined,
+    data: extra.data || undefined,
   };
 
   // Keep state logic separated
