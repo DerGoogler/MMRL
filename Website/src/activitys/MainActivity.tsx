@@ -5,7 +5,7 @@ import { Context, Extra, IntentPusher } from "../hooks/useActivity";
 import { obj } from "googlers-tools";
 import { useSettings } from "@Hooks/useSettings";
 import React from "react";
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { os } from "@Native/Os";
 import { Shell } from "@Native/Shell";
 import MainApplication from "./MainApplication";
@@ -17,6 +17,7 @@ import { Splitter } from "@Components/onsenui/Splitter";
 import { RouterNavigator } from "@Components/onsenui/RouterNavigator";
 import { DrawerFragment } from "./fragments/DrawerFragment";
 import { Toolbar } from "@Components/onsenui/Toolbar";
+import CodeRoundedIcon from "@mui/icons-material/CodeRounded";
 import { Page } from "@Components/onsenui/Page";
 import eruda from "eruda";
 
@@ -155,7 +156,31 @@ const MainActivity = (): JSX.Element => {
     return (
       <>
         <Toolbar modifier="noshadow">
-          <Toolbar.Center>MMRL</Toolbar.Center>
+          <Toolbar.Center
+            sx={{
+              display: "flex",
+              alignSelf: "center",
+              alignItems: "center",
+            }}
+          >
+            <CodeRoundedIcon sx={{ display: "flex", mr: 1 }} />
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{
+                mr: 2,
+                display: "flex",
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".3rem",
+                color: "inherit",
+                textDecoration: "none",
+              }}
+            >
+              MMRL
+            </Typography>
+          </Toolbar.Center>
           <Toolbar.Right>
             <Toolbar.Button onClick={hideSplitter}>
               <Icon icon={CloseRounded} keepLight />

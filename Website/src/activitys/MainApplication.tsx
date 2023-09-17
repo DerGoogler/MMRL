@@ -8,7 +8,11 @@ import { Page } from "@Components/onsenui/Page";
 import { useStrings } from "@Hooks/useStrings";
 import { Tabbar, TabbarRenderTab } from "@Components/onsenui/Tabbar";
 import { useRepos } from "@Hooks/useRepos";
+import CodeRoundedIcon from "@mui/icons-material/CodeRounded";
 import React from "react";
+import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import Avatar from "@mui/material/Avatar";
 
 const MainApplication = () => {
   const { strings } = useStrings();
@@ -52,7 +56,39 @@ const MainApplication = () => {
             }}
           />
         </Toolbar.Left>
-        <Toolbar.Center>MMRL</Toolbar.Center>
+        <Toolbar.Center
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignSelf: "center",
+            alignItems: "center",
+          }}
+        >
+          <CodeRoundedIcon sx={{ display: "flex", mr: 1 }} />
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{
+              mr: 2,
+              display: "flex",
+              fontFamily: "monospace",
+              fontWeight: 700,
+              letterSpacing: ".3rem",
+              color: "inherit",
+              textDecoration: "none",
+            }}
+          >
+            MMRL
+          </Typography>
+        </Toolbar.Center>
+        <Toolbar.Right>
+          <Toolbar.Button>
+            <Avatar sx={{ width: 35.4, height: 35.4 }} alt="Account">
+              A
+            </Avatar>
+          </Toolbar.Button>
+        </Toolbar.Right>
       </Toolbar>
     );
   };

@@ -18,6 +18,7 @@ interface HTMLToolbar {
 
 interface HTMLToolbarButton {
   children?: React.ReactNode;
+  sx?: SxProps;
   modifier?: string;
   disabled?: boolean;
   onClick?: React.MouseEventHandler<HTMLToolbarButton>;
@@ -31,7 +32,7 @@ const HTMLToolbarButton = onsCustomElement<HTMLElement, HTMLToolbarButton>("ons-
 
 const ToolbarButton = React.forwardRef((props: HTMLToolbarButton, ref: React.Ref<HTMLElement>) => {
   return (
-    <HTMLToolbarButton ref={ref} id={props.id} style={{ fontFamily: "unset" }} onClick={props.onClick}>
+    <HTMLToolbarButton sx={props.sx} ref={ref} id={props.id} style={{ fontFamily: "unset" }} onClick={props.onClick}>
       {props.icon ? <Icon icon={props.icon} keepLight={!props.keepLight ? true : props.keepLight} /> : <>{props.children}</>}
     </HTMLToolbarButton>
   );
