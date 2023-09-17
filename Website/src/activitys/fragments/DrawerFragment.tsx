@@ -1,16 +1,17 @@
 import { DAPITestActivity } from "@Activitys/DAPITestActivity";
-import DescriptonActivity from "@Activitys/DescriptonActivity";
 import RepoActivity from "@Activitys/RepoActivity";
 import SettingsActivity from "@Activitys/SettingsActivity";
 import { StyledListItemText } from "@Components/StyledListItemText";
 import { useStrings } from "@Hooks/useStrings";
 import { Divider, List, ListItemButton, ListSubheader } from "@mui/material";
 import { Page } from "react-onsenui";
+import { IntentPusher } from "@Hooks/useActivity";
+import FetchTextActivity from "@Activitys/FetchTextActivity";
 
 type Props = {
   renderToolbar: () => JSX.Element;
   hideSplitter: () => void;
-  pushPage: (props: PushPropsCore<any>) => void;
+  pushPage: (props: IntentPusher) => void;
 };
 
 export const DrawerFragment = (props: Props) => {
@@ -26,10 +27,7 @@ export const DrawerFragment = (props: Props) => {
           onClick={() => {
             pushPage({
               component: SettingsActivity,
-              props: {
-                key: "settings",
-                extra: {},
-              },
+              key: "settings",
             });
             hide();
           }}
@@ -40,10 +38,7 @@ export const DrawerFragment = (props: Props) => {
           onClick={() => {
             pushPage({
               component: RepoActivity,
-              props: {
-                key: "repos",
-                extra: {},
-              },
+              key: "repos",
             });
             hide();
           }}
@@ -59,15 +54,12 @@ export const DrawerFragment = (props: Props) => {
           onClick={() => {
             pushPage({
               component: DAPITestActivity,
-              props: {
-                key: "dapitestActivity",
-                extra: {},
-              },
+              key: "dapitestActivity",
             });
             hide();
           }}
         >
-          <StyledListItemText primary={"D-API Tester"} />
+          <StyledListItemText primary={"DAPI Tester"} />
         </ListItemButton>
       </List>
 
@@ -77,16 +69,11 @@ export const DrawerFragment = (props: Props) => {
         <ListItemButton
           onClick={() => {
             pushPage({
-              component: DescriptonActivity,
-              props: {
-                key: "license",
-                extra: {
-                  request: {
-                    use: true,
-                    url: "https://raw.githubusercontent.com/wiki/DerGoogler/MMRL/License.md",
-                  },
-                  title: "License",
-                },
+              component: FetchTextActivity,
+              key: "license",
+              extra: {
+                title: "License",
+                url: "https://raw.githubusercontent.com/wiki/DerGoogler/MMRL/License.md",
               },
             });
             hide();
@@ -97,15 +84,11 @@ export const DrawerFragment = (props: Props) => {
         <ListItemButton
           onClick={() => {
             pushPage({
-              component: DescriptonActivity,
-              props: {
-                key: "changelog",
-                extra: {
-                  request: {
-                    url: "https://raw.githubusercontent.com/wiki/DerGoogler/MMRL/Changelog.md",
-                  },
-                  title: "Changelog",
-                },
+              component: FetchTextActivity,
+              key: "changelog",
+              extra: {
+                url: "https://raw.githubusercontent.com/wiki/DerGoogler/MMRL/Changelog.md",
+                title: "Changelog",
               },
             });
             hide();

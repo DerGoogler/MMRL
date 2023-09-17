@@ -1,6 +1,6 @@
 import { Native } from "./Native";
 
-interface IShell {
+interface NativeShell {
   /**
    * Executes an command without result
    */
@@ -9,44 +9,116 @@ interface IShell {
    * Executes an command with result
    */
   result(command: string): string;
+  isSuccess(command: string): boolean;
+  getCode(command: string): number;
+  /**
+   * Checks if the app has been granted root privileges
+   * @deprecated Use `Shell.isSuAvailable()` instead
+   */
+  isAppGrantedRoot(): boolean;
   /**
    * Checks if the app has been granted root privileges
    */
-  isAppGrantedRoot(): boolean;
+  isSuAvailable(): boolean;
+}
+
+interface IShell {
+  exec(): void;
+  result(): string;
 }
 
 /**
  * Run Shell commands native on Android
  */
 
-class ShellClass extends Native<IShell> {
+class ShellClass extends Native<NativeShell> {
+  private _command: string;
   public constructor() {
     super();
+    this._command = "";
     this.interfaceName = "__shell__";
   }
 
-  public exec(cmds: string | string[]): void {
+  public cmd(cmd: string): this {
+    this._command = cmd;
+    return this;
+  }
+
+  public exec(): void {
     if (this.isAndroid) {
-      if (cmds instanceof Array) {
-        cmds.forEach((cmd) => {
-          this.getInterface.exec(cmd);
-        });
-      } else {
-        this.getInterface.exec(cmds);
-      }
+      this.getInterface.exec(this._command);
     }
   }
 
-  public result(cmd: string): string {
+  public result(): string {
     if (this.isAndroid) {
-      return this.getInterface.result(cmd);
+      return this.getInterface.result(this._command);
     } else {
-      return cmd;
+      return this._command;
     }
   }
 
+  public isSuccess(): boolean {
+    if (this.isAndroid) {
+      return this.getInterface.isSuccess(this._command);
+    } else {
+      return false;
+    }
+  }
+
+  public getCode(): number {
+    if (this.isAndroid) {
+      return this.getInterface.getCode(this._command);
+    } else {
+      return 1;
+    }
+  }
+  /**
+   * Checks if the app has been granted root privileges
+   * @deprecated Use `Shell.isSuAvailable()` instead
+   */
   public isAppGrantedRoot(): boolean {
     return this.getInterface.isAppGrantedRoot();
+  }
+
+  /**
+   * Checks if the app has been granted root privileges
+   */
+  public isSuAvailable(): boolean {
+    return this.getInterface.isSuAvailable();
+  }
+
+  /**
+   * Get current installed Superuser version code
+   */
+  public VERSION_CODE(): number {
+    if (this.isAndroid) {
+      return parseInt(this.getInterface.result("su -V"));
+    } else {
+      return 0;
+    }
+  }
+
+  public VERSION_NAME(): string {
+    if (this.isAndroid) {
+      return this.getInterface.result("su -v");
+    } else {
+      return "0:SU";
+    }
+  }
+
+  /**
+   * Determine if MMRL runs with KernelSU
+   */
+  public get isKernelSU(): boolean {
+    return /(\d+\.\d+\.\d+):KernelSU/i.test(this.VERSION_NAME()) ? true : false;
+  }
+
+  /**
+   * Determine if MMRL runs with Magisk
+   */
+  public get isMagisk(): boolean {
+    return /(\d+\.\d+):MAGISKSU/i.test(this.VERSION_NAME()) ? true : false;
   }
 }
 

@@ -5,7 +5,6 @@ import { useStrings } from "@Hooks/useStrings";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useSettings } from "@Hooks/useSettings";
 import Giscus from "@giscus/react";
-import { RelativeStyledSection } from "@Components/StyledSection";
 import { useTheme } from "@Hooks/useTheme";
 
 type Extra = {
@@ -31,7 +30,7 @@ const CommentsActivity = () => {
 
   return (
     <Page renderToolbar={renderToolbar}>
-      <RelativeStyledSection>
+      <Page.RelativeContent>
         <Giscus
           repo="DerGoogler/MMRL"
           repoId="R_kgDOHO8GRQ"
@@ -47,7 +46,7 @@ const CommentsActivity = () => {
           lang={settings.language.value}
           loading="lazy"
         />
-      </RelativeStyledSection>
+      </Page.RelativeContent>
     </Page>
   );
 };

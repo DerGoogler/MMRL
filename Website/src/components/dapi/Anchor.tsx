@@ -8,22 +8,27 @@ import { os } from "@Native/Os";
 import SettingsActivity from "@Activitys/SettingsActivity";
 import RepoActivity from "@Activitys/RepoActivity";
 import DescriptonActivity from "@Activitys/DescriptonActivity";
+import { useSettings } from "@Hooks/useSettings";
+import ModuleViewActivity from "@Activitys/ModuleViewActivity";
+import ExtensionIcon from "@mui/icons-material/Extension";
+import { useRepos } from "@Hooks/useRepos";
+import FetchTextActivity from "@Activitys/FetchTextActivity";
 
 interface AnchorProps {
   noIcon?: boolean;
+  module?: string;
 }
 
 const StyledAnchor = styled("div")(({ theme }) => {
   const { scheme } = useTheme();
+  const { settings } = useSettings();
+
   const s = {
     cursor: "pointer",
-    color: scheme[300],
+    color: settings.darkmode ? scheme[200] : scheme[700],
+    // color: !settings.darkmode ? "rgb(66, 66, 66)" : scheme[700],
     display: "flex",
     alignItems: "center",
-    // "& abbr[title]": {
-    //   textDecoration: "none",
-    //   cursor: "pointer",
-    // },
     ":hover": {
       textDecoration: "underline",
     },
@@ -37,36 +42,56 @@ const StyledAnchor = styled("div")(({ theme }) => {
 });
 
 function Anchor(props: JSX.IntrinsicElements["a"] & AnchorProps) {
-  const { href, children, noIcon, ...rest } = props;
+  const { href, children, noIcon, module, ...rest } = props;
 
   const { theme, scheme } = useTheme();
+
+  const { modules } = useRepos();
+  const { context } = useActivity();
 
   return (
     <StyledAnchor>
       <div
-        href={href}
+        href={!module ? href : module}
         // @ts-ignore
         onClick={() => {
-          href
-            ? os.open(href, {
+          if (module) {
+            const m_ = modules.find((m) => m.id === module);
+
+            if (m_) {
+              context.pushPage({
+                component: ModuleViewActivity,
+                key: "",
+                extra: {
+                  last_update: m_.last_update,
+                  zip_url: m_.zip_url,
+                  authorData: null,
+                  notes_url: m_.notes_url,
+                  module: m_.prop_url,
+                },
+              });
+            }
+          } else {
+            if (href) {
+              os.open(href, {
                 target: "_blank",
                 features: {
                   color: theme.palette.primary.main,
                 },
-              })
-            : null;
+              });
+            }
+          }
         }}
         {...rest}
       >
         {children}
         {!noIcon && (
           <>
-            {" "}
             <Icon
-              icon={LaunchRoundedIcon}
+              icon={!module ? LaunchRoundedIcon : ExtensionIcon}
               sx={{
                 fontSize: 16,
-                marginLeft: "2px",
+                marginLeft: "3.7px",
               }}
             />
           </>
@@ -95,39 +120,28 @@ export function Open(props: OpenProps) {
         onClick={() => {
           switch (page) {
             case "settings":
-              context.pushPage<{}>({
+              context.pushPage({
                 component: SettingsActivity,
-                props: {
-                  key: "settings",
-                  extra: {},
-                },
+                key: "settings",
               });
               break;
 
             case "repos":
-              context.pushPage<{}>({
+              context.pushPage({
                 component: RepoActivity,
-                props: {
-                  key: "repo",
-                  extra: {},
-                },
+                key: "repo",
               });
               break;
             case "request":
               if (!props.url) {
                 os.toast("Missing Url!", "short");
               } else {
-                context.pushPage<any>({
-                  component: DescriptonActivity,
-                  props: {
-                    key: `desc_open${Math.round(Math.random() * 56)}`,
-                    extra: {
-                      request: {
-                        use: true,
-                        url: props.url,
-                      },
-                      shortDesc: props.title,
-                    },
+                context.pushPage({
+                  component: FetchTextActivity,
+                  key: `desc_open${Math.round(Math.random() * 56)}`,
+                  extra: {
+                    url: props.url,
+                    title: props.title,
                   },
                 });
               }

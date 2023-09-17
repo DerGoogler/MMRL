@@ -1,4 +1,3 @@
-import { TabWrapper } from "@Components/TabWrapper";
 import { Menu } from "@mui/icons-material";
 import DeviceModuleFragment from "./fragments/DeviceModuleFragment";
 import ExploreModuleFragment from "./fragments/ExploreModuleFragment";
@@ -8,40 +7,37 @@ import { os } from "@Native/Os";
 import { Page } from "@Components/onsenui/Page";
 import { useStrings } from "@Hooks/useStrings";
 import { Tabbar, TabbarRenderTab } from "@Components/onsenui/Tabbar";
+import { useRepos } from "@Hooks/useRepos";
+import CodeRoundedIcon from "@mui/icons-material/CodeRounded";
+import React from "react";
+import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import Avatar from "@mui/material/Avatar";
 
-interface Props {
-  id: string;
-  name: string;
-  version: string;
-  versionCode: int;
-  author: string;
-  description: string;
-  minApi?: int;
-  maxApi?: int;
-  minMagisk?: int;
-  needRamdisk?: boolean;
-  support?: string;
-  donate?: string;
-  config?: string;
-  changeBoot?: boolean;
-  pushPage: any;
-}
-
-const MainApplication = (props: Props) => {
+const MainApplication = () => {
   const { strings } = useStrings();
-
   const { context } = useActivity();
+  const [index, setIndex] = React.useState(0);
+
+  const filteredModules = (modules: Module[], search: string) =>
+    modules.filter(
+      (module) =>
+        module.prop_url.id.toLowerCase().includes(search.toLowerCase()) ||
+        module.prop_url.name.toLowerCase().includes(search.toLowerCase()) ||
+        module.prop_url.author.toLowerCase().includes(search.toLowerCase()) ||
+        module.prop_url.description.toLowerCase().includes(search.toLowerCase())
+    );
 
   const renderTabs = (): TabbarRenderTab[] => {
     return [
       {
-        content: <TabWrapper element={ExploreModuleFragment} />,
+        content: <ExploreModuleFragment applyFilter={filteredModules} />,
         tab: <Tabbar.Tab label={strings.explore} />,
       },
       ...(os.isAndroid
         ? [
             {
-              content: <TabWrapper element={DeviceModuleFragment} />,
+              content: <DeviceModuleFragment />,
               tab: <Tabbar.Tab label={strings.installed} />,
             },
           ]
@@ -60,14 +56,58 @@ const MainApplication = (props: Props) => {
             }}
           />
         </Toolbar.Left>
-        <Toolbar.Center>MMRL</Toolbar.Center>
+        <Toolbar.Center
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignSelf: "center",
+            alignItems: "center",
+          }}
+        >
+          <CodeRoundedIcon sx={{ display: "flex", mr: 1 }} />
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{
+              mr: 2,
+              display: "flex",
+              fontFamily: "monospace",
+              fontWeight: 700,
+              letterSpacing: ".3rem",
+              color: "inherit",
+              textDecoration: "none",
+            }}
+          >
+            MMRL
+          </Typography>
+        </Toolbar.Center>
+        <Toolbar.Right>
+          <Toolbar.Button>
+            <Avatar sx={{ width: 35.4, height: 35.4 }} alt="Account">
+              A
+            </Avatar>
+          </Toolbar.Button>
+        </Toolbar.Right>
       </Toolbar>
     );
   };
 
   return (
     <Page modifier="noshadow" renderToolbar={renderToolbar}>
-      <Tabbar modifier="noshadow" swipeable={false} position={"top"} renderTabs={renderTabs} />
+      <Tabbar
+        modifier="noshadow"
+        hideTabs={!os.isAndroid}
+        swipeable={false}
+        position={"top"}
+        index={index}
+        onPreChange={(event) => {
+          if (event.index != index) {
+            setIndex(event.index);
+          }
+        }}
+        renderTabs={renderTabs}
+      />
     </Page>
   );
 };

@@ -1,11 +1,13 @@
 package com.dergoogler.mmrl;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Bundle;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
-import com.dergoogler.core.NativeFs;
+import com.dergoogler.core.NativeEnvironment;
+import com.dergoogler.core.NativeSuFile;
 import com.dergoogler.core.NativeLog;
 import com.dergoogler.core.NativeOS;
 import com.dergoogler.core.NativeProperties;
@@ -41,14 +43,15 @@ public class MainActivity extends CordovaActivity {
         webViewSettings.setAllowUniversalAccessFromFileURLs(true);
         webViewSettings.setDatabaseEnabled(true);
         webViewSettings.setDomStorageEnabled(false);
-        webViewSettings.setUserAgentString("MMRL");
+        webViewSettings.setUserAgentString(this.mmrlUserAgent());
         webViewSettings.setAllowFileAccessFromFileURLs(false);
         webViewSettings.setAllowUniversalAccessFromFileURLs(false);
         webViewSettings.setAllowFileAccess(false);
         webViewSettings.setAllowContentAccess(false);
 
         // Core
-        wv.addJavascriptInterface(new NativeFs(this), "__fs__");
+        wv.addJavascriptInterface(new NativeSuFile(this), "__sufile__");
+        wv.addJavascriptInterface(new NativeEnvironment(this), "__environment__");
         wv.addJavascriptInterface(new NativeShell(wv), "__shell__");
         wv.addJavascriptInterface(new NativeBuildConfig(), "__buildconfig__");
         wv.addJavascriptInterface(new NativeOS(this), "__os__");
@@ -56,5 +59,9 @@ public class MainActivity extends CordovaActivity {
         wv.addJavascriptInterface(new NativeProperties(), "__properties__");
         wv.addJavascriptInterface(new NativeLog(), "__log__");
 
+    }
+
+    private String mmrlUserAgent() {
+        return "MMRL/" + BuildConfig.VERSION_NAME + " (Linux; Android " + Build.VERSION.RELEASE + "; " + Build.MODEL + " Build/" + Build.DISPLAY + ")";
     }
 }

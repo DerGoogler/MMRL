@@ -1,4 +1,4 @@
-import { Divider, List, ListItem, ListItemButton, ListSubheader } from "@mui/material";
+import { Divider, InputAdornment, List, ListItem, ListItemButton, ListSubheader } from "@mui/material";
 import { BuildConfig } from "@Native/BuildConfig";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -12,12 +12,17 @@ import { ListPickerItem } from "@Components/ListPickerItem";
 import { languages_map } from "../locales/languages";
 import { os } from "@Native/Os";
 import { Android12Switch } from "@Components/Android12Switch";
-import { RelativeStyledSection } from "@Components/StyledSection";
 import { useTheme } from "@Hooks/useTheme";
+import { useRepos } from "@Hooks/useRepos";
+import { Shell } from "@Native/Shell";
+import { DialogEditTextListItem } from "@Components/DialogEditTextListItem";
+import ModuleTreeConf from "./ModuleTreeConf";
 
 function SettingsActivity() {
   const { context } = useActivity();
   const { strings } = useStrings();
+  const { setRepos } = useRepos();
+  const { patchSettings } = useSettings();
 
   const { theme } = useTheme();
 
@@ -37,7 +42,7 @@ function SettingsActivity() {
 
   return (
     <Page renderToolbar={renderToolbar}>
-      <RelativeStyledSection zeroMargin>
+      <Page.RelativeContent zeroMargin>
         <List
           subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>{strings.appearance}</ListSubheader>}
         >
@@ -54,6 +59,26 @@ function SettingsActivity() {
               }}
             />
           </ListItem>
+          {settings.darkmode && (
+            <DialogEditTextListItem
+              InputProps={{
+                startAdornment: <InputAdornment position="start">-</InputAdornment>,
+              }}
+              inputLabel="Shading"
+              type="number"
+              title="Apply custom shading"
+              initialValue={settings.shade_value.toString().replace("-", "")}
+              description="Use with care, if to dark you may not able to see the UI anymore."
+              onSuccess={(value) => {
+                if (value) {
+                  setSettings("shade_value", Number("-" + value));
+                }
+              }}
+            >
+              <StyledListItemText primary="Apply custom shade" />
+            </DialogEditTextListItem>
+          )}
+
           <ListPickerItem id="accent-color" targetSetting="accent_scheme" title={strings.accent_color} contentMap={accent_colors} />
           <ListPickerItem id="language" targetSetting="language" title={strings.language} contentMap={languages_map} />
         </List>
@@ -77,32 +102,33 @@ function SettingsActivity() {
               }}
             />
           </ListItem>
-          <ListItem>
-            <StyledListItemText
-              id="switch-list-_disable_module_covers"
-              primary={"Disable module covers"}
-              secondary="This may increase app performance"
-            />
-            <Android12Switch
-              edge="end"
-              onChange={(e: any) => {
-                setSettings("_disable_module_covers", e.target.checked);
-              }}
-              checked={settings._disable_module_covers}
-              inputProps={{
-                "aria-labelledby": "switch-list-_disable_module_covers",
-              }}
-            />
-          </ListItem>
+          {os.isAndroid && (
+            <>
+              <ListItemButton
+                onClick={() => {
+                  context.pushPage({
+                    component: ModuleTreeConf,
+                    key: "Mod_Tree",
+                    extra: {},
+                  });
+                }}
+              >
+                <StyledListItemText primary="Customize module tree" />
+              </ListItemButton>
+            </>
+          )}
           {os.isAndroid && (
             <ListItem>
               <StyledListItemText
                 id="switch-list-__experimental_local_install"
                 primary={"Enable local install"}
-                secondary="Allows you to install local *.zip files (Experimental)"
+                secondary={
+                  <>Allows you to install local *.zip files (Experimental). {Shell.isKernelSU && <strong>Disabled due KernelSU.</strong>}</>
+                }
               />
               <Android12Switch
                 edge="end"
+                disabled={Shell.isKernelSU}
                 onChange={(e: any) => {
                   setSettings("__experimental_local_install", e.target.checked);
                 }}
@@ -149,17 +175,36 @@ function SettingsActivity() {
 
         <Divider />
 
+        <List subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>{"Storage"}</ListSubheader>}>
+          <ListItemButton
+            onClick={() => {
+              setRepos([]);
+            }}
+          >
+            <StyledListItemText primary="Clear repositories" />
+          </ListItemButton>{" "}
+          <ListItemButton
+            onClick={() => {
+              patchSettings();
+            }}
+          >
+            <StyledListItemText primary="Patch settings" secondary="Adds missing settings keys" />
+          </ListItemButton>
+        </List>
+
+        <Divider />
+
         <ListItem>
           <StyledListItemText
             primary={
               <span>
                 {BuildConfig.APPLICATION_ID} v{BuildConfig.VERSION_NAME} ({BuildConfig.VERSION_CODE})<br />
-                {os.isAndroid ? `${Magisk.VERSION_NAME} (${Magisk.VERSION_CODE})` : ""}
+                {os.isAndroid ? `${Shell.VERSION_NAME()} (${Shell.VERSION_CODE()})` : ""}
               </span>
             }
           />
         </ListItem>
-      </RelativeStyledSection>
+      </Page.RelativeContent>
     </Page>
   );
 }

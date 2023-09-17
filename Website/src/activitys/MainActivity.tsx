@@ -1,11 +1,11 @@
 import { CloseRounded } from "@mui/icons-material";
 import { useState } from "react";
-import { RouterUtil } from "react-onsenui";
-import { Context, Extra } from "../hooks/useActivity";
+import { RouterUtil } from "@Util/RouterUtil";
+import { Context, Extra, IntentPusher } from "../hooks/useActivity";
 import { obj } from "googlers-tools";
 import { useSettings } from "@Hooks/useSettings";
 import React from "react";
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { os } from "@Native/Os";
 import { Shell } from "@Native/Shell";
 import MainApplication from "./MainApplication";
@@ -13,11 +13,11 @@ import NoRootActivity from "./NoRootActivity";
 import { ErrorBoundary } from "@Components/ErrorBoundary";
 import Icon from "@Components/Icon";
 import SettingsActivity from "./SettingsActivity";
-import { StyledSection } from "@Components/StyledSection";
 import { Splitter } from "@Components/onsenui/Splitter";
 import { RouterNavigator } from "@Components/onsenui/RouterNavigator";
 import { DrawerFragment } from "./fragments/DrawerFragment";
 import { Toolbar } from "@Components/onsenui/Toolbar";
+import CodeRoundedIcon from "@mui/icons-material/CodeRounded";
 import { Page } from "@Components/onsenui/Page";
 import eruda from "eruda";
 
@@ -34,9 +34,14 @@ const MainActivity = (): JSX.Element => {
     setIsSplitterOpen(true);
   };
 
+  const erudaRef = React.useRef<HTMLElement | null>(null);
+
   React.useEffect(() => {
     if (settings.eruda_console_enabled) {
-      eruda.init();
+      eruda.init({
+        container: erudaRef.current as HTMLElement,
+        tool: ["console", "elements", "resources", "info"],
+      });
     } else {
       if ((window as any).eruda) {
         eruda.destroy();
@@ -52,7 +57,8 @@ const MainActivity = (): JSX.Element => {
 
   const CheckRoot = () => {
     if (os.isAndroid) {
-      if (Shell.isAppGrantedRoot()) {
+      // Shell.isAppGrantedRoot() doesn't work on KSU
+      if (Shell.isSuAvailable()) {
         return MainApplication;
       } else {
         return NoRootActivity;
@@ -62,29 +68,39 @@ const MainActivity = (): JSX.Element => {
     }
   };
 
+  const pushContext = {
+    pushPage: (props: IntentPusher) => pushPage(props),
+    popPage: (options?: any) => popPage(options),
+    splitter: {
+      show: () => showSplitter(),
+      hide: () => hideSplitter(),
+      state: isSplitterOpen,
+    },
+  };
+
   const ignoreThat = RouterUtil.init([
     {
-      component: CheckRoot(),
-      props: {
-        key: "main",
-        context: {
-          pushPage: (props: PushPropsCore) => pushPage(props),
-          splitter: {
-            show: () => showSplitter(),
-            hide: () => hideSplitter(),
-            state: isSplitterOpen,
-          },
+      route: {
+        component: CheckRoot(),
+        props: {
+          key: "main",
         },
       },
+      key: "main",
+      props: {
+        key: "main",
+      },
+      context: pushContext,
     },
   ]);
 
   const [routeConfig, setRouteConfig] = useState<any>(ignoreThat);
 
-  const popPage = (options = {}) => {
+  const popPage = (options?: any) => {
     setRouteConfig((prev: any) =>
       RouterUtil.pop({
         routeConfig: prev,
+        key: prev.key,
         options: {
           ...options,
           animationOptions: {
@@ -93,27 +109,15 @@ const MainActivity = (): JSX.Element => {
             animation: "fade-md",
           },
         },
-      })
+      } as any)
     );
   };
 
-  const pushPage = (props: PushPropsCore): void => {
+  const pushPage = (props: IntentPusher): void => {
     const route = {
       component: props.component,
-
       props: {
-        key: props.props.key,
-        extra: props.props.extra ? props.props.extra : {},
-
-        context: {
-          popPage: (options = {}) => popPage(options),
-          pushPage: (props: PushPropsCore) => pushPage(props),
-          splitter: {
-            show: () => showSplitter(),
-            hide: () => hideSplitter(),
-            state: isSplitterOpen,
-          },
-        },
+        key: props.key || props.component.name,
       },
     };
 
@@ -124,7 +128,10 @@ const MainActivity = (): JSX.Element => {
         routeConfig: prev,
         route: route,
         options: options,
-        key: props.props.key,
+        key: props.component.name || props.key,
+        props: props.props,
+        context: pushContext,
+        extra: props.extra ? props.extra : {},
       })
     );
   };
@@ -137,16 +144,10 @@ const MainActivity = (): JSX.Element => {
     setRouteConfig((prev: any) => RouterUtil.postPop(prev));
   };
 
-  const renderPage = (route: any) => {
-    const props = route.props || {};
-    const newProps = obj.omit(["extra", "context"], props);
+  const renderPage = (route: any, props: any) => {
     return (
       <ErrorBoundary fallback={fallback}>
-        <Extra.Provider key={props.key + "_extra"} value={props.extra}>
-          <Context.Provider key={props.key + "_context"} value={props.context}>
-            <route.component {...newProps} />
-          </Context.Provider>
-        </Extra.Provider>
+        <route.component {...props} />
       </ErrorBoundary>
     );
   };
@@ -155,7 +156,31 @@ const MainActivity = (): JSX.Element => {
     return (
       <>
         <Toolbar modifier="noshadow">
-          <Toolbar.Center>MMRL</Toolbar.Center>
+          <Toolbar.Center
+            sx={{
+              display: "flex",
+              alignSelf: "center",
+              alignItems: "center",
+            }}
+          >
+            <CodeRoundedIcon sx={{ display: "flex", mr: 1 }} />
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{
+                mr: 2,
+                display: "flex",
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".3rem",
+                color: "inherit",
+                textDecoration: "none",
+              }}
+            >
+              MMRL
+            </Typography>
+          </Toolbar.Center>
           <Toolbar.Right>
             <Toolbar.Button onClick={hideSplitter}>
               <Icon icon={CloseRounded} keepLight />
@@ -178,15 +203,13 @@ const MainActivity = (): JSX.Element => {
     const handleOpenSettings = () => {
       pushPage({
         component: SettingsActivity,
-        props: {
-          key: "settings",
-          extra: {},
-        },
+        key: "settings",
       });
     };
 
     return (
       <Page
+        ref={erudaRef}
         renderToolbar={() => {
           return (
             <Toolbar modifier="noshadow">
@@ -195,7 +218,7 @@ const MainActivity = (): JSX.Element => {
           );
         }}
       >
-        <StyledSection>
+        <Page.RelativeContent>
           <pre style={style}>
             <span>{error.message}</span>
           </pre>
@@ -210,7 +233,7 @@ const MainActivity = (): JSX.Element => {
           <pre style={style}>
             <code>{errorInfo.componentStack}</code>
           </pre>
-        </StyledSection>
+        </Page.RelativeContent>
       </Page>
     );
   };

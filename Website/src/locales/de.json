@@ -2,8 +2,7 @@
   "search_modules": "Module durchsuchen",
   "settings": "Einstellungen",
   "repository": "Repository",
-  "repositories": "Repositories",
-  "custom_repository": "Eigene repository",
+  "repositories": "Repositorys",
   "accent_color": "Akzentfarbe",
   "appearance": "Aussehen",
   "language": "Sprache",
@@ -25,7 +24,6 @@
   "module_disabled_LOG": "{name} wurde deaktiviert",
   "add": "Hinzufügen",
   "cancel": "Abbrechen",
-  "add_repo": "Repository hinzufügen",
   "confirm_repo_delete": "Möchten Sie das {name} Repository wirklich entfernen?",
   "submit_module": "Ein Module einreichen",
   "donate": "Spenden",
@@ -33,7 +31,7 @@
   "website": "Webseite",
   "no_root": "Kein Root",
   "failed": "Fehlgeschlagen",
-  "no_root_message": "Scheint, dass keine Root-Berechtigungen vorhanden sind? Wenn Sie Magisk (Delta) installiert haben, können Sie es direkt von hier aus öffnen.",
+  "no_root_message": "Bitte stellen Sie sicher, dass Sie über mindestens einen Root-Manager verfügen, andernfalls können Sie MMRL nicht verwenden.",
   "open_magisk": "Magisk öffnen",
   "development": "Entwicklung",
   "enabled": "Aktiviert",
@@ -41,5 +39,8 @@
   "verified": "Verifiziert",
   "configureable": "Anpassbar",
   "change_boot": "Ändert Boot",
-  "need_ramdisk": "Braucht Ramdisk"
+  "need_ramdisk": "Braucht Ramdisk",
+  "add_repository": "Repository hinzufügen",
+  "add_repository_description": "Fügen Sie Ihr Repository oder ein Repository von einem anderen hinzu.",
+  "explore_repositories": "Entdecke Repositorys"
 }

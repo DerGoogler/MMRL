@@ -80,11 +80,8 @@ export const StyledIconButtonWithText = styled("span")(({ theme }) => {
     overflow: "visible",
     transition: "background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
     border: `1px solid ${theme.palette.divider}`,
-    // borderTopColor: theme.palette.divider,
-    // borderRightColor: theme.palette.divider,
-    // borderBottomColor: theme.palette.divider,
-    // borderLeftColor: theme.palette.divider,
-    color: !settings.darkmode ? "rgb(66, 66, 66)" : shade(scheme[700], -61),
+    // color: !settings.darkmode ? "rgb(66, 66, 66)" : shade(scheme[700], -61),
+    color: !settings.darkmode ? "rgb(66, 66, 66)" : scheme[700],
     borderRadius: theme.shape.borderRadius,
     alignSelf: "flex-start",
     ":hover": {

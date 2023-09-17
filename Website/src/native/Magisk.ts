@@ -7,7 +7,7 @@ class MagiskClass extends Native {
    */
   public get VERSION_CODE(): number {
     if (this.isAndroid) {
-      return parseInt(Shell.result("magisk -V"));
+      return parseInt(Shell.cmd("magisk -V").result());
     } else {
       return 0;
     }
@@ -15,7 +15,7 @@ class MagiskClass extends Native {
 
   public get VERSION_NAME(): string {
     if (this.isAndroid) {
-      return Shell.result("magisk -v");
+      return Shell.cmd("magisk -v").result();
     } else {
       return "0:MAGISKSU";
     }
@@ -34,30 +34,9 @@ class MagiskClass extends Native {
       return parseInt(version.substring(0, i)) * 1000 + parseInt(version.substring(i + 1)) * 100;
     }
   }
-
-  /**
-   * Installs an Magisk module from path
-   * @param path Directory path
-   */
-  public INSTALL_MODULE(path: string): void {
-    if (this.isAndroid) {
-      Shell.exec(`magisk --install-module ${path}`);
-    } else {
-      console.error("Error installing Magisk module.");
-    }
-  }
-
-  /**
-   * Removes all Magisk modules and reboot
-   * @warn Dangerus usage, keep it private!
-   */
-  private REMOVE_MODULES(): void {
-    if (this.isAndroid) {
-      Shell.exec(`magisk --remove-modules`);
-    } else {
-      console.error("Error removing Magisk modules.");
-    }
-  }
 }
 
+/**
+ * @deprecated Use `Shell` instead
+ */
 export const Magisk: MagiskClass = new MagiskClass();

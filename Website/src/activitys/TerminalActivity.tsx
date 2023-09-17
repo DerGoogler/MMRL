@@ -1,15 +1,11 @@
-import { StyledSection } from "@Components/StyledSection";
 import { Page } from "@Components/onsenui/Page";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import { useActivity } from "@Hooks/useActivity";
-import { useStrings } from "@Hooks/useStrings";
 import { styled } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import Ansi from "ansi-to-react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import React from "react";
-import { Button, Card } from "react-onsenui";
-import { useOnScreen } from "@Hooks/useOnScreen";
 
 function useOnceCall(effect: React.EffectCallback, deps?: React.DependencyList | undefined) {
   const isCalledRef = React.useRef(false);
@@ -29,15 +25,58 @@ const TerminalActivity = () => {
   const [lines, setLines] = React.useState<string[]>([]);
 
   const ref = React.useRef<HTMLDivElement>(null);
-  const isVisible = useOnScreen(ref);
 
-  React.useEffect(() => {
-    if (isVisible) {
+  const addLine = (line: string) => {
+    setLines((lines) => [...lines, line]);
+  };
+
+  const dl = (url: string, savePath: string, saveName: string) => {
+    try {
+      return window.__sufile__.downloadFile(url, savePath, saveName);
+    } catch {
+      return false;
+    }
+  };
+
+  const unzip = (file: string, target: string) => {
+    try {
+      return window.__sufile__.unzip(file, target);
+    } catch {
+      return false;
+    }
+  };
+
+  const install = () => {
+    const { exploreInstall, path } = extra;
+
+    const url = new URL(path).pathname.split("/");
+    const getFileName = url[2] + "-" + url[4];
+
+    if (exploreInstall) {
+      addLine("- Download module");
+      const success = dl(path, "/sdcard/MMRL/", getFileName);
+
+      if (success) {
+        addLine("- Unzipping file");
+        const unzippSuccess = unzip(`/sdcard/MMRL/${getFileName}`, "/sdcard/MMRL/unzipped/");
+
+        if (unzippSuccess) {
+          addLine("\x1B[32m- Success\x1b[0m");
+          setActive(false);
+        } else {
+          setActive(false);
+          addLine("\x1B[31m! Unzipping failed\x1b[0m");
+        }
+      } else {
+        setActive(false);
+        addLine("\x1B[31m! Download failed\x1b[0m");
+      }
+    } else {
       // @ts-ignore
       Terminal.exec(
-        `magisk --install-module "${extra.path}"`,
+        `magisk --install-module "${path}"`,
         (r) => {
-          setLines((prev) => [...prev, r]);
+          addLine(r);
         },
         (code) => {
           if (code) {
@@ -46,7 +85,7 @@ const TerminalActivity = () => {
         }
       );
     }
-  }, [isVisible]);
+  };
 
   const renderToolbar = () => {
     return (
@@ -58,13 +97,19 @@ const TerminalActivity = () => {
   };
 
   return (
-    <Page modifier="noshadow" renderToolbar={renderToolbar}>
+    <Page
+      onShow={install}
+      modifier="noshadow"
+      renderToolbar={renderToolbar}
+      backgroundStyle={{
+        backgroundColor: "black",
+      }}
+    >
       <div
         ref={ref}
         style={{
           display: "flex",
           flexWrap: "wrap",
-          height: "100%",
         }}
       >
         <Stack

@@ -55,6 +55,8 @@ declare global {
       "ons-navigator": HTMLAttributes<HTMLElement>;
       "ons-tabbar": HTMLAttributes<HTMLElement>;
       "ons-tab": HTMLAttributes<HTMLElement>;
+      "ons-gesture-detector": HTMLAttributes<HTMLElement>;
+      "ons-bottom-toolbar": HTMLAttributes<HTMLElement>;
     }
   }
 
@@ -62,10 +64,15 @@ declare global {
    * Native window properties for Android
    */
   interface AndroidWindow<I = any> {
+    /**object
+     * This is an Android only window object
+     */
+    readonly __sufile__: I;
     /**
      * This is an Android only window object
      */
-    readonly __fs__: I;
+    readonly __environment__: I;
+
     /**
      * This is an Android only window object
      */
@@ -95,7 +102,7 @@ declare global {
     LENGTH_SHORT: "short";
   };
 
-  const NODE_ENV: string | undefined;
+  const __webpack__mode__: "production" | "development";
 
   type PushPropsExtra<E = {}> = E & {
     param?: {
@@ -104,10 +111,10 @@ declare global {
     };
   };
 
-  interface PushPropsCore<E = {}> {
+  interface PushPropsCore<E = {}, P = {}> {
     component: React.ElementType;
 
-    props: {
+    props: P & {
       key: string;
       extra: PushPropsExtra<E>;
       readonly popPage?: () => void;
@@ -118,8 +125,8 @@ declare global {
   interface PushProps<E = {}> {
     readonly extra: PushPropsExtra<E>;
     // readonly context: {
-    readonly popPage: () => void;
-    readonly pushPage: <T>(props: PushPropsCore<T>) => void;
+    readonly popPage: (options?: any) => void;
+    readonly pushPage: <E, P>(props: PushPropsCore<E, P>) => void;
     readonly splitter: {
       readonly show: () => void;
       readonly hide: () => void;
@@ -132,7 +139,7 @@ declare global {
 
   interface UseActivity<E = {}> {
     readonly context: {
-      readonly popPage: () => void;
+      readonly popPage: (options?: any) => void;
       readonly pushPage: <T>(props: PushPropsCore<T>) => void;
       readonly splitter: {
         readonly show: () => void;
@@ -144,7 +151,6 @@ declare global {
 
   interface StoredRepo extends Omit<Repo, "modules"> {
     modules: string;
-    isOn: boolean;
   }
 
   interface Repo {
@@ -153,6 +159,7 @@ declare global {
      * An required filed, to disply the repository name
      */
     name: string;
+    mmrlOwner?: string;
     /**
      * An given website link for the repository
      */
@@ -163,7 +170,7 @@ declare global {
     support?: string | undefined;
     donate?: string | undefined;
     submitModule?: string | undefined;
-    last_update?: string | number | undefined;
+    last_update: string | number;
     modules: Module[];
   }
 
@@ -189,6 +196,11 @@ declare global {
     mmrlConfig?: string;
     mmrlNoComments?: string;
     mmrlCover?: string;
+    mmrlAuthor?: string;
+    mmrlLogo?: string;
+    mmrlScreenshots?: string;
+    // Developers that points "Gaming" won't have a change to get verified. Magisk isn't made for Gaming purposes.
+    mmrlCategories?: string;
 
     // Fox's Mmm supported properties
     minApi?: string;

@@ -29,28 +29,24 @@ const Video = (props: VideoProps) => {
   switch (type) {
     case "video/youtube":
       return (
-        <>
-          <iframe
-            className="Video--Custom card"
-            style={util.typeCheck(style, Style)}
-            src={`https://www.youtube.com/embed/${src.replace("https://www.youtube.com/watch?v=", "")}`}
-          ></iframe>
-        </>
+        <iframe
+          className="Video--Custom card"
+          style={util.typeCheck(style, Style)}
+          src={`https://www.youtube.com/embed/${src.replace("https://www.youtube.com/watch?v=", "")}`}
+        ></iframe>
       );
 
     default:
       return (
-        <>
-          <video
-            className="Video--Custom card"
-            style={util.typeCheck(style, Style)}
-            controls={util.typeCheck(controls, true)}
-            poster={poster}
-          >
-            <source src={src} type={util.typeCheck(type, "video/mp4")} />
-            {util.typeCheck(noSupportText, "Your browser does not support HTML video.")}
-          </video>
-        </>
+        <video
+          className="Video--Custom card"
+          style={util.typeCheck(style, Style)}
+          controls={util.typeCheck(controls, true)}
+          poster={poster}
+        >
+          <source src={src} type={util.typeCheck(type, "video/mp4")} />
+          {util.typeCheck(noSupportText, "Your browser does not support HTML video.")}
+        </video>
       );
   }
 };

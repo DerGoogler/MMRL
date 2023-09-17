@@ -7,14 +7,10 @@ interface State<T> {
 
 type Cache<T> = { [url: string]: T };
 
-type Options = RequestInit & {
-  fetchType?: string;
-};
-
 // discriminated union type
 type Action<T> = { type: "loading" } | { type: "fetched"; payload: T } | { type: "error"; payload: Error };
 
-export function useFetch<T = unknown>(url?: string, options?: Options): State<T> {
+export function useFetch<T = unknown>(fetchType?: "json" | "text", url?: string, options?: RequestInit): State<T> {
   const cache = useRef<Cache<T>>({});
 
   // Used to prevent state update if the component is unmounted
@@ -62,7 +58,7 @@ export function useFetch<T = unknown>(url?: string, options?: Options): State<T>
           throw new Error(response.statusText);
         }
 
-        const data = (options?.fetchType === "text" ? await response.text() : await response.json()) as T;
+        const data = (fetchType === "text" ? await response.text() : await response.json()) as T;
         cache.current[url] = data;
         if (cancelRequest.current) return;
 

@@ -1,115 +1,132 @@
-import { Alert, AlertTitle, Box, CardMedia, Chip, Divider, Stack, Typography } from "@mui/material";
+import { Alert, AlertTitle, Box, Card, CardMedia, Chip, Stack, Typography } from "@mui/material";
 import { useActivity } from "@Hooks/useActivity";
 import { useStrings } from "@Hooks/useStrings";
-import DescriptonActivity from "@Activitys/DescriptonActivity";
-import { VerifiedRounded } from "@mui/icons-material";
-import { os } from "@Native/Os";
-import { StyledCard } from "./StyledCard";
 import { useLowQualityModule } from "@Hooks/useLowQualityModule";
-import { StyledIconButton } from "./StyledIconButton";
-import { useSettings } from "@Hooks/useSettings";
-import { isDesktop } from "react-device-detect";
+import { colors, useSettings } from "@Hooks/useSettings";
+import { useFormatDate } from "@Hooks/useFormatDate";
+import { useModuleOptions } from "@Hooks/useModuleOptions";
+import { GestureDetector } from "./onsenui/GestureDetector";
+import { useTheme } from "@Hooks/useTheme";
+import ModuleViewActivity from "@Activitys/ModuleViewActivity";
 
 interface Props {
   index: number;
   moduleProps: Module;
-  moduleOptions: any;
+  disableLowQuality?: boolean;
+  disableCovers?: boolean;
 }
 export const ExploreModule = (props: Props) => {
   const { context } = useActivity();
   const { strings } = useStrings();
   const { settings } = useSettings();
+  const { theme, scheme, shade } = useTheme();
 
-  const { moduleOptions, index } = props;
   const { id, notes_url, zip_url, last_update, prop_url } = props.moduleProps;
 
-  // Create better handler
-  const isVerified = moduleOptions[id]?.verified;
-  const _display = moduleOptions[id]?.display;
+  const { isVerified, isHidden } = useModuleOptions(id);
+  const isLowQuality = useLowQualityModule(prop_url, props.disableLowQuality);
+  const formatLastUpdate = useFormatDate(last_update);
 
-  const isLowQuality = useLowQualityModule(prop_url);
-
-  const formatDate = (date: Date) => {
-    var hours = date.getHours();
-    var minutes = date.getMinutes();
-    var ampm = hours >= 12 ? "pm" : "am";
-    hours = hours % 12;
-    hours = hours ? hours : 12; // the hour '0' should be '12'
-    // @ts-ignore
-    minutes = minutes < 10 ? "0" + minutes : minutes;
-    var strTime = hours + ":" + minutes + " " + ampm;
-    return date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear() + " " + strTime;
-  };
+  if (isHidden) {
+    return null;
+  }
 
   const handleOpen = () => {
-    context.pushPage<any>({
-      component: DescriptonActivity,
+    // context.pushPage({
+    //   component: DescriptonActivity,
+    //   key: `view_${prop_url.id}`,
+    //   extra: {
+    //     title: prop_url.name,
+    //     prop_url: prop_url,
+    //     zip_url: zip_url,
+    //     authorData: authorData,
+    //     request: {
+    //       url: notes_url,
+    //     },
+    //   },
+    // });
 
-      props: {
-        key: `view_${prop_url.id}`,
-        extra: {
-          param: {
-            name: "module",
-            value: prop_url.id,
-          },
-          title: prop_url.name,
-          prop_url: prop_url,
-          module_options: props.moduleOptions,
-          zip_url: zip_url,
-          request: {
-            url: notes_url,
-          },
-        },
+    context.pushPage({
+      component: ModuleViewActivity,
+      key: "",
+      extra: {
+        last_update: last_update,
+        zip_url: zip_url,
+        notes_url: notes_url,
+        module: prop_url,
       },
     });
   };
 
-  return (
-    <StyledCard elevation={0}>
-      {!settings._disable_module_covers && prop_url.mmrlCover && (
-        // @ts-ignore
+  const CoverHandler = () => {
+    if (props.disableCovers) {
+      return null;
+    }
+
+    if (prop_url.mmrlCover) {
+      return (
         <CardMedia
           component="img"
-          style={{ objectFit: "unset" }}
-          height={isDesktop ? "445px" : "181.500px"}
+          sx={(theme) => ({
+            height: "calc(calc(100vw - 48px)*9/16)",
+            objectFit: "cover",
+            m: 1,
+            borderRadius: theme.shape.borderRadius / 8,
+            boxShadow: "0 1px 2px 0 rgba(60,64,67,.3), 0 1px 10px 1px rgba(60,64,67,.15)",
+            width: "calc(100% - 16px)",
+          })}
           image={prop_url.mmrlCover}
           alt={prop_url.name}
         />
-      )}
+      );
+    }
+
+    return null;
+  };
+
+  return (
+    <Card
+      variant="outlined"
+      onTap={handleOpen}
+      component={GestureDetector}
+      sx={{
+        ":hover": {
+          cursor: "pointer",
+          bgcolor: !settings.darkmode ? shade(colors[settings.accent_scheme.value][100], 7.6) : "unset",
+        },
+        width: "100%",
+      }}
+    >
+      <CoverHandler />
       <Box sx={{ p: 2, display: "flex" }}>
-        <Stack spacing={0.5} style={{ flexGrow: 1 }} onClick={handleOpen}>
+        <Stack spacing={0.5} style={{ flexGrow: 1 }}>
           <Typography fontWeight={700} color="text.primary">
             {prop_url.name}
           </Typography>{" "}
           <Typography variant="caption" sx={{ fontSize: ".70rem" }} color="text.secondary">
-            {prop_url.version} ({prop_url.versionCode}) / {prop_url.author}
+            <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={0.5}>
+              <span>
+                {prop_url.version} ({prop_url.versionCode}) /
+              </span>
+              <span>{prop_url.author}</span>
+            </Stack>
           </Typography>
           <Typography variant="body1" color="text.secondary">
             {prop_url.description}
           </Typography>
         </Stack>
       </Box>
-      <Divider />
       <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ px: 2, py: 1 }}>
         <Chip
           size="small"
           sx={(theme) => ({
-            bgcolor: theme.palette.secondary.light,
+            bgcolor: `${settings.darkmode ? shade(scheme[200], -24.5) : shade(scheme[300], 49)}46`,
           })}
-          label={formatDate(new Date(last_update))}
+          label={formatLastUpdate}
         />
-        <Stack spacing={0.8} direction="row">
-          {isVerified && (
-            <StyledIconButton
-              style={{ width: 30, height: 30 }}
-              onClick={() => {
-                os.toast(strings.module_verified, Toast.LENGTH_SHORT);
-              }}
-            >
-              <VerifiedRounded sx={{ fontSize: 14 }} />
-            </StyledIconButton>
-          )}
-        </Stack>
+        {/* <Stack spacing={0.8} direction="row">
+Keep for update modules           
+          </Stack> */}
       </Stack>
       {settings._low_quality_module && isLowQuality && (
         <Alert style={{ borderRadius: 0 }} severity="warning">
@@ -117,6 +134,6 @@ export const ExploreModule = (props: Props) => {
           Module meets not the requirements of its props
         </Alert>
       )}
-    </StyledCard>
+    </Card>
   );
 };

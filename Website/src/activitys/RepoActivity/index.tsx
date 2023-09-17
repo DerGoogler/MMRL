@@ -1,5 +1,19 @@
 import { Add } from "@mui/icons-material";
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Divider,
+  List,
+  ListSubheader,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useRepos } from "@Hooks/useRepos";
 import React from "react";
 import { useActivity } from "@Hooks/useActivity";
@@ -8,13 +22,12 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { os } from "@Native/Os";
 import { useStrings } from "@Hooks/useStrings";
 import { Page } from "@Components/onsenui/Page";
-import { For } from "@Components/For";
 import { RecommendedRepo } from "./components/RecommendedRepo";
-import { RelativeStyledSection, StyledSection } from "@Components/StyledSection";
 import { LocalRepository } from "./components/LocalRepository";
+import { useNetwork } from "@Hooks/useNetwork";
 
 const RepoActivity = () => {
-  const MAX_REPO_LENGTH: number = 5;
+  const { isNetworkAvailable } = useNetwork();
   const { context } = useActivity();
   const { strings } = useStrings();
 
@@ -25,7 +38,11 @@ const RepoActivity = () => {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
-    setOpen(true);
+    if (isNetworkAvailable) {
+      setOpen(true);
+    } else {
+      os.toast("Please chack your internet connection", Toast.LENGTH_SHORT);
+    }
   };
 
   const handleClose = () => {
@@ -63,32 +80,45 @@ const RepoActivity = () => {
       module_count: 3,
       link: "https://raw.githubusercontent.com/Googlers-Repo/googlers-repo.github.io/master/modules.json",
     },
+    {
+      name: "Magisk Modules Repo (Official)",
+      module_count: 108,
+      link: "https://raw.githubusercontent.com/Magisk-Modules-Repo/submission/modules/modules.json",
+    },
   ];
 
   return (
     <>
       <Page renderToolbar={renderToolbar}>
-        <RelativeStyledSection zeroMargin>
-          <For
-            each={filteredRepos}
-            fallback={() => (
-              <StyledSection>
-                <Typography variant="h6" sx={{ fontWeight: "bold" }} gutterBottom>
-                  Recommended Repos
-                </Typography>
+        <Page.RelativeContent>
+          <Stack direction="column" justifyContent="flex-start" alignItems="center" spacing={1}>
+            {filteredRepos.map((repo, index) => (
+              <LocalRepository key={"repo_" + index} repo={repo} />
+            ))}
+          </Stack>
+
+          {isNetworkAvailable && (
+            <>
+              {filteredRepos.length !== 0 && <Divider />}
+              <List
+                subheader={
+                  <ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>
+                    {strings.explore_repositories}
+                  </ListSubheader>
+                }
+              >
                 {recommended_repos.map((repo) => (
                   <RecommendedRepo key={"recomm_" + repo.module_count} name={repo.name} moduleCount={repo.module_count} link={repo.link} />
                 ))}
-              </StyledSection>
-            )}
-            catch={(e: Error | undefined) => <Box sx={(theme) => ({ color: theme.palette.text.primary })}>ERROR: {e?.message}</Box>}
-            render={(repo, index) => <LocalRepository key={"repo_" + index} repo={repo} />}
-          />
-        </RelativeStyledSection>
+              </List>
+            </>
+          )}
+        </Page.RelativeContent>
+
         <Dialog open={open} onClose={handleClose}>
-          <DialogTitle>Add Repository</DialogTitle>
+          <DialogTitle>{strings.add_repository}</DialogTitle>
           <DialogContent>
-            <DialogContentText>Add your repository or an repository from some other people</DialogContentText>
+            <DialogContentText>{strings.add_repository_description}</DialogContentText>
             <TextField
               autoFocus
               name="repo_link"
@@ -102,7 +132,7 @@ const RepoActivity = () => {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
+            <Button onClick={handleClose}>{strings.cancel}</Button>
             <Button
               onClick={() => {
                 actions.addRepo({
@@ -119,7 +149,7 @@ const RepoActivity = () => {
                 });
               }}
             >
-              Fetch
+              {strings.add}
             </Button>
           </DialogActions>
         </Dialog>

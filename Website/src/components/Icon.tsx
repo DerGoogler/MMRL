@@ -16,9 +16,9 @@ interface IProps extends SvgIconProps {
 const Icon = (props: IProps) => {
   const { settings } = useSettings();
 
-  const { keepLight, ...rest } = props;
+  const { keepLight, icon: WarpperIcon, ...rest } = props;
   return (
-    <props.icon
+    <WarpperIcon
       sx={{
         color: keepLight ? "rgba(255, 255, 255, 1)" : settings.darkmode ? "rgba(255, 255, 255, 1)" : "rgba(0, 0, 0, 0.54)",
         verticalAlign: "baseline",

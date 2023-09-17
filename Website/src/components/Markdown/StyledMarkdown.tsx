@@ -1,8 +1,6 @@
-import styled from "@emotion/styled";
-import { Theme } from "@mui/material";
+import { Theme, styled } from "@mui/material";
 import React from "react";
 import { useSettings } from "../../hooks/useSettings";
-import useShadeColor from "../../hooks/useShadeColor";
 import { useTheme } from "@Hooks/useTheme";
 
 interface Props {
@@ -10,16 +8,11 @@ interface Props {
   style?: React.CSSProperties;
 }
 
-interface T {
-  theme: Theme;
-}
+export const StyledMarkdown = styled("article")(() => {
+  const { theme, scheme, shade } = useTheme();
+  const { settings } = useSettings();
 
-export const StyledMarkdown = React.forwardRef((props: Props, ref) => {
-  const { theme, scheme } = useTheme();
-  const { settings, setSettings } = useSettings();
-  const shade = useShadeColor();
-
-  const Article = styled.article(({ theme }: T) => ({
+  return {
     msTextSizeAdjust: "100%",
     WebkitTextSizeAdjust: "100%",
     margin: "0",
@@ -222,8 +215,8 @@ export const StyledMarkdown = React.forwardRef((props: Props, ref) => {
     blockquote: {
       margin: "0",
       padding: "0 1em",
-      color: "#57606a",
-      borderLeft: "0.25em solid #d0d7de",
+      color: settings.darkmode ? shade(scheme[200], -9.2) : "#57606a",
+      borderLeft: `0.25em solid ${settings.darkmode ? shade(scheme[200], -9.2) : "#57606a"}`,
     },
     ul: {
       marginTop: "0",
@@ -268,7 +261,7 @@ export const StyledMarkdown = React.forwardRef((props: Props, ref) => {
       padding: "16px",
       overflow: "auto",
       lineHeight: 1.45,
-      backgroundColor: settings.darkmode ? shade(scheme[900], -85) : "#f6f8fa",
+      backgroundColor: !settings.darkmode ? scheme[100] + "46" : shade(scheme[600], settings.shade_value),
       borderRadius: theme.shape.borderRadius,
       "code,\n    tt": {
         display: "inline",
@@ -455,7 +448,7 @@ export const StyledMarkdown = React.forwardRef((props: Props, ref) => {
       padding: "0.2em 0.4em",
       margin: "0",
       fontSize: "85%",
-      backgroundColor: "rgba(175, 184, 193, 0.2)",
+      backgroundColor: !settings.darkmode ? scheme[100] + "46" : shade(scheme[600], settings.shade_value),
       borderRadius: "6px",
     },
     "code br,\n  tt br": { display: "none" },
@@ -469,7 +462,7 @@ export const StyledMarkdown = React.forwardRef((props: Props, ref) => {
         overflow: "auto",
         fontSize: "85%",
         lineHeight: 1.45,
-        backgroundColor: "#f6f8fa",
+        backgroundColor: !settings.darkmode ? scheme[100] + "46" : shade(scheme[600], settings.shade_value),
         borderRadius: "6px",
       },
     },
@@ -560,7 +553,5 @@ export const StyledMarkdown = React.forwardRef((props: Props, ref) => {
     ".hljs-addition": { color: "#22863a", backgroundColor: "#f0fff4" },
     ".hljs-deletion": { color: "#b31d28", backgroundColor: "#ffeef0" },
     ".hljs-char.escape_,\n  .hljs-link,\n  .hljs-params,\n  .hljs-property,\n  .hljs-punctuation,\n  .hljs-tag": {},
-  }));
-
-  return <Article ref={ref as any} theme={theme} style={props.style} children={props.children} />;
+  };
 });

@@ -1,7 +1,7 @@
 import React, { createContext, useContext } from "react";
 import { colors as kolors } from "@mui/material";
 import { defaultComposer } from "default-composer";
-import { useNativeStorage } from "./useNativeStorage";
+import { SetValue, useNativeStorage } from "./useNativeStorage";
 import { languages_map } from "../locales/languages";
 import { os } from "@Native/Os";
 import { SetStateAction } from "./useStateCallback";
@@ -22,6 +22,10 @@ export const accent_colors: Picker<string, any>[] = [
   {
     name: "Blue & Grey",
     value: "blueGrey",
+  },
+  {
+    name: "Dark & Grey",
+    value: "darkGrey",
   },
   {
     name: "Cyan",
@@ -104,10 +108,24 @@ const monet = {
   900: os.getMonetColor("system_accent2_900"),
 };
 
+const darkGrey = {
+  50: "#bcc8d4",
+  100: "#a9b4be",
+  200: "#96a0a9",
+  300: "#838c94",
+  400: "#70787f",
+  500: "#5e646a",
+  600: "#4b5054",
+  700: "#383c3f",
+  800: "#25282a",
+  900: "#121415",
+};
+
 export const colors = {
   amber: kolors.amber,
   blue: kolors.blue,
   blueGrey: kolors.blueGrey,
+  darkGrey: darkGrey,
   brown: kolors.brown,
   cyan: kolors.cyan,
   deepOrange: kolors.deepOrange,
@@ -143,7 +161,24 @@ export interface StorageDeclaration {
   _disable_module_covers: boolean;
   __experimental_local_install: boolean;
   repos: StoredRepo[];
-  test: any;
+  shade_value: number;
+
+  // default paths
+  mod_tree: string;
+  mod_prop: string;
+  mod_system: string;
+  mod_sepolicy: string;
+
+  // service paths
+  mod_late_service: string;
+  mod_post_service: string;
+  mod_mounted: string;
+  mod_boot: string;
+
+  // status paths
+  mod_s_mount: string;
+  mod_disable: string;
+  mod_remove: string;
 }
 
 export const INITIAL_SETTINGS: StorageDeclaration = {
@@ -156,10 +191,28 @@ export const INITIAL_SETTINGS: StorageDeclaration = {
   _disable_module_covers: false,
   __experimental_local_install: false,
   repos: [],
-  test: [],
+  shade_value: -80,
+
+  // default paths
+  mod_tree: "/data/adb/modules",
+  mod_prop: "module.prop",
+  mod_system: "system.prop",
+  mod_sepolicy: "sepolicy.rule",
+
+  // service paths
+  mod_late_service: "service.sh",
+  mod_post_service: "post-fs-data.sh",
+  mod_mounted: "post-mount.sh",
+  mod_boot: "boot-completed.sh",
+
+  // status paths
+  mod_s_mount: "skip_mount",
+  mod_disable: "disable",
+  mod_remove: "remove",
 };
 
 export interface Context {
+  patchSettings: () => void;
   settings: StorageDeclaration;
   setSettings<K extends keyof StorageDeclaration>(
     key: K,
@@ -169,6 +222,7 @@ export interface Context {
 }
 
 export const SettingsContext = createContext<Context>({
+  patchSettings: () => {},
   settings: INITIAL_SETTINGS,
   setSettings<K extends keyof StorageDeclaration>(
     key: K,
@@ -187,14 +241,17 @@ export const SettingsProvider = (props: React.PropsWithChildren) => {
   return (
     <SettingsContext.Provider
       value={{
+        patchSettings: () => {
+          setSettings(defaultComposer(INITIAL_SETTINGS, settings));
+        },
         settings: defaultComposer(INITIAL_SETTINGS, settings),
         setSettings: (name, state, callback) => {
           setSettings(
             (prev) => {
-              // const newValue = state instanceof Function ? state(prev[name]) : state;
+              const newValue = state instanceof Function ? state(prev[name]) : state;
               return {
                 ...prev,
-                [name]: state,
+                [name]: newValue,
               };
             },
             (state) => callback && callback(state[name])
