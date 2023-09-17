@@ -26,32 +26,9 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { styled } from "@mui/material";
 
 type Extra = {
-  configFile: string;
   modulename: string;
+  moduleid: string;
 };
-
-namespace ConfigList {
-  export interface UseSwitch {
-    key: string;
-  }
-
-  export interface UseOpen {
-    url: string;
-  }
-
-  export interface Element {
-    type: "item" | "button";
-    use_switch?: UseSwitch;
-    use_open?: UseOpen;
-    text: string;
-    subtext?: string;
-  }
-
-  export interface Base {
-    list_name: string;
-    list_elements: Element[];
-  }
-}
 
 const OnClick = (props: any) => {
   return <Box onClick={props.handler}>{props.children}</Box>;
@@ -111,12 +88,12 @@ const ConfigureActivity = () => {
   const { context, extra } = useActivity<Extra>();
 
   const config: string = React.useMemo(() => {
-    const file = new SuFile(`${settings.mod_tree}/${extra.modulename}/${extra.configFile}`);
+    const file = new SuFile(`${settings.mod_tree}/${extra.moduleid}/system/usr/share/mmrl/config/${extra.moduleid}.js`);
 
     if (file.exist()) {
       return file.read();
     } else {
-      return "<p>mmrl-config.jsx not found</p>";
+      return `<p>Config file not found</p>`;
     }
   }, []);
 
@@ -151,19 +128,19 @@ const ConfigureActivity = () => {
           },
         }}
         components={{
-          OnClick,
-          Box,
-          Alert,
-          AlertTitle,
-          InputAdornment,
-          List,
-          ListItem,
-          ListItemButton,
+          OnClick: OnClick,
+          Box: Box,
+          Alert: Alert,
+          AlertTitle: AlertTitle,
+          InputAdornment: InputAdornment,
+          List: List,
+          ListItem: ListItem,
+          ListItemButton: ListItemButton,
           ListItemText: StyledListItemText,
           ListItemDialogEditText: DialogEditListItem,
           ListSubheader: StyledListSubheader,
-          Switch,
-          Divider,
+          Switch: Switch,
+          Divider: Divider,
         }}
         jsx={config}
       />

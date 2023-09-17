@@ -65,6 +65,8 @@ const DeviceModule = (props: Props) => {
   const post_mount = SuFile.exist(`${settings.mod_tree}/${module}/${settings.mod_mounted}`);
   const boot_complete = SuFile.exist(`${settings.mod_tree}/${module}/${settings.mod_boot}`);
 
+  const module_config_file = SuFile.exist(`${settings.mod_tree}/${module}/system/usr/share/mmrl/config/${module}.js`);
+
   if (!readProps.exist()) {
     return null;
   }
@@ -135,7 +137,7 @@ const DeviceModule = (props: Props) => {
           />
 
           <Stack spacing={0.8} direction="row">
-            {mmrlConfig && (
+            {module_config_file && (
               <StyledIconButton
                 style={{ width: 30, height: 30 }}
                 onClick={() => {
@@ -143,8 +145,8 @@ const DeviceModule = (props: Props) => {
                     component: ConfigureActivity,
                     key: `${module}_configure`,
                     extra: {
-                      configFile: mmrlConfig,
-                      modulename: module,
+                      modulename: name,
+                      moduleid: module,
                     },
                   });
                 }}

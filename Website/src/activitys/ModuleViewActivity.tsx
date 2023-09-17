@@ -36,7 +36,7 @@ import { os } from "@Native/Os";
 import { Markup } from "@Components/Markdown";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
-import { useFilterCategory } from "@Hooks/useCategory";
+import { useCategories } from "@Hooks/useCategories";
 import { useFormatDate } from "@Hooks/useFormatDate";
 import Chip from "@mui/material/Chip";
 import CardMedia from "@mui/material/CardMedia";
@@ -82,7 +82,7 @@ const ModuleViewActivity = () => {
     maxApi,
     mmrlCover,
     needRamdisk,
-    mmrlCategory,
+    mmrlCategories,
     changeBoot,
   } = extra.module;
 
@@ -91,7 +91,7 @@ const ModuleViewActivity = () => {
 
   const [moduleRemoved, setModuleRemoved] = React.useState(remove.exist());
 
-  const categories = useFilterCategory(mmrlCategory);
+  const categories = useCategories(mmrlCategories);
   const { data } = useFetch<string>(notes_url);
   const formatLastUpdate = useFormatDate(last_update);
   const { SupportIcon, supportText } = useSupportIconForUrl(support);

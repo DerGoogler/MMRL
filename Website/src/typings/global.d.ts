@@ -64,7 +64,7 @@ declare global {
    * Native window properties for Android
    */
   interface AndroidWindow<I = any> {
-    /**
+    /**object
      * This is an Android only window object
      */
     readonly __sufile__: I;
@@ -200,7 +200,7 @@ declare global {
     mmrlLogo?: string;
     mmrlScreenshots?: string;
     // Developers that points "Gaming" won't have a change to get verified. Magisk isn't made for Gaming purposes.
-    mmrlCategory?: string;
+    mmrlCategories?: string;
 
     // Fox's Mmm supported properties
     minApi?: string;

@@ -19,9 +19,9 @@ Magisk Module Repo Loader (MMRL). Allows you to load custom repos with an simple
 - [x] View installed modules
 - [x] Remove installed modules
 - [x] Enable/Disable installed modules
+- [x] Dynamic module configuration
 - [ ] Module install
 - [x] Monet theming
-- [x] Filtering installed modules with regex
 
 #### Root Manager (Android)
 
@@ -50,14 +50,14 @@ author=<string>
 description=<string>
 
 # MMRL supported properties
-mmrlConfig=<boolean>
+# mmrlConfig=<file> config file get automatically detected
 mmrlNoComments=<boolean>
 mmrlCover=<url>
 mmrlAuthor=<uid>
 mmrlLogo=<url>
 mmrlScreenshots=<url>,<url>,<url> ...
 # Developers that points "Gaming" won't have a change to get verified. Magisk isn't made for gaming purposes.
-mmrlCategory=<string>,<string>,<string> ...
+mmrlCategories=<string>,<string>,<string> ...
 
 # Fox's Mmm supported properties
 minApi=<int>
