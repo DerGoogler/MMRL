@@ -163,6 +163,10 @@ export interface StorageDeclaration {
   repos: StoredRepo[];
   shade_value: number;
 
+  // cli
+  mod_msu_cli: string;
+  mod_ksu_cli: string;
+
   // default paths
   mod_tree: string;
   mod_prop: string;
@@ -192,6 +196,10 @@ export const INITIAL_SETTINGS: StorageDeclaration = {
   __experimental_local_install: false,
   repos: [],
   shade_value: -80,
+
+  //cli
+  mod_msu_cli: '/system/bin/magisk --install-module "{path}"',
+  mod_ksu_cli: '/data/adb/ksu/bin/ksud module install "{path}"',
 
   // default paths
   mod_tree: "/data/adb/modules",

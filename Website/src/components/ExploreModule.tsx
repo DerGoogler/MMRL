@@ -15,16 +15,16 @@ interface Props {
   disableLowQuality?: boolean;
   disableCovers?: boolean;
 }
-export const ExploreModule = (props: Props) => {
+export const ExploreModule = (_props: Props) => {
   const { context } = useActivity();
   const { strings } = useStrings();
   const { settings } = useSettings();
   const { theme, scheme, shade } = useTheme();
 
-  const { id, notes_url, zip_url, last_update, prop_url } = props.moduleProps;
+  const { id, notes_url, zip_url, last_update, props } = _props.moduleProps;
 
   const { isVerified, isHidden } = useModuleOptions(id);
-  const isLowQuality = useLowQualityModule(prop_url, props.disableLowQuality);
+  const isLowQuality = useLowQualityModule(props, _props.disableLowQuality);
   const formatLastUpdate = useFormatDate(last_update);
 
   if (isHidden) {
@@ -53,17 +53,17 @@ export const ExploreModule = (props: Props) => {
         last_update: last_update,
         zip_url: zip_url,
         notes_url: notes_url,
-        module: prop_url,
+        module: props,
       },
     });
   };
 
   const CoverHandler = () => {
-    if (props.disableCovers) {
+    if (_props.disableCovers) {
       return null;
     }
 
-    if (prop_url.mmrlCover) {
+    if (props.mmrlCover) {
       return (
         <CardMedia
           component="img"
@@ -75,8 +75,8 @@ export const ExploreModule = (props: Props) => {
             boxShadow: "0 1px 2px 0 rgba(60,64,67,.3), 0 1px 10px 1px rgba(60,64,67,.15)",
             width: "calc(100% - 16px)",
           })}
-          image={prop_url.mmrlCover}
-          alt={prop_url.name}
+          image={props.mmrlCover}
+          alt={props.name}
         />
       );
     }
@@ -101,18 +101,18 @@ export const ExploreModule = (props: Props) => {
       <Box sx={{ p: 2, display: "flex" }}>
         <Stack spacing={0.5} style={{ flexGrow: 1 }}>
           <Typography fontWeight={700} color="text.primary">
-            {prop_url.name}
+            {props.name}
           </Typography>{" "}
           <Typography variant="caption" sx={{ fontSize: ".70rem" }} color="text.secondary">
             <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={0.5}>
               <span>
-                {prop_url.version} ({prop_url.versionCode}) /
+                {props.version} ({props.versionCode}) /
               </span>
-              <span>{prop_url.author}</span>
+              <span>{props.author}</span>
             </Stack>
           </Typography>
           <Typography variant="body1" color="text.secondary">
-            {prop_url.description}
+            {props.description}
           </Typography>
         </Stack>
       </Box>

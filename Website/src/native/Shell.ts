@@ -20,6 +20,8 @@ interface NativeShell {
    * Checks if the app has been granted root privileges
    */
   isSuAvailable(): boolean;
+  isKernelSU(): boolean;
+  isMagiskSU(): boolean;
 }
 
 interface IShell {
@@ -107,18 +109,36 @@ class ShellClass extends Native<NativeShell> {
     }
   }
 
+  public getRootManager(): string {
+    if (this.isMagiskSU()) {
+      return "Mang. by Magisk";
+    } else if (this.isKernelSU()) {
+      return "Mang. by KernelSU";
+    } else {
+      return "Mang. by Unknown";
+    }
+  }
+
   /**
    * Determine if MMRL runs with KernelSU
    */
-  public get isKernelSU(): boolean {
-    return /(\d+\.\d+\.\d+):KernelSU/i.test(this.VERSION_NAME()) ? true : false;
+  public isKernelSU(): boolean {
+    if (this.isAndroid) {
+      return this.getInterface.isKernelSU();
+    } else {
+      return false;
+    }
   }
 
   /**
    * Determine if MMRL runs with Magisk
    */
-  public get isMagisk(): boolean {
-    return /(\d+\.\d+):MAGISKSU/i.test(this.VERSION_NAME()) ? true : false;
+  public isMagiskSU(): boolean {
+    if (this.isAndroid) {
+      return this.getInterface.isMagiskSU();
+    } else {
+      return false;
+    }
   }
 }
 

@@ -6,6 +6,8 @@ import Stack from "@mui/material/Stack";
 import Ansi from "ansi-to-react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import React from "react";
+import { Shell } from "@Native/Shell";
+import { useSettings } from "@Hooks/useSettings";
 
 function useOnceCall(effect: React.EffectCallback, deps?: React.DependencyList | undefined) {
   const isCalledRef = React.useRef(false);
@@ -20,6 +22,7 @@ function useOnceCall(effect: React.EffectCallback, deps?: React.DependencyList |
 
 const TerminalActivity = () => {
   const { context, extra } = useActivity<any>();
+  const { settings } = useSettings();
   const [active, setActive] = React.useState<bool>(true);
 
   const [lines, setLines] = React.useState<string[]>([]);
@@ -46,13 +49,23 @@ const TerminalActivity = () => {
     }
   };
 
+  const installCli = (path: string) => {
+    if (Shell.isMagiskSU()) {
+      return settings.mod_msu_cli.replace(/{path}/i, path);
+    } else if (Shell.isKernelSU()) {
+      return settings.mod_ksu_cli.replace(/{path}/i, path);
+    } else {
+      throw new Error("Unable to determine installation string");
+    }
+  };
+
   const install = () => {
     const { exploreInstall, path } = extra;
 
-    const url = new URL(path).pathname.split("/");
-    const getFileName = url[2] + "-" + url[4];
-
     if (exploreInstall) {
+      const url = new URL(path).pathname.split("/");
+      const getFileName = url[2] + "-" + url[4];
+
       addLine("- Download module");
       const success = dl(path, "/sdcard/MMRL/", getFileName);
 
@@ -74,7 +87,7 @@ const TerminalActivity = () => {
     } else {
       // @ts-ignore
       Terminal.exec(
-        `magisk --install-module "${path}"`,
+        installCli(path),
         (r) => {
           addLine(r);
         },
@@ -98,6 +111,11 @@ const TerminalActivity = () => {
 
   return (
     <Page
+      onDeviceBackButton={(e: Event) => {
+        if (active) {
+          e.preventDefault();
+        }
+      }}
       onShow={install}
       modifier="noshadow"
       renderToolbar={renderToolbar}

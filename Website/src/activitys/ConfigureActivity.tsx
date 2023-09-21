@@ -88,7 +88,7 @@ const ConfigureActivity = () => {
   const { context, extra } = useActivity<Extra>();
 
   const config: string = React.useMemo(() => {
-    const file = new SuFile(`${settings.mod_tree}/${extra.moduleid}/system/usr/share/mmrl/config/${extra.moduleid}.js`);
+    const file = new SuFile(`${settings.mod_tree}/${extra.moduleid}/system/usr/share/mmrl/config/${extra.moduleid}.mdx`);
 
     if (file.exist()) {
       return file.read();

@@ -178,7 +178,8 @@ declare global {
     id: string;
     last_update: string;
     notes_url: string;
-    prop_url: ModuleProps;
+    prop_url: string;
+    props: ModuleProps;
     stars: string;
     zip_url: string;
   }

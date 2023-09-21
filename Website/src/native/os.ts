@@ -53,6 +53,12 @@ class OsClass extends Native {
     this.isAndroid ? this.getInterface.close() : window.close();
   }
 
+  public shareText(title: string, body: string): void {
+    if (this.isAndroid) {
+      this.getInterface.shareText(title, body);
+    }
+  }
+
   /**
    * Makes an toast, even on Android
    * @param text
