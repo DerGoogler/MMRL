@@ -246,7 +246,7 @@ function ModuleTreeConf() {
             }
             type="text"
             title="Mounted service location"
-            disabled={Shell.isMagisk}
+            disabled={Shell.isMagiskSU()}
             initialValue={settings.mod_mounted}
             onSuccess={(value) => {
               if (value) {
@@ -287,7 +287,7 @@ function ModuleTreeConf() {
             }
             type="text"
             title="Boot complete service location"
-            disabled={Shell.isMagisk}
+            disabled={Shell.isMagiskSU()}
             initialValue={settings.mod_boot}
             onSuccess={(value) => {
               if (value) {

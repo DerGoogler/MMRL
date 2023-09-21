@@ -17,6 +17,7 @@ import { useRepos } from "@Hooks/useRepos";
 import { Shell } from "@Native/Shell";
 import { DialogEditTextListItem } from "@Components/DialogEditTextListItem";
 import ModuleTreeConf from "./ModuleTreeConf";
+import { Properties } from "@Native/Properties";
 
 function SettingsActivity() {
   const { context } = useActivity();
@@ -123,12 +124,14 @@ function SettingsActivity() {
                 id="switch-list-__experimental_local_install"
                 primary={"Enable local install"}
                 secondary={
-                  <>Allows you to install local *.zip files (Experimental). {Shell.isKernelSU && <strong>Disabled due KernelSU.</strong>}</>
+                  <>
+                    Allows you to install local *.zip files (Experimental). {Shell.isKernelSU() && <strong>Disabled due KernelSU.</strong>}
+                  </>
                 }
               />
               <Android12Switch
                 edge="end"
-                disabled={Shell.isKernelSU}
+                disabled={!(Shell.isKernelSU() || Shell.isMagiskSU())}
                 onChange={(e: any) => {
                   setSettings("__experimental_local_install", e.target.checked);
                 }}
@@ -170,6 +173,36 @@ function SettingsActivity() {
             }}
           >
             <StyledListItemText id="switch-list-label-wifi" primary="Issues" secondary="Track our issues" />
+          </ListItemButton>
+          <ListItemButton
+            onClick={() => {
+              os.shareText(
+                "Share via",
+                JSON.stringify(
+                  {
+                    device: {
+                      sdk: Properties.get("ro.build.version.sdk", "unknown"),
+                      brand: Properties.get("ro.product.brand", "unknown"),
+                      model: Properties.get("ro.product.model", "unknown"),
+                    },
+                    application: {
+                      package_name: BuildConfig.APPLICATION_ID,
+                      version_name: BuildConfig.VERSION_NAME,
+                      version_code: BuildConfig.VERSION_CODE,
+                    },
+                    root: {
+                      manager: Shell.getRootManager(),
+                      version_name: Shell.VERSION_NAME(),
+                      version_code: Shell.VERSION_CODE(),
+                    },
+                  },
+                  null,
+                  4
+                )
+              );
+            }}
+          >
+            <StyledListItemText primary="Share device informations" secondary="Helpful for MMRLs development" />
           </ListItemButton>
         </List>
 

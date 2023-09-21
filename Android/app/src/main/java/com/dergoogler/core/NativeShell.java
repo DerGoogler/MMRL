@@ -3,7 +3,6 @@ package com.dergoogler.core;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 
-import com.topjohnwu.superuser.CallbackList;
 import com.topjohnwu.superuser.Shell;
 import com.topjohnwu.superuser.ShellUtils;
 
@@ -17,6 +16,10 @@ public class NativeShell {
 
     public NativeShell(WebView wv) {
         this.wv = wv;
+    }
+
+    static {
+        System.loadLibrary("native-shell-lib");
     }
 
     @JavascriptInterface
@@ -49,6 +52,13 @@ public class NativeShell {
             return false;
         }
     }
+
+    @JavascriptInterface
+    public static native boolean isMagiskSU();
+
+    @JavascriptInterface
+    public static native boolean isKernelSU();
+
 
     @JavascriptInterface
     public boolean isAppGrantedRoot() {

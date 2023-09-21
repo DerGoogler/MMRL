@@ -6,6 +6,7 @@ import Stack from "@mui/material/Stack";
 import Ansi from "ansi-to-react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import React from "react";
+import { Shell } from "@Native/Shell";
 
 function useOnceCall(effect: React.EffectCallback, deps?: React.DependencyList | undefined) {
   const isCalledRef = React.useRef(false);
@@ -49,10 +50,10 @@ const TerminalActivity = () => {
   const install = () => {
     const { exploreInstall, path } = extra;
 
-    const url = new URL(path).pathname.split("/");
-    const getFileName = url[2] + "-" + url[4];
-
     if (exploreInstall) {
+      const url = new URL(path).pathname.split("/");
+      const getFileName = url[2] + "-" + url[4];
+
       addLine("- Download module");
       const success = dl(path, "/sdcard/MMRL/", getFileName);
 
@@ -74,7 +75,7 @@ const TerminalActivity = () => {
     } else {
       // @ts-ignore
       Terminal.exec(
-        `magisk --install-module "${path}"`,
+        Shell.installModuleString(path),
         (r) => {
           addLine(r);
         },
@@ -98,6 +99,11 @@ const TerminalActivity = () => {
 
   return (
     <Page
+      onDeviceBackButton={(e: Event) => {
+        if (active) {
+          e.preventDefault();
+        }
+      }}
       onShow={install}
       modifier="noshadow"
       renderToolbar={renderToolbar}

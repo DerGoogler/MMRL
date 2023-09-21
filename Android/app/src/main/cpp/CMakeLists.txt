@@ -17,3 +17,6 @@ add_library(native-log-lib SHARED
 
 add_library(native-properties-lib SHARED
         properties.cpp)
+
+add_library(native-shell-lib SHARED
+        shell.cpp)

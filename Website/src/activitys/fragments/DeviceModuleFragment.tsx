@@ -21,7 +21,7 @@ const DeviceModuleFragment = () => {
   return (
     <Page>
       <Page.RelativeContent>
-        {settings.__experimental_local_install && Shell.isMagisk && (
+        {settings.__experimental_local_install && (Shell.isMagiskSU() || Shell.isKernelSU()) && (
           <Card
             variant="outlined"
             onClick={() => {
@@ -34,6 +34,7 @@ const DeviceModuleFragment = () => {
                       component: TerminalActivity,
                       key: "local_install",
                       extra: {
+                        exploreInstall: false,
                         path: file.path,
                       },
                     });

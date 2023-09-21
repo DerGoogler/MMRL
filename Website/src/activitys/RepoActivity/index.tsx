@@ -73,17 +73,17 @@ const RepoActivity = () => {
     {
       name: "Magisk Modules Alternative Repository",
       module_count: 100,
-      link: "https://raw.githubusercontent.com/Magisk-Modules-Alt-Repo/json/main/modules.json",
+      link: "https://api.mmrl.dergoogler.com/mmar.json",
     },
     {
       name: "Googlers Magisk Repo",
       module_count: 3,
-      link: "https://raw.githubusercontent.com/Googlers-Repo/googlers-repo.github.io/master/modules.json",
+      link: "https://api.mmrl.dergoogler.com/gmr.json",
     },
     {
       name: "Magisk Modules Repo (Official)",
       module_count: 108,
-      link: "https://raw.githubusercontent.com/Magisk-Modules-Repo/submission/modules/modules.json",
+      link: "https://api.mmrl.dergoogler.com/mmr.json",
     },
   ];
 

@@ -7,15 +7,17 @@ import Stack from "@mui/material/Stack";
 import Pagination from "@mui/material/Pagination";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Avatar from "@mui/material/Avatar";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
+import PersonIcon from "@mui/icons-material/Person";
+import AddIcon from "@mui/icons-material/Add";
+import Typography from "@mui/material/Typography";
 import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import InputLabel from "@mui/material/InputLabel";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { useStrings } from "@Hooks/useStrings";
 import { usePagination } from "@Hooks/usePagination";
 import RepoActivity from "@Activitys/RepoActivity";
@@ -27,11 +29,32 @@ import { BottomToolbar } from "@Components/onsenui/BottomToolbar";
 import Icon from "@Components/Icon";
 import { MissingInternet } from "@Components/MissingInternet";
 import { useNetwork } from "@Hooks/useNetwork";
+import { useNativeStorage } from "@Hooks/useNativeStorage";
+import UpdateDisabledIcon from "@mui/icons-material/UpdateDisabled";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 
 export interface ExploreModuleProps {
   renderToolbar?: RenderFunction;
   applyFilter: (modules: Module[], search: string) => Module[];
 }
+
+const filters = [
+  {
+    name: "No filter",
+    icon: UpdateDisabledIcon,
+    value: "none",
+  },
+  {
+    name: "By date (newest)",
+    icon: CalendarMonthIcon,
+    value: "date_newest",
+  },
+  {
+    name: "By date (oldest)",
+    icon: CalendarMonthIcon,
+    value: "date_oldest",
+  },
+];
 
 const ExploreModuleFragment = (props: ExploreModuleProps) => {
   const { context } = useActivity();
@@ -43,7 +66,8 @@ const ExploreModuleFragment = (props: ExploreModuleProps) => {
   const [search, setSearch] = React.useState("");
 
   const [open, setOpen] = React.useState(false);
-  const [exploreFilter, setExploreFilter] = React.useState<number | string>("none");
+
+  const [exploreFilter, setExploreFilter] = useNativeStorage("filter", filters[0].value);
 
   const filterSystem = () => {
     const applyFilter = props.applyFilter(modules, search);
@@ -133,18 +157,13 @@ const ExploreModuleFragment = (props: ExploreModuleProps) => {
     );
   }
 
-  const handleChange = (event: SelectChangeEvent<typeof exploreFilter>) => {
-    setExploreFilter(event.target.value);
-  };
-
   const handleClickOpen = () => {
     setOpen(true);
   };
 
-  const handleClose = (event: React.SyntheticEvent<unknown>, reason?: string) => {
-    if (reason !== "backdropClick") {
-      setOpen(false);
-    }
+  const handleClose = (value: string) => {
+    setOpen(false);
+    setExploreFilter(value);
   };
 
   return (
@@ -180,48 +199,47 @@ const ExploreModuleFragment = (props: ExploreModuleProps) => {
         </Stack>
       </Page.RelativeContent>
 
-      <Dialog disableEscapeKeyDown open={open} onClose={handleClose}>
-        <DialogTitle>Apply a filter</DialogTitle>
-        <DialogContent>
-          <Box component="form" sx={{ display: "flex", flexWrap: "wrap" }}>
-            <FormControl sx={{ m: 1, minWidth: 120 }}>
-              <InputLabel id="demo-dialog-select-label">Filter</InputLabel>
-              <Select
-                labelId="demo-dialog-select-label"
-                id="demo-dialog-select"
-                value={exploreFilter}
-                onChange={handleChange}
-                input={<OutlinedInput label="Filter" />}
-              >
-                <MenuItem value="none">
-                  <em>No filter</em>
-                </MenuItem>
-                <MenuItem value="date_oldest">By date (oldest)</MenuItem>
-                <MenuItem value="date_newest">By date (newest)</MenuItem>
-              </Select>
-            </FormControl>
-          </Box>
-        </DialogContent>
-        <DialogActions>
-          <Button
-            sx={{
-              color: scheme[500],
-            }}
-            onClick={handleClose}
-          >
-            Cancel
-          </Button>
-          <Button
-            sx={{
-              color: scheme[500],
-            }}
-            onClick={handleClose}
-          >
-            Apply
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <FilterDialog selectedValue={exploreFilter} open={open} onClose={handleClose} />
     </Page>
+  );
+};
+
+interface FilterDialogProps {
+  open: boolean;
+  selectedValue: string;
+  onClose: (value: string) => void;
+}
+
+const FilterDialog = (props: FilterDialogProps) => {
+  const { scheme, theme } = useTheme();
+  const { onClose, selectedValue, open } = props;
+
+  const handleClose = () => {
+    onClose(selectedValue);
+  };
+
+  const handleListItemClick = (value: string) => {
+    onClose(value);
+  };
+
+  return (
+    <Dialog onClose={handleClose} open={open}>
+      <DialogTitle>Apply filter</DialogTitle>
+      <List sx={{ pt: 0 }}>
+        {filters.map((filter) => (
+          <ListItem disableGutters key={filter.value}>
+            <ListItemButton onClick={() => handleListItemClick(filter.value)}>
+              <ListItemAvatar>
+                <Avatar sx={{ bgcolor: scheme[100], color: scheme[600] }}>
+                  <filter.icon />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText primary={filter.name} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+    </Dialog>
   );
 };
 

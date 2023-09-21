@@ -47,14 +47,13 @@ const DeviceModule = (props: Props) => {
     }
   }, []);
 
+  const remove = new SuFile(`${settings.mod_tree}/${module}/${settings.mod_remove}`);
   React.useEffect(() => {
-    const remove = new SuFile(`${settings.mod_tree}/${module}/${settings.mod_remove}`);
-
     setIsSwitchDisabled(remove.exist());
   }, [isSwitchDisabled]);
 
+  const disable = new SuFile(`${settings.mod_tree}/${module}/${settings.mod_disable}`);
   React.useEffect(() => {
-    const disable = new SuFile(`${settings.mod_tree}/${module}/${settings.mod_remove}`);
     setIsEnabled(!disable.exist());
   }, [isEnabled]);
 
