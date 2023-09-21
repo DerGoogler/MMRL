@@ -7,6 +7,7 @@ import Ansi from "ansi-to-react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import React from "react";
 import { Shell } from "@Native/Shell";
+import { useSettings } from "@Hooks/useSettings";
 
 function useOnceCall(effect: React.EffectCallback, deps?: React.DependencyList | undefined) {
   const isCalledRef = React.useRef(false);
@@ -21,6 +22,7 @@ function useOnceCall(effect: React.EffectCallback, deps?: React.DependencyList |
 
 const TerminalActivity = () => {
   const { context, extra } = useActivity<any>();
+  const { settings } = useSettings();
   const [active, setActive] = React.useState<bool>(true);
 
   const [lines, setLines] = React.useState<string[]>([]);
@@ -44,6 +46,16 @@ const TerminalActivity = () => {
       return window.__sufile__.unzip(file, target);
     } catch {
       return false;
+    }
+  };
+
+  const installCli = (path: string) => {
+    if (Shell.isMagiskSU()) {
+      return settings.mod_msu_cli.replace(/{path}/i, path);
+    } else if (Shell.isKernelSU()) {
+      return settings.mod_ksu_cli.replace(/{path}/i, path);
+    } else {
+      throw new Error("Unable to determine installation string");
     }
   };
 
@@ -75,7 +87,7 @@ const TerminalActivity = () => {
     } else {
       // @ts-ignore
       Terminal.exec(
-        Shell.installModuleString(path),
+        installCli(path),
         (r) => {
           addLine(r);
         },

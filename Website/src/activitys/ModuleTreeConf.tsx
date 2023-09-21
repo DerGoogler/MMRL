@@ -47,6 +47,48 @@ function ModuleTreeConf() {
           I am not responsible for anything that may happen to your phone by changing these informations. You do it at your own risk and
           take the responsibility upon yourself and you are not to blame us or MMRL and its respected developers
         </Alert>
+        <List
+          subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>Command line interfaces</ListSubheader>}
+        >
+          <DialogEditTextListItem
+            inputLabel="Path"
+            type="text"
+            title="Installation cli"
+            disabled={!Shell.isMagiskSU()}
+            initialValue={settings.mod_msu_cli}
+            onSuccess={(value) => {
+              if (value) {
+                setSettings("mod_msu_cli", value);
+              }
+            }}
+          >
+            <StyledListItemText primary="Magisk install cli" secondary={settings.mod_msu_cli} />
+          </DialogEditTextListItem>
+          <DialogEditTextListItem
+            inputLabel="Path"
+            type="text"
+            title="Installation cli"
+            disabled={!Shell.isKernelSU()}
+            initialValue={settings.mod_ksu_cli}
+            onSuccess={(value) => {
+              if (value) {
+                setSettings("mod_ksu_cli", value);
+              }
+            }}
+          >
+            <StyledListItemText
+              primary={
+                <Box sx={{ display: "flex", alignItems: "center", justifyItems: "center" }}>
+                  <KernelSULogo sx={{ mr: 1 }} width="1rem" height="1rem" />
+                  KernelSU install cli
+                </Box>
+              }
+              secondary={settings.mod_ksu_cli}
+            />
+          </DialogEditTextListItem>
+        </List>
+
+        <Divider />
         <List subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>Default paths</ListSubheader>}>
           <DialogEditTextListItem
             inputLabel="Path"
@@ -246,7 +288,7 @@ function ModuleTreeConf() {
             }
             type="text"
             title="Mounted service location"
-            disabled={Shell.isMagiskSU()}
+            disabled={!Shell.isKernelSU()}
             initialValue={settings.mod_mounted}
             onSuccess={(value) => {
               if (value) {
@@ -287,7 +329,7 @@ function ModuleTreeConf() {
             }
             type="text"
             title="Boot complete service location"
-            disabled={Shell.isMagiskSU()}
+            disabled={!Shell.isKernelSU()}
             initialValue={settings.mod_boot}
             onSuccess={(value) => {
               if (value) {

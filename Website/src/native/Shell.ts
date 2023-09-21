@@ -140,16 +140,6 @@ class ShellClass extends Native<NativeShell> {
       return false;
     }
   }
-
-  public installModuleString(path: string): string {
-    if (this.isMagiskSU()) {
-      return `/system/bin/magisk --install-module "${path}"`;
-    } else if (this.isKernelSU()) {
-      return `/data/adb/ksu/ksud module install "${path}"`;
-    } else {
-      throw new Error("Unable to determine installation string");
-    }
-  }
 }
 
 export const Shell: ShellClass = new ShellClass();
