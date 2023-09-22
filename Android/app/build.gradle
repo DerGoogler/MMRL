@@ -26,6 +26,16 @@ android {
             abiFilters "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
         }
     }
+    
+    splits {
+        abi {
+            enable true
+            reset()
+            include "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
+            universalApk true
+        }
+    }
+    
     buildTypes {
         release {
             resValue "string", "app_name", "${app_name}"
