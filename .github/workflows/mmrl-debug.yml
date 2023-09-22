@@ -59,6 +59,7 @@ jobs:
          npm run web:dev
          npm run assetfix:android-clean
          npm run assetfix:android-build
+         cd ..
          ./Android/gradlew app:assembleDefaultDebug
 
       - name: Upload MMRL-default-arm64-v8a-debug
