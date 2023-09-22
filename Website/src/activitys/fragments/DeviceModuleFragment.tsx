@@ -11,11 +11,11 @@ import TerminalActivity from "@Activitys/TerminalActivity";
 
 const DeviceModuleFragment = () => {
   const { context } = useActivity();
-  const { settings } = useSettings();
+  const { settings, modConf } = useSettings();
   const [modules, setModules] = React.useState<string[]>([]);
 
   React.useEffect(() => {
-    setModules(SuFile.list(settings.mod_tree).split(","));
+    setModules(SuFile.list(modConf("MODULES")).split(","));
   }, [settings]);
 
   return (

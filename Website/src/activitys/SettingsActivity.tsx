@@ -114,7 +114,7 @@ function SettingsActivity() {
                   });
                 }}
               >
-                <StyledListItemText primary="Customize module tree" />
+                <StyledListItemText primary="ModConf" secondary="A way to manage different module system" />
               </ListItemButton>
             </>
           )}

@@ -83,12 +83,12 @@ const DialogEditListItem = ({
 const ConfigureActivity = () => {
   const log = useLog("ConfigureActivity");
   const { strings } = useStrings();
-  const { settings } = useSettings();
+  const { settings, modConf } = useSettings();
   const { theme } = useTheme();
   const { context, extra } = useActivity<Extra>();
 
   const config: string = React.useMemo(() => {
-    const file = new SuFile(`${settings.mod_tree}/${extra.moduleid}/system/usr/share/mmrl/config/${extra.moduleid}.mdx`);
+    const file = new SuFile(modConf("CONFIG", { MODID: extra.moduleid }));
 
     if (file.exist()) {
       return file.read();

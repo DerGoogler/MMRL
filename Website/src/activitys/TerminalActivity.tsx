@@ -22,7 +22,7 @@ function useOnceCall(effect: React.EffectCallback, deps?: React.DependencyList |
 
 const TerminalActivity = () => {
   const { context, extra } = useActivity<any>();
-  const { settings } = useSettings();
+  const { settings, modConf } = useSettings();
   const [active, setActive] = React.useState<bool>(true);
 
   const [lines, setLines] = React.useState<string[]>([]);
@@ -51,9 +51,9 @@ const TerminalActivity = () => {
 
   const installCli = (path: string) => {
     if (Shell.isMagiskSU()) {
-      return settings.mod_msu_cli.replace(/{path}/i, path);
+      return modConf("MSUCLI", { ZIPFILE: path });
     } else if (Shell.isKernelSU()) {
-      return settings.mod_ksu_cli.replace(/{path}/i, path);
+      return modConf("KSUCLI", { ZIPFILE: path });
     } else {
       throw new Error("Unable to determine installation string");
     }

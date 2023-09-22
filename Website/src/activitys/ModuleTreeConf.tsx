@@ -6,7 +6,7 @@ import { Page } from "@Components/onsenui/Page";
 import { Magisk } from "@Native/Magisk";
 import { useStrings } from "@Hooks/useStrings";
 import { useActivity } from "@Hooks/useActivity";
-import { accent_colors, colors, useSettings } from "@Hooks/useSettings";
+import { ModConf, accent_colors, colors, useSettings } from "@Hooks/useSettings";
 import { StyledListItemText } from "@Components/StyledListItemText";
 import { ListPickerItem } from "@Components/ListPickerItem";
 import { languages_map } from "../locales/languages";
@@ -17,17 +17,17 @@ import { useRepos } from "@Hooks/useRepos";
 import { Shell } from "@Native/Shell";
 import { DialogEditTextListItem } from "@Components/DialogEditTextListItem";
 import { KernelSULogo } from "@Components/icon/KernelSULogo";
+import React from "react";
 
 function ModuleTreeConf() {
   const { context } = useActivity();
   const { strings } = useStrings();
   const { setRepos } = useRepos();
-  const { patchSettings } = useSettings();
 
   const { theme, scheme } = useTheme();
 
   // Prefs
-  const { settings, setSettings } = useSettings();
+  const { _modConf, setModConf } = useSettings();
 
   const renderToolbar = () => {
     return (
@@ -53,26 +53,26 @@ function ModuleTreeConf() {
           <DialogEditTextListItem
             inputLabel="Path"
             type="text"
-            title="Installation cli"
+            title="Installation CLI"
             disabled={!Shell.isMagiskSU()}
-            initialValue={settings.mod_msu_cli}
+            initialValue={_modConf.MSUCLI}
             onSuccess={(value) => {
               if (value) {
-                setSettings("mod_msu_cli", value);
+                setModConf("MSUCLI", value);
               }
             }}
           >
-            <StyledListItemText primary="Magisk install cli" secondary={settings.mod_msu_cli} />
+            <StyledListItemText primary="Magisk install CLI" secondary={_modConf.MSUCLI} />
           </DialogEditTextListItem>
           <DialogEditTextListItem
             inputLabel="Path"
             type="text"
-            title="Installation cli"
+            title="Installation CLI"
             disabled={!Shell.isKernelSU()}
-            initialValue={settings.mod_ksu_cli}
+            initialValue={_modConf.KSUCLI}
             onSuccess={(value) => {
               if (value) {
-                setSettings("mod_ksu_cli", value);
+                setModConf("KSUCLI", value);
               }
             }}
           >
@@ -83,7 +83,7 @@ function ModuleTreeConf() {
                   KernelSU install cli
                 </Box>
               }
-              secondary={settings.mod_ksu_cli}
+              secondary={_modConf.KSUCLI}
             />
           </DialogEditTextListItem>
         </List>
@@ -93,206 +93,119 @@ function ModuleTreeConf() {
           <DialogEditTextListItem
             inputLabel="Path"
             type="text"
-            title="Modules location"
-            initialValue={settings.mod_tree}
+            title="Base location"
+            initialValue={_modConf.ADB}
             onSuccess={(value) => {
               if (value) {
-                setSettings("mod_tree", value);
+                setModConf("ADB", value);
               }
             }}
           >
-            <StyledListItemText primary="Modules location" secondary={settings.mod_tree} />
+            <StyledListItemText primary="Base location" secondary={_modConf.ADB} />
           </DialogEditTextListItem>
           <DialogEditTextListItem
-            inputLabel={
-              <Box sx={{ display: "flex" }}>
-                {settings.mod_tree}/
-                <Box
-                  sx={{
-                    px: 0.5,
-                    py: 0.25,
-                    borderRadius: 1,
-                    display: "flex",
-                    typography: "caption",
-                    bgcolor: (theme) => (theme.palette.mode === "dark" ? scheme[900] : scheme[50]),
-                    color: (theme) => (theme.palette.mode === "dark" ? "#fff" : scheme[700]),
-                  }}
-                >
-                  MODID
-                </Box>
-                /
-              </Box>
-            }
+            inputLabel="Path"
+            type="text"
+            title="Modules location"
+            initialValue={_modConf.MODULES}
+            onSuccess={(value) => {
+              if (value) {
+                setModConf("MODULES", value);
+              }
+            }}
+          >
+            <StyledListItemText primary="Modules location" secondary={_modConf.MODULES} />
+          </DialogEditTextListItem>
+          <DialogEditTextListItem
+            inputLabel="Path"
             type="text"
             title="Module properties location"
-            initialValue={settings.mod_prop}
+            initialValue={_modConf.PROPS}
             onSuccess={(value) => {
               if (value) {
-                setSettings("mod_prop", value);
+                setModConf("PROPS", value);
               }
             }}
           >
-            <StyledListItemText primary="Module properties location" secondary={settings.mod_prop} />
+            <StyledListItemText primary="Module properties location" secondary={_modConf.PROPS} />
           </DialogEditTextListItem>
           <DialogEditTextListItem
-            inputLabel={
-              <Box sx={{ display: "flex" }}>
-                {settings.mod_tree}/
-                <Box
-                  sx={{
-                    px: 0.5,
-                    py: 0.25,
-                    borderRadius: 1,
-                    display: "flex",
-                    typography: "caption",
-                    bgcolor: (theme) => (theme.palette.mode === "dark" ? scheme[900] : scheme[50]),
-                    color: (theme) => (theme.palette.mode === "dark" ? "#fff" : scheme[700]),
-                  }}
-                >
-                  MODID
-                </Box>
-                /
-              </Box>
-            }
+            inputLabel="Path"
             type="text"
             title="Module system properties location"
-            disabled
-            initialValue={settings.mod_system}
+            initialValue={_modConf.SYSTEM}
             onSuccess={(value) => {
               if (value) {
-                setSettings("mod_system", value);
+                setModConf("SYSTEM", value);
               }
             }}
           >
-            <StyledListItemText primary="Module system properties location" secondary={settings.mod_system} />
+            <StyledListItemText primary="Module system properties location" secondary={_modConf.SYSTEM} />
           </DialogEditTextListItem>
           <DialogEditTextListItem
-            inputLabel={
-              <Box sx={{ display: "flex" }}>
-                {settings.mod_tree}/
-                <Box
-                  sx={{
-                    px: 0.5,
-                    py: 0.25,
-                    borderRadius: 1,
-                    display: "flex",
-                    typography: "caption",
-                    bgcolor: (theme) => (theme.palette.mode === "dark" ? scheme[900] : scheme[50]),
-                    color: (theme) => (theme.palette.mode === "dark" ? "#fff" : scheme[700]),
-                  }}
-                >
-                  MODID
-                </Box>
-                /
-              </Box>
-            }
+            inputLabel="Path"
             type="text"
             title="Module sepolicy rules location"
-            disabled
-            initialValue={settings.mod_sepolicy}
+            initialValue={_modConf.SEPOLICY}
             onSuccess={(value) => {
               if (value) {
-                setSettings("mod_sepolicy", value);
+                setModConf("SEPOLICY", value);
               }
             }}
           >
-            <StyledListItemText primary="Module sepolicy rules location" secondary={settings.mod_sepolicy} />
+            <StyledListItemText primary="Module sepolicy rules location" secondary={_modConf.SEPOLICY} />
+          </DialogEditTextListItem>
+          <DialogEditTextListItem
+            inputLabel="Path"
+            type="text"
+            title="Module config file location"
+            disabled
+            initialValue={_modConf.CONFIG}
+            onSuccess={(value) => {}}
+          >
+            <StyledListItemText primary="Module config file location" secondary={_modConf.CONFIG} />
           </DialogEditTextListItem>
         </List>
 
         <Divider />
         <List subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>Service path</ListSubheader>}>
           <DialogEditTextListItem
-            inputLabel={
-              <Box sx={{ display: "flex" }}>
-                {settings.mod_tree}/
-                <Box
-                  sx={{
-                    px: 0.5,
-                    py: 0.25,
-                    borderRadius: 1,
-                    display: "flex",
-                    typography: "caption",
-                    bgcolor: (theme) => (theme.palette.mode === "dark" ? scheme[900] : scheme[50]),
-                    color: (theme) => (theme.palette.mode === "dark" ? "#fff" : scheme[700]),
-                  }}
-                >
-                  MODID
-                </Box>
-                /
-              </Box>
-            }
+            inputLabel="Path"
             type="text"
             title="Late service location"
-            initialValue={settings.mod_late_service}
+            initialValue={_modConf.LATESERVICE}
             onSuccess={(value) => {
               if (value) {
-                setSettings("mod_late_service", value);
+                setModConf("LATESERVICE", value);
               }
             }}
           >
-            <StyledListItemText primary="Late service location" secondary={settings.mod_late_service} />
+            <StyledListItemText primary="Late service location" secondary={_modConf.LATESERVICE} />
           </DialogEditTextListItem>
 
           <DialogEditTextListItem
-            inputLabel={
-              <Box sx={{ display: "flex" }}>
-                {settings.mod_tree}/
-                <Box
-                  sx={{
-                    px: 0.5,
-                    py: 0.25,
-                    borderRadius: 1,
-                    display: "flex",
-                    typography: "caption",
-                    bgcolor: (theme) => (theme.palette.mode === "dark" ? scheme[900] : scheme[50]),
-                    color: (theme) => (theme.palette.mode === "dark" ? "#fff" : scheme[700]),
-                  }}
-                >
-                  MODID
-                </Box>
-                /
-              </Box>
-            }
+            inputLabel="Path"
             type="text"
             title="Post service location"
-            initialValue={settings.mod_post_service}
+            initialValue={_modConf.POSTSERVICE}
             onSuccess={(value) => {
               if (value) {
-                setSettings("mod_post_service", value);
+                setModConf("POSTSERVICE", value);
               }
             }}
           >
-            <StyledListItemText primary="Post service location" secondary={settings.mod_post_service} />
+            <StyledListItemText primary="Post service location" secondary={_modConf.POSTSERVICE} />
           </DialogEditTextListItem>
 
           <DialogEditTextListItem
-            inputLabel={
-              <Box sx={{ display: "flex" }}>
-                {settings.mod_tree}/
-                <Box
-                  sx={{
-                    px: 0.5,
-                    py: 0.25,
-                    borderRadius: 1,
-                    display: "flex",
-                    typography: "caption",
-                    bgcolor: (theme) => (theme.palette.mode === "dark" ? scheme[900] : scheme[50]),
-                    color: (theme) => (theme.palette.mode === "dark" ? "#fff" : scheme[700]),
-                  }}
-                >
-                  MODID
-                </Box>
-                /
-              </Box>
-            }
+            inputLabel="Path"
             type="text"
             title="Mounted service location"
             disabled={!Shell.isKernelSU()}
-            initialValue={settings.mod_mounted}
+            initialValue={_modConf.POSTMOUNT}
             onSuccess={(value) => {
               if (value) {
-                setSettings("mod_mounted", value);
+                setModConf("POSTMOUNT", value);
               }
             }}
           >
@@ -303,37 +216,19 @@ function ModuleTreeConf() {
                   Mounted service location
                 </Box>
               }
-              secondary={settings.mod_mounted}
+              secondary={_modConf.POSTMOUNT}
             />
           </DialogEditTextListItem>
 
           <DialogEditTextListItem
-            inputLabel={
-              <Box sx={{ display: "flex" }}>
-                {settings.mod_tree}/
-                <Box
-                  sx={{
-                    px: 0.5,
-                    py: 0.25,
-                    borderRadius: 1,
-                    display: "flex",
-                    typography: "caption",
-                    bgcolor: (theme) => (theme.palette.mode === "dark" ? scheme[900] : scheme[50]),
-                    color: (theme) => (theme.palette.mode === "dark" ? "#fff" : scheme[700]),
-                  }}
-                >
-                  MODID
-                </Box>
-                /
-              </Box>
-            }
+            inputLabel="Path"
             type="text"
             title="Boot complete service location"
             disabled={!Shell.isKernelSU()}
-            initialValue={settings.mod_boot}
+            initialValue={_modConf.BOOTCOMP}
             onSuccess={(value) => {
               if (value) {
-                setSettings("mod_boot", value);
+                setModConf("BOOTCOMP", value);
               }
             }}
           >
@@ -344,7 +239,7 @@ function ModuleTreeConf() {
                   Boot complete service location
                 </Box>
               }
-              secondary={settings.mod_boot}
+              secondary={_modConf.BOOTCOMP}
             />
           </DialogEditTextListItem>
         </List>
@@ -353,100 +248,59 @@ function ModuleTreeConf() {
 
         <List subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>Status path</ListSubheader>}>
           <DialogEditTextListItem
-            inputLabel={
-              <Box sx={{ display: "flex" }}>
-                {settings.mod_tree}/
-                <Box
-                  sx={{
-                    px: 0.5,
-                    py: 0.25,
-                    borderRadius: 1,
-                    display: "flex",
-                    typography: "caption",
-                    bgcolor: (theme) => (theme.palette.mode === "dark" ? scheme[900] : scheme[50]),
-                    color: (theme) => (theme.palette.mode === "dark" ? "#fff" : scheme[700]),
-                  }}
-                >
-                  MODID
-                </Box>
-                /
-              </Box>
-            }
+            inputLabel="Path"
             type="text"
             title="Module skip mount location"
-            initialValue={settings.mod_s_mount}
-            disabled
+            initialValue={_modConf.SKIPMOUNT}
             onSuccess={(value) => {
               if (value) {
-                setSettings("mod_s_mount", value);
+                setModConf("SKIPMOUNT", value);
               }
             }}
           >
-            <StyledListItemText primary="Module skip mount location" secondary={settings.mod_s_mount} />
+            <StyledListItemText primary="Module skip mount location" secondary={_modConf.SKIPMOUNT} />
           </DialogEditTextListItem>
 
           <DialogEditTextListItem
-            inputLabel={
-              <Box sx={{ display: "flex" }}>
-                {settings.mod_tree}/
-                <Box
-                  sx={{
-                    px: 0.5,
-                    py: 0.25,
-                    borderRadius: 1,
-                    display: "flex",
-                    typography: "caption",
-                    bgcolor: (theme) => (theme.palette.mode === "dark" ? scheme[900] : scheme[50]),
-                    color: (theme) => (theme.palette.mode === "dark" ? "#fff" : scheme[700]),
-                  }}
-                >
-                  MODID
-                </Box>
-                /
-              </Box>
-            }
+            inputLabel="Path"
             type="text"
             title="Module disable location"
-            initialValue={settings.mod_disable}
+            initialValue={_modConf.DISABLE}
             onSuccess={(value) => {
               if (value) {
-                setSettings("mod_disable", value);
+                setModConf("DISABLE", value);
               }
             }}
           >
-            <StyledListItemText primary="Module disable location" secondary={settings.mod_disable} />
+            <StyledListItemText primary="Module disable location" secondary={_modConf.DISABLE} />
           </DialogEditTextListItem>
 
           <DialogEditTextListItem
-            inputLabel={
-              <Box sx={{ display: "flex" }}>
-                {settings.mod_tree}/
-                <Box
-                  sx={{
-                    px: 0.5,
-                    py: 0.25,
-                    borderRadius: 1,
-                    display: "flex",
-                    typography: "caption",
-                    bgcolor: (theme) => (theme.palette.mode === "dark" ? scheme[900] : scheme[50]),
-                    color: (theme) => (theme.palette.mode === "dark" ? "#fff" : scheme[700]),
-                  }}
-                >
-                  MODID
-                </Box>
-                /
-              </Box>
-            }
+            inputLabel="Path"
             type="text"
             title="Module remove location"
-            initialValue={settings.mod_remove}
+            initialValue={_modConf.REMOVE}
             onSuccess={(value) => {
               if (value) {
-                setSettings("mod_remove", value);
+                setModConf("REMOVE", value);
               }
             }}
           >
-            <StyledListItemText primary="Module remove location" secondary={settings.mod_remove} />
+            <StyledListItemText primary="Module remove location" secondary={_modConf.REMOVE} />
+          </DialogEditTextListItem>
+
+          <DialogEditTextListItem
+            inputLabel="Path"
+            type="text"
+            title="Module remove location"
+            initialValue={_modConf.UPDATE}
+            onSuccess={(value) => {
+              if (value) {
+                setModConf("UPDATE", value);
+              }
+            }}
+          >
+            <StyledListItemText primary="Module update location" secondary={_modConf.UPDATE} />
           </DialogEditTextListItem>
         </List>
 

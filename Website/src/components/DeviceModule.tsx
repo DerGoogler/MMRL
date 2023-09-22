@@ -10,7 +10,7 @@ import { ConfigureActivity } from "@Activitys/ConfigureActivity";
 import { StyledIconButton } from "./StyledIconButton";
 import { useLog } from "@Hooks/native/useLog";
 import { Properties } from "properties-file";
-import { colors, useSettings } from "@Hooks/useSettings";
+import { ModConf, colors, useSettings } from "@Hooks/useSettings";
 
 export const badgeStyle: (color: (typeof colors)["blue" | "teal" | "red" | "orange"]) => SxProps<Theme> = (color) => {
   return {
@@ -30,7 +30,7 @@ interface Props {
 
 const DeviceModule = (props: Props) => {
   const { strings } = useStrings();
-  const { settings } = useSettings();
+  const { settings, modConf } = useSettings();
   const { context, extra } = useActivity<any>();
   const [moduleProps, setModuleProps] = React.useState<Partial<ModuleProps>>({});
   const [isEnabled, setIsEnabled] = React.useState(true);
@@ -40,31 +40,33 @@ const DeviceModule = (props: Props) => {
 
   const module = props.module;
 
-  const readProps = new SuFile(`${settings.mod_tree}/${module}/${settings.mod_prop}`);
+  const format = React.useCallback<<K extends keyof ModConf>(key: K) => ModConf[K]>((key) => modConf(key, { MODID: props.module }), []);
+
+  const readProps = new SuFile(format("PROPS"));
   React.useEffect(() => {
     if (readProps.exist()) {
       setModuleProps(new Properties(readProps.read()).toObject());
     }
   }, []);
 
-  const remove = new SuFile(`${settings.mod_tree}/${module}/${settings.mod_remove}`);
+  const remove = new SuFile(format("REMOVE"));
   React.useEffect(() => {
     setIsSwitchDisabled(remove.exist());
   }, [isSwitchDisabled]);
 
-  const disable = new SuFile(`${settings.mod_tree}/${module}/${settings.mod_disable}`);
+  const disable = new SuFile(format("DISABLE"));
   React.useEffect(() => {
     setIsEnabled(!disable.exist());
   }, [isEnabled]);
 
   const { id, name, version, versionCode, author, description, mmrlConfig } = moduleProps;
 
-  const post_service = SuFile.exist(`${settings.mod_tree}/${module}/${settings.mod_post_service}`);
-  const late_service = SuFile.exist(`${settings.mod_tree}/${module}/${settings.mod_late_service}`);
-  const post_mount = SuFile.exist(`${settings.mod_tree}/${module}/${settings.mod_mounted}`);
-  const boot_complete = SuFile.exist(`${settings.mod_tree}/${module}/${settings.mod_boot}`);
+  const post_service = SuFile.exist(format("POSTSERVICE"));
+  const late_service = SuFile.exist(format("LATESERVICE"));
+  const post_mount = SuFile.exist(format("POSTMOUNT"));
+  const boot_complete = SuFile.exist(format("BOOTCOMP"));
 
-  const module_config_file = SuFile.exist(`${settings.mod_tree}/${module}/system/usr/share/mmrl/config/${module}.mdx`);
+  const module_config_file = SuFile.exist(format("CONFIG"));
 
   if (!readProps.exist()) {
     return null;
@@ -107,7 +109,7 @@ const DeviceModule = (props: Props) => {
             disabled={isSwitchDisabled}
             onChange={(e) => {
               const checked = e.target.checked;
-              const disable = new SuFile(`${settings.mod_tree}/${module}/${settings.mod_disable}`);
+              const disable = new SuFile(format("DISABLE"));
 
               if (checked) {
                 if (disable.exist()) {
@@ -158,7 +160,7 @@ const DeviceModule = (props: Props) => {
               <StyledIconButton
                 style={{ width: 30, height: 30 }}
                 onClick={() => {
-                  const remove = new SuFile(`${settings.mod_tree}/${module}/${settings.mod_remove}`);
+                  const remove = new SuFile(format("REMOVE"));
                   if (remove.exist()) {
                     if (remove.delete()) {
                       setIsSwitchDisabled(false);
@@ -177,7 +179,7 @@ const DeviceModule = (props: Props) => {
               <StyledIconButton
                 style={{ width: 30, height: 30 }}
                 onClick={() => {
-                  const file = new SuFile(`${settings.mod_tree}/${module}/${settings.mod_remove}`);
+                  const file = new SuFile(format("REMOVE"));
                   if (file.create()) {
                     setIsSwitchDisabled(true);
                   } else {
