@@ -66,6 +66,16 @@ jobs:
          cd ../Android
          ./gradlew app:assembleDebug
 
+      - name: Ls
+        run: | 
+         ls app/build/outputs/apk/debug
+         echo ---------------
+         ls app/build/outputs/apk
+         echo ---------------
+         ls app/build/outputs
+         echo ---------------
+         ls app/build
+
       - name: Upload MMRL-arm64-v8a-debug
         uses: actions/upload-artifact@v3
         with:
