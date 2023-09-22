@@ -64,40 +64,34 @@ jobs:
          npm run assetfix:android-clean
          npm run assetfix:android-build
          cd ../Android
-         ./gradlew app:assembleDefaultDebug
+         ./gradlew app:assembleDebug
 
-      - name: Upload MMRL-default-arm64-v8a-debug
+      - name: Upload MMRL-arm64-v8a-debug
         uses: actions/upload-artifact@v3
         with:
-          name: MMRL-default-arm64-v8a-debug
-          path: app/build/outputs/apk/default/debug/*-default-arm64-v8a-debug.apk
+          name: MMRL-arm64-v8a-debug
+          path: app/build/outputs/apk/debug/*-arm64-v8a-debug.apk
 
-      - name: Upload MMRL-default-armeabi-v7a-debug
+      - name: Upload MMRL-armeabi-v7a-debug
         uses: actions/upload-artifact@v3
         with:
-          name: MMRL-default-armeabi-v7a-debug
-          path: app/build/outputs/apk/default/debug/*-default-armeabi-v7a-debug.apk
+          name: MMRL-armeabi-v7a-debug
+          path: app/build/outputs/apk/debug/*-armeabi-v7a-debug.apk
 
-      - name: Upload MMRL-default-universal-debug
+      - name: Upload MMRL-universal-debug
         uses: actions/upload-artifact@v3
         with:
-          name: MMRL-default-universal-debug
-          path: app/build/outputs/apk/default/debug/*-default-universal-debug.apk
+          name: MMRL-universal-debug
+          path: app/build/outputs/apk/debug/*-universal-debug.apk
 
-      - name: Upload MMRL-default-x86-debug
+      - name: Upload MMRL-x86-debug
         uses: actions/upload-artifact@v3
         with:
-          name: MMRL-default-x86-debug
-          path: app/build/outputs/apk/default/debug/*-default-x86-debug.apk
+          name: MMRL-x86-debug
+          path: app/build/outputs/apk/debug/*-x86-debug.apk
 
-      - name: Upload MMRL-default-x86_64-debug
+      - name: Upload MMRL-x86_64-debug
         uses: actions/upload-artifact@v3
         with:
-          name: MMRL-default-x86_64-debug
-          path: app/build/outputs/apk/default/debug/*-default-x86_64-debug.apk
-   
-      - name: Upload MMRL-default-universal-debug
-        uses: actions/upload-artifact@v3
-        with:
-          name: MMRL-default-universal-debug
-          path: app/build/outputs/apk/default/debug/*-default-universal-debug.apk
+          name: MMRL-x86_64-debug
+          path: app/build/outputs/apk/debug/*-x86_64-debug.apk
