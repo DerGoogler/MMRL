@@ -18,6 +18,7 @@ import { Shell } from "@Native/Shell";
 import { DialogEditTextListItem } from "@Components/DialogEditTextListItem";
 import { KernelSULogo } from "@Components/icon/KernelSULogo";
 import React from "react";
+import Marquee from "react-fast-marquee";
 
 function ModuleTreeConf() {
   const { context } = useActivity();
@@ -163,7 +164,14 @@ function ModuleTreeConf() {
             initialValue={_modConf.CONFIG}
             onSuccess={(value) => {}}
           >
-            <StyledListItemText primary="Module config file location" secondary={_modConf.CONFIG} />
+            <StyledListItemText
+              primary="Module config file location"
+              secondary={
+                <Marquee play={false} gradient gradientWidth={15} gradientColor={theme.palette.background.default}>
+                  {_modConf.CONFIG}
+                </Marquee>
+              }
+            />
           </DialogEditTextListItem>
         </List>
 

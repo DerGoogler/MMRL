@@ -1,22 +1,13 @@
 import { Page } from "@Components/onsenui/Page";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import { useStrings } from "@Hooks/useStrings";
-import VerifiedIcon from "@mui/icons-material/Verified";
-import { DeleteRounded, RefreshRounded } from "@mui/icons-material";
-import LaunchIcon from "@mui/icons-material/Launch";
 import Box from "@mui/material/Box";
 import React from "react";
-import Fade from "@mui/material/Fade";
 import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import CloseIcon from "@mui/icons-material/Close";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Typography from "@mui/material/Typography";
-import Dialog, { DialogProps } from "@mui/material/Dialog";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
 import Card from "@mui/material/Card";
@@ -31,9 +22,7 @@ import { StyledListItemText } from "@Components/StyledListItemText";
 import { parseAndroidVersion } from "@Util/parseAndroidVersion";
 import { Magisk } from "@Native/Magisk";
 import { useTheme } from "@Hooks/useTheme";
-import useShadeColor from "@Hooks/useShadeColor";
 import { os } from "@Native/Os";
-import { Markup } from "@Components/Markdown";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import { useCategories } from "@Hooks/useCategories";
@@ -70,6 +59,7 @@ const ModuleViewActivity = () => {
     id,
     name,
     author,
+    description,
     mmrlAuthor,
     mmrlLogo,
     mmrlScreenshots,
@@ -391,54 +381,8 @@ const ModuleViewActivity = () => {
                   </IconButton>
                 </Stack>
 
-                <Typography
-                  component={Markdown}
-                  sx={{
-                    width: { xs: "50vh" },
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    display: "-webkit-box",
-                    WebkitLineClamp: 5,
-                    WebkitBoxOrient: "vertical",
-                  }}
-                  variant="body2"
-                  color="text.secondary"
-                  options={{
-                    overrides: {
-                      h1: {
-                        component: "p",
-                      },
-                      h2: {
-                        component: "p",
-                      },
-                      h3: {
-                        component: "p",
-                      },
-                      h4: {
-                        component: "p",
-                      },
-                      h5: {
-                        component: "p",
-                      },
-                      h6: {
-                        component: "p",
-                      },
-                      img: {
-                        component: "p",
-                      },
-                      video: {
-                        component: "p",
-                      },
-                      audio: {
-                        component: "p",
-                      },
-                      a: {
-                        component: "p",
-                      },
-                    },
-                  }}
-                >
-                  {data}
+                <Typography variant="body2" color="text.secondary">
+                  {description}
                 </Typography>
                 <Typography sx={{ mt: 3 }} variant="h6" component="div">
                   Updated on

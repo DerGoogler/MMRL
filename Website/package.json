@@ -59,6 +59,7 @@
     "react-device-detect": "^2.2.2",
     "react-disappear": "^1.0.0",
     "react-dom": "^18.2.0",
+    "react-fast-marquee": "^1.6.1",
     "react-from-json": "^0.7.2",
     "react-jsx-parser": "^1.29.0",
     "react-onsenui": "^1.13.2",

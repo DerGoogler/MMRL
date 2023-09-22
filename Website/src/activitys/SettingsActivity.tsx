@@ -103,7 +103,7 @@ function SettingsActivity() {
               }}
             />
           </ListItem>
-          {os.isAndroid && (
+          {/* {os.isAndroid && ( */}
             <>
               <ListItemButton
                 onClick={() => {
@@ -114,20 +114,16 @@ function SettingsActivity() {
                   });
                 }}
               >
-                <StyledListItemText primary="ModConf" secondary="A way to manage different module system" />
+                <StyledListItemText primary="ModConf" secondary="A way to manage different module systems" />
               </ListItemButton>
             </>
-          )}
+          {/* )} */}
           {os.isAndroid && (
             <ListItem>
               <StyledListItemText
                 id="switch-list-__experimental_local_install"
                 primary={"Enable local install"}
-                secondary={
-                  <>
-                    Allows you to install local *.zip files (Experimental). {Shell.isKernelSU() && <strong>Disabled due KernelSU.</strong>}
-                  </>
-                }
+                secondary="Allows you to install local *.zip files (Experimental)."
               />
               <Android12Switch
                 edge="end"
