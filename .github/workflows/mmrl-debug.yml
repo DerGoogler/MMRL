@@ -22,10 +22,6 @@ jobs:
       contents: read
       packages: write
 
-    strategy:
-      matrix:
-        node-version: [ 18 ]
-
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
@@ -39,9 +35,9 @@ jobs:
           distribution: 'temurin'
 
       - name: Set up Node.js 18
-      - uses: actions/setup-node@v3
+        uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 18
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v2
