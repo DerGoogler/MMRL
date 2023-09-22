@@ -14,6 +14,10 @@ on:
       - '**.md'
   workflow_dispatch:
 
+defaults:
+  run:
+    working-directory: Android
+
 jobs:
   build:
 
@@ -53,14 +57,14 @@ jobs:
  
       - name: Build Debug APK
         run: |
-         chmod +x ./Android/gradlew
-         cd ./Website
+         chmod +x ./gradlew
+         cd ./../Website
          npm install --force
          npm run web:dev
          npm run assetfix:android-clean
          npm run assetfix:android-build
-         cd ..
-         ./Android/gradlew app:assembleDefaultDebug
+         cd ./Android
+         ./gradlew app:assembleDefaultDebug
 
       - name: Upload MMRL-default-arm64-v8a-debug
         uses: actions/upload-artifact@v3
