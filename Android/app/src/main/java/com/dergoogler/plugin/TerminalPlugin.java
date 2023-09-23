@@ -12,6 +12,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.List;
 
 public class TerminalPlugin extends CordovaPlugin {
@@ -25,25 +29,18 @@ public class TerminalPlugin extends CordovaPlugin {
                 String cmd = data.getString(0);
 
                 this.terminalCallbackContext = callbackContext;
+                String[] commands = {"su", "-c", cmd};
+
 
                 cordova.getThreadPool().execute(() -> {
-                    Shell.cmd(cmd)
-                            .to(new CallbackList<String>() {
-                                @Override
-                                public void onAddElement(String s) {
-                                    updateTerminal(s);
-                                }
-                            })
-                            .submit(result -> {
-                                if (result.isSuccess()) {
-                                    callbackContext.error(1);
-                                } else {
-                                    callbackContext.error(0);
-                                }
-                            });
-
+                    try {
+                        run(commands);
+                        callbackContext.error(1);
+                    } catch (IOException e) {
+                        callbackContext.error(0);
+                        e.printStackTrace();
+                    }
                 });
-
 
 
                 return true;
@@ -57,6 +54,19 @@ public class TerminalPlugin extends CordovaPlugin {
                 return false;
         }
 
+    }
+
+    public void run(String... command) throws IOException {
+        ProcessBuilder pb = new ProcessBuilder(command).redirectErrorStream(true);
+        Process process = pb.start();
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+            while (true) {
+                String line = in.readLine();
+                if (line == null)
+                    break;
+                updateTerminal(line);
+            }
+        }
     }
 
     private void updateTerminal(String line) {
