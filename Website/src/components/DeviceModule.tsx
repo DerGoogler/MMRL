@@ -75,7 +75,7 @@ const DeviceModule = (props: Props) => {
   return (
     <>
       <Card
-        variant="outlined"
+        elevation={0}
         sx={{
           width: "100%",
         }}

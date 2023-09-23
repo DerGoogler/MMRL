@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Button, SearchInput } from "react-onsenui";
-import { FormControl, styled } from "@mui/material";
+import { FormControl, SxProps, styled } from "@mui/material";
 import useShadeColor from "../hooks/useShadeColor";
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
@@ -10,17 +10,19 @@ import { useSettings } from "@Hooks/useSettings";
 import FilterListIcon from "@mui/icons-material/FilterList";
 
 type SearchbarProps = {
+  sx?: SxProps;
   onFilterClick?: React.MouseEventHandler<HTMLButtonElement>;
   onChange: React.ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>;
   placeholder: string;
 };
 
-export const Searchbar = ({ placeholder, onChange, onFilterClick }: SearchbarProps) => {
+export const Searchbar = ({ sx, placeholder, onChange, onFilterClick }: SearchbarProps) => {
   return (
     <Paper
+      elevation={0}
       component="form"
-      variant="outlined"
       sx={{
+        ...sx,
         p: "2px 4px",
         display: "flex",
         alignItems: "center",

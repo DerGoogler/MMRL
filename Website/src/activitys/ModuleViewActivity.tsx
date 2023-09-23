@@ -302,7 +302,7 @@ const ModuleViewActivity = () => {
           )}
 
           {mmrlScreenshots && (
-            <Card variant="outlined" sx={{ /*width: { xs: "100%", sm: "100vh" },*/ width: "100%" }}>
+            <Card elevation={0} sx={{ /*width: { xs: "100%", sm: "100vh" },*/ width: "100%" }}>
               <CardContent>
                 <Typography variant="h5" component="div">
                   Images
@@ -343,7 +343,7 @@ const ModuleViewActivity = () => {
 
           {data ? (
             <Card
-              variant="outlined"
+              elevation={0}
               sx={{
                 width: "100%",
               }}
@@ -409,7 +409,7 @@ const ModuleViewActivity = () => {
           ) : null}
 
           <Card
-            variant="outlined"
+            elevation={0}
             sx={{
               // width: { xs: "100%", sm: "100vh" },
 

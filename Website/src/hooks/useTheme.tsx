@@ -64,10 +64,10 @@ export const ThemeProvider = (props: React.PropsWithChildren) => {
                 // dark: colors[settings.accent_scheme.value][800],
               },
               background: {
-                default: colors[settings.accent_scheme.value][50],
-                paper: shade(colors[settings.accent_scheme.value][100], 14.5),
+                default: colors[settings.accent_scheme.value][200],
+                paper: shade(colors[settings.accent_scheme.value][200], 14.5 * 2),
               },
-              divider: colors[settings.accent_scheme.value][100],
+              divider: colors[settings.accent_scheme.value][300],
               secondary: {
                 main: "#e5e8ec",
                 light: "#eeeeee",

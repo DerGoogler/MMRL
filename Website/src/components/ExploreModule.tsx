@@ -86,7 +86,7 @@ export const ExploreModule = (_props: Props) => {
 
   return (
     <Card
-      variant="outlined"
+      elevation={0}
       onTap={handleOpen}
       component={GestureDetector}
       sx={{

@@ -32,6 +32,7 @@ import { useNetwork } from "@Hooks/useNetwork";
 import { useNativeStorage } from "@Hooks/useNativeStorage";
 import UpdateDisabledIcon from "@mui/icons-material/UpdateDisabled";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import { Card } from "@mui/material";
 
 export interface ExploreModuleProps {
   renderToolbar?: RenderFunction;
@@ -167,30 +168,46 @@ const ExploreModuleFragment = (props: ExploreModuleProps) => {
   };
 
   return (
-    <Page
-      renderToolbar={props.renderToolbar}
-      renderBottomToolbar={() => {
-        return (
-          <BottomToolbar modifier="transparent">
-            <Stack justifyContent="center" spacing={0.8} direction="row" alignItems="center" style={{ height: "100%" }}>
-              <Pagination
-                count={count}
-                color="primary"
-                page={page}
-                variant="outlined"
-                shape="rounded"
-                onChange={(e, p) => {
-                  setPage(p);
-                  _DATA.jump(p);
-                }}
-              />
-            </Stack>
-          </BottomToolbar>
-        );
-      }}
-    >
+    <Page renderToolbar={props.renderToolbar}>
       <Page.RelativeContent>
-        <Searchbar onFilterClick={handleClickOpen} placeholder={strings.search_modules} onChange={(e) => setSearch(e.target.value)} />
+        <Searchbar
+          sx={{
+            borderRadius: `${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0px 0px`,
+          }}
+          onFilterClick={handleClickOpen}
+          placeholder={strings.search_modules}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+
+        <Card
+          component={Stack}
+          elevation={0}
+          justifyContent="center"
+          spacing={0.8}
+          direction="row"
+          alignItems="center"
+          sx={{
+            borderRadius: `0px 0px ${theme.shape.borderRadius}px ${theme.shape.borderRadius}px`,
+            pr: 1,
+            pl: 1,
+            pb: 1,
+            display: "flex",
+            alignItems: "center",
+            width: "100%",
+          }}
+        >
+          <Pagination
+            count={count}
+            color="primary"
+            page={page}
+            variant="outlined"
+            shape="rounded"
+            onChange={(e, p) => {
+              setPage(p);
+              _DATA.jump(p);
+            }}
+          />
+        </Card>
 
         <Stack sx={{ mt: 1 }} direction="column" justifyContent="flex-start" alignItems="center" spacing={1}>
           {_DATA.currentData().map((module, index) => (
