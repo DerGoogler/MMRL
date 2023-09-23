@@ -51,25 +51,16 @@ public class NativeOS {
         }
     }
 
+    @Deprecated
     @JavascriptInterface
     public boolean hasStoragePermission() {
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            return Environment.isExternalStorageManager();
-        } else {
-            return this.ctx.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED;
-        }
+        return true;
     }
 
+    @Deprecated
     @JavascriptInterface
     public void requestStoargePermission() {
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
-            Uri uri = Uri.fromParts("package", this.ctx.getPackageName(), null);
-            intent.setData(uri);
-            this.ctx.startActivity(intent);
-        } else {
-            ((Activity) this.ctx).requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1000);
-        }
+        // do nothing
     }
 
     @JavascriptInterface

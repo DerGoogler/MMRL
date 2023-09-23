@@ -3,10 +3,10 @@
   "description": "",
   "config": {
     "application_id": "com.dergoogler.mmrl",
-    "min_sdk": 26,
-    "target_Sdk": 33,
-    "version_name": "1.7.1",
-    "version_code": 171
+    "min_sdk": 33,
+    "target_Sdk": 34,
+    "version_name": "1.7.3",
+    "version_code": 173
   },
   "main": "index.tsx",
   "keywords": [],
