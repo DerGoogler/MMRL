@@ -7,6 +7,7 @@ import { Divider, List, ListItemButton, ListSubheader } from "@mui/material";
 import { Page } from "react-onsenui";
 import { IntentPusher } from "@Hooks/useActivity";
 import FetchTextActivity from "@Activitys/FetchTextActivity";
+import AboutActivity from "@Activitys/AboutActivity";
 
 type Props = {
   renderToolbar: () => JSX.Element;
@@ -66,6 +67,18 @@ export const DrawerFragment = (props: Props) => {
       <Divider />
 
       <List subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>Other</ListSubheader>}>
+        <ListItemButton
+          onClick={() => {
+            pushPage({
+              component: AboutActivity,
+              key: "abt",
+              extra: {},
+            });
+            hide();
+          }}
+        >
+          <StyledListItemText primary={"About"} />
+        </ListItemButton>
         <ListItemButton
           onClick={() => {
             pushPage({

@@ -7,6 +7,11 @@ import com.dergoogler.mmrl.BuildConfig;
 
 public class NativeBuildConfig {
     @JavascriptInterface
+    public long BUILD_DATE() {
+        return BuildConfig.BUILD_DATE;
+    }
+
+    @JavascriptInterface
     public int VERSION_CODE() {
         return BuildConfig.VERSION_CODE;
     }

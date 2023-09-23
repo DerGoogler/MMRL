@@ -102,6 +102,8 @@ declare global {
     LENGTH_SHORT: "short";
   };
 
+  const WEB_BUILD_DATE: number;
+
   const __webpack__mode__: "production" | "development";
 
   type PushPropsExtra<E = {}> = E & {

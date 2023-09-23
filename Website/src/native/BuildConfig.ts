@@ -10,6 +10,14 @@ class BuildConfigClass extends Native {
     this.interfaceName = "__buildconfig__";
   }
 
+  public get BUILD_DATE(): number {
+    if (this.isAndroid) {
+      return this.getInterface.BUILD_DATE();
+    } else {
+      return WEB_BUILD_DATE;
+    }
+  }
+
   public get VERSION_NAME(): string {
     if (this.isAndroid) {
       return this.getInterface.VERSION_NAME();

@@ -5,17 +5,20 @@ import com.google.gson.*;
 apply plugin: 'com.android.application'
 apply plugin: 'com.github.node-gradle.node'
 
+def packageJson = new File('./../Website/package.json')
+def pkg = new JsonSlurper().parseText(packageJson.getText())
 def app_name = "MMRL"
+def cur_time = System.currentTimeMillis()
 
 android {
     compileSdk 33
 
     defaultConfig {
-        applicationId 'com.dergoogler.mmrl'
-        minSdk 26
-        targetSdk 33
-        versionName '1.7.0'
-        versionCode 170
+        applicationId pkg.config.application_id
+        minSdk pkg.config.min_sdk
+        targetSdk pkg.config.target_sdk
+        versionName pkg.config.version_name
+        versionCode pkg.config.version_code
         externalNativeBuild {
             cmake {
                 cppFlags "-llog"
@@ -50,7 +53,6 @@ android {
             minifyEnabled false
             multiDexEnabled false
             applicationIdSuffix '.debug'
-            buildConfigField "String", "BASE_URL", "\"leer\""
         }
     }
     externalNativeBuild {
@@ -68,6 +70,14 @@ android {
         }
         resources {
             excludes += ['META-INF/DEPENDENCIES.txt', 'META-INF/DEPENDENCIES', 'META-INF/LICENSE', 'META-INF/LICENSE.txt', 'META-INF/MANIFEST.MF', 'META-INF/NOTICE', 'META-INF/NOTICE.txt', 'META-INF/ASL2.0']
+        }
+    }
+    flavorDimensions 'type'
+    productFlavors {
+        'default' {
+            dimension 'type'
+
+            buildConfigField "long", "BUILD_DATE", "${cur_time}"
         }
     }
 }

@@ -78,6 +78,7 @@ const config: Configuration = {
         LENGTH_LONG: JSON.stringify("long"),
         LENGTH_SHORT: JSON.stringify("short"),
       },
+      WEB_BUILD_DATE: JSON.stringify(Date.now()),
       NODE_ENV: JSON.stringify(process.env.NODE_ENV),
     }),
     new MiniCssExtractPlugin({

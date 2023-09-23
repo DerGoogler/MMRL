@@ -111,11 +111,11 @@ class ShellClass extends Native<NativeShell> {
 
   public getRootManager(): string {
     if (this.isMagiskSU()) {
-      return "Mang. by Magisk";
+      return "Magisk";
     } else if (this.isKernelSU()) {
-      return "Mang. by KernelSU";
+      return "KernelSU";
     } else {
-      return "Mang. by Unknown";
+      return "Unknown";
     }
   }
 
