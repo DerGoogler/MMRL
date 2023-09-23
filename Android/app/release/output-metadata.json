@@ -11,8 +11,8 @@
       "type": "UNIVERSAL",
       "filters": [],
       "attributes": [],
-      "versionCode": 165,
-      "versionName": "1.6.5",
+      "versionCode": 170,
+      "versionName": "1.7.0",
       "outputFile": "app-universal-release.apk"
     },
     {
@@ -24,8 +24,8 @@
         }
       ],
       "attributes": [],
-      "versionCode": 165,
-      "versionName": "1.6.5",
+      "versionCode": 170,
+      "versionName": "1.7.0",
       "outputFile": "app-x86_64-release.apk"
     },
     {
@@ -37,8 +37,8 @@
         }
       ],
       "attributes": [],
-      "versionCode": 165,
-      "versionName": "1.6.5",
+      "versionCode": 170,
+      "versionName": "1.7.0",
       "outputFile": "app-arm64-v8a-release.apk"
     },
     {
@@ -50,8 +50,8 @@
         }
       ],
       "attributes": [],
-      "versionCode": 165,
-      "versionName": "1.6.5",
+      "versionCode": 170,
+      "versionName": "1.7.0",
       "outputFile": "app-armeabi-v7a-release.apk"
     },
     {
@@ -63,8 +63,8 @@
         }
       ],
       "attributes": [],
-      "versionCode": 165,
-      "versionName": "1.6.5",
+      "versionCode": 170,
+      "versionName": "1.7.0",
       "outputFile": "app-x86-release.apk"
     }
   ],

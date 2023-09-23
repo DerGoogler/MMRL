@@ -16,7 +16,7 @@ import { useTheme } from "@Hooks/useTheme";
 import { useRepos } from "@Hooks/useRepos";
 import { Shell } from "@Native/Shell";
 import { DialogEditTextListItem } from "@Components/DialogEditTextListItem";
-import ModuleTreeConf from "./ModuleTreeConf";
+import ModConfActivity from "./ModConfActivity";
 import { Properties } from "@Native/Properties";
 
 function SettingsActivity() {
@@ -108,7 +108,7 @@ function SettingsActivity() {
               <ListItemButton
                 onClick={() => {
                   context.pushPage({
-                    component: ModuleTreeConf,
+                    component: ModConfActivity,
                     key: "Mod_Tree",
                     extra: {},
                   });
