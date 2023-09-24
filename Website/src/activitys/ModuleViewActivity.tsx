@@ -35,6 +35,7 @@ import { useLog } from "@Hooks/native/useLog";
 import { SuFile } from "@Native/SuFile";
 import DescriptonActivity from "./DescriptonActivity";
 import { useSettings } from "@Hooks/useSettings";
+import TerminalActivity from "./TerminalActivity";
 
 type Extra = {
   module: ModuleProps;
@@ -77,7 +78,7 @@ const ModuleViewActivity = () => {
   } = extra.module;
 
   const remove = new SuFile(`/data/adb/modules/${id}/remove`);
-  const moduleInstalled = new SuFile(`/data/adb/modules/${id}/module.prop`);
+  const hasInstallTools = SuFile.exist("/data/adb/modules/mmrl_install_tools/module.prop");
 
   const [moduleRemoved, setModuleRemoved] = React.useState(remove.exist());
 
@@ -229,32 +230,33 @@ const ModuleViewActivity = () => {
               )}
 
               <Stack direction="row" justifyContent="center" alignItems="center" spacing={1}>
-                {/* {os.isAndroid && moduleInstalled.exist() && (
+                {os.isAndroid && hasInstallTools && (
                   <Button
                     sx={{
-                      color: scheme[100],
-                      border: `1px solid ${scheme[100]}80`,
+                      color: settings.darkmode ? scheme[900] : scheme[600],
+                      bgcolor: settings.darkmode ? scheme[500] : shade(scheme[600], settings.shade_value),
+                      ":hover": {
+                        bgcolor: settings.darkmode ? scheme[700] : shade(scheme[200], settings.shade_value),
+                      },
                       minWidth: 160,
                       width: { sm: "unset", xs: "100%" },
                       alignSelf: "flex-end",
-                      ":hover": {
-                        color: scheme[200],
-                        border: `1px solid ${scheme[200]}80`,
-                      },
                     }}
                     variant="outlined"
-                    startIcon={moduleRemoved ? <RefreshRounded /> : <DeleteRounded />}
                     onClick={() => {
-                      if (remove.exist()) {
-                        setModuleRemoved(remove.delete());
-                      } else {
-                        setModuleRemoved(!remove.create());
-                      }
+                      context.pushPage({
+                        component: TerminalActivity,
+                        key: "explore_install",
+                        extra: {
+                          exploreInstall: true,
+                          path: zip_url,
+                        },
+                      });
                     }}
                   >
-                    {moduleRemoved ? "Restore" : "Remove"}
+                    Install
                   </Button>
-                )} */}
+                )}
 
                 <Button
                   disabled={!zip_url}

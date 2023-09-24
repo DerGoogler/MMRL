@@ -23,7 +23,7 @@ const DeviceModuleFragment = () => {
       <Page.RelativeContent>
         {settings.__experimental_local_install && (Shell.isMagiskSU() || Shell.isKernelSU()) && (
           <Card
-            variant="outlined"
+            elevation={0}
             onClick={() => {
               // @ts-ignore
               Chooser.getFile(

@@ -261,7 +261,7 @@ export const useSettings = () => {
   return useContext(SettingsContext);
 };
 
-function formatString(template, object) {
+export function formatString(template, object) {
   return template.replace(/\<(\w+(\.\w+)*)\>/gi, (match, key) => {
     const keys = key.split(".");
     let value = object;

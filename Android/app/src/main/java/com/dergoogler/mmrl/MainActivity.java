@@ -3,6 +3,7 @@ package com.dergoogler.mmrl;
 import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
@@ -24,6 +25,11 @@ public class MainActivity extends CordovaActivity {
         super.onCreate(savedInstanceState);
         appView = findViewById(R.id.mmrl_view);
         super.init();
+
+        if (isEmulator) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
 
         WebView wv = (WebView) appView.getEngine().getView();
         // enable Cordova apps to be started in the background
@@ -64,4 +70,23 @@ public class MainActivity extends CordovaActivity {
     private String mmrlUserAgent() {
         return "MMRL/" + BuildConfig.VERSION_NAME + " (Linux; Android " + Build.VERSION.RELEASE + "; " + Build.MODEL + " Build/" + Build.DISPLAY + ")";
     }
+
+
+    private boolean isEmulator = (Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic"))
+            || Build.FINGERPRINT.startsWith("generic")
+            || Build.FINGERPRINT.startsWith("unknown")
+            || Build.HARDWARE.contains("goldfish")
+            || Build.HARDWARE.contains("ranchu")
+            || Build.MODEL.contains("google_sdk")
+            || Build.MODEL.contains("Emulator")
+            || Build.MODEL.contains("Android SDK built for x86")
+            || Build.MANUFACTURER.contains("Genymotion")
+            || Build.PRODUCT.contains("sdk_google")
+            || Build.PRODUCT.contains("google_sdk")
+            || Build.PRODUCT.contains("sdk")
+            || Build.PRODUCT.contains("sdk_x86")
+            || Build.PRODUCT.contains("sdk_gphone64_arm64")
+            || Build.PRODUCT.contains("vbox86p")
+            || Build.PRODUCT.contains("emulator")
+            || Build.PRODUCT.contains("simulator");
 }
