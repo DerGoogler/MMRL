@@ -22,10 +22,10 @@ const MainApplication = () => {
   const filteredModules = (modules: Module[], search: string) =>
     modules.filter(
       (module) =>
-        module.props.id.toLowerCase().includes(search.toLowerCase()) ||
-        module.props.name.toLowerCase().includes(search.toLowerCase()) ||
-        module.props.author.toLowerCase().includes(search.toLowerCase()) ||
-        module.props.description.toLowerCase().includes(search.toLowerCase())
+        module.id.toLowerCase().includes(search.toLowerCase()) ||
+        module.name.toLowerCase().includes(search.toLowerCase()) ||
+        module.author?.toLowerCase().includes(search.toLowerCase()) ||
+        module.description?.toLowerCase().includes(search.toLowerCase())
     );
 
   const renderTabs = (): TabbarRenderTab[] => {

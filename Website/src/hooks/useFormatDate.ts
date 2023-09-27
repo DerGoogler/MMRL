@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useSettings } from "./useSettings";
 
-export const useFormatDate = (date: string) => {
+export const useFormatDate = (date: int) => {
   const { settings } = useSettings();
 
   return useMemo(
@@ -13,7 +13,7 @@ export const useFormatDate = (date: string) => {
         hour: "2-digit",
         minute: "2-digit",
         hour12: true,
-      }).format(new Date(Number(date))),
+      }).format(new Date(date)),
     [date]
   );
 };

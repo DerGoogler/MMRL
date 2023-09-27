@@ -62,13 +62,7 @@ function Anchor(props: JSX.IntrinsicElements["a"] & AnchorProps) {
               context.pushPage({
                 component: ModuleViewActivity,
                 key: "",
-                extra: {
-                  last_update: m_.last_update,
-                  zip_url: m_.zip_url,
-                  authorData: null,
-                  notes_url: m_.notes_url,
-                  module: m_.prop_url,
-                },
+                extra: m_,
               });
             }
           } else {

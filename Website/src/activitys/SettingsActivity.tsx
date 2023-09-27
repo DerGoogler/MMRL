@@ -87,20 +87,23 @@ function SettingsActivity() {
         <Divider />
         <List subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>Module</ListSubheader>}>
           <ListItem>
-            <StyledListItemText
-              id="switch-list-_low_quality_module"
-              primary={"Low quality modules"}
-              secondary="Shows a alert below the module if it has a low quality"
-            />
+            <StyledListItemText primary="Low quality modules" secondary="Shows a alert below the module if it has a low quality" />
             <Android12Switch
               edge="end"
               onChange={(e: any) => {
                 setSettings("_low_quality_module", e.target.checked);
               }}
               checked={settings._low_quality_module}
-              inputProps={{
-                "aria-labelledby": "switch-list-_low_quality_module",
+            />
+          </ListItem>
+          <ListItem>
+            <StyledListItemText primary="Invalid modules" secondary="Show invalid modules" />
+            <Android12Switch
+              edge="end"
+              onChange={(e: any) => {
+                setSettings("_invald_module", e.target.checked);
               }}
+              checked={settings._invald_module}
             />
           </ListItem>
           {os.isAndroid && (

@@ -32,7 +32,7 @@ const DeviceModule = (props: Props) => {
   const { strings } = useStrings();
   const { settings, modConf } = useSettings();
   const { context, extra } = useActivity<any>();
-  const [moduleProps, setModuleProps] = React.useState<Partial<ModuleProps>>({});
+  const [moduleProps, setModuleProps] = React.useState<Partial<Module>>({});
   const [isEnabled, setIsEnabled] = React.useState(true);
   const [isSwitchDisabled, setIsSwitchDisabled] = React.useState(false);
 
@@ -59,7 +59,7 @@ const DeviceModule = (props: Props) => {
     setIsEnabled(!disable.exist());
   }, [isEnabled]);
 
-  const { id, name, version, versionCode, author, description, mmrlConfig } = moduleProps;
+  const { id, name, version, versionCode, author, description } = moduleProps;
 
   const post_service = SuFile.exist(format("POSTSERVICE"));
   const late_service = SuFile.exist(format("LATESERVICE"));

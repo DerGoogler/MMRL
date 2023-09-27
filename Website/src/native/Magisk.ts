@@ -26,7 +26,7 @@ class MagiskClass extends Native {
    * @param version
    * @returns
    */
-  public PARSE_VERSION(version: string): number {
+  public PARSE_VERSION(version: str): number {
     const i = version.indexOf(".");
     if (i == -1) {
       return parseInt(version);

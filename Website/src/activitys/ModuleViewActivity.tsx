@@ -38,55 +38,27 @@ import { useSettings } from "@Hooks/useSettings";
 import TerminalActivity from "./TerminalActivity";
 import { Shell } from "@Native/Shell";
 
-type Extra = {
-  module: ModuleProps;
-  notes_url: string;
-  zip_url: string;
-  authorData?: any;
-  last_update: string;
-};
-
 const ModuleViewActivity = () => {
   const { strings } = useStrings();
   const { settings } = useSettings();
   const { theme, scheme, shade } = useTheme();
-  const { context, extra } = useActivity<Extra>();
+  const { context, extra } = useActivity<Module>();
 
   const log = useLog("ModuleViewActivity");
 
   const { modules } = useRepos();
 
-  const { notes_url, zip_url, authorData, last_update } = extra;
-  const {
-    id,
-    name,
-    author,
-    description,
-    mmrlAuthor,
-    mmrlLogo,
-    mmrlScreenshots,
-    version,
-    versionCode,
-    mmtReborn,
-    support,
-    minMagisk,
-    minApi,
-    maxApi,
-    mmrlCover,
-    needRamdisk,
-    mmrlCategories,
-    changeBoot,
-  } = extra.module;
+  const { id, name, version, versionCode, description, author, readme, download, mmrl, fox, last_update } = extra;
 
   const remove = new SuFile(`/data/adb/modules/${id}/remove`);
   const hasInstallTools = SuFile.exist("/data/adb/modules/mmrl_install_tools/module.prop");
 
   const [moduleRemoved, setModuleRemoved] = React.useState(remove.exist());
 
-  const categories = useCategories(mmrlCategories);
-  const { data } = useFetch<string>(notes_url);
+  const categories = useCategories(mmrl.categories);
+  const { data } = useFetch<str>(readme);
   const formatLastUpdate = useFormatDate(last_update);
-  const { SupportIcon, supportText } = useSupportIconForUrl(support);
+  const { SupportIcon, supportText } = useSupportIconForUrl(fox.support);
 
   const renderToolbar = () => {
     return (
@@ -115,7 +87,7 @@ const ModuleViewActivity = () => {
           // display: "flex",
         })}
       >
-        {mmrlCover && (
+        {mmrl.cover && (
           <Box
             sx={(theme) => ({
               //background: '-webkit-gradient(linear,left bottom,left top,from(rgb(32,33,36)),color-stop(56%,rgba(0,0,0,0)))',
@@ -136,7 +108,7 @@ const ModuleViewActivity = () => {
                 objectFit: "cover",
                 // width: "calc(100% - 16px)",
               })}
-              image={mmrlCover}
+              image={mmrl.cover}
               alt={name}
             />
           </Box>
@@ -144,7 +116,7 @@ const ModuleViewActivity = () => {
 
         <Box
           sx={(theme) => ({
-            pt: mmrlCover ? 0 : 2,
+            pt: mmrl.cover ? 0 : 2,
             pl: 2,
             pr: 2,
             pb: 2,
@@ -172,7 +144,7 @@ const ModuleViewActivity = () => {
                 mr: 1.5,
                 fontSize: 50,
               })}
-              src={mmrlLogo}
+              src={mmrl.logo}
             >
               {name.charAt(0).toUpperCase()}
             </Avatar>
@@ -202,7 +174,7 @@ const ModuleViewActivity = () => {
             </Typography>
 
             <Stack direction={{ xs: "column", sm: "row" }} spacing={1}>
-              {support && (
+              {fox.support && (
                 <Button
                   sx={{
                     color: settings.darkmode ? scheme[700] : shade(scheme[200], settings.shade_value),
@@ -218,7 +190,7 @@ const ModuleViewActivity = () => {
                   variant="outlined"
                   startIcon={<SupportIcon />}
                   onClick={() => {
-                    os.open(support, {
+                    os.open(fox.support, {
                       target: "_blank",
                       features: {
                         color: theme.palette.primary.main,
@@ -250,7 +222,7 @@ const ModuleViewActivity = () => {
                         key: "explore_install",
                         extra: {
                           exploreInstall: true,
-                          path: zip_url,
+                          path: download,
                         },
                       });
                     }}
@@ -260,9 +232,9 @@ const ModuleViewActivity = () => {
                 )}
 
                 <Button
-                  disabled={!zip_url}
+                  disabled={!download}
                   onClick={() => {
-                    os.open(zip_url, {
+                    os.open(download, {
                       target: "_blank",
                       features: {
                         color: theme.palette.primary.main,
@@ -292,7 +264,7 @@ const ModuleViewActivity = () => {
 
       <Page.RelativeContent>
         <Stack direction="column" justifyContent="center" alignItems="flex-start" spacing={1}>
-          {minApi && os.sdk <= Number(minApi) && (
+          {fox.minApi && os.sdk <= fox.minApi && (
             <Alert
               sx={{
                 width: "100%",
@@ -300,11 +272,11 @@ const ModuleViewActivity = () => {
               severity="warning"
             >
               <AlertTitle>Unsupported</AlertTitle>
-              Module requires {parseAndroidVersion(minApi)}
+              Module requires {parseAndroidVersion(fox.minApi)}
             </Alert>
           )}
 
-          {mmrlScreenshots && (
+          {mmrl.screenshots && (
             <Card elevation={0} sx={{ /*width: { xs: "100%", sm: "100vh" },*/ width: "100%" }}>
               <CardContent>
                 <Typography variant="h5" component="div">
@@ -323,7 +295,7 @@ const ModuleViewActivity = () => {
                   gridAutoColumns: "minmax(160px, 1fr)",
                 }}
               >
-                {mmrlScreenshots.split(",").map((image, i) => (
+                {mmrl.screenshots.map((image, i) => (
                   <ImageListItem
                     sx={(theme) => ({
                       ml: 1,
@@ -373,7 +345,7 @@ const ModuleViewActivity = () => {
                         extra: {
                           desc: data,
                           name: name,
-                          logo: mmrlLogo,
+                          logo: mmrl.logo,
                         },
                       });
                     }}
@@ -436,31 +408,31 @@ const ModuleViewActivity = () => {
             >
               <List sx={{ width: { xs: "100%" } }} subheader={<ListSubheader sx={{ bgcolor: "transparent" }}>Access</ListSubheader>}>
                 <ListItem>
-                  <StyledListItemText primary="Changes boot" secondary={changeBoot === "true" ? "Yes" : "No"} />
+                  <StyledListItemText primary="Changes boot" secondary={fox.changeBoot ? "Yes" : "No"} />
                 </ListItem>
 
                 <ListItem>
-                  <StyledListItemText primary="Needs ramdisk" secondary={needRamdisk === "true" ? "Yes" : "No"} />
+                  <StyledListItemText primary="Needs ramdisk" secondary={fox.needRamdisk ? "Yes" : "No"} />
                 </ListItem>
 
                 <ListItem>
-                  <StyledListItemText primary="MMT-Reborn" secondary={mmtReborn === "true" ? "Yes" : "No"} />
+                  <StyledListItemText primary="MMT-Reborn" secondary={fox.mmtReborn ? "Yes" : "No"} />
                 </ListItem>
               </List>
 
               <List sx={{ width: { xs: "100%" } }} subheader={<ListSubheader sx={{ bgcolor: "transparent" }}>Minimum</ListSubheader>}>
                 <ListItem>
-                  <StyledListItemText primary="Operating System" secondary={minApi ? parseAndroidVersion(minApi) : "Undefined"} />
+                  <StyledListItemText primary="Operating System" secondary={fox.minApi ? parseAndroidVersion(fox.minApi) : "Unset"} />
                 </ListItem>
 
                 <ListItem>
-                  <StyledListItemText primary="Magisk" secondary={minMagisk ? Magisk.PARSE_VERSION(minMagisk) : "Undefined"} />
+                  <StyledListItemText primary="Magisk" secondary={fox.minMagisk ? Magisk.PARSE_VERSION(String(fox.minMagisk)) : "Unset"} />
                 </ListItem>
               </List>
 
               <List sx={{ width: { xs: "100%" } }} subheader={<ListSubheader sx={{ bgcolor: "transparent" }}>Recommended</ListSubheader>}>
                 <ListItem>
-                  <StyledListItemText primary="Operating System" secondary={maxApi ? parseAndroidVersion(maxApi) : "Undefined"} />
+                  <StyledListItemText primary="Operating System" secondary={fox.maxApi ? parseAndroidVersion(fox.maxApi) : "Unset"} />
                 </ListItem>
               </List>
             </Box>

@@ -158,6 +158,7 @@ export interface StorageDeclaration {
   eruda_console_enabled: boolean;
   disabled_repos: string[];
   _low_quality_module: boolean;
+  _invald_module: boolean;
   _disable_module_covers: boolean;
   __experimental_local_install: boolean;
   repos: StoredRepo[];
@@ -213,6 +214,7 @@ export const INITIAL_SETTINGS: StorageDeclaration = {
   eruda_console_enabled: false,
   disabled_repos: [],
   _low_quality_module: true,
+  _invald_module: false,
   _disable_module_covers: false,
   __experimental_local_install: false,
   repos: [],

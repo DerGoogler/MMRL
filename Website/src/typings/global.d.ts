@@ -5,6 +5,9 @@ import NBuildConfig from "./android/buildconfig";
 export {};
 
 declare global {
+  type arr<T> = Array<T>;
+  type str = string;
+  type Str = String;
   type int = number;
   type Int = Number;
   type Void = void;
@@ -156,64 +159,68 @@ declare global {
   }
 
   interface Repo {
-    id: string;
+    id: str;
     /**
      * An required filed, to disply the repository name
      */
-    name: string;
-    mmrlOwner?: string;
+    name: str;
+    mmrlOwner?: str;
     /**
      * An given website link for the repository
      */
-    website?: string | undefined;
+    website?: str;
     /**
      * Given support link i.g. Telegram, Xda, GitHub or something
      */
-    support?: string | undefined;
-    donate?: string | undefined;
-    submitModule?: string | undefined;
-    last_update: string | number;
+    support?: str;
+    donate?: str;
+    submitModule?: str;
+    last_update: int;
     modules: Module[];
   }
 
-  interface Module {
-    id: string;
-    last_update: string;
-    notes_url: string;
-    prop_url: string;
-    props: ModuleProps;
-    stars: string;
-    zip_url: string;
+  export interface Root {
+    last_update: number;
+    name: string;
+    website: any;
+    support: any;
+    donate: any;
+    submitModule: string;
+    modules: Module[];
   }
 
-  interface ModuleProps {
-    // Magisk supported properties
-    id: string;
-    name: string;
-    version: string;
-    versionCode: number;
-    author: string;
-    description: string;
+  export interface Module {
+    id: str;
+    name: str;
+    version?: int;
+    versionCode?: int;
+    author?: str;
+    description?: str;
+    valid: bool;
+    download: str;
+    last_update: int;
+    readme: str;
+    stars: int;
+    mmrl: Mmrl;
+    fox: Fox;
+  }
 
-    // MMRL supported properties
-    mmrlConfig?: string;
-    mmrlNoComments?: string;
-    mmrlCover?: string;
-    mmrlAuthor?: string;
-    mmrlLogo?: string;
-    mmrlScreenshots?: string;
-    // Developers that points "Gaming" won't have a change to get verified. Magisk isn't made for Gaming purposes.
-    mmrlCategories?: string;
+  export interface Mmrl {
+    cover?: str;
+    logo?: str;
+    screenshots?: arr<str>;
+    categories?: arr<str>;
+  }
 
-    // Fox's Mmm supported properties
-    minApi?: string;
-    maxApi?: string;
-    minMagisk?: string;
-    needRamdisk?: string;
-    support?: string;
-    donate?: string;
-    config?: string;
-    changeBoot?: string;
-    mmtReborn?: string;
+  export interface Fox {
+    minApi?: int;
+    maxApi?: int;
+    minMagisk?: int;
+    needRamdisk?: bool;
+    support?: str;
+    donate?: str;
+    config?: str;
+    changeBoot?: bool;
+    mmtReborn?: bool;
   }
 }

@@ -21,13 +21,17 @@ export const ExploreModule = (_props: Props) => {
   const { settings } = useSettings();
   const { theme, scheme, shade } = useTheme();
 
-  const { id, notes_url, zip_url, last_update, props } = _props.moduleProps;
+  const { id, name, version, versionCode, description, author, last_update, mmrl, valid } = _props.moduleProps;
 
   const { isVerified, isHidden } = useModuleOptions(id);
-  const isLowQuality = useLowQualityModule(props, _props.disableLowQuality);
+  const isLowQuality = useLowQualityModule(_props.moduleProps, _props.disableLowQuality);
   const formatLastUpdate = useFormatDate(last_update);
 
   if (isHidden) {
+    return null;
+  }
+
+  if (!valid) {
     return null;
   }
 
@@ -49,12 +53,7 @@ export const ExploreModule = (_props: Props) => {
     context.pushPage({
       component: ModuleViewActivity,
       key: "",
-      extra: {
-        last_update: last_update,
-        zip_url: zip_url,
-        notes_url: notes_url,
-        module: props,
-      },
+      extra: _props.moduleProps,
     });
   };
 
@@ -63,7 +62,7 @@ export const ExploreModule = (_props: Props) => {
       return null;
     }
 
-    if (props.mmrlCover) {
+    if (mmrl.cover) {
       return (
         <CardMedia
           component="img"
@@ -75,8 +74,8 @@ export const ExploreModule = (_props: Props) => {
             boxShadow: "0 1px 2px 0 rgba(60,64,67,.3), 0 1px 10px 1px rgba(60,64,67,.15)",
             width: "calc(100% - 16px)",
           })}
-          image={props.mmrlCover}
-          alt={props.name}
+          image={mmrl.cover}
+          alt={name}
         />
       );
     }
@@ -101,18 +100,18 @@ export const ExploreModule = (_props: Props) => {
       <Box sx={{ p: 2, display: "flex" }}>
         <Stack spacing={0.5} style={{ flexGrow: 1 }}>
           <Typography fontWeight={700} color="text.primary">
-            {props.name}
-          </Typography>{" "}
+            {name}
+          </Typography>
           <Typography variant="caption" sx={{ fontSize: ".70rem" }} color="text.secondary">
             <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={0.5}>
               <span>
-                {props.version} ({props.versionCode}) /
+                {version} ({versionCode}) /
               </span>
-              <span>{props.author}</span>
+              <span>{author}</span>
             </Stack>
           </Typography>
           <Typography variant="body1" color="text.secondary">
-            {props.description}
+            {description}
           </Typography>
         </Stack>
       </Box>

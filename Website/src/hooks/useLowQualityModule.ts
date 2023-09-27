@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-export const useLowQualityModule = (props: ModuleProps, disable?: boolean) => {
+export const useLowQualityModule = (props: Module, disable?: boolean) => {
   const requiredProp = ["id", "name", "version", "versionCode", "author", "description"];
 
   const res = useMemo(

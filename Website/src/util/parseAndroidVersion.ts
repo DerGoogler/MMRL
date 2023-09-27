@@ -1,7 +1,7 @@
 import { Build } from "@Native/Build";
 
-export const parseAndroidVersion = (version: string) => {
-  switch (Number(version)) {
+export const parseAndroidVersion = (version: int) => {
+  switch (version) {
     case Build.VERSION_CODES.BASE:
       return "Android 1.0";
     case Build.VERSION_CODES.BASE_1_1:

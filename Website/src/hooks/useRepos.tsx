@@ -59,60 +59,6 @@ type SetRepoStateData = {
   callback?: (state: string[]) => void;
 };
 
-const repo_schema = {
-  type: "object",
-  additionalProperties: true,
-  required: ["last_update", "name", "modules"],
-  properties: {
-    last_update: {
-      type: "number",
-    },
-    name: {
-      type: "string",
-    },
-    website: {
-      type: "string",
-      nullable: true,
-    },
-    support: {
-      type: "string",
-      nullable: true,
-    },
-    donate: {
-      type: "string",
-      nullable: true,
-    },
-    submitModule: {
-      type: "string",
-      nullable: true,
-    },
-    modules: {
-      type: "array",
-      items: {
-        type: "object",
-        required: ["id", "last_update", "prop_url", "zip_url", "notes_url"],
-        properties: {
-          id: {
-            type: "string",
-          },
-          last_update: {
-            type: "number",
-          },
-          prop_url: {
-            type: "string",
-          },
-          zip_url: {
-            type: "string",
-          },
-          notes_url: {
-            type: "string",
-          },
-        },
-      },
-    },
-  },
-};
-
 export const RepoProvider = (props: React.PropsWithChildren) => {
   const log = useLog("RepoProvider");
   const [repos, setRepos] = useNativeStorage<StoredRepo[]>("repos", []);
@@ -134,37 +80,28 @@ export const RepoProvider = (props: React.PropsWithChildren) => {
         fetch(data.url)
           .then((response) => response.json())
           .then((response) => {
-            const ajv = new Ajv(); // options can be passed, e.g. {allErrors: true}
-            const validate = ajv.compile(repo_schema);
-            const valid = validate(response) as boolean;
-
-            if (valid) {
-              setRepos(
-                (prev) => [
-                  ...prev,
-                  {
-                    id: "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
-                      var r = (Math.random() * 16) | 0,
-                        v = c == "x" ? r : (r & 0x3) | 0x8;
-                      return v.toString(16);
-                    }),
-                    name: response.name || "Unknown Repository",
-                    mmrlOwner: response.mmrlOwner || null,
-                    website: response.website || null,
-                    support: response.support || null,
-                    donate: response.donate || null,
-                    submitModule: response.submitModules || null,
-                    last_update: response.last_update || 0,
-                    modules: data.url,
-                    isOn: false,
-                  },
-                ],
-                data.callback
-              );
-            } else {
-              log.e(JSON.stringify(validate.errors, null, 4));
-              os.toast("Repository schema does not match", Toast.LENGTH_SHORT);
-            }
+            setRepos(
+              (prev) => [
+                ...prev,
+                {
+                  id: "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+                    var r = (Math.random() * 16) | 0,
+                      v = c == "x" ? r : (r & 0x3) | 0x8;
+                    return v.toString(16);
+                  }),
+                  name: response.name || "Unknown Repository",
+                  mmrlOwner: response.mmrlOwner || null,
+                  website: response.website || null,
+                  support: response.support || null,
+                  donate: response.donate || null,
+                  submitModule: response.submitModules || null,
+                  last_update: response.last_update || 0,
+                  modules: data.url,
+                  isOn: false,
+                },
+              ],
+              data.callback
+            );
           })
           .catch((e) => (data.callback ? data.callback(e) : log.e(e)));
       } else {

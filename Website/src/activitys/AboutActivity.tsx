@@ -54,7 +54,7 @@ const AboutActivity = () => {
     );
   };
 
-  const date = useFormatDate(String(BuildConfig.BUILD_DATE));
+  const date = useFormatDate(BuildConfig.BUILD_DATE);
 
   type ListRender = { primary: string; secondary: string | number };
 

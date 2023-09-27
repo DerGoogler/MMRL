@@ -64,7 +64,7 @@ export const LocalRepository = (props: LocalRepositoryProps) => {
   const { theme, scheme } = useTheme();
   const shade = useShadeColor();
 
-  const formatLastUpdate = useFormatDate(repo.last_update as string);
+  const formatLastUpdate = useFormatDate(repo.last_update);
 
   const MListItem = (props: ListItemProps) => {
     return (
