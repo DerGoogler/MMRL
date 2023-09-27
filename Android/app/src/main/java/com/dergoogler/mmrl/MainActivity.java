@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.util.Log;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
@@ -15,6 +16,8 @@ import com.dergoogler.core.NativeProperties;
 import com.dergoogler.core.NativeStorage;
 import com.dergoogler.core.NativeShell;
 import com.dergoogler.core.NativeBuildConfig;
+import com.topjohnwu.superuser.Shell;
+import com.topjohnwu.superuser.ShellUtils;
 
 import org.apache.cordova.*;
 

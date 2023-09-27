@@ -34,9 +34,13 @@ const TerminalActivity = () => {
     setLines((lines) => [...lines, line]);
   };
 
-  React.useEffect(() => {
-    termEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
-  }, [lines]);
+  if (settings.term_scroll_bottom) {
+    const termBehavior = React.useMemo(() => settings.term_scroll_behavior, [settings]);
+
+    React.useEffect(() => {
+      termEndRef.current?.scrollIntoView({ behavior: termBehavior.value, block: "end", inline: "nearest" });
+    }, [lines]);
+  }
 
   const installCli = (path: string) => {
     if (Shell.isMagiskSU()) {
@@ -45,6 +49,12 @@ const TerminalActivity = () => {
       return modConf("KSUCLI", { ZIPFILE: path });
     } else {
       throw new Error("Unable to determine installation string");
+    }
+  };
+
+  const env = (i: { [key: string]: string }) => {
+    for (const k in i) {
+      Shell.setenv(k, i[k], 1);
     }
   };
 
@@ -57,11 +67,17 @@ const TerminalActivity = () => {
       const name = url[2];
       const branch = url[4].split(".").slice(0, -1).join(".");
 
+      env({
+        MMRL: "true",
+        NAME: name,
+        URL: path,
+        BRANCH: branch,
+        INSTALLER_CLI: installCli(`/data/local/${name}-${branch}-moduled.zip`),
+      });
+
       // @ts-ignore
       Terminal.exec(
-        `/system/usr/share/mmrl/bin/mmrl_installer "${name}" "${path}" "${branch}" "${installCli(
-          `/data/local/tmp/${name}-${branch}-moduled.zip`
-        )}"`,
+        `${modConf("MMRLINI")}/system/usr/share/mmrl/bin/mmrl_installer`,
         (r) => {
           addLine(r);
         },

@@ -19,8 +19,9 @@ type ContentMap = {
 
 interface PickerItemProps {
   id: string;
+  disabled?: boolean;
   contentMap: ContentMap[];
-  targetSetting: "language" | "accent_scheme";
+  targetSetting: "language" | "accent_scheme" | "term_scroll_behavior";
   title: string;
 }
 
@@ -49,7 +50,7 @@ export function ListPickerItem(props: PickerItemProps) {
 
   return (
     <>
-      <ListItemButton onClick={handleOpen}>
+      <ListItemButton disabled={props.disabled} onClick={handleOpen}>
         <StyledListItemText primary={props.title} secondary={settings[props.targetSetting].name} />
       </ListItemButton>
       <ConfirmationDialogRaw

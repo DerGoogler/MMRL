@@ -162,6 +162,8 @@ export interface StorageDeclaration {
   __experimental_local_install: boolean;
   repos: StoredRepo[];
   shade_value: number;
+  term_scroll_bottom: boolean;
+  term_scroll_behavior: { name: string; value: ScrollBehavior };
 }
 
 export interface ModConf {
@@ -188,7 +190,21 @@ export interface ModConf {
   DISABLE: string;
   REMOVE: string;
   UPDATE: string;
+
+  // others
+  MMRLINI: string;
 }
+
+export const termScrollBehaviors: StorageDeclaration["term_scroll_behavior"][] = [
+  {
+    name: "Smooth",
+    value: "smooth",
+  },
+  {
+    name: "Instant",
+    value: "instant" as "smooth",
+  },
+];
 
 export const INITIAL_SETTINGS: StorageDeclaration = {
   darkmode: false,
@@ -201,6 +217,8 @@ export const INITIAL_SETTINGS: StorageDeclaration = {
   __experimental_local_install: false,
   repos: [],
   shade_value: -80,
+  term_scroll_bottom: true,
+  term_scroll_behavior: termScrollBehaviors[0],
 };
 
 export const INITIAL_MOD_CONF: ModConf = {
@@ -227,6 +245,9 @@ export const INITIAL_MOD_CONF: ModConf = {
   DISABLE: "<MODULES>/<MODID>/disable",
   REMOVE: "<MODULES>/<MODID>/remove",
   UPDATE: "<MODULES>/<MODID>/update",
+
+  // others
+  MMRLINI: "<MODULES>/mmrl_install_tools",
 };
 
 export interface Context {

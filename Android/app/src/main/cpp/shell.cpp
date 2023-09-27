@@ -6,6 +6,7 @@
 #include <malloc.h>
 #include <fcntl.h>
 #include <jni.h>
+#include <cstdlib>
 
 bool path_detection(char **paths) {
     int len = sizeof(paths) / sizeof(paths[0]);
@@ -133,4 +134,20 @@ Java_com_dergoogler_core_NativeShell_isKernelSU(JNIEnv *env, jclass clazz) {
     } else {
         return JNI_FALSE;
     }
+}
+
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_dergoogler_core_NativeShell_getenv(JNIEnv *env, jclass clazz, jstring key) {
+    const char *name = env->GetStringUTFChars(key, nullptr);
+    return env->NewStringUTF(getenv(name));
+}
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_dergoogler_core_NativeShell_setenv(JNIEnv *env, jclass clazz, jstring key, jstring value,
+                                            jint override) {
+    const char *_key = env->GetStringUTFChars(key, nullptr);
+    const char *_value = env->GetStringUTFChars(value, nullptr);
+    setenv(_key,_value,(int)override);
 }

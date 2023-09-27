@@ -6,7 +6,7 @@ import { Page } from "@Components/onsenui/Page";
 import { Magisk } from "@Native/Magisk";
 import { useStrings } from "@Hooks/useStrings";
 import { useActivity } from "@Hooks/useActivity";
-import { accent_colors, useSettings } from "@Hooks/useSettings";
+import { accent_colors, termScrollBehaviors, useSettings } from "@Hooks/useSettings";
 import { StyledListItemText } from "@Components/StyledListItemText";
 import { ListPickerItem } from "@Components/ListPickerItem";
 import { languages_map } from "../locales/languages";
@@ -103,7 +103,7 @@ function SettingsActivity() {
               }}
             />
           </ListItem>
-          {/* {os.isAndroid && ( */}
+          {os.isAndroid && (
             <>
               <ListItemButton
                 onClick={() => {
@@ -117,28 +117,44 @@ function SettingsActivity() {
                 <StyledListItemText primary="ModConf" secondary="A way to manage different module systems" />
               </ListItemButton>
             </>
-          {/* )} */}
-          {os.isAndroid && (
-            <ListItem>
-              <StyledListItemText
-                id="switch-list-__experimental_local_install"
-                primary={"Enable local install"}
-                secondary="Allows you to install local *.zip files (Experimental)."
-              />
-              <Android12Switch
-                edge="end"
-                disabled={!(Shell.isKernelSU() || Shell.isMagiskSU())}
-                onChange={(e: any) => {
-                  setSettings("__experimental_local_install", e.target.checked);
-                }}
-                checked={settings.__experimental_local_install}
-                inputProps={{
-                  "aria-labelledby": "switch-list-__experimental_local_install",
-                }}
-              />
-            </ListItem>
           )}
         </List>
+
+        {os.isAndroid && (
+          <>
+            <Divider />
+            <List subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>Terminal</ListSubheader>}>
+              <ListItem>
+                <StyledListItemText primary={"Enable local install"} secondary="Allows you to install local *.zip files (Experimental)." />
+                <Android12Switch
+                  edge="end"
+                  disabled={!(Shell.isKernelSU() || Shell.isMagiskSU())}
+                  onChange={(e: any) => {
+                    setSettings("__experimental_local_install", e.target.checked);
+                  }}
+                  checked={settings.__experimental_local_install}
+                />
+              </ListItem>
+
+              <ListItem>
+                <StyledListItemText primary="Scroll to bottom" secondary="Automatically scroll to bottom within the terminal" />
+                <Android12Switch
+                  edge="end"
+                  onChange={(e: any) => {
+                    setSettings("term_scroll_bottom", e.target.checked);
+                  }}
+                  checked={settings.term_scroll_bottom}
+                />
+              </ListItem>
+              <ListPickerItem
+                id="term-scroll-behavior"
+                targetSetting="term_scroll_behavior"
+                title="Scroll behavior"
+                contentMap={termScrollBehaviors}
+              />
+            </List>
+          </>
+        )}
 
         <Divider />
 

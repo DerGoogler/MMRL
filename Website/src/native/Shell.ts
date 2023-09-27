@@ -22,6 +22,8 @@ interface NativeShell {
   isSuAvailable(): boolean;
   isKernelSU(): boolean;
   isMagiskSU(): boolean;
+  getenv(key: string): string;
+  setenv(key: string, value: string, override: number): void;
 }
 
 interface IShell {
@@ -138,6 +140,20 @@ class ShellClass extends Native<NativeShell> {
       return this.getInterface.isMagiskSU();
     } else {
       return false;
+    }
+  }
+
+  public getenv(key: string): string {
+    if (this.isAndroid) {
+      return this.getInterface.getenv(key);
+    } else {
+      return "";
+    }
+  }
+
+  public setenv(key: string, value: string, override = 1): void {
+    if (this.isAndroid) {
+      this.getInterface.setenv(key, value, override);
     }
   }
 }

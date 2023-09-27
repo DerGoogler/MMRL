@@ -36,6 +36,7 @@ import { SuFile } from "@Native/SuFile";
 import DescriptonActivity from "./DescriptonActivity";
 import { useSettings } from "@Hooks/useSettings";
 import TerminalActivity from "./TerminalActivity";
+import { Shell } from "@Native/Shell";
 
 type Extra = {
   module: ModuleProps;
@@ -230,7 +231,7 @@ const ModuleViewActivity = () => {
               )}
 
               <Stack direction="row" justifyContent="center" alignItems="center" spacing={1}>
-                {os.isAndroid && hasInstallTools && (
+                {os.isAndroid && (Shell.isMagiskSU() || Shell.isKernelSU()) && hasInstallTools && settings.__experimental_local_install && (
                   <Button
                     sx={{
                       color: settings.darkmode ? scheme[900] : scheme[600],

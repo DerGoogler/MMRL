@@ -59,6 +59,11 @@ public class NativeShell {
     @JavascriptInterface
     public static native boolean isKernelSU();
 
+    @JavascriptInterface
+    public static native String getenv(String key);
+
+    @JavascriptInterface
+    public static native void setenv(String key, String value, int override);
 
     @JavascriptInterface
     public boolean isAppGrantedRoot() {
