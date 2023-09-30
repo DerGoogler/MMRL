@@ -8,6 +8,9 @@ import { useModuleOptions } from "@Hooks/useModuleOptions";
 import { GestureDetector } from "./onsenui/GestureDetector";
 import { useTheme } from "@Hooks/useTheme";
 import ModuleViewActivity from "@Activitys/ModuleViewActivity";
+import { StyledIconButtonWithText } from "./StyledIconButton";
+import StarBorderRoundedIcon from "@mui/icons-material/StarBorderRounded";
+import { badgeStyle } from "./DeviceModule";
 
 interface Props {
   index: number;
@@ -21,17 +24,17 @@ export const ExploreModule = (_props: Props) => {
   const { settings } = useSettings();
   const { theme, scheme, shade } = useTheme();
 
-  const { id, name, version, versionCode, description, author, last_update, mmrl, valid } = _props.moduleProps;
+  const { id, name, version, versionCode, description, stars, author, last_update, mmrl, valid } = _props.moduleProps;
 
   const { isVerified, isHidden } = useModuleOptions(id);
   const isLowQuality = useLowQualityModule(_props.moduleProps, _props.disableLowQuality);
   const formatLastUpdate = useFormatDate(last_update);
 
-  if (isHidden) {
-    return null;
-  }
+  // if (isHidden) {
+  //   return null;
+  // }
 
-  if (!valid) {
+  if (!settings._invald_module && !valid) {
     return null;
   }
 
@@ -123,9 +126,22 @@ export const ExploreModule = (_props: Props) => {
           })}
           label={formatLastUpdate}
         />
-        {/* <Stack spacing={0.8} direction="row">
-Keep for update modules           
-          </Stack> */}
+        <Stack spacing={0.8} direction="row">
+          <Stack direction="row" justifyContent="center" alignItems="center" spacing={0.5} sx={badgeStyle(scheme)}>
+            <StarBorderRoundedIcon
+              sx={{
+                typography: "caption",
+              }}
+            />
+            <Typography
+              sx={{
+                typography: "caption",
+              }}
+            >
+              {stars}
+            </Typography>
+          </Stack>
+        </Stack>
       </Stack>
       {settings._low_quality_module && isLowQuality && (
         <Alert style={{ borderRadius: 0 }} severity="warning">

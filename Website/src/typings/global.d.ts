@@ -201,8 +201,14 @@ declare global {
     last_update: int;
     readme: str;
     stars: int;
+    about: About;
     mmrl: Mmrl;
     fox: Fox;
+  }
+
+  export interface About {
+    issues?: string;
+    source: string;
   }
 
   export interface Mmrl {

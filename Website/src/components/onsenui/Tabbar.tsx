@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "onsenui/esm/elements/ons-tab";
 import "onsenui/esm/elements/ons-tabbar";
 import onsCustomElement from "@Util/onsCustomElement";
+import { SxProps } from "@mui/material";
 
 export interface TabbarRenderTab {
   content: JSX.Element;
@@ -9,6 +10,7 @@ export interface TabbarRenderTab {
 }
 
 interface HTMLTabbar {
+  sx?: SxProps;
   activeIndex?: number;
   index?: number;
   renderTabs: (index?: number, ref?: React.ForwardedRef<HTMLElement>) => TabbarRenderTab[];

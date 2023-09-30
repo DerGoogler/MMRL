@@ -37,6 +37,35 @@ import DescriptonActivity from "./DescriptonActivity";
 import { useSettings } from "@Hooks/useSettings";
 import TerminalActivity from "./TerminalActivity";
 import { Shell } from "@Native/Shell";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import ListItemButton from "@mui/material/ListItemButton";
+import SourceIcon from "@mui/icons-material/Source";
+import BugReportIcon from "@mui/icons-material/BugReport";
+import ListItemIcon from "@mui/material/ListItemIcon";
+
+function a11yProps(index: number) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
+
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
+
+function CustomTabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div role="tabpanel" hidden={value !== index} id={`simple-tabpanel-${index}`} aria-labelledby={`simple-tab-${index}`} {...other}>
+      {value === index && <Box>{children}</Box>}
+    </div>
+  );
+}
 
 const ModuleViewActivity = () => {
   const { strings } = useStrings();
@@ -45,19 +74,13 @@ const ModuleViewActivity = () => {
   const { context, extra } = useActivity<Module>();
 
   const log = useLog("ModuleViewActivity");
-
-  const { modules } = useRepos();
-
-  const { id, name, version, versionCode, description, author, readme, download, mmrl, fox, last_update } = extra;
-
-  const remove = new SuFile(`/data/adb/modules/${id}/remove`);
-  const hasInstallTools = SuFile.exist("/data/adb/modules/mmrl_install_tools/module.prop");
-
-  const [moduleRemoved, setModuleRemoved] = React.useState(remove.exist());
+  const { id, name, version, versionCode, description, author, readme, about, download, mmrl, fox, last_update } = extra;
 
   const categories = useCategories(mmrl.categories);
   const { data } = useFetch<str>(readme);
   const formatLastUpdate = useFormatDate(last_update);
+
+  const hasInstallTools = SuFile.exist("/data/adb/modules/mmrl_install_tools/module.prop");
   const { SupportIcon, supportText } = useSupportIconForUrl(fox.support);
 
   const renderToolbar = () => {
@@ -71,27 +94,26 @@ const ModuleViewActivity = () => {
     );
   };
 
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
+  };
+
   return (
     <Page modifier="noshadow" renderToolbar={renderToolbar}>
       <Box
         component="div"
-        sx={(theme) => ({
-          // pt: 0,
-          // pl: 2,
-          // pr: 2,
-          // pb: 2,
+        sx={{
           position: "relative",
           zIndex: 9,
           backgroundColor: theme.palette.primary.main,
           color: "white",
-          // display: "flex",
-        })}
+        }}
       >
         {mmrl.cover && (
           <Box
             sx={(theme) => ({
-              //background: '-webkit-gradient(linear,left bottom,left top,from(rgb(32,33,36)),color-stop(56%,rgba(0,0,0,0)))',
-              //background: '-webkit-linear-gradient(bottom,rgb(32,33,36) 0,rgba(0,0,0,0) 56%)',
               background: `linear-gradient(to top,${theme.palette.primary.main} 0,rgba(0,0,0,0) 56%)`,
             })}
           >
@@ -106,7 +128,6 @@ const ModuleViewActivity = () => {
                   xs: "calc(calc(100vw - 48px)*9/16)",
                 },
                 objectFit: "cover",
-                // width: "calc(100% - 16px)",
               })}
               image={mmrl.cover}
               alt={name}
@@ -260,184 +281,230 @@ const ModuleViewActivity = () => {
             </Stack>
           </Stack>
         </Box>
+        <Tabs value={value} onChange={handleChange} indicatorColor="secondary" textColor="inherit" variant="fullWidth">
+          <Tab label="Overview" {...a11yProps(0)} />
+          <Tab label="About" {...a11yProps(1)} />
+        </Tabs>
       </Box>
 
       <Page.RelativeContent>
-        <Stack direction="column" justifyContent="center" alignItems="flex-start" spacing={1}>
-          {fox.minApi && os.sdk <= fox.minApi && (
-            <Alert
-              sx={{
-                width: "100%",
-              }}
-              severity="warning"
-            >
-              <AlertTitle>Unsupported</AlertTitle>
-              Module requires {parseAndroidVersion(fox.minApi)}
-            </Alert>
-          )}
-
-          {mmrl.screenshots && (
-            <Card elevation={0} sx={{ /*width: { xs: "100%", sm: "100vh" },*/ width: "100%" }}>
-              <CardContent>
-                <Typography variant="h5" component="div">
-                  Images
-                </Typography>
-              </CardContent>
-
-              <ImageList
+        <CustomTabPanel value={value} index={0}>
+          <Stack direction="column" justifyContent="center" alignItems="flex-start" spacing={1}>
+            {fox.minApi && os.sdk <= fox.minApi && (
+              <Alert
                 sx={{
-                  pt: 0,
-                  p: 1,
-                  overflow: "auto",
-                  whiteSpace: "nowrap",
-                  gridAutoFlow: "column",
-                  gridTemplateColumns: "repeat(auto-fill,minmax(160px,1fr)) !important",
-                  gridAutoColumns: "minmax(160px, 1fr)",
+                  width: "100%",
+                }}
+                severity="warning"
+              >
+                <AlertTitle>Unsupported</AlertTitle>
+                Module requires {parseAndroidVersion(fox.minApi)}
+              </Alert>
+            )}
+
+            {mmrl.screenshots && (
+              <Card elevation={0} sx={{ /*width: { xs: "100%", sm: "100vh" },*/ width: "100%" }}>
+                <CardContent>
+                  <Typography variant="h5" component="div">
+                    Images
+                  </Typography>
+                </CardContent>
+
+                <ImageList
+                  sx={{
+                    pt: 0,
+                    p: 1,
+                    overflow: "auto",
+                    whiteSpace: "nowrap",
+                    gridAutoFlow: "column",
+                    gridTemplateColumns: "repeat(auto-fill,minmax(160px,1fr)) !important",
+                    gridAutoColumns: "minmax(160px, 1fr)",
+                  }}
+                >
+                  {mmrl.screenshots.map((image, i) => (
+                    <ImageListItem
+                      sx={(theme) => ({
+                        ml: 1,
+                        mr: 1,
+                      })}
+                    >
+                      <Box
+                        component="img"
+                        src={image}
+                        sx={(theme) => ({
+                          boxShadow: "0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15)",
+                          borderRadius: theme.shape.borderRadius / theme.shape.borderRadius,
+                        })}
+                      />
+                    </ImageListItem>
+                  ))}
+                </ImageList>
+              </Card>
+            )}
+
+            {data ? (
+              <Card
+                elevation={0}
+                sx={{
+                  width: "100%",
                 }}
               >
-                {mmrl.screenshots.map((image, i) => (
-                  <ImageListItem
-                    sx={(theme) => ({
-                      ml: 1,
-                      mr: 1,
-                    })}
+                <CardContent>
+                  <Stack
+                    component={Typography}
+                    sx={{
+                      alignItems: "center",
+                    }}
+                    direction="row"
+                    justifyContent={{ xs: "space-between", sm: "row" }}
+                    spacing={1}
+                    gutterBottom
                   >
-                    <Box
-                      component="img"
-                      src={image}
-                      sx={(theme) => ({
-                        boxShadow: "0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15)",
-                        borderRadius: theme.shape.borderRadius / theme.shape.borderRadius,
-                      })}
-                    />
-                  </ImageListItem>
-                ))}
-              </ImageList>
-            </Card>
-          )}
+                    <Typography variant="h5" component="div">
+                      About this module
+                    </Typography>
+                    <IconButton
+                      onClick={() => {
+                        context.pushPage({
+                          component: DescriptonActivity,
+                          key: "",
+                          extra: {
+                            desc: data,
+                            name: name,
+                            logo: mmrl.logo,
+                          },
+                        });
+                      }}
+                      sx={{ ml: 0.5 }}
+                      aria-label="Example"
+                    >
+                      <ArrowForwardIcon />
+                    </IconButton>
+                  </Stack>
 
-          {data ? (
+                  <Typography variant="body2" color="text.secondary">
+                    {description}
+                  </Typography>
+                  <Typography sx={{ mt: 3 }} variant="h6" component="div">
+                    Updated on
+                    <Typography sx={{ fontSize: "0.875rem" }} variant="body2" component="div" color="text.secondary">
+                      {formatLastUpdate}
+                    </Typography>
+                  </Typography>
+                  {categories.length !== 0 && (
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexWrap: "wrap",
+                        gap: "16px 12px",
+                        mt: 3.5,
+                      }}
+                    >
+                      {categories.map((category) => (
+                        <Chip label={category} variant="outlined" />
+                      ))}
+                    </Box>
+                  )}
+                </CardContent>
+              </Card>
+            ) : null}
+
             <Card
               elevation={0}
               sx={{
+                // width: { xs: "100%", sm: "100vh" },
+
                 width: "100%",
               }}
             >
               <CardContent>
-                <Stack
-                  component={Typography}
-                  sx={{
-                    alignItems: "center",
-                  }}
-                  direction="row"
-                  justifyContent={{ xs: "space-between", sm: "row" }}
-                  spacing={1}
-                  gutterBottom
-                >
-                  <Typography variant="h5" component="div">
-                    About this module
-                  </Typography>
-                  <IconButton
-                    onClick={() => {
-                      context.pushPage({
-                        component: DescriptonActivity,
-                        key: "",
-                        extra: {
-                          desc: data,
-                          name: name,
-                          logo: mmrl.logo,
-                        },
-                      });
-                    }}
-                    sx={{ ml: 0.5 }}
-                    aria-label="Example"
-                  >
-                    <ArrowForwardIcon />
-                  </IconButton>
-                </Stack>
-
-                <Typography variant="body2" color="text.secondary">
-                  {description}
+                <Typography variant="h5" component="div">
+                  Requirements
                 </Typography>
-                <Typography sx={{ mt: 3 }} variant="h6" component="div">
-                  Updated on
-                  <Typography sx={{ fontSize: "0.875rem" }} variant="body2" component="div" color="text.secondary">
-                    {formatLastUpdate}
-                  </Typography>
-                </Typography>
-                {categories.length !== 0 && (
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexWrap: "wrap",
-                      gap: "16px 12px",
-                      mt: 3.5,
-                    }}
-                  >
-                    {categories.map((category) => (
-                      <Chip label={category} variant="outlined" />
-                    ))}
-                  </Box>
-                )}
               </CardContent>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: {
+                    xs: "column", // mobile
+                    sm: "row", // tablet and up
+                  },
+                }}
+              >
+                <List sx={{ width: { xs: "100%" } }} subheader={<ListSubheader sx={{ bgcolor: "transparent" }}>Access</ListSubheader>}>
+                  <ListItem>
+                    <StyledListItemText primary="Changes boot" secondary={fox.changeBoot ? "Yes" : "No"} />
+                  </ListItem>
+
+                  <ListItem>
+                    <StyledListItemText primary="Needs ramdisk" secondary={fox.needRamdisk ? "Yes" : "No"} />
+                  </ListItem>
+
+                  <ListItem>
+                    <StyledListItemText primary="MMT-Reborn" secondary={fox.mmtReborn ? "Yes" : "No"} />
+                  </ListItem>
+                </List>
+
+                <List sx={{ width: { xs: "100%" } }} subheader={<ListSubheader sx={{ bgcolor: "transparent" }}>Minimum</ListSubheader>}>
+                  <ListItem>
+                    <StyledListItemText primary="Operating System" secondary={fox.minApi ? parseAndroidVersion(fox.minApi) : "Unset"} />
+                  </ListItem>
+
+                  <ListItem>
+                    <StyledListItemText
+                      primary="Magisk"
+                      secondary={fox.minMagisk ? Magisk.PARSE_VERSION(String(fox.minMagisk)) : "Unset"}
+                    />
+                  </ListItem>
+                </List>
+
+                <List sx={{ width: { xs: "100%" } }} subheader={<ListSubheader sx={{ bgcolor: "transparent" }}>Recommended</ListSubheader>}>
+                  <ListItem>
+                    <StyledListItemText primary="Operating System" secondary={fox.maxApi ? parseAndroidVersion(fox.maxApi) : "Unset"} />
+                  </ListItem>
+                </List>
+              </Box>
             </Card>
-          ) : null}
+          </Stack>
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={1}>
+          <List>
+            {about.issues && (
+              <ListItemButton
+                onClick={() => {
+                  os.open(about.issues, {
+                    target: "_blank",
+                    features: {
+                      color: theme.palette.primary.main,
+                    },
+                  });
+                }}
+              >
+                <ListItemIcon>
+                  <BugReportIcon />
+                </ListItemIcon>
+                <StyledListItemText primary="Issues" secondary={about.issues} />
+              </ListItemButton>
+            )}
 
-          <Card
-            elevation={0}
-            sx={{
-              // width: { xs: "100%", sm: "100vh" },
-
-              width: "100%",
-            }}
-          >
-            <CardContent>
-              <Typography variant="h5" component="div">
-                Requirements
-              </Typography>
-            </CardContent>
-
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: {
-                  xs: "column", // mobile
-                  sm: "row", // tablet and up
-                },
+            <ListItemButton
+              onClick={() => {
+                os.open(about.source, {
+                  target: "_blank",
+                  features: {
+                    color: theme.palette.primary.main,
+                  },
+                });
               }}
             >
-              <List sx={{ width: { xs: "100%" } }} subheader={<ListSubheader sx={{ bgcolor: "transparent" }}>Access</ListSubheader>}>
-                <ListItem>
-                  <StyledListItemText primary="Changes boot" secondary={fox.changeBoot ? "Yes" : "No"} />
-                </ListItem>
-
-                <ListItem>
-                  <StyledListItemText primary="Needs ramdisk" secondary={fox.needRamdisk ? "Yes" : "No"} />
-                </ListItem>
-
-                <ListItem>
-                  <StyledListItemText primary="MMT-Reborn" secondary={fox.mmtReborn ? "Yes" : "No"} />
-                </ListItem>
-              </List>
-
-              <List sx={{ width: { xs: "100%" } }} subheader={<ListSubheader sx={{ bgcolor: "transparent" }}>Minimum</ListSubheader>}>
-                <ListItem>
-                  <StyledListItemText primary="Operating System" secondary={fox.minApi ? parseAndroidVersion(fox.minApi) : "Unset"} />
-                </ListItem>
-
-                <ListItem>
-                  <StyledListItemText primary="Magisk" secondary={fox.minMagisk ? Magisk.PARSE_VERSION(String(fox.minMagisk)) : "Unset"} />
-                </ListItem>
-              </List>
-
-              <List sx={{ width: { xs: "100%" } }} subheader={<ListSubheader sx={{ bgcolor: "transparent" }}>Recommended</ListSubheader>}>
-                <ListItem>
-                  <StyledListItemText primary="Operating System" secondary={fox.maxApi ? parseAndroidVersion(fox.maxApi) : "Unset"} />
-                </ListItem>
-              </List>
-            </Box>
-          </Card>
-        </Stack>
+              <ListItemIcon>
+                <SourceIcon />
+              </ListItemIcon>
+              <StyledListItemText primary="Source" secondary={about.source} />
+            </ListItemButton>
+          </List>
+        </CustomTabPanel>
       </Page.RelativeContent>
     </Page>
   );
