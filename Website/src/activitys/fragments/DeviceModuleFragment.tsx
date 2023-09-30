@@ -8,10 +8,13 @@ import Stack from "@mui/material/Stack";
 import { Shell } from "@Native/Shell";
 import { Box, Card, Typography } from "@mui/material";
 import TerminalActivity from "@Activitys/TerminalActivity";
+import { Searchbar } from "@Components/Searchbar";
+import { useTheme } from "@Hooks/useTheme";
 
 const DeviceModuleFragment = () => {
   const { context } = useActivity();
   const { settings, modConf } = useSettings();
+  const { theme } = useTheme();
   const [modules, setModules] = React.useState<string[]>([]);
 
   React.useEffect(() => {

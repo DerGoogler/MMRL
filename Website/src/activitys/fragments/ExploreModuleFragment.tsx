@@ -6,18 +6,6 @@ import { useRepos } from "@Hooks/useRepos";
 import Stack from "@mui/material/Stack";
 import Pagination from "@mui/material/Pagination";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Avatar from "@mui/material/Avatar";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
-import PersonIcon from "@mui/icons-material/Person";
-import AddIcon from "@mui/icons-material/Add";
-import Typography from "@mui/material/Typography";
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
 import { useStrings } from "@Hooks/useStrings";
 import { usePagination } from "@Hooks/usePagination";
 import RepoActivity from "@Activitys/RepoActivity";
@@ -29,44 +17,13 @@ import { BottomToolbar } from "@Components/onsenui/BottomToolbar";
 import Icon from "@Components/Icon";
 import { MissingInternet } from "@Components/MissingInternet";
 import { useNetwork } from "@Hooks/useNetwork";
-import { useNativeStorage } from "@Hooks/useNativeStorage";
-import UpdateDisabledIcon from "@mui/icons-material/UpdateDisabled";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import AbcIcon from "@mui/icons-material/Abc";
 import { Card } from "@mui/material";
+import { FilterDialog, useModuleFilter } from "@Hooks/useModulesFilter";
 
 export interface ExploreModuleProps {
   renderToolbar?: RenderFunction;
   applyFilter: (modules: Module[], search: string) => Module[];
 }
-
-const filters = [
-  {
-    name: "No filter",
-    icon: UpdateDisabledIcon,
-    value: "none",
-  },
-  {
-    name: "By date (newest)",
-    icon: CalendarMonthIcon,
-    value: "date_newest",
-  },
-  {
-    name: "By date (oldest)",
-    icon: CalendarMonthIcon,
-    value: "date_oldest",
-  },
-  {
-    name: "Alphabetically",
-    icon: AbcIcon,
-    value: "alphabetically",
-  },
-  {
-    name: "Alphabetically (reverse)",
-    icon: AbcIcon,
-    value: "alphabetically_reverse",
-  },
-];
 
 const ExploreModuleFragment = (props: ExploreModuleProps) => {
   const { context } = useActivity();
@@ -79,42 +36,13 @@ const ExploreModuleFragment = (props: ExploreModuleProps) => {
 
   const [open, setOpen] = React.useState(false);
 
-  const [exploreFilter, setExploreFilter] = useNativeStorage("filter", filters[0].value);
-
-  const filterSystem = () => {
-    const applyFilter = props.applyFilter(modules, search);
-
-    switch (exploreFilter) {
-      case "none":
-        return applyFilter;
-      case "date_oldest":
-        return applyFilter.sort(function (a, b) {
-          var da = new Date(a.last_update).getTime();
-          var db = new Date(b.last_update).getTime();
-
-          return da - db;
-        });
-      case "date_newest":
-        return applyFilter.sort(function (a, b) {
-          var da = new Date(a.last_update).getTime();
-          var db = new Date(b.last_update).getTime();
-
-          return db - da;
-        });
-      case "alphabetically":
-        return applyFilter.sort((a, b) => a.name.localeCompare(b.name));
-      case "alphabetically_reverse":
-        return applyFilter.sort((a, b) => b.name.localeCompare(a.name));
-      default:
-        return applyFilter;
-    }
-  };
+  const [filteredModules, exploreFilter, setExploreFilter] = useModuleFilter(props.applyFilter(modules, search));
 
   const [page, setPage] = React.useState(1);
 
   const PER_PAGE = 20;
-  const count = Math.ceil(filterSystem().length / PER_PAGE);
-  const _DATA = usePagination(filterSystem(), PER_PAGE);
+  const count = Math.ceil(filteredModules.length / PER_PAGE);
+  const _DATA = usePagination(filteredModules, PER_PAGE);
 
   if (!isNetworkAvailable) {
     return (
@@ -233,51 +161,6 @@ const ExploreModuleFragment = (props: ExploreModuleProps) => {
 
       <FilterDialog selectedValue={exploreFilter} open={open} onClose={handleClose} />
     </Page>
-  );
-};
-
-interface FilterDialogProps {
-  open: boolean;
-  selectedValue: string;
-  onClose: (value: string) => void;
-}
-
-const FilterDialog = (props: FilterDialogProps) => {
-  const { scheme, theme } = useTheme();
-  const { onClose, selectedValue, open } = props;
-
-  const handleClose = () => {
-    onClose(selectedValue);
-  };
-
-  const handleListItemClick = (value: string) => {
-    onClose(value);
-  };
-
-  return (
-    <Dialog onClose={handleClose} open={open}>
-      <DialogTitle>Apply filter</DialogTitle>
-      <List sx={{ pt: 0 }}>
-        {filters.map((filter) => (
-          <ListItem disableGutters key={filter.value}>
-            <ListItemButton onClick={() => handleListItemClick(filter.value)}>
-              <ListItemAvatar>
-                <Avatar
-                  sx={{
-                    bgcolor: scheme[100],
-                    color: scheme[600],
-                    border: filter.value === selectedValue ? `2px solid ${scheme[600]}` : "unset",
-                  }}
-                >
-                  <filter.icon />
-                </Avatar>
-              </ListItemAvatar>
-              <ListItemText primary={filter.name} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-    </Dialog>
   );
 };
 
