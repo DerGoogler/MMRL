@@ -8,6 +8,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import React from "react";
 import { Shell } from "@Native/Shell";
 import { formatString, useSettings } from "@Hooks/useSettings";
+import { useNativeProperties } from "@Hooks/useNativeProperties";
 
 function useOnceCall(effect: React.EffectCallback, deps?: React.DependencyList | undefined) {
   const isCalledRef = React.useRef(false);
@@ -67,12 +68,19 @@ const TerminalActivity = () => {
       const name = url[2];
       const branch = url[4].split(".").slice(0, -1).join(".");
 
+      const installPath = window.__properties__.get("persist.mmrlini.install_folder", "/data/local/tmp/<NAME>-<BRANCH>-moduled.zip");
+
       env({
         MMRL: "true",
         NAME: name,
         URL: path,
         BRANCH: branch,
-        INSTALLER_CLI: installCli(`/data/local/${name}-${branch}-moduled.zip`),
+        INSTALLER_CLI: installCli(
+          formatString(installPath, {
+            NAME: name,
+            BRANCH: branch,
+          })
+        ),
       });
 
       // @ts-ignore

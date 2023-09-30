@@ -225,8 +225,8 @@ export const INITIAL_SETTINGS: StorageDeclaration = {
 
 export const INITIAL_MOD_CONF: ModConf = {
   //cli
-  MSUCLI: '/system/bin/magisk --install-module "<ZIPFILE>"',
-  KSUCLI: '<ADB>/ksu/bin/ksud module install "<ZIPFILE>"',
+  MSUCLI: "/system/bin/magisk --install-module <ZIPFILE>",
+  KSUCLI: "<ADB>/ksu/bin/ksud module install <ZIPFILE>",
 
   // default paths
   ADB: "/data/adb",
@@ -284,7 +284,7 @@ export const useSettings = () => {
   return useContext(SettingsContext);
 };
 
-export function formatString(template, object) {
+export function formatString(template: string, object: object): string {
   return template.replace(/\<(\w+(\.\w+)*)\>/gi, (match, key) => {
     const keys = key.split(".");
     let value = object;
