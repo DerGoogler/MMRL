@@ -32,6 +32,7 @@ import { useNetwork } from "@Hooks/useNetwork";
 import { useNativeStorage } from "@Hooks/useNativeStorage";
 import UpdateDisabledIcon from "@mui/icons-material/UpdateDisabled";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import AbcIcon from "@mui/icons-material/Abc";
 import { Card } from "@mui/material";
 
 export interface ExploreModuleProps {
@@ -54,6 +55,16 @@ const filters = [
     name: "By date (oldest)",
     icon: CalendarMonthIcon,
     value: "date_oldest",
+  },
+  {
+    name: "Alphabetically",
+    icon: AbcIcon,
+    value: "alphabetically",
+  },
+  {
+    name: "Alphabetically (reverse)",
+    icon: AbcIcon,
+    value: "alphabetically_reverse",
   },
 ];
 
@@ -90,6 +101,10 @@ const ExploreModuleFragment = (props: ExploreModuleProps) => {
 
           return db - da;
         });
+      case "alphabetically":
+        return applyFilter.sort((a, b) => a.name.localeCompare(b.name));
+      case "alphabetically_reverse":
+        return applyFilter.sort((a, b) => b.name.localeCompare(a.name));
       default:
         return applyFilter;
     }
@@ -247,7 +262,13 @@ const FilterDialog = (props: FilterDialogProps) => {
           <ListItem disableGutters key={filter.value}>
             <ListItemButton onClick={() => handleListItemClick(filter.value)}>
               <ListItemAvatar>
-                <Avatar sx={{ bgcolor: scheme[100], color: scheme[600] }}>
+                <Avatar
+                  sx={{
+                    bgcolor: scheme[100],
+                    color: scheme[600],
+                    border: filter.value === selectedValue ? `2px solid ${scheme[600]}` : "unset",
+                  }}
+                >
                   <filter.icon />
                 </Avatar>
               </ListItemAvatar>
