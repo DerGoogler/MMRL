@@ -1,4 +1,3 @@
-import { DAPITestActivity } from "@Activitys/DAPITestActivity";
 import RepoActivity from "@Activitys/RepoActivity";
 import SettingsActivity from "@Activitys/SettingsActivity";
 import { StyledListItemText } from "@Components/StyledListItemText";
@@ -8,11 +7,28 @@ import { Page } from "react-onsenui";
 import { IntentPusher } from "@Hooks/useActivity";
 import FetchTextActivity from "@Activitys/FetchTextActivity";
 import AboutActivity from "@Activitys/AboutActivity";
+import PlaygroundsActivity, { PlaygroundExtra } from "@Activitys/PlaygroundsActivity";
+import { ConfigureView } from "@Components/ConfigureView";
+import { ConfigureActivity } from "@Activitys/ConfigureActivity";
+import { Markup } from "@Components/Markdown";
+import {
+  CheckRounded,
+  CloseRounded,
+  FormatBoldRounded,
+  FormatItalicRounded,
+  FormatListBulletedRounded,
+  FormatListNumberedRounded,
+  FormatQuoteRounded,
+  FormatStrikethroughRounded,
+  ImageRounded,
+  LinkRounded,
+  WarningAmberRounded,
+} from "@mui/icons-material";
 
 type Props = {
   renderToolbar: () => JSX.Element;
   hideSplitter: () => void;
-  pushPage: (props: IntentPusher) => void;
+  pushPage: <E, P>(props: IntentPusher<E, P>) => void;
 };
 
 export const DrawerFragment = (props: Props) => {
@@ -53,14 +69,100 @@ export const DrawerFragment = (props: Props) => {
       <List subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>Components</ListSubheader>}>
         <ListItemButton
           onClick={() => {
-            pushPage({
-              component: DAPITestActivity,
+            pushPage<PlaygroundExtra, any>({
+              component: PlaygroundsActivity,
               key: "dapitestActivity",
+              extra: {
+                title: "DAPI Tester",
+                previewPage: FetchTextActivity,
+                preview: Markup,
+                commands: [
+                  {
+                    name: "bold",
+                    icon: FormatBoldRounded,
+                  },
+                  {
+                    name: "italic",
+                    icon: FormatItalicRounded,
+                  },
+                  {
+                    name: "strike-through",
+                    icon: FormatStrikethroughRounded,
+                  },
+                  {
+                    name: "link",
+                    icon: LinkRounded,
+                  },
+                  {
+                    name: "image",
+                    icon: ImageRounded,
+                  },
+                  {
+                    name: "unordered-list",
+                    icon: FormatListBulletedRounded,
+                  },
+                  {
+                    name: "ordered-list",
+                    icon: FormatListNumberedRounded,
+                  },
+                  {
+                    name: "block-quotes",
+                    icon: FormatQuoteRounded,
+                  },
+                  {
+                    name: "insert-checkmark",
+                    icon: CheckRounded,
+                    iconStyle: {
+                      color: "#1a7f37",
+                    },
+                    handler: ({ cursor }) => {
+                      cursor.insert(`${cursor.MARKER}<CheckIcon/>${cursor.MARKER}`);
+                    },
+                  },
+                  {
+                    name: "insert-warnmark",
+                    icon: WarningAmberRounded,
+                    iconStyle: {
+                      color: "#d29922",
+                    },
+                    handler: ({ cursor }) => {
+                      cursor.insert(`${cursor.MARKER}<AlertIcon/>${cursor.MARKER}`);
+                    },
+                  },
+                  {
+                    name: "insert-dangermark",
+                    icon: CloseRounded,
+                    iconStyle: {
+                      color: "#cf222e",
+                    },
+                    handler: ({ cursor }) => {
+                      cursor.insert(`${cursor.MARKER}<XIcon/>${cursor.MARKER}`);
+                    },
+                  },
+                ],
+              },
             });
             hide();
           }}
         >
           <StyledListItemText primary={"DAPI Tester"} />
+        </ListItemButton>
+        <ListItemButton
+          onClick={() => {
+            pushPage<PlaygroundExtra, any>({
+              component: PlaygroundsActivity,
+              key: "configure_playground",
+              extra: {
+                title: "Configure playground",
+                previewPage: ConfigureActivity,
+                preview: ConfigureView,
+                commands: [],
+              },
+            });
+            hide();
+          }}
+        >
+          <StyledListItemText primary={"Configure playground"} />
         </ListItemButton>
       </List>
 

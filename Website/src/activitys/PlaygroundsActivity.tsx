@@ -4,6 +4,7 @@ import { Stack, styled, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import * as React from "react";
 import Button from "@mui/material/Button";
 import TextareaMarkdown, { Command, TextareaMarkdownRef } from "textarea-markdown-editor";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import {
   CheckRounded,
   CloseRounded,
@@ -29,22 +30,70 @@ import { useActivity } from "@Hooks/useActivity";
 import { useStrings } from "@Hooks/useStrings";
 import { Markup } from "@Components/Markdown";
 import FetchTextActivity from "./FetchTextActivity";
+import { ConfigureView } from "@Components/ConfigureView";
+import { ConfigureActivity } from "./ConfigureActivity";
 
 interface CustomCommand extends Command {
   icon: React.ElementType;
   iconStyle?: React.CSSProperties;
 }
 
-const DAPITestActivity = () => {
-  const { context, extra } = useActivity();
+const defText = `<Box sx={{p:1}}>
+<Alert severity="info">
+  <AlertTitle>Still in development!</AlertTitle>
+  This configure screen is still in development, the api may change in future
+</Alert>
+</Box>      
+
+<List subheader={<ListSubheader>Settings</ListSubheader>}>
+<ListItemDialogEditText
+    id="rootfs"
+    scope="mkshrc"
+    inputLabel="Path"
+    type="text"
+    title="Change ROOTFS"
+    initialValue="/data/mkuser"
+    description="Changing this path will move/create a new environment">
+  <ListItemText primary="Default ROOTFS" secondary={"lol"} />
+</ListItemDialogEditText>
+<ListItem>
+  <ListItemText primary="Show service notification" />
+  <Switch id="show_service_notify" defaultState={true} />
+</ListItem>
+</List>
+
+<Divider/>
+
+<List subheader={<ListSubheader>Project</ListSubheader>}>
+<OnClick handler={openLink("https://github.com/Magisk-Modules-Alt-Repo/mkshrc/issues")}>
+  <ListItemButton>
+    <ListItemText primary="Report a issue" />
+  </ListItemButton>
+</OnClick>
+<OnClick handler={openLink("https://github.com/Magisk-Modules-Alt-Repo/mkshrc")}>
+  <ListItemButton>
+    <ListItemText primary="Source code" />
+  </ListItemButton>
+</OnClick>
+</List>`;
+
+export interface PlaygroundExtra {
+  title: string;
+  previewPage: React.ElementType<any> & Function;
+  preview(props: React.PropsWithChildren): React.JSX.Element;
+  commands: CustomCommand[];
+}
+
+const PlaygroundsActivity = () => {
+  const { context, extra } = useActivity<PlaygroundExtra>();
   const { strings } = useStrings();
 
-  const [description, setDescription] = React.useState(
-    '# Extended D-API\n\nThere are more components, try it out!\n\n## Alerts within a box\n\n<paper style="padding:8px;" elevation={1}>\n    <stack spacing>\n        <alert error>This is an error alert — check it out!</alert>\n        <alert warning>This is a warning alert — check it out!</alert>\n        <alert info>This is an info alert — check it out!</alert>\n        <alert success>This is a success alert — check it out!</alert>\n    </stack>\n</paper>\n\n### Code\n\n```html\n<paper style="padding:8px;" elevation={1}>\n    <stack spacing>\n        <alert error>This is an error alert — check it out!</alert>\n        <alert warning>This is a warning alert — check it out!</alert>\n        <alert info>This is an info alert — check it out!</alert>\n        <alert success>This is a success alert — check it out!</alert>\n    </stack>\n</paper>\n```'
-  );
+  const [description, setDescription] = React.useState(defText);
 
   const markdownRef = React.useRef<TextareaMarkdownRef>(null);
   const markdownRefAdvanced = React.useRef<AceEditor>(null);
+
+  const isLargeScreen = useMediaQuery("(min-width:600px)");
 
   const customTextareaCommands: CustomCommand[] = [
     {
@@ -62,70 +111,19 @@ const DAPITestActivity = () => {
         markdownRefAdvanced.current?.editor.redo();
       },
     },
-
-    {
-      name: "bold",
-      icon: FormatBoldRounded,
-    },
-    {
-      name: "italic",
-      icon: FormatItalicRounded,
-    },
-    {
-      name: "strike-through",
-      icon: FormatStrikethroughRounded,
-    },
-    {
-      name: "link",
-      icon: LinkRounded,
-    },
-    {
-      name: "image",
-      icon: ImageRounded,
-    },
-    {
-      name: "unordered-list",
-      icon: FormatListBulletedRounded,
-    },
-    {
-      name: "ordered-list",
-      icon: FormatListNumberedRounded,
-    },
-    {
-      name: "block-quotes",
-      icon: FormatQuoteRounded,
-    },
-    {
-      name: "insert-checkmark",
-      icon: CheckRounded,
-      iconStyle: {
-        color: "#1a7f37",
-      },
-      handler: ({ cursor }) => {
-        cursor.insert(`${cursor.MARKER}<CheckIcon/>${cursor.MARKER}`);
-      },
-    },
-    {
-      name: "insert-warnmark",
-      icon: WarningAmberRounded,
-      iconStyle: {
-        color: "#d29922",
-      },
-      handler: ({ cursor }) => {
-        cursor.insert(`${cursor.MARKER}<AlertIcon/>${cursor.MARKER}`);
-      },
-    },
-    {
-      name: "insert-dangermark",
-      icon: CloseRounded,
-      iconStyle: {
-        color: "#cf222e",
-      },
-      handler: ({ cursor }) => {
-        cursor.insert(`${cursor.MARKER}<XIcon/>${cursor.MARKER}`);
-      },
-    },
+    ...extra.commands,
   ];
+
+  const handlePreview = () => {
+    context.pushPage({
+      component: extra.previewPage,
+      key: extra.title,
+      extra: {
+        modulename: "Preview",
+        raw_data: description,
+      },
+    });
+  };
 
   const renderToolbar = () => {
     return (
@@ -133,20 +131,9 @@ const DAPITestActivity = () => {
         <Toolbar.Left>
           <Toolbar.Button icon={ArrowBackIcon} onClick={context.popPage} />
         </Toolbar.Left>
-        <Toolbar.Center>DAPI Tester</Toolbar.Center>
+        <Toolbar.Center>{extra.title}</Toolbar.Center>
       </Toolbar>
     );
-  };
-
-  const handlePreview = () => {
-    context.pushPage({
-      component: FetchTextActivity,
-      key: "dapi-preview",
-      extra: {
-        title: "Preview",
-        data: description,
-      },
-    });
   };
 
   return (
@@ -189,26 +176,28 @@ const DAPITestActivity = () => {
                 placeholder={""}
               />
             </TextareaMarkdown.Wrapper>
-            {!os.isAndroid && isDesktop && (
+            {isLargeScreen && (
               <Preview>
-                <Markup children={description} />
+                <extra.preview>{description}</extra.preview>
               </Preview>
             )}
           </Stack>
         </span>
-        <Stack
-          style={{
-            marginTop: 8,
-          }}
-          direction="row"
-          justifyContent="center"
-          alignItems="center"
-          spacing={1}
-        >
-          <Button fullWidth variant="outlined" onClick={handlePreview}>
-            Preview
-          </Button>
-        </Stack>
+        {!isLargeScreen && (
+          <Stack
+            style={{
+              marginTop: 8,
+            }}
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+            spacing={1}
+          >
+            <Button fullWidth variant="outlined" onClick={handlePreview}>
+              Preview
+            </Button>
+          </Stack>
+        )}
       </section>
     </Page>
   );
@@ -286,4 +275,4 @@ export const Editor = React.forwardRef<AceEditor, EditorProps>((props, ref) => (
   </>
 ));
 
-export { DAPITestActivity };
+export default PlaygroundsActivity;

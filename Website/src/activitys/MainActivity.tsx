@@ -113,7 +113,7 @@ const MainActivity = (): JSX.Element => {
     );
   };
 
-  const pushPage = (props: IntentPusher): void => {
+  const pushPage = <E, P>(props: IntentPusher<E, P>): void => {
     const route = {
       component: props.component,
       props: {

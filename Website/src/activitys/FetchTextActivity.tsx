@@ -11,8 +11,8 @@ import { useNetwork } from "@Hooks/useNetwork";
 import { MissingInternet } from "@Components/MissingInternet";
 
 type FetchTextActivityExtra = {
-  title: string;
-  data: string;
+  modulename: string;
+  raw_data: string;
   url: string;
 };
 
@@ -27,11 +27,11 @@ type Action<T> = { type: "loading" } | { type: "fetched"; payload: T } | { type:
 function FetchTextActivity() {
   const { context, extra } = useActivity<FetchTextActivityExtra>();
   const { isNetworkAvailable } = useNetwork();
-  const { title, url } = extra;
+  const { modulename, url } = extra;
 
   const initialState: State<string> = {
     error: undefined,
-    data: extra.data || undefined,
+    data: extra.raw_data || undefined,
   };
 
   // Keep state logic separated
@@ -105,7 +105,7 @@ function FetchTextActivity() {
         <Toolbar.Left>
           <Toolbar.BackButton onClick={context.popPage} />
         </Toolbar.Left>
-        <Toolbar.Center>{title}</Toolbar.Center>
+        <Toolbar.Center>{modulename}</Toolbar.Center>
       </Toolbar>
     );
   };
