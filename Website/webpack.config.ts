@@ -104,7 +104,7 @@ const config: Configuration = {
       "@Annotation": resolve(__dirname, "src/annotation"),
     },
     modules: ["node_modules", join(process.env.NPM_CONFIG_PREFIX || __dirname, "lib/node_modules")],
-    extensions: [".js", ".jsx", ".ts", ".tsx", ".scss", ".sass", "css"],
+    extensions: [".js", ".jsx", ".ts", ".tsx", ".scss", ".sass", ".css"],
   },
 
   devServer: {

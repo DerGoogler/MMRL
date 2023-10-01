@@ -5,9 +5,7 @@ import { link } from "googlers-tools";
 import _ from "underscore";
 import { useSettings } from "./useSettings";
 import { os } from "@Native/Os";
-import Ajv, { JSONSchemaType } from "ajv";
 import { useLog } from "./native/useLog";
-import { Properties } from "properties-file";
 
 export interface RepoContextActions {
   addRepo: (data: AddRepoData) => void;

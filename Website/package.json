@@ -43,7 +43,6 @@
     "axios": "^0.27.2",
     "default-composer": "^0.4.0",
     "eruda": "^3.0.0",
-    "firebase": "^10.2.0",
     "googlers-tools": "^1.2.8",
     "highlight.js": "^11.6.0",
     "install": "^0.13.0",
