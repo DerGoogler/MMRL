@@ -2,6 +2,7 @@ import ons from "onsenui";
 import React, { useCallback } from "react";
 import { useEventListener } from "usehooks-ts";
 import { Native } from "./Native";
+import { Build } from "./Build";
 
 export type OpenOptions = {
   target?: string | undefined;
@@ -86,7 +87,7 @@ class OsClass extends Native {
   }
 
   public getMonetColor(id: string): string {
-    if (this.isAndroid) {
+    if (this.isAndroid && this.sdk >= Build.VERSION_CODES.S) {
       return this.getInterface.getMonetColor(id);
     } else {
       return "#ffffff";
