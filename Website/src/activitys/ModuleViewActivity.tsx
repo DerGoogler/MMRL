@@ -83,6 +83,19 @@ const ModuleViewActivity = () => {
   const hasInstallTools = SuFile.exist("/data/adb/modules/mmrl_install_tools/module.prop");
   const { SupportIcon, supportText } = useSupportIconForUrl(fox.support);
 
+  const search = React.useMemo(() => new URLSearchParams(window.location.search), [window.location.search]);
+
+  React.useEffect(() => {
+    search.set("module", id);
+    const newRelativePathQuery = window.location.pathname + "?" + search.toString();
+    history.pushState(null, "", newRelativePathQuery);
+    return () => {
+      search.delete("module");
+      const newRelativePathQuery = window.location.pathname + search.toString();
+      history.pushState(null, "", newRelativePathQuery);
+    };
+  }, []);
+
   const renderToolbar = () => {
     return (
       <Toolbar modifier="noshadow">

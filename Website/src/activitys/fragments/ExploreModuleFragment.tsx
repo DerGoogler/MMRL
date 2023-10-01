@@ -19,6 +19,7 @@ import { MissingInternet } from "@Components/MissingInternet";
 import { useNetwork } from "@Hooks/useNetwork";
 import { Card } from "@mui/material";
 import { FilterDialog, useModuleFilter } from "@Hooks/useModulesFilter";
+import ModuleViewActivity from "@Activitys/ModuleViewActivity";
 
 export interface ExploreModuleProps {
   renderToolbar?: RenderFunction;
@@ -109,6 +110,19 @@ const ExploreModuleFragment = (props: ExploreModuleProps) => {
     setOpen(false);
     setExploreFilter(value);
   };
+
+  React.useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get("module");
+    const m_ = modules.find((m) => m.id === id);
+    if (m_) {
+      context.pushPage({
+        component: ModuleViewActivity,
+        key: "",
+        extra: m_,
+      });
+    }
+  }, [modules]);
 
   return (
     <Page renderToolbar={props.renderToolbar}>
