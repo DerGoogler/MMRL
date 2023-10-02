@@ -23,7 +23,7 @@ const CommentsActivity = () => {
         <Toolbar.Left>
           <Toolbar.Button icon={ArrowBackIcon} onClick={context.popPage} />
         </Toolbar.Left>
-        <Toolbar.Center>{strings.comments}</Toolbar.Center>
+        <Toolbar.Center>{strings("comments")}</Toolbar.Center>
       </Toolbar>
     );
   };

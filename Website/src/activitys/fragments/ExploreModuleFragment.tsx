@@ -89,7 +89,7 @@ const ExploreModuleFragment = (props: ExploreModuleProps) => {
               });
             }}
           >
-            <Box>{strings.repository}</Box>
+            <Box>{strings("repository")}</Box>
             <Icon
               icon={NorthEastRoundedIcon}
               sx={{
@@ -132,7 +132,7 @@ const ExploreModuleFragment = (props: ExploreModuleProps) => {
             borderRadius: `${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0px 0px`,
           }}
           onFilterClick={handleClickOpen}
-          placeholder={strings.search_modules}
+          placeholder={strings("search_modules")}
           onChange={(e) => setSearch(e.target.value)}
         />
 

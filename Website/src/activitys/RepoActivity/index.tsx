@@ -61,7 +61,7 @@ const RepoActivity = () => {
         <Toolbar.Left>
           <Toolbar.Button icon={ArrowBackIcon} onClick={context.popPage} />
         </Toolbar.Left>
-        <Toolbar.Center>{strings.repositories}</Toolbar.Center>
+        <Toolbar.Center>{strings("repositories")}</Toolbar.Center>
         <Toolbar.Right>
           <Toolbar.Button icon={Add} onClick={handleClickOpen} />
         </Toolbar.Right>
@@ -103,7 +103,7 @@ const RepoActivity = () => {
               <List
                 subheader={
                   <ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>
-                    {strings.explore_repositories}
+                    {strings("explore_repositories")}
                   </ListSubheader>
                 }
               >
@@ -116,9 +116,9 @@ const RepoActivity = () => {
         </Page.RelativeContent>
 
         <Dialog open={open} onClose={handleClose}>
-          <DialogTitle>{strings.add_repository}</DialogTitle>
+          <DialogTitle>{strings("add_repository")}</DialogTitle>
           <DialogContent>
-            <DialogContentText>{strings.add_repository_description}</DialogContentText>
+            <DialogContentText>{strings("add_repository_description")}</DialogContentText>
             <TextField
               autoFocus
               name="repo_link"
@@ -132,7 +132,7 @@ const RepoActivity = () => {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>{strings.cancel}</Button>
+            <Button onClick={handleClose}>{strings("cancel")}</Button>
             <Button
               onClick={() => {
                 actions.addRepo({
@@ -149,7 +149,7 @@ const RepoActivity = () => {
                 });
               }}
             >
-              {strings.add}
+              {strings("add")}
             </Button>
           </DialogActions>
         </Dialog>

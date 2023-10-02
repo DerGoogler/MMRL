@@ -115,9 +115,9 @@ const DeviceModule = (props: Props) => {
                 if (disable.exist()) {
                   if (disable.delete()) {
                     log.i(
-                      strings.formatString(strings.module_enabled_LOG, {
+                      strings("module_enabled_LOG", {
                         name: module,
-                      }) as string
+                      })
                     );
                   }
                 }
@@ -125,9 +125,9 @@ const DeviceModule = (props: Props) => {
                 if (!disable.exist()) {
                   if (disable.create()) {
                     log.i(
-                      strings.formatString(strings.module_disabled_LOG, {
+                      strings("module_disabled_LOG", {
                         name: module,
-                      }) as string
+                      })
                     );
                   }
                 }

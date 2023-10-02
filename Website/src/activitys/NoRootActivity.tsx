@@ -46,10 +46,10 @@ const NoRootActivity = () => {
         <Card elevation={0}>
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
-              {strings.failed}!
+              {strings("failed")}!
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              {strings.no_root_message}
+              {strings("no_root_message")}
             </Typography>
           </CardContent>
         </Card>

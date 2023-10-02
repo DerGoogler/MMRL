@@ -9,7 +9,6 @@ import { useActivity } from "@Hooks/useActivity";
 import { accent_colors, termScrollBehaviors, useSettings } from "@Hooks/useSettings";
 import { StyledListItemText } from "@Components/StyledListItemText";
 import { ListPickerItem } from "@Components/ListPickerItem";
-import { languages_map } from "../locales/languages";
 import { os } from "@Native/Os";
 import { Android12Switch } from "@Components/Android12Switch";
 import { useTheme } from "@Hooks/useTheme";
@@ -18,10 +17,12 @@ import { Shell } from "@Native/Shell";
 import { DialogEditTextListItem } from "@Components/DialogEditTextListItem";
 import ModConfActivity from "./ModConfActivity";
 import { Properties } from "@Native/Properties";
+import { useLanguageMap } from "./../locales/declaration";
 
 function SettingsActivity() {
   const { context } = useActivity();
   const { strings } = useStrings();
+  const availableLangs = useLanguageMap();
   const { setRepos } = useRepos();
   const { patchSettings } = useSettings();
 
@@ -36,7 +37,7 @@ function SettingsActivity() {
         <Toolbar.Left>
           <Toolbar.Button icon={ArrowBackIcon} onClick={context.popPage} />
         </Toolbar.Left>
-        <Toolbar.Center>{strings.settings}</Toolbar.Center>
+        <Toolbar.Center>{strings("settings")}</Toolbar.Center>
       </Toolbar>
     );
   };
@@ -45,10 +46,10 @@ function SettingsActivity() {
     <Page renderToolbar={renderToolbar}>
       <Page.RelativeContent zeroMargin>
         <List
-          subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>{strings.appearance}</ListSubheader>}
+          subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>{strings("appearance")}</ListSubheader>}
         >
           <ListItem>
-            <StyledListItemText id="switch-list-label-wifi" primary={strings.dark_theme} />
+            <StyledListItemText id="switch-list-label-wifi" primary={strings("dark_theme")} />
             <Android12Switch
               edge="end"
               onChange={(e: any) => {
@@ -80,8 +81,8 @@ function SettingsActivity() {
             </DialogEditTextListItem>
           )}
 
-          <ListPickerItem id="accent-color" targetSetting="accent_scheme" title={strings.accent_color} contentMap={accent_colors} />
-          <ListPickerItem id="language" targetSetting="language" title={strings.language} contentMap={languages_map} />
+          <ListPickerItem id="accent-color" targetSetting="accent_scheme" title={strings("accent_color")} contentMap={accent_colors} />
+          <ListPickerItem id="language" targetSetting="language" title={strings("language")} contentMap={availableLangs} />
         </List>
 
         <Divider />
@@ -162,7 +163,9 @@ function SettingsActivity() {
         <Divider />
 
         <List
-          subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>{strings.development}</ListSubheader>}
+          subheader={
+            <ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>{strings("development")}</ListSubheader>
+          }
         >
           <ListItem>
             <StyledListItemText id="switch-list-label-eruda" primary={"Eruda console"} secondary={"Useful for development and bugs"} />

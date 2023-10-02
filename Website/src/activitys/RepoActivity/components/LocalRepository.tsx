@@ -175,7 +175,7 @@ export const LocalRepository = (props: LocalRepositoryProps) => {
             <MListItem
               part={repo.website}
               icon={LanguageRounded}
-              text={strings.website}
+              text={strings("website")}
               onClick={() => {
                 if (repo.website) {
                   os.open(repo.website);
@@ -185,7 +185,7 @@ export const LocalRepository = (props: LocalRepositoryProps) => {
             <MListItem
               part={repo.support}
               icon={SupportRounded}
-              text={strings.support}
+              text={strings("support")}
               onClick={() => {
                 if (repo.support) {
                   os.open(repo.support);
@@ -195,7 +195,7 @@ export const LocalRepository = (props: LocalRepositoryProps) => {
             <MListItem
               part={repo.donate}
               icon={VolunteerActivismRounded}
-              text={strings.donate}
+              text={strings("donate")}
               onClick={() => {
                 if (repo.donate) {
                   os.open(repo.donate);
@@ -205,7 +205,7 @@ export const LocalRepository = (props: LocalRepositoryProps) => {
             <MListItem
               part={repo.submitModule}
               icon={UploadFileRounded}
-              text={strings.submit_module}
+              text={strings("submit_module")}
               onClick={() => {
                 if (repo.submitModule) {
                   os.open(repo.submitModule);
@@ -215,12 +215,12 @@ export const LocalRepository = (props: LocalRepositoryProps) => {
             <MListItem
               part={true}
               icon={DeleteRounded}
-              text={strings.remove}
+              text={strings("remove")}
               onClick={() => {
                 confirm({
                   title: "Delete?",
                   confirmationText: "Sure",
-                  description: strings.formatString(strings.confirm_repo_delete, {
+                  description: strings("confirm_repo_delete", {
                     name: repo.name,
                   }),
                 }).then(() => {

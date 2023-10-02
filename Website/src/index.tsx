@@ -4,7 +4,7 @@ import { CssBaseline } from "@mui/material";
 import { LightTheme } from "@Styles/light_theme";
 import { ConfirmProvider } from "material-ui-confirm";
 import { ThemeProvider } from "@Hooks/useTheme";
-import { StringProvider } from "@Hooks/useStrings";
+import { StringsProvider } from "@Hooks/useStrings";
 import { Preventer, render } from "react-render-tools";
 import { MainActivity } from "@Activitys/MainActivity";
 import { RepoProvider } from "@Hooks/useRepos";
@@ -14,6 +14,7 @@ import { MMRLApp } from "./custom-elements/app";
 
 import "onsenui/css/onsenui.css";
 import "@Styles/default.scss";
+import { strs } from "./locales/declaration";
 
 ons.platform.select("android");
 
@@ -27,7 +28,7 @@ ons.ready(() => {
   render(
     <React.StrictMode>
       <SettingsProvider>
-        <StringProvider>
+        <StringsProvider>
           <ThemeProvider>
             <Preventer prevent="contextmenu">
               <RepoProvider>
@@ -39,7 +40,7 @@ ons.ready(() => {
               </RepoProvider>
             </Preventer>
           </ThemeProvider>
-        </StringProvider>
+        </StringsProvider>
       </SettingsProvider>
     </React.StrictMode>,
     "mmrl-app"

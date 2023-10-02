@@ -49,7 +49,7 @@ export const DrawerFragment = (props: Props) => {
             hide();
           }}
         >
-          <StyledListItemText primary={strings.settings} />
+          <StyledListItemText primary={strings("settings")} />
         </ListItemButton>
         <ListItemButton
           onClick={() => {
@@ -60,7 +60,7 @@ export const DrawerFragment = (props: Props) => {
             hide();
           }}
         >
-          <StyledListItemText primary={strings.repositories} />
+          <StyledListItemText primary={strings("repositories")} />
         </ListItemButton>
       </List>
 

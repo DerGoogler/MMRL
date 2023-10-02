@@ -1,10 +1,10 @@
 import React, { createContext, useContext } from "react";
 import { colors as kolors } from "@mui/material";
 import { defaultComposer } from "default-composer";
-import { SetValue, useNativeStorage } from "./useNativeStorage";
-import { languages_map } from "../locales/languages";
+import { useNativeStorage } from "./useNativeStorage";
 import { os } from "@Native/Os";
 import { SetStateAction } from "./useStateCallback";
+import { useLanguageMap } from "./../locales/declaration";
 
 export const accent_colors: Picker<string, any>[] = [
   {
@@ -207,22 +207,6 @@ export const termScrollBehaviors: StorageDeclaration["term_scroll_behavior"][] =
   },
 ];
 
-export const INITIAL_SETTINGS: StorageDeclaration = {
-  darkmode: false,
-  language: languages_map[0],
-  accent_scheme: accent_colors[0],
-  eruda_console_enabled: false,
-  disabled_repos: [],
-  _low_quality_module: true,
-  _invald_module: false,
-  _disable_module_covers: false,
-  __experimental_local_install: false,
-  repos: [],
-  shade_value: -80,
-  term_scroll_bottom: true,
-  term_scroll_behavior: termScrollBehaviors[0],
-};
-
 export const INITIAL_MOD_CONF: ModConf = {
   //cli
   MSUCLI: "/system/bin/magisk --install-module <ZIPFILE>",
@@ -267,7 +251,8 @@ export interface Context {
 
 export const SettingsContext = createContext<Context>({
   patchSettings: () => {},
-  settings: INITIAL_SETTINGS,
+  // @ts-ignore
+  settings: {},
   _modConf: INITIAL_MOD_CONF,
   modConf<K extends keyof ModConf>(key: K, adds?: Record<string, any>) {
     return key;
@@ -300,6 +285,24 @@ export function formatString(template: string, object: object): string {
 }
 
 export const SettingsProvider = (props: React.PropsWithChildren) => {
+  const availableLangs = useLanguageMap();
+
+  const INITIAL_SETTINGS: StorageDeclaration = {
+    darkmode: false,
+    language: availableLangs[0],
+    accent_scheme: accent_colors[0],
+    eruda_console_enabled: false,
+    disabled_repos: [],
+    _low_quality_module: true,
+    _invald_module: false,
+    _disable_module_covers: false,
+    __experimental_local_install: false,
+    repos: [],
+    shade_value: -80,
+    term_scroll_bottom: true,
+    term_scroll_behavior: termScrollBehaviors[0],
+  };
+
   const [settings, setSettings] = useNativeStorage("settings", INITIAL_SETTINGS);
   const [modConf, setModConf] = useNativeStorage("mod-conf", INITIAL_MOD_CONF);
 

@@ -77,7 +77,7 @@ export const DialogEditTextListItem = (props: DialogEditTextListItemProps) => {
             }}
             onClick={handleClose}
           >
-            {strings.cancel}
+            {strings("cancel")}
           </Button>
           <Button
             sx={{

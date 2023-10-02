@@ -134,11 +134,6 @@ export const RepoProvider = (props: React.PropsWithChildren) => {
   React.useEffect(() => {
     // Needs an another solution
     setModules([]);
-
-    for (const repo of repos) {
-      if (settings.disabled_repos.includes(repo.id)) continue;
-    }
-
     const fetchData = async () => {
       for (const repo of repos) {
         if (settings.disabled_repos.includes(repo.id)) continue;

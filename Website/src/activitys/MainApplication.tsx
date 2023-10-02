@@ -32,13 +32,13 @@ const MainApplication = () => {
     return [
       {
         content: <ExploreModuleFragment applyFilter={filteredModules} />,
-        tab: <Tabbar.Tab label={strings.explore} />,
+        tab: <Tabbar.Tab label={strings("explore")} />,
       },
       ...(os.isAndroid
         ? [
             {
               content: <DeviceModuleFragment />,
-              tab: <Tabbar.Tab label={strings.installed} />,
+              tab: <Tabbar.Tab label={strings("installed")} />,
             },
           ]
         : []),
