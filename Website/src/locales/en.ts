@@ -20,7 +20,7 @@ export const en = {
   installed: "Installed",
   remove: "Remove",
   restore: "Restore",
-  module_enabled_LOG: "{name has been enabled",
+  module_enabled_LOG: "{name} has been enabled",
   module_disabled_LOG: "{name} has been disabled",
   add: "Add",
   cancel: "Cancel",
@@ -43,4 +43,60 @@ export const en = {
   add_repository: "Add Repository",
   add_repository_description: "Add your repository or an repository from some else.",
   explore_repositories: "Explore Repositories",
+
+  // Module details page (explore)
+  overview: "Overview",
+  about_this_module: "About this module",
+  about: "About",
+  updated_on: "Updated on",
+  requirements: "Requirements",
+  access: "Access",
+  minimum: "Minimum",
+  recommended: "Recommended",
+  source: "Source",
+  require_sdk: "Module requires {sdk}",
+  unsupported: "Unsupported",
+  images: "Images",
+  unset: "Unset",
+  yes: "Yes",
+  no: "No",
+  operating_sys: "Operating System",
+
+  // Settings
+  shading: "Shading",
+  shading_title: "Apply custom shading",
+  shading_desc: "Use with care, if to dark you may not able to see the UI anymore.",
+
+  module: "Module",
+
+  low_quality_modules: "Low quality modules",
+  low_quality_modules_subtitle: "Shows a alert below the module if it has a low quality",
+
+  invaild_modules: "Invaild modules",
+  invaild_modules_subtitle: "Show invaild modules",
+
+  modconf: "ModConf",
+  modconf_subtitle: "A way to manage different module systems",
+
+  enable_install: "Enable install",
+  enable_install_subtitle: "Experimental installation of *.zip files",
+
+  scroll_to_bottom: "Scroll to bottom",
+  scroll_to_bottom_subtitle: "Automatically scroll to bottom within the terminal",
+
+  scroll_behavior: "Scroll behavior",
+
+  terminal: "Terminal",
+
+  eruda_console: "Eruda console",
+  eruda_console_subtitle: "Useful for development and bug hunting",
+
+  share_device_infos: "Share device information's",
+  share_device_infos_subtilte: "Helpful for MMRLs development",
+
+  storage: "Storage",
+  clear_repos: "Clear repositories",
+
+  patch_settings: "Patch settings",
+  patch_settings_subtitle: "Add missing settings keys"
 };

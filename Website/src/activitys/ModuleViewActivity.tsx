@@ -43,6 +43,8 @@ import ListItemButton from "@mui/material/ListItemButton";
 import SourceIcon from "@mui/icons-material/Source";
 import BugReportIcon from "@mui/icons-material/BugReport";
 import ListItemIcon from "@mui/material/ListItemIcon";
+import { Disappear } from "react-disappear";
+import Fade from "@mui/material/Fade";
 
 function a11yProps(index: number) {
   return {
@@ -99,7 +101,11 @@ const ModuleViewActivity = () => {
   const renderToolbar = () => {
     return (
       <Toolbar modifier="noshadow">
-        <Toolbar.Center></Toolbar.Center>
+        <Toolbar.Center>
+          <Fade in={isNameVisible}>
+            <span>{name}</span>
+          </Fade>
+        </Toolbar.Center>
         <Toolbar.Left>
           <Toolbar.BackButton onClick={context.popPage} />
         </Toolbar.Left>
@@ -108,6 +114,7 @@ const ModuleViewActivity = () => {
   };
 
   const [value, setValue] = React.useState(0);
+  const [isNameVisible, setIsNameVisible] = React.useState(true);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -184,11 +191,11 @@ const ModuleViewActivity = () => {
             </Avatar>
 
             <Box sx={{ alignSelf: "center", ml: 0.5, mr: 0.5, width: "100%" }}>
-              <Typography variant="body1" fontWeight="bold">
+              <Disappear as={Typography} variant="body1" fontWeight="bold" onDisappear={(visible) => setIsNameVisible(!visible)}>
                 {name}
-              </Typography>
+              </Disappear>
               <Typography variant="body2" color="text.secondary">
-                <span>{author}</span>
+                {author}
               </Typography>
             </Box>
           </Box>
@@ -261,7 +268,7 @@ const ModuleViewActivity = () => {
                       });
                     }}
                   >
-                    Install
+                    {strings("install")}
                   </Button>
                 )}
 
@@ -288,15 +295,15 @@ const ModuleViewActivity = () => {
                   variant="contained"
                   disableElevation
                 >
-                  Download
+                  {strings("download")}
                 </Button>
               </Stack>
             </Stack>
           </Stack>
         </Box>
         <Tabs value={value} onChange={handleChange} indicatorColor="secondary" textColor="inherit" variant="fullWidth">
-          <Tab label="Overview" {...a11yProps(0)} />
-          <Tab label="About" {...a11yProps(1)} />
+          <Tab label={strings("overview")} {...a11yProps(0)} />
+          <Tab label={strings("about")} {...a11yProps(1)} />
         </Tabs>
       </Box>
 
@@ -310,8 +317,8 @@ const ModuleViewActivity = () => {
                 }}
                 severity="warning"
               >
-                <AlertTitle>Unsupported</AlertTitle>
-                Module requires {parseAndroidVersion(fox.minApi)}
+                <AlertTitle>{strings("unsupported")}</AlertTitle>
+                {strings("require_sdk", { sdk: parseAndroidVersion(fox.minApi) })}
               </Alert>
             )}
 
@@ -319,7 +326,7 @@ const ModuleViewActivity = () => {
               <Card elevation={0} sx={{ /*width: { xs: "100%", sm: "100vh" },*/ width: "100%" }}>
                 <CardContent>
                   <Typography variant="h5" component="div">
-                    Images
+                    {strings("images")}
                   </Typography>
                 </CardContent>
 
@@ -374,7 +381,7 @@ const ModuleViewActivity = () => {
                     gutterBottom
                   >
                     <Typography variant="h5" component="div">
-                      About this module
+                      {strings("about_this_module")}
                     </Typography>
                     <IconButton
                       onClick={() => {
@@ -389,7 +396,6 @@ const ModuleViewActivity = () => {
                         });
                       }}
                       sx={{ ml: 0.5 }}
-                      aria-label="Example"
                     >
                       <ArrowForwardIcon />
                     </IconButton>
@@ -399,7 +405,7 @@ const ModuleViewActivity = () => {
                     {description}
                   </Typography>
                   <Typography sx={{ mt: 3 }} variant="h6" component="div">
-                    Updated on
+                    {strings("updated_on")}
                     <Typography sx={{ fontSize: "0.875rem" }} variant="body2" component="div" color="text.secondary">
                       {formatLastUpdate}
                     </Typography>
@@ -432,7 +438,7 @@ const ModuleViewActivity = () => {
             >
               <CardContent>
                 <Typography variant="h5" component="div">
-                  Requirements
+                  {strings("requirements")}
                 </Typography>
               </CardContent>
 
@@ -445,36 +451,51 @@ const ModuleViewActivity = () => {
                   },
                 }}
               >
-                <List sx={{ width: { xs: "100%" } }} subheader={<ListSubheader sx={{ bgcolor: "transparent" }}>Access</ListSubheader>}>
+                <List
+                  sx={{ width: { xs: "100%" } }}
+                  subheader={<ListSubheader sx={{ bgcolor: "transparent" }}>{strings("access")}</ListSubheader>}
+                >
                   <ListItem>
-                    <StyledListItemText primary="Changes boot" secondary={fox.changeBoot ? "Yes" : "No"} />
+                    <StyledListItemText primary={strings("change_boot")} secondary={fox.changeBoot ? strings("yes") : strings("no")} />
                   </ListItem>
 
                   <ListItem>
-                    <StyledListItemText primary="Needs ramdisk" secondary={fox.needRamdisk ? "Yes" : "No"} />
+                    <StyledListItemText primary={strings("need_ramdisk")} secondary={fox.needRamdisk ? strings("yes") : strings("no")} />
                   </ListItem>
 
                   <ListItem>
-                    <StyledListItemText primary="MMT-Reborn" secondary={fox.mmtReborn ? "Yes" : "No"} />
+                    <StyledListItemText primary="MMT-Reborn" secondary={fox.mmtReborn ? strings("yes") : strings("no")} />
                   </ListItem>
                 </List>
 
-                <List sx={{ width: { xs: "100%" } }} subheader={<ListSubheader sx={{ bgcolor: "transparent" }}>Minimum</ListSubheader>}>
+                <List
+                  sx={{ width: { xs: "100%" } }}
+                  subheader={<ListSubheader sx={{ bgcolor: "transparent" }}>{strings("minimum")}</ListSubheader>}
+                >
                   <ListItem>
-                    <StyledListItemText primary="Operating System" secondary={fox.minApi ? parseAndroidVersion(fox.minApi) : "Unset"} />
+                    <StyledListItemText
+                      primary={strings("operating_sys")}
+                      secondary={fox.minApi ? parseAndroidVersion(fox.minApi) : strings("unset")}
+                    />
                   </ListItem>
 
                   <ListItem>
                     <StyledListItemText
                       primary="Magisk"
-                      secondary={fox.minMagisk ? Magisk.PARSE_VERSION(String(fox.minMagisk)) : "Unset"}
+                      secondary={fox.minMagisk ? Magisk.PARSE_VERSION(String(fox.minMagisk)) : strings("unset")}
                     />
                   </ListItem>
                 </List>
 
-                <List sx={{ width: { xs: "100%" } }} subheader={<ListSubheader sx={{ bgcolor: "transparent" }}>Recommended</ListSubheader>}>
+                <List
+                  sx={{ width: { xs: "100%" } }}
+                  subheader={<ListSubheader sx={{ bgcolor: "transparent" }}>{strings("recommended")}</ListSubheader>}
+                >
                   <ListItem>
-                    <StyledListItemText primary="Operating System" secondary={fox.maxApi ? parseAndroidVersion(fox.maxApi) : "Unset"} />
+                    <StyledListItemText
+                      primary={strings("operating_sys")}
+                      secondary={fox.maxApi ? parseAndroidVersion(fox.maxApi) : strings("unset")}
+                    />
                   </ListItem>
                 </List>
               </Box>
@@ -514,7 +535,7 @@ const ModuleViewActivity = () => {
               <ListItemIcon>
                 <SourceIcon />
               </ListItemIcon>
-              <StyledListItemText primary="Source" secondary={about.source} />
+              <StyledListItemText primary={strings("source")} secondary={about.source} />
             </ListItemButton>
           </List>
         </CustomTabPanel>

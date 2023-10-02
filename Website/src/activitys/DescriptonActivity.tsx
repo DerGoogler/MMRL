@@ -58,7 +58,7 @@ function DescriptonActivity() {
                 {name}
               </Typography>
               <Typography variant="body2" color="text.secondary" noWrap>
-                About this module
+                {strings("about_this_module")}
               </Typography>
             </Box>
           </Box>

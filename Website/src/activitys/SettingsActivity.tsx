@@ -66,18 +66,18 @@ function SettingsActivity() {
               InputProps={{
                 startAdornment: <InputAdornment position="start">-</InputAdornment>,
               }}
-              inputLabel="Shading"
+              inputLabel={strings("shading")}
               type="number"
-              title="Apply custom shading"
+              title={strings("shading_title")}
               initialValue={settings.shade_value.toString().replace("-", "")}
-              description="Use with care, if to dark you may not able to see the UI anymore."
+              description={strings("shading_desc")}
               onSuccess={(value) => {
                 if (value) {
                   setSettings("shade_value", Number("-" + value));
                 }
               }}
             >
-              <StyledListItemText primary="Apply custom shade" />
+              <StyledListItemText primary={strings("shading_title")} />
             </DialogEditTextListItem>
           )}
 
@@ -86,9 +86,11 @@ function SettingsActivity() {
         </List>
 
         <Divider />
-        <List subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>Module</ListSubheader>}>
+        <List
+          subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>{strings("module")}</ListSubheader>}
+        >
           <ListItem>
-            <StyledListItemText primary="Low quality modules" secondary="Shows a alert below the module if it has a low quality" />
+            <StyledListItemText primary={strings("low_quality_modules")} secondary={strings("low_quality_modules_subtitle")} />
             <Android12Switch
               edge="end"
               onChange={(e: any) => {
@@ -98,7 +100,7 @@ function SettingsActivity() {
             />
           </ListItem>
           <ListItem>
-            <StyledListItemText primary="Invalid modules" secondary="Show invalid modules" />
+            <StyledListItemText primary={strings("invaild_modules")} secondary={strings("invaild_modules_subtitle")} />
             <Android12Switch
               edge="end"
               onChange={(e: any) => {
@@ -118,7 +120,7 @@ function SettingsActivity() {
                   });
                 }}
               >
-                <StyledListItemText primary="ModConf" secondary="A way to manage different module systems" />
+                <StyledListItemText primary={strings("modconf")} secondary={strings("modconf_subtitle")} />
               </ListItemButton>
             </>
           )}
@@ -127,9 +129,13 @@ function SettingsActivity() {
         {os.isAndroid && (
           <>
             <Divider />
-            <List subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>Terminal</ListSubheader>}>
+            <List
+              subheader={
+                <ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>{strings("terminal")}</ListSubheader>
+              }
+            >
               <ListItem>
-                <StyledListItemText primary={"Enable local install"} secondary="Allows you to install local *.zip files (Experimental)." />
+                <StyledListItemText primary={strings("enable_install")} secondary={strings("enable_install_subtitle")} />
                 <Android12Switch
                   edge="end"
                   disabled={!(Shell.isKernelSU() || Shell.isMagiskSU())}
@@ -141,7 +147,7 @@ function SettingsActivity() {
               </ListItem>
 
               <ListItem>
-                <StyledListItemText primary="Scroll to bottom" secondary="Automatically scroll to bottom within the terminal" />
+                <StyledListItemText primary={strings("scroll_to_bottom")} secondary={strings("scroll_to_bottom_subtitle")} />
                 <Android12Switch
                   edge="end"
                   onChange={(e: any) => {
@@ -153,7 +159,7 @@ function SettingsActivity() {
               <ListPickerItem
                 id="term-scroll-behavior"
                 targetSetting="term_scroll_behavior"
-                title="Scroll behavior"
+                title={strings("scroll_behavior")}
                 contentMap={termScrollBehaviors}
               />
             </List>
@@ -168,7 +174,11 @@ function SettingsActivity() {
           }
         >
           <ListItem>
-            <StyledListItemText id="switch-list-label-eruda" primary={"Eruda console"} secondary={"Useful for development and bugs"} />
+            <StyledListItemText
+              id="switch-list-label-eruda"
+              primary={strings("eruda_console")}
+              secondary={strings("eruda_console_subtitle")}
+            />
             <Android12Switch
               edge="end"
               onChange={(e: any) => {
@@ -220,26 +230,28 @@ function SettingsActivity() {
               );
             }}
           >
-            <StyledListItemText primary="Share device informations" secondary="Helpful for MMRLs development" />
+            <StyledListItemText primary={strings("share_device_infos")} secondary={strings("share_device_infos_subtilte")} />
           </ListItemButton>
         </List>
 
         <Divider />
 
-        <List subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>{"Storage"}</ListSubheader>}>
+        <List
+          subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>{strings("storage")}</ListSubheader>}
+        >
           <ListItemButton
             onClick={() => {
               setRepos([]);
             }}
           >
-            <StyledListItemText primary="Clear repositories" />
+            <StyledListItemText primary={strings("clear_repos")} />
           </ListItemButton>{" "}
           <ListItemButton
             onClick={() => {
               patchSettings();
             }}
           >
-            <StyledListItemText primary="Patch settings" secondary="Adds missing settings keys" />
+            <StyledListItemText primary={strings("patch_settings")} secondary={strings("patch_settings_subtitle")} />
           </ListItemButton>
         </List>
 

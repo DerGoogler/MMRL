@@ -44,4 +44,60 @@ export const de = {
   add_repository: "Repository hinzufügen",
   add_repository_description: "Fügen Sie Ihr Repository oder ein Repository von einem anderen hinzu.",
   explore_repositories: "Entdecke Repositorys",
+
+  // Module details page (explore)
+  overview: "Übersicht",
+  about_this_module: "Über dieses Modul",
+  about: "Über",
+  updated_on: "Aktualisiert am",
+  requirements: "Anforderungen",
+  access: "Zugriffe",
+  minimum: "Minimum",
+  recommended: "Empfohlen",
+  source: "Quelle",
+  require_sdk: "Modul erfordert {sdk}",
+  unsupported: "Nicht unterstützt",
+  images: "Bilder",
+  unset: "Unbestimmt",
+  yes: "Ja",
+  no: "Nein",
+  operating_sys: "Betriebssystem",
+
+  // Settings
+  shading: "Schattierung",
+  shading_title: "Benutzerdefinierte Schattierung anwenden",
+  shading_desc: "Seien Sie vorsichtig, wenn es zu dunkel ist, können Sie die Benutzeroberfläche möglicherweise nicht mehr sehen.",
+
+  module: "Modul",
+
+  low_quality_modules: "Module von geringer Qualität",
+  low_quality_modules_subtitle: "Zeigt eine Warnung unterhalb des Moduls an, wenn es eine niedrige Qualität hat",
+
+  invaild_modules: "Ungültige Module",
+  invaild_modules_subtitle: "Ungültige Module anzeigen",
+
+  modconf: "ModConf",
+  modconf_subtitle: "Eine Möglichkeit, verschiedene Modulsysteme zu verwalten",
+
+  enable_install: "Installation aktivieren",
+  enable_install_subtitle: "Experimentelle Installation von *.zip-Dateien",
+
+  scroll_to_bottom: "Nach unten scrollen",
+  scroll_to_bottom_subtitle: "Automatisches Scrollen nach unten im Terminal",
+
+  scroll_behavior: "Scrollverhalten",
+
+  terminal: "Terminal",
+
+  eruda_console: "Eruda Konsole",
+  eruda_console_subtitle: "Nützlich bei der Entwicklung und Fehlersuche",
+
+  share_device_infos: "Informationen über das Gerät teilen",
+  share_device_infos_subtilte: "Hilfreich für die Entwicklung von MMRL",
+
+  storage: "Speicher",
+  clear_repos: "Repositorys löschen",
+
+  patch_settings: "Einstellungen patchen",
+  patch_settings_subtitle: "Fehlende Einstellungsschlüssel hinzufügen",
 };
