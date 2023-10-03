@@ -16,7 +16,6 @@ import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import ListSubheader from "@mui/material/ListSubheader";
 import Stack from "@mui/material/Stack";
-import Markdown from "markdown-to-jsx";
 import { useActivity } from "@Hooks/useActivity";
 import { StyledListItemText } from "@Components/StyledListItemText";
 import { parseAndroidVersion } from "@Util/parseAndroidVersion";
@@ -30,7 +29,6 @@ import { useFormatDate } from "@Hooks/useFormatDate";
 import Chip from "@mui/material/Chip";
 import CardMedia from "@mui/material/CardMedia";
 import { useSupportIconForUrl } from "@Hooks/useSupportIconForUrl";
-import { useRepos } from "@Hooks/useRepos";
 import { useLog } from "@Hooks/native/useLog";
 import { SuFile } from "@Native/SuFile";
 import DescriptonActivity from "./DescriptonActivity";
@@ -45,6 +43,7 @@ import BugReportIcon from "@mui/icons-material/BugReport";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import { Disappear } from "react-disappear";
 import Fade from "@mui/material/Fade";
+import TelegramIcon from "@mui/icons-material/Telegram";
 
 function a11yProps(index: number) {
   return {
@@ -101,14 +100,32 @@ const ModuleViewActivity = () => {
   const renderToolbar = () => {
     return (
       <Toolbar modifier="noshadow">
+        <Toolbar.Left>
+          <Toolbar.BackButton onClick={context.popPage} />
+        </Toolbar.Left>
         <Toolbar.Center>
           <Fade in={isNameVisible}>
             <span>{name}</span>
           </Fade>
         </Toolbar.Center>
-        <Toolbar.Left>
-          <Toolbar.BackButton onClick={context.popPage} />
-        </Toolbar.Left>
+        <Toolbar.Right>
+          <Toolbar.Button
+            icon={TelegramIcon}
+            onClick={() => {
+              os.open(
+                `https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(
+                  "Check out this module on MMRL. Requires a machted repo to open this module. "
+                )}`,
+                {
+                  target: "_blank",
+                  features: {
+                    color: theme.palette.primary.main,
+                  },
+                }
+              );
+            }}
+          />
+        </Toolbar.Right>
       </Toolbar>
     );
   };
