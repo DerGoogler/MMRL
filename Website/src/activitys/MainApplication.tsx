@@ -13,6 +13,10 @@ import React from "react";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import Avatar from "@mui/material/Avatar";
+import { useNativeStorage } from "@Hooks/useNativeStorage";
+import { BuildConfig } from "@Native/BuildConfig";
+import { useNewerVersion } from "@Hooks/useNewerVersion";
+import FetchTextActivity from "./FetchTextActivity";
 
 const MainApplication = () => {
   const { strings } = useStrings();
@@ -44,6 +48,23 @@ const MainApplication = () => {
         : []),
     ];
   };
+
+  const [currentVersion, setCurrentVersion] = useNativeStorage<VersionType>("current_version", "0.0.0");
+  const isNewVersion = useNewerVersion(currentVersion, BuildConfig.VERSION_NAME);
+
+  React.useEffect(() => {
+    if (isNewVersion) {
+      setCurrentVersion(BuildConfig.VERSION_NAME);
+      context.pushPage({
+        component: FetchTextActivity,
+        key: "changelog",
+        extra: {
+          url: "https://raw.githubusercontent.com/wiki/DerGoogler/MMRL/Changelog.md",
+          title: "Changelog",
+        },
+      });
+    }
+  }, []);
 
   const renderToolbar = () => {
     return (

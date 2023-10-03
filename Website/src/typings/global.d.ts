@@ -17,6 +17,8 @@ declare global {
   type HTMLAttributes<E, P = {}> = React.DetailedHTMLProps<React.HTMLAttributes<E> & P, E>;
   type AnchorHTMLAttributes<E, P = {}> = React.DetailedHTMLProps<React.AnchorHTMLAttributes<E> & P, E>;
 
+  type VersionType = `${string}.${string}.${string}`;
+
   namespace JSX {
     interface IntrinsicElements {
       "module-container": HTMLAttributes<HTMLDivElement>;

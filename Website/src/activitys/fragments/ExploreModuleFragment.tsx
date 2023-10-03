@@ -20,6 +20,7 @@ import { useNetwork } from "@Hooks/useNetwork";
 import { Card } from "@mui/material";
 import { FilterDialog, useModuleFilter } from "@Hooks/useModulesFilter";
 import ModuleViewActivity from "@Activitys/ModuleViewActivity";
+import { Disappear } from "react-disappear";
 
 export interface ExploreModuleProps {
   renderToolbar?: RenderFunction;
@@ -30,7 +31,7 @@ const ExploreModuleFragment = (props: ExploreModuleProps) => {
   const { context } = useActivity();
   const { strings } = useStrings();
   const { settings } = useSettings();
-  const { scheme, theme } = useTheme();
+  const { scheme, theme, shade } = useTheme();
   const { modules, repos } = useRepos();
   const { isNetworkAvailable } = useNetwork();
   const [search, setSearch] = React.useState("");
@@ -124,47 +125,109 @@ const ExploreModuleFragment = (props: ExploreModuleProps) => {
     }
   }, [modules]);
 
+  const [scrolled, setScrolled] = React.useState(false);
+
+  const handleScroll = () => {
+    const offset = window.scrollY;
+    if (offset > 200) {
+      setScrolled((prev) => !prev);
+    }
+  };
+
+  const searchCardBackground = theme.palette.primary.main;
+  const searchCardTransition = "background-color 0.5s ease, margin 0.5s ease, padding 0.5s ease, width 0.5s ease";
+
   return (
     <Page renderToolbar={props.renderToolbar}>
       <Page.RelativeContent>
-        <Searchbar
-          sx={{
-            borderRadius: `${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0px 0px`,
-          }}
-          onFilterClick={handleClickOpen}
-          placeholder={strings("search_modules")}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-
-        <Card
-          component={Stack}
-          elevation={0}
-          justifyContent="center"
-          spacing={0.8}
-          direction="row"
-          alignItems="center"
-          sx={{
-            borderRadius: `0px 0px ${theme.shape.borderRadius}px ${theme.shape.borderRadius}px`,
-            pr: 1,
-            pl: 1,
-            pb: 1,
-            display: "flex",
-            alignItems: "center",
-            width: "100%",
+        <Disappear
+          onDisappear={(state) => {
+            setScrolled(!state);
           }}
         >
-          <Pagination
-            count={count}
-            color="primary"
-            page={page}
-            variant="outlined"
-            shape="rounded"
-            onChange={(e, p) => {
-              setPage(p);
-              _DATA.jump(p);
+          <></>
+        </Disappear>
+        <Box
+          sx={
+            !settings.disable_sticky_search_bar
+              ? {
+                  color: "#fff",
+                  position: "sticky",
+                  top: 0,
+                  borderRadius: theme.shape.borderRadius / theme.shape.borderRadius,
+                  transition: searchCardTransition,
+                  ...(scrolled
+                    ? {
+                        borderRadius: "unset",
+                        // 8px * 2 = 16px
+                        width: "calc(100% + 16px)",
+                        // -1 = -8px
+                        ml: -1,
+                        boxShadow: theme.shadows[1],
+                        backgroundColor: searchCardBackground,
+                      }
+                    : {}),
+                }
+              : {}
+          }
+        >
+          <Searchbar
+            sx={{
+              ...(!settings.disable_sticky_search_bar
+                ? {
+                    transition: searchCardTransition,
+                    ...(scrolled
+                      ? {
+                          backgroundColor: searchCardBackground,
+                        }
+                      : {}),
+                  }
+                : {}),
+              borderRadius: `${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0px 0px`,
             }}
+            onFilterClick={handleClickOpen}
+            placeholder={strings("search_modules")}
+            onChange={(e) => setSearch(e.target.value)}
           />
-        </Card>
+          <Card
+            component={Stack}
+            elevation={0}
+            justifyContent="center"
+            spacing={0.8}
+            direction="row"
+            alignItems="center"
+            sx={{
+              ...(!settings.disable_sticky_search_bar
+                ? {
+                    transition: searchCardTransition,
+                    ...(scrolled
+                      ? {
+                          backgroundColor: searchCardBackground,
+                        }
+                      : {}),
+                  }
+                : {}),
+              borderRadius: `0px 0px ${theme.shape.borderRadius}px ${theme.shape.borderRadius}px`,
+              pr: 1,
+              pl: 1,
+              pb: 1,
+              display: "flex",
+              alignItems: "center",
+              width: "100%",
+            }}
+          >
+            <Pagination
+              count={count}
+              page={page}
+              color={settings.darkmode ? "secondary" : "standard"}
+              shape="rounded"
+              onChange={(e, p) => {
+                setPage(p);
+                _DATA.jump(p);
+              }}
+            />
+          </Card>
+        </Box>
 
         <Stack sx={{ mt: 1 }} direction="column" justifyContent="flex-start" alignItems="center" spacing={1}>
           {_DATA.currentData().map((module, index) => (

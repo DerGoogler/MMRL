@@ -165,6 +165,7 @@ export interface StorageDeclaration {
   shade_value: number;
   term_scroll_bottom: boolean;
   term_scroll_behavior: { name: string; value: ScrollBehavior };
+  disable_sticky_search_bar: bool;
 }
 
 export interface ModConf {
@@ -301,6 +302,7 @@ export const SettingsProvider = (props: React.PropsWithChildren) => {
     shade_value: -80,
     term_scroll_bottom: true,
     term_scroll_behavior: termScrollBehaviors[0],
+    disable_sticky_search_bar: false,
   };
 
   const [settings, setSettings] = useNativeStorage("settings", INITIAL_SETTINGS);

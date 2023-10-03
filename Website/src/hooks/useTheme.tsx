@@ -68,10 +68,6 @@ export const ThemeProvider = (props: React.PropsWithChildren) => {
                 paper: shade(colors[settings.accent_scheme.value][200], 14.5 * 2),
               },
               divider: colors[settings.accent_scheme.value][300],
-              secondary: {
-                main: "#e5e8ec",
-                light: "#eeeeee",
-              },
             }
           : {
               mode: "dark",

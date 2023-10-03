@@ -98,5 +98,7 @@ export const en = {
   clear_repos: "Clear repositories",
 
   patch_settings: "Patch settings",
-  patch_settings_subtitle: "Add missing settings keys"
+  patch_settings_subtitle: "Add missing settings keys",
+
+  sticky_search_bar: "Disable sticky search bar",
 };

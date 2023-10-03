@@ -127,7 +127,21 @@ export const ExploreModule = (_props: Props) => {
           label={formatLastUpdate}
         />
         <Stack spacing={0.8} direction="row">
-          <Stack direction="row" justifyContent="center" alignItems="center" spacing={0.5} sx={badgeStyle(scheme)}>
+          <Stack
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+            spacing={0.5}
+            sx={{
+              px: 1,
+              py: 0.5,
+              borderRadius: 1,
+              display: "flex",
+              typography: "caption",
+              bgcolor: theme.palette.secondary.main,
+              color: theme.palette.mode === "dark" ? "#000" : "#fff",
+            }}
+          >
             <StarBorderRoundedIcon
               sx={{
                 typography: "caption",
