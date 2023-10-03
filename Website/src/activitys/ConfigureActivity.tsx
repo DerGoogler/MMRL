@@ -49,7 +49,7 @@ const ConfigureActivity = () => {
 
   return (
     <Page renderToolbar={renderToolbar}>
-      <ConfigureView>{config}</ConfigureView>
+      <ConfigureView modid={extra.moduleid}>{config}</ConfigureView>
     </Page>
   );
 };

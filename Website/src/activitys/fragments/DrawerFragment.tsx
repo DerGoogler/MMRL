@@ -24,6 +24,8 @@ import {
   LinkRounded,
   WarningAmberRounded,
 } from "@mui/icons-material";
+import { configureSample } from "@Util/configure-sample";
+import { dapiSample } from "@Util/dapi-sample";
 
 type Props = {
   renderToolbar: () => JSX.Element;
@@ -74,72 +76,10 @@ export const DrawerFragment = (props: Props) => {
               key: "dapitestActivity",
               extra: {
                 title: "DAPI Tester",
+                defaultText: dapiSample,
+                editorMode: "markdown",
                 previewPage: FetchTextActivity,
                 preview: Markup,
-                commands: [
-                  {
-                    name: "bold",
-                    icon: FormatBoldRounded,
-                  },
-                  {
-                    name: "italic",
-                    icon: FormatItalicRounded,
-                  },
-                  {
-                    name: "strike-through",
-                    icon: FormatStrikethroughRounded,
-                  },
-                  {
-                    name: "link",
-                    icon: LinkRounded,
-                  },
-                  {
-                    name: "image",
-                    icon: ImageRounded,
-                  },
-                  {
-                    name: "unordered-list",
-                    icon: FormatListBulletedRounded,
-                  },
-                  {
-                    name: "ordered-list",
-                    icon: FormatListNumberedRounded,
-                  },
-                  {
-                    name: "block-quotes",
-                    icon: FormatQuoteRounded,
-                  },
-                  {
-                    name: "insert-checkmark",
-                    icon: CheckRounded,
-                    iconStyle: {
-                      color: "#1a7f37",
-                    },
-                    handler: ({ cursor }) => {
-                      cursor.insert(`${cursor.MARKER}<CheckIcon/>${cursor.MARKER}`);
-                    },
-                  },
-                  {
-                    name: "insert-warnmark",
-                    icon: WarningAmberRounded,
-                    iconStyle: {
-                      color: "#d29922",
-                    },
-                    handler: ({ cursor }) => {
-                      cursor.insert(`${cursor.MARKER}<AlertIcon/>${cursor.MARKER}`);
-                    },
-                  },
-                  {
-                    name: "insert-dangermark",
-                    icon: CloseRounded,
-                    iconStyle: {
-                      color: "#cf222e",
-                    },
-                    handler: ({ cursor }) => {
-                      cursor.insert(`${cursor.MARKER}<XIcon/>${cursor.MARKER}`);
-                    },
-                  },
-                ],
               },
             });
             hide();
@@ -154,9 +94,10 @@ export const DrawerFragment = (props: Props) => {
               key: "configure_playground",
               extra: {
                 title: "Configure playground",
+                editorMode: "mdx",
+                defaultText: configureSample,
                 previewPage: ConfigureActivity,
                 preview: ConfigureView,
-                commands: [],
               },
             });
             hide();

@@ -11,6 +11,7 @@ import { StyledListItemText } from "@Components/StyledListItemText";
 import { Android12Switch } from "@Components/Android12Switch";
 import { os } from "@Native/Os";
 import { useTheme } from "@Hooks/useTheme";
+import AppBar from "@mui/material/AppBar";
 import JsxParser from "react-jsx-parser";
 import Box from "@mui/material/Box";
 import { Shell } from "@Native/Shell";
@@ -22,7 +23,13 @@ import CodeOutlinedIcon from "@mui/icons-material/CodeOutlined";
 import Video from "./dapi/Video";
 import { DiscordWidget } from "./dapi/DiscordWidget";
 import Anchor from "./dapi/Anchor";
-import { shadesOfPurple } from "react-syntax-highlighter/dist/esm/styles/hljs";
+
+import Tab from "@mui/material/Tab";
+import TabContext from "@mui/lab/TabContext";
+import TabList from "@mui/lab/TabList";
+import TabPanel from "@mui/lab/TabPanel";
+import { formatString, useSettings } from "@Hooks/useSettings";
+import { SuFile } from "@Native/SuFile";
 
 const OnClick = (props: any) => {
   return <Box onClick={props.handler}>{props.children}</Box>;
@@ -155,6 +162,26 @@ const PromoBanner = (props: React.PropsWithChildren & { sx?: SxProps }) => {
   );
 };
 
+const Import = (props: { file?: str }) => {
+  const [data, setData] = React.useState<str>("");
+  const { _modConf } = useSettings();
+
+  if (!props.file || typeof props.file != "string") {
+    return <>{data}</>;
+  }
+
+  React.useEffect(() => {
+    if (props.file) {
+      const fil = new SuFile(props.file);
+      if (fil.exist()) {
+        setData(fil.read());
+      }
+    }
+  }, [props.file]);
+
+  return <>{data}</>;
+};
+
 const Markdown = (props: { children?: string; fetch?: string }) => {
   const [text, setText] = React.useState<string>(props.children ? props.children : "");
 
@@ -171,54 +198,72 @@ const Markdown = (props: { children?: string; fetch?: string }) => {
   return <Markup children={text} />;
 };
 
-export const ConfigureView = (props: React.PropsWithChildren) => {
+export const ConfigureView = (props: React.PropsWithChildren & { modid?: string }) => {
   const { theme, scheme, shade } = useTheme();
 
-  const [fetchedText, setFetchedText] = React.useState("");
+  const [value, setValue] = React.useState("1");
+  const { _modConf } = useSettings();
+
+  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+    setValue(newValue);
+  };
 
   return (
-    // @ts-ignore
-    <JsxParser
-      bindings={{
-        // scheme: scheme,
-        // theme: theme,
-        // shade: shade,
-        openLink: (url: string) => {
-          return () => {
-            os.open(url, {
-              target: "_blank",
-              features: {
-                color: theme.palette.primary.main,
-              },
-            });
-          };
-        },
-        getprop: (key: string, def: string) => {
-          return window.__properties__.get(key, def);
-        },
-      }}
-      components={{
-        Video: Video,
-        DiscordWidget: DiscordWidget,
-        // Better support for browsers
-        a: Anchor,
-        PromoBanner: PromoBanner,
-        Markdown: Markdown,
-        OnClick: OnClick,
-        Box: Box,
-        Alert: Alert,
-        AlertTitle: AlertTitle,
-        InputAdornment: InputAdornment,
-        List: List,
-        ListItem: ListItem,
-        ListItemButton: ListItemButton,
-        ListItemText: StyledListItemText,
-        ListItemDialogEditText: DialogEditListItem,
-        ListSubheader: StyledListSubheader,
-        Switch: Switch,
-        Divider: Divider,
-      }}
-      jsx={props.children}
-    />
+    <TabContext value={value}>
+      {/* @ts-ignore */}
+      <JsxParser
+        disableFragments
+        bindings={{
+          // scheme: scheme,
+          // theme: theme,
+          // shade: shade,
+          openLink: (url: str) => {
+            return () => {
+              os.open(url, {
+                target: "_blank",
+                features: {
+                  color: theme.palette.primary.main,
+                },
+              });
+            };
+          },
+          modpath: (path: str) => formatString("<MODULES>/<MODID><PATH>", { ..._modConf, PATH: path, MODID: props.modid }),
+          handleTabChange: () => handleChange,
+          tabValue: value,
+          getprop: (key: str, def: str) => {
+            return window.__properties__.get(key, def);
+          },
+        }}
+        blacklistedAttrs={[]}
+        components={{
+          Import: Import,
+          AppBar: AppBar,
+          TabContext: TabContext,
+          Tab: Tab,
+          TabList: TabList,
+          TabPanel: TabPanel,
+          Video: Video,
+          DiscordWidget: DiscordWidget,
+          // Better support for browsers
+          a: Anchor,
+          PromoBanner: PromoBanner,
+          Markdown: Markdown,
+          OnClick: OnClick,
+          Box: Box,
+          Alert: Alert,
+          AlertTitle: AlertTitle,
+          InputAdornment: InputAdornment,
+          List: List,
+          ListItem: ListItem,
+          ListItemButton: ListItemButton,
+          ListItemText: StyledListItemText,
+          ListItemDialogEditText: DialogEditListItem,
+          ListSubheader: StyledListSubheader,
+          Switch: Switch,
+          Divider: Divider,
+        }}
+        jsx={props.children}
+      />
+    </TabContext>
   );
 };
