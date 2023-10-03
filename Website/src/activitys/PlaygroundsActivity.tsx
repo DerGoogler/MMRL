@@ -1,6 +1,6 @@
 import "ace-builds/src-noconflict/ace";
 import "ace-builds/src-noconflict/mode-markdown";
-import { Stack, styled, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { Box, Stack, styled, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import * as React from "react";
 import Button from "@mui/material/Button";
 import TextareaMarkdown, { Command, TextareaMarkdownRef } from "textarea-markdown-editor";
@@ -178,7 +178,9 @@ const PlaygroundsActivity = () => {
             </TextareaMarkdown.Wrapper>
             {isLargeScreen && (
               <Preview>
-                <extra.preview>{description}</extra.preview>
+                <Box component="section" sx={{ width: "100%" }}>
+                  <extra.preview>{description}</extra.preview>
+                </Box>
               </Preview>
             )}
           </Stack>
@@ -215,7 +217,7 @@ const Preview = styled("div")(({ theme }) => ({
   minWidth: "0%",
   overflow: "auto",
   borderColor: "rgba(0, 0, 0, 0.23)",
-  article: {
+  section: {
     position: "absolute",
     overflowY: "scroll",
   },

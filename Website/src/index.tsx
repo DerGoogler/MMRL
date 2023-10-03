@@ -11,10 +11,10 @@ import { RepoProvider } from "@Hooks/useRepos";
 import { SettingsProvider } from "@Hooks/useSettings";
 
 import { MMRLApp } from "./custom-elements/app";
+import { MMRLAnchor } from "./custom-elements/anchor";
 
 import "onsenui/css/onsenui.css";
 import "@Styles/default.scss";
-import { strs } from "./locales/declaration";
 
 ons.platform.select("android");
 
@@ -24,6 +24,7 @@ ons.ready(() => {
   }
 
   customElements.define("mmrl-app", MMRLApp);
+  customElements.define("mmrl-anchor", MMRLAnchor);
 
   render(
     <React.StrictMode>

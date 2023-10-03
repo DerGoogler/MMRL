@@ -5,7 +5,7 @@ import { useStrings } from "@Hooks/useStrings";
 import { Divider, List, ListItemButton, ListSubheader } from "@mui/material";
 import { Page } from "react-onsenui";
 import { IntentPusher } from "@Hooks/useActivity";
-import FetchTextActivity from "@Activitys/FetchTextActivity";
+import FetchTextActivity, { FetchTextActivityExtra } from "@Activitys/FetchTextActivity";
 import AboutActivity from "@Activitys/AboutActivity";
 import PlaygroundsActivity, { PlaygroundExtra } from "@Activitys/PlaygroundsActivity";
 import { ConfigureView } from "@Components/ConfigureView";
@@ -198,12 +198,13 @@ export const DrawerFragment = (props: Props) => {
         </ListItemButton>
         <ListItemButton
           onClick={() => {
-            pushPage({
+            pushPage<FetchTextActivityExtra, any>({
               component: FetchTextActivity,
               key: "changelog",
               extra: {
-                url: "https://raw.githubusercontent.com/wiki/DerGoogler/MMRL/Changelog.md",
-                title: "Changelog",
+                rendering: ConfigureView,
+                url: "https://raw.githubusercontent.com/wiki/DerGoogler/MMRL/MDX-Changelog.md",
+                modulename: "Changelog",
               },
             });
             hide();

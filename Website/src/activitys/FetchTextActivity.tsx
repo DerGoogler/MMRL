@@ -10,10 +10,11 @@ import Icon from "@Components/Icon";
 import { useNetwork } from "@Hooks/useNetwork";
 import { MissingInternet } from "@Components/MissingInternet";
 
-type FetchTextActivityExtra = {
+export type FetchTextActivityExtra = {
+  rendering?(props: React.PropsWithChildren): React.JSX.Element;
   modulename: string;
-  raw_data: string;
-  url: string;
+  raw_data?: string;
+  url?: string;
 };
 
 interface State<T> {
@@ -138,7 +139,7 @@ function FetchTextActivity() {
   return (
     <Page renderToolbar={renderToolbar}>
       <Page.RelativeContent>
-        <Markup children={state.data} />
+        {!extra.rendering ? <Markup children={state.data} /> : <extra.rendering children={state.data} />}
       </Page.RelativeContent>
     </Page>
   );

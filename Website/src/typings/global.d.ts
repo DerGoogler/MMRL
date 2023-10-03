@@ -50,6 +50,8 @@ declare global {
       "license-card-version": HTMLAttributes<HTMLSpanElement>;
       "license-card-license": HTMLAttributes<HTMLSpanElement>;
 
+      "mmrl-anchor": React.DetailedHTMLProps<React.AnchorHTMLAttributes<HTMLAnchorElement> & { page?: string }, HTMLAnchorElement>;
+
       // Onsen Elements
       "ons-toolbar-button": HTMLAttributes<HTMLElement>;
       "ons-toolbar": HTMLAttributes<HTMLElement>;

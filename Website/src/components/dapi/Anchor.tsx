@@ -1,5 +1,5 @@
 import { useTheme } from "@Hooks/useTheme";
-import { styled } from "@mui/material";
+import { Box, Typography, styled } from "@mui/material";
 import { useActivity } from "../../hooks/useActivity";
 import Icon from "@Components/Icon";
 import NorthEastRoundedIcon from "@mui/icons-material/NorthEastRounded";
@@ -7,12 +7,13 @@ import LaunchRoundedIcon from "@mui/icons-material/LaunchRounded";
 import { os } from "@Native/Os";
 import SettingsActivity from "@Activitys/SettingsActivity";
 import RepoActivity from "@Activitys/RepoActivity";
-import DescriptonActivity from "@Activitys/DescriptonActivity";
 import { useSettings } from "@Hooks/useSettings";
 import ModuleViewActivity from "@Activitys/ModuleViewActivity";
 import ExtensionIcon from "@mui/icons-material/Extension";
 import { useRepos } from "@Hooks/useRepos";
 import FetchTextActivity from "@Activitys/FetchTextActivity";
+import { createRoot } from "react-dom/client";
+import React from "react";
 
 interface AnchorProps {
   noIcon?: boolean;
@@ -29,6 +30,7 @@ const StyledAnchor = styled("div")(({ theme }) => {
     // color: !settings.darkmode ? "rgb(66, 66, 66)" : scheme[700],
     display: "flex",
     alignItems: "center",
+
     ":hover": {
       textDecoration: "underline",
     },
@@ -36,24 +38,46 @@ const StyledAnchor = styled("div")(({ theme }) => {
 
   return {
     display: "inline-block",
-    "& div[href]": s,
-    "& div[page]": s,
+    "& mmrl-anchor[href]": s,
+    "& mmrl-anchor[page]": s,
   };
 });
 
 function Anchor(props: JSX.IntrinsicElements["a"] & AnchorProps) {
-  const { href, children, noIcon, module, ...rest } = props;
+  const { href, children, noIcon, module, color } = props;
 
   const { theme, scheme } = useTheme();
-
+  const { settings } = useSettings();
   const { modules } = useRepos();
   const { context } = useActivity();
 
+  const _color = !color ? (settings.darkmode ? scheme[200] : scheme[700]) : color;
+
+  const s = React.useMemo(
+    () => ({
+      cursor: "pointer",
+      color: _color,
+      display: "flex",
+      alignItems: "center",
+      ":hover": {
+        textDecorationColor: _color,
+        textDecoration: "underline",
+      },
+    }),
+    [color]
+  );
+
   return (
-    <StyledAnchor>
-      <div
+    <Box
+      sx={{
+        display: "inline-block",
+        "& mmrl-anchor[href]": s,
+        "& mmrl-anchor[page]": s,
+      }}
+    >
+      <Box
+        component="mmrl-anchor"
         href={!module ? href : module}
-        // @ts-ignore
         onClick={() => {
           if (module) {
             const m_ = modules.find((m) => m.id === module);
@@ -64,6 +88,8 @@ function Anchor(props: JSX.IntrinsicElements["a"] & AnchorProps) {
                 key: "",
                 extra: m_,
               });
+            } else {
+              os.toast("Module not found. Did you add the right repo?", Toast.LENGTH_SHORT);
             }
           } else {
             if (href) {
@@ -76,22 +102,24 @@ function Anchor(props: JSX.IntrinsicElements["a"] & AnchorProps) {
             }
           }
         }}
-        {...rest}
+        color={_color}
       >
-        {children}
+        <Typography component="span" color={_color}>{children}</Typography>
         {!noIcon && (
           <>
             <Icon
               icon={!module ? LaunchRoundedIcon : ExtensionIcon}
               sx={{
+                color: _color,
+                fill: _color,
                 fontSize: 16,
                 marginLeft: "3.7px",
               }}
             />
           </>
         )}
-      </div>
-    </StyledAnchor>
+      </Box>
+    </Box>
   );
 }
 
@@ -107,10 +135,9 @@ export function Open(props: OpenProps) {
 
   return (
     <StyledAnchor>
-      <div
-        // @ts-ignore
+      <Box
+        component="mmrl-anchor"
         page={page}
-        // @ts-ignore
         onClick={() => {
           switch (page) {
             case "settings":
@@ -158,7 +185,7 @@ export function Open(props: OpenProps) {
             />
           </>
         )}
-      </div>
+      </Box>
     </StyledAnchor>
   );
 }
