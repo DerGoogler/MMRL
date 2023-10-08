@@ -68,6 +68,9 @@ export const ThemeProvider = (props: React.PropsWithChildren) => {
                 paper: shade(colors[settings.accent_scheme.value][200], 14.5 * 2),
               },
               divider: colors[settings.accent_scheme.value][300],
+              secondary: {
+                main: colors[settings.accent_scheme.value][600],
+              },
             }
           : {
               mode: "dark",
@@ -83,6 +86,9 @@ export const ThemeProvider = (props: React.PropsWithChildren) => {
                 default: shade(colors[settings.accent_scheme.value][700], settings.shade_value),
               },
               divider: shade(colors[settings.accent_scheme.value][900], settings.shade_value),
+              secondary: {
+                main: colors[settings.accent_scheme.value][600],
+              },
             },
       }),
     [settings.darkmode, settings.accent_scheme]
