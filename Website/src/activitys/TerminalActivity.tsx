@@ -8,18 +8,8 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import React from "react";
 import { Shell } from "@Native/Shell";
 import { formatString, useSettings } from "@Hooks/useSettings";
-import { useNativeProperties } from "@Hooks/useNativeProperties";
-
-function useOnceCall(effect: React.EffectCallback, deps?: React.DependencyList | undefined) {
-  const isCalledRef = React.useRef(false);
-
-  React.useEffect(() => {
-    if (deps && !isCalledRef.current) {
-      isCalledRef.current = true;
-      effect();
-    }
-  }, [effect, deps]);
-}
+import { useNewerVersion } from "@Hooks/useNewerVersion";
+import { BuildConfig } from "@Native/BuildConfig";
 
 const TerminalActivity = () => {
   const { context, extra } = useActivity<any>();
@@ -59,6 +49,13 @@ const TerminalActivity = () => {
     }
   };
 
+  const escapePath = React.useCallback(
+    (path: string) => {
+      return path.replace(/[-/\\^$*+?.()|[\]{} ]/g, "\\$&");
+    },
+    [extra.path]
+  );
+
   const install = () => {
     const { exploreInstall, path } = extra;
 
@@ -70,44 +67,57 @@ const TerminalActivity = () => {
 
       const installPath = window.__properties__.get("persist.mmrlini.install_folder", "/data/local/tmp/<NAME>-<BRANCH>-moduled.zip");
 
-      env({
-        MMRL: "true",
-        NAME: name,
-        URL: path,
-        BRANCH: branch,
-        INSTALLER_CLI: installCli(
-          formatString(installPath, {
-            NAME: name,
-            BRANCH: branch,
-          })
-        ),
-      });
+      const envp_explore = React.useMemo<Record<string, string>>(
+        () => ({
+          MMRL: "true",
+          MMRL_VER: BuildConfig.VERSION_CODE.toString(),
+          NAME: name,
+          URL: path,
+          BRANCH: branch,
+          INSTALLER_CLI: installCli(
+            formatString(escapePath(installPath), {
+              NAME: name,
+              BRANCH: branch,
+            })
+          ),
+        }),
+        [path]
+      );
 
-      // @ts-ignore
-      Terminal.exec(
-        `${modConf("MMRLINI")}/system/usr/share/mmrl/bin/mmrl_installer`,
-        (r) => {
-          addLine(r);
+      Terminal.exec({
+        command: `${modConf("MMRLINI")}/system/usr/share/mmrl/bin/mmrl_explore_install`,
+        env: envp_explore,
+        onLine: (line) => {
+          addLine(line);
         },
-        (code) => {
+        onExit: (code) => {
           if (code) {
             setActive(false);
           }
-        }
-      );
+        },
+      });
     } else {
-      // @ts-ignore
-      Terminal.exec(
-        installCli(path),
-        (r) => {
-          addLine(r);
+      const envp_local = React.useMemo<Record<string, string>>(
+        () => ({
+          MMRL: "true",
+          MMRL_VER: BuildConfig.VERSION_CODE.toString(),
+          INSTALLER_CLI: installCli(escapePath(path)),
+        }),
+        [path]
+      );
+
+      Terminal.exec({
+        command: `${modConf("MMRLINI")}/system/usr/share/mmrl/bin/mmrl_local_install`,
+        env: envp_local,
+        onLine: (line) => {
+          addLine(line);
         },
-        (code) => {
+        onExit: (code) => {
           if (code) {
             setActive(false);
           }
-        }
-      );
+        },
+      });
     }
   };
 
@@ -115,9 +125,7 @@ const TerminalActivity = () => {
     return (
       <Toolbar modifier="noshadow">
         <Toolbar.Left>{!active && <Toolbar.Button icon={ArrowBackIcon} onClick={context.popPage} />}</Toolbar.Left>
-        <Toolbar.Center>
-          <div onClick={() => addLine("Called after " + Date.now() + " sec!")}>Installer</div>
-        </Toolbar.Center>
+        <Toolbar.Center>Install</Toolbar.Center>
       </Toolbar>
     );
   };
@@ -125,8 +133,9 @@ const TerminalActivity = () => {
   return (
     <Page
       onDeviceBackButton={(e: Event) => {
-        if (active) {
-          e.preventDefault();
+        e.preventDefault();
+        if (!active) {
+          context.popPage();
         }
       }}
       onShow={install}

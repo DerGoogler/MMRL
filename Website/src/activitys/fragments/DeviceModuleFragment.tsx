@@ -20,10 +20,12 @@ const DeviceModuleFragment = () => {
     setModules(SuFile.list(modConf("MODULES")).split(","));
   }, [settings]);
 
+  const hasInstallTools = SuFile.exist("/data/adb/modules/mmrl_install_tools/module.prop");
+
   return (
     <Page>
       <Page.RelativeContent>
-        {settings.__experimental_local_install && (Shell.isMagiskSU() || Shell.isKernelSU()) && (
+        {hasInstallTools && (Shell.isMagiskSU() || Shell.isKernelSU()) && (
           <Card
             elevation={0}
             onClick={() => {

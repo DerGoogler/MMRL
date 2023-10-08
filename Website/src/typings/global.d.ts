@@ -102,6 +102,19 @@ declare global {
     readonly __nativeStorage__: Pick<Storage, "getItem" | "setItem" | "removeItem" | "clear"> & { defineName: (name: string) => void };
   }
 
+  type TerminalExec = {
+    command: string;
+    env: Record<string, string>;
+    onLine: (line: string) => void;
+    onExit: (code: number) => void;
+  };
+
+  interface Terminal {
+    exec(opt: TerminalExec): void;
+  }
+
+  const Terminal: Terminal;
+
   interface Window extends AndroidWindow<any> {}
 
   const Toast: {

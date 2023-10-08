@@ -2,9 +2,6 @@ package com.dergoogler.plugin;
 
 import android.util.Log;
 
-import com.topjohnwu.superuser.CallbackList;
-import com.topjohnwu.superuser.Shell;
-
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.PluginResult;
@@ -14,9 +11,12 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class TerminalPlugin extends CordovaPlugin {
     private static final String LOG_TAG = "TerminalPlugin";
@@ -27,24 +27,21 @@ public class TerminalPlugin extends CordovaPlugin {
         switch (action) {
             case "exec":
                 String cmd = data.getString(0);
+                JSONObject envp = data.getJSONObject(1);
 
                 this.terminalCallbackContext = callbackContext;
                 String[] commands = {"su", "-c", cmd};
 
-
                 cordova.getThreadPool().execute(() -> {
                     try {
-                        run(commands);
+                        run(envp, commands);
                         callbackContext.error(1);
-                    } catch (IOException e) {
+                    } catch (IOException | JSONException e) {
                         callbackContext.error(0);
                         e.printStackTrace();
                     }
                 });
-
-
                 return true;
-
             case "test":
                 String msg = data.getString(0);
                 Log.i("d", msg);
@@ -56,8 +53,12 @@ public class TerminalPlugin extends CordovaPlugin {
 
     }
 
-    public void run(String... command) throws IOException {
+    public void run(JSONObject envp, String... command) throws IOException, JSONException {
         ProcessBuilder pb = new ProcessBuilder(command).redirectErrorStream(true);
+        if (envp != null) {
+            Map<String, String> m = pb.environment();
+            m.putAll(toMap(envp));
+        }
         Process process = pb.start();
         try (BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
             while (true) {
@@ -79,6 +80,31 @@ public class TerminalPlugin extends CordovaPlugin {
             result.setKeepCallback(keepCallback);
             this.terminalCallbackContext.sendPluginResult(result);
         }
+    }
+
+    public static Map<String, String> toMap(JSONObject jsonobj) throws JSONException {
+        Map<String, String> map = new HashMap<String, String>();
+        Iterator<String> keys = jsonobj.keys();
+        while (keys.hasNext()) {
+            String key = keys.next();
+            String value = jsonobj.getString(key);
+            map.put(key, value);
+        }
+        return map;
+    }
+
+    public static List<Object> toList(JSONArray array) throws JSONException {
+        List<Object> list = new ArrayList<Object>();
+        for (int i = 0; i < array.length(); i++) {
+            Object value = array.get(i);
+            if (value instanceof JSONArray) {
+                value = toList((JSONArray) value);
+            } else if (value instanceof JSONObject) {
+                value = toMap((JSONObject) value);
+            }
+            list.add(value);
+        }
+        return list;
     }
 
 }
