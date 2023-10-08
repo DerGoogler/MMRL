@@ -49,12 +49,12 @@ const MainApplication = () => {
     ];
   };
 
-  const [currentVersion, setCurrentVersion] = useNativeStorage<VersionType>("current_version", "0.0.0");
-  const isNewVersion = useNewerVersion(currentVersion, BuildConfig.VERSION_NAME);
+  const [storedCurrentVersion, setStoredCurrentVersion] = useNativeStorage<VersionType>("current_version", "0.0.0");
+  const isNewVersion = useNewerVersion(storedCurrentVersion);
 
   React.useEffect(() => {
     if (isNewVersion) {
-      setCurrentVersion(BuildConfig.VERSION_NAME);
+      setStoredCurrentVersion(BuildConfig.VERSION_NAME);
       context.pushPage({
         component: FetchTextActivity,
         key: "changelog",

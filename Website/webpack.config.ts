@@ -4,7 +4,6 @@ import { Configuration, DefinePlugin } from "webpack";
 import webpackDevServer from "webpack-dev-server";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
-import MonacoWebpackPlugin from "monaco-editor-webpack-plugin";
 import * as fs from "fs";
 
 const outputPath = "./../www";
@@ -42,7 +41,6 @@ const config: Configuration = {
       },
       {
         test: /\.(scss|css)$/,
-        // include: [APP_DIR, MONACO_DIR],
         use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
       },
       {
@@ -78,7 +76,6 @@ const config: Configuration = {
     maxAssetSize: 512000,
   },
   plugins: [
-    new MonacoWebpackPlugin({ languages: ["mdx", "markdown"] }),
     new DefinePlugin({
       Toast: {
         LENGTH_LONG: JSON.stringify("long"),

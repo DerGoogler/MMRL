@@ -7,7 +7,7 @@ import { Toolbar } from "@Components/onsenui/Toolbar";
 import { Page } from "@Components/onsenui/Page";
 import { useActivity } from "@Hooks/useActivity";
 import { useStrings } from "@Hooks/useStrings";
-import MonacoEditor from "react-monaco-editor";
+import Editor from "@monaco-editor/react";
 import { useTheme } from "@Hooks/useTheme";
 
 export interface PlaygroundExtra {
@@ -63,25 +63,8 @@ const PlaygroundsActivity = () => {
             alignItems="center"
             spacing={1}
           >
-            <Box
-              sx={{
-                height: "100%",
-                flex: 1,
-                width: "100%",
-                minHeight: "100%",
-                position: "relative",
-                ".react-monaco-editor-container": {
-                  borderRadius: theme.shape.borderRadius / theme.shape.borderRadius,
-                  ".monaco-editor": {
-                    borderRadius: theme.shape.borderRadius / theme.shape.borderRadius,
-                  },
-                  ".overflow-guard": {
-                    borderRadius: theme.shape.borderRadius / theme.shape.borderRadius,
-                  },
-                },
-              }}
-            >
-              <MonacoEditor
+            <Preview sx={{ border: "unset" }}>
+              <Editor
                 height="100%"
                 width="100%"
                 theme="vs-dark"
@@ -109,7 +92,7 @@ const PlaygroundsActivity = () => {
                   automaticLayout: true,
                 }}
               />
-            </Box>
+            </Preview>
 
             {isLargeScreen && (
               <Preview>
@@ -142,6 +125,7 @@ const PlaygroundsActivity = () => {
 
 const Preview = styled("div")(({ theme }) => ({
   flex: 1,
+  flexBasis: "50%",
   height: "100%",
   width: "100%",
   minHeight: "100%",
@@ -155,6 +139,12 @@ const Preview = styled("div")(({ theme }) => ({
   section: {
     position: "absolute",
     overflowY: "scroll",
+  },
+  ".monaco-editor": {
+    borderRadius: theme.shape.borderRadius / theme.shape.borderRadius,
+  },
+  ".overflow-guard": {
+    borderRadius: theme.shape.borderRadius / theme.shape.borderRadius,
   },
 }));
 
