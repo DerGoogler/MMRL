@@ -16,6 +16,7 @@ export const en = {
   module_verified: "This module is verified and is trusted",
   download: "Download",
   install: "Install",
+  update: "Update",
   explore: "Explore",
   installed: "Installed",
   remove: "Remove",

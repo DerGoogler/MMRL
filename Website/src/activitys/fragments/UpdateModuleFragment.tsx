@@ -4,47 +4,56 @@ import React from "react";
 import { useActivity } from "@Hooks/useActivity";
 import { useRepos } from "@Hooks/useRepos";
 import Stack from "@mui/material/Stack";
-import Pagination from "@mui/material/Pagination";
 import Box from "@mui/material/Box";
 import { useStrings } from "@Hooks/useStrings";
-import { usePagination } from "@Hooks/usePagination";
-import RepoActivity from "@Activitys/RepoActivity";
 import { useSettings } from "@Hooks/useSettings";
-import NorthEastRoundedIcon from "@mui/icons-material/NorthEastRounded";
 import { useTheme } from "@Hooks/useTheme";
 import { Page, RenderFunction } from "@Components/onsenui/Page";
-import { BottomToolbar } from "@Components/onsenui/BottomToolbar";
-import Icon from "@Components/Icon";
 import { MissingInternet } from "@Components/MissingInternet";
 import { useNetwork } from "@Hooks/useNetwork";
-import { Button, Card, Paper } from "@mui/material";
+import { Button, Paper } from "@mui/material";
 import { FilterDialog, useModuleFilter } from "@Hooks/useModulesFilter";
 import ModuleViewActivity from "@Activitys/ModuleViewActivity";
 import { Disappear } from "react-disappear";
+import { SuFile } from "@Native/SuFile";
+import { Properties } from "properties-file";
+import TerminalActivity from "@Activitys/TerminalActivity";
 
 export interface ExploreModuleProps {
   renderToolbar?: RenderFunction;
   applyFilter: (modules: Module[], search: string) => Module[];
 }
 
-const ExploreModuleFragment = React.memo<ExploreModuleProps>((props) => {
+const UpdateModuleFragment = React.memo<ExploreModuleProps>((props) => {
   const { context } = useActivity();
   const { strings } = useStrings();
-  const { settings } = useSettings();
+  const { settings, modConf } = useSettings();
   const { scheme, theme, shade } = useTheme();
   const { modules, repos } = useRepos();
   const { isNetworkAvailable } = useNetwork();
   const [search, setSearch] = React.useState("");
+  const [updateableModule, setUpdateableModule] = React.useState<Module[]>(modules);
+
+  React.useEffect(() => {
+    setUpdateableModule((prev) => {
+      const t = prev.filter(({ id, versionCode }) => {
+        const properties = new SuFile(modConf("PROPS", { MODID: id }));
+        if (properties.exist()) {
+          const props = new Properties(properties.read()).toObject() as unknown as Module;
+          return props.versionCode < versionCode;
+        } else {
+          return false;
+        }
+      });
+
+      console.log(t);
+      return t;
+    });
+  }, []);
 
   const [open, setOpen] = React.useState(false);
 
-  const [filteredModules, exploreFilter, setExploreFilter] = useModuleFilter("explore_filter", props.applyFilter(modules, search));
-
-  const [page, setPage] = React.useState(1);
-
-  const PER_PAGE = 20;
-  const count = Math.ceil(filteredModules.length / PER_PAGE);
-  const _DATA = usePagination(filteredModules, PER_PAGE);
+  const [filteredModules, exploreFilter, setExploreFilter] = useModuleFilter("update_filter", props.applyFilter(updateableModule, search));
 
   if (!isNetworkAvailable) {
     return (
@@ -54,7 +63,7 @@ const ExploreModuleFragment = React.memo<ExploreModuleProps>((props) => {
     );
   }
 
-  if (repos.length === 0) {
+  if (modules.length === 0) {
     return (
       <Page>
         <Stack
@@ -70,34 +79,7 @@ const ExploreModuleFragment = React.memo<ExploreModuleProps>((props) => {
           alignItems="center"
           spacing={1}
         >
-          <Box>Looks empty here... Add an</Box>
-          <Stack
-            direction="row"
-            justifyContent="center"
-            alignItems="center"
-            spacing={0.5}
-            sx={{
-              color: theme.palette.primary.dark,
-              ":hover": {
-                cursor: "pointer",
-              },
-            }}
-            onClick={() => {
-              context.pushPage({
-                component: RepoActivity,
-                key: "repos",
-                extra: {},
-              });
-            }}
-          >
-            <Box>{strings("repository")}</Box>
-            <Icon
-              icon={NorthEastRoundedIcon}
-              sx={{
-                fontSize: 18,
-              }}
-            />
-          </Stack>
+          <Box>There are no updates</Box>
         </Stack>
       </Page>
     );
@@ -150,45 +132,44 @@ const ExploreModuleFragment = React.memo<ExploreModuleProps>((props) => {
         >
           <Searchbar
             sx={{
-              borderRadius: `${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0px 0px`,
+              borderRadius: theme.shape.borderRadius,
             }}
             onFilterClick={handleClickOpen}
             placeholder={strings("search_modules")}
             onChange={(e) => setSearch(e.target.value)}
           />
-          <Paper
-            component={Stack}
-            elevation={0}
-            justifyContent="center"
-            spacing={0.8}
-            direction="row"
-            alignItems="center"
-            sx={{
-              borderRadius: `0px 0px ${theme.shape.borderRadius}px ${theme.shape.borderRadius}px`,
-              pr: 1,
-              pl: 1,
-              pb: 1,
-              display: "flex",
-              alignItems: "center",
-              width: "100%",
-            }}
-          >
-            <Pagination
-              count={count}
-              page={page}
-              color={settings.darkmode ? "secondary" : "standard"}
-              shape="rounded"
-              onChange={(e, p) => {
-                setPage(p);
-                _DATA.jump(p);
-              }}
-            />
-          </Paper>
         </Paper>
 
         <Stack sx={{ mt: 1 }} direction="column" justifyContent="flex-start" alignItems="center" spacing={1}>
-          {_DATA.currentData().map((module, index) => (
-            <ExploreModule index={index} key={module.id + index} moduleProps={module} />
+          {filteredModules.map((module, index) => (
+            <Box sx={{ width: "100%" }}>
+              <ExploreModule
+                sx={{ borderRadius: `${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0px 0px` }}
+                index={index}
+                key={module.id + index}
+                moduleProps={module}
+              />
+              <Button
+                sx={{
+                  borderRadius: `0px 0px ${theme.shape.borderRadius}px ${theme.shape.borderRadius}px`,
+                }}
+                fullWidth
+                variant="contained"
+                disableElevation
+                onClick={() => {
+                  context.pushPage({
+                    component: TerminalActivity,
+                    key: "update_install",
+                    extra: {
+                      exploreInstall: true,
+                      path: module.download,
+                    },
+                  });
+                }}
+              >
+                {strings("update")}
+              </Button>
+            </Box>
           ))}
         </Stack>
       </Page.RelativeContent>
@@ -198,4 +179,4 @@ const ExploreModuleFragment = React.memo<ExploreModuleProps>((props) => {
   );
 });
 
-export default ExploreModuleFragment;
+export default UpdateModuleFragment;

@@ -210,7 +210,7 @@ declare global {
     id: str;
     name: str;
     version?: int;
-    versionCode?: int;
+    versionCode: int;
     author?: str;
     description?: str;
     valid: bool;

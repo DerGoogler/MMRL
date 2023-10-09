@@ -19,7 +19,7 @@ export interface DeviceModuleProps {
   applyFilter: (modules: Module[], search: string) => Module[];
 }
 
-const DeviceModuleFragment = (props: DeviceModuleProps) => {
+const DeviceModuleFragment = React.memo<DeviceModuleProps>((props) => {
   const { context } = useActivity();
   const { settings, modConf } = useSettings();
   const { strings } = useStrings();
@@ -29,7 +29,7 @@ const DeviceModuleFragment = (props: DeviceModuleProps) => {
   React.useEffect(() => {
     const folders = SuFile.list(modConf("MODULES")).split(",");
     folders.forEach((module) => {
-      const properties = new SuFile(formatString(modConf("PROPS"), { MODID: module }));
+      const properties = new SuFile(modConf("PROPS", { MODID: module }));
       if (properties.exist()) {
         setModules((prev) => {
           // Preventing duplicates
@@ -130,6 +130,6 @@ const DeviceModuleFragment = (props: DeviceModuleProps) => {
       <FilterDialog selectedValue={exploreFilter} open={open} onClose={handleClose} />
     </Page>
   );
-};
+});
 
 export default DeviceModuleFragment;

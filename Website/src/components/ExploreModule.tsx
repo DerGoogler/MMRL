@@ -1,4 +1,4 @@
-import { Alert, AlertTitle, Box, Card, CardMedia, Chip, Stack, Typography } from "@mui/material";
+import { Alert, AlertTitle, Box, Card, CardMedia, Chip, Stack, SxProps, Typography } from "@mui/material";
 import { useActivity } from "@Hooks/useActivity";
 import { useStrings } from "@Hooks/useStrings";
 import { useLowQualityModule } from "@Hooks/useLowQualityModule";
@@ -18,6 +18,7 @@ interface Props {
   moduleProps: Module;
   disableLowQuality?: boolean;
   disableCovers?: boolean;
+  sx?: SxProps;
 }
 
 export const ExploreModule = React.memo<Props>((props) => {
@@ -80,6 +81,7 @@ export const ExploreModule = React.memo<Props>((props) => {
       onTap={handleOpen}
       component={GestureDetector}
       sx={{
+        ...props.sx,
         ":hover": {
           cursor: "pointer",
           bgcolor: !settings.darkmode ? shade(colors[settings.accent_scheme.value][100], 7.6) : "unset",

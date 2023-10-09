@@ -17,6 +17,7 @@ import { useNativeStorage } from "@Hooks/useNativeStorage";
 import { BuildConfig } from "@Native/BuildConfig";
 import { useNewerVersion } from "@Hooks/useNewerVersion";
 import FetchTextActivity from "./FetchTextActivity";
+import UpdateModuleFragment from "./fragments/UpdateModuleFragment";
 
 const MainApplication = () => {
   const { strings } = useStrings();
@@ -40,6 +41,10 @@ const MainApplication = () => {
       },
       ...(os.isAndroid
         ? [
+            {
+              content: <UpdateModuleFragment applyFilter={filteredModules} />,
+              tab: <Tabbar.Tab label={"Updates"} />,
+            },
             {
               content: <DeviceModuleFragment applyFilter={filteredModules} />,
               tab: <Tabbar.Tab label={strings("installed")} />,
