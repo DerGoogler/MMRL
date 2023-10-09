@@ -5,13 +5,14 @@ import com.google.gson.*;
 apply plugin: 'com.android.application'
 apply plugin: 'com.github.node-gradle.node'
 
-def packageJson = new File('./../Website/package.json')
-def pkg = new JsonSlurper().parseText(packageJson.getText())
+
+def inputFile = new File("./../Website/package.json")
+def pkg = new JsonSlurper().parseText(inputFile.text)
 def app_name = "MMRL"
 def cur_time = System.currentTimeMillis()
 
 android {
-    compileSdk 33
+    compileSdk pkg.config.target_sdk
 
     defaultConfig {
         applicationId pkg.config.application_id
@@ -29,7 +30,7 @@ android {
             abiFilters "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
         }
     }
-    
+
     splits {
         abi {
             enable true
@@ -38,7 +39,7 @@ android {
             universalApk true
         }
     }
-    
+
     buildTypes {
         release {
             resValue "string", "app_name", "${app_name}"
@@ -88,21 +89,21 @@ repositories {
 }
 
 dependencies {
-    implementation "androidx.browser:browser:1.5.0"
-    implementation "com.github.topjohnwu.libsu:core:5.0.2"
-    implementation "com.github.topjohnwu.libsu:io:5.0.1"
+    implementation "androidx.browser:browser:1.6.0"
+    implementation "com.github.topjohnwu.libsu:core:5.0.3"
+    implementation "com.github.topjohnwu.libsu:io:5.0.3"
     implementation "androidx.appcompat:appcompat:1.6.1"
     implementation "org.apache.cordova:framework:10.1.1"
-    implementation "androidx.webkit:webkit:1.7.0"
+    implementation "androidx.webkit:webkit:1.8.0"
     implementation 'com.jraska:console:1.2.0'
-   // implementation 'com.google.android.material:material:1.6.0'
+    // implementation 'com.google.android.material:material:1.6.0'
 }
 
 configurations.implementation.setCanBeResolved(true)
 
 task printDepsTreeInJson {
     doLast {
-        configurations.implementation.incoming.getResolutionResult().getAllDependencies().each { depResult  ->
+        configurations.implementation.incoming.getResolutionResult().getAllDependencies().each { depResult ->
             println "{\"from\":\"" + depResult.getFrom() + "\"," + "\"requested\":\"" + depResult.getRequested() + "\"}"
         }
     }
@@ -125,13 +126,13 @@ task printSolvedDepsTreeInJson {
             }
             addToJson(dep)
         }
-        if(jsonOutput[-1] == ','){
+        if (jsonOutput[-1] == ',') {
             jsonOutput = jsonOutput[0..-2]
         }
         jsonOutput += "]"
 
         // This took me more than two hours to make -_-
-        def jsonFile =new JsonSlurper().parseText(jsonOutput)
+        def jsonFile = new JsonSlurper().parseText(jsonOutput)
         def json = JsonOutput.toJson(jsonFile)
         def pretty = JsonOutput.prettyPrint(json)
         def myFile = new File('./../Website/src/utils/native-licenses.json')

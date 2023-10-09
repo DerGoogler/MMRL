@@ -11,6 +11,7 @@ import ModuleViewActivity from "@Activitys/ModuleViewActivity";
 import { StyledIconButtonWithText } from "./StyledIconButton";
 import StarBorderRoundedIcon from "@mui/icons-material/StarBorderRounded";
 import { badgeStyle } from "./DeviceModule";
+import React from "react";
 
 interface Props {
   index: number;
@@ -18,16 +19,17 @@ interface Props {
   disableLowQuality?: boolean;
   disableCovers?: boolean;
 }
-export const ExploreModule = (_props: Props) => {
+
+export const ExploreModule = React.memo<Props>((props) => {
   const { context } = useActivity();
   const { strings } = useStrings();
   const { settings } = useSettings();
   const { theme, scheme, shade } = useTheme();
 
-  const { id, name, version, versionCode, description, stars, author, last_update, mmrl, valid } = _props.moduleProps;
+  const { id, name, version, versionCode, description, stars, author, last_update, mmrl, valid } = props.moduleProps;
 
   const { isVerified, isHidden } = useModuleOptions(id);
-  const isLowQuality = useLowQualityModule(_props.moduleProps, _props.disableLowQuality);
+  const isLowQuality = useLowQualityModule(props.moduleProps, props.disableLowQuality);
   const formatLastUpdate = useFormatDate(last_update);
 
   // if (isHidden) {
@@ -39,29 +41,15 @@ export const ExploreModule = (_props: Props) => {
   }
 
   const handleOpen = () => {
-    // context.pushPage({
-    //   component: DescriptonActivity,
-    //   key: `view_${prop_url.id}`,
-    //   extra: {
-    //     title: prop_url.name,
-    //     prop_url: prop_url,
-    //     zip_url: zip_url,
-    //     authorData: authorData,
-    //     request: {
-    //       url: notes_url,
-    //     },
-    //   },
-    // });
-
     context.pushPage({
       component: ModuleViewActivity,
       key: "",
-      extra: _props.moduleProps,
+      extra: props.moduleProps,
     });
   };
 
   const CoverHandler = () => {
-    if (_props.disableCovers) {
+    if (props.disableCovers) {
       return null;
     }
 
@@ -165,4 +153,4 @@ export const ExploreModule = (_props: Props) => {
       )}
     </Card>
   );
-};
+});

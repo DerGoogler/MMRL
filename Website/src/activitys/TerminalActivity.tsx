@@ -51,7 +51,7 @@ const TerminalActivity = () => {
 
   const escapePath = React.useCallback(
     (path: string) => {
-      return path.replace(/[-/\\^$*+?.()|[\]{} ]/g, "\\$&");
+      return path.replace(/[\\^$*+?()[\]{}|\s]/g, "\\$&");
     },
     [extra.path]
   );
@@ -67,22 +67,19 @@ const TerminalActivity = () => {
 
       const installPath = window.__properties__.get("persist.mmrlini.install_folder", "/data/local/tmp/<NAME>-<BRANCH>-moduled.zip");
 
-      const envp_explore = React.useMemo<Record<string, string>>(
-        () => ({
-          MMRL: "true",
-          MMRL_VER: BuildConfig.VERSION_CODE.toString(),
-          NAME: name,
-          URL: path,
-          BRANCH: branch,
-          INSTALLER_CLI: installCli(
-            formatString(escapePath(installPath), {
-              NAME: name,
-              BRANCH: branch,
-            })
-          ),
-        }),
-        [path]
-      );
+      const envp_explore = {
+        MMRL: "true",
+        MMRL_VER: BuildConfig.VERSION_CODE.toString(),
+        NAME: name,
+        URL: path,
+        BRANCH: branch,
+        INSTALLER_CLI: installCli(
+          formatString(installPath, {
+            NAME: name,
+            BRANCH: branch,
+          })
+        ),
+      };
 
       Terminal.exec({
         command: `${modConf("MMRLINI")}/system/usr/share/mmrl/bin/mmrl_explore_install`,
@@ -97,14 +94,14 @@ const TerminalActivity = () => {
         },
       });
     } else {
-      const envp_local = React.useMemo<Record<string, string>>(
-        () => ({
-          MMRL: "true",
-          MMRL_VER: BuildConfig.VERSION_CODE.toString(),
-          INSTALLER_CLI: installCli(escapePath(path)),
-        }),
-        [path]
-      );
+
+      console.log(escapePath(path))
+
+      const envp_local = {
+        MMRL: "true",
+        MMRL_VER: BuildConfig.VERSION_CODE.toString(),
+        INSTALLER_CLI: installCli(escapePath(path)),
+      };
 
       Terminal.exec({
         command: `${modConf("MMRLINI")}/system/usr/share/mmrl/bin/mmrl_local_install`,

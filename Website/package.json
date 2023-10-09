@@ -4,7 +4,7 @@
   "config": {
     "application_id": "com.dergoogler.mmrl",
     "min_sdk": 26,
-    "target_Sdk": 34,
+    "target_sdk": 34,
     "version_name": "1.7.6",
     "version_code": 176
   },
@@ -37,6 +37,7 @@
     "@mui/icons-material": "^5.8.0",
     "@mui/lab": "^5.0.0-alpha.135",
     "@mui/material": "^5.13.7",
+    "@nyariv/sandboxjs": "^0.8.23",
     "@primer/octicons-react": "^19.4.0",
     "ace-builds": "^1.23.3",
     "ajv": "^8.12.0",

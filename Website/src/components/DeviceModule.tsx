@@ -28,7 +28,7 @@ interface Props {
   module: string;
 }
 
-const DeviceModule = (props: Props) => {
+const DeviceModule = React.memo<Props>((props) => {
   const { strings } = useStrings();
   const { settings, modConf } = useSettings();
   const { context, extra } = useActivity<any>();
@@ -195,6 +195,6 @@ const DeviceModule = (props: Props) => {
       </Card>
     </>
   );
-};
+});
 
 export default DeviceModule;
