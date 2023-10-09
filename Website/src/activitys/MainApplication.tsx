@@ -41,7 +41,7 @@ const MainApplication = () => {
       ...(os.isAndroid
         ? [
             {
-              content: <DeviceModuleFragment />,
+              content: <DeviceModuleFragment applyFilter={filteredModules} />,
               tab: <Tabbar.Tab label={strings("installed")} />,
             },
           ]

@@ -41,8 +41,8 @@ export const filters = [
   },
 ];
 
-export const useModuleFilter = (modules: arr<Module>): [arr<Module>, string, SetValue<string>] => {
-  const [filter, setFilter] = useNativeStorage("filter", filters[0].value);
+export const useModuleFilter = (key: string, modules: arr<Module>): [arr<Module>, string, SetValue<string>] => {
+  const [filter, setFilter] = useNativeStorage(key, filters[0].value);
 
   switch (filter) {
     case "none":

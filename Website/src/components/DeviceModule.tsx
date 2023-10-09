@@ -25,29 +25,21 @@ export const badgeStyle: (color: (typeof colors)["blue" | "teal" | "red" | "oran
 };
 
 interface Props {
-  module: string;
+  module: Module;
 }
 
 const DeviceModule = React.memo<Props>((props) => {
   const { strings } = useStrings();
   const { settings, modConf } = useSettings();
   const { context, extra } = useActivity<any>();
-  const [moduleProps, setModuleProps] = React.useState<Partial<Module>>({});
   const [isEnabled, setIsEnabled] = React.useState(true);
   const [isSwitchDisabled, setIsSwitchDisabled] = React.useState(false);
 
   const log = useLog("DeviceModule");
 
-  const module = props.module;
+  const { id, name, version, versionCode, author, description } = props.module;
 
-  const format = React.useCallback<<K extends keyof ModConf>(key: K) => ModConf[K]>((key) => modConf(key, { MODID: props.module }), []);
-
-  const readProps = new SuFile(format("PROPS"));
-  React.useEffect(() => {
-    if (readProps.exist()) {
-      setModuleProps(new Properties(readProps.read()).toObject());
-    }
-  }, []);
+  const format = React.useCallback<<K extends keyof ModConf>(key: K) => ModConf[K]>((key) => modConf(key, { MODID: id }), []);
 
   const remove = new SuFile(format("REMOVE"));
   React.useEffect(() => {
@@ -59,18 +51,11 @@ const DeviceModule = React.memo<Props>((props) => {
     setIsEnabled(!disable.exist());
   }, [isEnabled]);
 
-  const { id, name, version, versionCode, author, description } = moduleProps;
-
   const post_service = SuFile.exist(format("POSTSERVICE"));
   const late_service = SuFile.exist(format("LATESERVICE"));
   const post_mount = SuFile.exist(format("POSTMOUNT"));
   const boot_complete = SuFile.exist(format("BOOTCOMP"));
-
   const module_config_file = SuFile.exist(format("CONFIG"));
-
-  if (!readProps.exist()) {
-    return null;
-  }
 
   return (
     <>
@@ -144,10 +129,10 @@ const DeviceModule = React.memo<Props>((props) => {
                 onClick={() => {
                   context.pushPage({
                     component: ConfigureActivity,
-                    key: `${module}_configure`,
+                    key: `${id}_configure`,
                     extra: {
                       modulename: name,
-                      moduleid: module,
+                      moduleid: id,
                     },
                   });
                 }}

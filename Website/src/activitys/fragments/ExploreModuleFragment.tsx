@@ -38,7 +38,7 @@ const ExploreModuleFragment = (props: ExploreModuleProps) => {
 
   const [open, setOpen] = React.useState(false);
 
-  const [filteredModules, exploreFilter, setExploreFilter] = useModuleFilter(props.applyFilter(modules, search));
+  const [filteredModules, exploreFilter, setExploreFilter] = useModuleFilter("explore_filter", props.applyFilter(modules, search));
 
   const [page, setPage] = React.useState(1);
 
@@ -126,16 +126,6 @@ const ExploreModuleFragment = (props: ExploreModuleProps) => {
   }, [modules]);
 
   const [scrolled, setScrolled] = React.useState(false);
-
-  const handleScroll = () => {
-    const offset = window.scrollY;
-    if (offset > 200) {
-      setScrolled((prev) => !prev);
-    }
-  };
-
-  const searchCardBackground = theme.palette.primary.main;
-  const searchCardTransition = "background-color 0.5s ease, margin 0.5s ease, padding 0.5s ease, width 0.5s ease";
 
   return (
     <Page renderToolbar={props.renderToolbar}>
