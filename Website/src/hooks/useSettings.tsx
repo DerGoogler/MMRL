@@ -159,13 +159,11 @@ export interface StorageDeclaration {
   disabled_repos: string[];
   _low_quality_module: boolean;
   _invald_module: boolean;
-  _disable_module_covers: boolean;
   __experimental_local_install: boolean;
   repos: StoredRepo[];
   shade_value: number;
   term_scroll_bottom: boolean;
   term_scroll_behavior: { name: string; value: ScrollBehavior };
-  disable_sticky_search_bar: bool;
 }
 
 export interface ModConf {
@@ -288,22 +286,23 @@ export function formatString(template: string, object: object): string {
 export const SettingsProvider = (props: React.PropsWithChildren) => {
   const availableLangs = useLanguageMap();
 
-  const INITIAL_SETTINGS: StorageDeclaration = {
-    darkmode: false,
-    language: availableLangs[0],
-    accent_scheme: accent_colors[0],
-    eruda_console_enabled: false,
-    disabled_repos: [],
-    _low_quality_module: true,
-    _invald_module: false,
-    _disable_module_covers: false,
-    __experimental_local_install: false,
-    repos: [],
-    shade_value: -80,
-    term_scroll_bottom: true,
-    term_scroll_behavior: termScrollBehaviors[0],
-    disable_sticky_search_bar: false,
-  };
+  const INITIAL_SETTINGS = React.useMemo<StorageDeclaration>(
+    () => ({
+      darkmode: false,
+      language: availableLangs[0],
+      accent_scheme: accent_colors[0],
+      eruda_console_enabled: false,
+      disabled_repos: [],
+      _low_quality_module: true,
+      _invald_module: false,
+      __experimental_local_install: false,
+      repos: [],
+      shade_value: -80,
+      term_scroll_bottom: true,
+      term_scroll_behavior: termScrollBehaviors[0],
+    }),
+    []
+  );
 
   const [settings, setSettings] = useNativeStorage("settings", INITIAL_SETTINGS);
   const [modConf, setModConf] = useNativeStorage("mod-conf", INITIAL_MOD_CONF);

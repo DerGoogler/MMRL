@@ -80,16 +80,6 @@ function SettingsActivity() {
 
           <ListPickerItem id="accent-color" targetSetting="accent_scheme" title={strings("accent_color")} contentMap={accent_colors} />
           <ListPickerItem id="language" targetSetting="language" title={strings("language")} contentMap={availableLangs} />
-          <ListItem>
-            <StyledListItemText id="switch-list-label-wifi" primary={strings("sticky_search_bar")} />
-            <Android12Switch
-              edge="end"
-              onChange={(e: any) => {
-                setSettings("disable_sticky_search_bar", e.target.checked);
-              }}
-              checked={settings.disable_sticky_search_bar}
-            />
-          </ListItem>
         </List>
 
         <Divider />
