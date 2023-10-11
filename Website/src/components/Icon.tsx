@@ -8,6 +8,8 @@ interface IProps extends SvgIconProps {
    * Keeps the icons in light colors even if it's dark mode on
    */
   keepLight?: boolean;
+
+  [key: string]: any;
 }
 
 /**

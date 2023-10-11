@@ -14,7 +14,6 @@ import { badgeStyle } from "./DeviceModule";
 import React from "react";
 
 interface Props {
-  index: number;
   moduleProps: Module;
   disableLowQuality?: boolean;
   disableCovers?: boolean;

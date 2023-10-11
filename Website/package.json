@@ -45,6 +45,8 @@
     "axios": "^0.27.2",
     "default-composer": "^0.4.0",
     "eruda": "^3.0.0",
+    "flatlist-react": "^1.5.14",
+    "framer-motion": "^10.16.4",
     "googlers-tools": "^1.2.8",
     "highlight.js": "^11.6.0",
     "install": "^0.13.0",

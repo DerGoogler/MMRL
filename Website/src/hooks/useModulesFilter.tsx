@@ -12,6 +12,8 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
+import { SortInterface } from "flatlist-react/lib";
+import React from "react";
 
 export const filters = [
   {
@@ -41,41 +43,21 @@ export const filters = [
   },
 ];
 
-export const useModuleFilter = (key: string, modules: arr<Module>): [arr<Module>, string, SetValue<string>] => {
+export const useModuleFilter = (key: string): [Array<any>, string, SetValue<string>] => {
   const [filter, setFilter] = useNativeStorage(key, filters[0].value);
 
-  switch (filter) {
-    case "none":
-      return [modules, filter, setFilter];
-    case "date_oldest":
-      return [
-        modules.sort(function (a, b) {
-          var da = new Date(a.last_update).getTime();
-          var db = new Date(b.last_update).getTime();
+  const f = React.useMemo(
+    () => ({
+      none: [{}],
+      date_oldest: [{ key: "last_update", descending: false }],
+      date_newest: [{ key: "last_update", descending: true }],
+      alphabetically: [{ key: "name", descending: false }],
+      alphabetically_reverse: [{ key: "name", descending: true }],
+    }),
+    []
+  );
 
-          return da - db;
-        }),
-        filter,
-        setFilter,
-      ];
-    case "date_newest":
-      return [
-        modules.sort(function (a, b) {
-          var da = new Date(a.last_update).getTime();
-          var db = new Date(b.last_update).getTime();
-
-          return db - da;
-        }),
-        filter,
-        setFilter,
-      ];
-    case "alphabetically":
-      return [modules.sort((a, b) => a.name.localeCompare(b.name)), filter, setFilter];
-    case "alphabetically_reverse":
-      return [modules.sort((a, b) => b.name.localeCompare(a.name)), filter, setFilter];
-    default:
-      return [modules, filter, setFilter];
-  }
+  return [f[filter], filter, setFilter];
 };
 
 interface FilterDialogProps {

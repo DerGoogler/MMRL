@@ -1,25 +1,29 @@
 import * as React from "react";
-import { Button, SearchInput } from "react-onsenui";
 import { FormControl, SxProps, styled } from "@mui/material";
-import useShadeColor from "../hooks/useShadeColor";
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import IconButton from "@mui/material/IconButton";
-import { useTheme } from "@Hooks/useTheme";
-import { useSettings } from "@Hooks/useSettings";
 import FilterListIcon from "@mui/icons-material/FilterList";
 
-type SearchbarProps = {
+export interface SearchbarProps {
+  elevation?: number | undefined;
   sx?: SxProps;
   onFilterClick?: React.MouseEventHandler<HTMLButtonElement>;
-  onChange: React.ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>;
+  value: string;
+  setValue: React.Dispatch<React.SetStateAction<string>>;
   placeholder: string;
-};
+}
 
-export const Searchbar = ({ sx, placeholder, onChange, onFilterClick }: SearchbarProps) => {
+export const Searchbar = React.memo<SearchbarProps>((props) => {
+  const { elevation, onFilterClick, sx, placeholder, value, setValue } = props;
+
+  const handleChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setValue(e.target.value);
+  }, []);
+
   return (
     <Paper
-      elevation={0}
+      elevation={elevation || 0}
       component="form"
       sx={{
         ...sx,
@@ -38,17 +42,17 @@ export const Searchbar = ({ sx, placeholder, onChange, onFilterClick }: Searchba
           placeholder={placeholder}
           inputProps={{
             "aria-label": placeholder,
-            // onKeyDown: (e: any) => {
-            //   if (e.key === "Enter") {
-            //     e.preventDefault();
-            //     onSearch(value);
-            //   }
-            // },
+            onKeyDown: (e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+              }
+            },
           }}
-          onChange={onChange}
+          value={value}
+          onChange={handleChange}
           fullWidth
         />
       </FormControl>
     </Paper>
   );
-};
+});
