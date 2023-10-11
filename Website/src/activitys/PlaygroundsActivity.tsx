@@ -20,8 +20,6 @@ export interface PlaygroundExtra {
 
 const PlaygroundsActivity = () => {
   const { context, extra } = useActivity<PlaygroundExtra>();
-  const { strings } = useStrings();
-  const { theme } = useTheme();
 
   const [description, setDescription] = React.useState(extra.defaultText || "");
 
@@ -70,6 +68,11 @@ const PlaygroundsActivity = () => {
                 theme="vs-dark"
                 language={extra.editorMode}
                 value={description}
+                onChange={(value) => {
+                  if (value) {
+                    setDescription(value);
+                  }
+                }}
                 options={{
                   autoIndent: "full",
                   contextmenu: true,
