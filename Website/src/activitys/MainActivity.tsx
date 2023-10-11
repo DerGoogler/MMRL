@@ -59,12 +59,12 @@ const MainActivity = (): JSX.Element => {
     if (os.isAndroid) {
       // Shell.isAppGrantedRoot() doesn't work on KSU
       if (Shell.isSuAvailable()) {
-        return MainApplication;
+        return React.memo(MainApplication);
       } else {
-        return NoRootActivity;
+        return React.memo(NoRootActivity);
       }
     } else {
-      return MainApplication;
+      return React.memo(MainApplication);
     }
   };
 
@@ -115,7 +115,7 @@ const MainActivity = (): JSX.Element => {
 
   const pushPage = <E, P>(props: IntentPusher<E, P>): void => {
     const route = {
-      component: props.component,
+      component: React.memo(props.component),
       props: {
         key: props.key || props.component.name,
       },

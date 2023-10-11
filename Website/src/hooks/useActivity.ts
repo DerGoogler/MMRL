@@ -5,7 +5,7 @@ export const Extra = React.createContext({});
 
 export interface IntentPusher<E = {}, P = {}> {
   key: string;
-  component: React.ElementType<P> & Function;
+  component: React.FunctionComponent<P> | React.ComponentType<P>;
   options?: any;
   extra?: E;
   props?: React.Attributes & P;

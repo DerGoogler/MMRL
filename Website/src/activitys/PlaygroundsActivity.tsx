@@ -5,7 +5,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import { Page } from "@Components/onsenui/Page";
-import { useActivity } from "@Hooks/useActivity";
+import { IntentPusher, useActivity } from "@Hooks/useActivity";
 import { useStrings } from "@Hooks/useStrings";
 import Editor from "@monaco-editor/react";
 import { useTheme } from "@Hooks/useTheme";
@@ -14,7 +14,7 @@ export interface PlaygroundExtra {
   title: string;
   editorMode?: string;
   defaultText?: string;
-  previewPage: React.ElementType<any> & Function;
+  previewPage: IntentPusher["component"];
   preview(props: React.PropsWithChildren): React.JSX.Element;
 }
 
