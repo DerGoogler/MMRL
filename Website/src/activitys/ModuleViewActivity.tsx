@@ -261,7 +261,7 @@ const ModuleViewActivity = () => {
               )}
 
               <Stack direction="row" justifyContent="center" alignItems="center" spacing={1}>
-                {os.isAndroid && (Shell.isMagiskSU() || Shell.isKernelSU()) && hasInstallTools && settings.__experimental_local_install && (
+                {os.isAndroid && (Shell.isMagiskSU() || Shell.isKernelSU()) && hasInstallTools && (
                   <Button
                     sx={{
                       color: settings.darkmode ? scheme[900] : scheme[600],

@@ -80,7 +80,7 @@ export const de = {
   modconf_subtitle: "Eine Möglichkeit, verschiedene Modulsysteme zu verwalten",
 
   enable_install: "Installation aktivieren",
-  enable_install_subtitle: "Experimentelle Installation von *.zip-Dateien",
+  // enable_install_subtitle: "Experimentelle Installation von *.zip-Dateien",
 
   scroll_to_bottom: "Nach unten scrollen",
   scroll_to_bottom_subtitle: "Automatisches Scrollen nach unten im Terminal",

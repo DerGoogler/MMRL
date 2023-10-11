@@ -133,14 +133,7 @@ function SettingsActivity() {
             >
               <ListItem>
                 <StyledListItemText primary={strings("enable_install")} secondary={strings("enable_install_subtitle")} />
-                <Android12Switch
-                  edge="end"
-                  disabled={!(Shell.isKernelSU() || Shell.isMagiskSU())}
-                  onChange={(e: any) => {
-                    setSettings("__experimental_local_install", e.target.checked);
-                  }}
-                  checked={settings.__experimental_local_install}
-                />
+                <Android12Switch edge="end" disabled onChange={(e: any) => {}} checked={false} />
               </ListItem>
 
               <ListItem>
