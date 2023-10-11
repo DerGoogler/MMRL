@@ -2,30 +2,16 @@ import React from "react";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import FlatList from "flatlist-react";
-import { Searchbar } from "@Components/Searchbar";
-import { useActivity } from "@Hooks/useActivity";
-import { useStrings } from "@Hooks/useStrings";
-import { useSettings } from "@Hooks/useSettings";
 import { useTheme } from "@Hooks/useTheme";
 import { Page, RenderFunction } from "@Components/onsenui/Page";
 import { MissingInternet } from "@Components/MissingInternet";
 import { useNetwork } from "@Hooks/useNetwork";
-import { FilterDialog, filters, useModuleFilter } from "@Hooks/useModulesFilter";
-import { Disappear } from "react-disappear";
+import { filters, useModuleFilter } from "@Hooks/useModulesFilter";
 import { renderFunc } from "flatlist-react/lib/___subComponents/uiFunctions";
-import Paper from "@mui/material/Paper";
-import Pagination from "@mui/material/Pagination";
-import { usePagination } from "@Hooks/usePagination";
-
 import { styled, alpha } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import Menu, { MenuProps } from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import EditIcon from "@mui/icons-material/Edit";
-import Divider from "@mui/material/Divider";
-import ArchiveIcon from "@mui/icons-material/Archive";
-import FileCopyIcon from "@mui/icons-material/FileCopy";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 const RenderWhenEmpty = React.memo(() => {
@@ -95,10 +81,6 @@ const StyledMenu = styled((props: MenuProps) => (
 }));
 
 const ModuleFragment = React.memo<ModuleFragmentProps>((props) => {
-  const { context } = useActivity();
-  const { strings } = useStrings();
-  const { settings } = useSettings();
-  const { theme } = useTheme();
   const { isNetworkAvailable } = useNetwork();
 
   const renderItem = React.useCallback<renderFunc<Module>>((m, k) => props.renderItem(m, k), []);
@@ -111,17 +93,6 @@ const ModuleFragment = React.memo<ModuleFragmentProps>((props) => {
       </Page>
     );
   }
-
-  // const handleClickOpen = () => {
-  //   setOpen(true);
-  // };
-
-  // const handleClose = (value: string) => {
-  //   setOpen(false);
-  //   setFilter(value);
-  // };
-
-  const [page, setPage] = React.useState(1);
 
   const modules = React.useMemo(() => props.modules, [props.modules]);
 
@@ -174,32 +145,6 @@ const ModuleFragment = React.memo<ModuleFragmentProps>((props) => {
             ))}
           </StyledMenu>
         </Stack>
-        {/* <Paper
-          component={Stack}
-          elevation={0}
-          justifyContent="center"
-          spacing={0.8}
-          direction="row"
-          alignItems="center"
-          sx={{
-            borderRadius: theme.shape.borderRadius / theme.shape.borderRadius,
-            p: 1,
-            display: "flex",
-            alignItems: "center",
-            width: "100%",
-          }}
-        >
-          <Pagination
-            count={count}
-            page={page}
-            color={settings.darkmode ? "secondary" : "standard"}
-            shape="rounded"
-            onChange={(e, p) => {
-              setPage(p);
-              modules.jump(p);
-            }}
-          />
-        </Paper> */}
 
         <Box sx={{ mt: 1 }}>
           <FlatList
@@ -210,6 +155,7 @@ const ModuleFragment = React.memo<ModuleFragmentProps>((props) => {
             search={{
               by: ["id", "name", "author", "description"],
               term: props.search,
+              caseInsensitive: true,
             }}
             sortBy={filter}
             display={{
