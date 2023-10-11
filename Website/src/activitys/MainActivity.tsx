@@ -36,15 +36,17 @@ const MainActivity = (): JSX.Element => {
 
   const erudaRef = React.useRef<HTMLElement | null>(null);
 
+  const _eruda = React.useMemo(() => eruda, [settings.eruda_console_enabled]);
+
   React.useEffect(() => {
     if (settings.eruda_console_enabled) {
-      eruda.init({
+      _eruda.init({
         container: erudaRef.current as HTMLElement,
         tool: ["console", "elements", "resources", "info"],
       });
     } else {
       if ((window as any).eruda) {
-        eruda.destroy();
+        _eruda.destroy();
       }
     }
   }, [settings.eruda_console_enabled]);
