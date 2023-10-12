@@ -33,19 +33,6 @@
       "filters": [
         {
           "filterType": "ABI",
-          "value": "armeabi-v7a"
-        }
-      ],
-      "attributes": [],
-      "versionCode": 176,
-      "versionName": "1.7.6",
-      "outputFile": "app-default-armeabi-v7a-release.apk"
-    },
-    {
-      "type": "ONE_OF_MANY",
-      "filters": [
-        {
-          "filterType": "ABI",
           "value": "x86"
         }
       ],
@@ -53,6 +40,19 @@
       "versionCode": 176,
       "versionName": "1.7.6",
       "outputFile": "app-default-x86-release.apk"
+    },
+    {
+      "type": "ONE_OF_MANY",
+      "filters": [
+        {
+          "filterType": "ABI",
+          "value": "armeabi-v7a"
+        }
+      ],
+      "attributes": [],
+      "versionCode": 176,
+      "versionName": "1.7.6",
+      "outputFile": "app-default-armeabi-v7a-release.apk"
     },
     {
       "type": "ONE_OF_MANY",

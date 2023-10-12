@@ -1,8 +1,7 @@
 import { CloseRounded } from "@mui/icons-material";
 import { useState } from "react";
 import { RouterUtil } from "@Util/RouterUtil";
-import { Context, Extra, IntentPusher } from "../hooks/useActivity";
-import { obj } from "googlers-tools";
+import { IntentPusher } from "../hooks/useActivity";
 import { useSettings } from "@Hooks/useSettings";
 import React from "react";
 import { Button, Typography } from "@mui/material";
@@ -119,7 +118,7 @@ const MainActivity = (): JSX.Element => {
     const route = {
       component: React.memo(props.component),
       props: {
-        key: props.key || props.component.name,
+        key: props.component.name || props.key,
       },
     };
 

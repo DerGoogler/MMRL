@@ -1,7 +1,7 @@
 import CodeRoundedIcon from "@mui/icons-material/CodeRounded";
 import React from "react";
 import Typography from "@mui/material/Typography";
-import Avatar from "@mui/material/Avatar";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import FetchTextActivity from "./FetchTextActivity";
 import ModuleFragment from "./fragments/ModuleFragment";
 import TerminalActivity from "./TerminalActivity";
@@ -32,7 +32,12 @@ import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import ClearIcon from "@mui/icons-material/Clear";
 
+interface SearchbarRef {
+  clear(): void;
+}
+
 interface SearchbarProps {
+  value: string;
   onSearch(term: string): void;
   placeholder: string;
 }
@@ -40,36 +45,48 @@ interface SearchbarProps {
 const Clear = motion(ClearIcon);
 const Search = motion(SearchIcon);
 const MotionTypography = motion(Typography);
-const SearchBar = motion(
-  React.forwardRef<any, SearchbarProps>((props, ref) => {
-    const [term, setTerm] = React.useState("");
-    const { onSearch, placeholder } = props;
+const MotionInputBase = motion(InputBase);
+const SearchBar = React.forwardRef<SearchbarRef, SearchbarProps>((props, ref) => {
+  const { onSearch, placeholder, value } = props;
+  const [term, setTerm] = React.useState(value);
 
-    const handleTermChange = (e) => {
-      setTerm(e.target.value);
-    };
+  const handleTermChange = (e) => {
+    setTerm(e.target.value);
+  };
 
-    return (
-      <InputBase
-        ref={ref}
-        autoFocus
-        fullWidth
-        value={term}
-        inputProps={{
-          "aria-label": placeholder,
-          onKeyDown(e) {
-            if (e.key === "Enter") {
-              e.preventDefault();
-              onSearch(term);
-            }
-          },
-        }}
-        onChange={handleTermChange}
-        placeholder={placeholder}
-      />
-    );
-  })
-);
+  React.useImperativeHandle(
+    ref,
+    () => ({
+      clear() {
+        setTerm("");
+      },
+    }),
+    []
+  );
+
+  return (
+    <MotionInputBase
+      ref={ref as any}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      autoFocus
+      fullWidth
+      value={term}
+      inputProps={{
+        "aria-label": placeholder,
+        onKeyDown(e) {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            onSearch(term);
+          }
+        },
+      }}
+      onChange={handleTermChange}
+      placeholder={placeholder}
+    />
+  );
+});
 
 const MainApplication = () => {
   const { strings } = useStrings();
@@ -80,6 +97,8 @@ const MainApplication = () => {
   const [index, setIndex] = React.useState(0);
   const [localModules, setLocalModules] = React.useState<Module[]>([]);
   const [updateableModules, setUpdateableModules] = React.useState<Module[]>(modules);
+
+  const searchRef = React.useRef<SearchbarRef | null>(null);
 
   const [isVisible, setVisible] = React.useState(false);
   const [search, setSearch] = React.useState("");
@@ -248,13 +267,29 @@ const MainApplication = () => {
     }
   }, []);
 
-  const handleSearchState = () => {
-    setVisible((prev) => {
-      if (prev) {
+  const handleOpenSearch = () => {
+    if (isVisible) {
+      if (searchRef.current) {
         setSearch("");
+        searchRef.current.clear();
       }
-      return !prev;
-    });
+    } else {
+      setVisible((prev) => !prev);
+    }
+  };
+
+  const handleSearch = () => {
+    if (isVisible) {
+      setVisible((prev) => {
+        if (prev && searchRef.current) {
+          setSearch("");
+          searchRef.current.clear();
+        }
+        return !prev;
+      });
+    } else {
+      context.splitter.show();
+    }
   };
 
   const renderToolbar = () => {
@@ -263,10 +298,14 @@ const MainApplication = () => {
         <AnimatePresence>
           <Toolbar.Left>
             <Toolbar.Button
-              icon={Menu}
-              onClick={() => {
-                context.splitter.show();
+              iconProps={{
+                initial: { opacity: 0 },
+                animate: { opacity: 1 },
+                exit: { opacity: 0 },
               }}
+              // @ts-ignore
+              icon={isVisible ? ArrowBackIcon : Menu}
+              onClick={handleSearch}
             />
           </Toolbar.Left>
           <Toolbar.Center
@@ -309,9 +348,8 @@ const MainApplication = () => {
               </MotionTypography>
             ) : (
               <SearchBar
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
+                ref={searchRef as any}
+                value={search}
                 onSearch={(term) => setSearch(term)}
                 placeholder={strings("search_modules")}
               />
@@ -327,7 +365,7 @@ const MainApplication = () => {
               }}
               // @ts-ignore
               icon={isVisible ? Clear : Search}
-              onClick={handleSearchState}
+              onClick={handleOpenSearch}
             />
           </Toolbar.Right>
         </AnimatePresence>
