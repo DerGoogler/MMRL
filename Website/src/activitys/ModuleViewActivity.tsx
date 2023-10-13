@@ -277,7 +277,7 @@ const ModuleViewActivity = () => {
                     onClick={() => {
                       context.pushPage({
                         component: TerminalActivity,
-                        key: "explore_install",
+                        key: "TerminalActivity",
                         extra: {
                           exploreInstall: true,
                           path: download,
@@ -404,7 +404,7 @@ const ModuleViewActivity = () => {
                       onClick={() => {
                         context.pushPage({
                           component: DescriptonActivity,
-                          key: "",
+                          key: "DescriptonActivity",
                           extra: {
                             desc: data,
                             name: name,

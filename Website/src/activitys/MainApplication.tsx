@@ -144,7 +144,7 @@ const MainApplication = () => {
     if (m_) {
       context.pushPage({
         component: ModuleViewActivity,
-        key: "",
+        key: "ModuleViewActivity",
         extra: m_,
       });
     }
@@ -188,7 +188,7 @@ const MainApplication = () => {
                           onClick={() => {
                             context.pushPage({
                               component: TerminalActivity,
-                              key: "update_install",
+                              key: "TerminalActivity",
                               extra: {
                                 exploreInstall: true,
                                 path: module.download,
@@ -224,7 +224,7 @@ const MainApplication = () => {
                               if (file) {
                                 context.pushPage({
                                   component: TerminalActivity,
-                                  key: "local_install",
+                                  key: "TerminalActivity",
                                   extra: {
                                     exploreInstall: false,
                                     path: file.path,
@@ -258,12 +258,12 @@ const MainApplication = () => {
       setStoredCurrentVersion(BuildConfig.VERSION_NAME);
       context.pushPage({
         component: FetchTextActivity,
-        key: "changelog",
+        key: "FetchTextActivity",
         extra: {
           url: "https://raw.githubusercontent.com/wiki/DerGoogler/MMRL/Changelog.md",
           title: "Changelog",
         },
-      });
+      }); 
     }
   }, []);
 

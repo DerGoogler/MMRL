@@ -112,7 +112,7 @@ function SettingsActivity() {
                 onClick={() => {
                   context.pushPage({
                     component: ModConfActivity,
-                    key: "Mod_Tree",
+                    key: "ModConfActivity",
                     extra: {},
                   });
                 }}

@@ -43,7 +43,7 @@ export const ExploreModule = React.memo<Props>((props) => {
   const handleOpen = () => {
     context.pushPage({
       component: ModuleViewActivity,
-      key: "",
+      key: "ModuleViewActivity",
       extra: props.moduleProps,
     });
   };

@@ -118,20 +118,25 @@ export const LocalRepository = (props: LocalRepositoryProps) => {
           <Android12Switch
             edge="end"
             onChange={(e: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-              setSettings(
-                "disabled_repos",
-                (prev) => {
-                  if (prev.some((elem) => elem === repo.id)) {
-                    return prev.filter((item) => item !== repo.id);
-                  } else {
-                    return [...prev, repo.id];
-                  }
-                },
-                (state) => {
-                  console.log(state);
+              actions.setRepoEnabled({
+                id: repo.modules,
+                callback(state) {
                   setEnabled(!state.some((elem) => elem === repo.id));
-                }
-              );
+                },
+              })
+              // setSettings(
+              //   "disabled_repos",
+              //   (prev) => {
+              //     if (prev.some((elem) => elem === repo.id)) {
+              //       return prev.filter((item) => item !== repo.id);
+              //     } else {
+              //       return [...prev, repo.id];
+              //     }
+              //   },
+              //   (state) => {
+              //     console.log(state);
+              //   }
+              // );
             }}
             checked={enabled}
           />

@@ -85,7 +85,7 @@ function Anchor(props: JSX.IntrinsicElements["a"] & AnchorProps) {
             if (m_) {
               context.pushPage({
                 component: ModuleViewActivity,
-                key: "",
+                key: "ModuleViewActivity",
                 extra: m_,
               });
             } else {
@@ -104,7 +104,9 @@ function Anchor(props: JSX.IntrinsicElements["a"] & AnchorProps) {
         }}
         color={_color}
       >
-        <Typography component="span" color={_color}>{children}</Typography>
+        <Typography component="span" color={_color}>
+          {children}
+        </Typography>
         {!noIcon && (
           <>
             <Icon
@@ -143,14 +145,14 @@ export function Open(props: OpenProps) {
             case "settings":
               context.pushPage({
                 component: SettingsActivity,
-                key: "settings",
+                key: "SettingsActivity",
               });
               break;
 
             case "repos":
               context.pushPage({
                 component: RepoActivity,
-                key: "repo",
+                key: "RepoActivity",
               });
               break;
             case "request":
@@ -159,7 +161,7 @@ export function Open(props: OpenProps) {
               } else {
                 context.pushPage({
                   component: FetchTextActivity,
-                  key: `desc_open${Math.round(Math.random() * 56)}`,
+                  key: "FetchTextActivity",
                   extra: {
                     url: props.url,
                     title: props.title,

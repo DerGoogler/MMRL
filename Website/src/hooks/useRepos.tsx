@@ -53,7 +53,6 @@ type RemoveRepoData = {
 
 type SetRepoStateData = {
   id: string;
-  state: boolean;
   callback?: (state: string[]) => void;
 };
 
@@ -157,12 +156,12 @@ export const RepoProvider = (props: React.PropsWithChildren) => {
     void fetchData();
   }, [repos, settings]);
 
-  return (
-    <RepoContext.Provider
-      value={{ repos, setRepos, modulesLoading, modules, moduleOptions, actions: { addRepo, removeRepo, setRepoEnabled } }}
-      children={props.children}
-    />
+  const contextValue = React.useMemo(
+    () => ({ repos, setRepos, modulesLoading, modules, moduleOptions, actions: { addRepo, removeRepo, setRepoEnabled } }),
+    [repos, modules, settings]
   );
+
+  return <RepoContext.Provider value={contextValue} children={props.children} />;
 };
 
 export const useRepos = () => {
