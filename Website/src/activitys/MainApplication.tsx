@@ -67,6 +67,7 @@ const SearchBar = React.forwardRef<SearchbarRef, SearchbarProps>((props, ref) =>
   return (
     <MotionInputBase
       ref={ref as any}
+      key="inputshit"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -263,7 +264,7 @@ const MainApplication = () => {
           url: "https://raw.githubusercontent.com/wiki/DerGoogler/MMRL/Changelog.md",
           title: "Changelog",
         },
-      }); 
+      });
     }
   }, []);
 
@@ -295,10 +296,11 @@ const MainApplication = () => {
   const renderToolbar = () => {
     return (
       <Toolbar modifier="noshadow">
-        <AnimatePresence>
+        <AnimatePresence key="idontknowman">
           <Toolbar.Left>
             <Toolbar.Button
               iconProps={{
+                key: "sdlfgkhjdok;gfhjseoif",
                 initial: { opacity: 0 },
                 animate: { opacity: 1 },
                 exit: { opacity: 0 },
@@ -318,6 +320,7 @@ const MainApplication = () => {
           >
             {!isVisible ? (
               <MotionTypography
+                key="fckthisdipshit"
                 sx={{
                   display: "flex",
                   justifyContent: "center",
@@ -359,6 +362,7 @@ const MainApplication = () => {
           <Toolbar.Right>
             <Toolbar.Button
               iconProps={{
+                key: "sldjgfhdlkfughskdjfbn",
                 initial: { opacity: 0 },
                 animate: { opacity: 1 },
                 exit: { opacity: 0 },

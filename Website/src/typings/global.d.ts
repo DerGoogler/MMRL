@@ -176,7 +176,6 @@ declare global {
   }
 
   interface Repo {
-    id: str;
     /**
      * An required filed, to disply the repository name
      */

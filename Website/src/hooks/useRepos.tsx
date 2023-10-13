@@ -81,11 +81,6 @@ export const RepoProvider = (props: React.PropsWithChildren) => {
               (prev) => [
                 ...prev,
                 {
-                  id: "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
-                    var r = (Math.random() * 16) | 0,
-                      v = c == "x" ? r : (r & 0x3) | 0x8;
-                    return v.toString(16);
-                  }),
                   name: response.name || "Unknown Repository",
                   mmrlOwner: response.mmrlOwner || null,
                   website: response.website || null,
@@ -111,7 +106,7 @@ export const RepoProvider = (props: React.PropsWithChildren) => {
 
   const removeRepo = (data: RemoveRepoData) => {
     setRepos((tmp) => {
-      tmp = tmp.filter((remv) => remv.id != data.id);
+      tmp = tmp.filter((remv) => remv.modules != data.id);
       return tmp;
     }, data.callback);
   };
@@ -121,7 +116,7 @@ export const RepoProvider = (props: React.PropsWithChildren) => {
       "disabled_repos",
       (prev) => {
         if (prev.some((elem) => elem === data.id)) {
-          return prev.filter((item) => item === data.id);
+          return prev.filter((item) => item !== data.id);
         } else {
           return [...prev, data.id];
         }
@@ -135,7 +130,7 @@ export const RepoProvider = (props: React.PropsWithChildren) => {
     setModules([]);
     const fetchData = async () => {
       for (const repo of repos) {
-        if (settings.disabled_repos.includes(repo.id)) continue;
+        if (settings.disabled_repos.includes(repo.modules)) continue;
 
         fetch(repo.modules)
           .then((res) => {

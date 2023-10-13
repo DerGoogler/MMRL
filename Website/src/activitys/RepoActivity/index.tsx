@@ -26,6 +26,42 @@ import { RecommendedRepo } from "./components/RecommendedRepo";
 import { LocalRepository } from "./components/LocalRepository";
 import { useNetwork } from "@Hooks/useNetwork";
 
+const recommended_repos = [
+  {
+    name: "Magisk Modules Alternative Repository",
+    module_count: 100,
+    link: "https://api.mmrl.dergoogler.com/json/mmar.json",
+  },
+  {
+    name: "Googlers Magisk Repo",
+    module_count: 5,
+    link: "https://api.mmrl.dergoogler.com/json/gmr.json",
+  },
+  {
+    name: "Magisk Modules Repo (Official)",
+    module_count: 100,
+    link: "https://api.mmrl.dergoogler.com/json/mmr.json",
+  },
+];
+
+const MemoizdRecommendedRepos = React.memo<{ filteredRepos: StoredRepo[] }>((props) => {
+  const { strings } = useStrings();
+  return (
+    <>
+      {props.filteredRepos.length !== 0 && <Divider />}
+      <List
+        subheader={
+          <ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>{strings("explore_repositories")}</ListSubheader>
+        }
+      >
+        {recommended_repos.map((repo, index) => (
+          <RecommendedRepo key={repo.name + "_" + index} name={repo.name} moduleCount={repo.module_count} link={repo.link} />
+        ))}
+      </List>
+    </>
+  );
+});
+
 const RepoActivity = () => {
   const { isNetworkAvailable } = useNetwork();
   const { context } = useActivity();
@@ -53,7 +89,10 @@ const RepoActivity = () => {
     setRepoLink(event.target.value);
   };
 
-  const filteredRepos = repos.filter((item) => item.name.toLowerCase().includes(search.toLowerCase()));
+  const filteredRepos = React.useMemo(
+    () => repos.filter((item) => item.name.toLowerCase().includes(search.toLowerCase())),
+    [repos, search]
+  );
 
   const renderToolbar = () => {
     return (
@@ -69,50 +108,15 @@ const RepoActivity = () => {
     );
   };
 
-  const recommended_repos = [
-    {
-      name: "Magisk Modules Alternative Repository",
-      module_count: 100,
-      link: "https://api.mmrl.dergoogler.com/json/mmar.json",
-    },
-    {
-      name: "Googlers Magisk Repo",
-      module_count: 5,
-      link: "https://api.mmrl.dergoogler.com/json/gmr.json",
-    },
-    {
-      name: "Magisk Modules Repo (Official)",
-      module_count: 100,
-      link: "https://api.mmrl.dergoogler.com/json/mmr.json",
-    },
-  ];
-
   return (
     <>
       <Page renderToolbar={renderToolbar}>
-        <Page.RelativeContent>
-          <Stack direction="column" justifyContent="flex-start" alignItems="center" spacing={1}>
-            {filteredRepos.map((repo, index) => (
-              <LocalRepository key={"repo_" + index} repo={repo} />
-            ))}
-          </Stack>
+        <Page.RelativeContent zeroMargin>
+          {filteredRepos.map((repo, index) => (
+            <LocalRepository key={"repo_" + repo.name + "_" + index} repo={repo} />
+          ))}
 
-          {isNetworkAvailable && (
-            <>
-              {filteredRepos.length !== 0 && <Divider />}
-              <List
-                subheader={
-                  <ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>
-                    {strings("explore_repositories")}
-                  </ListSubheader>
-                }
-              >
-                {recommended_repos.map((repo) => (
-                  <RecommendedRepo key={"recomm_" + repo.module_count} name={repo.name} moduleCount={repo.module_count} link={repo.link} />
-                ))}
-              </List>
-            </>
-          )}
+          {isNetworkAvailable && <MemoizdRecommendedRepos filteredRepos={filteredRepos} />}
         </Page.RelativeContent>
 
         <Dialog open={open} onClose={handleClose}>

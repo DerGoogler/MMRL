@@ -1,47 +1,19 @@
-import Icon from "@Components/Icon";
+import React from "react";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import Collapse from "@mui/material/Collapse";
 import { StyledListItemText } from "@Components/StyledListItemText";
 import { useRepos } from "@Hooks/useRepos";
 import { useSettings } from "@Hooks/useSettings";
 import { useStrings } from "@Hooks/useStrings";
-import {
-  Box,
-  Button,
-  Card,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  Divider,
-  IconButton,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListSubheader,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { List, ListItem, ListItemButton, ListItemIcon, ListSubheader } from "@mui/material";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { SvgIconTypeMap } from "@mui/material/SvgIcon/SvgIcon";
-import VerifiedIcon from "@mui/icons-material/Verified";
-import {
-  DeleteRounded,
-  ExtensionRounded,
-  LanguageRounded,
-  SupportRounded,
-  UploadFileRounded,
-  VolunteerActivismRounded,
-} from "@mui/icons-material";
-import React from "react";
+import { DeleteRounded, LanguageRounded, SupportRounded, UploadFileRounded, VolunteerActivismRounded } from "@mui/icons-material";
 import { Android12Switch } from "@Components/Android12Switch";
 import { os } from "@Native/Os";
-import ons from "onsenui";
-import { StyledIconButton, StyledIconButtonWithText } from "@Components/StyledIconButton";
-import { StyledCard } from "@Components/StyledCard";
 import { useFormatDate } from "@Hooks/useFormatDate";
 import { useConfirm } from "material-ui-confirm";
-import { useTheme } from "@Hooks/useTheme";
-import CloseIcon from "@mui/icons-material/Close";
-import useShadeColor from "@Hooks/useShadeColor";
 
 interface ListItemProps {
   part?: any;
@@ -54,129 +26,54 @@ interface LocalRepositoryProps {
   repo: StoredRepo;
 }
 
-export const LocalRepository = (props: LocalRepositoryProps) => {
+const MListItem = React.memo<ListItemProps>((props) => {
+  return props.part ? (
+    <ListItemButton onClick={props.onClick}>
+      <ListItemIcon>
+        <props.icon />
+      </ListItemIcon>
+      <StyledListItemText primary={props.text} />
+    </ListItemButton>
+  ) : null;
+});
+
+export const LocalRepository = React.memo<LocalRepositoryProps>((props) => {
   const { repo } = props;
   const { strings } = useStrings();
-  const { settings, setSettings } = useSettings();
+  const { settings } = useSettings();
   const confirm = useConfirm();
   const { actions } = useRepos();
-  const [enabled, setEnabled] = React.useState(!settings.disabled_repos.includes(repo.id));
-  const { theme, scheme } = useTheme();
-  const shade = useShadeColor();
+  const [enabled, setEnabled] = React.useState(!settings.disabled_repos.includes(repo.modules));
 
   const formatLastUpdate = useFormatDate(repo.last_update);
-
-  const MListItem = (props: ListItemProps) => {
-    return (
-      <>
-        {props.part && (
-          <ListItemButton onClick={props.onClick}>
-            <ListItemIcon>
-              <props.icon />
-            </ListItemIcon>
-            <StyledListItemText primary={props.text} />
-          </ListItemButton>
-        )}
-      </>
-    );
-  };
-
-  const [authorData, setAuthorData] = React.useState<any>({});
-
   const [open, setOpen] = React.useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
+  const handleClick = () => {
+    setOpen(!open);
   };
 
   return (
     <React.Fragment>
-      <Card
-        variant="outlined"
-        sx={{
-          width: "100%",
-        }}
-      >
-        <Box sx={{ p: 2, display: "flex" }}>
-          <Stack spacing={0.5} style={{ flexGrow: 1 }}>
-            <Typography fontWeight={700} color="text.primary">
-              {repo.name}
-            </Typography>{" "}
-            <Typography variant="caption" sx={{ fontSize: ".70rem" }} color="text.secondary">
-              <span>Unknown owner</span>
-            </Typography>
-            <Typography variant="body1" color="text.secondary">
-              {formatLastUpdate}
-            </Typography>
-          </Stack>
-        </Box>
-        <Divider />
-        <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ px: 2, py: 1 }}>
+      <List sx={{ bgcolor: "transparent" }}>
+        <ListItem>
+          <ListItemIcon onClick={handleClick}>{open ? <ExpandLess /> : <ExpandMore />}</ListItemIcon>
+          <StyledListItemText primary={repo.name} secondary={formatLastUpdate} />
+
           <Android12Switch
             edge="end"
             onChange={(e: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
               actions.setRepoEnabled({
                 id: repo.modules,
                 callback(state) {
-                  setEnabled(!state.some((elem) => elem === repo.id));
+                  setEnabled(!state.some((elem) => elem === repo.modules));
                 },
-              })
-              // setSettings(
-              //   "disabled_repos",
-              //   (prev) => {
-              //     if (prev.some((elem) => elem === repo.id)) {
-              //       return prev.filter((item) => item !== repo.id);
-              //     } else {
-              //       return [...prev, repo.id];
-              //     }
-              //   },
-              //   (state) => {
-              //     console.log(state);
-              //   }
-              // );
+              });
             }}
             checked={enabled}
           />
-
-          <Stack spacing={0.8} direction="row">
-            <Button
-              sx={{
-                color: scheme[500],
-              }}
-              onClick={handleClickOpen}
-              variant="text"
-            >
-              More
-            </Button>
-          </Stack>
-        </Stack>
-      </Card>
-
-      <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
-        <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-          {repo.name}
-        </DialogTitle>
-        <IconButton
-          aria-label="close"
-          onClick={handleClose}
-          sx={{
-            position: "absolute",
-            right: 8,
-            top: 8,
-            color: (theme) => theme.palette.grey[500],
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
-        <DialogContent dividers>
-          <Typography gutterBottom>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus,
-            porta ac consectetur ac, vestibulum at eros.
-          </Typography>
-          <List component="nav" subheader={<ListSubheader sx={{ bgcolor: "transparent" }}>About this repo</ListSubheader>}>
+        </ListItem>
+        <Collapse in={open} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
             <MListItem
               part={repo.website}
               icon={LanguageRounded}
@@ -218,7 +115,7 @@ export const LocalRepository = (props: LocalRepositoryProps) => {
               }}
             />
             <MListItem
-              part={true}
+              part
               icon={DeleteRounded}
               text={strings("remove")}
               onClick={() => {
@@ -230,14 +127,14 @@ export const LocalRepository = (props: LocalRepositoryProps) => {
                   }),
                 }).then(() => {
                   actions.removeRepo({
-                    id: repo.id,
+                    id: repo.modules,
                   });
                 });
               }}
             />
           </List>
-        </DialogContent>
-      </Dialog>
+        </Collapse>
+      </List>
     </React.Fragment>
   );
-};
+});

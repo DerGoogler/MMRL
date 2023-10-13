@@ -81,7 +81,7 @@ export default function onsCustomElement<E = HTMLElement, P = {}>(
         ref
       );
 
-      return React.createElement(WrappedComponent, { ref: ref, style: style, ...properties }, children);
+      return React.createElement(WrappedComponent, { ref: ref, key: WrappedComponent, style: style, ...properties }, children);
     })
   );
 }
