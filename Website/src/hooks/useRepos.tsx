@@ -72,35 +72,37 @@ export const RepoProvider = (props: React.PropsWithChildren) => {
   }, []);
 
   const addRepo = (data: AddRepoData) => {
-    if (repos.length <= 4) {
-      if (link.validURL(data.url)) {
-        fetch(data.url)
-          .then((response) => response.json())
-          .then((response) => {
-            setRepos(
-              (prev) => [
-                ...prev,
-                {
-                  name: response.name || "Unknown Repository",
-                  mmrlOwner: response.mmrlOwner || null,
-                  website: response.website || null,
-                  support: response.support || null,
-                  donate: response.donate || null,
-                  submitModule: response.submitModules || null,
-                  last_update: response.last_update || 0,
-                  modules: data.url,
-                  isOn: false,
-                },
-              ],
-              data.callback
-            );
-          })
-          .catch((e) => (data.callback ? data.callback(e) : log.e(e)));
+    if (!repos.some((repo) => repo.modules === data.url)) {
+      if (repos.length <= 4) {
+        if (link.validURL(data.url)) {
+          fetch(data.url)
+            .then((response) => response.json())
+            .then((response) => {
+              setRepos(
+                (prev) => [
+                  ...prev,
+                  {
+                    name: response.name || "Unknown Repository",
+                    website: response.website || null,
+                    support: response.support || null,
+                    donate: response.donate || null,
+                    submitModule: response.submitModules || null,
+                    last_update: response.last_update || 0,
+                    modules: data.url,
+                  },
+                ],
+                data.callback
+              );
+            })
+            .catch((e) => (data.callback ? data.callback(e) : log.e(e)));
+        } else {
+          os.toast("The given link isn't valid", Toast.LENGTH_SHORT);
+        }
       } else {
-        os.toast("The given link isn't valid", Toast.LENGTH_SHORT);
+        os.toast("You can't add more than 5 repos", Toast.LENGTH_SHORT);
       }
     } else {
-      os.toast("You can't add more than five repos", Toast.LENGTH_SHORT);
+      os.toast("This repo alredy exist", Toast.LENGTH_SHORT);
     }
   };
 
