@@ -261,7 +261,7 @@ export const StyledMarkdown = styled("article")(() => {
       padding: "16px",
       overflow: "auto",
       lineHeight: 1.45,
-      backgroundColor: !settings.darkmode ? scheme[100] + "46" : shade(scheme[600], settings.shade_value),
+      backgroundColor: "#22272e",
       borderRadius: theme.shape.borderRadius,
       "code,\n    tt": {
         display: "inline",
@@ -448,7 +448,8 @@ export const StyledMarkdown = styled("article")(() => {
       padding: "0.2em 0.4em",
       margin: "0",
       fontSize: "85%",
-      backgroundColor: !settings.darkmode ? scheme[100] + "46" : shade(scheme[600], settings.shade_value),
+      color: "#cdd9e5",
+      backgroundColor: "#22272e",
       borderRadius: "6px",
     },
     "code br,\n  tt br": { display: "none" },
@@ -462,7 +463,7 @@ export const StyledMarkdown = styled("article")(() => {
         overflow: "auto",
         fontSize: "85%",
         lineHeight: 1.45,
-        backgroundColor: !settings.darkmode ? scheme[100] + "46" : shade(scheme[600], settings.shade_value),
+        backgroundColor: "#22272e",
         borderRadius: "6px",
       },
     },
@@ -523,35 +524,41 @@ export const StyledMarkdown = styled("article")(() => {
       margin: "0 -1.6em 0.25em 0.2em",
     },
     "::-webkit-calendar-picker-indicator": { filter: "invert(50%)" },
-    ".hljs": { color: "#24292e" },
-    ".hljs-doctag,\n  .hljs-keyword,\n  .hljs-meta .hljs-keyword,\n  .hljs-template-tag,\n  .hljs-template-variable,\n  .hljs-type,\n  .hljs-variable.language_":
-      {
-        color: "#d73a49",
-      },
-    ".hljs-title": {
-      color: "#6f42c1",
-      "&.class_": { color: "#6f42c1", "&.inherited__": { color: "#6f42c1" } },
-      "&.function_": { color: "#6f42c1" },
+    // Highlight.js
+    ".hljs": {
+      display: "block",
+      overflowX: "auto",
+      padding: "0.5em",
+      color: "#cdd9e5",
+      background: "#22272e",
     },
-    ".hljs-attr,\n  .hljs-attribute,\n  .hljs-literal,\n  .hljs-meta,\n  .hljs-number,\n  .hljs-operator,\n  .hljs-variable,\n  .hljs-selector-attr,\n  .hljs-selector-class,\n  .hljs-selector-id":
-      {
-        color: "#005cc5",
-      },
-    ".hljs-regexp,\n  .hljs-string,\n  .hljs-meta .hljs-string": {
-      color: "#032f62",
+    ".hljs-comment,\n.hljs-punctuation": { color: "#768390" },
+    ".hljs-attr,\n.hljs-attribute,\n.hljs-meta,\n.hljs-selector-attr,\n.hljs-selector-class,\n.hljs-selector-id": {
+      color: "#6cb6ff",
     },
-    ".hljs-built_in,\n  .hljs-symbol": { color: "#e36209" },
-    ".hljs-comment,\n  .hljs-code,\n  .hljs-formula": { color: "#6a737d" },
-    ".hljs-name,\n  .hljs-quote,\n  .hljs-selector-tag,\n  .hljs-selector-pseudo": {
-      color: "#22863a",
+    ".hljs-variable,\n.hljs-literal,\n.hljs-number,\n.hljs-doctag": {
+      color: "#f69d50",
     },
-    ".hljs-subst": { color: "#24292e" },
-    ".hljs-section": { color: "#005cc5", fontWeight: "bold" },
-    ".hljs-bullet": { color: "#735c0f" },
-    ".hljs-emphasis": { color: "#24292e", fontStyle: "italic" },
-    ".hljs-strong": { color: "#24292e", fontWeight: "bold" },
-    ".hljs-addition": { color: "#22863a", backgroundColor: "#f0fff4" },
-    ".hljs-deletion": { color: "#b31d28", backgroundColor: "#ffeef0" },
-    ".hljs-char.escape_,\n  .hljs-link,\n  .hljs-params,\n  .hljs-property,\n  .hljs-punctuation,\n  .hljs-tag": {},
+    ".hljs-params": { color: "#cdd9e5" },
+    ".hljs-function": { color: "#dcbdfb" },
+    ".hljs-class,\n.hljs-tag,\n.hljs-title,\n.hljs-built_in": {
+      color: "#8ddb8c",
+    },
+    ".hljs-keyword,\n.hljs-type,\n.hljs-builtin-name,\n.hljs-meta-keyword,\n.hljs-template-tag,\n.hljs-template-variable": {
+      color: "#f47067",
+    },
+    ".hljs-string,\n.hljs-undefined": { color: "#96d0ff" },
+    ".hljs-regexp": { color: "#96d0ff" },
+    ".hljs-symbol": { color: "#6cb6ff" },
+    ".hljs-bullet": { color: "#f69d50" },
+    ".hljs-section": { color: "#6cb6ff", fontWeight: "bold" },
+    ".hljs-quote,\n.hljs-name,\n.hljs-selector-tag,\n.hljs-selector-pseudo": {
+      color: "#8ddb8c",
+    },
+    ".hljs-emphasis": { color: "#f69d50", fontStyle: "italic" },
+    ".hljs-strong": { color: "#f69d50", fontWeight: "bold" },
+    ".hljs-deletion": { color: "#ff938a", backgroundColor: "#78191b" },
+    ".hljs-addition": { color: "#8ddb8c", backgroundColor: "#113417" },
+    ".hljs-link": { color: "#96d0ff", fontStyle: "underline" },
   };
 });

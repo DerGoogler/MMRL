@@ -5,7 +5,6 @@ import React from "react";
 import { Alert, Divider, Paper, Stack, SxProps, Theme } from "@mui/material";
 import styled from "@emotion/styled";
 import hljs from "highlight.js";
-import { doc } from "googlers-tools";
 import { Image } from "@Components/dapi/Image";
 import { StyledMarkdown } from "./StyledMarkdown";
 import { DiscordWidget } from "@Components/dapi/DiscordWidget";
@@ -83,19 +82,18 @@ export const MarkdownOverrides: MarkdownToJSX.Overrides | undefined = {
 };
 
 export const Markup = (props: Props) => {
-  // const ref = React.useRef<HTMLDivElement>(null);
+  const ref = React.useRef<HTMLDivElement>(null);
 
-  // Disabled due lack of darkmode support
-  // React.useEffect(() => {
-  //   doc.findRef(ref, (ref) => {
-  //     ref.querySelectorAll("pre code").forEach((block: any) => {
-  //       hljs.highlightBlock(block);
-  //     });
-  //   });
-  // });
+  React.useEffect(() => {
+    if (ref.current) {
+      ref.current.querySelectorAll<HTMLElement>("pre code").forEach((block) => {
+        hljs.highlightBlock(block);
+      });
+    }
+  });
 
   return (
-    <StyledMarkdown sx={props.sx}>
+    <StyledMarkdown ref={ref} sx={props.sx}>
       <Markdown
         style={props.styleMd}
         options={{
