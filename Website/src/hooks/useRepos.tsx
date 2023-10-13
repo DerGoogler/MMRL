@@ -72,7 +72,7 @@ export const RepoProvider = (props: React.PropsWithChildren) => {
   }, []);
 
   const addRepo = (data: AddRepoData) => {
-    if (repos.length <= 5) {
+    if (repos.length <= 4) {
       if (link.validURL(data.url)) {
         fetch(data.url)
           .then((response) => response.json())
