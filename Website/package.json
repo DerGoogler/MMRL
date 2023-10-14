@@ -30,6 +30,8 @@
     "@types/webpack": "^5.28.0"
   },
   "dependencies": {
+    "@babel/runtime": "^7.23.2",
+    "@babel/standalone": "^7.23.2",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "@giscus/react": "^2.3.0",
@@ -83,6 +85,8 @@
     "@babel/core": "^7.16.5",
     "@babel/preset-env": "^7.16.5",
     "@babel/preset-react": "^7.16.5",
+    "@types/babel__core": "^7.20.2",
+    "@types/babel__standalone": "^7.1.5",
     "@types/fs-extra": "^11.0.1",
     "@types/node": "^18.0.6",
     "@types/object-assign": "^4.0.30",
@@ -103,6 +107,7 @@
     "license-checker": "^25.0.1",
     "mini-css-extract-plugin": "^2.5.3",
     "postcss-loader": "^7.0.0",
+    "raw-loader": "^4.0.2",
     "sass": "^1.49.8",
     "sass-loader": "^13.0.2",
     "style-loader": "^3.3.3",

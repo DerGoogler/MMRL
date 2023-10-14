@@ -55,7 +55,7 @@ const DeviceModule = React.memo<Props>((props) => {
   const late_service = SuFile.exist(format("LATESERVICE"));
   const post_mount = SuFile.exist(format("POSTMOUNT"));
   const boot_complete = SuFile.exist(format("BOOTCOMP"));
-  const module_config_file = SuFile.exist(format("CONFIG"));
+  const module_config_file = SuFile.exist(format("CONFINDEX"));
 
   return (
     <>

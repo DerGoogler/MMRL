@@ -1,7 +1,7 @@
 import React from "react";
 import "onsenui/esm/elements/ons-page";
 import onsCustomElement from "@Util/onsCustomElement";
-import { styled } from "@mui/material";
+import { Box, SxProps, styled } from "@mui/material";
 import { os } from "@Native/Os";
 import { useTheme } from "@Hooks/useTheme";
 
@@ -13,7 +13,7 @@ interface NativeUIColors {
 }
 
 interface HTMLPage {
-  contentStyle?: React.CSSProperties;
+  sx?: SxProps;
   backgroundStyle?: React.CSSProperties;
   modifier?: string;
   renderModal?: RenderFunction;
@@ -38,18 +38,18 @@ const HTMLPage = onsCustomElement<HTMLElement, HTMLPage>("ons-page", {
 const _Page = React.forwardRef<HTMLElement, HTMLPage>((props, ref) => {
   const { theme } = useTheme();
   const { context } = useActivity();
-  const { renderToolbar, renderBottomToolbar, renderModal, renderFixed, contentStyle, children, ...rest } = props;
+  const { renderToolbar, renderBottomToolbar, renderModal, renderFixed, sx, children, ...rest } = props;
 
   return (
     <HTMLPage {...rest} ref={ref}>
       {renderToolbar && renderToolbar(ref, context)}
-      <div className="page__background" style={props.backgroundStyle}></div>
-      <div className="page__content" style={contentStyle}>
+      <Box className="page__background" sx={props.backgroundStyle}></Box>
+      <Box className="page__content" sx={sx}>
         {children}
-      </div>
-      <div className="page__extra" style={{ zIndex: 10001 }}>
+      </Box>
+      <Box className="page__extra" sx={{ zIndex: 10001 }}>
         {renderModal && renderModal(ref, context)}
-      </div>
+      </Box>
       {renderFixed && renderFixed(ref, context)}
       {renderBottomToolbar && renderBottomToolbar(ref, context)}
     </HTMLPage>

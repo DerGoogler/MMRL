@@ -1,57 +1,173 @@
-export const configureSample = `<TabContext value={tabValue}>
-<AppBar position="sticky"  elevation={0}>     
-    <TabList onChange={handleTabChange()} indicatorColor="secondary" textColor="inherit" variant="fullWidth">
-        <Tab label="General" value="1" />
-        <Tab label="Changelog" value="2" />
-    </TabList>
-</AppBar>
-<TabPanel sx={{p:1}} value="1">
-    <Box sx={{p:1}}>
-        <Alert severity="info">
-            <AlertTitle>Still in development!</AlertTitle>
-            This configure screen is still in development, the api may change in future
-    </Alert>
-    </Box>      
+export const configureSample = `import React from "react"
+import { Markdown, Page, Tabbar } from "mmrl-ui"
+import { useNativeProperties, useNativeStorage } from "mmrl-hooks"
 
-    <List subheader={<ListSubheader>Settings</ListSubheader>}>
-      <ListItemDialogEditText
-          id="rootfs"
-          scope="mkshrc"
+function GeneralTab(props) {
+  const [curl, setCurl] = useNativeProperties("persist.mmrlini.curl", "/system/usr/share/mmrl/bin/curl");
+  const [zip, setZip] = useNativeProperties("persist.mmrlini.zip", "/system/usr/share/mmrl/bin/zip");
+  const [unzip, setUnzip] = useNativeProperties("persist.mmrlini.unzip", "/system/bin/unzip");
+  const [installFolder, setInstallFolder] = useNativeProperties("persist.mmrlini.install_folder", "/data/local/tmp/<NAME>-<BRANCH>-moduled.zip");
+
+  return (
+    <Page sx={{ p: 0 }}>
+      <List subheader={<ListSubheader>Settings</ListSubheader>}>
+        <ListItemDialogEditText
+          onSuccess={(val) => {
+            if (val) setCurl(val);
+          }}
           inputLabel="Path"
           type="text"
-          title="Change ROOTFS"
-          initialValue="/data/mkuser"
-          description="Changing this path will move/create a new environment">
-        <ListItemText primary="Default ROOTFS" />
-      </ListItemDialogEditText>
-      <ListItem>
-        <ListItemText primary="Show service notification" />
-        <Switch id="show_service_notify" defaultState={true} />
-      </ListItem>
-    </List>
+          title="Change curl bin path"
+          initialValue={curl}
+        >
+          <ListItemText primary="Change curl bin path" secondary={curl} />
+        </ListItemDialogEditText>
+        <ListItemDialogEditText
+          onSuccess={(val) => {
+            if (val) setZip(val);
+          }}
+          inputLabel="Path"
+          type="text"
+          title="Change zip bin path"
+          initialValue={zip}
+        >
+          <ListItemText primary="Change zip bin path" secondary={zip} />
+        </ListItemDialogEditText>
+        <ListItemDialogEditText
+          onSuccess={(val) => {
+            if (val) setUnzip(val);
+          }}
+          inputLabel="Path"
+          type="text"
+          title="Change unzip bin path"
+          initialValue={unzip}
+        >
+          <ListItemText primary="Change unzip bin path" secondary={unzip} />
+        </ListItemDialogEditText>
+        <ListItemDialogEditText
+          onSuccess={(val) => {
+            if (val) setInstallFolder(val);
+          }}
+          inputLabel="Path"
+          type="text"
+          title="Change install path"
+          description="Edit with care!"
+          initialValue={installFolder}
+        >
+          <ListItemText primary="Install folder/file" secondary={installFolder} />
+        </ListItemDialogEditText>
+      </List>
 
-    <Divider/>
+      <List subheader={<ListSubheader>Config</ListSubheader>}>
+        <ListItem>
+          <ListItemText primary="Swipeable tabs" secondary="Enables swipe between tabs" />
+          <Switch checked={props.swipeable} onChange={(e) => props.setSwipeable(e.target.checked)} />
+        </ListItem>
+      </List>
 
-    <List subheader={<ListSubheader>Project</ListSubheader>}>
-      <OnClick handler={openLink("https://github.com/Magisk-Modules-Alt-Repo/mkshrc/issues")}>
-        <ListItemButton>
+      <Divider />
+
+      <List subheader={<ListSubheader>Project</ListSubheader>}>
+        <ListItemButton onClick={() => window.open("https://github.com/DerGoogler/MMRL/issues")}>
           <ListItemText primary="Report a issue" />
         </ListItemButton>
-      </OnClick>
-      <OnClick handler={openLink("https://github.com/Magisk-Modules-Alt-Repo/mkshrc")}>
-        <ListItemButton>
-          <ListItemText primary="Source code" />
-        </ListItemButton>
-      </OnClick>
-      <OnClick handler={openLink("https://github.com/Magisk-Modules-Alt-Repo/node")}>
-        <ListItemButton>
-          <ListItemText primary="Try Node.js" />
-        </ListItemButton>
-      </OnClick>
-    </List>
-</TabPanel>
-<TabPanel sx={{p:1}} value="2">
-    <Import file={modpath("/system/usr/share/mmrl/config/mmrl_install_tools_changelog.mdx")}/>
-    {/* <Markdown fetch="https://raw.githubusercontent.com/wiki/DerGoogler/MMRL/Changelog.md" /> */}
-</TabPanel>
-</TabContext>`
+      </List>
+    </Page>
+  );
+}
+
+function TippsTab() {
+  const data = \`# Enable Extended JSX Support
+
+Create this file in your module folder
+
+\\\`\\\`\\\`shell
+touch $MODID/system/usr/share/mmrl/config/$MODID/index.jsx
+\\\`\\\`\\\`
+
+## Simple counter
+
+\\\`\\\`\\\`jsx
+import React from 'react'
+ 
+function Counter() {
+  const [counter, setCounter] = React.useState(0);
+ 
+  //increase counter
+  const increase = () => {
+    setCounter(count => count + 1);
+  };
+ 
+  //decrease counter
+  const decrease = () => {
+    setCounter(count => count - 1);
+  };
+ 
+  //reset counter 
+  const reset = () =>{
+    setCounter(0)
+  }
+ 
+  return (
+    <div className="counter">
+      <h1>React Counter</h1>
+      <span className="counter__output">{counter}</span>
+      <div className="btn__container">
+        <button className="control__btn" onClick={increase}>+</button>
+        <button className="control__btn" onClick={decrease}>-</button>
+        <button className="reset" onClick={reset}>Reset</button>
+      </div>
+    </div>
+  );
+}
+
+export default Counter
+\\\`\\\`\\\`
+
+\`;
+
+  return (
+    <Page sx={{ p: 1 }}>
+      <Markdown children={data} />
+    </Page>
+  );
+}
+
+function InstallToolsConfig() {
+  const [index, setIndex] = React.useState(0)
+  const [swipeable, setSwipeable] = useNativeStorage("mmrlini_swipeable", false)
+
+  const handlePreChange = (event) => {
+    if (event.index != this.state.index) {
+      setIndex(event.index)
+    }
+  };
+
+  const renderTabs = () => {
+    return [
+      {
+        content: <GeneralTab swipeable={swipeable} setSwipeable={setSwipeable} />,
+        tab: <Tabbar.Tab label='General' />
+      },
+      {
+        content: <TippsTab />,
+        tab: <Tabbar.Tab label='JSX Support' />
+      }
+    ];
+  }
+
+  return (
+    <Page>
+      <Tabbar
+        swipeable={swipeable}
+        position='auto'
+        index={index}
+        onPreChange={handlePreChange}
+        renderTabs={renderTabs}
+      />
+    </Page>
+  );
+}
+
+export default InstallToolsConfig;
+`;

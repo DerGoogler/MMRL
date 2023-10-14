@@ -6,7 +6,6 @@ import Divider from "@mui/material/Divider";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import ListSubheader from "@mui/material/ListSubheader";
-import React from "react";
 import { StyledListItemText } from "@Components/StyledListItemText";
 import { Android12Switch } from "@Components/Android12Switch";
 import { os } from "@Native/Os";
@@ -31,6 +30,19 @@ import TabPanel from "@mui/lab/TabPanel";
 import { formatString, useSettings } from "@Hooks/useSettings";
 import { SuFile } from "@Native/SuFile";
 
+import Sandbox from "@nyariv/sandboxjs";
+import { transform, registerPlugin } from "@babel/standalone";
+import * as React from "react";
+import * as Mui from "@mui/material";
+import * as Lab from "@mui/lab";
+import * as Icon from "@mui/icons-material";
+import { PreviewErrorBoundaryChildren } from "@Activitys/PlaygroundsActivity";
+import { PluginObj } from "@babel/core";
+import { Page } from "./onsenui/Page";
+import { BottomToolbar } from "./onsenui/BottomToolbar";
+import { Tabbar } from "./onsenui/Tabbar";
+import { useNativeStorage } from "@Hooks/useNativeStorage";
+
 const OnClick = (props: any) => {
   return <Box onClick={props.handler}>{props.children}</Box>;
 };
@@ -52,31 +64,9 @@ const Switch = (props: any) => {
   );
 };
 
-const DialogEditListItem = ({
-  initialValue,
-  onSuccess,
-  id,
-  scope,
-  ...rest
-}: DialogEditTextListItemProps & { id: string; scope: string }) => {
-  const _scope = scope || "mmrl";
-  const [state, setState] = useNativeProperties(`persist.${_scope}.${id.substring(0, 19)}`, initialValue);
-
-  return (
-    <DialogEditTextListItem
-      {...rest}
-      counter
-      maxLength={92}
-      initialValue={state}
-      onSuccess={(value) => {
-        if (value) {
-          setState(value);
-        }
-      }}
-    />
-  );
-};
-
+const DialogEditListItem = ({ children, ...rest }: DialogEditTextListItemProps) => (
+  <DialogEditTextListItem {...rest} counter maxLength={92} children={children} />
+);
 const PromoBanner = (props: React.PropsWithChildren & { sx?: SxProps }) => {
   const { theme, scheme } = useTheme();
 
@@ -198,72 +188,121 @@ const Markdown = (props: { children?: string; fetch?: string }) => {
   return <Markup children={text} />;
 };
 
-export const ConfigureView = (props: React.PropsWithChildren & { modid?: string }) => {
-  const { theme, scheme, shade } = useTheme();
-
-  const [value, setValue] = React.useState("1");
-  const { _modConf } = useSettings();
-
-  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-    setValue(newValue);
+function plugin({ types: t }): PluginObj {
+  return {
+    visitor: {
+      ExportDefaultDeclaration(path) {
+        path.replaceWith(t.returnStatement(path.node.declaration));
+      },
+    },
   };
+}
 
-  return (
-    <TabContext value={value}>
-      {/* @ts-ignore */}
-      <JsxParser
-        disableFragments
-        bindings={{
-          // scheme: scheme,
-          // theme: theme,
-          // shade: shade,
-          openLink: (url: str) => {
-            return () => {
-              os.open(url, {
-                target: "_blank",
-                features: {
-                  color: theme.palette.primary.main,
-                },
-              });
-            };
-          },
-          modpath: (path: str) => formatString("<MODULES>/<MODID><PATH>", { ..._modConf, PATH: path, MODID: props.modid }),
-          handleTabChange: () => handleChange,
-          tabValue: value,
-          getprop: (key: str, def: str) => {
-            return window.__properties__.get(key, def);
-          },
-        }}
-        blacklistedAttrs={[]}
-        components={{
-          Import: Import,
-          AppBar: AppBar,
-          TabContext: TabContext,
-          Tab: Tab,
-          TabList: TabList,
-          TabPanel: TabPanel,
-          Video: Video,
-          DiscordWidget: DiscordWidget,
-          // Better support for browsers
-          a: Anchor,
-          PromoBanner: PromoBanner,
-          Markdown: Markdown,
-          OnClick: OnClick,
-          Box: Box,
-          Alert: Alert,
-          AlertTitle: AlertTitle,
-          InputAdornment: InputAdornment,
-          List: List,
-          ListItem: ListItem,
-          ListItemButton: ListItemButton,
-          ListItemText: StyledListItemText,
-          ListItemDialogEditText: DialogEditListItem,
-          ListSubheader: StyledListSubheader,
-          Switch: Switch,
-          Divider: Divider,
-        }}
-        jsx={props.children}
-      />
-    </TabContext>
-  );
+registerPlugin("plugin", plugin);
+
+function parseCode(data: string): string {
+  try {
+    const { code } = transform(data, {
+      filename: "index.jsx",
+      presets: ["typescript", "react"],
+      plugins: [
+        "plugin",
+        "transform-computed-properties",
+        ["transform-destructuring", { loose: true }],
+        "transform-modules-commonjs",
+        "transform-object-rest-spread",
+        "syntax-class-properties",
+        "transform-class-properties",
+        "syntax-object-rest-spread",
+      ],
+    });
+    return code as string;
+  } catch (err) {
+    console.error("Error parsing code: ", err);
+    return "";
+  }
+}
+
+const prototypeWhitelist = Sandbox.SAFE_PROTOTYPES;
+prototypeWhitelist.set(Object, new Set());
+
+const globals = {
+  ...Sandbox.SAFE_GLOBALS,
+  Object,
+  require(id: string) {
+    switch (id) {
+      case "react":
+        return require("react");
+      case "@mui/material":
+        return require("@mui/material");
+      case "@mui/lab":
+        return require("@mui/lab");
+      case "@mui/icons-material":
+        return require("@mui/icons-material");
+      case "mmrl-ui":
+        return MMRL_UI;
+      case "mmrl-hooks":
+        return MMRL_Hooks;
+      default:
+        return {};
+    }
+  },
+};
+
+const sandbox = new Sandbox({ globals, prototypeWhitelist });
+
+const MMRL_Hooks = {
+  useNativeProperties: useNativeProperties,
+  useNativeStorage: useNativeStorage,
+  useTheme: useTheme,
+};
+
+const MMRL_UI = {
+  useNativeProperties: useNativeProperties,
+  useNativeStorage: useNativeStorage,
+  useTheme: useTheme,
+
+  Page: Page,
+  BottomToolbar: BottomToolbar,
+  Tabbar: Tabbar,
+  Video: Video,
+  DiscordWidget: DiscordWidget,
+  PromoBanner: PromoBanner,
+  Markdown: Markdown,
+  OnClick: OnClick,
+};
+
+const scope = {
+  // Better support for browsers
+  a: Anchor,
+  List: List,
+  ListItem: ListItem,
+  ListItemButton: ListItemButton,
+  ListItemText: StyledListItemText,
+  ListItemDialogEditText: DialogEditListItem,
+  ListSubheader: StyledListSubheader,
+  Switch: Android12Switch,
+  Divider: Divider,
+};
+
+export const ConfigureView = (props: PreviewErrorBoundaryChildren) => {
+  const { theme, scheme, shade } = useTheme();
+  const Component = sandbox
+    .compile<React.FunctionComponent<any>>(parseCode(props.children as string))({
+      modid: props.modid,
+      window: {
+        open(href: string) {
+          os.open(href, {
+            target: "_blank",
+            features: {
+              color: theme.palette.primary.main,
+            },
+          });
+        },
+      },
+      ...scope,
+    })
+    .run();
+
+  return <Component />;
 };

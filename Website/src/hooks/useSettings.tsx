@@ -192,6 +192,8 @@ export interface ModConf {
 
   // others
   MMRLINI: string;
+  CONFCWD: string;
+  CONFINDEX: string;
 }
 
 export const termScrollBehaviors: StorageDeclaration["term_scroll_behavior"][] = [
@@ -232,6 +234,8 @@ export const INITIAL_MOD_CONF: ModConf = {
 
   // others
   MMRLINI: "<MODULES>/mmrl_install_tools",
+  CONFCWD: "<MODULES>/<MODID>/system/usr/share/mmrl/config/<MODID>",
+  CONFINDEX: "<CONFCWD>/index.jsx",
 };
 
 export interface Context {

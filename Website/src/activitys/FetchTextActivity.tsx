@@ -11,7 +11,7 @@ import { useNetwork } from "@Hooks/useNetwork";
 import { MissingInternet } from "@Components/MissingInternet";
 
 export type FetchTextActivityExtra = {
-  rendering?(props: React.PropsWithChildren): React.JSX.Element;
+  rendering?: React.FunctionComponent<any> | React.ComponentType<any>;
   modulename: string;
   raw_data?: string;
   url?: string;

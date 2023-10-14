@@ -94,7 +94,7 @@ export const DrawerFragment = (props: Props) => {
               key: "configure_playground",
               extra: {
                 title: "Configure playground",
-                editorMode: "mdx",
+                editorMode: "javascript",
                 defaultText: configureSample,
                 previewPage: ConfigureActivity,
                 preview: ConfigureView,

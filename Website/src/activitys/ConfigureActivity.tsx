@@ -1,13 +1,11 @@
 import { Page } from "@Components/onsenui/Page";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import { useActivity } from "@Hooks/useActivity";
-import { useStrings } from "@Hooks/useStrings";
 import React from "react";
 import { SuFile } from "@Native/SuFile";
-import { useLog } from "@Hooks/native/useLog";
-import { useTheme } from "@Hooks/useTheme";
 import { useSettings } from "@Hooks/useSettings";
 import { ConfigureView } from "@Components/ConfigureView";
+import { PreviewErrorBoundary } from "./PlaygroundsActivity";
 
 type Extra = {
   raw_data?: string;
@@ -16,15 +14,12 @@ type Extra = {
 };
 
 const ConfigureActivity = () => {
-  const log = useLog("ConfigureActivity");
-  const { strings } = useStrings();
-  const { settings, modConf } = useSettings();
-  const { theme } = useTheme();
+  const { modConf } = useSettings();
   const { context, extra } = useActivity<Extra>();
 
   const config: string = React.useMemo(() => {
     if (!extra.raw_data) {
-      const file = new SuFile(modConf("CONFIG", { MODID: extra.moduleid }));
+      const file = new SuFile(modConf("CONFINDEX", { MODID: extra.moduleid }));
 
       if (file.exist()) {
         return file.read();
@@ -49,7 +44,7 @@ const ConfigureActivity = () => {
 
   return (
     <Page renderToolbar={renderToolbar}>
-      <ConfigureView modid={extra.moduleid}>{config}</ConfigureView>
+      <PreviewErrorBoundary modid={extra.moduleid} children={config} renderElement={ConfigureView} />
     </Page>
   );
 };

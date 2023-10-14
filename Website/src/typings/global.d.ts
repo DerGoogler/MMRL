@@ -4,6 +4,11 @@ import NBuildConfig from "./android/buildconfig";
 
 export {};
 
+declare module '*.d.ts' {
+  const value: string;
+  export default value;
+}
+
 declare global {
   type arr<T> = Array<T>;
   type str = string;

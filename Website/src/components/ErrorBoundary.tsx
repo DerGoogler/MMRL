@@ -1,16 +1,16 @@
 import React from "react";
 
-interface Props extends React.PropsWithChildren {
-  fallback: (error: Error, errorInfo: React.ErrorInfo, resetErrorBoundary: () => void) => JSX.Element;
+export interface ErrorBoundaryProps extends React.PropsWithChildren {
+  fallback(error: Error, errorInfo: React.ErrorInfo, resetErrorBoundary: () => void): JSX.Element;
 }
 
-interface State {
+export interface ErrorBoundaryState {
   hasError: boolean;
   error: Error;
   errorInfo: React.ErrorInfo;
 }
 
-const initialState = {
+export const errorBoundaryInitialState = {
   hasError: false,
   error: {
     name: "string",
@@ -25,31 +25,30 @@ const initialState = {
   },
 };
 
-export class ErrorBoundary extends React.Component<Props, State> {
-  constructor(props: Props) {
+export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  public constructor(props: ErrorBoundaryProps) {
     super(props);
-
     this.resetErrorBoundary = this.resetErrorBoundary.bind(this);
-    this.state = initialState;
+    this.state = errorBoundaryInitialState;
   }
 
-  static getDerivedStateFromError(error: any) {
+  public static getDerivedStateFromError(error: any) {
     return { hasError: true };
   }
 
-  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+  public componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
     this.setState({ error, errorInfo });
   }
 
-  resetErrorBoundary() {
+  public resetErrorBoundary() {
     const { error } = this.state;
 
     if (error !== null) {
-      this.setState(initialState);
+      this.setState(errorBoundaryInitialState);
     }
   }
 
-  render() {
+  public render() {
     if (this.state.hasError) {
       // You can render any custom fallback UI
       return this.props.fallback(this.state.error, this.state.errorInfo, this.resetErrorBoundary);
