@@ -80,7 +80,7 @@ export const en = {
   modconf_subtitle: "A way to manage different module systems",
 
   enable_install: "Enable install",
-  enable_install_subtitle: "Since 1.7.6 the MMRL Install Tools are required",
+  enable_install_subtitle: "Since 1.8.6 the MMRL Install Tools are required",
 
   scroll_to_bottom: "Scroll to bottom",
   scroll_to_bottom_subtitle: "Automatically scroll to bottom within the terminal",
