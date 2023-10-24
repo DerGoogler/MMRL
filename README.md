@@ -20,7 +20,7 @@ Magisk Module Repo Loader (MMRL). Allows you to load custom repos with an simple
 - [x] Remove installed modules
 - [x] Enable/Disable installed modules
 - [x] Dynamic module configuration
-- [ ] Module install
+- [x] Module install
 - [x] Monet theming
 
 #### Root Manager (Android)
