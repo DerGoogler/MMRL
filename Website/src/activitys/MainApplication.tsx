@@ -97,7 +97,6 @@ const MainApplication = () => {
   const { modules } = useRepos();
   const [index, setIndex] = React.useState(0);
   const [localModules, setLocalModules] = React.useState<Module[]>([]);
-  const [updateableModules, setUpdateableModules] = React.useState<Module[]>(modules);
 
   const searchRef = React.useRef<SearchbarRef | null>(null);
 
@@ -119,23 +118,6 @@ const MainApplication = () => {
         }
       });
     }, [settings]);
-
-    React.useEffect(() => {
-      setUpdateableModules((prev) => {
-        const t = prev.filter(({ id, versionCode }) => {
-          const properties = new SuFile(modConf("PROPS", { MODID: id }));
-          if (properties.exist()) {
-            const props = new Properties(properties.read()).toObject() as unknown as Module;
-            return props.versionCode < versionCode;
-          } else {
-            return false;
-          }
-        });
-
-        console.log(t);
-        return t;
-      });
-    }, []);
   }
 
   React.useEffect(() => {
@@ -166,46 +148,6 @@ const MainApplication = () => {
       },
       ...(os.isAndroid
         ? [
-            {
-              content: (
-                <ModuleFragment
-                  search={search}
-                  id="update"
-                  modules={updateableModules}
-                  renderItem={(module, key) =>
-                    module.valid ? (
-                      <Box key={key} sx={{ width: "100%" }}>
-                        <ExploreModule
-                          sx={{ borderRadius: `${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0px 0px` }}
-                          moduleProps={module}
-                        />
-                        <Button
-                          sx={{
-                            borderRadius: `0px 0px ${theme.shape.borderRadius}px ${theme.shape.borderRadius}px`,
-                          }}
-                          fullWidth
-                          variant="contained"
-                          disableElevation
-                          onClick={() => {
-                            context.pushPage({
-                              component: TerminalActivity,
-                              key: "TerminalActivity",
-                              extra: {
-                                exploreInstall: true,
-                                path: module.download,
-                              },
-                            });
-                          }}
-                        >
-                          {strings("update")}
-                        </Button>
-                      </Box>
-                    ) : null
-                  }
-                />
-              ),
-              tab: <Tabbar.Tab label={"Updates"} />,
-            },
             {
               content: (
                 <ModuleFragment

@@ -3,7 +3,7 @@ import { DeleteRounded, RefreshRounded } from "@mui/icons-material";
 import React from "react";
 import { useStrings } from "@Hooks/useStrings";
 import { Android12Switch } from "./Android12Switch";
-import { Box, Card, Divider, Stack, SxProps, Theme, Typography } from "@mui/material";
+import { Box, Button, Card, Divider, Stack, SxProps, Theme, Typography } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { useActivity } from "@Hooks/useActivity";
 import { ConfigureActivity } from "@Activitys/ConfigureActivity";
@@ -11,6 +11,9 @@ import { StyledIconButton } from "./StyledIconButton";
 import { useLog } from "@Hooks/native/useLog";
 import { Properties } from "properties-file";
 import { ModConf, colors, useSettings } from "@Hooks/useSettings";
+import { useTheme } from "@Hooks/useTheme";
+import TerminalActivity from "@Activitys/TerminalActivity";
+import { useRepos } from "@Hooks/useRepos";
 
 export const badgeStyle: (color: (typeof colors)["blue" | "teal" | "red" | "orange"]) => SxProps<Theme> = (color) => {
   return {
@@ -31,7 +34,9 @@ interface Props {
 const DeviceModule = React.memo<Props>((props) => {
   const { strings } = useStrings();
   const { settings, modConf } = useSettings();
+  const { theme } = useTheme();
   const { context, extra } = useActivity<any>();
+  const { modules } = useRepos();
   const [isEnabled, setIsEnabled] = React.useState(true);
   const [isSwitchDisabled, setIsSwitchDisabled] = React.useState(false);
 
@@ -57,6 +62,8 @@ const DeviceModule = React.memo<Props>((props) => {
   const boot_complete = SuFile.exist(format("BOOTCOMP"));
   const module_config_file = SuFile.exist(format("CONFINDEX"));
 
+  const findOnlineModule = React.useMemo(() => modules.find((module) => module.id === id), [modules]) as Module;
+console.log(findOnlineModule)
   return (
     <>
       <Card
@@ -177,6 +184,28 @@ const DeviceModule = React.memo<Props>((props) => {
             )}
           </Stack>
         </Stack>
+        {versionCode < findOnlineModule?.versionCode && (
+          <Button
+            sx={{
+              borderRadius: `0px 0px ${theme.shape.borderRadius}px ${theme.shape.borderRadius}px`,
+            }}
+            fullWidth
+            variant="contained"
+            disableElevation
+            onClick={() => {
+              context.pushPage({
+                component: TerminalActivity,
+                key: "TerminalActivity",
+                extra: {
+                  exploreInstall: true,
+                  path: findOnlineModule?.download,
+                },
+              });
+            }}
+          >
+            {strings("update")}
+          </Button>
+        )}
       </Card>
     </>
   );
