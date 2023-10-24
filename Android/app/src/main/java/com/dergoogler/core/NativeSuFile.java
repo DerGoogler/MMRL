@@ -115,13 +115,4 @@ public class NativeSuFile {
             return false;
         }
     }
-
-    private void dirChecker(String filePath) {
-        File file = new File(filePath);
-        if (!file.exists()) {
-            file.mkdirs();
-        } else {
-
-        }
-    }
 }
