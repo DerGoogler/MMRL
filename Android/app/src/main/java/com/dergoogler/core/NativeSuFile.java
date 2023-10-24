@@ -76,43 +76,4 @@ public class NativeSuFile {
     public boolean existFile(String path) {
         return new SuFile(path).exists();
     }
-
-
-    @JavascriptInterface
-    public static boolean downloadFile(final String url, final String savePath, final String saveName) {
-        try {
-            File savefilepath = new SuFile(savePath);
-            if (!savefilepath.exists()) {
-                savefilepath.mkdirs();
-            }
-            File savefile = new SuFile(savePath + saveName);
-            if (savefile.exists()) {
-                savefile.delete();
-            }
-            savefile.createNewFile();
-
-            URL u = new URL(url);
-            URLConnection conn = u.openConnection();
-            int contentLength = conn.getContentLength();
-
-            DataInputStream stream = new DataInputStream(u.openStream());
-
-            byte[] buffer = new byte[contentLength];
-            stream.readFully(buffer);
-            stream.close();
-
-            DataOutputStream fos = new DataOutputStream(SuFileOutputStream.open(
-                    savePath + saveName, true));
-            fos.write(buffer);
-            fos.flush();
-            fos.close();
-            return true;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            return false;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
 }
