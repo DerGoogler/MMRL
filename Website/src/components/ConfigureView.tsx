@@ -226,51 +226,67 @@ function parseCode(data: string): string {
 const prototypeWhitelist = Sandbox.SAFE_PROTOTYPES;
 prototypeWhitelist.set(Object, new Set());
 
+const libraries = [
+  {
+    name: "react",
+    lib: React,
+  },
+  {
+    name: "@mui/material",
+    lib: Mui,
+  },
+  {
+    name: "@mui/lab",
+    lib: Lab,
+  },
+  {
+    name: "@mui/icons-material",
+    lib: Icon,
+  },
+  {
+    name: "@mmrl/ui",
+    lib: {
+      Anchor: Anchor,
+      Page: Page,
+      BottomToolbar: BottomToolbar,
+      Tabbar: Tabbar,
+      Video: Video,
+      DiscordWidget: DiscordWidget,
+      PromoBanner: PromoBanner,
+      Markdown: Markdown,
+      OnClick: OnClick,
+    },
+  },
+  {
+    name: "@mmrl/hooks",
+    lib: {
+      useNativeProperties: useNativeProperties,
+      useNativeStorage: useNativeStorage,
+      useTheme: useTheme,
+    },
+  },
+
+  {
+    name: "@mmrl/native",
+    lib: {
+      // SuFile: SuFile,
+    },
+  },
+];
+
 const globals = {
   ...Sandbox.SAFE_GLOBALS,
   Object,
   require(id: string) {
-    switch (id) {
-      case "react":
-        return require("react");
-      case "@mui/material":
-        return require("@mui/material");
-      case "@mui/lab":
-        return require("@mui/lab");
-      case "@mui/icons-material":
-        return require("@mui/icons-material");
-      case "mmrl-ui":
-        return MMRL_UI;
-      case "mmrl-hooks":
-        return MMRL_Hooks;
-      default:
-        return {};
-    }
+    return libraries.find((lib) => id === lib.name)?.lib;
   },
 };
 
 const sandbox = new Sandbox({ globals, prototypeWhitelist });
 
-const MMRL_Hooks = {
-  useNativeProperties: useNativeProperties,
-  useNativeStorage: useNativeStorage,
-  useTheme: useTheme,
-};
+const MMRL_Hooks = {};
 
-const MMRL_UI = {
-  useNativeProperties: useNativeProperties,
-  useNativeStorage: useNativeStorage,
-  useTheme: useTheme,
-
-  Page: Page,
-  BottomToolbar: BottomToolbar,
-  Tabbar: Tabbar,
-  Video: Video,
-  DiscordWidget: DiscordWidget,
-  PromoBanner: PromoBanner,
-  Markdown: Markdown,
-  OnClick: OnClick,
-};
+const MMRL_UI = {};
 
 const scope = {
   // Better support for browsers
@@ -285,7 +301,7 @@ const scope = {
   Divider: Divider,
 };
 
-export const ConfigureView = (props: PreviewErrorBoundaryChildren) => {
+export const ConfigureView = React.memo<PreviewErrorBoundaryChildren>((props) => {
   const { theme, scheme, shade } = useTheme();
   const Component = sandbox
     .compile<React.FunctionComponent<any>>(parseCode(props.children as string))({
@@ -305,4 +321,4 @@ export const ConfigureView = (props: PreviewErrorBoundaryChildren) => {
     .run();
 
   return <Component />;
-};
+});
