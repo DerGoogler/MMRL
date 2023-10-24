@@ -144,7 +144,7 @@ export const DrawerFragment = (props: Props) => {
               key: "changelog",
               extra: {
                 rendering: ConfigureView,
-                url: "https://raw.githubusercontent.com/wiki/DerGoogler/MMRL/MDX-Changelog.md",
+                url: "https://raw.githubusercontent.com/wiki/DerGoogler/MMRL/JSX-Changelog.md",
                 modulename: "Changelog",
               },
             });
