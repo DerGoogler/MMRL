@@ -63,7 +63,7 @@ const DeviceModule = React.memo<Props>((props) => {
   const module_config_file = SuFile.exist(format("CONFINDEX"));
 
   const findOnlineModule = React.useMemo(() => modules.find((module) => module.id === id), [modules]) as Module;
-console.log(findOnlineModule)
+
   return (
     <>
       <Card
@@ -184,7 +184,7 @@ console.log(findOnlineModule)
             )}
           </Stack>
         </Stack>
-        {versionCode < findOnlineModule?.versionCode && (
+        {findOnlineModule && versionCode < findOnlineModule.versionCode && (
           <Button
             sx={{
               borderRadius: `0px 0px ${theme.shape.borderRadius}px ${theme.shape.borderRadius}px`,
@@ -197,8 +197,9 @@ console.log(findOnlineModule)
                 component: TerminalActivity,
                 key: "TerminalActivity",
                 extra: {
+                  hasUpdateJson: findOnlineModule.hasUpdateJson,
                   exploreInstall: true,
-                  path: findOnlineModule?.download,
+                  path: findOnlineModule.download,
                 },
               });
             }}

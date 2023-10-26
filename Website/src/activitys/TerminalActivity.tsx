@@ -73,6 +73,7 @@ const TerminalActivity = () => {
         NAME: name,
         URL: path,
         BRANCH: branch,
+        HAS_UPDATE_JSON: extra.hasUpdateJson,
         INSTALLER_CLI: installCli(
           formatString(installPath, {
             NAME: name,
@@ -94,12 +95,13 @@ const TerminalActivity = () => {
         },
       });
     } else {
-
-      console.log(escapePath(path))
+      console.log(escapePath(path));
 
       const envp_local = {
         MMRL: "true",
         MMRL_VER: BuildConfig.VERSION_CODE.toString(),
+        EXCAPED_PATH: escapePath(path),
+        NORMAL_PATH: path,
         INSTALLER_CLI: installCli(escapePath(path)),
       };
 

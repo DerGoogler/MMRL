@@ -44,7 +44,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import { Disappear } from "react-disappear";
 import Fade from "@mui/material/Fade";
 import TelegramIcon from "@mui/icons-material/Telegram";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
+import SecurityUpdateGoodIcon from "@mui/icons-material/SecurityUpdateGood";
 import { useRepos } from "@Hooks/useRepos";
 import PicturePreviewActivity from "./PicturePreviewActivity";
 
@@ -79,7 +79,7 @@ const ModuleViewActivity = () => {
   const { context, extra } = useActivity<Module>();
 
   const log = useLog("ModuleViewActivity");
-  const { id, name, version, versionCode, description, author, readme, about, download, mmrl, fox, last_update } = extra;
+  const { id, name, version, versionCode, description, author, readme, about, download, mmrl, fox, last_update, hasUpdateJson } = extra;
 
   const categories = useCategories(mmrl.categories);
   const { data } = useFetch<str>(readme);
@@ -283,6 +283,7 @@ const ModuleViewActivity = () => {
                         component: TerminalActivity,
                         key: "TerminalActivity",
                         extra: {
+                          hasUpdateJson: hasUpdateJson,
                           exploreInstall: true,
                           path: download,
                         },
@@ -592,6 +593,18 @@ const ModuleViewActivity = () => {
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
           <List>
+            {hasUpdateJson && (
+              <ListItem>
+                <ListItemIcon>
+                  <SecurityUpdateGoodIcon />
+                </ListItemIcon>
+                <StyledListItemText
+                  primary={"Uses own update.json"}
+                  secondary={"This module utilizes its own update.json for updating and installation purposes."}
+                />
+              </ListItem>
+            )}
+
             {about.issues && (
               <ListItemButton
                 onClick={() => {

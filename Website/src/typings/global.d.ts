@@ -1,6 +1,6 @@
 export {};
 
-declare module '*.d.ts' {
+declare module "*.d.ts" {
   const value: string;
   export default value;
 }
@@ -135,18 +135,32 @@ declare global {
   export interface Module {
     id: string;
     name: string;
+    /** Can overridden by `update.json` with `version` */
     version?: number;
+    /** Can overridden by `update.json` with `versionCode` */
     versionCode: number;
     author?: string;
     description?: string;
     valid: boolean;
+    /** Can overridden by `update.json` with `zipUrl` */
     download: string;
     last_update: number;
     readme: string;
     stars: number;
+    hasUpdateJson: boolean;
     about: About;
     mmrl: Mmrl;
     fox: Fox;
+  }
+
+  /**
+   * If a `update.json` exists then the `update.json` will override existing props.
+   */
+  export interface UpdateJson {
+    version: string;
+    versionCode: number;
+    zipUrl: string;
+    changelog: string;
   }
 
   export interface About {
