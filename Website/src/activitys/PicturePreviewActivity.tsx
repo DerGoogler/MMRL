@@ -1,10 +1,7 @@
 import { Page } from "@Components/onsenui/Page";
 import { Toolbar } from "@Components/onsenui/Toolbar";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { useActivity } from "@Hooks/useActivity";
-import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 
 const PicturePreviewActivity = () => {

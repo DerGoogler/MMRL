@@ -9,6 +9,8 @@ import { useTheme } from "@Hooks/useTheme";
 import { useNativeStorage } from "@Hooks/useNativeStorage";
 import { useNativeProperties } from "@Hooks/useNativeProperties";
 import { Markdown, PromoBanner } from "./components";
+import { useActivity } from "@Hooks/useActivity";
+import { Toolbar } from "@Components/onsenui/Toolbar";
 
 export const libraries = [
   {
@@ -34,6 +36,7 @@ export const libraries = [
       Page: Page,
       BottomToolbar: BottomToolbar,
       Tabbar: Tabbar,
+      Toolbar: Toolbar,
       Video: Video,
       DiscordWidget: DiscordWidget,
       PromoBanner: PromoBanner,
@@ -43,6 +46,7 @@ export const libraries = [
   {
     name: "@mmrl/hooks",
     __esModule: {
+      useActivity: useActivity,
       useNativeProperties: useNativeProperties,
       useNativeStorage: useNativeStorage,
       useTheme: useTheme,
