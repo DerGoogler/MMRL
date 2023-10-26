@@ -159,6 +159,7 @@ declare global {
     logo?: string;
     screenshots?: Array<string>;
     categories?: Array<string>;
+    require?: Array<string>;
   }
 
   export interface Fox {

@@ -44,6 +44,8 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import { Disappear } from "react-disappear";
 import Fade from "@mui/material/Fade";
 import TelegramIcon from "@mui/icons-material/Telegram";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import { useRepos } from "@Hooks/useRepos";
 
 function a11yProps(index: number) {
   return {
@@ -71,6 +73,7 @@ function CustomTabPanel(props: TabPanelProps) {
 const ModuleViewActivity = () => {
   const { strings } = useStrings();
   const { settings } = useSettings();
+  const { modules } = useRepos();
   const { theme, scheme, shade } = useTheme();
   const { context, extra } = useActivity<Module>();
 
@@ -444,6 +447,64 @@ const ModuleViewActivity = () => {
                 </CardContent>
               </Card>
             ) : null}
+
+            {mmrl.require && (
+              <Card
+                elevation={0}
+                sx={{
+                  // width: { xs: "100%", sm: "100vh" },
+
+                  width: "100%",
+                }}
+              >
+                <CardContent>
+                  <Typography variant="h5" component="div">
+                    {"Dependencies"}
+                  </Typography>
+                </CardContent>
+
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: {
+                      xs: "column", // mobile
+                      sm: "row", // tablet and up
+                    },
+                  }}
+                >
+                  <List disablePadding sx={{ width: { xs: "100%" } }}>
+                    {mmrl.require.map((req) => {
+                      const findRequire = React.useMemo(() => modules.find((module) => module.id === req), [modules]);
+
+                      if (findRequire) {
+                        return (
+                          <ListItemButton
+                            onClick={() => {
+                              context.pushPage({
+                                component: ModuleViewActivity,
+                                key: "ModuleViewActivity",
+                                extra: findRequire,
+                              });
+                            }}
+                          >
+                            <StyledListItemText
+                              primary={findRequire.name}
+                              secondary={`${findRequire.version} (${findRequire.versionCode})`}
+                            />
+                          </ListItemButton>
+                        );
+                      } else {
+                        return (
+                          <ListItem>
+                            <StyledListItemText primary={req} />
+                          </ListItem>
+                        );
+                      }
+                    })}
+                  </List>
+                </Box>
+              </Card>
+            )}
 
             <Card
               elevation={0}
