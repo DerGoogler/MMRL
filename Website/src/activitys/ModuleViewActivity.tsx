@@ -79,7 +79,8 @@ const ModuleViewActivity = () => {
   const { context, extra } = useActivity<Module>();
 
   const log = useLog("ModuleViewActivity");
-  const { id, name, version, versionCode, description, author, readme, about, download, mmrl, fox, last_update, hasUpdateJson } = extra;
+  const { id, name, version, versionCode, description, author, readme, about, download, mmrl, fox, last_update, hasUpdateJson, verified } =
+    extra;
 
   const categories = useCategories(mmrl.categories);
   const { data } = useFetch<str>(readme);
@@ -593,6 +594,20 @@ const ModuleViewActivity = () => {
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
           <List>
+            {verified && (
+              <ListItem>
+                <ListItemIcon>
+                  <SecurityUpdateGoodIcon />
+                </ListItemIcon>
+                <StyledListItemText
+                  primary={"Verified module"}
+                  secondary={
+                    "This module has undergone verification and has been confirmed as a trusted module developed by a reputable developer."
+                  }
+                />
+              </ListItem>
+            )}
+
             {hasUpdateJson && (
               <ListItem>
                 <ListItemIcon>

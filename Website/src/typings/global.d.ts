@@ -142,6 +142,7 @@ declare global {
     author?: string;
     description?: string;
     valid: boolean;
+    verified: boolean;
     /** Can overridden by `update.json` with `zipUrl` */
     download: string;
     last_update: number;
