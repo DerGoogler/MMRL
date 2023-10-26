@@ -38,7 +38,6 @@ import { Shell } from "@Native/Shell";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import ListItemButton from "@mui/material/ListItemButton";
-import SourceIcon from "@mui/icons-material/Source";
 import BugReportIcon from "@mui/icons-material/BugReport";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import { Disappear } from "react-disappear";
@@ -47,6 +46,8 @@ import TelegramIcon from "@mui/icons-material/Telegram";
 import SecurityUpdateGoodIcon from "@mui/icons-material/SecurityUpdateGood";
 import { useRepos } from "@Hooks/useRepos";
 import PicturePreviewActivity from "./PicturePreviewActivity";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import TerminalIcon from "@mui/icons-material/Terminal";
 
 function a11yProps(index: number) {
   return {
@@ -612,6 +613,15 @@ const ModuleViewActivity = () => {
               </ListItem>
             )}
 
+            {about.language && (
+              <ListItem>
+                <ListItemIcon>
+                  <TerminalIcon />
+                </ListItemIcon>
+                <StyledListItemText primary={strings("language")} secondary={about.language} />
+              </ListItem>
+            )}
+
             {about.issues && (
               <ListItemButton
                 onClick={() => {
@@ -641,7 +651,7 @@ const ModuleViewActivity = () => {
               }}
             >
               <ListItemIcon>
-                <SourceIcon />
+                <GitHubIcon />
               </ListItemIcon>
               <StyledListItemText primary={strings("source")} secondary={about.source} />
             </ListItemButton>

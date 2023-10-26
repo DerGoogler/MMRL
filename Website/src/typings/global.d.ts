@@ -165,6 +165,8 @@ declare global {
   }
 
   export interface About {
+    repo_source: string;
+    language: string;
     issues?: string;
     source: string;
   }
