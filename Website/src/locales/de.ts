@@ -63,6 +63,13 @@ export const de = {
   no: "Nein",
   operating_sys: "Betriebssystem",
 
+  // Explore Module View
+  verified_module: "Verifiziertes Modul",
+  verified_module_desc: "Dieses Modul wurde einer Überprüfung unterzogen und wurde als vertrauenswürdiges Modul bestätigt, das von einem seriösen Entwickler entwickelt wurde.",
+
+  update_json: "Verwendet eigene Update.json",
+  update_json_desc: "Dieses Modul verwendet seine eigene update.json für Aktualisierungs- und Installationszwecke.",
+
   // Settings
   shading: "Schattierung",
   shading_title: "Benutzerdefinierte Schattierung anwenden",

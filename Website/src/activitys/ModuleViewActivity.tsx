@@ -599,12 +599,7 @@ const ModuleViewActivity = () => {
                 <ListItemIcon>
                   <SecurityUpdateGoodIcon />
                 </ListItemIcon>
-                <StyledListItemText
-                  primary={"Verified module"}
-                  secondary={
-                    "This module has undergone verification and has been confirmed as a trusted module developed by a reputable developer."
-                  }
-                />
+                <StyledListItemText primary={strings("verified_module")} secondary={strings("verified_module_desc")} />
               </ListItem>
             )}
 
@@ -613,10 +608,7 @@ const ModuleViewActivity = () => {
                 <ListItemIcon>
                   <SecurityUpdateGoodIcon />
                 </ListItemIcon>
-                <StyledListItemText
-                  primary={"Uses own update.json"}
-                  secondary={"This module utilizes its own update.json for updating and installation purposes."}
-                />
+                <StyledListItemText primary={strings("update_json")} secondary={strings("update_json_desc")} />
               </ListItem>
             )}
 

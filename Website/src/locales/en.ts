@@ -13,7 +13,6 @@ export const en = {
   source_code: "Source code",
   acknowledgements: "Acknowledgements",
   issues: "Issues",
-  module_verified: "This module is verified and is trusted",
   download: "Download",
   install: "Install",
   update: "Update",
@@ -37,7 +36,6 @@ export const en = {
   development: "Development",
   enabled: "Enabled",
   comments: "Comments",
-  verified: "Verified",
   configureable: "Configureable",
   change_boot: "Changes boot",
   need_ramdisk: "Needs Ramdisk",
@@ -62,6 +60,13 @@ export const en = {
   yes: "Yes",
   no: "No",
   operating_sys: "Operating System",
+
+  // Explore Module View
+  verified_module: "Verified module",
+  verified_module_desc: "This module has undergone verification and has been confirmed as a trusted module developed by a reputable developer.",
+
+  update_json: "Uses own update.json",
+  update_json_desc: "This module utilizes its own update.json for updating and installation purposes.",
 
   // Settings
   shading: "Shading",
