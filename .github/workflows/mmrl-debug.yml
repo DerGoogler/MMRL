@@ -63,32 +63,32 @@ jobs:
           cd ../Android
           ./gradlew app:assembleDefaultDebug
 
-      - name: Upload MMRL-arm64-v8a-debug
+      - name: Upload app-arm64-v8a-debug
         uses: actions/upload-artifact@v3
         with:
-          name: MMRL-arm64-v8a-debug
-          path: app/default/debug/*-arm64-v8a-debug.apk
+          name: app-arm64-v8a-debug
+          path: ${{ github.workspace }}/Android/app/build/outputs/apk/default/debug/app-arm64-v8a-debug.apk
 
-      - name: Upload MMRL-armeabi-v7a-debug
+      - name: Upload app-armeabi-v7a-debug
         uses: actions/upload-artifact@v3
         with:
-          name: MMRL-armeabi-v7a-debug
-          path: app/build/outputs/apk/default/debug/*-armeabi-v7a-debug.apk
+          name: app-armeabi-v7a-debug
+          path: ${{ github.workspace }}/Android/app/build/outputs/apk/default/debug/app-armeabi-v7a-debug.apk
 
-      - name: Upload MMRL-universal-debug
+      - name: Upload app-universal-debug
         uses: actions/upload-artifact@v3
         with:
-          name: MMRL-universal-debug
-          path: app/build/outputs/apk/default/debug/*-universal-debug.apk
+          name: app-universal-debug
+          path: ${{ github.workspace }}/Android/app/build/outputs/apk/default/debug/app-universal-debug.apk
 
-      - name: Upload MMRL-x86-debug
+      - name: Upload app-x86-debug
         uses: actions/upload-artifact@v3
         with:
-          name: MMRL-x86-debug
-          path: app/build/outputs/apk/default/debug/*-x86-debug.apk
+          name: app-x86-debug
+          path: ${{ github.workspace }}/Android/app/build/outputs/apk/default/debug/app-x86-debug.apk
 
-      - name: Upload MMRL-x86_64-debug
+      - name: Upload app-x86_64-debug
         uses: actions/upload-artifact@v3
         with:
-          name: MMRL-x86_64-debug
-          path: app/build/outputs/apk/default/debug/*-x86_64-debug.apk
+          name: app-x86_64-debug
+          path: ${{ github.workspace }}/Android/app/build/outputs/apk/debug/app-x86_64-debug.apk
