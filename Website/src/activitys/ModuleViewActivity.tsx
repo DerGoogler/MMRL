@@ -46,6 +46,7 @@ import Fade from "@mui/material/Fade";
 import TelegramIcon from "@mui/icons-material/Telegram";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import { useRepos } from "@Hooks/useRepos";
+import PicturePreviewActivity from "./PicturePreviewActivity";
 
 function a11yProps(index: number) {
   return {
@@ -375,6 +376,15 @@ const ModuleViewActivity = () => {
                           boxShadow: "0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15)",
                           borderRadius: theme.shape.borderRadius / theme.shape.borderRadius,
                         })}
+                        onClick={() => {
+                          context.pushPage({
+                            component: PicturePreviewActivity,
+                            key: "PicturePreviewActivity",
+                            extra: {
+                              picture: image,
+                            },
+                          });
+                        }}
                       />
                     </ImageListItem>
                   ))}

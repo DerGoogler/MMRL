@@ -76,6 +76,7 @@
     "react-render-tools": "^1.0.1",
     "react-router-dom": "^6.15.0",
     "react-syntax-highlighter": "^15.5.0",
+    "react-zoom-pan-pinch": "^3.3.0",
     "textarea-markdown-editor": "^1.0.4",
     "underscore": "^1.13.6",
     "uninstall": "^0.0.0",
