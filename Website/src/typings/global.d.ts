@@ -1,7 +1,3 @@
-import NShell from "./android/shell";
-import NOS from "./android/os";
-import NBuildConfig from "./android/buildconfig";
-
 export {};
 
 declare module '*.d.ts' {
@@ -26,35 +22,6 @@ declare global {
 
   namespace JSX {
     interface IntrinsicElements {
-      "module-container": HTMLAttributes<HTMLDivElement>;
-      "lib-container": HTMLAttributes<HTMLDivElement>;
-      "settings-container": HTMLAttributes<HTMLDivElement>;
-      "content-body": HTMLAttributes<HTMLDivElement>;
-      "content-body-inner": HTMLAttributes<HTMLDivElement>;
-
-      // ./components/Item.tsx
-      "item-card-wrapper": HTMLAttributes<HTMLDivElement>;
-      "item-title": HTMLAttributes<HTMLDivElement>;
-      "item-version-author": HTMLAttributes<HTMLSpanElement>;
-      "item-description": HTMLAttributes<HTMLSpanElement>;
-      "item-last-update": HTMLAttributes<HTMLSpanElement>;
-      "item-module-name": HTMLAttributes<HTMLSpanElement>;
-      "item-name": HTMLAttributes<HTMLSpanElement>;
-      "item-switch": HTMLAttributes<HTMLSpanElement>;
-      "item-module-button-wrapper": HTMLAttributes<HTMLDivElement>;
-      "item-module-button": HTMLAttributes<HTMLSpanElement>;
-
-      // License cards
-      "license-card-wrapper": HTMLAttributes<HTMLDivElement>;
-      "license-card-title": HTMLAttributes<HTMLDivElement>;
-      "license-card-name": HTMLAttributes<HTMLSpanElement>;
-      "license-card-author": HTMLAttributes<HTMLSpanElement>;
-      "license-card-description": HTMLAttributes<HTMLSpanElement>;
-      "license-card-diver": HTMLAttributes<HTMLHRElement>;
-      "license-card-infos": HTMLAttributes<HTMLDivElement>;
-      "license-card-version": HTMLAttributes<HTMLSpanElement>;
-      "license-card-license": HTMLAttributes<HTMLSpanElement>;
-
       "mmrl-anchor": React.DetailedHTMLProps<React.AnchorHTMLAttributes<HTMLAnchorElement> & { page?: string }, HTMLAnchorElement>;
 
       // Onsen Elements
@@ -131,51 +98,6 @@ declare global {
 
   const __webpack__mode__: "production" | "development";
 
-  type PushPropsExtra<E = {}> = E & {
-    param?: {
-      name: string;
-      value: string;
-    };
-  };
-
-  interface PushPropsCore<E = {}, P = {}> {
-    component: React.ElementType;
-
-    props: P & {
-      key: string;
-      extra: PushPropsExtra<E>;
-      readonly popPage?: () => void;
-      readonly pushPage?: (...args: [props: PushPropsCore<PushPropsExtra<E>>]) => void; //
-    };
-  }
-
-  interface PushProps<E = {}> {
-    readonly extra: PushPropsExtra<E>;
-    // readonly context: {
-    readonly popPage: (options?: any) => void;
-    readonly pushPage: <E, P>(props: PushPropsCore<E, P>) => void;
-    readonly splitter: {
-      readonly show: () => void;
-      readonly hide: () => void;
-      readonly state: boolean;
-    };
-    readonly onBackPressed: (handler: EventListener) => void;
-    readonly onResume: (handler: EventListener) => void;
-    // };
-  }
-
-  interface UseActivity<E = {}> {
-    readonly context: {
-      readonly popPage: (options?: any) => void;
-      readonly pushPage: <T>(props: PushPropsCore<T>) => void;
-      readonly splitter: {
-        readonly show: () => void;
-        readonly hide: () => void;
-        readonly state: () => boolean;
-      };
-    };
-  }
-
   interface StoredRepo extends Omit<Repo, "modules"> {
     modules: string;
   }
@@ -184,19 +106,19 @@ declare global {
     /**
      * An required filed, to disply the repository name
      */
-    name: str;
-    mmrlOwner?: str;
+    name: string;
+    mmrlOwner?: string;
     /**
      * An given website link for the repository
      */
-    website?: str;
+    website?: string;
     /**
      * Given support link i.g. Telegram, Xda, GitHub or something
      */
-    support?: str;
-    donate?: str;
-    submitModule?: str;
-    last_update: int;
+    support?: string;
+    donate?: string;
+    submitModule?: string;
+    last_update: number;
     modules: Module[];
   }
 
@@ -211,17 +133,17 @@ declare global {
   }
 
   export interface Module {
-    id: str;
-    name: str;
-    version?: int;
-    versionCode: int;
-    author?: str;
-    description?: str;
-    valid: bool;
-    download: str;
-    last_update: int;
-    readme: str;
-    stars: int;
+    id: string;
+    name: string;
+    version?: number;
+    versionCode: number;
+    author?: string;
+    description?: string;
+    valid: boolean;
+    download: string;
+    last_update: number;
+    readme: string;
+    stars: number;
     about: About;
     mmrl: Mmrl;
     fox: Fox;
@@ -233,21 +155,21 @@ declare global {
   }
 
   export interface Mmrl {
-    cover?: str;
-    logo?: str;
-    screenshots?: arr<str>;
-    categories?: arr<str>;
+    cover?: string;
+    logo?: string;
+    screenshots?: Array<string>;
+    categories?: Array<string>;
   }
 
   export interface Fox {
-    minApi?: int;
-    maxApi?: int;
-    minMagisk?: int;
-    needRamdisk?: bool;
-    support?: str;
-    donate?: str;
-    config?: str;
-    changeBoot?: bool;
-    mmtReborn?: bool;
+    minApi?: number;
+    maxApi?: number;
+    minMagisk?: number;
+    needRamdisk?: boolean;
+    support?: string;
+    donate?: string;
+    config?: string;
+    changeBoot?: boolean;
+    mmtReborn?: boolean;
   }
 }
