@@ -3,18 +3,12 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import { DialogEditTextListItem, DialogEditTextListItemProps } from "@Components/DialogEditTextListItem";
 import Divider from "@mui/material/Divider";
-import Alert from "@mui/material/Alert";
-import AlertTitle from "@mui/material/AlertTitle";
 import ListSubheader from "@mui/material/ListSubheader";
 import { StyledListItemText } from "@Components/StyledListItemText";
 import { Android12Switch } from "@Components/Android12Switch";
 import { os } from "@Native/Os";
 import { useTheme } from "@Hooks/useTheme";
-import AppBar from "@mui/material/AppBar";
-import JsxParser from "react-jsx-parser";
 import Box from "@mui/material/Box";
-import { Shell } from "@Native/Shell";
-import InputAdornment from "@mui/material/InputAdornment";
 import { Paper, SxProps, Typography, styled } from "@mui/material";
 import { useNativeProperties } from "@Hooks/useNativeProperties";
 import { Markup } from "./Markdown";
@@ -23,10 +17,6 @@ import Video from "./dapi/Video";
 import { DiscordWidget } from "./dapi/DiscordWidget";
 import Anchor from "./dapi/Anchor";
 
-import Tab from "@mui/material/Tab";
-import TabContext from "@mui/lab/TabContext";
-import TabList from "@mui/lab/TabList";
-import TabPanel from "@mui/lab/TabPanel";
 import { formatString, useSettings } from "@Hooks/useSettings";
 import { SuFile } from "@Native/SuFile";
 
@@ -229,23 +219,23 @@ prototypeWhitelist.set(Object, new Set());
 const libraries = [
   {
     name: "react",
-    lib: React,
+    __esModule: require("react"),
   },
   {
     name: "@mui/material",
-    lib: Mui,
+    __esModule: require("@mui/material"),
   },
   {
     name: "@mui/lab",
-    lib: Lab,
+    __esModule: require("@mui/lab"),
   },
   {
     name: "@mui/icons-material",
-    lib: Icon,
+    __esModule: require("@mui/icons-material"),
   },
   {
     name: "@mmrl/ui",
-    lib: {
+    __esModule: {
       Anchor: Anchor,
       Page: Page,
       BottomToolbar: BottomToolbar,
@@ -259,7 +249,7 @@ const libraries = [
   },
   {
     name: "@mmrl/hooks",
-    lib: {
+    __esModule: {
       useNativeProperties: useNativeProperties,
       useNativeStorage: useNativeStorage,
       useTheme: useTheme,
@@ -268,7 +258,7 @@ const libraries = [
 
   {
     name: "@mmrl/native",
-    lib: {
+    __esModule: {
       // SuFile: SuFile,
     },
   },
@@ -277,8 +267,9 @@ const libraries = [
 const globals = {
   ...Sandbox.SAFE_GLOBALS,
   Object,
+  // React: require("react"),
   require(id: string) {
-    return libraries.find((lib) => id === lib.name)?.lib;
+    return libraries.find((lib) => id === lib.name)?.__esModule;
   },
 };
 
@@ -303,8 +294,10 @@ const scope = {
 
 export const ConfigureView = React.memo<PreviewErrorBoundaryChildren>((props) => {
   const { theme, scheme, shade } = useTheme();
+  const C = parseCode(props.children as string);
+  console.log(C);
   const Component = sandbox
-    .compile<React.FunctionComponent<any>>(parseCode(props.children as string))({
+    .compile<React.FunctionComponent<any>>(C)({
       modid: props.modid,
       window: {
         open(href: string) {

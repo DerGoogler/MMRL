@@ -11,19 +11,6 @@ import PlaygroundsActivity, { PlaygroundExtra } from "@Activitys/PlaygroundsActi
 import { ConfigureView } from "@Components/ConfigureView";
 import { ConfigureActivity } from "@Activitys/ConfigureActivity";
 import { Markup } from "@Components/Markdown";
-import {
-  CheckRounded,
-  CloseRounded,
-  FormatBoldRounded,
-  FormatItalicRounded,
-  FormatListBulletedRounded,
-  FormatListNumberedRounded,
-  FormatQuoteRounded,
-  FormatStrikethroughRounded,
-  ImageRounded,
-  LinkRounded,
-  WarningAmberRounded,
-} from "@mui/icons-material";
 import { configureSample } from "@Util/configure-sample";
 import { dapiSample } from "@Util/dapi-sample";
 
