@@ -19,7 +19,7 @@ public class NativeShell {
     }
 
     static {
-        System.loadLibrary("native-shell-lib");
+        System.loadLibrary("shell");
     }
 
     @JavascriptInterface
