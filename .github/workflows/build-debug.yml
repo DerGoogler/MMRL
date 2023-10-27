@@ -66,6 +66,9 @@ jobs:
       - name: Build apk debug
         run: ./gradlew app:assembleDefaultDebug
 
+      - name: Build apk debug
+        run: ls app/build/outputs/apk/default/debug/
+
       - name: Upload MMRL-default-arm64-v8a-debug
         uses: actions/upload-artifact@v3
         with:
