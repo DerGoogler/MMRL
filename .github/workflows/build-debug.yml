@@ -60,6 +60,9 @@ jobs:
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
 
+      - name: Installing dependencies
+        run: ./gradlew app:npmInstall
+
       - name: Build apk debug
         run: ./gradlew app:assembleDefaultDebug
 
