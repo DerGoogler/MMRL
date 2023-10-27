@@ -6,6 +6,7 @@
     "emitDeclarationOnly": false,
     "experimentalDecorators": true,
     "declarationMap": false,
+    "allowImportingTsExtensions": true,
     "typeRoots": ["src/typings/global.d.ts"],
     "sourceMap": true,
     "strict": true,
