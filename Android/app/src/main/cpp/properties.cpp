@@ -1,10 +1,12 @@
 #include <jni.h>
 #include <cstring>
 #include <sys/system_properties.h>
-//#include <cutils/properties.h>
+//#include <system_properties.h>
+
+#define JNICALL
 
 extern "C"
-JNIEXPORT jstring JNICALL
+JNIEXPORT jstring  extern "C" JNICALL
 Java_com_dergoogler_core_NativeProperties_get(JNIEnv *env, jclass clazz, jstring key,
                                                       jstring def) {
     const char *myKey = env->GetStringUTFChars(key, 0);
