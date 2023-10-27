@@ -5,7 +5,7 @@ import android.webkit.JavascriptInterface;
 public class NativeLog {
 
     static {
-        System.loadLibrary("clog");
+        System.loadLibrary("native-log-lib");
     }
 
     @JavascriptInterface

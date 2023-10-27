@@ -5,7 +5,7 @@ import android.webkit.JavascriptInterface;
 public class NativeProperties {
 
     static {
-        System.loadLibrary("properties");
+        System.loadLibrary("native-properties-lib");
     }
 
     @JavascriptInterface
