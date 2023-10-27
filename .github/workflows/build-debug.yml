@@ -73,28 +73,28 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: MMRL-default-arm64-v8a-debug
-          path: app/build/outputs/apk/default/debug/app-default-arm64-v8a-debug.apk
+          path: ${{ github.workspace }}/app/build/outputs/apk/default/debug/*-default-arm64-v8a-debug.apk
 
       - name: Upload MMRL-default-armeabi-v7a-debug
         uses: actions/upload-artifact@v3
         with:
           name: MMRL-default-armeabi-v7a-debug
-          path: app/build/outputs/apk/default/debug/app-default-armeabi-v7a-debug.apk
+          path: ${{ github.workspace }}/app/build/outputs/apk/default/debug/*-default-armeabi-v7a-debug.apk
 
       - name: Upload MMRL-default-universal-debug
         uses: actions/upload-artifact@v3
         with:
           name: MMRL-default-universal-debug
-          path: app/build/outputs/apk/default/debug/app-default-universal-debug.apk
+          path: ${{ github.workspace }}/app/build/outputs/apk/default/debug/*-default-universal-debug.apk
 
       - name: Upload MMRL-default-x86-debug
         uses: actions/upload-artifact@v3
         with:
           name: MMRL-default-x86-debug
-          path: app/build/outputs/apk/default/debug/app-default-x86-debug.apk
+          path: ${{ github.workspace }}/app/build/outputs/apk/default/debug/*-default-x86-debug.apk
 
       - name: Upload MMRL-default-x86_64-debug
         uses: actions/upload-artifact@v3
         with:
           name: MMRL-default-x86_64-debug
-          path: app/build/outputs/apk/default/debug/app-default-x86_64-debug.apk
+          path: ${{ github.workspace }}/app/build/outputs/apk/default/debug/*-default-x86_64-debug.apk
