@@ -1,4 +1,8 @@
+import { IFs } from "memfs";
 import { Native } from "./Native";
+import { WasmFs } from "@wasmer/wasmfs";
+
+export const wasmFs = new WasmFs();
 
 interface NativeSuFile {
   readFile(path: string): string;
@@ -15,18 +19,31 @@ interface NativeSuFile {
  */
 class SuFile extends Native<NativeSuFile> {
   private path: string;
+  private _fs: IFs = wasmFs.fs;
 
   public constructor(path?: string) {
     super();
     this.path = path ? path : "";
     this.interfaceName = "__sufile__";
+    // Support for browsers
+    // if (!this.isAndroid) {
+    //   this._fs = null as unknown as IFs;
+    // }
   }
 
   public read(): string {
     if (this.isAndroid) {
       return this.getInterface.readFile(this.path);
     } else {
-      return "";
+      return this._fs.readFileSync(this.path).toString();
+    }
+  }
+
+  public write(content: string): void {
+    if (this.isAndroid) {
+      null;
+    } else {
+      this._fs.writeFileSync(this.path, content);
     }
   }
 
@@ -49,7 +66,7 @@ class SuFile extends Native<NativeSuFile> {
     if (this.isAndroid) {
       return this.getInterface.existFile(this.path);
     } else {
-      return false;
+      return this._fs.existsSync(this.path);
     }
   }
 
@@ -77,6 +94,10 @@ class SuFile extends Native<NativeSuFile> {
 
   public static read(path: string): string {
     return new SuFile(path).read();
+  }
+
+  public static write(path: string, content: string): void {
+    new SuFile(path).write(content);
   }
 
   /**

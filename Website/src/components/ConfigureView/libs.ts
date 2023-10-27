@@ -11,6 +11,8 @@ import { useNativeProperties } from "@Hooks/useNativeProperties";
 import { Markdown, PromoBanner } from "./components";
 import { useActivity } from "@Hooks/useActivity";
 import { Toolbar } from "@Components/onsenui/Toolbar";
+import { SuFile } from "@Native/SuFile";
+import { os } from "@Native/Os";
 
 export const libraries = [
   {
@@ -54,18 +56,22 @@ export const libraries = [
   },
 
   {
-    name: "@mmrl/native",
+    name: "@mmrl/sufile",
     __esModule: {
-      // SuFile: SuFile,
+      read: SuFile.read,
+      write: SuFile.write,
+      list: SuFile.list,
+      exist: SuFile.exist,
+      delete: SuFile.delete,
+      deleteRecursive: SuFile.deleteRecursive,
     },
   },
 ];
 
+const prototypeWhitelist = Sandbox.SAFE_PROTOTYPES;
+prototypeWhitelist.set(Node, new Set());
+
 export const globals = {
   ...Sandbox.SAFE_GLOBALS,
   Object,
-  // React: require("react"),
-  require(id: string) {
-    return libraries.find((lib) => id === lib.name)?.__esModule;
-  },
 };

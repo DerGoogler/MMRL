@@ -173,6 +173,7 @@ export interface ModConf {
   // default paths
   ADB: string;
   MODULES: string;
+  MODULECWD: string;
   PROPS: string;
   SYSTEM: string;
   SEPOLICY: string;
@@ -215,26 +216,27 @@ export const INITIAL_MOD_CONF: ModConf = {
   // default paths
   ADB: "/data/adb",
   MODULES: "<ADB>/modules",
-  PROPS: "<MODULES>/<MODID>/module.prop",
-  SYSTEM: "<MODULES>/<MODID>/system.prop",
-  SEPOLICY: "<MODULES>/<MODID>/sepolicy.rule",
-  CONFIG: `<MODULES>/<MODID>/system/usr/share/mmrl/config/<MODID>.mdx`,
+  MODULECWD: "<MODULES>/<MODID>",
+  PROPS: "<MODULECWD>/module.prop",
+  SYSTEM: "<MODULECWD>/system.prop",
+  SEPOLICY: "<MODULECWD>/sepolicy.rule",
+  CONFIG: `<MODULECWD>/system/usr/share/mmrl/config/<MODID>.mdx`,
 
   // service paths
-  LATESERVICE: "<MODULES>/<MODID>/service.sh",
-  POSTSERVICE: "<MODULES>/<MODID>/post-fs-data.sh",
-  POSTMOUNT: "<MODULES>/<MODID>/post-mount.sh",
-  BOOTCOMP: "<MODULES>/<MODID>/boot-completed.sh",
+  LATESERVICE: "<MODULECWD>/service.sh",
+  POSTSERVICE: "<MODULECWD>/post-fs-data.sh",
+  POSTMOUNT: "<MODULECWD>/post-mount.sh",
+  BOOTCOMP: "<MODULECWD>/boot-completed.sh",
 
   // status paths
-  SKIPMOUNT: "<MODULES>/<MODID>/skip_mount",
-  DISABLE: "<MODULES>/<MODID>/disable",
-  REMOVE: "<MODULES>/<MODID>/remove",
-  UPDATE: "<MODULES>/<MODID>/update",
+  SKIPMOUNT: "<MODULECWD>/skip_mount",
+  DISABLE: "<MODULECWD>/disable",
+  REMOVE: "<MODULECWD>/remove",
+  UPDATE: "<MODULECWD>/update",
 
   // others
-  MMRLINI: "<MODULES>/mmrl_install_tools",
-  CONFCWD: "<MODULES>/<MODID>/system/usr/share/mmrl/config/<MODID>",
+  MMRLINI: "<MODULECWD>/mmrl_install_tools",
+  CONFCWD: "<MODULECWD>/system/usr/share/mmrl/config/<MODID>",
   CONFINDEX: "<CONFCWD>/index.jsx",
 };
 

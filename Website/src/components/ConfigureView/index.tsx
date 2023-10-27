@@ -11,8 +11,10 @@ import Sandbox from "@nyariv/sandboxjs";
 import { transform, registerPlugin } from "@babel/standalone";
 import * as React from "react";
 import { PluginObj } from "@babel/core";
-import { globals } from "./libs";
+import { globals, libraries } from "./libs";
 import { DialogEditListItem, StyledListSubheader } from "./components";
+import { SuFile, wasmFs } from "@Native/SuFile";
+import { ModConf, useSettings } from "@Hooks/useSettings";
 
 function plugin({ types: t }): PluginObj {
   return {
@@ -67,22 +69,63 @@ const scope = {
 
 export const ConfigureView = React.memo<PreviewErrorBoundaryChildren>((props) => {
   const { theme } = useTheme();
-  const Component = sandbox
-    .compile<React.FunctionComponent<any>>(parseCode(props.children as string))({
-      modid: props.modid,
-      window: {
-        open(href: string) {
-          os.open(href, {
-            target: "_blank",
-            features: {
-              color: theme.palette.primary.main,
-            },
-          });
-        },
-      },
-      ...scope,
-    })
-    .run();
+  const { modConf } = useSettings();
 
-  return <Component />;
+  const format = React.useCallback<<K extends keyof ModConf>(key: K) => ModConf[K]>((key) => modConf(key, { MODID: props.modid }), []);
+
+  React.useEffect(() => {
+    wasmFs.volume.fromJSON(
+      {
+        [format("PROPS")]: `id=${props.modid}`,
+        [format("CONFINDEX")]: 'export default "DO NOT USE THIS FILE OR IMPORT IT!"',
+      },
+      format("CONFCWD")
+    );
+  }, [props.modid]);
+
+  const box = React.useCallback(
+    (code: string) =>
+      sandbox
+        .compile<React.FunctionComponent<any> | undefined>(
+          parseCode(code),
+          true
+        )({
+          modid: props.modid,
+          modpath: (path: string) => `${format("MODULECWD")}/${path}`,
+          confpath: (path: string) => `${format("CONFCWD")}/${path}`,
+          window: {
+            open(href: string) {
+              os.open(href, {
+                target: "_blank",
+                features: {
+                  color: theme.palette.primary.main,
+                },
+              });
+            },
+          },
+          require(id: string) {
+            if (id.startsWith("!conf/")) {
+              const filename = id.replace(/!conf\/(.+)/gm, `${format("CONFCWD")}/$1`);
+              const file = new SuFile(filename);
+              if (file.exist()) {
+                return box(file.read());
+              } else {
+                return `Imported \"${filename}\" file not found`;
+              }
+            } else {
+              return libraries.find((lib) => id === lib.name)?.__esModule;
+            }
+          },
+          ...scope,
+        })
+        .run(),
+    []
+  );
+  const Component = box(props.children as string);
+
+  if (Component) {
+    return <Component />;
+  } else {
+    return <div>export is undefined</div>;
+  }
 });

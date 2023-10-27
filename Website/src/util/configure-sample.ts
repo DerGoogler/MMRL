@@ -169,5 +169,6 @@ function InstallToolsConfig() {
   );
 }
 
-export default InstallToolsConfig;
-`;
+export default {
+  onCreate: InstallToolsConfig
+};`;
