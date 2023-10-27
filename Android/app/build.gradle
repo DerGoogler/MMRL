@@ -101,7 +101,7 @@ dependencies {
 
 configurations.implementation.setCanBeResolved(true)
 
-task printDepsTreeInJson {
+tasks.register('printDepsTreeInJson') {
     doLast {
         configurations.implementation.incoming.getResolutionResult().getAllDependencies().each { depResult ->
             println "{\"from\":\"" + depResult.getFrom() + "\"," + "\"requested\":\"" + depResult.getRequested() + "\"}"
@@ -109,7 +109,7 @@ task printDepsTreeInJson {
     }
 }
 
-task printSolvedDepsTreeInJson {
+tasks.register('printSolvedDepsTreeInJson') {
     doLast {
         def jsonOutput = "["
         configurations.implementation.resolvedConfiguration.firstLevelModuleDependencies.each { dep ->
