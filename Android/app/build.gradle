@@ -46,6 +46,7 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             multiDexEnabled true
+            project.tasks.preBuild.dependsOn("webProd")
         }
         debug {
             resValue "string", "app_name", "${app_name} Debug"
@@ -54,6 +55,7 @@ android {
             minifyEnabled false
             multiDexEnabled false
             applicationIdSuffix '.debug'
+            project.tasks.preBuild.dependsOn("webDev")
         }
     }
     externalNativeBuild {
@@ -101,7 +103,21 @@ dependencies {
 
 configurations.implementation.setCanBeResolved(true)
 
-task printDepsTreeInJson {
+def npmRunPATH = "${System.getenv("PATH")}:./../../Website/node_modules/.bin:./../Website/node_modules/.bin"
+
+tasks.register('webDev', Exec) {
+    workingDir "./../../Website"
+    environment PATH: npmRunPATH
+    commandLine "npm", "run", "web:dev-app"
+}
+
+tasks.register('webProd', Exec) {
+    workingDir "./../../Website"
+    environment PATH: npmRunPATH
+    commandLine "npm", "run", "web:prod-app"
+}
+
+tasks.register('printDepsTreeInJson') {
     doLast {
         configurations.implementation.incoming.getResolutionResult().getAllDependencies().each { depResult ->
             println "{\"from\":\"" + depResult.getFrom() + "\"," + "\"requested\":\"" + depResult.getRequested() + "\"}"
@@ -109,7 +125,7 @@ task printDepsTreeInJson {
     }
 }
 
-task printSolvedDepsTreeInJson {
+tasks.register('printSolvedDepsTreeInJson') {
     doLast {
         def jsonOutput = "["
         configurations.implementation.resolvedConfiguration.firstLevelModuleDependencies.each { dep ->
