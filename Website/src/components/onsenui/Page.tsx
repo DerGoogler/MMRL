@@ -14,7 +14,7 @@ interface NativeUIColors {
 
 interface HTMLPage {
   sx?: SxProps;
-  backgroundStyle?: React.CSSProperties;
+  backgroundStyle?: React.CSSProperties["backgroundColor"];
   modifier?: string;
   renderModal?: RenderFunction;
   renderToolbar?: RenderFunction;
@@ -40,10 +40,19 @@ const _Page = React.forwardRef<HTMLElement, HTMLPage>((props, ref) => {
   const { context } = useActivity();
   const { renderToolbar, renderBottomToolbar, renderModal, renderFixed, sx, children, ...rest } = props;
 
+  React.useEffect(() => {
+    if (props.backgroundStyle) {
+      os.setNavigationBarColor(props.backgroundStyle);
+      return () => {
+        os.setNavigationBarColor(theme.palette.background.default);
+      };
+    }
+  }, [props.backgroundStyle]);
+
   return (
     <HTMLPage {...rest} ref={ref}>
       {renderToolbar && renderToolbar(ref, context)}
-      <Box className="page__background" sx={props.backgroundStyle}></Box>
+      <Box className="page__background" sx={{ backgroundColor: props.backgroundStyle }}></Box>
       <Box className="page__content" sx={sx}>
         {children}
       </Box>

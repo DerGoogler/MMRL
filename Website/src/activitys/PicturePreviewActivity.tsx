@@ -21,9 +21,7 @@ const PicturePreviewActivity = () => {
   return (
     <Page
       modifier="noshadow"
-      backgroundStyle={{
-        backgroundColor: "black",
-      }}
+      backgroundStyle="#000000"
       renderToolbar={renderToolbar}
     >
       <TransformWrapper>
