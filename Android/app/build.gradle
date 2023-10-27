@@ -43,7 +43,7 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             multiDexEnabled true
-            project.tasks.preBuild.dependsOn("webProd")
+//            project.tasks.preBuild.dependsOn("webProd")
         }
         debug {
             resValue "string", "app_name", "${app_name} Debug"
@@ -52,7 +52,7 @@ android {
             minifyEnabled false
             multiDexEnabled false
             applicationIdSuffix '.debug'
-            project.tasks.preBuild.dependsOn("webDev")
+//            project.tasks.preBuild.dependsOn("webDev")
         }
     }
     externalNativeBuild {
