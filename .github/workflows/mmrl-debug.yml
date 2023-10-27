@@ -1,4 +1,3 @@
-#file: noinspection SpellCheckingInspection
 name: Generate APK Debug
 
 on:
@@ -37,10 +36,13 @@ jobs:
           java-version: 17
           distribution: "temurin"
 
-      - name: Set up Node.js 18
+      - name: Set up Node.js 16
         uses: actions/setup-node@v3
         with:
           node-version: 18
+
+      - name: Linking Node.js binaries
+        run: sudo ln `which node` /usr/bin/node && sudo ln `which npm` /usr/bin/npm
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v2
@@ -54,41 +56,44 @@ jobs:
             jdks
             ${{ github.workspace }}/.gradle/configuration-cache
 
-      - name: Build Debug APK
-        run: |
-          chmod +x ./gradlew
-          cd ./../Website
-          npm install --force
-          npm run web:dev-app
-          cd ../Android
-          ./gradlew app:assembleDefaultDebug
+      - name: Change wrapper permissions
+        run: chmod +x ./gradlew
 
-      - name: Upload MMRL-arm64-v8a-debug
+      - name: Installing dependencies
+        run: ./gradlew app:npmInstall
+
+      - name: Build apk debug
+        run: ./gradlew app:assembleDefaultDebug
+
+      - name: Build apk debug
+        run: ls app/build/outputs/apk/default/debug/
+
+      - name: Upload MMRL-default-arm64-v8a-debug
         uses: actions/upload-artifact@v3
         with:
-          name: MMRL-arm64-v8a-debug
-          path: app/default/debug/*-arm64-v8a-debug.apk
+          name: MMRL-default-arm64-v8a-debug
+          path: ${{ github.workspace }}/Android/app/build/outputs/apk/default/debug/*-default-arm64-v8a-debug.apk
 
-      - name: Upload MMRL-armeabi-v7a-debug
+      - name: Upload MMRL-default-armeabi-v7a-debug
         uses: actions/upload-artifact@v3
         with:
-          name: MMRL-armeabi-v7a-debug
-          path: app/default/debug/*-armeabi-v7a-debug.apk
+          name: MMRL-default-armeabi-v7a-debug
+          path: ${{ github.workspace }}/Android/app/build/outputs/apk/default/debug/*-default-armeabi-v7a-debug.apk
 
-      - name: Upload MMRL-universal-debug
+      - name: Upload MMRL-default-universal-debug
         uses: actions/upload-artifact@v3
         with:
-          name: MMRL-universal-debug
-          path: app/default/debug/*-universal-debug.apk
+          name: MMRL-default-universal-debug
+          path: ${{ github.workspace }}/Android/app/build/outputs/apk/default/debug/*-default-universal-debug.apk
 
-      - name: Upload MMRL-x86-debug
+      - name: Upload MMRL-default-x86-debug
         uses: actions/upload-artifact@v3
         with:
-          name: MMRL-x86-debug
-          path: app/default/debug/*-x86-debug.apk
+          name: MMRL-default-x86-debug
+          path: ${{ github.workspace }}/Android/app/build/outputs/apk/default/debug/*-default-x86-debug.apk
 
-      - name: Upload MMRL-x86_64-debug
+      - name: Upload MMRL-default-x86_64-debug
         uses: actions/upload-artifact@v3
         with:
-          name: MMRL-x86_64-debug
-          path: app/default/debug/*-x86_64-debug.apk
+          name: MMRL-default-x86_64-debug
+          path: ${{ github.workspace }}/Android/app/build/outputs/apk/default/debug/*-default-x86_64-debug.apk

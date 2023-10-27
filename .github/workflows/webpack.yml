@@ -2,9 +2,9 @@ name: Build with Webpack
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 defaults:
   run:
@@ -14,23 +14,19 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [ 16, 18 ]
-    
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
 
-    - name: Build Development
-      run: |
-        npm install --force
-        npm run web:dev
+      - name: Build Development
+        run: |
+          npm install --force
+          npm run web:dev
 
-    - name: Build Production
-      run: |
-        npm install --force
-        npm run web:prod
+      - name: Build Production
+        run: |
+          npm install --force
+          npm run web:prod
