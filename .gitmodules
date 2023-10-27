@@ -1,0 +1,6 @@
+[submodule "libcxx"]
+	path = Android/app/src/main/cpp/libcxx
+	url = https://github.com/topjohnwu/libcxx.git
+[submodule "system_properties"]
+	path = Android/app/src/main/cpp/system_properties
+	url = https://github.com/topjohnwu/system_properties.git
