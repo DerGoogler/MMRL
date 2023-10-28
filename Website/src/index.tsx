@@ -17,6 +17,7 @@ import { MMRLAnchor } from "./custom-elements/anchor";
 
 import "onsenui/css/onsenui.css";
 import "@Styles/default.scss";
+import { strs } from "./locales/declaration";
 
 ons.platform.select("android");
 
@@ -32,7 +33,7 @@ ons.ready(() => {
     <React.StrictMode>
       <ModConfProvider>
         <SettingsProvider>
-          <StringsProvider>
+          <StringsProvider data={strs}>
             <ThemeProvider>
               <Preventer prevent="contextmenu">
                 <RepoProvider>

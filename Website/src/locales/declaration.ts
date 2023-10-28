@@ -8,7 +8,7 @@ import React from "react";
  */
 export type StringDeclaration = keyof typeof en;
 
-type Strs = {
+export type Strs = {
   [code: str]: Partial<Record<StringDeclaration, str>>;
 };
 

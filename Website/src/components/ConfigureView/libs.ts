@@ -12,7 +12,7 @@ import { Markdown, PromoBanner } from "./components";
 import { useActivity } from "@Hooks/useActivity";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import { SuFile } from "@Native/SuFile";
-import { os } from "@Native/Os";
+import { StringsProvider, useStrings } from "@Hooks/useStrings";
 
 export const libraries = [
   {
@@ -52,6 +52,13 @@ export const libraries = [
       useNativeProperties: useNativeProperties,
       useNativeStorage: useNativeStorage,
       useTheme: useTheme,
+      useStrings: useStrings,
+    },
+  },
+  {
+    name: "@mmrl/providers",
+    __esModule: {
+      StringsProvider: StringsProvider,
     },
   },
 

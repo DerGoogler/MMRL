@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useLocalStorage } from "usehooks-ts";
 import { SetValue, useNativeStorage } from "./useNativeStorage";
-import { StringDeclaration, strs, useLanguageMap } from "./../locales/declaration";
+import { StringDeclaration, Strs, useLanguageMap } from "./../locales/declaration";
 import { useSettings } from "./useSettings";
 
 interface StrContext {
@@ -25,14 +25,18 @@ export interface AvailableLangs {
   value: str;
 }
 
+interface StringsProviderProps extends React.PropsWithChildren {
+  data: Strs;
+}
+
 /**
  *
  * @param strings The first element is the default language
  */
-export const StringsProvider = (props: React.PropsWithChildren) => {
+export const StringsProvider = (props: StringsProviderProps) => {
   const { settings } = useSettings();
 
-  const defaultLanguage = Object.keys(strs)[0];
+  const defaultLanguage = Object.keys(props.data)[0];
   const currentLanguage = React.useMemo(() => settings.language.value, [settings]);
 
   const format = React.useCallback((template: string, object?: object) => {
@@ -52,8 +56,8 @@ export const StringsProvider = (props: React.PropsWithChildren) => {
 
   const strings = React.useCallback(
     (key: string, fmt?: object) => {
-      const currentLang = strs[currentLanguage];
-      const defaultLang = strs[defaultLanguage];
+      const currentLang = props.data[currentLanguage];
+      const defaultLang = props.data[defaultLanguage];
 
       if (currentLang[key] !== undefined) {
         return format(currentLang[key], fmt);
