@@ -73,6 +73,10 @@ function ModConfActivity() {
             confKey: "MODULES",
           },
           {
+            text: "Module work directory",
+            confKey: "MODULECWD",
+          },
+          {
             text: "Module properties path",
             confKey: "PROPS",
           },
@@ -168,7 +172,7 @@ function ModConfActivity() {
                     primary={
                       <Box sx={{ display: "flex", alignItems: "center", justifyItems: "center" }}>
                         {item.logoText && <item.logoText sx={{ mr: 1 }} width="1rem" height="1rem" />}
-                        {item.text}
+                        [{item.confKey}]: {item.text}
                       </Box>
                     }
                     secondary={_modConf[item.confKey]}
