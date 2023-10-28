@@ -63,7 +63,8 @@ export const en = {
 
   // Explore Module View
   verified_module: "Verified module",
-  verified_module_desc: "This module has undergone verification and has been confirmed as a trusted module developed by a reputable developer.",
+  verified_module_desc:
+    "This module has undergone verification and has been confirmed as a trusted module developed by a reputable developer.",
 
   update_json: "Uses own update.json",
   update_json_desc: "This module utilizes its own update.json for updating and installation purposes.",
@@ -75,8 +76,11 @@ export const en = {
 
   module: "Module",
 
+  low_quality_module: "Low quality module",
   low_quality_modules: "Low quality modules",
   low_quality_modules_subtitle: "Shows a alert below the module if it has a low quality",
+  low_quality_module_warn:
+    "This Magisk module is missing crucial properties, such as id, version, versionCode, author, etc., which may affect its functionality and origin.",
 
   invaild_modules: "Invaild modules",
   invaild_modules_subtitle: "Show invaild modules",

@@ -23,13 +23,13 @@ interface Props {
 
 export const ExploreModule = React.memo<Props>((props) => {
   const { context } = useActivity();
-  const { currentLanguage } = useStrings();
+  const { strings, currentLanguage } = useStrings();
   const { settings } = useSettings();
   const { theme, scheme, shade } = useTheme();
 
   const { id, name, version, versionCode, description, stars, author, last_update, mmrl, valid, hidden } = props.moduleProps;
 
-  const isLowQuality = useLowQualityModule(props.moduleProps, props.disableLowQuality);
+  const isLowQuality = useLowQualityModule(props.moduleProps, !settings._low_quality_module);
   const formatLastUpdate = useFormatDate(last_update);
 
   if (hidden) {
@@ -146,10 +146,10 @@ export const ExploreModule = React.memo<Props>((props) => {
           </Stack>
         </Stack>
       </Stack>
-      {settings._low_quality_module && isLowQuality && (
-        <Alert style={{ borderRadius: 0 }} severity="warning">
-          <AlertTitle>Low Quality</AlertTitle>
-          Module meets not the requirements of its props
+      {isLowQuality && (
+        <Alert sx={{ borderRadius: 0 }} severity="warning">
+          <AlertTitle>{strings("low_quality_module")}</AlertTitle>
+          {strings("low_quality_module_warn")}
         </Alert>
       )}
     </Card>

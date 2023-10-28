@@ -3,7 +3,7 @@ import { DeleteRounded, RefreshRounded } from "@mui/icons-material";
 import React from "react";
 import { useStrings } from "@Hooks/useStrings";
 import { Android12Switch } from "./Android12Switch";
-import { Box, Button, Card, Divider, Stack, SxProps, Theme, Typography } from "@mui/material";
+import { Alert, AlertTitle, Box, Button, Card, Divider, Stack, SxProps, Theme, Typography } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { useActivity } from "@Hooks/useActivity";
 import { ConfigureActivity } from "@Activitys/ConfigureActivity";
@@ -15,6 +15,7 @@ import { useTheme } from "@Hooks/useTheme";
 import TerminalActivity from "@Activitys/TerminalActivity";
 import { useRepos } from "@Hooks/useRepos";
 import { ModConf, useModConf } from "@Hooks/useModConf";
+import { useLowQualityModule } from "@Hooks/useLowQualityModule";
 
 export const badgeStyle: (color: (typeof colors)["blue" | "teal" | "red" | "orange"]) => SxProps<Theme> = (color) => {
   return {
@@ -65,6 +66,10 @@ const DeviceModule = React.memo<Props>((props) => {
   const module_config_file = SuFile.exist(format("CONFINDEX"));
 
   const findOnlineModule = React.useMemo(() => modules.find((module) => module.id === id), [modules]) as Module;
+
+  const hasUpdate = React.useMemo(() => findOnlineModule && versionCode < findOnlineModule.versionCode, [findOnlineModule]);
+
+  const isLowQuality = useLowQualityModule(props.module, !settings._low_quality_module);
 
   return (
     <>
@@ -186,7 +191,16 @@ const DeviceModule = React.memo<Props>((props) => {
             )}
           </Stack>
         </Stack>
-        {findOnlineModule && versionCode < findOnlineModule.versionCode && (
+        {isLowQuality && (
+          <Alert
+            sx={{ borderRadius: hasUpdate ? 0 : `0px 0px ${theme.shape.borderRadius}px ${theme.shape.borderRadius}px` }}
+            severity="warning"
+          >
+            <AlertTitle>{strings("low_quality_module")}</AlertTitle>
+            {strings("low_quality_module_warn")}
+          </Alert>
+        )}
+        {hasUpdate && (
           <Button
             sx={{
               borderRadius: `0px 0px ${theme.shape.borderRadius}px ${theme.shape.borderRadius}px`,

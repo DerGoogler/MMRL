@@ -49,6 +49,7 @@ import PicturePreviewActivity from "./PicturePreviewActivity";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import TerminalIcon from "@mui/icons-material/Terminal";
 import { isLiteralObject } from "@Util/util";
+import { useLowQualityModule } from "@Hooks/useLowQualityModule";
 
 function a11yProps(index: number) {
   return {
@@ -92,6 +93,8 @@ const ModuleViewActivity = () => {
   const { SupportIcon, supportText } = useSupportIconForUrl(fox.support);
 
   const search = React.useMemo(() => new URLSearchParams(window.location.search), [window.location.search]);
+
+  const isLowQuality = useLowQualityModule(extra, !settings._low_quality_module);
 
   React.useEffect(() => {
     search.set("module", id);
@@ -347,6 +350,13 @@ const ModuleViewActivity = () => {
               </Alert>
             )}
 
+            {isLowQuality && (
+              <Alert severity="warning">
+                <AlertTitle>{strings("low_quality_module")}</AlertTitle>
+                {strings("low_quality_module_warn")}
+              </Alert>
+            )}
+
             {mmrl.screenshots && (
               <Card elevation={0} sx={{ /*width: { xs: "100%", sm: "100vh" },*/ width: "100%" }}>
                 <CardContent>
@@ -436,7 +446,7 @@ const ModuleViewActivity = () => {
                   </Stack>
 
                   <Typography variant="body2" color="text.secondary">
-            {isLiteralObject(description) ? String((description as ModuleDescription)[currentLanguage]) : String(description)}
+                    {isLiteralObject(description) ? String((description as ModuleDescription)[currentLanguage]) : String(description)}
                   </Typography>
                   <Typography sx={{ mt: 3 }} variant="h6" component="div">
                     {strings("updated_on")}
