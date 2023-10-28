@@ -13,6 +13,8 @@ import { ConfigureActivity } from "@Activitys/ConfigureActivity";
 import { Markup } from "@Components/Markdown";
 import { configureSample } from "@Util/configure-sample";
 import { dapiSample } from "@Util/dapi-sample";
+import ModConfActivity from "@Activitys/ModConfActivity";
+import { os } from "@Native/Os";
 
 type Props = {
   renderToolbar: () => JSX.Element;
@@ -51,6 +53,22 @@ export const DrawerFragment = (props: Props) => {
         >
           <StyledListItemText primary={strings("repositories")} />
         </ListItemButton>
+        {/* {os.isAndroid && ( */}
+          <>
+            <ListItemButton
+              onClick={() => {
+                pushPage({
+                  component: ModConfActivity,
+                  key: "ModConfActivity",
+                  extra: {},
+                });
+                hide();
+              }}
+            >
+              <StyledListItemText primary={strings("modconf")} />
+            </ListItemButton>
+          </>
+        {/* )} */}
       </List>
 
       <Divider />

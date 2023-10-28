@@ -106,21 +106,6 @@ function SettingsActivity() {
               checked={settings._invald_module}
             />
           </ListItem>
-          {os.isAndroid && (
-            <>
-              <ListItemButton
-                onClick={() => {
-                  context.pushPage({
-                    component: ModConfActivity,
-                    key: "ModConfActivity",
-                    extra: {},
-                  });
-                }}
-              >
-                <StyledListItemText primary={strings("modconf")} secondary={strings("modconf_subtitle")} />
-              </ListItemButton>
-            </>
-          )}
         </List>
 
         {os.isAndroid && (
