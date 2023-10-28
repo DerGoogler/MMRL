@@ -12,6 +12,7 @@ import { StyledIconButtonWithText } from "./StyledIconButton";
 import StarBorderRoundedIcon from "@mui/icons-material/StarBorderRounded";
 import { badgeStyle } from "./DeviceModule";
 import React from "react";
+import { isLiteralObject } from "@Util/util";
 
 interface Props {
   moduleProps: Module;
@@ -22,7 +23,7 @@ interface Props {
 
 export const ExploreModule = React.memo<Props>((props) => {
   const { context } = useActivity();
-  const { strings } = useStrings();
+  const { currentLanguage } = useStrings();
   const { settings } = useSettings();
   const { theme, scheme, shade } = useTheme();
 
@@ -103,7 +104,7 @@ export const ExploreModule = React.memo<Props>((props) => {
             </Stack>
           </Typography>
           <Typography variant="body1" color="text.secondary">
-            {description}
+            {isLiteralObject(description) ? String((description as ModuleDescription)[currentLanguage]) : String(description)}
           </Typography>
         </Stack>
       </Box>

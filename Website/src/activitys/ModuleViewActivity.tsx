@@ -48,6 +48,7 @@ import { useRepos } from "@Hooks/useRepos";
 import PicturePreviewActivity from "./PicturePreviewActivity";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import TerminalIcon from "@mui/icons-material/Terminal";
+import { isLiteralObject } from "@Util/util";
 
 function a11yProps(index: number) {
   return {
@@ -73,7 +74,7 @@ function CustomTabPanel(props: TabPanelProps) {
 }
 
 const ModuleViewActivity = () => {
-  const { strings } = useStrings();
+  const { strings, currentLanguage } = useStrings();
   const { settings } = useSettings();
   const { modules } = useRepos();
   const { theme, scheme, shade } = useTheme();
@@ -435,7 +436,7 @@ const ModuleViewActivity = () => {
                   </Stack>
 
                   <Typography variant="body2" color="text.secondary">
-                    {description}
+            {isLiteralObject(description) ? String((description as ModuleDescription)[currentLanguage]) : String(description)}
                   </Typography>
                   <Typography sx={{ mt: 3 }} variant="h6" component="div">
                     {strings("updated_on")}

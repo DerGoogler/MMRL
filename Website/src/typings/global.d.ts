@@ -1,3 +1,5 @@
+import { AvailableStrs, strs } from "./../locales/declaration";
+
 export {};
 
 declare module "*.d.ts" {
@@ -132,6 +134,9 @@ declare global {
     modules: Module[];
   }
 
+  /** Allows developers to translate their description */
+  export type ModuleDescription = Record<AvailableStrs, string>;
+
   export interface Module {
     id: string;
     name: string;
@@ -140,7 +145,7 @@ declare global {
     /** Can overridden by `update.json` with `versionCode` */
     versionCode: number;
     author?: string;
-    description?: string;
+    description?: string | ModuleDescription;
     valid: boolean;
     verified: boolean;
     /** Can overridden by `update.json` with `zipUrl` */

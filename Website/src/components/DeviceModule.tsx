@@ -33,7 +33,7 @@ interface Props {
 }
 
 const DeviceModule = React.memo<Props>((props) => {
-  const { strings } = useStrings();
+  const { strings, currentLanguage } = useStrings();
   const { settings } = useSettings();
   const { modConf } = useModConf();
   const { theme } = useTheme();
@@ -83,7 +83,7 @@ const DeviceModule = React.memo<Props>((props) => {
               {version} ({versionCode}) / {author}
             </Typography>
             <Typography variant="body1" color="text.secondary">
-              {description}
+              {description as string}
             </Typography>
           </Stack>
         </Box>
