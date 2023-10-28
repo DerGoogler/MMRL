@@ -8,7 +8,9 @@ import { StringsProvider } from "@Hooks/useStrings";
 import { Preventer, render } from "react-render-tools";
 import { MainActivity } from "@Activitys/MainActivity";
 import { RepoProvider } from "@Hooks/useRepos";
+
 import { SettingsProvider } from "@Hooks/useSettings";
+import { ModConfProvider } from "@Hooks/useModConf";
 
 import { MMRLApp } from "./custom-elements/app";
 import { MMRLAnchor } from "./custom-elements/anchor";
@@ -28,21 +30,23 @@ ons.ready(() => {
 
   render(
     <React.StrictMode>
-      <SettingsProvider>
-        <StringsProvider>
-          <ThemeProvider>
-            <Preventer prevent="contextmenu">
-              <RepoProvider>
-                <ConfirmProvider>
-                  <CssBaseline />
-                  <LightTheme />
-                  <MainActivity />
-                </ConfirmProvider>
-              </RepoProvider>
-            </Preventer>
-          </ThemeProvider>
-        </StringsProvider>
-      </SettingsProvider>
+      <ModConfProvider>
+        <SettingsProvider>
+          <StringsProvider>
+            <ThemeProvider>
+              <Preventer prevent="contextmenu">
+                <RepoProvider>
+                  <ConfirmProvider>
+                    <CssBaseline />
+                    <LightTheme />
+                    <MainActivity />
+                  </ConfirmProvider>
+                </RepoProvider>
+              </Preventer>
+            </ThemeProvider>
+          </StringsProvider>
+        </SettingsProvider>
+      </ModConfProvider>
     </React.StrictMode>,
     "mmrl-app"
   );

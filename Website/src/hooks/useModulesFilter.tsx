@@ -3,7 +3,6 @@ import UpdateDisabledIcon from "@mui/icons-material/UpdateDisabled";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import AbcIcon from "@mui/icons-material/Abc";
 import { useTheme } from "./useTheme";
-import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -12,7 +11,6 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
-import { SortInterface } from "flatlist-react/lib";
 import React from "react";
 
 export const filters = [

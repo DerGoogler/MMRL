@@ -31,6 +31,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import ClearIcon from "@mui/icons-material/Clear";
+import { useModConf } from "@Hooks/useModConf";
 
 interface SearchbarRef {
   clear(): void;
@@ -91,7 +92,8 @@ const SearchBar = React.forwardRef<SearchbarRef, SearchbarProps>((props, ref) =>
 
 const MainApplication = () => {
   const { strings } = useStrings();
-  const { settings, modConf } = useSettings();
+  const { settings } = useSettings();
+  const { modConf } = useModConf();
   const { context } = useActivity();
   const { theme } = useTheme();
   const { modules } = useRepos();

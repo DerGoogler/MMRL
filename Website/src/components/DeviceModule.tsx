@@ -10,10 +10,11 @@ import { ConfigureActivity } from "@Activitys/ConfigureActivity";
 import { StyledIconButton } from "./StyledIconButton";
 import { useLog } from "@Hooks/native/useLog";
 import { Properties } from "properties-file";
-import { ModConf, colors, useSettings } from "@Hooks/useSettings";
+import { colors, useSettings } from "@Hooks/useSettings";
 import { useTheme } from "@Hooks/useTheme";
 import TerminalActivity from "@Activitys/TerminalActivity";
 import { useRepos } from "@Hooks/useRepos";
+import { ModConf, useModConf } from "@Hooks/useModConf";
 
 export const badgeStyle: (color: (typeof colors)["blue" | "teal" | "red" | "orange"]) => SxProps<Theme> = (color) => {
   return {
@@ -33,7 +34,8 @@ interface Props {
 
 const DeviceModule = React.memo<Props>((props) => {
   const { strings } = useStrings();
-  const { settings, modConf } = useSettings();
+  const { settings } = useSettings();
+  const { modConf } = useModConf();
   const { theme } = useTheme();
   const { context, extra } = useActivity<any>();
   const { modules } = useRepos();

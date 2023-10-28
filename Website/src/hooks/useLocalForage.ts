@@ -26,32 +26,27 @@ export function useLocalForage<D>(key: string, initialValue: D, errorHandler?: E
   };
 
   useEffect(() => {
-    (async function () {
-      try {
-        const value: D | null = await localForage.getItem(key);
-        setStoredValue(value == null ? initialValue : value);
-      } catch (e) {
-        error(e as any);
+    localForage.getItem<D>(key).then((value) => {
+      if (value !== null) {
+        setStoredValue(value);
+      } else {
+        setStoredValue(initialValue);
       }
-    })();
+    });
   }, []);
 
-  const setValue: SetValue<D> = useCallback(
-    (value, callback) => {
-      const newValue = value instanceof Function ? value(storedValue) : value;
-      async function set(value: D, callback: ((state: D) => void) | undefined) {
-        try {
-          setStoredValue(value, callback);
-          await localForage.setItem(key, value);
-        } catch (e) {
-          error(e as any);
-        }
+  const setValue: SetValue<D> = (value, callback) => {
+    setStoredValue(value, callback);
+    const newValue = value instanceof Function ? value(storedValue) : value;
+    localForage.setItem<D>(key, newValue).then((_value) => {
+      const _newValue = _value instanceof Function ? _value(storedValue) : _value;
+      if (_newValue !== null) {
+        setStoredValue(_newValue, callback);
+      } else {
+        setStoredValue(initialValue, callback);
       }
-
-      set(newValue, callback);
-    },
-    [key]
-  );
+    });
+  };
 
   const removeValue = useCallback(() => {
     async function remove() {

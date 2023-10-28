@@ -1,10 +1,10 @@
 import React, { createContext, useContext } from "react";
 import { colors as kolors } from "@mui/material";
 import { defaultComposer } from "default-composer";
-import { useNativeStorage } from "./useNativeStorage";
 import { os } from "@Native/Os";
 import { SetStateAction } from "./useStateCallback";
 import { useLanguageMap } from "./../locales/declaration";
+import { useNativeStorage } from "./useNativeStorage";
 
 export const accent_colors: Picker<string, any>[] = [
   {
@@ -165,38 +165,6 @@ export interface StorageDeclaration {
   term_scroll_behavior: { name: string; value: ScrollBehavior };
 }
 
-export interface ModConf {
-  //cli
-  MSUCLI: string;
-  KSUCLI: string;
-
-  // default paths
-  ADB: string;
-  MODULES: string;
-  MODULECWD: string;
-  PROPS: string;
-  SYSTEM: string;
-  SEPOLICY: string;
-  CONFIG: string;
-
-  // service paths
-  LATESERVICE: string;
-  POSTSERVICE: string;
-  POSTMOUNT: string;
-  BOOTCOMP: string;
-
-  // status paths
-  SKIPMOUNT: string;
-  DISABLE: string;
-  REMOVE: string;
-  UPDATE: string;
-
-  // others
-  MMRLINI: string;
-  CONFCWD: string;
-  CONFINDEX: string;
-}
-
 export const termScrollBehaviors: StorageDeclaration["term_scroll_behavior"][] = [
   {
     name: "Smooth",
@@ -208,85 +176,30 @@ export const termScrollBehaviors: StorageDeclaration["term_scroll_behavior"][] =
   },
 ];
 
-export const INITIAL_MOD_CONF: ModConf = {
-  //cli
-  MSUCLI: "/system/bin/magisk --install-module <ZIPFILE>",
-  KSUCLI: "<ADB>/ksu/bin/ksud module install <ZIPFILE>",
-
-  // default paths
-  ADB: "/data/adb",
-  MODULES: "<ADB>/modules",
-  MODULECWD: "<MODULES>/<MODID>",
-  PROPS: "<MODULECWD>/module.prop",
-  SYSTEM: "<MODULECWD>/system.prop",
-  SEPOLICY: "<MODULECWD>/sepolicy.rule",
-  CONFIG: `<MODULECWD>/system/usr/share/mmrl/config/<MODID>.mdx`,
-
-  // service paths
-  LATESERVICE: "<MODULECWD>/service.sh",
-  POSTSERVICE: "<MODULECWD>/post-fs-data.sh",
-  POSTMOUNT: "<MODULECWD>/post-mount.sh",
-  BOOTCOMP: "<MODULECWD>/boot-completed.sh",
-
-  // status paths
-  SKIPMOUNT: "<MODULECWD>/skip_mount",
-  DISABLE: "<MODULECWD>/disable",
-  REMOVE: "<MODULECWD>/remove",
-  UPDATE: "<MODULECWD>/update",
-
-  // others
-  MMRLINI: "<MODULECWD>/mmrl_install_tools",
-  CONFCWD: "<MODULECWD>/system/usr/share/mmrl/config/<MODID>",
-  CONFINDEX: "<CONFCWD>/index.jsx",
-};
-
 export interface Context {
   patchSettings: () => void;
   settings: StorageDeclaration;
-  _modConf: ModConf;
-  modConf<K extends keyof ModConf>(key: K, adds?: Record<string, any>): ModConf[K];
   setSettings<K extends keyof StorageDeclaration>(
     key: K,
     state: SetStateAction<StorageDeclaration[K]>,
     callback?: (state: StorageDeclaration[K]) => void
   ): void;
-  setModConf<K extends keyof ModConf>(key: K, state: SetStateAction<ModConf[K]>, callback?: (state: ModConf[K]) => void): void;
 }
 
 export const SettingsContext = createContext<Context>({
   patchSettings: () => {},
   // @ts-ignore
   settings: {},
-  _modConf: INITIAL_MOD_CONF,
-  modConf<K extends keyof ModConf>(key: K, adds?: Record<string, any>) {
-    return key;
-  },
   setSettings<K extends keyof StorageDeclaration>(
     key: K,
     state: SetStateAction<StorageDeclaration[K]>,
     callback?: (state: StorageDeclaration[K]) => void
   ) {},
-  setModConf<K extends keyof ModConf>(key: K, state: SetStateAction<ModConf[K]>, callback?: (state: ModConf[K]) => void) {},
 });
 
 export const useSettings = () => {
   return useContext(SettingsContext);
 };
-
-export function formatString(template: string, object: object): string {
-  return template.replace(/\<(\w+(\.\w+)*)\>/gi, (match, key) => {
-    const keys = key.split(".");
-    let value = object;
-    for (const k of keys) {
-      if (k in value) {
-        value = value[k];
-      } else {
-        return match;
-      }
-    }
-    return formatString(String(value), object);
-  });
-}
 
 export const SettingsProvider = (props: React.PropsWithChildren) => {
   const availableLangs = useLanguageMap();
@@ -309,60 +222,30 @@ export const SettingsProvider = (props: React.PropsWithChildren) => {
   );
 
   const [settings, setSettings] = useNativeStorage("settings", INITIAL_SETTINGS);
-  const [modConf, setModConf] = useNativeStorage("mod-conf", INITIAL_MOD_CONF);
 
-  // Test purposes
-  // React.useEffect(() => {
-  //   for (const k in modConf) {
-  //     console.info(
-  //       formatString(defaultComposer(INITIAL_MOD_CONF, modConf)[k], {
-  //         ...modConf,
-  //         ...{
-  //           MODID: "node_on_android",
-  //           ZIPFILE: "/sdard/xh.zip",
-  //         },
-  //       })
-  //     );
-  //   }
-  // }, [modConf]);
+  const _setSettings = (name, state, callback) => {
+    setSettings(
+      (prev) => {
+        const newValue = state instanceof Function ? state(prev[name]) : state;
+        return {
+          ...prev,
+          [name]: newValue,
+        };
+      },
+      (state) => callback && callback(state[name])
+    );
+  };
 
-  return (
-    <SettingsContext.Provider
-      value={{
-        patchSettings: () => {
-          setSettings(defaultComposer(INITIAL_SETTINGS, settings));
-        },
-        _modConf: defaultComposer(INITIAL_MOD_CONF, modConf),
-        modConf: (key, adds) => {
-          return formatString(defaultComposer(INITIAL_MOD_CONF, modConf)[key], { ...modConf, ...adds });
-        },
-        settings: defaultComposer(INITIAL_SETTINGS, settings),
-        setSettings: (name, state, callback) => {
-          setSettings(
-            (prev) => {
-              const newValue = state instanceof Function ? state(prev[name]) : state;
-              return {
-                ...prev,
-                [name]: newValue,
-              };
-            },
-            (state) => callback && callback(state[name])
-          );
-        },
-        setModConf: (name, state, callback) => {
-          setModConf(
-            (prev) => {
-              const newValue = state instanceof Function ? state(prev[name]) : state;
-              return {
-                ...prev,
-                [name]: newValue,
-              };
-            },
-            (state) => callback && callback(state[name])
-          );
-        },
-      }}
-      children={props.children}
-    />
+  const contextValue = React.useMemo(
+    () => ({
+      patchSettings: () => {
+        setSettings(defaultComposer(INITIAL_SETTINGS, settings));
+      },
+      settings: defaultComposer(INITIAL_SETTINGS, settings),
+      setSettings: _setSettings,
+    }),
+    [settings]
   );
+
+  return <SettingsContext.Provider value={contextValue} children={props.children} />;
 };

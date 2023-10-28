@@ -61,7 +61,7 @@ type SetRepoStateData = {
 export const RepoProvider = (props: React.PropsWithChildren) => {
   const TAG = "RepoProvider";
   const log = useLog(TAG);
-  const [repos, setRepos, removeRepos] = useLocalForage<StoredRepo[]>("repos", [
+  const [repos, setRepos] = useNativeStorage<StoredRepo[]>("repos", [
     {
       name: "Magisk Modules Alt Repo (pre-configured)",
       website: "",

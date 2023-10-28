@@ -7,13 +7,14 @@ import Ansi from "ansi-to-react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import React from "react";
 import { Shell } from "@Native/Shell";
-import { formatString, useSettings } from "@Hooks/useSettings";
-import { useNewerVersion } from "@Hooks/useNewerVersion";
+import { useSettings } from "@Hooks/useSettings";
 import { BuildConfig } from "@Native/BuildConfig";
+import { useModConf, formatString } from "@Hooks/useModConf";
 
 const TerminalActivity = () => {
   const { context, extra } = useActivity<any>();
-  const { settings, modConf, _modConf } = useSettings();
+  const { settings } = useSettings();
+  const { modConf, _modConf } = useModConf();
   const [active, setActive] = React.useState<bool>(true);
 
   const [lines, setLines] = React.useState<string[]>([]);

@@ -14,7 +14,7 @@ import { PluginObj } from "@babel/core";
 import { globals, libraries } from "./libs";
 import { DialogEditListItem, StyledListSubheader } from "./components";
 import { SuFile, wasmFs } from "@Native/SuFile";
-import { ModConf, useSettings } from "@Hooks/useSettings";
+import { ModConf, useModConf } from "@Hooks/useModConf";
 
 function plugin({ types: t }): PluginObj {
   return {
@@ -69,7 +69,7 @@ const scope = {
 
 export const ConfigureView = React.memo<PreviewErrorBoundaryChildren>((props) => {
   const { theme } = useTheme();
-  const { modConf } = useSettings();
+  const { modConf } = useModConf();
 
   const format = React.useCallback<<K extends keyof ModConf>(key: K) => ModConf[K]>((key) => modConf(key, { MODID: props.modid }), []);
 
