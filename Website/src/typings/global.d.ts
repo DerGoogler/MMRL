@@ -148,6 +148,7 @@ declare global {
     description?: string | ModuleDescription;
     valid: boolean;
     verified: boolean;
+    hidden: boolean;
     /** Can overridden by `update.json` with `zipUrl` */
     download: string;
     last_update: number;

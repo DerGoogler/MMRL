@@ -27,15 +27,14 @@ export const ExploreModule = React.memo<Props>((props) => {
   const { settings } = useSettings();
   const { theme, scheme, shade } = useTheme();
 
-  const { id, name, version, versionCode, description, stars, author, last_update, mmrl, valid } = props.moduleProps;
+  const { id, name, version, versionCode, description, stars, author, last_update, mmrl, valid, hidden } = props.moduleProps;
 
-  const { isVerified, isHidden } = useModuleOptions(id);
   const isLowQuality = useLowQualityModule(props.moduleProps, props.disableLowQuality);
   const formatLastUpdate = useFormatDate(last_update);
 
-  // if (isHidden) {
-  //   return null;
-  // }
+  if (hidden) {
+    return null;
+  }
 
   if (!settings._invald_module && !valid) {
     return null;
