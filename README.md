@@ -12,7 +12,7 @@ We want to implant [Sentry](https://sentry.io) in MMRL to automatically report c
 
 > [Sentry](https://sentry.io) can disabled in the settings if the vote success
 
-Here you can vote: https://forms.gle/fnxfcfk4qj5ZuXvk6
+Here you can vote in this [discussion](https://github.com/DerGoogler/MMRL/discussions/50)
 
 > This vote is expected to end on 01. December, 2023.
 
