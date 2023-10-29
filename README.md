@@ -1,10 +1,20 @@
-<h1 align="center"><pre>Magisk Modules Repo Loader</pre></h1>
+# Magisk Modules Repo Loader
 
 Introducing Magisk Module Repo Loader (MMRL) - the ultimate module manager for Magisk and KernelSU on Android. This highly configurable app allows users to manage modules effortlessly, all while being completely free of ads.
 
 [![Build with Webpack](https://github.com/DerGoogler/MMRL/actions/workflows/webpack.yml/badge.svg?branch=master)](https://github.com/DerGoogler/MMRL/actions/workflows/webpack.yml)
 [![CodeQL](https://github.com/DerGoogler/MMRL/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/DerGoogler/MMRL/actions/workflows/codeql-analysis.yml)
 [![Android CI](https://github.com/DerGoogler/MMRL/actions/workflows/android.yml/badge.svg)](https://github.com/DerGoogler/MMRL/actions/workflows/android.yml)
+
+## Important
+
+We want to implant [Sentry](https://sentry.io) in MMRL to automatically report crashes and errors. We don't want to implant it without asking the community.
+
+> [Sentry](https://sentry.io) can disabled in the settings if the vote success
+
+Here you can vote: https://forms.gle/fnxfcfk4qj5ZuXvk6
+
+> This vote is expected to end on 01. December, 2023.
 
 ## What MMRL Supports (Roadmap)
 
