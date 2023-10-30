@@ -34,29 +34,6 @@ const TerminalActivity = () => {
     }, [lines]);
   }
 
-  const installCli = (path: string) => {
-    if (Shell.isMagiskSU()) {
-      return modConf("MSUCLI", { ZIPFILE: path });
-    } else if (Shell.isKernelSU()) {
-      return modConf("KSUCLI", { ZIPFILE: path });
-    } else {
-      throw new Error("Unable to determine installation string");
-    }
-  };
-
-  const env = (i: { [key: string]: string }) => {
-    for (const k in i) {
-      Shell.setenv(k, i[k], 1);
-    }
-  };
-
-  const escapePath = React.useCallback(
-    (path: string) => {
-      return path.replace(/[\\^$*+?()[\]{}|\s]/g, "\\$&");
-    },
-    [extra.path]
-  );
-
   const install = () => {
     const { exploreInstall, path } = extra;
 
@@ -66,8 +43,6 @@ const TerminalActivity = () => {
       const name = url[2];
       const branch = url[4].split(".").slice(0, -1).join(".");
 
-      const installPath = window.__properties__.get("persist.mmrlini.install_folder", "/data/local/tmp/<NAME>-<BRANCH>-moduled.zip");
-
       const envp_explore = {
         MMRL: "true",
         MMRL_VER: BuildConfig.VERSION_CODE.toString(),
@@ -75,16 +50,13 @@ const TerminalActivity = () => {
         URL: path,
         BRANCH: branch,
         HAS_UPDATE_JSON: extra.hasUpdateJson,
-        INSTALLER_CLI: installCli(
-          formatString(installPath, {
-            NAME: name,
-            BRANCH: branch,
-          })
-        ),
+        ROOTMANAGER: Shell.getRootManager(),
+        MSUCLI: modConf("MSUCLI"),
+        KSUCLI: modConf("KSUCLI"),
       };
 
       Terminal.exec({
-        command: `${modConf("MMRLINI")}/system/usr/share/mmrl/bin/mmrl_explore_install`,
+        command: `${modConf("MMRLINI")}/system/usr/share/mmrl/bin/mmrl_explore_install_v2`,
         env: envp_explore,
         onLine: (line) => {
           addLine(line);
@@ -96,18 +68,17 @@ const TerminalActivity = () => {
         },
       });
     } else {
-      console.log(escapePath(path));
-
       const envp_local = {
         MMRL: "true",
         MMRL_VER: BuildConfig.VERSION_CODE.toString(),
-        EXCAPED_PATH: escapePath(path),
-        NORMAL_PATH: path,
-        INSTALLER_CLI: installCli(escapePath(path)),
+        ZIPFILE: path,
+        ROOTMANAGER: Shell.getRootManager(),
+        MSUCLI: modConf("MSUCLI"),
+        KSUCLI: modConf("KSUCLI"),
       };
 
       Terminal.exec({
-        command: `${modConf("MMRLINI")}/system/usr/share/mmrl/bin/mmrl_local_install`,
+        command: `${modConf("MMRLINI")}/system/usr/share/mmrl/bin/mmrl_local_install_v2`,
         env: envp_local,
         onLine: (line) => {
           addLine(line);

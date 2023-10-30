@@ -41,8 +41,8 @@ export interface ModConf {
 
 export const INITIAL_MOD_CONF: ModConf = {
   //cli
-  MSUCLI: "/system/bin/magisk --install-module <ZIPFILE>",
-  KSUCLI: "<ADB>/ksu/bin/ksud module install <ZIPFILE>",
+  MSUCLI: "/system/bin/magisk",
+  KSUCLI: "<ADB>/ksu/bin/ksud",
 
   // default paths
   ADB: "/data/adb",
@@ -66,7 +66,7 @@ export const INITIAL_MOD_CONF: ModConf = {
   UPDATE: "<MODULECWD>/update",
 
   // others
-  MMRLINI: "<MODULECWD>/mmrl_install_tools",
+  MMRLINI: "<MODULES>/mmrl_install_tools",
   CONFCWD: "<MODULECWD>/system/usr/share/mmrl/config/<MODID>",
   CONFINDEX: "<CONFCWD>/index.jsx",
 };
@@ -105,7 +105,7 @@ export function formatString(template: string, object: object): string {
 }
 
 export const ModConfProvider = (props: React.PropsWithChildren) => {
-  const [modConf, setModConf] = useNativeStorage("modconf", INITIAL_MOD_CONF);
+  const [modConf, setModConf] = useNativeStorage("modconf_v2", INITIAL_MOD_CONF);
 
   // Test purposes
   // React.useEffect(() => {
@@ -131,7 +131,7 @@ export const ModConfProvider = (props: React.PropsWithChildren) => {
       setModConf: (name, state, callback) => {
         setModConf(
           (prev) => {
-            const newValue = React.useMemo(() => (state instanceof Function ? state(prev[name]) : state), [name]);
+            const newValue = state instanceof Function ? state(prev[name]) : state;
             return {
               ...prev,
               [name]: newValue,
