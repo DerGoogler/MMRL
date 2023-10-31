@@ -105,7 +105,7 @@ const MainApplication = () => {
 
   if (os.isAndroid) {
     React.useEffect(() => {
-      const folders = SuFile.list(modConf("MODULES")).split(",");
+      const folders = SuFile.list(modConf("MODULES"));
       folders.forEach((module) => {
         const properties = new SuFile(modConf("PROPS", { MODID: module }));
         if (properties.exist()) {
