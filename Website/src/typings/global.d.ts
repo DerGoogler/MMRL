@@ -38,6 +38,7 @@ declare global {
       "ons-tab": HTMLAttributes<HTMLElement>;
       "ons-gesture-detector": HTMLAttributes<HTMLElement>;
       "ons-bottom-toolbar": HTMLAttributes<HTMLElement>;
+      "ons-fab": HTMLAttributes<HTMLElement>;
     }
   }
 

@@ -5,8 +5,6 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import FetchTextActivity from "./FetchTextActivity";
 import ModuleFragment from "./fragments/ModuleFragment";
 import TerminalActivity from "./TerminalActivity";
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
 import DeviceModule from "@Components/DeviceModule";
 import ModuleViewActivity from "./ModuleViewActivity";
 import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
@@ -26,12 +24,12 @@ import { useNewerVersion } from "@Hooks/useNewerVersion";
 import { ExploreModule } from "@Components/ExploreModule";
 import { useSettings } from "@Hooks/useSettings";
 import { useTheme } from "@Hooks/useTheme";
-import { Fab } from "react-onsenui";
 import { AnimatePresence, motion } from "framer-motion";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import ClearIcon from "@mui/icons-material/Clear";
 import { useModConf } from "@Hooks/useModConf";
+import Fab from "@Components/onsenui/Fab";
 
 interface SearchbarRef {
   clear(): void;
@@ -159,7 +157,6 @@ const MainApplication = () => {
                   renderItem={(module, key) => <DeviceModule key={key} module={module} />}
                   renderFixed={() => {
                     return (
-                      // @ts-ignore
                       <Fab
                         onClick={() => {
                           Chooser.getFile(
