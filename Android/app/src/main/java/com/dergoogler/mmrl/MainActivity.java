@@ -1,6 +1,7 @@
 package com.dergoogler.mmrl;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -20,6 +21,8 @@ import com.topjohnwu.superuser.Shell;
 import com.topjohnwu.superuser.ShellUtils;
 
 import org.apache.cordova.*;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MainActivity extends CordovaActivity {
     @Override
@@ -35,6 +38,16 @@ public class MainActivity extends CordovaActivity {
         }
 
         WebView wv = (WebView) appView.getEngine().getView();
+
+
+        NativeStorage ns = new NativeStorage(this);
+        try {
+            this.applyTheme(wv, ns);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
+
         // enable Cordova apps to be started in the background
         Bundle extras = getIntent().getExtras();
         if (extras != null && extras.getBoolean("cdvStartInBackground", false)) {
@@ -64,7 +77,7 @@ public class MainActivity extends CordovaActivity {
         wv.addJavascriptInterface(new NativeShell(wv), "__shell__");
         wv.addJavascriptInterface(new NativeBuildConfig(), "__buildconfig__");
         wv.addJavascriptInterface(new NativeOS(this), "__os__");
-        wv.addJavascriptInterface(new NativeStorage(this), "__nativeStorage__");
+        wv.addJavascriptInterface(ns, "__nativeStorage__");
         wv.addJavascriptInterface(new NativeProperties(), "__properties__");
         wv.addJavascriptInterface(new NativeLog(), "__log__");
 
@@ -74,6 +87,14 @@ public class MainActivity extends CordovaActivity {
         return "MMRL/" + BuildConfig.VERSION_NAME + " (Linux; Android " + Build.VERSION.RELEASE + "; " + Build.MODEL + " Build/" + Build.DISPLAY + ")";
     }
 
+    private void applyTheme(WebView wv, NativeStorage ns) throws JSONException {
+        String bg = ns.getItem("background_color");
+        if (bg == null) {
+            wv.setBackgroundColor(Color.parseColor("#ce93d8"));
+        } else {
+            wv.setBackgroundColor(Color.parseColor(bg.replace("\"", "")));
+        }
+    }
 
     private boolean isEmulator = (Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic"))
             || Build.FINGERPRINT.startsWith("generic")
