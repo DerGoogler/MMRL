@@ -76,18 +76,29 @@ declare global {
     readonly __nativeStorage__: Pick<Storage, "getItem" | "setItem" | "removeItem" | "clear"> & { defineName: (name: string) => void };
   }
 
-  type TerminalExec = {
-    command: string;
-    env: Record<string, string>;
-    onLine: (line: string) => void;
-    onExit: (code: number) => void;
-  };
+  namespace Terminal {
+    export type Exec = {
+      command: string;
+      env: Record<string, string>;
+      onLine: (line: string) => void;
+      onExit: (code: number) => void;
+    };
 
-  interface Terminal {
-    exec(opt: TerminalExec): void;
+    export function exec(opt: Exec): void;
   }
 
-  const Terminal: Terminal;
+  namespace Chooser {
+    export type File = {
+      name: string;
+      uri: string;
+      path: string;
+    };
+
+    export type SuccessCallback = (file: File | "RESULT_CANCELED") => void;
+    export type ErrorCallback = ((code: number) => void) | null;
+
+    export function getFile(type: string, successCallback: SuccessCallback, ErrorCallback: ErrorCallback): any;
+  }
 
   interface Window extends AndroidWindow<any> {}
 

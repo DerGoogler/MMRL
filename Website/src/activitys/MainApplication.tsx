@@ -162,11 +162,10 @@ const MainApplication = () => {
                       // @ts-ignore
                       <Fab
                         onClick={() => {
-                          // @ts-ignore
                           Chooser.getFile(
                             "application/zip",
                             (file) => {
-                              if (file) {
+                              if (file !== "RESULT_CANCELED") {
                                 context.pushPage({
                                   component: TerminalActivity,
                                   key: "TerminalActivity",
