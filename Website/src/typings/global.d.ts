@@ -196,4 +196,16 @@ declare global {
     changeBoot?: boolean;
     mmtReborn?: boolean;
   }
+
+  // OnsenUI Types
+  /**
+   * @extends {Event}
+   */
+  export interface DeviceBackButtonEvent extends Event {
+    /**
+     * Runs the handler for the immediate parent that supports device back button.
+     * @returns {void}
+     */
+    callParentHandler: () => void;
+  }
 }

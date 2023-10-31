@@ -24,7 +24,7 @@ interface HTMLPage {
   onShow?: Function;
   onHide?: Function;
   onInfiniteScroll?: Function;
-  onDeviceBackButton?: Function;
+  onDeviceBackButton?: (event: DeviceBackButtonEvent) => void;
   children?: React.ReactNode;
   statusbarColor?: string;
   setStatusBarColor?: string;

@@ -103,10 +103,9 @@ const TerminalActivity = () => {
 
   return (
     <Page
-      onDeviceBackButton={(e: Event) => {
-        e.preventDefault();
+      onDeviceBackButton={(e) => {
         if (!active) {
-          context.popPage();
+          e.callParentHandler();
         }
       }}
       onShow={install}
