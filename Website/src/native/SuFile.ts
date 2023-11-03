@@ -30,6 +30,7 @@ interface NativeSuFileV2 {
  * @implements {NativeSuFile}
  */
 class SuFile extends Native<NativeSuFile> {
+  // @ts-ignore - Won't get even called
   private _file: ReturnType<NativeSuFile["v2"]>;
   private _fs: IFs = wasmFs.fs;
   private _path: string;
@@ -41,7 +42,9 @@ class SuFile extends Native<NativeSuFile> {
 
     this.interfaceName = "__sufile__";
     this._path = path;
-    this._file = (window.__sufile__ as NativeSuFile).v2(path);
+    if (this.isAndroid) {
+      this._file = this.interface("v2")(path);
+    }
   }
 
   public read(): string {
