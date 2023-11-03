@@ -41,6 +41,7 @@ public class MainActivity extends CordovaActivity {
 
 
         NativeStorage ns = new NativeStorage(this);
+        NativeOS os = new NativeOS(this);
         try {
             this.applyTheme(wv, ns);
         } catch (JSONException e) {
@@ -87,11 +88,18 @@ public class MainActivity extends CordovaActivity {
         return "MMRL/" + BuildConfig.VERSION_NAME + " (Linux; Android " + Build.VERSION.RELEASE + "; " + Build.MODEL + " Build/" + Build.DISPLAY + ")";
     }
 
-    private void applyTheme(WebView wv, NativeStorage ns) throws JSONException {
+    private void applyTheme(WebView wv, NativeStorage ns, NativeOS os) throws JSONException {
         String bg = ns.getItem("background_color");
+        String sbg = ns.getItem("statusbar_color");
+        String defColor = "#ce93d8";
         if (bg == null) {
-            wv.setBackgroundColor(Color.parseColor("#ce93d8"));
+            os.setStatusBarColor(defColor,false);
+            os.setNavigationBarColor(defColor);
+            wv.setBackgroundColor(Color.parseColor(defColor));
         } else {
+
+            os.setStatusBarColor(sbg.replace("\"", ""),false);
+            os.setNavigationBarColor(bg.replace("\"", ""));
             wv.setBackgroundColor(Color.parseColor(bg.replace("\"", "")));
         }
     }

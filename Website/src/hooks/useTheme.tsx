@@ -46,8 +46,8 @@ export const ThemeProvider = (props: React.PropsWithChildren) => {
   const { settings } = useSettings();
   const shade = useShadeColor();
 
-  const initialBackground = colors[settings.accent_scheme.value][200];
-  const [, setBackgroundColor] = useNativeStorage("background_color", initialBackground);
+  const [, setBackgroundColor] = useNativeStorage("background_color", colors[settings.accent_scheme.value][200]);
+  const [, setStatusBarColor] = useNativeStorage("statusbar_color", colors[settings.accent_scheme.value][500]);
 
   const theme = React.useMemo(() => {
     const THIS_IS_THE_THEME_OBJECT_OF_THIS_F_APP = createTheme({
@@ -67,7 +67,7 @@ export const ThemeProvider = (props: React.PropsWithChildren) => {
               // dark: colors[settings.accent_scheme.value][800],
             },
             background: {
-              default: initialBackground,
+              default: colors[settings.accent_scheme.value][200],
               paper: shade(colors[settings.accent_scheme.value][200], 14.5 * 2),
             },
             divider: colors[settings.accent_scheme.value][300],
@@ -98,6 +98,7 @@ export const ThemeProvider = (props: React.PropsWithChildren) => {
     os.setStatusBarColor(THIS_IS_THE_THEME_OBJECT_OF_THIS_F_APP.palette.primary.main, false);
     os.setNavigationBarColor(THIS_IS_THE_THEME_OBJECT_OF_THIS_F_APP.palette.background.default);
     setBackgroundColor(THIS_IS_THE_THEME_OBJECT_OF_THIS_F_APP.palette.background.default);
+    setStatusBarColor(THIS_IS_THE_THEME_OBJECT_OF_THIS_F_APP.palette.primary.main);
     return THIS_IS_THE_THEME_OBJECT_OF_THIS_F_APP;
   }, [settings.darkmode, settings.accent_scheme]);
 
