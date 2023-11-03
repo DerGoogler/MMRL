@@ -131,18 +131,24 @@ const ModuleFragment = React.memo<ModuleFragmentProps>((props) => {
               setAnchorEl(null);
             }}
           >
-            {filters.map((fil) => (
-              <MenuItem
-                onClick={() => {
-                  setFilter(fil.value);
-                  setAnchorEl(null);
-                }}
-                disableRipple
-              >
-                <fil.icon />
-                {fil.name}
-              </MenuItem>
-            ))}
+            {filters.map((fil) => {
+              if (fil.allowedIds.includes(props.id)) {
+                return (
+                  <MenuItem
+                    onClick={() => {
+                      setFilter(fil.value);
+                      setAnchorEl(null);
+                    }}
+                    disableRipple
+                  >
+                    <fil.icon />
+                    {fil.name}
+                  </MenuItem>
+                );
+              } else {
+                return null;
+              }
+            })}
           </StyledMenu>
         </Stack>
 

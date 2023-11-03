@@ -11,6 +11,8 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
+import StarIcon from "@mui/icons-material/Star";
+import StarBorderIcon from "@mui/icons-material/StarBorder";
 import React from "react";
 
 export const filters = [
@@ -18,26 +20,43 @@ export const filters = [
     name: "No filter",
     icon: UpdateDisabledIcon,
     value: "none",
+    allowedIds: ["explore", "local"],
   },
   {
     name: "By date (newest)",
     icon: CalendarMonthIcon,
     value: "date_newest",
+    allowedIds: ["explore"],
   },
   {
     name: "By date (oldest)",
     icon: CalendarMonthIcon,
     value: "date_oldest",
+    allowedIds: ["explore"],
   },
   {
     name: "Alphabetically",
     icon: AbcIcon,
     value: "alphabetically",
+    allowedIds: ["explore", "local"],
   },
   {
     name: "Alphabetically (reverse)",
     icon: AbcIcon,
     value: "alphabetically_reverse",
+    allowedIds: ["explore", "local"],
+  },
+  {
+    name: "Most stars",
+    icon: StarIcon,
+    value: "most_stars",
+    allowedIds: ["explore"],
+  },
+  {
+    name: "Least stars",
+    icon: StarBorderIcon,
+    value: "least_stars",
+    allowedIds: ["explore"],
   },
 ];
 
@@ -51,6 +70,8 @@ export const useModuleFilter = (key: string): [Array<any>, string, SetValue<stri
       date_newest: [{ key: "last_update", descending: true }],
       alphabetically: [{ key: "name", descending: false }],
       alphabetically_reverse: [{ key: "name", descending: true }],
+      least_stars: [{ key: "stars", descending: false }],
+      most_stars: [{ key: "stars", descending: true }],
     }),
     []
   );
@@ -59,6 +80,7 @@ export const useModuleFilter = (key: string): [Array<any>, string, SetValue<stri
 };
 
 interface FilterDialogProps {
+  id: string;
   open: boolean;
   selectedValue: string;
   onClose: (value: string) => void;
