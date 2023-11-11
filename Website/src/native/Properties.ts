@@ -8,13 +8,12 @@ interface IProperties {
 
 class PropertiesClass extends Native<IProperties> {
   public constructor() {
-    super();
-    this.interfaceName = "__properties__";
+    super(window.__properties__);
   }
 
   public get(key: string, def: string): string {
     if (this.isAndroid) {
-      return this.getInterface.get(key, def);
+      return this.interface.get(key, def);
     } else {
       return "";
     }

@@ -1,5 +1,5 @@
 export interface INative<T = any> {
-  get getInterface(): T;
+  get interface(): T;
   get userAgent(): string;
 }
 
@@ -9,13 +9,16 @@ export type NativeArgumentTypes<F extends Function> = F extends (...args: infer 
  * Core functions for native functions/interfaces
  */
 export class Native<I = any> implements INative<I> {
+  private _internal_interface: I;
+
   /**
    * This field is required, otherwise the comunacation between Android will not work
    * @required true
    */
-  public interfaceName: keyof AndroidWindow<I> | undefined;
-
-  public constructor() {}
+  public constructor(i: I) {
+    if (typeof i === "undefined") throw new Error("No interface defined");
+    this._internal_interface = i;
+  }
 
   private get userAgentRegex(): RegExp {
     return /MMRL\/(.+)\s\(Linux;\sAndroid\s(.+);\s(.+)\sBuild\/(.+)\)/gs;
@@ -32,28 +35,7 @@ export class Native<I = any> implements INative<I> {
     return this.userAgentRegex.test(this.userAgent) || window.hasOwnProperty("cordova") ? true : false;
   }
 
-  /**
-   * @deprecated Use `Native.interface()` instead
-   */
-  public get getInterface(): I {
-    if (this.interfaceName) {
-      return window[this.interfaceName];
-    } else {
-      throw new Error("No interface defined");
-    }
-  }
-
-  public interface<K extends keyof I>(name: K): I[K] {
-    if (this.interfaceName) {
-      if (typeof window[this.interfaceName][name] == "undefined") {
-        return (window[this.interfaceName][name] = () => {
-          console.log("Undefined function");
-        }) as any;
-      } else {
-        return window[this.interfaceName][name];
-      }
-    } else {
-      throw new Error("No interface defined");
-    }
+  public get interface(): I {
+    return this._internal_interface;
   }
 }

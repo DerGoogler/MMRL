@@ -36,14 +36,13 @@ class SuFile extends Native<NativeSuFile> {
   private _path: string;
 
   public constructor(path?: string) {
-    super();
+    super(window.__sufile__);
 
     if (typeof path !== "string") throw new TypeError("Path name isn't a string");
 
-    this.interfaceName = "__sufile__";
     this._path = path;
     if (this.isAndroid) {
-      this._file = this.interface("v2")(path);
+      this._file = this.interface.v2.bind(this.interface)(path);
     }
   }
 

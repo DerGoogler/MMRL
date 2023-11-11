@@ -43,7 +43,6 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             multiDexEnabled true
-//            project.tasks.preBuild.dependsOn("webProd")
         }
         debug {
             resValue "string", "app_name", "${app_name} Debug"
@@ -52,7 +51,6 @@ android {
             minifyEnabled false
             multiDexEnabled false
             applicationIdSuffix '.debug'
-//            project.tasks.preBuild.dependsOn("webDev")
         }
     }
     externalNativeBuild {
@@ -94,8 +92,6 @@ dependencies {
     implementation "androidx.appcompat:appcompat:1.6.1"
     implementation "org.apache.cordova:framework:10.1.1"
     implementation "androidx.webkit:webkit:1.8.0"
-    implementation 'com.jraska:console:1.2.0'
-    // implementation 'com.google.android.material:material:1.6.0'
 }
 
 configurations.implementation.setCanBeResolved(true)

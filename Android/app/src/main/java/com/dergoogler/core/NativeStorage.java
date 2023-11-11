@@ -22,6 +22,15 @@ public class NativeStorage {
     }
 
     @JavascriptInterface
+    public String getItem(String key, String def) {
+        try {
+            return this.localStorage.getString(key, def);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @JavascriptInterface
     public String getItem(String key) {
         try {
             return this.localStorage.getString(key, null);

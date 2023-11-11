@@ -42,12 +42,7 @@ public class MainActivity extends CordovaActivity {
 
         NativeStorage ns = new NativeStorage(this);
         NativeOS os = new NativeOS(this);
-        try {
-            this.applyTheme(wv, ns, os);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-
+        this.applyTheme(wv, ns, os);
 
         // enable Cordova apps to be started in the background
         Bundle extras = getIntent().getExtras();
@@ -88,20 +83,13 @@ public class MainActivity extends CordovaActivity {
         return "MMRL/" + BuildConfig.VERSION_NAME + " (Linux; Android " + Build.VERSION.RELEASE + "; " + Build.MODEL + " Build/" + Build.DISPLAY + ")";
     }
 
-    private void applyTheme(WebView wv, NativeStorage ns, NativeOS os) throws JSONException {
-        String bg = ns.getItem("background_color");
-        String sbg = ns.getItem("statusbar_color");
+    private void applyTheme(WebView wv, NativeStorage ns, NativeOS os)  {
         String defColor = "#ce93d8";
-        if (bg == null) {
-            os.setStatusBarColor(defColor,false);
-            os.setNavigationBarColor(defColor);
-            wv.setBackgroundColor(Color.parseColor(defColor));
-        } else {
-
-            os.setStatusBarColor(sbg.replace("\"", ""),false);
-            os.setNavigationBarColor(bg.replace("\"", ""));
-            wv.setBackgroundColor(Color.parseColor(bg.replace("\"", "")));
-        }
+        String bg = ns.getItem("background_color", defColor);
+        String sbg = ns.getItem("statusbar_color", defColor);
+        os.setStatusBarColor(sbg.replace("\"", ""),false);
+        os.setNavigationBarColor(bg.replace("\"", ""));
+        wv.setBackgroundColor(Color.parseColor(bg.replace("\"", "")));
     }
 
     private boolean isEmulator = (Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic"))

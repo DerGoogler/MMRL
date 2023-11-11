@@ -19,13 +19,12 @@ export type OpenOptions = {
 
 class OsClass extends Native {
   public constructor() {
-    super();
-    this.interfaceName = "__os__";
+    super(window.__os__);
   }
 
   public open(url?: string | URL | undefined, options?: OpenOptions): Window | null {
     if (this.isAndroid) {
-      return this.getInterface.open(url, options?.features?.color || "#fffddd");
+      return this.interface.open(url, options?.features?.color || "#fffddd");
     } else {
       return window.open(url, options?.target, options?.features?.window);
     }
@@ -33,7 +32,7 @@ class OsClass extends Native {
 
   public hasStoragePermission(): boolean {
     if (this.isAndroid) {
-      return this.getInterface.hasStoragePermission();
+      return this.interface.hasStoragePermission();
     } else {
       return true;
     }
@@ -41,7 +40,7 @@ class OsClass extends Native {
 
   public requestStoargePermission(): void {
     if (this.isAndroid) {
-      this.getInterface.requestStoargePermission();
+      this.interface.requestStoargePermission();
     } else {
       name;
     }
@@ -51,12 +50,12 @@ class OsClass extends Native {
    * Closes the window. On Android closes the App
    */
   public close(): void {
-    this.isAndroid ? this.getInterface.close() : window.close();
+    this.isAndroid ? this.interface.close() : window.close();
   }
 
   public shareText(title: string, body: string): void {
     if (this.isAndroid) {
-      this.getInterface.shareText(title, body);
+      this.interface.shareText(title, body);
     }
   }
 
@@ -68,7 +67,7 @@ class OsClass extends Native {
   public toast(text: string, duration: "long" | "short"): void {
     const _duration = duration === "short" ? (this.isAndroid ? 0 : 2000) : this.isAndroid ? 1 : 5000;
     if (this.isAndroid) {
-      this.getInterface.makeToast(text, _duration);
+      this.interface.makeToast(text, _duration);
     } else {
       ons.notification.toast(text, { timeout: _duration, animation: "ascend" });
     }
@@ -80,7 +79,7 @@ class OsClass extends Native {
    */
   public get sdk(): number {
     if (this.isAndroid) {
-      return this.getInterface.sdk();
+      return this.interface.sdk();
     } else {
       return 40;
     }
@@ -88,7 +87,7 @@ class OsClass extends Native {
 
   public getMonetColor(id: string): string {
     if (this.isAndroid && this.sdk >= Build.VERSION_CODES.S) {
-      return this.getInterface.getMonetColor(id);
+      return this.interface.getMonetColor(id);
     } else {
       return "#ffffff";
     }
@@ -100,7 +99,7 @@ class OsClass extends Native {
    */
   public getStatusBarHeight(): number {
     if (this.isAndroid) {
-      return this.getInterface.getStatusBarHeight() / 2;
+      return this.interface.getStatusBarHeight() / 2;
     } else {
       return 0;
     }
@@ -108,7 +107,7 @@ class OsClass extends Native {
 
   // public getSafeAreaInsets(typr: "top" | "bottom"): number {
   //   if (this.isAndroid) {
-  //     return this.getInterface.getSafeAreaInsets() / 2;
+  //     return this.interface.getSafeAreaInsets() / 2;
   //   } else {
   //     return 0;
   //   }
@@ -120,11 +119,11 @@ class OsClass extends Native {
    * @param white `true` makes the status bar white
    */
   public setStatusBarColor(color: string, white: boolean): void {
-    this.isAndroid ? this.getInterface.setStatusBarColor(color, white) : null;
+    this.isAndroid ? this.interface.setStatusBarColor(color, white) : null;
   }
 
   public setNavigationBarColor(color: string): void {
-    this.isAndroid ? this.getInterface.setNavigationBarColor(color) : null;
+    this.isAndroid ? this.interface.setNavigationBarColor(color) : null;
   }
 
   public addNativeEventListener<K extends keyof WindowEventMap>(
