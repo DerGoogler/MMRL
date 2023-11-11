@@ -43,7 +43,7 @@ public class MainActivity extends CordovaActivity {
         NativeStorage ns = new NativeStorage(this);
         NativeOS os = new NativeOS(this);
         try {
-            this.applyTheme(wv, ns);
+            this.applyTheme(wv, ns, os);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -77,7 +77,7 @@ public class MainActivity extends CordovaActivity {
         wv.addJavascriptInterface(new NativeEnvironment(this), "__environment__");
         wv.addJavascriptInterface(new NativeShell(wv), "__shell__");
         wv.addJavascriptInterface(new NativeBuildConfig(), "__buildconfig__");
-        wv.addJavascriptInterface(new NativeOS(this), "__os__");
+        wv.addJavascriptInterface(os, "__os__");
         wv.addJavascriptInterface(ns, "__nativeStorage__");
         wv.addJavascriptInterface(new NativeProperties(), "__properties__");
         wv.addJavascriptInterface(new NativeLog(), "__log__");
