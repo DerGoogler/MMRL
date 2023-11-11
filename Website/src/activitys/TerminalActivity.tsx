@@ -7,13 +7,14 @@ import Ansi from "ansi-to-react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import React from "react";
 import { Shell } from "@Native/Shell";
-import { formatString, useSettings } from "@Hooks/useSettings";
-import { useNewerVersion } from "@Hooks/useNewerVersion";
+import { useSettings } from "@Hooks/useSettings";
 import { BuildConfig } from "@Native/BuildConfig";
+import { useModConf, formatString } from "@Hooks/useModConf";
 
 const TerminalActivity = () => {
   const { context, extra } = useActivity<any>();
-  const { settings, modConf, _modConf } = useSettings();
+  const { settings } = useSettings();
+  const { modConf, _modConf } = useModConf();
   const [active, setActive] = React.useState<bool>(true);
 
   const [lines, setLines] = React.useState<string[]>([]);
@@ -33,29 +34,6 @@ const TerminalActivity = () => {
     }, [lines]);
   }
 
-  const installCli = (path: string) => {
-    if (Shell.isMagiskSU()) {
-      return modConf("MSUCLI", { ZIPFILE: path });
-    } else if (Shell.isKernelSU()) {
-      return modConf("KSUCLI", { ZIPFILE: path });
-    } else {
-      throw new Error("Unable to determine installation string");
-    }
-  };
-
-  const env = (i: { [key: string]: string }) => {
-    for (const k in i) {
-      Shell.setenv(k, i[k], 1);
-    }
-  };
-
-  const escapePath = React.useCallback(
-    (path: string) => {
-      return path.replace(/[\\^$*+?()[\]{}|\s]/g, "\\$&");
-    },
-    [extra.path]
-  );
-
   const install = () => {
     const { exploreInstall, path } = extra;
 
@@ -65,24 +43,20 @@ const TerminalActivity = () => {
       const name = url[2];
       const branch = url[4].split(".").slice(0, -1).join(".");
 
-      const installPath = window.__properties__.get("persist.mmrlini.install_folder", "/data/local/tmp/<NAME>-<BRANCH>-moduled.zip");
-
       const envp_explore = {
         MMRL: "true",
         MMRL_VER: BuildConfig.VERSION_CODE.toString(),
         NAME: name,
         URL: path,
         BRANCH: branch,
-        INSTALLER_CLI: installCli(
-          formatString(installPath, {
-            NAME: name,
-            BRANCH: branch,
-          })
-        ),
+        HAS_UPDATE_JSON: extra.hasUpdateJson,
+        ROOTMANAGER: Shell.getRootManager(),
+        MSUCLI: modConf("MSUCLI"),
+        KSUCLI: modConf("KSUCLI"),
       };
 
       Terminal.exec({
-        command: `${modConf("MMRLINI")}/system/usr/share/mmrl/bin/mmrl_explore_install`,
+        command: `${modConf("MMRLINI")}/system/usr/share/mmrl/bin/mmrl_explore_install_v2`,
         env: envp_explore,
         onLine: (line) => {
           addLine(line);
@@ -94,17 +68,17 @@ const TerminalActivity = () => {
         },
       });
     } else {
-
-      console.log(escapePath(path))
-
       const envp_local = {
         MMRL: "true",
         MMRL_VER: BuildConfig.VERSION_CODE.toString(),
-        INSTALLER_CLI: installCli(escapePath(path)),
+        ZIPFILE: path,
+        ROOTMANAGER: Shell.getRootManager(),
+        MSUCLI: modConf("MSUCLI"),
+        KSUCLI: modConf("KSUCLI"),
       };
 
       Terminal.exec({
-        command: `${modConf("MMRLINI")}/system/usr/share/mmrl/bin/mmrl_local_install`,
+        command: `${modConf("MMRLINI")}/system/usr/share/mmrl/bin/mmrl_local_install_v2`,
         env: envp_local,
         onLine: (line) => {
           addLine(line);
@@ -129,18 +103,15 @@ const TerminalActivity = () => {
 
   return (
     <Page
-      onDeviceBackButton={(e: Event) => {
-        e.preventDefault();
+      onDeviceBackButton={(e) => {
         if (!active) {
-          context.popPage();
+          e.callParentHandler();
         }
       }}
       onShow={install}
       modifier="noshadow"
       renderToolbar={renderToolbar}
-      backgroundStyle={{
-        backgroundColor: "black",
-      }}
+      backgroundStyle="#000000"
     >
       <div
         ref={ref}

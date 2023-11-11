@@ -1,20 +1,23 @@
-
 export interface INative<T = any> {
-  get getInterface(): T;
+  get interface(): T;
   get userAgent(): string;
 }
+
+export type NativeArgumentTypes<F extends Function> = F extends (...args: infer A) => any ? A : never;
 
 /**
  * Core functions for native functions/interfaces
  */
 export class Native<I = any> implements INative<I> {
+  private _internal_interface: I;
+
   /**
    * This field is required, otherwise the comunacation between Android will not work
    * @required true
    */
-  public interfaceName: keyof AndroidWindow<I> | undefined;
-
-  public constructor() {}
+  public constructor(i: I) {
+    this._internal_interface = i;
+  }
 
   private get userAgentRegex(): RegExp {
     return /MMRL\/(.+)\s\(Linux;\sAndroid\s(.+);\s(.+)\sBuild\/(.+)\)/gs;
@@ -31,11 +34,7 @@ export class Native<I = any> implements INative<I> {
     return this.userAgentRegex.test(this.userAgent) || window.hasOwnProperty("cordova") ? true : false;
   }
 
-  public get getInterface(): I {
-    if (this.interfaceName) {
-      return window[this.interfaceName];
-    } else {
-      throw new Error("No interface defined");
-    }
+  public get interface(): I {
+    return this._internal_interface;
   }
 }

@@ -38,9 +38,8 @@ interface IShell {
 class ShellClass extends Native<NativeShell> {
   private _command: string;
   public constructor() {
-    super();
+    super(window.__shell__);
     this._command = "";
-    this.interfaceName = "__shell__";
   }
 
   public cmd(cmd: string): this {
@@ -50,13 +49,13 @@ class ShellClass extends Native<NativeShell> {
 
   public exec(): void {
     if (this.isAndroid) {
-      this.getInterface.exec(this._command);
+      this.interface.exec(this._command);
     }
   }
 
   public result(): string {
     if (this.isAndroid) {
-      return this.getInterface.result(this._command);
+      return this.interface.result(this._command);
     } else {
       return this._command;
     }
@@ -64,7 +63,7 @@ class ShellClass extends Native<NativeShell> {
 
   public isSuccess(): boolean {
     if (this.isAndroid) {
-      return this.getInterface.isSuccess(this._command);
+      return this.interface.isSuccess(this._command);
     } else {
       return false;
     }
@@ -72,7 +71,7 @@ class ShellClass extends Native<NativeShell> {
 
   public getCode(): number {
     if (this.isAndroid) {
-      return this.getInterface.getCode(this._command);
+      return this.interface.getCode(this._command);
     } else {
       return 1;
     }
@@ -82,14 +81,14 @@ class ShellClass extends Native<NativeShell> {
    * @deprecated Use `Shell.isSuAvailable()` instead
    */
   public isAppGrantedRoot(): boolean {
-    return this.getInterface.isAppGrantedRoot();
+    return this.interface.isAppGrantedRoot();
   }
 
   /**
    * Checks if the app has been granted root privileges
    */
   public isSuAvailable(): boolean {
-    return this.getInterface.isSuAvailable();
+    return this.interface.isSuAvailable();
   }
 
   /**
@@ -97,7 +96,7 @@ class ShellClass extends Native<NativeShell> {
    */
   public VERSION_CODE(): number {
     if (this.isAndroid) {
-      return parseInt(this.getInterface.result("su -V"));
+      return parseInt(this.interface.result("su -V"));
     } else {
       return 0;
     }
@@ -105,7 +104,7 @@ class ShellClass extends Native<NativeShell> {
 
   public VERSION_NAME(): string {
     if (this.isAndroid) {
-      return this.getInterface.result("su -v");
+      return this.interface.result("su -v");
     } else {
       return "0:SU";
     }
@@ -126,7 +125,7 @@ class ShellClass extends Native<NativeShell> {
    */
   public isKernelSU(): boolean {
     if (this.isAndroid) {
-      return this.getInterface.isKernelSU();
+      return this.interface.isKernelSU();
     } else {
       return false;
     }
@@ -137,7 +136,7 @@ class ShellClass extends Native<NativeShell> {
    */
   public isMagiskSU(): boolean {
     if (this.isAndroid) {
-      return this.getInterface.isMagiskSU();
+      return this.interface.isMagiskSU();
     } else {
       return false;
     }
@@ -145,7 +144,7 @@ class ShellClass extends Native<NativeShell> {
 
   public getenv(key: string): string {
     if (this.isAndroid) {
-      return this.getInterface.getenv(key);
+      return this.interface.getenv(key);
     } else {
       return "";
     }
@@ -153,7 +152,7 @@ class ShellClass extends Native<NativeShell> {
 
   public setenv(key: string, value: string, override = 1): void {
     if (this.isAndroid) {
-      this.getInterface.setenv(key, value, override);
+      this.interface.setenv(key, value, override);
     }
   }
 }

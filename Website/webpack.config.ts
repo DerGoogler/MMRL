@@ -4,7 +4,6 @@ import { Configuration, DefinePlugin } from "webpack";
 import webpackDevServer from "webpack-dev-server";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
-import * as fs from "fs";
 
 const outputPath = "./../www";
 

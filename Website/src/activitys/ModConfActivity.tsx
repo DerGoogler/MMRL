@@ -3,7 +3,8 @@ import { Alert, Box, Divider, List, ListSubheader } from "@mui/material";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import { Page } from "@Components/onsenui/Page";
 import { useActivity } from "@Hooks/useActivity";
-import { ModConf, useSettings } from "@Hooks/useSettings";
+import { useSettings } from "@Hooks/useSettings";
+import { ModConf, useModConf } from "@Hooks/useModConf";
 import { StyledListItemText } from "@Components/StyledListItemText";
 import { Shell } from "@Native/Shell";
 import { DialogEditTextListItem } from "@Components/DialogEditTextListItem";
@@ -29,7 +30,7 @@ interface ModConfListItem<K extends keyof ModConf> {
 function ModConfActivity() {
   const { context } = useActivity();
 
-  const { _modConf, setModConf } = useSettings();
+  const { _modConf, setModConf } = useModConf();
 
   const renderToolbar = () => {
     return (
@@ -71,6 +72,10 @@ function ModConfActivity() {
           {
             text: "Modules path",
             confKey: "MODULES",
+          },
+          {
+            text: "Module work directory",
+            confKey: "MODULECWD",
           },
           {
             text: "Module properties path",
@@ -167,8 +172,7 @@ function ModConfActivity() {
                   <StyledListItemText
                     primary={
                       <Box sx={{ display: "flex", alignItems: "center", justifyItems: "center" }}>
-                        {item.logoText && <item.logoText sx={{ mr: 1 }} width="1rem" height="1rem" />}
-                        {item.text}
+                        {item.logoText && <item.logoText sx={{ mr: 1 }} width="1rem" height="1rem" />}[{item.confKey}]: {item.text}
                       </Box>
                     }
                     secondary={_modConf[item.confKey]}

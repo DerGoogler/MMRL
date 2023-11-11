@@ -12,6 +12,7 @@ import { StyledIconButtonWithText } from "./StyledIconButton";
 import StarBorderRoundedIcon from "@mui/icons-material/StarBorderRounded";
 import { badgeStyle } from "./DeviceModule";
 import React from "react";
+import { isLiteralObject } from "@Util/util";
 
 interface Props {
   moduleProps: Module;
@@ -22,19 +23,18 @@ interface Props {
 
 export const ExploreModule = React.memo<Props>((props) => {
   const { context } = useActivity();
-  const { strings } = useStrings();
+  const { strings, currentLanguage } = useStrings();
   const { settings } = useSettings();
   const { theme, scheme, shade } = useTheme();
 
-  const { id, name, version, versionCode, description, stars, author, last_update, mmrl, valid } = props.moduleProps;
+  const { id, name, version, versionCode, description, stars, author, last_update, mmrl, valid, hidden } = props.moduleProps;
 
-  const { isVerified, isHidden } = useModuleOptions(id);
-  const isLowQuality = useLowQualityModule(props.moduleProps, props.disableLowQuality);
+  const isLowQuality = useLowQualityModule(props.moduleProps, !settings._low_quality_module);
   const formatLastUpdate = useFormatDate(last_update);
 
-  // if (isHidden) {
-  //   return null;
-  // }
+  if (hidden) {
+    return null;
+  }
 
   if (!settings._invald_module && !valid) {
     return null;
@@ -103,7 +103,7 @@ export const ExploreModule = React.memo<Props>((props) => {
             </Stack>
           </Typography>
           <Typography variant="body1" color="text.secondary">
-            {description}
+            {isLiteralObject(description) ? String((description as ModuleDescription)[currentLanguage]) : String(description)}
           </Typography>
         </Stack>
       </Box>
@@ -146,10 +146,10 @@ export const ExploreModule = React.memo<Props>((props) => {
           </Stack>
         </Stack>
       </Stack>
-      {settings._low_quality_module && isLowQuality && (
-        <Alert style={{ borderRadius: 0 }} severity="warning">
-          <AlertTitle>Low Quality</AlertTitle>
-          Module meets not the requirements of its props
+      {isLowQuality && (
+        <Alert sx={{ borderRadius: 0 }} severity="warning">
+          <AlertTitle>{strings("low_quality_module")}</AlertTitle>
+          {strings("low_quality_module_warn")}
         </Alert>
       )}
     </Card>

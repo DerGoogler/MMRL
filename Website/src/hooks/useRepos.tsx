@@ -2,6 +2,7 @@ import React from "react";
 import { SetValue, useNativeStorage } from "./useNativeStorage";
 import axios from "axios";
 import { link } from "googlers-tools";
+import localForage from "localforage";
 import _ from "underscore";
 import { useSettings } from "./useSettings";
 import { os } from "@Native/Os";
@@ -57,8 +58,20 @@ type SetRepoStateData = {
 };
 
 export const RepoProvider = (props: React.PropsWithChildren) => {
-  const log = useLog("RepoProvider");
-  const [repos, setRepos] = useNativeStorage<StoredRepo[]>("repos", []);
+  const TAG = "RepoProvider";
+  const log = useLog(TAG);
+  const [repos, setRepos] = useNativeStorage<StoredRepo[]>("repos", [
+    {
+      name: "Magisk Modules Alt Repo (pre-configured)",
+      website: "",
+      support: "",
+      donate: "",
+      submitModule: "",
+      last_update: 1690995729000,
+      modules: "https://api.mmrl.dergoogler.com/json/mmar.json",
+    },
+  ]);
+
   const { settings, setSettings } = useSettings();
   const [modules, setModules] = React.useState<Module[]>([]);
 

@@ -3,9 +3,9 @@ import { Toolbar } from "@Components/onsenui/Toolbar";
 import { useActivity } from "@Hooks/useActivity";
 import React from "react";
 import { SuFile } from "@Native/SuFile";
-import { useSettings } from "@Hooks/useSettings";
 import { ConfigureView } from "@Components/ConfigureView";
 import { PreviewErrorBoundary } from "./PlaygroundsActivity";
+import { useModConf } from "@Hooks/useModConf";
 
 type Extra = {
   raw_data?: string;
@@ -14,7 +14,7 @@ type Extra = {
 };
 
 const ConfigureActivity = () => {
-  const { modConf } = useSettings();
+  const { modConf } = useModConf();
   const { context, extra } = useActivity<Extra>();
 
   const config: string = React.useMemo(() => {

@@ -39,7 +39,7 @@ const CheckRoot = (props: CheckRootProps): React.JSX.Element => {
 
 const AboutActivity = () => {
   const { strings } = useStrings();
-  const { settings, _modConf } = useSettings();
+  const { settings } = useSettings();
   const { theme } = useTheme();
   const { context, extra } = useActivity();
 

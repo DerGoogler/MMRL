@@ -1,6 +1,10 @@
+import { IFs } from "memfs";
 import { Native } from "./Native";
+import { WasmFs } from "@wasmer/wasmfs";
 
-interface NativeSuFile {
+export const wasmFs = new WasmFs();
+
+interface NativeSuFile extends NativeSuFileV2 {
   readFile(path: string): string;
   listFiles(path: string): string;
   createFile(path: string): boolean;
@@ -9,53 +13,74 @@ interface NativeSuFile {
   existFile(path: string): boolean;
 }
 
+interface NativeSuFileV2 {
+  v2(path: string): {
+    write(data: string): void;
+    read(): string;
+    list(delimiter: string | null): string;
+    create(): boolean;
+    delete(): boolean;
+    deleteRecursive(): void;
+    exists(): boolean;
+  };
+}
+
 /**
  * Class to read files on a native Android device
  * @implements {NativeSuFile}
  */
 class SuFile extends Native<NativeSuFile> {
-  private path: string;
+  // @ts-ignore - Won't get even called
+  private _file: ReturnType<NativeSuFile["v2"]>;
+  private _fs: IFs = wasmFs.fs;
+  private _path: string;
 
   public constructor(path?: string) {
-    super();
-    this.path = path ? path : "";
-    this.interfaceName = "__sufile__";
+    super(window.__sufile__);
+
+    if (typeof path !== "string") throw new TypeError("Path name isn't a string");
+
+    this._path = path;
+    if (this.isAndroid) {
+      this._file = this.interface.v2.bind(this.interface)(path);
+    }
   }
 
   public read(): string {
     if (this.isAndroid) {
-      return this.getInterface.readFile(this.path);
+      return this._file.read();
     } else {
-      return "";
+      return this._fs.readFileSync(this._path).toString();
     }
   }
 
-  /**
-   * @description
-   * ```js
-   * new File("").list().split(",");
-   * ```
-   */
-  public list(): string;
-  public list(join?: string): string {
+  public write(content: string): void {
     if (this.isAndroid) {
-      return this.getInterface.listFiles(this.path);
+      this._file.write(content);
     } else {
-      return "";
+      this._fs.writeFileSync(this._path, content);
+    }
+  }
+
+  public list(delimiter: string = ","): Array<string> {
+    if (this.isAndroid) {
+      return this._file.list(delimiter).split(delimiter);
+    } else {
+      return [""];
     }
   }
 
   public exist(): boolean {
     if (this.isAndroid) {
-      return this.getInterface.existFile(this.path);
+      return this._file.exists();
     } else {
-      return false;
+      return this._fs.existsSync(this._path);
     }
   }
 
   public delete(): boolean {
     if (this.isAndroid) {
-      return this.getInterface.deleteFile(this.path);
+      return this._file.delete();
     } else {
       return false;
     }
@@ -63,13 +88,13 @@ class SuFile extends Native<NativeSuFile> {
 
   public deleteRecursive(): void {
     if (this.isAndroid) {
-      this.getInterface.deleteRecursive(this.path);
+      this._file.deleteRecursive();
     }
   }
 
   public create(): boolean {
     if (this.isAndroid) {
-      return this.getInterface.createFile(this.path);
+      return this._file.create();
     } else {
       return false;
     }
@@ -79,15 +104,11 @@ class SuFile extends Native<NativeSuFile> {
     return new SuFile(path).read();
   }
 
-  /**
-   *
-   * @param path
-   * @description
-   * ```js
-   * File.list("").split(",");
-   * ```
-   */
-  public static list(path: string): string {
+  public static write(path: string, content: string): void {
+    new SuFile(path).write(content);
+  }
+
+  public static list(path: string): Array<string> {
     return new SuFile(path).list();
   }
 

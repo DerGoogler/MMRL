@@ -38,12 +38,18 @@ import { Shell } from "@Native/Shell";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import ListItemButton from "@mui/material/ListItemButton";
-import SourceIcon from "@mui/icons-material/Source";
 import BugReportIcon from "@mui/icons-material/BugReport";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import { Disappear } from "react-disappear";
 import Fade from "@mui/material/Fade";
 import TelegramIcon from "@mui/icons-material/Telegram";
+import SecurityUpdateGoodIcon from "@mui/icons-material/SecurityUpdateGood";
+import { useRepos } from "@Hooks/useRepos";
+import PicturePreviewActivity from "./PicturePreviewActivity";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import TerminalIcon from "@mui/icons-material/Terminal";
+import { isLiteralObject } from "@Util/util";
+import { useLowQualityModule } from "@Hooks/useLowQualityModule";
 
 function a11yProps(index: number) {
   return {
@@ -69,13 +75,15 @@ function CustomTabPanel(props: TabPanelProps) {
 }
 
 const ModuleViewActivity = () => {
-  const { strings } = useStrings();
+  const { strings, currentLanguage } = useStrings();
   const { settings } = useSettings();
+  const { modules } = useRepos();
   const { theme, scheme, shade } = useTheme();
   const { context, extra } = useActivity<Module>();
 
   const log = useLog("ModuleViewActivity");
-  const { id, name, version, versionCode, description, author, readme, about, download, mmrl, fox, last_update } = extra;
+  const { id, name, version, versionCode, description, author, readme, about, download, mmrl, fox, last_update, hasUpdateJson, verified } =
+    extra;
 
   const categories = useCategories(mmrl.categories);
   const { data } = useFetch<str>(readme);
@@ -85,6 +93,8 @@ const ModuleViewActivity = () => {
   const { SupportIcon, supportText } = useSupportIconForUrl(fox.support);
 
   const search = React.useMemo(() => new URLSearchParams(window.location.search), [window.location.search]);
+
+  const isLowQuality = useLowQualityModule(extra, !settings._low_quality_module);
 
   React.useEffect(() => {
     search.set("module", id);
@@ -279,6 +289,7 @@ const ModuleViewActivity = () => {
                         component: TerminalActivity,
                         key: "TerminalActivity",
                         extra: {
+                          hasUpdateJson: hasUpdateJson,
                           exploreInstall: true,
                           path: download,
                         },
@@ -339,6 +350,13 @@ const ModuleViewActivity = () => {
               </Alert>
             )}
 
+            {isLowQuality && (
+              <Alert severity="warning">
+                <AlertTitle>{strings("low_quality_module")}</AlertTitle>
+                {strings("low_quality_module_warn")}
+              </Alert>
+            )}
+
             {mmrl.screenshots && (
               <Card elevation={0} sx={{ /*width: { xs: "100%", sm: "100vh" },*/ width: "100%" }}>
                 <CardContent>
@@ -354,8 +372,8 @@ const ModuleViewActivity = () => {
                     overflow: "auto",
                     whiteSpace: "nowrap",
                     gridAutoFlow: "column",
-                    gridTemplateColumns: "repeat(auto-fill,minmax(160px,1fr)) !important",
-                    gridAutoColumns: "minmax(160px, 1fr)",
+                    gridTemplateColumns: "repeat(auto-fill,minmax(250px,1fr)) !important",
+                    gridAutoColumns: "minmax(250px, 1fr)",
                   }}
                 >
                   {mmrl.screenshots.map((image, i) => (
@@ -372,6 +390,15 @@ const ModuleViewActivity = () => {
                           boxShadow: "0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15)",
                           borderRadius: theme.shape.borderRadius / theme.shape.borderRadius,
                         })}
+                        onClick={() => {
+                          context.pushPage({
+                            component: PicturePreviewActivity,
+                            key: "PicturePreviewActivity",
+                            extra: {
+                              picture: image,
+                            },
+                          });
+                        }}
                       />
                     </ImageListItem>
                   ))}
@@ -419,7 +446,7 @@ const ModuleViewActivity = () => {
                   </Stack>
 
                   <Typography variant="body2" color="text.secondary">
-                    {description}
+                    {isLiteralObject(description) ? String((description as ModuleDescription)[currentLanguage]) : String(description)}
                   </Typography>
                   <Typography sx={{ mt: 3 }} variant="h6" component="div">
                     {strings("updated_on")}
@@ -444,6 +471,64 @@ const ModuleViewActivity = () => {
                 </CardContent>
               </Card>
             ) : null}
+
+            {mmrl.require && (
+              <Card
+                elevation={0}
+                sx={{
+                  // width: { xs: "100%", sm: "100vh" },
+
+                  width: "100%",
+                }}
+              >
+                <CardContent>
+                  <Typography variant="h5" component="div">
+                    {"Dependencies"}
+                  </Typography>
+                </CardContent>
+
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: {
+                      xs: "column", // mobile
+                      sm: "row", // tablet and up
+                    },
+                  }}
+                >
+                  <List disablePadding sx={{ width: { xs: "100%" } }}>
+                    {mmrl.require.map((req) => {
+                      const findRequire = React.useMemo(() => modules.find((module) => module.id === req), [modules]);
+
+                      if (findRequire) {
+                        return (
+                          <ListItemButton
+                            onClick={() => {
+                              context.pushPage({
+                                component: ModuleViewActivity,
+                                key: "ModuleViewActivity",
+                                extra: findRequire,
+                              });
+                            }}
+                          >
+                            <StyledListItemText
+                              primary={findRequire.name}
+                              secondary={`${findRequire.version} (${findRequire.versionCode})`}
+                            />
+                          </ListItemButton>
+                        );
+                      } else {
+                        return (
+                          <ListItem>
+                            <StyledListItemText primary={req} />
+                          </ListItem>
+                        );
+                      }
+                    })}
+                  </List>
+                </Box>
+              </Card>
+            )}
 
             <Card
               elevation={0}
@@ -521,6 +606,33 @@ const ModuleViewActivity = () => {
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
           <List>
+            {verified && (
+              <ListItem>
+                <ListItemIcon>
+                  <SecurityUpdateGoodIcon />
+                </ListItemIcon>
+                <StyledListItemText primary={strings("verified_module")} secondary={strings("verified_module_desc")} />
+              </ListItem>
+            )}
+
+            {hasUpdateJson && (
+              <ListItem>
+                <ListItemIcon>
+                  <SecurityUpdateGoodIcon />
+                </ListItemIcon>
+                <StyledListItemText primary={strings("update_json")} secondary={strings("update_json_desc")} />
+              </ListItem>
+            )}
+
+            {about.language && (
+              <ListItem>
+                <ListItemIcon>
+                  <TerminalIcon />
+                </ListItemIcon>
+                <StyledListItemText primary={strings("language")} secondary={about.language} />
+              </ListItem>
+            )}
+
             {about.issues && (
               <ListItemButton
                 onClick={() => {
@@ -550,7 +662,7 @@ const ModuleViewActivity = () => {
               }}
             >
               <ListItemIcon>
-                <SourceIcon />
+                <GitHubIcon />
               </ListItemIcon>
               <StyledListItemText primary={strings("source")} secondary={about.source} />
             </ListItemButton>

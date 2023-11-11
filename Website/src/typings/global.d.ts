@@ -1,10 +1,8 @@
-import NShell from "./android/shell";
-import NOS from "./android/os";
-import NBuildConfig from "./android/buildconfig";
+import { AvailableStrs, strs } from "./../locales/declaration";
 
 export {};
 
-declare module '*.d.ts' {
+declare module "*.d.ts" {
   const value: string;
   export default value;
 }
@@ -26,35 +24,6 @@ declare global {
 
   namespace JSX {
     interface IntrinsicElements {
-      "module-container": HTMLAttributes<HTMLDivElement>;
-      "lib-container": HTMLAttributes<HTMLDivElement>;
-      "settings-container": HTMLAttributes<HTMLDivElement>;
-      "content-body": HTMLAttributes<HTMLDivElement>;
-      "content-body-inner": HTMLAttributes<HTMLDivElement>;
-
-      // ./components/Item.tsx
-      "item-card-wrapper": HTMLAttributes<HTMLDivElement>;
-      "item-title": HTMLAttributes<HTMLDivElement>;
-      "item-version-author": HTMLAttributes<HTMLSpanElement>;
-      "item-description": HTMLAttributes<HTMLSpanElement>;
-      "item-last-update": HTMLAttributes<HTMLSpanElement>;
-      "item-module-name": HTMLAttributes<HTMLSpanElement>;
-      "item-name": HTMLAttributes<HTMLSpanElement>;
-      "item-switch": HTMLAttributes<HTMLSpanElement>;
-      "item-module-button-wrapper": HTMLAttributes<HTMLDivElement>;
-      "item-module-button": HTMLAttributes<HTMLSpanElement>;
-
-      // License cards
-      "license-card-wrapper": HTMLAttributes<HTMLDivElement>;
-      "license-card-title": HTMLAttributes<HTMLDivElement>;
-      "license-card-name": HTMLAttributes<HTMLSpanElement>;
-      "license-card-author": HTMLAttributes<HTMLSpanElement>;
-      "license-card-description": HTMLAttributes<HTMLSpanElement>;
-      "license-card-diver": HTMLAttributes<HTMLHRElement>;
-      "license-card-infos": HTMLAttributes<HTMLDivElement>;
-      "license-card-version": HTMLAttributes<HTMLSpanElement>;
-      "license-card-license": HTMLAttributes<HTMLSpanElement>;
-
       "mmrl-anchor": React.DetailedHTMLProps<React.AnchorHTMLAttributes<HTMLAnchorElement> & { page?: string }, HTMLAnchorElement>;
 
       // Onsen Elements
@@ -69,7 +38,12 @@ declare global {
       "ons-tab": HTMLAttributes<HTMLElement>;
       "ons-gesture-detector": HTMLAttributes<HTMLElement>;
       "ons-bottom-toolbar": HTMLAttributes<HTMLElement>;
+      "ons-fab": HTMLAttributes<HTMLElement>;
     }
+  }
+
+  interface NativeStorage extends Storage {
+    getItem(key: string, def?: string): string;
   }
 
   /**
@@ -104,23 +78,36 @@ declare global {
      *
      * - This interface is not configurable
      */
-    readonly __nativeStorage__: Pick<Storage, "getItem" | "setItem" | "removeItem" | "clear"> & { defineName: (name: string) => void };
+    readonly __nativeStorage__: NativeStorage;
   }
 
-  type TerminalExec = {
-    command: string;
-    env: Record<string, string>;
-    onLine: (line: string) => void;
-    onExit: (code: number) => void;
-  };
+  namespace Terminal {
+    export type Exec = {
+      command: string;
+      env: Record<string, string>;
+      onLine: (line: string) => void;
+      onExit: (code: number) => void;
+    };
 
-  interface Terminal {
-    exec(opt: TerminalExec): void;
+    export function exec(opt: Exec): void;
   }
 
-  const Terminal: Terminal;
+  namespace Chooser {
+    export type File = {
+      name: string;
+      uri: string;
+      path: string;
+    };
 
-  interface Window extends AndroidWindow<any> {}
+    export type SuccessCallback = (file: File | "RESULT_CANCELED") => void;
+    export type ErrorCallback = ((code: number) => void) | null;
+
+    export function getFile(type: string, successCallback: SuccessCallback, ErrorCallback: ErrorCallback): any;
+  }
+
+  interface Window extends AndroidWindow<any> {
+    localStorage: NativeStorage;
+  }
 
   const Toast: {
     LENGTH_LONG: "long";
@@ -131,51 +118,6 @@ declare global {
 
   const __webpack__mode__: "production" | "development";
 
-  type PushPropsExtra<E = {}> = E & {
-    param?: {
-      name: string;
-      value: string;
-    };
-  };
-
-  interface PushPropsCore<E = {}, P = {}> {
-    component: React.ElementType;
-
-    props: P & {
-      key: string;
-      extra: PushPropsExtra<E>;
-      readonly popPage?: () => void;
-      readonly pushPage?: (...args: [props: PushPropsCore<PushPropsExtra<E>>]) => void; //
-    };
-  }
-
-  interface PushProps<E = {}> {
-    readonly extra: PushPropsExtra<E>;
-    // readonly context: {
-    readonly popPage: (options?: any) => void;
-    readonly pushPage: <E, P>(props: PushPropsCore<E, P>) => void;
-    readonly splitter: {
-      readonly show: () => void;
-      readonly hide: () => void;
-      readonly state: boolean;
-    };
-    readonly onBackPressed: (handler: EventListener) => void;
-    readonly onResume: (handler: EventListener) => void;
-    // };
-  }
-
-  interface UseActivity<E = {}> {
-    readonly context: {
-      readonly popPage: (options?: any) => void;
-      readonly pushPage: <T>(props: PushPropsCore<T>) => void;
-      readonly splitter: {
-        readonly show: () => void;
-        readonly hide: () => void;
-        readonly state: () => boolean;
-      };
-    };
-  }
-
   interface StoredRepo extends Omit<Repo, "modules"> {
     modules: string;
   }
@@ -184,19 +126,19 @@ declare global {
     /**
      * An required filed, to disply the repository name
      */
-    name: str;
-    mmrlOwner?: str;
+    name: string;
+    mmrlOwner?: string;
     /**
      * An given website link for the repository
      */
-    website?: str;
+    website?: string;
     /**
      * Given support link i.g. Telegram, Xda, GitHub or something
      */
-    support?: str;
-    donate?: str;
-    submitModule?: str;
-    last_update: int;
+    support?: string;
+    donate?: string;
+    submitModule?: string;
+    last_update: number;
     modules: Module[];
   }
 
@@ -210,44 +152,78 @@ declare global {
     modules: Module[];
   }
 
+  /** Allows developers to translate their description */
+  export type ModuleDescription = Record<AvailableStrs, string>;
+
   export interface Module {
-    id: str;
-    name: str;
-    version?: int;
-    versionCode: int;
-    author?: str;
-    description?: str;
-    valid: bool;
-    download: str;
-    last_update: int;
-    readme: str;
-    stars: int;
+    id: string;
+    name: string;
+    /** Can overridden by `update.json` with `version` */
+    version?: number;
+    /** Can overridden by `update.json` with `versionCode` */
+    versionCode: number;
+    author?: string;
+    description?: string | ModuleDescription;
+    valid: boolean;
+    verified: boolean;
+    hidden: boolean;
+    /** Can overridden by `update.json` with `zipUrl` */
+    download: string;
+    last_update: number;
+    readme: string;
+    stars: number;
+    hasUpdateJson: boolean;
     about: About;
     mmrl: Mmrl;
     fox: Fox;
   }
 
+  /**
+   * If a `update.json` exists then the `update.json` will override existing props.
+   */
+  export interface UpdateJson {
+    version: string;
+    versionCode: number;
+    zipUrl: string;
+    changelog: string;
+  }
+
   export interface About {
+    repo_source: string;
+    language: string;
     issues?: string;
     source: string;
   }
 
   export interface Mmrl {
-    cover?: str;
-    logo?: str;
-    screenshots?: arr<str>;
-    categories?: arr<str>;
+    cover?: string;
+    logo?: string;
+    screenshots?: Array<string>;
+    categories?: Array<string>;
+    require?: Array<string>;
   }
 
   export interface Fox {
-    minApi?: int;
-    maxApi?: int;
-    minMagisk?: int;
-    needRamdisk?: bool;
-    support?: str;
-    donate?: str;
-    config?: str;
-    changeBoot?: bool;
-    mmtReborn?: bool;
+    minApi?: number;
+    maxApi?: number;
+    minMagisk?: number;
+    needRamdisk?: boolean;
+    support?: string;
+    donate?: string;
+    config?: string;
+    changeBoot?: boolean;
+    mmtReborn?: boolean;
+  }
+
+  // OnsenUI Types
+  /**
+   * @extends {Event}
+   */
+  export interface DeviceBackButtonEvent extends Event {
+    /**
+     * Runs the handler for the immediate parent that supports device back button.
+     * @returns {void}
+     */
+    callParentHandler: () => void;
   }
 }

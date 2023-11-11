@@ -12,8 +12,7 @@ export interface NativeEnvironment {
  */
 class EnvironmentClass extends Native<NativeEnvironment> {
   public constructor() {
-    super();
-    this.interfaceName = "__environment__";
+    super(window.__environment__);
   }
 
   public readonly DIRECTORY_MUSIC: string = "Music";
@@ -31,19 +30,19 @@ class EnvironmentClass extends Native<NativeEnvironment> {
   public readonly DIRECTORY_RECORDINGS: string = "Recordings";
 
   public getExternalStorageDir(): string {
-    return this.getInterface.getExternalStorageDir();
+    return this.interface.getExternalStorageDir();
   }
 
   public getPackageDataDir(): string {
-    return this.getInterface.getPackageDataDir();
+    return this.interface.getPackageDataDir();
   }
 
   public getPublicDir(type: string): string {
-    return this.getInterface.getPublicDir(type);
+    return this.interface.getPublicDir(type);
   }
 
   public getDataDir(): string {
-    return this.getInterface.getDataDir();
+    return this.interface.getDataDir();
   }
 }
 

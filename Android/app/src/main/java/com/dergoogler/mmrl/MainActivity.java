@@ -1,6 +1,7 @@
 package com.dergoogler.mmrl;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -20,6 +21,8 @@ import com.topjohnwu.superuser.Shell;
 import com.topjohnwu.superuser.ShellUtils;
 
 import org.apache.cordova.*;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MainActivity extends CordovaActivity {
     @Override
@@ -35,6 +38,12 @@ public class MainActivity extends CordovaActivity {
         }
 
         WebView wv = (WebView) appView.getEngine().getView();
+
+
+        NativeStorage ns = new NativeStorage(this);
+        NativeOS os = new NativeOS(this);
+        this.applyTheme(wv, ns, os);
+
         // enable Cordova apps to be started in the background
         Bundle extras = getIntent().getExtras();
         if (extras != null && extras.getBoolean("cdvStartInBackground", false)) {
@@ -63,8 +72,8 @@ public class MainActivity extends CordovaActivity {
         wv.addJavascriptInterface(new NativeEnvironment(this), "__environment__");
         wv.addJavascriptInterface(new NativeShell(wv), "__shell__");
         wv.addJavascriptInterface(new NativeBuildConfig(), "__buildconfig__");
-        wv.addJavascriptInterface(new NativeOS(this), "__os__");
-        wv.addJavascriptInterface(new NativeStorage(this), "__nativeStorage__");
+        wv.addJavascriptInterface(os, "__os__");
+        wv.addJavascriptInterface(ns, "__nativeStorage__");
         wv.addJavascriptInterface(new NativeProperties(), "__properties__");
         wv.addJavascriptInterface(new NativeLog(), "__log__");
 
@@ -74,6 +83,14 @@ public class MainActivity extends CordovaActivity {
         return "MMRL/" + BuildConfig.VERSION_NAME + " (Linux; Android " + Build.VERSION.RELEASE + "; " + Build.MODEL + " Build/" + Build.DISPLAY + ")";
     }
 
+    private void applyTheme(WebView wv, NativeStorage ns, NativeOS os)  {
+        String defColor = "#ce93d8";
+        String bg = ns.getItem("background_color", defColor);
+        String sbg = ns.getItem("statusbar_color", defColor);
+        os.setStatusBarColor(sbg.replace("\"", ""),false);
+        os.setNavigationBarColor(bg.replace("\"", ""));
+        wv.setBackgroundColor(Color.parseColor(bg.replace("\"", "")));
+    }
 
     private boolean isEmulator = (Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic"))
             || Build.FINGERPRINT.startsWith("generic")

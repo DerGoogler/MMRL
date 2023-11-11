@@ -5,8 +5,6 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import FetchTextActivity from "./FetchTextActivity";
 import ModuleFragment from "./fragments/ModuleFragment";
 import TerminalActivity from "./TerminalActivity";
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
 import DeviceModule from "@Components/DeviceModule";
 import ModuleViewActivity from "./ModuleViewActivity";
 import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
@@ -26,11 +24,12 @@ import { useNewerVersion } from "@Hooks/useNewerVersion";
 import { ExploreModule } from "@Components/ExploreModule";
 import { useSettings } from "@Hooks/useSettings";
 import { useTheme } from "@Hooks/useTheme";
-import { Fab } from "react-onsenui";
 import { AnimatePresence, motion } from "framer-motion";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import ClearIcon from "@mui/icons-material/Clear";
+import { useModConf } from "@Hooks/useModConf";
+import Fab from "@Components/onsenui/Fab";
 
 interface SearchbarRef {
   clear(): void;
@@ -91,7 +90,8 @@ const SearchBar = React.forwardRef<SearchbarRef, SearchbarProps>((props, ref) =>
 
 const MainApplication = () => {
   const { strings } = useStrings();
-  const { settings, modConf } = useSettings();
+  const { settings } = useSettings();
+  const { modConf } = useModConf();
   const { context } = useActivity();
   const { theme } = useTheme();
   const { modules } = useRepos();
@@ -105,7 +105,7 @@ const MainApplication = () => {
 
   if (os.isAndroid) {
     React.useEffect(() => {
-      const folders = SuFile.list(modConf("MODULES")).split(",");
+      const folders = SuFile.list(modConf("MODULES"));
       folders.forEach((module) => {
         const properties = new SuFile(modConf("PROPS", { MODID: module }));
         if (properties.exist()) {
@@ -157,14 +157,12 @@ const MainApplication = () => {
                   renderItem={(module, key) => <DeviceModule key={key} module={module} />}
                   renderFixed={() => {
                     return (
-                      // @ts-ignore
                       <Fab
                         onClick={() => {
-                          // @ts-ignore
                           Chooser.getFile(
                             "application/zip",
                             (file) => {
-                              if (file) {
+                              if (file !== "RESULT_CANCELED") {
                                 context.pushPage({
                                   component: TerminalActivity,
                                   key: "TerminalActivity",

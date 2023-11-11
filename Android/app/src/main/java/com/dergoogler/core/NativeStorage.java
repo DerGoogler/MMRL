@@ -13,12 +13,21 @@ public class NativeStorage {
     private String localStorageName;
 
     public NativeStorage(@NonNull Context ctx) {
-        this.localStorage = ctx.getSharedPreferences(localStorageName, Activity.MODE_PRIVATE);
+        this.localStorage = ctx.getSharedPreferences("localstorage_v2", Activity.MODE_PRIVATE);
     }
 
     @JavascriptInterface
     public void defineName(String name) {
         this.localStorageName = name;
+    }
+
+    @JavascriptInterface
+    public String getItem(String key, String def) {
+        try {
+            return this.localStorage.getString(key, def);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @JavascriptInterface

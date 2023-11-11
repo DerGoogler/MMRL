@@ -39,6 +39,14 @@ Here you can vote in this [discussion](https://github.com/DerGoogler/MMRL/discus
 - [x] Magisk Delta
 - [x] KernelSU
 
+## Retive configs
+
+```shell
+function getconf {
+  /system/bin/getprop "$1" "$2" | sed 's/^"\(.*\)"$/\1/'
+}
+```
+
 ## Screenshots
 
 <table>

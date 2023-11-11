@@ -2,6 +2,10 @@ import { Native } from "./Native";
 import { Shell } from "./Shell";
 
 class MagiskClass extends Native {
+  public constructor() {
+    super({});
+  }
+
   /**
    * Get current installed Magisk version code
    */

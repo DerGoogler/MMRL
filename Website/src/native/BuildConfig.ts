@@ -6,13 +6,12 @@ import { Native } from "./Native";
  */
 class BuildConfigClass extends Native {
   public constructor() {
-    super();
-    this.interfaceName = "__buildconfig__";
+    super(window.__buildconfig__);
   }
 
   public get BUILD_DATE(): number {
     if (this.isAndroid) {
-      return this.getInterface.BUILD_DATE();
+      return this.interface.BUILD_DATE();
     } else {
       return WEB_BUILD_DATE;
     }
@@ -20,7 +19,7 @@ class BuildConfigClass extends Native {
 
   public get VERSION_NAME(): VersionType {
     if (this.isAndroid) {
-      return this.getInterface.VERSION_NAME();
+      return this.interface.VERSION_NAME();
     } else {
       return pkg.config.version_name as VersionType;
     }
@@ -28,7 +27,7 @@ class BuildConfigClass extends Native {
 
   public get VERSION_CODE(): number {
     if (this.isAndroid) {
-      return this.getInterface.VERSION_CODE();
+      return this.interface.VERSION_CODE();
     } else {
       return pkg.config.version_code;
     }
@@ -36,14 +35,14 @@ class BuildConfigClass extends Native {
 
   public get APPLICATION_ID(): string {
     if (this.isAndroid) {
-      return this.getInterface.APPLICATION_ID();
+      return this.interface.APPLICATION_ID();
     } else {
       return pkg.name;
     }
   }
   public get DEBUG(): boolean {
     if (this.isAndroid) {
-      return this.getInterface.DEBUG;
+      return this.interface.DEBUG;
     } else {
       return __webpack__mode__ === "development";
     }
@@ -51,7 +50,7 @@ class BuildConfigClass extends Native {
 
   public get BUILD_TYPE(): string {
     if (this.isAndroid) {
-      return this.getInterface.BUILD_TYPE;
+      return this.interface.BUILD_TYPE;
     } else {
       return "unknown";
     }

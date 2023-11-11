@@ -67,6 +67,8 @@ function Anchor(props: JSX.IntrinsicElements["a"] & AnchorProps) {
     [color]
   );
 
+  const findModule = React.useMemo(() => modules.find((m) => m.id === module), [module]);
+
   return (
     <Box
       sx={{
@@ -77,20 +79,14 @@ function Anchor(props: JSX.IntrinsicElements["a"] & AnchorProps) {
     >
       <Box
         component="mmrl-anchor"
-        href={!module ? href : module}
+        href={!(module && findModule) ? href : module}
         onClick={() => {
-          if (module) {
-            const m_ = modules.find((m) => m.id === module);
-
-            if (m_) {
-              context.pushPage({
-                component: ModuleViewActivity,
-                key: "ModuleViewActivity",
-                extra: m_,
-              });
-            } else {
-              os.toast("Module not found. Did you add the right repo?", Toast.LENGTH_SHORT);
-            }
+          if (module && findModule) {
+            context.pushPage({
+              component: ModuleViewActivity,
+              key: "ModuleViewActivity",
+              extra: findModule,
+            });
           } else {
             if (href) {
               os.open(href, {
@@ -110,7 +106,7 @@ function Anchor(props: JSX.IntrinsicElements["a"] & AnchorProps) {
         {!noIcon && (
           <>
             <Icon
-              icon={!module ? LaunchRoundedIcon : ExtensionIcon}
+              icon={!(module && findModule) ? LaunchRoundedIcon : ExtensionIcon}
               sx={{
                 color: _color,
                 fill: _color,
