@@ -33,7 +33,7 @@ Introducing Magisk Module Repo Loader (MMRL) - the ultimate module manager for M
 
 ```shell
 function getconf {
-  /system/bin/getprop "$1" "$2" | sed 's/"//g'
+  /system/bin/getprop "$1" "$2" | sed 's/^"\(.*\)"$/\1/'
 }
 ```
 
