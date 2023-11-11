@@ -7,7 +7,6 @@ import _ from "underscore";
 import { useSettings } from "./useSettings";
 import { os } from "@Native/Os";
 import { useLog } from "./native/useLog";
-import { useLocalForage } from "./useLocalForage";
 
 export interface RepoContextActions {
   addRepo: (data: AddRepoData) => void;

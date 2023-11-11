@@ -42,6 +42,10 @@ declare global {
     }
   }
 
+  interface NativeStorage extends Storage {
+    getItem(key: string, def?: string): string;
+  }
+
   /**
    * Native window properties for Android
    */
@@ -74,7 +78,7 @@ declare global {
      *
      * - This interface is not configurable
      */
-    readonly __nativeStorage__: Pick<Storage, "getItem" | "setItem" | "removeItem" | "clear"> & { defineName: (name: string) => void };
+    readonly __nativeStorage__: NativeStorage;
   }
 
   namespace Terminal {
@@ -101,7 +105,9 @@ declare global {
     export function getFile(type: string, successCallback: SuccessCallback, ErrorCallback: ErrorCallback): any;
   }
 
-  interface Window extends AndroidWindow<any> {}
+  interface Window extends AndroidWindow<any> {
+    localStorage: NativeStorage;
+  }
 
   const Toast: {
     LENGTH_LONG: "long";

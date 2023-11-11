@@ -15,13 +15,15 @@ class PropertiesClass extends Native<IProperties> {
     if (this.isAndroid) {
       return this.interface.get(key, def);
     } else {
-      return "";
+      return window.localStorage.getItem(key) || def;
     }
   }
 
   public set(key: string, value: string): void {
     if (this.isAndroid) {
       Shell.cmd(`setprop "${key}" "${value}"`).exec();
+    } else {
+      return window.localStorage.setItem(key, value);
     }
   }
 }

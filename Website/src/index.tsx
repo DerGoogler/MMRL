@@ -22,10 +22,6 @@ import { strs } from "./locales/declaration";
 ons.platform.select("android");
 
 ons.ready(() => {
-  if (window.__nativeStorage__) {
-    window.__nativeStorage__.defineName("localstorage");
-  }
-
   customElements.define("mmrl-app", MMRLApp);
   customElements.define("mmrl-anchor", MMRLAnchor);
 

@@ -16,7 +16,6 @@ export class Native<I = any> implements INative<I> {
    * @required true
    */
   public constructor(i: I) {
-    if (typeof i === "undefined") throw new Error("No interface defined");
     this._internal_interface = i;
   }
 

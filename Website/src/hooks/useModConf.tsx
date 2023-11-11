@@ -1,11 +1,7 @@
 import React, { createContext, useContext } from "react";
-import { colors as kolors } from "@mui/material";
 import { defaultComposer } from "default-composer";
 import { useNativeStorage } from "./useNativeStorage";
-import { os } from "@Native/Os";
 import { SetStateAction } from "./useStateCallback";
-import { useLanguageMap } from "./../locales/declaration";
-import { useLocalForage } from "./useLocalForage";
 
 export interface ModConf {
   //cli

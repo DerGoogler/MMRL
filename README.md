@@ -29,6 +29,14 @@ Introducing Magisk Module Repo Loader (MMRL) - the ultimate module manager for M
 - [x] Magisk Delta
 - [x] KernelSU
 
+## Retive configs
+
+```shell
+function getconf {
+  /system/bin/getprop "$1" "$2" | sed 's/"//g'
+}
+```
+
 ## Screenshots
 
 <table>

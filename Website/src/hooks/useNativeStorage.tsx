@@ -111,7 +111,7 @@ export function useNativeStorage<T>(key: string, initialValue: T): [T, SetValue<
 
 // A wrapper for "JSON.parse()"" to support "undefined" value
 
-function parseJSON<T>(value: string | null): T | Error {
+export function parseJSON<T>(value: string | null): T | Error {
   try {
     return value === "undefined" ? undefined : JSON.parse(value ?? "");
   } catch (e) {
