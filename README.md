@@ -14,7 +14,7 @@ We want to implant [Sentry](https://sentry.io) in MMRL to automatically report c
 
 Here you can vote in this [discussion](https://github.com/DerGoogler/MMRL/discussions/50) ([Telegram Vote](https://t.me/Fox2Code_Chat/34775))
 
-> This vote is expected to end on 01. December, 2023.
+> This vote is expected to end on 19. November, 2023.
 
 ## What MMRL Supports (Roadmap)
 
