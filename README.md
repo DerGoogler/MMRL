@@ -67,16 +67,6 @@ versionCode=<int>
 author=<string>
 description=<string>
 
-# MMRL supported properties
-# mmrlConfig=<file> config file get automatically detected
-mmrlNoComments=<boolean>
-mmrlCover=<url>
-mmrlAuthor=<uid>
-mmrlLogo=<url>
-mmrlScreenshots=<url>,<url>,<url> ...
-# Developers that points "Gaming" won't have a change to get verified. Magisk isn't made for gaming purposes.
-mmrlCategories=<string>,<string>,<string> ...
-
 # Fox's Mmm supported properties
 minApi=<int>
 maxApi=<int>
@@ -88,48 +78,6 @@ config=<package>
 changeBoot=<boolean>
 mmtReborn=<boolean>
 ```
-
-## Supported `module.json` syntax
-
-> **Note** > `prop_url` should always an string otherwise MMRL can't manipulate it.
-
-```json
-{
-  "last_update": 1658146279000,
-  "name": "Googlers Magisk Repo",
-  "website": "https://dergoogler.com/repo",
-  "support": "https://t.me/The_Googler",
-  "donate": null,
-  "submitModule": null,
-  "modules": [
-    {
-      "id": "samsung_a70_raven_prop_overlay",
-      "last_update": 1654181061000,
-      "prop_url": "https://.../module.prop",
-      "zip_url": "https://.../master.zip",
-      "notes_url": "https://.../README.md"
-    }
-  ]
-}
-```
-
-## FAQ
-
-### Why does some description reports `404: Not Found`?
-
-Always create an `README.md` not `readme.md` or something.
-
-### Module props like `changeBoot` or something are not displayed?
-
-The module doesn't have this prop.
-
-### Why does my module aren't displayed?
-
-The MMRL has an own hidding system. This means that bad modules can hidden from an admin.
-
-### How to get an verified module?
-
-**Updated soon**
 
 # Credits & Thanks
 
