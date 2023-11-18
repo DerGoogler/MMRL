@@ -43,7 +43,7 @@ export function useNativeProperties(
     }
 
     try {
-      const item = Properties.get(key, String(initialValue));
+      const item = Properties.get(key, "");
 
       return item ? (parseJSON(item) as string | boolean | number) : initialValue;
     } catch (error) {
