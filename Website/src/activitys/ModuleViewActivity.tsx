@@ -44,6 +44,7 @@ import { Disappear } from "react-disappear";
 import Fade from "@mui/material/Fade";
 import TelegramIcon from "@mui/icons-material/Telegram";
 import SecurityUpdateGoodIcon from "@mui/icons-material/SecurityUpdateGood";
+import VerifiedIcon from '@mui/icons-material/Verified';
 import { useRepos } from "@Hooks/useRepos";
 import PicturePreviewActivity from "./PicturePreviewActivity";
 import GitHubIcon from "@mui/icons-material/GitHub";
@@ -598,7 +599,7 @@ const ModuleViewActivity = () => {
             {verified && (
               <ListItem>
                 <ListItemIcon>
-                  <SecurityUpdateGoodIcon />
+                  <VerifiedIcon />
                 </ListItemIcon>
                 <StyledListItemText primary={strings("verified_module")} secondary={strings("verified_module_desc")} />
               </ListItem>
