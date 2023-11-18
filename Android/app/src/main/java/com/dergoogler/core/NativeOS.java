@@ -135,7 +135,11 @@ public class NativeOS {
             throw new IllegalArgumentException(
                     "No resource string found with name " + id);
         } else {
-            return String.format("#%06x", manipulateColor(ContextCompat.getColor(this.ctx, nameResourceID) & 0xffffff, 75));
+            int color = ContextCompat.getColor(this.ctx, nameResourceID);
+            int red = Color.red(color);
+            int blue = Color.blue(color);
+            int green = Color.green(color);
+            return String.format("#%02x%02x%02x", red, green, blue);
         }
     }
 

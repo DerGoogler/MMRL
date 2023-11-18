@@ -44,6 +44,7 @@ import { Disappear } from "react-disappear";
 import Fade from "@mui/material/Fade";
 import TelegramIcon from "@mui/icons-material/Telegram";
 import SecurityUpdateGoodIcon from "@mui/icons-material/SecurityUpdateGood";
+import VerifiedIcon from '@mui/icons-material/Verified';
 import { useRepos } from "@Hooks/useRepos";
 import PicturePreviewActivity from "./PicturePreviewActivity";
 import GitHubIcon from "@mui/icons-material/GitHub";
@@ -244,19 +245,15 @@ const ModuleViewActivity = () => {
             <Stack direction={{ xs: "column", sm: "row" }} spacing={1}>
               {fox.support && (
                 <Button
+                  color="secondary"
                   sx={{
-                    color: settings.darkmode ? scheme[700] : shade(scheme[200], settings.shade_value),
-                    border: settings.darkmode ? `1px solid ${scheme[500]}` : `1px solid ${shade(scheme[600], settings.shade_value)}`,
-                    ":hover": {
-                      color: settings.darkmode ? scheme[700] : shade(scheme[200], settings.shade_value),
-                      border: settings.darkmode ? `1px solid ${scheme[700]}` : `1px solid ${shade(scheme[200], settings.shade_value)}`,
-                    },
                     minWidth: 160,
                     width: { sm: "unset", xs: "100%" },
                     alignSelf: "flex-end",
                   }}
-                  variant="outlined"
+                  variant="contained"
                   startIcon={<SupportIcon />}
+                  disableElevation
                   onClick={() => {
                     os.open(fox.support, {
                       target: "_blank",
@@ -273,17 +270,14 @@ const ModuleViewActivity = () => {
               <Stack direction="row" justifyContent="center" alignItems="center" spacing={1}>
                 {os.isAndroid && (Shell.isMagiskSU() || Shell.isKernelSU()) && hasInstallTools && (
                   <Button
+                    color="secondary"
                     sx={{
-                      color: settings.darkmode ? scheme[900] : scheme[600],
-                      bgcolor: settings.darkmode ? scheme[500] : shade(scheme[600], settings.shade_value),
-                      ":hover": {
-                        bgcolor: settings.darkmode ? scheme[700] : shade(scheme[200], settings.shade_value),
-                      },
                       minWidth: 160,
                       width: { sm: "unset", xs: "100%" },
                       alignSelf: "flex-end",
                     }}
-                    variant="outlined"
+                    variant="contained"
+                    disableElevation
                     onClick={() => {
                       context.pushPage({
                         component: TerminalActivity,
@@ -301,6 +295,7 @@ const ModuleViewActivity = () => {
                 )}
 
                 <Button
+                  color="secondary"
                   disabled={!download}
                   onClick={() => {
                     os.open(download, {
@@ -311,11 +306,6 @@ const ModuleViewActivity = () => {
                     });
                   }}
                   sx={{
-                    color: settings.darkmode ? scheme[900] : scheme[600],
-                    bgcolor: settings.darkmode ? scheme[500] : shade(scheme[600], settings.shade_value),
-                    ":hover": {
-                      bgcolor: settings.darkmode ? scheme[700] : shade(scheme[200], settings.shade_value),
-                    },
                     minWidth: 160,
                     width: { sm: "unset", xs: "100%" },
                     alignSelf: "flex-end",
@@ -609,7 +599,7 @@ const ModuleViewActivity = () => {
             {verified && (
               <ListItem>
                 <ListItemIcon>
-                  <SecurityUpdateGoodIcon />
+                  <VerifiedIcon />
                 </ListItemIcon>
                 <StyledListItemText primary={strings("verified_module")} secondary={strings("verified_module_desc")} />
               </ListItem>
