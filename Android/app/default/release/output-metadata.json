@@ -11,8 +11,8 @@
       "type": "UNIVERSAL",
       "filters": [],
       "attributes": [],
-      "versionCode": 195,
-      "versionName": "1.9.5",
+      "versionCode": 196,
+      "versionName": "1.9.6",
       "outputFile": "app-default-universal-release.apk"
     },
     {
@@ -20,44 +20,13 @@
       "filters": [
         {
           "filterType": "ABI",
-<<<<<<< HEAD
-=======
-<<<<<<< Updated upstream
-          "value": "x86"
-        }
-      ],
-      "attributes": [],
-      "versionCode": 185,
-      "versionName": "1.8.5",
-      "outputFile": "app-default-x86-release.apk"
-=======
           "value": "arm64-v8a"
         }
       ],
       "attributes": [],
-      "versionCode": 195,
-      "versionName": "1.9.5",
+      "versionCode": 196,
+      "versionName": "1.9.6",
       "outputFile": "app-default-arm64-v8a-release.apk"
->>>>>>> Stashed changes
-    },
-    {
-      "type": "ONE_OF_MANY",
-      "filters": [
-        {
-          "filterType": "ABI",
->>>>>>> 7b190e8 (.)
-          "value": "x86_64"
-        }
-      ],
-      "attributes": [],
-<<<<<<< Updated upstream
-      "versionCode": 185,
-      "versionName": "1.8.5",
-=======
-      "versionCode": 195,
-      "versionName": "1.9.5",
->>>>>>> Stashed changes
-      "outputFile": "app-default-x86_64-release.apk"
     },
     {
       "type": "ONE_OF_MANY",
@@ -68,29 +37,9 @@
         }
       ],
       "attributes": [],
-<<<<<<< Updated upstream
-      "versionCode": 185,
-      "versionName": "1.8.5",
-=======
-      "versionCode": 195,
-      "versionName": "1.9.5",
->>>>>>> Stashed changes
+      "versionCode": 196,
+      "versionName": "1.9.6",
       "outputFile": "app-default-armeabi-v7a-release.apk"
-    },
-    {
-      "type": "ONE_OF_MANY",
-      "filters": [
-        {
-          "filterType": "ABI",
-          "value": "arm64-v8a"
-        }
-      ],
-      "attributes": [],
-<<<<<<< Updated upstream
-      "versionCode": 185,
-      "versionName": "1.8.5",
-      "outputFile": "app-default-arm64-v8a-release.apk"
-<<<<<<< HEAD
     },
     {
       "type": "ONE_OF_MANY",
@@ -101,16 +50,22 @@
         }
       ],
       "attributes": [],
-      "versionCode": 185,
-      "versionName": "1.8.5",
+      "versionCode": 196,
+      "versionName": "1.9.6",
       "outputFile": "app-default-x86-release.apk"
-=======
-=======
-      "versionCode": 195,
-      "versionName": "1.9.5",
-      "outputFile": "app-default-x86-release.apk"
->>>>>>> Stashed changes
->>>>>>> 7b190e8 (.)
+    },
+    {
+      "type": "ONE_OF_MANY",
+      "filters": [
+        {
+          "filterType": "ABI",
+          "value": "x86_64"
+        }
+      ],
+      "attributes": [],
+      "versionCode": 196,
+      "versionName": "1.9.6",
+      "outputFile": "app-default-x86_64-release.apk"
     }
   ],
   "elementType": "File"
