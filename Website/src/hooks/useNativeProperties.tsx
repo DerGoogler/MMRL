@@ -29,13 +29,15 @@ function convertToProperType(value: string) {
   }
 }
 
+type KJGHKSJFDHGIUDHGKJHFDG = string | boolean | number;
+
 export function useNativeProperties(
   key: string,
-  initialValue: string | boolean | number
-): [string | boolean | number, SetValue<string | boolean | number>] {
+  initialValue: KJGHKSJFDHGIUDHGKJHFDG
+): [KJGHKSJFDHGIUDHGKJHFDG, SetValue<KJGHKSJFDHGIUDHGKJHFDG>] {
   const log = useLog("useNativeProperties");
 
-  const readValue = useCallback((): string | boolean | number => {
+  const readValue = useCallback((): KJGHKSJFDHGIUDHGKJHFDG => {
     // Prevent build error "window is undefined" but keeps working
 
     if (typeof window === "undefined") {
@@ -43,9 +45,7 @@ export function useNativeProperties(
     }
 
     try {
-      const item = Properties.get(key, "");
-
-      return item ? (parseJSON(item) as string | boolean | number) : initialValue;
+      return parseJSON(Properties.get(key, JSON.stringify(initialValue))) as KJGHKSJFDHGIUDHGKJHFDG;
     } catch (error) {
       log.w(`Error reading nativeStorage key “${key}”: ${error}`);
 
@@ -53,16 +53,16 @@ export function useNativeProperties(
     }
   }, [initialValue, key]);
 
-  const [storedValue, setStoredValue] = useStateCallback<string | boolean | number>(readValue);
+  const [storedValue, setStoredValue] = useStateCallback<KJGHKSJFDHGIUDHGKJHFDG>(readValue);
 
-  const setValue: SetValue<string | boolean | number> = (value, callback) => {
+  const setValue: SetValue<KJGHKSJFDHGIUDHGKJHFDG> = (value, callback) => {
     if (typeof window === "undefined") {
       log.w(`Tried setting nativeProperties key “${key}” even though environment is not a client`);
     }
 
     try {
       const newValue = value instanceof Function ? value(storedValue) : value;
-      Properties.set(key, JSON.stringify(newValue));
+      Properties.set(key, JSON.stringify(JSON.stringify(newValue)));
       setStoredValue(newValue, callback);
     } catch (error) {
       log.w(`Error setting localStorage key “${key}”: ${error}`);
