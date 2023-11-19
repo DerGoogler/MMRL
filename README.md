@@ -6,23 +6,12 @@ Introducing Magisk Module Repo Loader (MMRL) - the ultimate module manager for M
 [![CodeQL](https://github.com/DerGoogler/MMRL/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/DerGoogler/MMRL/actions/workflows/codeql-analysis.yml)
 [![Android CI](https://github.com/DerGoogler/MMRL/actions/workflows/android.yml/badge.svg)](https://github.com/DerGoogler/MMRL/actions/workflows/android.yml)
 
-## Important
-
-We want to implant [Sentry](https://sentry.io) in MMRL to automatically report crashes and errors. We don't want to implant it without asking the community.
-
-> [Sentry](https://sentry.io) can disabled in the settings if the vote success
-
-Here you can vote in this [discussion](https://github.com/DerGoogler/MMRL/discussions/50) ([Telegram Vote](https://t.me/Fox2Code_Chat/34775))
-
-> This vote is expected to end on 19. November, 2023.
-
 ## What MMRL Supports (Roadmap)
 
 - [x] Custom repo loading (Since 1.4.2 mutiple repositories are supported)
 - [x] Translation
 - [x] Dark mode
 - [x] Themes
-- [ ] Favorite lists
 
 ### Android only
 
