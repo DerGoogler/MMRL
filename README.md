@@ -2,9 +2,16 @@
 
 Introducing Magisk Module Repo Loader (MMRL) - the ultimate module manager for Magisk and KernelSU on Android. This highly configurable app allows users to manage modules effortlessly, all while being completely free of ads.
 
-[![Build with Webpack](https://github.com/DerGoogler/MMRL/actions/workflows/webpack.yml/badge.svg?branch=master)](https://github.com/DerGoogler/MMRL/actions/workflows/webpack.yml)
-[![CodeQL](https://github.com/DerGoogler/MMRL/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/DerGoogler/MMRL/actions/workflows/codeql-analysis.yml)
-[![Android CI](https://github.com/DerGoogler/MMRL/actions/workflows/android.yml/badge.svg)](https://github.com/DerGoogler/MMRL/actions/workflows/android.yml)
+[![Build with Webpack](https://img.shields.io/github/actions/workflow/status/DerGoogler/MMRL/.github%2Fworkflows%2Fwebpack.yml?logo=github&label=Build%20with%20Webpack
+)](https://github.com/DerGoogler/MMRL/actions/workflows/webpack.yml)
+[![CodeQL](https://img.shields.io/github/actions/workflow/status/DerGoogler/MMRL/.github%2Fworkflows%2Fcodeql-analysis.yml?logo=github&label=CodeQL
+)](https://github.com/DerGoogler/MMRL/actions/workflows/codeql-analysis.yml)
+[![Android CI](https://img.shields.io/github/actions/workflow/status/DerGoogler/MMRL/.github%2Fworkflows%2Fandroid.yml?logo=github&label=Android%20CI
+)](https://github.com/DerGoogler/MMRL/actions/workflows/android.yml)
+[![Generate APK Debug](https://img.shields.io/github/actions/workflow/status/DerGoogler/MMRL/.github%2Fworkflows%2Fbuild-debug.yml?logo=github&label=Generate%20APK%20Debug)](https://github.com/DerGoogler/MMRL/actions/workflows/build-debug.yml)
+
+![GitHub all releases](https://img.shields.io/github/downloads/DerGoogler/MMRL/total?label=All%20time%20downloads)
+
 
 ## What MMRL Supports (Roadmap)
 
