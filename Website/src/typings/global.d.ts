@@ -175,9 +175,6 @@ declare global {
     fox: Fox;
   }
 
-  /**
-   * If a `update.json` exists then the `update.json` will override existing props.
-   */
   export interface UpdateJson {
     version: string;
     versionCode: number;
