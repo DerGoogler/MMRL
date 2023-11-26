@@ -60,6 +60,18 @@ function ModConfActivity() {
             logoText: KernelSULogo,
             confKey: "KSUCLI",
           },
+          {
+            text: "Magisk Busybox CLI",
+            disabled: !Shell.isMagiskSU(),
+            logoText: MagiskSULogo,
+            confKey: "MSUBSU",
+          },
+          {
+            text: "KernelSU Busybox CLI",
+            disabled: !Shell.isKernelSU(),
+            logoText: KernelSULogo,
+            confKey: "KSUBSU",
+          },
         ],
       },
       {

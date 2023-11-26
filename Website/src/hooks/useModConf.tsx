@@ -7,6 +7,8 @@ export interface ModConf {
   //cli
   MSUCLI: string;
   KSUCLI: string;
+  MSUBSU: string;
+  KSUBSU: string;
 
   // default paths
   ADB: string;
@@ -39,6 +41,8 @@ export const INITIAL_MOD_CONF: ModConf = {
   //cli
   MSUCLI: "/system/bin/magisk",
   KSUCLI: "<ADB>/ksu/bin/ksud",
+  MSUBSU: "<ADB>/magisk/busybox",
+  KSUBSU: "<ADB>/ksu/bin/busybox",
 
   // default paths
   ADB: "/data/adb",
