@@ -63,6 +63,9 @@ jobs:
       - name: Installing dependencies
         run: ./gradlew app:npmInstall
 
+      - name: Building web prod
+        run: ./gradlew app:webProd
+
       - name: Build apk debug
         run: ./gradlew app:assembleDefaultDebug
 

@@ -11,7 +11,7 @@
   "main": "index.tsx",
   "keywords": [],
   "author": "Der_Googler",
-  "license": "ISC",
+  "license": "GPL-3.0",
   "scripts": {
     "start:dev": "webpack-dev-server --open --config webpack.dev.ts",
     "start:prod": "webpack-dev-server --open --config webpack.prod.ts",
