@@ -213,7 +213,6 @@ const DeviceModule = React.memo<Props>((props) => {
                 component: TerminalActivity,
                 key: "TerminalActivity",
                 extra: {
-                  hasUpdateJson: findOnlineModule.hasUpdateJson,
                   exploreInstall: true,
                   path: findOnlineModule.download,
                 },

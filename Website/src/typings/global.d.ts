@@ -158,21 +158,18 @@ declare global {
   export interface Module {
     id: string;
     name: string;
-    /** Can overridden by `update.json` with `version` */
     version?: number;
-    /** Can overridden by `update.json` with `versionCode` */
     versionCode: number;
     author?: string;
     description?: string | ModuleDescription;
     valid: boolean;
     verified: boolean;
     hidden: boolean;
-    /** Can overridden by `update.json` with `zipUrl` */
     download: string;
     last_update: number;
     readme: string;
     stars: number;
-    hasUpdateJson: boolean;
+    updateJson: string;
     about: About;
     mmrl: Mmrl;
     fox: Fox;
@@ -195,7 +192,17 @@ declare global {
     source: string;
   }
 
+  export interface MmrlAuthor {
+    name: string;
+    avatar: string;
+    bio: string;
+    followers: number;
+    verified: boolean;
+  }
+
   export interface Mmrl {
+    author?: MmrlAuthor;
+    contributors?: Array<MmrlAuthor>;
     cover?: string;
     logo?: string;
     screenshots?: Array<string>;
