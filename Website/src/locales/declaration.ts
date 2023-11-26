@@ -1,6 +1,6 @@
 import { AvailableLangs, useStrings } from "@Hooks/useStrings";
-import { de } from "./de";
-import { en } from "./en";
+import de from "./de.json";
+import en from "./en.json";
 import React from "react";
 
 /**
