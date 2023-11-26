@@ -133,6 +133,7 @@ The MMRL has an own hidding system. This means that bad modules can hidden from 
 
 # Credits & Thanks
 
+- [Googlers-Repo/node-native](https://github.com/Googlers-Repo/node-native)
 - [topjohnwu/libsu](https://github.com/topjohnwu/libsu)
 - [Fox2Code/FoxMagiskModuleManager](https://github.com/Fox2Code/FoxMagiskModuleManager)
 - [DerGoogler/dgm-cms](https://github.com/DerGoogler/dgm-cms)
