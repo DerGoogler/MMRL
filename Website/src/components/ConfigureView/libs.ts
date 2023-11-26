@@ -13,6 +13,7 @@ import { useActivity } from "@Hooks/useActivity";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import { SuFile } from "@Native/SuFile";
 import { StringsProvider, useStrings } from "@Hooks/useStrings";
+import { Shell } from "@Native/Shell";
 
 export const libraries = [
   {
@@ -71,6 +72,16 @@ export const libraries = [
       exist: SuFile.exist,
       delete: SuFile.delete,
       deleteRecursive: SuFile.deleteRecursive,
+    },
+  },
+  {
+    name: "@mmrl/shell",
+    __esModule: {
+      getRootManager: Shell.getRootManager,
+      isKernelSU: Shell.isKernelSU,
+      isMagiskSU: Shell.isMagiskSU,
+      VERSION_CODE: Shell.VERSION_CODE,
+      VERSION_NAME: Shell.VERSION_NAME,
     },
   },
 ];
