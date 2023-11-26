@@ -4,13 +4,11 @@ import { useStrings } from "@Hooks/useStrings";
 import { useLowQualityModule } from "@Hooks/useLowQualityModule";
 import { colors, useSettings } from "@Hooks/useSettings";
 import { useFormatDate } from "@Hooks/useFormatDate";
-import { useModuleOptions } from "@Hooks/useModuleOptions";
 import { GestureDetector } from "./onsenui/GestureDetector";
 import { useTheme } from "@Hooks/useTheme";
 import ModuleViewActivity from "@Activitys/ModuleViewActivity";
-import { StyledIconButtonWithText } from "./StyledIconButton";
 import StarBorderRoundedIcon from "@mui/icons-material/StarBorderRounded";
-import { badgeStyle } from "./DeviceModule";
+import VerifiedIcon from "@mui/icons-material/Verified";
 import React from "react";
 import { isLiteralObject } from "@Util/util";
 
@@ -99,7 +97,23 @@ export const ExploreModule = React.memo<Props>((props) => {
               <span>
                 {version} ({versionCode}) /
               </span>
-              <span>{author}</span>
+              {mmrl.author ? (
+                <Box
+                  component="span"
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyItems: "center",
+                    ":hover": {
+                      cursor: "pointer",
+                    },
+                  }}
+                >
+                  {mmrl.author.name} {mmrl.author.verified && <VerifiedIcon sx={{ ml: 0.5, fontSize: "0.8rem" }} />}
+                </Box>
+              ) : (
+                <span>{author}</span>
+              )}
             </Stack>
           </Typography>
           <Typography variant="body1" color="text.secondary">

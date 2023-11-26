@@ -13,6 +13,7 @@ import { useActivity } from "@Hooks/useActivity";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import { SuFile } from "@Native/SuFile";
 import { StringsProvider, useStrings } from "@Hooks/useStrings";
+import { Shell } from "@Native/Shell";
 
 export const libraries = [
   {
@@ -73,6 +74,19 @@ export const libraries = [
       deleteRecursive: SuFile.deleteRecursive,
     },
   },
+  {
+    name: "@mmrl/shell",
+    __esModule: {
+      getRootManager: Shell.getRootManager,
+      isKernelSU: Shell.isKernelSU,
+      isMagiskSU: Shell.isMagiskSU,
+      VERSION_CODE: Shell.VERSION_CODE,
+      VERSION_NAME: Shell.VERSION_NAME,
+      pw_uid: Shell.pw_uid,
+      pw_gid: Shell.pw_gid,
+      pw_name: Shell.pw_name,
+    },
+  },
 ];
 
 const prototypeWhitelist = Sandbox.SAFE_PROTOTYPES;
@@ -80,5 +94,8 @@ prototypeWhitelist.set(Node, new Set());
 
 export const globals = {
   ...Sandbox.SAFE_GLOBALS,
+  JSON: JSON,
+  YAML: require("yaml"),
+  INI: require("ini"),
   Object,
 };

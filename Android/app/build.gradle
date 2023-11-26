@@ -88,9 +88,9 @@ repositories {
 }
 
 dependencies {
-    implementation "androidx.browser:browser:1.6.0"
-    implementation "com.github.topjohnwu.libsu:core:5.0.3"
-    implementation "com.github.topjohnwu.libsu:io:5.0.3"
+    implementation "androidx.browser:browser:1.7.0"
+    implementation "com.github.topjohnwu.libsu:core:5.2.1"
+    implementation "com.github.topjohnwu.libsu:io:5.2.1"
     implementation "androidx.appcompat:appcompat:1.6.1"
     implementation "org.apache.cordova:framework:10.1.1"
     implementation "androidx.webkit:webkit:1.8.0"

@@ -5,13 +5,13 @@
     "application_id": "com.dergoogler.mmrl",
     "min_sdk": 26,
     "target_sdk": 34,
-    "version_name": "1.9.6",
-    "version_code": 196
+    "version_name": "1.10.6",
+    "version_code": 1106
   },
   "main": "index.tsx",
   "keywords": [],
   "author": "Der_Googler",
-  "license": "ISC",
+  "license": "GPL-3.0",
   "scripts": {
     "start:dev": "webpack-dev-server --open --config webpack.dev.ts",
     "start:prod": "webpack-dev-server --open --config webpack.prod.ts",
@@ -84,7 +84,8 @@
     "textarea-markdown-editor": "^1.0.4",
     "underscore": "^1.13.6",
     "uninstall": "^0.0.0",
-    "usehooks-ts": "^2.9.1"
+    "usehooks-ts": "^2.9.1",
+    "yaml": "^2.3.4"
   },
   "devDependencies": {
     "@babel/core": "^7.16.5",

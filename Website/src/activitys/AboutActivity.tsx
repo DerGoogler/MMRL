@@ -18,7 +18,7 @@ import { KernelSULogo } from "@Components/icon/KernelSULogo";
 import { Shell } from "@Native/Shell";
 import DeviceUnknownIcon from "@mui/icons-material/DeviceUnknown";
 import { MagiskSULogo } from "@Components/icon/MagiskSULogo";
-import { SxProps } from "@mui/material";
+import { ListSubheader, SxProps } from "@mui/material";
 import React from "react";
 import { BuildConfig } from "@Native/BuildConfig";
 import { useFormatDate } from "@Hooks/useFormatDate";
@@ -56,16 +56,37 @@ const AboutActivity = () => {
 
   const date = useFormatDate(BuildConfig.BUILD_DATE);
 
-  type ListRender = { primary: string; secondary: string | number };
+  type ListRender = {
+    title: string;
+    content: Array<{ primary: string; secondary: string | number }>;
+  };
 
   const list = React.useMemo<ListRender[]>(
     () => [
-      { primary: "Name", secondary: BuildConfig.APPLICATION_ID },
-      { primary: "Version", secondary: `v${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})` },
-      { primary: "Build date", secondary: date },
-      { primary: "Build type", secondary: BuildConfig.BUILD_TYPE },
-      { primary: "Root manager", secondary: Shell.getRootManager() },
-      { primary: "Root version", secondary: `${Shell.VERSION_NAME().replace(/(.+):(.+)/gim, "$1")} (${Shell.VERSION_CODE()})` },
+      {
+        title: "App",
+        content: [
+          { primary: "Name", secondary: BuildConfig.APPLICATION_ID },
+          { primary: "Version", secondary: `v${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})` },
+          { primary: "Build date", secondary: date },
+          { primary: "Build type", secondary: BuildConfig.BUILD_TYPE },
+        ],
+      },
+      {
+        title: "Root",
+        content: [
+          { primary: "Root manager", secondary: Shell.getRootManager() },
+          { primary: "Root version", secondary: `${Shell.VERSION_NAME().replace(/(.+):(.+)/gim, "$1")} (${Shell.VERSION_CODE()})` },
+        ],
+      },
+      {
+        title: "User",
+        content: [
+          { primary: "Name", secondary: Shell.pw_name() },
+          { primary: "User ID", secondary: Shell.pw_uid() },
+          { primary: "Group ID", secondary: Shell.pw_gid() },
+        ],
+      },
     ],
     []
   );
@@ -73,9 +94,9 @@ const AboutActivity = () => {
   return (
     <Page renderToolbar={renderToolbar}>
       <Page.RelativeContent zeroMargin>
-        <Stack direction="column" justifyContent="flex-start" alignItems="center" spacing={1}>
+        <Stack sx={{ mt: 1 }} direction="column" justifyContent="flex-start" alignItems="center" spacing={1}>
           <Badge
-            sx={{ mt: 1, height: 100, width: 100 }}
+            sx={{ height: 100, width: 100 }}
             overlap="circular"
             anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
             badgeContent={
@@ -115,26 +136,31 @@ const AboutActivity = () => {
             MMRL
           </Typography>
 
-          <List sx={{ width: "100%", bgcolor: "background.paper" }}>
-            {list.map((item) => (
-              <ListItem alignItems="flex-start">
-                <ListItemText
-                  primary={
-                    <>
-                      <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={1}>
-                        <Typography sx={{ display: "inline" }} color={settings.darkmode ? "text.primary" : undefined} component="span">
-                          {item.primary}
-                        </Typography>
-                        <Typography sx={{ display: "inline" }} component="span" variant="body2" color="text.primary">
-                          {item.secondary}
-                        </Typography>
-                      </Stack>
-                    </>
-                  }
-                />
-              </ListItem>
-            ))}
-          </List>
+          {list.map((l) => (
+            <List
+              sx={{ width: "100%", bgcolor: "background.paper" }}
+              subheader={l.title ? <ListSubheader>{l.title}</ListSubheader> : undefined}
+            >
+              {l.content.map((c) => (
+                <ListItem alignItems="flex-start">
+                  <ListItemText
+                    primary={
+                      <>
+                        <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={1}>
+                          <Typography sx={{ display: "inline" }} color={settings.darkmode ? "text.primary" : undefined} component="span">
+                            {c.primary}
+                          </Typography>
+                          <Typography sx={{ display: "inline" }} component="span" variant="body2" color="text.primary">
+                            {c.secondary}
+                          </Typography>
+                        </Stack>
+                      </>
+                    }
+                  />
+                </ListItem>
+              ))}
+            </List>
+          ))}
         </Stack>
       </Page.RelativeContent>
     </Page>

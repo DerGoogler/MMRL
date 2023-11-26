@@ -71,4 +71,13 @@ public class NativeShell {
                         "then echo true; else echo false; fi", "magisk -V", "magisk --path")
                 .to(output).exec().isSuccess();
     }
+
+    @JavascriptInterface
+    public static native int pw_uid();
+
+    @JavascriptInterface
+    public static native int pw_gid();
+
+    @JavascriptInterface
+    public static native String pw_name();
 }

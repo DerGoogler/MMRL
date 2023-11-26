@@ -24,6 +24,9 @@ interface NativeShell {
   isMagiskSU(): boolean;
   getenv(key: string): string;
   setenv(key: string, value: string, override: number): void;
+  pw_uid(): number;
+  pw_gid(): number;
+  pw_name(): string;
 }
 
 interface IShell {
@@ -153,6 +156,42 @@ class ShellClass extends Native<NativeShell> {
   public setenv(key: string, value: string, override = 1): void {
     if (this.isAndroid) {
       this.interface.setenv(key, value, override);
+    }
+  }
+
+  /**
+   * Returns the current user id
+   * @returns {number} User ID
+   */
+  public pw_uid(): number {
+    if (this.isAndroid) {
+      return this.interface.pw_uid();
+    } else {
+      return -1;
+    }
+  }
+
+  /**
+   * Returns the current group id
+   * @returns {number} Group ID
+   */
+  public pw_gid(): number {
+    if (this.isAndroid) {
+      return this.interface.pw_gid();
+    } else {
+      return -1;
+    }
+  }
+
+  /**
+   * Returns the current user name
+   * @returns {string} User name
+   */
+  public pw_name(): string {
+    if (this.isAndroid) {
+      return this.interface.pw_name();
+    } else {
+      return "null";
     }
   }
 }

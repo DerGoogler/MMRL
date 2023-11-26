@@ -44,19 +44,33 @@ import { Disappear } from "react-disappear";
 import Fade from "@mui/material/Fade";
 import TelegramIcon from "@mui/icons-material/Telegram";
 import SecurityUpdateGoodIcon from "@mui/icons-material/SecurityUpdateGood";
-import VerifiedIcon from '@mui/icons-material/Verified';
+import VerifiedIcon from "@mui/icons-material/Verified";
 import { useRepos } from "@Hooks/useRepos";
 import PicturePreviewActivity from "./PicturePreviewActivity";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import TerminalIcon from "@mui/icons-material/Terminal";
 import { isLiteralObject } from "@Util/util";
 import { useLowQualityModule } from "@Hooks/useLowQualityModule";
+import AvatarGroup from "@mui/material/AvatarGroup";
+import ProfileActivty from "./ProfileActivity";
 
 function a11yProps(index: number) {
   return {
     id: `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
   };
+}
+
+function pickFourElements(jsonArray: Array<MmrlAuthor>): Array<MmrlAuthor> {
+  if (jsonArray.length <= 4) {
+    // Return the array as is if it contains 4 or fewer elements
+    return jsonArray;
+  } else {
+    // Shuffle the array to randomize the selection
+    const shuffledArray = jsonArray.sort(() => Math.random() - 0.5);
+    // Return the first four elements of the shuffled array
+    return shuffledArray.slice(0, 4);
+  }
 }
 
 interface TabPanelProps {
@@ -83,7 +97,7 @@ const ModuleViewActivity = () => {
   const { context, extra } = useActivity<Module>();
 
   const log = useLog("ModuleViewActivity");
-  const { id, name, version, versionCode, description, author, readme, about, download, mmrl, fox, last_update, hasUpdateJson, verified } =
+  const { id, name, version, versionCode, description, author, readme, about, download, mmrl, fox, last_update, updateJson, verified } =
     extra;
 
   const categories = useCategories(mmrl.categories);
@@ -222,9 +236,34 @@ const ModuleViewActivity = () => {
               <Disappear as={Typography} variant="body1" fontWeight="bold" onDisappear={(visible) => setIsNameVisible(!visible)}>
                 {name}
               </Disappear>
-              <Typography variant="body2" color="text.secondary">
-                {author}
-              </Typography>
+
+              {mmrl.author ? (
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyItems: "center",
+                    ":hover": {
+                      cursor: "pointer",
+                    },
+                  }}
+                  onClick={() => {
+                    context.pushPage({
+                      component: ProfileActivty,
+                      key: mmrl.author?.name + "_ProfileActivty",
+                      extra: mmrl.author,
+                    });
+                  }}
+                >
+                  {mmrl.author.name} {mmrl.author.verified && <VerifiedIcon sx={{ ml: 0.5, fontSize: "0.8rem" }} />}
+                </Typography>
+              ) : (
+                <Typography variant="body2" color="text.secondary">
+                  {author}
+                </Typography>
+              )}
             </Box>
           </Box>
 
@@ -234,41 +273,56 @@ const ModuleViewActivity = () => {
               display: "flex",
               width: "100%",
             }}
-            direction={{ xs: "column", sm: "row" }}
-            justifyContent="space-between"
+            direction="column"
+            justifyContent="center"
+            alignItems="flex-start"
             spacing={1}
           >
-            <Typography sx={{ display: "flex", justifyContent: "flex-start", alignItems: "center" }} color="text.secondary">
-              {version} ({versionCode})
-            </Typography>
+            {mmrl.author && mmrl.contributors && (
+              <Box>
+                <Typography color="text.secondary" variant="subtitle1">
+                  Contributors
+                </Typography>
+                <AvatarGroup max={4} total={mmrl.contributors.length}>
+                  {pickFourElements(mmrl.contributors).map((contributor) => (
+                    <Avatar
+                      alt={contributor.name}
+                      src={contributor.avatar}
+                      sx={{
+                        ":hover": {
+                          cursor: "pointer",
+                        },
+                      }}
+                      onClick={() => {
+                        context.pushPage({
+                          component: ProfileActivty,
+                          key: contributor.name + "_ProfileActivty",
+                          extra: contributor,
+                        });
+                      }}
+                    />
+                  ))}
+                </AvatarGroup>
+              </Box>
+            )}
 
-            <Stack direction={{ xs: "column", sm: "row" }} spacing={1}>
-              {fox.support && (
-                <Button
-                  color="secondary"
-                  sx={{
-                    minWidth: 160,
-                    width: { sm: "unset", xs: "100%" },
-                    alignSelf: "flex-end",
-                  }}
-                  variant="contained"
-                  startIcon={<SupportIcon />}
-                  disableElevation
-                  onClick={() => {
-                    os.open(fox.support, {
-                      target: "_blank",
-                      features: {
-                        color: theme.palette.primary.main,
-                      },
-                    });
-                  }}
-                >
-                  {supportText}
-                </Button>
-              )}
+            {/* DL SECTION */}
 
-              <Stack direction="row" justifyContent="center" alignItems="center" spacing={1}>
-                {os.isAndroid && (Shell.isMagiskSU() || Shell.isKernelSU()) && hasInstallTools && (
+            <Stack
+              sx={{
+                display: "flex",
+                width: "100%",
+              }}
+              direction={{ xs: "column", sm: "row" }}
+              justifyContent="space-between"
+              spacing={1}
+            >
+              <Typography sx={{ display: "flex", justifyContent: "flex-start", alignItems: "center" }} color="text.secondary">
+                {version} ({versionCode})
+              </Typography>
+
+              <Stack direction={{ xs: "column", sm: "row" }} spacing={1}>
+                {fox.support && (
                   <Button
                     color="secondary"
                     sx={{
@@ -277,44 +331,69 @@ const ModuleViewActivity = () => {
                       alignSelf: "flex-end",
                     }}
                     variant="contained"
+                    startIcon={<SupportIcon />}
                     disableElevation
                     onClick={() => {
-                      context.pushPage({
-                        component: TerminalActivity,
-                        key: "TerminalActivity",
-                        extra: {
-                          hasUpdateJson: hasUpdateJson,
-                          exploreInstall: true,
-                          path: download,
+                      os.open(fox.support, {
+                        target: "_blank",
+                        features: {
+                          color: theme.palette.primary.main,
                         },
                       });
                     }}
                   >
-                    {strings("install")}
+                    {supportText}
                   </Button>
                 )}
 
-                <Button
-                  color="secondary"
-                  disabled={!download}
-                  onClick={() => {
-                    os.open(download, {
-                      target: "_blank",
-                      features: {
-                        color: theme.palette.primary.main,
-                      },
-                    });
-                  }}
-                  sx={{
-                    minWidth: 160,
-                    width: { sm: "unset", xs: "100%" },
-                    alignSelf: "flex-end",
-                  }}
-                  variant="contained"
-                  disableElevation
-                >
-                  {strings("download")}
-                </Button>
+                <Stack direction="row" justifyContent="center" alignItems="center" spacing={1}>
+                  {os.isAndroid && (Shell.isMagiskSU() || Shell.isKernelSU()) && hasInstallTools && (
+                    <Button
+                      color="secondary"
+                      sx={{
+                        minWidth: 160,
+                        width: { sm: "unset", xs: "100%" },
+                        alignSelf: "flex-end",
+                      }}
+                      variant="contained"
+                      disableElevation
+                      onClick={() => {
+                        context.pushPage({
+                          component: TerminalActivity,
+                          key: "TerminalActivity",
+                          extra: {
+                            exploreInstall: true,
+                            path: download,
+                          },
+                        });
+                      }}
+                    >
+                      {strings("install")}
+                    </Button>
+                  )}
+
+                  <Button
+                    color="secondary"
+                    disabled={!download}
+                    onClick={() => {
+                      os.open(download, {
+                        target: "_blank",
+                        features: {
+                          color: theme.palette.primary.main,
+                        },
+                      });
+                    }}
+                    sx={{
+                      minWidth: 160,
+                      width: { sm: "unset", xs: "100%" },
+                      alignSelf: "flex-end",
+                    }}
+                    variant="contained"
+                    disableElevation
+                  >
+                    {strings("download")}
+                  </Button>
+                </Stack>
               </Stack>
             </Stack>
           </Stack>
@@ -605,7 +684,7 @@ const ModuleViewActivity = () => {
               </ListItem>
             )}
 
-            {hasUpdateJson && (
+            {updateJson && (
               <ListItem>
                 <ListItemIcon>
                   <SecurityUpdateGoodIcon />
