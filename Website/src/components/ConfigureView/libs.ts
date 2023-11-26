@@ -94,5 +94,8 @@ prototypeWhitelist.set(Node, new Set());
 
 export const globals = {
   ...Sandbox.SAFE_GLOBALS,
+  JSON: JSON,
+  YAML: require("yaml"),
+  INI: require("ini"),
   Object,
 };
