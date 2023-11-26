@@ -132,7 +132,7 @@ const ProfileActivty = React.memo(() => {
 
           {modules
             .filter((m) => m.mmrl.author?.name.includes(name) || m.mmrl.contributors?.find((con) => name == con.name))
-            .map((module, i) => (
+            .map((module) => (
               <ExploreModule moduleProps={module} disableLowQuality disableCovers />
             ))}
         </Card>
