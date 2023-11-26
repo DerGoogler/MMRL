@@ -2,19 +2,16 @@
 
 Introducing Magisk Module Repo Loader (MMRL) - the ultimate module manager for Magisk and KernelSU on Android. This highly configurable app allows users to manage modules effortlessly, all while being completely free of ads.
 
-[![Build with Webpack](https://github.com/DerGoogler/MMRL/actions/workflows/webpack.yml/badge.svg?branch=master)](https://github.com/DerGoogler/MMRL/actions/workflows/webpack.yml)
-[![CodeQL](https://github.com/DerGoogler/MMRL/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/DerGoogler/MMRL/actions/workflows/codeql-analysis.yml)
-[![Android CI](https://github.com/DerGoogler/MMRL/actions/workflows/android.yml/badge.svg)](https://github.com/DerGoogler/MMRL/actions/workflows/android.yml)
+[![Build with Webpack](https://img.shields.io/github/actions/workflow/status/DerGoogler/MMRL/.github%2Fworkflows%2Fwebpack.yml?logo=github&label=Build%20with%20Webpack
+)](https://github.com/DerGoogler/MMRL/actions/workflows/webpack.yml)
+[![CodeQL](https://img.shields.io/github/actions/workflow/status/DerGoogler/MMRL/.github%2Fworkflows%2Fcodeql-analysis.yml?logo=github&label=CodeQL
+)](https://github.com/DerGoogler/MMRL/actions/workflows/codeql-analysis.yml)
+[![Android CI](https://img.shields.io/github/actions/workflow/status/DerGoogler/MMRL/.github%2Fworkflows%2Fandroid.yml?logo=github&label=Android%20CI
+)](https://github.com/DerGoogler/MMRL/actions/workflows/android.yml)
+[![Generate APK Debug](https://img.shields.io/github/actions/workflow/status/DerGoogler/MMRL/.github%2Fworkflows%2Fbuild-debug.yml?logo=github&label=Generate%20APK%20Debug)](https://github.com/DerGoogler/MMRL/actions/workflows/build-debug.yml)
 
-## Important
+![GitHub all releases](https://img.shields.io/github/downloads/DerGoogler/MMRL/total?label=All%20time%20downloads)
 
-We want to implant [Sentry](https://sentry.io) in MMRL to automatically report crashes and errors. We don't want to implant it without asking the community.
-
-> [Sentry](https://sentry.io) can disabled in the settings if the vote success
-
-Here you can vote in this [discussion](https://github.com/DerGoogler/MMRL/discussions/50) ([Telegram Vote](https://t.me/Fox2Code_Chat/34775))
-
-> This vote is expected to end on 19. November, 2023.
 
 ## What MMRL Supports (Roadmap)
 
@@ -22,7 +19,6 @@ Here you can vote in this [discussion](https://github.com/DerGoogler/MMRL/discus
 - [x] Translation
 - [x] Dark mode
 - [x] Themes
-- [ ] Favorite lists
 
 ### Android only
 
@@ -67,16 +63,6 @@ versionCode=<int>
 author=<string>
 description=<string>
 
-# MMRL supported properties
-# mmrlConfig=<file> config file get automatically detected
-mmrlNoComments=<boolean>
-mmrlCover=<url>
-mmrlAuthor=<uid>
-mmrlLogo=<url>
-mmrlScreenshots=<url>,<url>,<url> ...
-# Developers that points "Gaming" won't have a change to get verified. Magisk isn't made for gaming purposes.
-mmrlCategories=<string>,<string>,<string> ...
-
 # Fox's Mmm supported properties
 minApi=<int>
 maxApi=<int>
@@ -88,48 +74,6 @@ config=<package>
 changeBoot=<boolean>
 mmtReborn=<boolean>
 ```
-
-## Supported `module.json` syntax
-
-> **Note** > `prop_url` should always an string otherwise MMRL can't manipulate it.
-
-```json
-{
-  "last_update": 1658146279000,
-  "name": "Googlers Magisk Repo",
-  "website": "https://dergoogler.com/repo",
-  "support": "https://t.me/The_Googler",
-  "donate": null,
-  "submitModule": null,
-  "modules": [
-    {
-      "id": "samsung_a70_raven_prop_overlay",
-      "last_update": 1654181061000,
-      "prop_url": "https://.../module.prop",
-      "zip_url": "https://.../master.zip",
-      "notes_url": "https://.../README.md"
-    }
-  ]
-}
-```
-
-## FAQ
-
-### Why does some description reports `404: Not Found`?
-
-Always create an `README.md` not `readme.md` or something.
-
-### Module props like `changeBoot` or something are not displayed?
-
-The module doesn't have this prop.
-
-### Why does my module aren't displayed?
-
-The MMRL has an own hidding system. This means that bad modules can hidden from an admin.
-
-### How to get an verified module?
-
-**Updated soon**
 
 # Credits & Thanks
 
