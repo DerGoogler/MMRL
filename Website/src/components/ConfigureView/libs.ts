@@ -82,6 +82,9 @@ export const libraries = [
       isMagiskSU: Shell.isMagiskSU,
       VERSION_CODE: Shell.VERSION_CODE,
       VERSION_NAME: Shell.VERSION_NAME,
+      pw_uid: Shell.pw_uid,
+      pw_gid: Shell.pw_gid,
+      pw_name: Shell.pw_name,
     },
   },
 ];
