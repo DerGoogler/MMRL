@@ -5,8 +5,8 @@
     "application_id": "com.dergoogler.mmrl",
     "min_sdk": 26,
     "target_sdk": 34,
-    "version_name": "1.9.6",
-    "version_code": 196
+    "version_name": "1.10.6",
+    "version_code": 1106
   },
   "main": "index.tsx",
   "keywords": [],
