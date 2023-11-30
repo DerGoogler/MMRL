@@ -12,6 +12,10 @@ Introducing Magisk Module Repo Loader (MMRL) - the ultimate module manager for M
 
 ![GitHub all releases](https://img.shields.io/github/downloads/DerGoogler/MMRL/total?label=All%20time%20downloads)
 
+## Requirements
+
+- Android 8.0 or later
+- [MMRL Install Tools](https://github.com/Googlers-Repo/mmrl_install_tools)
 
 ## What MMRL Supports (Roadmap)
 
