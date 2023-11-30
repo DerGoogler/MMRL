@@ -79,6 +79,7 @@ Java_com_dergoogler_core_NativeShell_isMagiskSU(JNIEnv *env, jclass clazz) {
     };
     static char *paths[] = {
             "/system/bin/magisk",
+            "/sbin/magisk",
             "/data/adb/magisk.db",
             "/data/adb/magisk/busybox",
             "/data/adb/magisk/magisk64",
