@@ -29,18 +29,15 @@ import { useNetwork } from "@Hooks/useNetwork";
 const recommended_repos = [
   {
     name: "Magisk Modules Alternative Repository",
-    module_count: 100,
-    link: "https://api.mmrl.dergoogler.com/json/mmar.json",
+    link: "https://gr.dergoogler.com/magisk/mmar.json",
   },
   {
     name: "Googlers Magisk Repo",
-    module_count: 5,
-    link: "https://api.mmrl.dergoogler.com/json/gmr.json",
+    link: "https://gr.dergoogler.com/magisk/gmr.json",
   },
   {
     name: "Magisk Modules Repo (Official)",
-    module_count: 100,
-    link: "https://api.mmrl.dergoogler.com/json/mmr.json",
+    link: "https://gr.dergoogler.com/magisk/mmr.json",
   },
 ];
 
@@ -55,7 +52,7 @@ const MemoizdRecommendedRepos = React.memo<{ filteredRepos: StoredRepo[] }>((pro
         }
       >
         {recommended_repos.map((repo, index) => (
-          <RecommendedRepo key={repo.name + "_" + index} name={repo.name} moduleCount={repo.module_count} link={repo.link} />
+          <RecommendedRepo key={repo.name + "_" + index} name={repo.name} link={repo.link} />
         ))}
       </List>
     </>

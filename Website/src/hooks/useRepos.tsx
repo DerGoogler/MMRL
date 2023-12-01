@@ -1,8 +1,6 @@
 import React from "react";
 import { SetValue, useNativeStorage } from "./useNativeStorage";
-import axios from "axios";
 import { link } from "googlers-tools";
-import localForage from "localforage";
 import _ from "underscore";
 import { useSettings } from "./useSettings";
 import { os } from "@Native/Os";
@@ -17,14 +15,7 @@ export interface RepoContextActions {
 interface RepoContextInterface {
   repos: StoredRepo[];
   setRepos: SetValue<StoredRepo[]>;
-  modulesLoading: boolean | undefined;
   modules: Module[];
-  moduleOptions: {
-    [name: string]: {
-      verified?: boolean;
-      hidden?: boolean;
-    };
-  }[];
   actions: RepoContextActions;
 }
 
@@ -32,8 +23,6 @@ export const RepoContext = React.createContext<RepoContextInterface>({
   repos: [],
   setRepos: () => {},
   modules: [],
-  modulesLoading: undefined,
-  moduleOptions: [],
   actions: {
     addRepo: (data: AddRepoData) => {},
     removeRepo: (data: RemoveRepoData) => {},
@@ -60,7 +49,7 @@ type SetRepoStateData = {
 export const RepoProvider = (props: React.PropsWithChildren) => {
   const TAG = "RepoProvider";
   const log = useLog(TAG);
-  const [repos, setRepos] = useNativeStorage<StoredRepo[]>("repos", [
+  const [repos, setRepos] = useNativeStorage<StoredRepo[]>("repos_v2", [
     {
       name: "Magisk Modules Alt Repo (pre-configured)",
       website: "",
@@ -68,21 +57,12 @@ export const RepoProvider = (props: React.PropsWithChildren) => {
       donate: "",
       submitModule: "",
       last_update: 1690995729000,
-      modules: "https://api.mmrl.dergoogler.com/json/mmar.json",
+      modules: "https://gr.dergoogler.com/magisk/mmar.json",
     },
   ]);
 
   const { settings, setSettings } = useSettings();
   const [modules, setModules] = React.useState<Module[]>([]);
-
-  const [modulesLoading, setModulesLoading] = React.useState<boolean | undefined>();
-  const [moduleOptions, setModuleOptions] = React.useState<any[]>([]);
-
-  React.useEffect(() => {
-    axios.get("https://raw.githubusercontent.com/Googlers-Repo/googlers-repo.github.io/master/moduleOptions.json").then((response) => {
-      setModuleOptions(response.data);
-    });
-  }, []);
 
   const addRepo = (data: AddRepoData) => {
     if (!repos.some((repo) => repo.modules === data.url)) {
@@ -167,7 +147,7 @@ export const RepoProvider = (props: React.PropsWithChildren) => {
   }, [repos, settings]);
 
   const contextValue = React.useMemo(
-    () => ({ repos, setRepos, modulesLoading, modules, moduleOptions, actions: { addRepo, removeRepo, setRepoEnabled } }),
+    () => ({ repos, setRepos, modules, actions: { addRepo, removeRepo, setRepoEnabled } }),
     [repos, modules, settings]
   );
 
