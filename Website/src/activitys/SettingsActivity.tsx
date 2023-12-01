@@ -117,11 +117,6 @@ function SettingsActivity() {
               }
             >
               <ListItem>
-                <StyledListItemText primary={strings("enable_install")} secondary={strings("enable_install_subtitle")} />
-                <Android12Switch edge="end" disabled onChange={(e: any) => {}} checked={false} />
-              </ListItem>
-
-              <ListItem>
                 <StyledListItemText primary={strings("scroll_to_bottom")} secondary={strings("scroll_to_bottom_subtitle")} />
                 <Android12Switch
                   edge="end"
