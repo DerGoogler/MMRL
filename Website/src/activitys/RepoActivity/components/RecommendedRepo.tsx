@@ -11,7 +11,6 @@ import { StyledListItemText } from "@Components/StyledListItemText";
 
 interface RecommendedRepoProps {
   name: string;
-  moduleCount: number;
   link: string;
 }
 
@@ -38,7 +37,7 @@ export const RecommendedRepo = (props: RecommendedRepoProps) => {
         </IconButton>
       }
     >
-      <StyledListItemText primary={props.name} secondary={`More than ${props.moduleCount.toString()}+ modules`} />
+      <StyledListItemText primary={props.name} secondary={props.link} />
     </ListItem>
   );
 };

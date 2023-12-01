@@ -60,7 +60,7 @@ type SetRepoStateData = {
 export const RepoProvider = (props: React.PropsWithChildren) => {
   const TAG = "RepoProvider";
   const log = useLog(TAG);
-  const [repos, setRepos] = useNativeStorage<StoredRepo[]>("repos", [
+  const [repos, setRepos] = useNativeStorage<StoredRepo[]>("repos_v2", [
     {
       name: "Magisk Modules Alt Repo (pre-configured)",
       website: "",
@@ -68,7 +68,7 @@ export const RepoProvider = (props: React.PropsWithChildren) => {
       donate: "",
       submitModule: "",
       last_update: 1690995729000,
-      modules: "https://api.mmrl.dergoogler.com/json/mmar.json",
+      modules: "https://gr.dergoogler.com/magisk/mmar.json",
     },
   ]);
 
