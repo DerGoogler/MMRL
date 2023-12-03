@@ -36,7 +36,7 @@ export function useSupportIconForUrl(url: string | undefined) {
       SupportIcon: SupportIcon,
       supportText: "GitLab",
     };
-  } else if (url.startsWith("https://forum.xda-developers.com/")) {
+  } else if (url.startsWith("https://xdaforums.com/") || url.startsWith("https://forum.xda-developers.com/")) {
     icon.current = {
       SupportIcon: SupportIcon,
       supportText: "XDA Developers",
