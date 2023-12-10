@@ -103,7 +103,7 @@
     "@types/react-syntax-highlighter": "^15.5.2",
     "@types/uglifyjs-webpack-plugin": "^1.1.2",
     "@types/underscore": "^1.11.5",
-    "@types/webpack": "^5.28.0",
+    "@types/webpack": "^5.28.5",
     "babel-loader": "^8.2.3",
     "commander": "^11.0.0",
     "css-loader": "^6.8.1",
@@ -125,7 +125,7 @@
     "typescript": "^5.2.2",
     "url-loader": "^4.1.1",
     "vscode": "^1.1.37",
-    "webpack": "^5.73.0",
+    "webpack": "^5.89.0",
     "webpack-cli": "^4.9.1",
     "webpack-dev-server": "^4.15.0",
     "yaml-loader": "^0.8.0"
