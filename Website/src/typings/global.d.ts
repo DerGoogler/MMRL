@@ -1,3 +1,4 @@
+import { AlertColor } from "@mui/material/Alert";
 import { AvailableStrs, strs } from "./../locales/declaration";
 
 export {};
@@ -205,6 +206,10 @@ declare global {
     screenshots?: Array<string>;
     categories?: Array<string>;
     require?: Array<string>;
+    developerNote?: {
+      severity?: AlertColor;
+      note?: string;
+    };
   }
 
   export interface Fox {

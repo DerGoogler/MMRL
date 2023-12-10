@@ -407,6 +407,12 @@ const ModuleViewActivity = () => {
       <Page.RelativeContent>
         <CustomTabPanel value={value} index={0}>
           <Stack direction="column" justifyContent="center" alignItems="flex-start" spacing={1}>
+            {mmrl.developerNote && (
+              <Alert severity={mmrl.developerNote.severity}>
+                <AlertTitle>Developer Note</AlertTitle>
+                {mmrl.developerNote.note}
+              </Alert>
+            )}
             {fox.minApi && os.sdk <= fox.minApi && (
               <Alert
                 sx={{
