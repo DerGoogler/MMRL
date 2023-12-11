@@ -46,7 +46,7 @@
     "ajv": "^8.12.0",
     "ansi-to-react": "^6.1.6",
     "axios": "^1.6.2",
-    "default-composer": "^0.4.0",
+    "default-composer": "^0.6.0",
     "eruda": "^3.0.0",
     "flatlist-react": "^1.5.14",
     "framer-motion": "^10.16.4",
