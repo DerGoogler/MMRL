@@ -102,7 +102,7 @@
     "@types/react-onsenui": "^2.9.17",
     "@types/react-syntax-highlighter": "^15.5.2",
     "@types/uglifyjs-webpack-plugin": "^1.1.2",
-    "@types/underscore": "^1.11.5",
+    "@types/underscore": "^1.11.15",
     "@types/webpack": "^5.28.5",
     "babel-loader": "^8.2.3",
     "commander": "^11.0.0",
