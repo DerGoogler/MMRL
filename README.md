@@ -1,30 +1,41 @@
-# Magisk Modules Repo Loader
+<p align="center">
+  <img width="550" height="auto" src="https://mmrl.dergoogler.com/assets/MMRL-Cover.png">
+  <br/>Your highly customizable module manager</b>
+</p>
+
+<p align="center">
+  <a href="https://play.google.com/store/apps/details?id=com.dergoogler.mmrl"><img height="75px" alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png"></a>
+  <a href="https://github.com/DerGoogler/MMRL/releases"><img height="75px" alt="Get it on GitHub" src="https://dergoogler.com/bl-content/uploads/pages/e5f2cff5950bf12b7ecdcc9a54d0a348/get-it-on-github.png"></a>
+</p>
+
+<p align="center">
+  <a href=""><img src="https://img.shields.io/github/actions/workflow/status/DerGoogler/MMRL/.github%2Fworkflows%2Fwebpack.yml?logo=github&amp;label=Build%20with%20Webpack" alt="Build with Webpack"></a>
+  <a href="https://github.com/DerGoogler/MMRL/actions/workflows/codeql-analysis.yml"><img src="https://img.shields.io/github/actions/workflow/status/DerGoogler/MMRL/.github%2Fworkflows%2Fcodeql-analysis.yml?logo=github&amp;label=CodeQL" alt="CodeQL"></a>
+  </br>
+  <a href="https://github.com/DerGoogler/MMRL/actions/workflows/android.yml"><img src="https://img.shields.io/github/actions/workflow/status/DerGoogler/MMRL/.github%2Fworkflows%2Fandroid.yml?logo=github&amp;label=Android%20CI" alt="Android CI"></a>
+  <a href="https://github.com/DerGoogler/MMRL/actions/workflows/build-debug.yml"><img src="https://img.shields.io/github/actions/workflow/status/DerGoogler/MMRL/.github%2Fworkflows%2Fbuild-debug.yml?logo=github&amp;label=Generate%20APK%20Debug" alt="Generate APK Debug"></a>
+  </br>
+  <img src="https://img.shields.io/github/downloads/DerGoogler/MMRL/total?label=All%20time%20downloads" alt="GitHub all releases">
+</p>
+
+
+# Summary
 
 Introducing Magisk Module Repo Loader (MMRL) - the ultimate module manager for Magisk and KernelSU on Android. This highly configurable app allows users to manage modules effortlessly, all while being completely free of ads.
 
-[![Build with Webpack](https://img.shields.io/github/actions/workflow/status/DerGoogler/MMRL/.github%2Fworkflows%2Fwebpack.yml?logo=github&label=Build%20with%20Webpack
-)](https://github.com/DerGoogler/MMRL/actions/workflows/webpack.yml)
-[![CodeQL](https://img.shields.io/github/actions/workflow/status/DerGoogler/MMRL/.github%2Fworkflows%2Fcodeql-analysis.yml?logo=github&label=CodeQL
-)](https://github.com/DerGoogler/MMRL/actions/workflows/codeql-analysis.yml)
-[![Android CI](https://img.shields.io/github/actions/workflow/status/DerGoogler/MMRL/.github%2Fworkflows%2Fandroid.yml?logo=github&label=Android%20CI
-)](https://github.com/DerGoogler/MMRL/actions/workflows/android.yml)
-[![Generate APK Debug](https://img.shields.io/github/actions/workflow/status/DerGoogler/MMRL/.github%2Fworkflows%2Fbuild-debug.yml?logo=github&label=Generate%20APK%20Debug)](https://github.com/DerGoogler/MMRL/actions/workflows/build-debug.yml)
-
-![GitHub all releases](https://img.shields.io/github/downloads/DerGoogler/MMRL/total?label=All%20time%20downloads)
-
-## Requirements
+# Requirements
 
 - Android 8.0 or later
 - [MMRL Install Tools](https://github.com/Googlers-Repo/mmrl_install_tools)
 
-## What MMRL Supports (Roadmap)
+# What MMRL Supports (Roadmap)
 
 - [x] Custom repo loading (Since 1.4.2 mutiple repositories are supported)
 - [x] Translation
 - [x] Dark mode
 - [x] Themes
 
-### Android only
+## Android only
 
 - [x] View installed modules
 - [x] Remove installed modules
@@ -33,30 +44,23 @@ Introducing Magisk Module Repo Loader (MMRL) - the ultimate module manager for M
 - [x] Module install
 - [x] Monet theming
 
-#### Root Manager (Android)
+### Root Manager (Android)
 
 - [x] Magisk
 - [x] Magisk Delta
 - [x] KernelSU
 
-## Retive configs
+# Screenshots
 
-```shell
-function getconf {
-  /system/bin/getprop "$1" "$2" | sed 's/^"\(.*\)"$/\1/'
-}
-```
+<p float="left">
+  <img src="https://play-lh.googleusercontent.com/wqup-XYEono-6Uun3t0wjqTunR4P46d92mYzJEYU567MN-Ja0UBT3zFi8nQBtwnfcg=w5120-h2880-rw"  width="240" height="auto">
+  <img src="https://play-lh.googleusercontent.com/aGpvDDcFNWKvJ-f1kz_NsaUkzczVQXOlL2ia3IWG9CK3ghMJQHXg4ehbOrxUh26Ptg=w5120-h2880-rw" width="240" height="auto">
+  <img src="https://play-lh.googleusercontent.com/sIIYd-6yG2VOE9u1IjFK7ztE7dy8odOV_r1_bIl-7UIRSZMypZl40mkl7cwTyJAbE_U=w5120-h2880-rw" width="240" height="auto">
+  <img src="https://play-lh.googleusercontent.com/EFUFow1bVx1HxVFIVbUHAk0oy5xz_kfjZLeuKO5Y-VAcQFNCQMNezmBUuCAHlWAJ44g=w5120-h2880-rw" width="240" height="auto">
+  <img src="https://play-lh.googleusercontent.com/5blSZWEGs_o3w-_NL7qvxaVTrrN4dKjVKn-gr3eZZJT3070gfzie3Zm7axHh2igHW_KA=w5120-h2880-rw" width="240" height="auto">
+</p>
 
-## Screenshots
-
-<table>
-<tr>
-	<td><img src="assets/screen1.jpg" width="250" />
-	<td><img src="assets/screen2.jpg" width="250"/>
-<tr>
-</table>
-
-## Supported `module.prop` properties
+# Supported `module.prop` properties
 
 ```properties
 # Magisk supported properties
