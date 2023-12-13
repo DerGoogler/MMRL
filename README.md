@@ -27,6 +27,7 @@ Introducing Magisk Module Repo Loader (MMRL) - the ultimate module manager for M
 
 - Android 8.0 or later
 - [MMRL Install Tools](https://github.com/Googlers-Repo/mmrl_install_tools)
+- 4-5 GB RAM (lower may possible)
 
 # What MMRL Supports (Roadmap)
 
