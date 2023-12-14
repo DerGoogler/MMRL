@@ -3,7 +3,6 @@ import { Alert, Box, Divider, List, ListSubheader } from "@mui/material";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import { Page } from "@Components/onsenui/Page";
 import { useActivity } from "@Hooks/useActivity";
-import { useSettings } from "@Hooks/useSettings";
 import { ModConf, useModConf } from "@Hooks/useModConf";
 import { StyledListItemText } from "@Components/StyledListItemText";
 import { Shell } from "@Native/Shell";
@@ -55,23 +54,35 @@ function ModConfActivity() {
             confKey: "MSUCLI",
           },
           {
-            text: "KernelSU install CLI",
-            disabled: !Shell.isKernelSU(),
-            logoText: KernelSULogo,
-            confKey: "KSUCLI",
-          },
-          {
             text: "Magisk Busybox CLI",
             disabled: !Shell.isMagiskSU(),
             logoText: MagiskSULogo,
             confKey: "MSUBSU",
           },
           {
+            text: "Magisk ResetProp CLI",
+            disabled: !Shell.isMagiskSU(),
+            logoText: MagiskSULogo,
+            confKey: "MSURSP",
+          },
+          {
+            text: "KernelSU install CLI",
+            disabled: !Shell.isKernelSU(),
+            logoText: KernelSULogo,
+            confKey: "KSUCLI",
+          },
+          {
             text: "KernelSU Busybox CLI",
             disabled: !Shell.isKernelSU(),
             logoText: KernelSULogo,
             confKey: "KSUBSU",
-          },
+          }, 
+          {
+            text: "KernelSU ResetProp CLI",
+            disabled: !Shell.isKernelSU(),
+            logoText: KernelSULogo,
+            confKey: "KSURSP",
+          },         
         ],
       },
       {

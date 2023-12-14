@@ -6,9 +6,11 @@ import { SetStateAction } from "./useStateCallback";
 export interface ModConf {
   //cli
   MSUCLI: string;
-  KSUCLI: string;
   MSUBSU: string;
+  MSURSP: string
+  KSUCLI: string;
   KSUBSU: string;
+  KSURSP: string
 
   // default paths
   ADB: string;
@@ -40,9 +42,11 @@ export interface ModConf {
 export const INITIAL_MOD_CONF: ModConf = {
   //cli
   MSUCLI: "/system/bin/magisk",
-  KSUCLI: "<ADB>/ksu/bin/ksud",
   MSUBSU: "<ADB>/magisk/busybox",
+  MSURSP: "/system/bin/resetprop",
+  KSUCLI: "<ADB>/ksu/bin/ksud",
   KSUBSU: "<ADB>/ksu/bin/busybox",
+  KSURSP: "<ADB>/ksu/bin/resetprop",
 
   // default paths
   ADB: "/data/adb",
@@ -105,7 +109,7 @@ export function formatString(template: string, object: object): string {
 }
 
 export const ModConfProvider = (props: React.PropsWithChildren) => {
-  const [modConf, setModConf] = useNativeStorage("modconf_v2", INITIAL_MOD_CONF);
+  const [modConf, setModConf] = useNativeStorage("modconf_v3", INITIAL_MOD_CONF);
 
   // Test purposes
   // React.useEffect(() => {

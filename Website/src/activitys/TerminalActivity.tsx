@@ -14,7 +14,7 @@ import { useModConf } from "@Hooks/useModConf";
 const TerminalActivity = () => {
   const { context, extra } = useActivity<any>();
   const { settings } = useSettings();
-  const { modConf } = useModConf();
+  const { modConf, _modConf } = useModConf();
   const [active, setActive] = React.useState<bool>(true);
 
   const [lines, setLines] = React.useState<string[]>([]);
@@ -50,8 +50,7 @@ const TerminalActivity = () => {
         URL: path,
         BRANCH: branch,
         ROOTMANAGER: Shell.getRootManager(),
-        MSUCLI: modConf("MSUCLI"),
-        KSUCLI: modConf("KSUCLI"),
+        ..._modConf,
       };
 
       Terminal.exec({
@@ -72,8 +71,7 @@ const TerminalActivity = () => {
         MMRL_VER: BuildConfig.VERSION_CODE.toString(),
         ZIPFILE: path,
         ROOTMANAGER: Shell.getRootManager(),
-        MSUCLI: modConf("MSUCLI"),
-        KSUCLI: modConf("KSUCLI"),
+        ..._modConf,
       };
 
       Terminal.exec({
