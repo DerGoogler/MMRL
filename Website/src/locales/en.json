@@ -83,7 +83,7 @@
   "eruda_console": "Eruda console",
   "eruda_console_subtitle": "Useful for development and bug hunting",
   "share_device_infos": "Share device information's",
-  "share_device_infos_subtilte": "Helpful for MMRLs development",
+  "share_device_infos_subtilte": "Device specs, configured ModConf, app infos and installed modules",
   "storage": "Storage",
   "clear_repos": "Clear repositories",
   "patch_settings": "Patch settings",

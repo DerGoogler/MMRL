@@ -3,7 +3,6 @@ import { BuildConfig } from "@Native/BuildConfig";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Page } from "@Components/onsenui/Page";
-import { Magisk } from "@Native/Magisk";
 import { useStrings } from "@Hooks/useStrings";
 import { useActivity } from "@Hooks/useActivity";
 import { accent_colors, termScrollBehaviors, useSettings } from "@Hooks/useSettings";
@@ -15,12 +14,14 @@ import { useTheme } from "@Hooks/useTheme";
 import { useRepos } from "@Hooks/useRepos";
 import { Shell } from "@Native/Shell";
 import { DialogEditTextListItem } from "@Components/DialogEditTextListItem";
-import ModConfActivity from "./ModConfActivity";
 import { Properties } from "@Native/Properties";
 import { useLanguageMap } from "./../locales/declaration";
+import { useModConf } from "@Hooks/useModConf";
+import { useLocalModules } from "@Hooks/useLocalModules";
 
 function SettingsActivity() {
   const { context } = useActivity();
+  const { _modConf } = useModConf();
   const { strings } = useStrings();
   const availableLangs = useLanguageMap();
   const { setRepos } = useRepos();
@@ -41,6 +42,8 @@ function SettingsActivity() {
       </Toolbar>
     );
   };
+
+  const localModules = useLocalModules();
 
   return (
     <Page renderToolbar={renderToolbar}>
@@ -184,6 +187,7 @@ function SettingsActivity() {
                       model: Properties.get("ro.product.model", "unknown"),
                     },
                     application: {
+                      user_agent: navigator.userAgent,
                       package_name: BuildConfig.APPLICATION_ID,
                       version_name: BuildConfig.VERSION_NAME,
                       version_code: BuildConfig.VERSION_CODE,
@@ -193,6 +197,8 @@ function SettingsActivity() {
                       version_name: Shell.VERSION_NAME(),
                       version_code: Shell.VERSION_CODE(),
                     },
+                    modconf: _modConf,
+                    modules: localModules,
                   },
                   null,
                   4

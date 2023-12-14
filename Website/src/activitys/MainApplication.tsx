@@ -30,6 +30,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import ClearIcon from "@mui/icons-material/Clear";
 import { useModConf } from "@Hooks/useModConf";
 import Fab from "@Components/onsenui/Fab";
+import { useLocalModules } from "@Hooks/useLocalModules";
 
 interface SearchbarRef {
   clear(): void;
@@ -96,29 +97,12 @@ const MainApplication = () => {
   const { theme } = useTheme();
   const { modules } = useRepos();
   const [index, setIndex] = React.useState(0);
-  const [localModules, setLocalModules] = React.useState<Module[]>([]);
+  const localModules = useLocalModules();
 
   const searchRef = React.useRef<SearchbarRef | null>(null);
 
   const [isVisible, setVisible] = React.useState(false);
   const [search, setSearch] = React.useState("");
-
-  if (os.isAndroid) {
-    React.useEffect(() => {
-      const folders = SuFile.list(modConf("MODULES"));
-      folders.forEach((module) => {
-        const properties = new SuFile(modConf("PROPS", { MODID: module }));
-        if (properties.exist()) {
-          setLocalModules((prev) => {
-            // Preventing duplicates
-            const ids = new Set(prev.map((d) => d.id));
-            const merged = [...prev, ...[new Properties(properties.read()).toObject() as unknown as Module].filter((d) => !ids.has(d.id))];
-            return merged;
-          });
-        }
-      });
-    }, [settings]);
-  }
 
   React.useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
