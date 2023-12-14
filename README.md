@@ -72,6 +72,9 @@ versionCode=<int>
 author=<string>
 description=<string>
 
+# MMRL supported properties
+minKernelSU=<boolean>
+
 # Fox's Mmm supported properties
 minApi=<int>
 maxApi=<int>

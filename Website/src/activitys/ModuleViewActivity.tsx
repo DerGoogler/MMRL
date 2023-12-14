@@ -666,6 +666,13 @@ const ModuleViewActivity = () => {
 
                   <ListItem>
                     <StyledListItemText
+                      primary="KernelSU"
+                      secondary={mmrl.minKernelSU ? String(mmrl.minKernelSU) : strings("unset")}
+                    />
+                  </ListItem>
+
+                  <ListItem>
+                    <StyledListItemText
                       primary="Magisk"
                       secondary={fox.minMagisk ? Magisk.PARSE_VERSION(String(fox.minMagisk)) : strings("unset")}
                     />

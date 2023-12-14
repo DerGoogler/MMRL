@@ -210,6 +210,8 @@ declare global {
       severity?: AlertColor;
       note?: string;
     };
+    minKernelSU?: number;
+    supportedRoots?: string
   }
 
   export interface Fox {
