@@ -1,21 +1,46 @@
-import { styled } from "@mui/material";
+import PicturePreviewActivity from "@Activitys/PicturePreviewActivity";
+import { useActivity } from "@Hooks/useActivity";
+import { useTheme } from "@Hooks/useTheme";
+import { Box, BoxProps } from "@mui/material";
 import { util } from "googlers-tools";
 
-type Props = JSX.IntrinsicElements["img"] & {
+type Props = BoxProps<"img", JSX.IntrinsicElements["img"]> & {
   shadow?: string;
   title?: string;
   caption?: string;
+  noOpen?: boolean;
 };
 
 function Image(props: Props) {
-  const { src, shadow, ...rest } = props;
+  const { theme } = useTheme();
+  const { context } = useActivity();
+  const { src, shadow, noOpen, ...rest } = props;
 
-  const StyledImage = styled("img")(({ theme }) => ({
-    borderRadius: theme.shape.borderRadius,
-    boxShadow: theme.shadows[util.typeCheck<any>(shadow, "0")],
-  }));
-
-  return <StyledImage src={src} {...rest} />;
+  return (
+    <Box
+      component="img"
+      sx={{
+        ":hover": {
+          cursor: !noOpen ? "pointer" : "unset",
+        },
+        borderRadius: theme.shape.borderRadius / theme.shape.borderRadius,
+        boxShadow: theme.shadows[shadow || 0],
+      }}
+      src={src}
+      onClick={() => {
+        if (!noOpen) {
+          context.pushPage({
+            component: PicturePreviewActivity,
+            key: "PicturePreviewActivity",
+            extra: {
+              picture: src,
+            },
+          });
+        }
+      }}
+      {...rest}
+    />
+  );
 }
 
 export { Image };
