@@ -7,10 +7,10 @@ export interface ModConf {
   //cli
   MSUCLI: string;
   MSUBSU: string;
-  MSURSP: string
+  MSURSP: string;
   KSUCLI: string;
   KSUBSU: string;
-  KSURSP: string
+  KSURSP: string;
 
   // default paths
   ADB: string;
@@ -77,12 +77,14 @@ export const INITIAL_MOD_CONF: ModConf = {
 
 export interface ModConfContext {
   _modConf: ModConf;
+  __modConf: ModConf;
   modConf<K extends keyof ModConf>(key: K, adds?: Record<string, any>): ModConf[K];
   setModConf<K extends keyof ModConf>(key: K, state: SetStateAction<ModConf[K]>, callback?: (state: ModConf[K]) => void): void;
 }
 
 export const ModConfContext = createContext<ModConfContext>({
   _modConf: INITIAL_MOD_CONF,
+  __modConf: INITIAL_MOD_CONF,
   modConf<K extends keyof ModConf>(key: K, adds?: Record<string, any>) {
     return key;
   },
@@ -108,6 +110,41 @@ export function formatString(template: string, object: object): string {
   });
 }
 
+export function formatObjectEntries<O extends object = object>(object: O): O {
+  const formatValue = (value: any): any => {
+    if (typeof value === "string") {
+      return value.replace(/\<(\w+(\.\w+)*)\>/gi, (match, key) => {
+        const keys = key.split(".");
+        let tempValue = object;
+        for (const k of keys) {
+          if (k in tempValue) {
+            tempValue = tempValue[k];
+          } else {
+            return match;
+          }
+        }
+        return formatValue(tempValue);
+      });
+    } else if (Array.isArray(value)) {
+      return value.map((item: any) => formatValue(item));
+    } else if (typeof value === "object" && value !== null) {
+      const formattedObject: any = {};
+      for (const prop in value) {
+        formattedObject[prop] = formatValue(value[prop]);
+      }
+      return formattedObject;
+    }
+    return value;
+  };
+
+  const formattedObject: any = {};
+  for (const key in object) {
+    const formattedValue = formatValue(object[key]);
+    formattedObject[key] = formattedValue;
+  }
+  return formattedObject;
+}
+
 export const ModConfProvider = (props: React.PropsWithChildren) => {
   const [modConf, setModConf] = useNativeStorage("modconf_v3", INITIAL_MOD_CONF);
 
@@ -129,6 +166,7 @@ export const ModConfProvider = (props: React.PropsWithChildren) => {
   const contextValue = React.useMemo(
     () => ({
       _modConf: defaultComposer(INITIAL_MOD_CONF, modConf),
+      __modConf: formatObjectEntries<ModConf>(defaultComposer(INITIAL_MOD_CONF, modConf)),
       modConf: (key, adds) => {
         return formatString(defaultComposer(INITIAL_MOD_CONF, modConf)[key], { ...modConf, ...adds });
       },
