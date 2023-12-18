@@ -42,7 +42,7 @@
     "@nyariv/sandboxjs": "^0.8.23",
     "@primer/octicons-react": "^19.4.0",
     "@wasmer/wasmfs": "^0.12.0",
-    "ace-builds": "^1.23.3",
+    "ace-builds": "^1.32.2",
     "ajv": "^8.12.0",
     "ansi-to-react": "^6.1.6",
     "axios": "^1.6.2",
