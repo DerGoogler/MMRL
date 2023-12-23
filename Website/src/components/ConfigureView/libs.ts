@@ -34,6 +34,10 @@ export const libraries = [
     __esModule: require("@mui/icons-material"),
   },
   {
+    name: "@mmrl/terminal",
+    __esModule: Terminal,
+  },
+  {
     name: "@mmrl/ui",
     __esModule: {
       Anchor: Anchor,
