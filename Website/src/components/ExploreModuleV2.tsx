@@ -1,4 +1,4 @@
-import { Alert, AlertTitle, Box, Card, CardMedia, Chip, Stack, SxProps, Typography } from "@mui/material";
+import { Alert, AlertTitle, Avatar, Box, Card, CardHeader, CardMedia, Chip, Divider, Stack, SxProps, Typography } from "@mui/material";
 import { useActivity } from "@Hooks/useActivity";
 import { useStrings } from "@Hooks/useStrings";
 import { useLowQualityModule } from "@Hooks/useLowQualityModule";
@@ -11,6 +11,8 @@ import StarBorderRoundedIcon from "@mui/icons-material/StarBorderRounded";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import React from "react";
 import { isLiteralObject } from "@Util/util";
+import UpdateIcon from "@mui/icons-material/Update";
+import StarIcon from "@mui/icons-material/Star";
 
 interface Props {
   moduleProps: Module;
@@ -19,7 +21,7 @@ interface Props {
   sx?: SxProps;
 }
 
-export const ExploreModule = React.memo<Props>((props) => {
+export const ExploreModuleV2 = React.memo<Props>((props) => {
   const { context } = useActivity();
   const { strings, currentLanguage } = useStrings();
   const { settings } = useSettings();
@@ -56,12 +58,12 @@ export const ExploreModule = React.memo<Props>((props) => {
         <CardMedia
           component="img"
           sx={(theme) => ({
-            height: "100%",
             objectFit: "cover",
             m: 1,
             borderRadius: theme.shape.borderRadius / 8,
             boxShadow: "0 1px 2px 0 rgba(60,64,67,.3), 0 1px 10px 1px rgba(60,64,67,.15)",
             width: "calc(100% - 16px)",
+            height: "100%",
           })}
           image={mmrl.cover}
           alt={name}
@@ -88,15 +90,28 @@ export const ExploreModule = React.memo<Props>((props) => {
     >
       <CoverHandler />
       <Box sx={{ p: 2, display: "flex" }}>
+        <Avatar
+          alt={name}
+          sx={(theme) => ({
+            bgcolor: theme.palette.primary.light,
+            width: 60,
+            height: 60,
+            boxShadow: "0 -1px 5px rgba(0,0,0,.09), 0 3px 5px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.3), 0 1px 3px rgba(0,0,0,.15)",
+            borderRadius: "20%",
+            mr: 1.5,
+            fontSize: 25,
+          })}
+          src={mmrl.logo}
+        >
+          {name.charAt(0).toUpperCase()}
+        </Avatar>
+
         <Stack spacing={0.5} style={{ flexGrow: 1 }}>
           <Typography fontWeight={700} color="text.primary">
             {name}
           </Typography>
           <Typography variant="caption" sx={{ fontSize: ".70rem" }} color="text.secondary">
-            <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={0.5}>
-              <span>
-                {version} ({versionCode}) /
-              </span>
+            <Stack direction="column" justifyContent="flex-start" alignItems="left" spacing={0.5}>
               {mmrl.author ? (
                 <Box
                   component="span"
@@ -109,57 +124,27 @@ export const ExploreModule = React.memo<Props>((props) => {
                     },
                   }}
                 >
-                  {mmrl.author.name} {mmrl.author.verified && <VerifiedIcon sx={{ ml: 0.5, fontSize: "0.8rem" }} />}
+                  <Typography variant="subtitle1">{mmrl.author.name}</Typography>{" "}
+                  {mmrl.author.verified && <VerifiedIcon sx={{ ml: 0.5, fontSize: "0.8rem" }} />}
                 </Box>
               ) : (
-                <span>{author}</span>
+                <Typography>{author}</Typography>
               )}
+              <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
+                <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={0.5}>
+                  <Typography>{version}</Typography>
+                  <UpdateIcon sx={{ fontSize: "0.8rem" }} />
+                </Stack>
+
+                <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={0.5}>
+                  <Typography>{stars}</Typography>
+                  <StarIcon sx={{ fontSize: "0.8rem" }} />
+                </Stack>
+              </Stack>
             </Stack>
-          </Typography>
-          <Typography variant="body1" color="text.secondary">
-            {isLiteralObject(description) ? String((description as ModuleDescription)[currentLanguage]) : String(description)}
           </Typography>
         </Stack>
       </Box>
-      <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ px: 2, py: 1 }}>
-        <Chip
-          size="small"
-          sx={(theme) => ({
-            bgcolor: `${settings.darkmode ? shade(scheme[200], -24.5) : shade(scheme[300], 49)}46`,
-          })}
-          label={formatLastUpdate}
-        />
-        <Stack spacing={0.8} direction="row">
-          <Stack
-            direction="row"
-            justifyContent="center"
-            alignItems="center"
-            spacing={0.5}
-            sx={{
-              px: 1,
-              py: 0.5,
-              borderRadius: 1,
-              display: "flex",
-              typography: "caption",
-              bgcolor: theme.palette.secondary.main,
-              color: theme.palette.mode === "dark" ? "#000" : "#fff",
-            }}
-          >
-            <StarBorderRoundedIcon
-              sx={{
-                typography: "caption",
-              }}
-            />
-            <Typography
-              sx={{
-                typography: "caption",
-              }}
-            >
-              {stars}
-            </Typography>
-          </Stack>
-        </Stack>
-      </Stack>
       {isLowQuality && (
         <Alert sx={{ borderRadius: 0 }} severity="warning">
           <AlertTitle>{strings("low_quality_module")}</AlertTitle>
