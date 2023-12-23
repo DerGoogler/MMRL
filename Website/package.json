@@ -34,7 +34,7 @@
     "@babel/standalone": "^7.23.2",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
-    "@giscus/react": "^2.3.0",
+    "@giscus/react": "^2.4.0",
     "@monaco-editor/react": "^4.6.0",
     "@mui/icons-material": "^5.8.0",
     "@mui/lab": "^5.0.0-alpha.135",
