@@ -44,6 +44,7 @@ Introducing Magisk Module Repo Loader (MMRL) - the ultimate module manager for M
 - [x] Dynamic module configuration
 - [x] Module install
 - [x] Monet theming
+- [x] Logcat logger ([MMRL Install Tools](https://github.com/Googlers-Repo/mmrl_install_tools) required)
 
 ### Root Manager (Android)
 

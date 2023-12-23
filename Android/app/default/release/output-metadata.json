@@ -11,9 +11,35 @@
       "type": "UNIVERSAL",
       "filters": [],
       "attributes": [],
-      "versionCode": 1118,
-      "versionName": "1.11.8",
+      "versionCode": 1128,
+      "versionName": "1.12.8",
       "outputFile": "app-default-universal-release.apk"
+    },
+    {
+      "type": "ONE_OF_MANY",
+      "filters": [
+        {
+          "filterType": "ABI",
+          "value": "x86_64"
+        }
+      ],
+      "attributes": [],
+      "versionCode": 1128,
+      "versionName": "1.12.8",
+      "outputFile": "app-default-x86_64-release.apk"
+    },
+    {
+      "type": "ONE_OF_MANY",
+      "filters": [
+        {
+          "filterType": "ABI",
+          "value": "armeabi-v7a"
+        }
+      ],
+      "attributes": [],
+      "versionCode": 1128,
+      "versionName": "1.12.8",
+      "outputFile": "app-default-armeabi-v7a-release.apk"
     },
     {
       "type": "ONE_OF_MANY",
@@ -24,8 +50,8 @@
         }
       ],
       "attributes": [],
-      "versionCode": 1118,
-      "versionName": "1.11.8",
+      "versionCode": 1128,
+      "versionName": "1.12.8",
       "outputFile": "app-default-arm64-v8a-release.apk"
     },
     {
@@ -37,35 +63,9 @@
         }
       ],
       "attributes": [],
-      "versionCode": 1118,
-      "versionName": "1.11.8",
+      "versionCode": 1128,
+      "versionName": "1.12.8",
       "outputFile": "app-default-x86-release.apk"
-    },
-    {
-      "type": "ONE_OF_MANY",
-      "filters": [
-        {
-          "filterType": "ABI",
-          "value": "armeabi-v7a"
-        }
-      ],
-      "attributes": [],
-      "versionCode": 1118,
-      "versionName": "1.11.8",
-      "outputFile": "app-default-armeabi-v7a-release.apk"
-    },
-    {
-      "type": "ONE_OF_MANY",
-      "filters": [
-        {
-          "filterType": "ABI",
-          "value": "x86_64"
-        }
-      ],
-      "attributes": [],
-      "versionCode": 1118,
-      "versionName": "1.11.8",
-      "outputFile": "app-default-x86_64-release.apk"
     }
   ],
   "elementType": "File"
