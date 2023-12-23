@@ -13,6 +13,10 @@ interface NativeUIColors {
 }
 
 interface HTMLPage {
+  /**
+   * Styles that are passed to plain component
+   */
+  compSx?: SxProps;
   sx?: SxProps;
   backgroundStyle?: React.CSSProperties["backgroundColor"];
   modifier?: string;
@@ -38,7 +42,7 @@ const HTMLPage = onsCustomElement<HTMLElement, HTMLPage>("ons-page", {
 const _Page = React.forwardRef<HTMLElement, HTMLPage>((props, ref) => {
   const { theme } = useTheme();
   const { context } = useActivity();
-  const { renderToolbar, renderBottomToolbar, renderModal, renderFixed, sx, children, ...rest } = props;
+  const { renderToolbar, renderBottomToolbar, renderModal, renderFixed, sx, compSx, children, ...rest } = props;
 
   React.useEffect(() => {
     if (props.backgroundStyle) {
@@ -50,7 +54,7 @@ const _Page = React.forwardRef<HTMLElement, HTMLPage>((props, ref) => {
   }, [props.backgroundStyle]);
 
   return (
-    <HTMLPage {...rest} ref={ref}>
+    <HTMLPage {...rest} sx={compSx} ref={ref}>
       {renderToolbar && renderToolbar(ref, context)}
       <Box className="page__background" sx={{ backgroundColor: props.backgroundStyle }}></Box>
       <Box className="page__content" sx={sx}>

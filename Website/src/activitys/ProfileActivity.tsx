@@ -28,7 +28,7 @@ const ProfileActivty = React.memo(() => {
   const { modules } = useRepos();
   const { context, extra } = useActivity<MmrlAuthor>();
 
-  const { name, bio, avatar, verified } = extra;
+  const { name, bio, avatar, verified, followers } = extra;
 
   const renderToolbar = () => {
     return (
@@ -55,10 +55,7 @@ const ProfileActivty = React.memo(() => {
               elevation={0}
               sx={{
                 display: "flex",
-                flexDirection: {
-                  xs: "column", // mobile
-                  sm: "row", // tablet and up
-                },
+                flexDirection: "row",
               }}
             >
               <CardMedia
@@ -69,30 +66,23 @@ const ProfileActivty = React.memo(() => {
                 src={avatar}
                 sx={{
                   borderRadius: 0.5,
-                  width: { xs: "100%", sm: 100 },
-                  mb: { xs: 1.5, sm: 0 },
+                  width: 100,
+                  mb: 0,
                 }}
               />
               <Box sx={{ alignSelf: "center", ml: 2, width: "100%" }}>
-                <Typography component="div" fontWeight="bold">
-                  {name}
-                </Typography>
-                <Stack
-                  direction="row"
-                  justifyContent="flex-start"
-                  alignItems="center"
+                <Typography
                   sx={{
-                    mt: 0.75,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyItems: "center",
                   }}
-                  spacing={0.5}
+                  component="div"
+                  fontWeight="bold"
                 >
-                  {verified && (
-                    <Box sx={badgeStyle(colors.blue)}>
-                      <VerifiedIcon sx={{ fontSize: 16, mr: 0.5, mt: "1px" }} />
-                      Verified
-                    </Box>
-                  )}
-                </Stack>
+                  {name} {verified && <VerifiedIcon sx={{ fontSize: 16, ml: 0.5 }} />}
+                </Typography>
+                <Typography variant="subtitle1">{followers} followers</Typography>
               </Box>
             </Paper>
           </Paper>
