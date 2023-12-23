@@ -15,6 +15,9 @@ import { SuFile } from "@Native/SuFile";
 import { StringsProvider, useStrings } from "@Hooks/useStrings";
 import { Shell } from "@Native/Shell";
 import Ansi from "ansi-to-react";
+import { os } from "@Native/Os";
+import { BuildConfig } from "@Native/BuildConfig";
+import { useSettings } from "@Hooks/useSettings";
 
 export const libraries = [
   {
@@ -35,7 +38,7 @@ export const libraries = [
   },
   {
     name: "@mmrl/terminal",
-    __esModule: Terminal,
+    __esModule: os.isAndroid ? Terminal : {},
   },
   {
     name: "@mmrl/ui",
@@ -59,6 +62,7 @@ export const libraries = [
       useNativeProperties: useNativeProperties,
       useNativeStorage: useNativeStorage,
       useTheme: useTheme,
+      useSettings: useSettings,
       useStrings: useStrings,
     },
   },
@@ -93,6 +97,24 @@ export const libraries = [
       pw_name: Shell.pw_name,
     },
   },
+  {
+    name: "@mmrl/os",
+    __esModule: {
+      toast: os.toast,
+      sdk: os.sdk,
+    },
+  },
+  {
+    name: "@mmrl/buildconfig",
+    __esModule: {
+      BUILD_DATE: BuildConfig.BUILD_DATE,
+      VERSION_NAME: BuildConfig.VERSION_NAME,
+      VERSION_CODE: BuildConfig.VERSION_CODE,
+      APPLICATION_ID: BuildConfig.APPLICATION_ID,
+      DEBUG: BuildConfig.DEBUG,
+      BUILD_TYPE: BuildConfig.BUILD_TYPE,
+    },
+  },
 ];
 
 const prototypeWhitelist = Sandbox.SAFE_PROTOTYPES;
@@ -103,5 +125,6 @@ export const globals = {
   JSON: JSON,
   YAML: require("yaml"),
   INI: require("ini"),
+  Toast: Toast,
   Object,
 };
