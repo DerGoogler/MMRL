@@ -30,7 +30,8 @@ public class TerminalPlugin extends CordovaPlugin {
                 JSONObject envp = data.getJSONObject(1);
 
                 this.terminalCallbackContext = callbackContext;
-                String[] commands = {"su", "-p", "-c", cmd};
+                String[] commands = {"su", "-p" +
+                        "", "-c", cmd};
 
                 cordova.getThreadPool().execute(() -> {
                     try {
