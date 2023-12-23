@@ -14,6 +14,7 @@ import { Toolbar } from "@Components/onsenui/Toolbar";
 import { SuFile } from "@Native/SuFile";
 import { StringsProvider, useStrings } from "@Hooks/useStrings";
 import { Shell } from "@Native/Shell";
+import Ansi from "ansi-to-react";
 
 export const libraries = [
   {
@@ -44,6 +45,7 @@ export const libraries = [
       DiscordWidget: DiscordWidget,
       PromoBanner: PromoBanner,
       Markdown: Markdown,
+      Ansi: Ansi,
     },
   },
   {
