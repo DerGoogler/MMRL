@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.23.2",
-    "@babel/standalone": "^7.23.2",
+    "@babel/standalone": "^7.23.6",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "@giscus/react": "^2.4.0",
@@ -92,7 +92,7 @@
     "@babel/preset-env": "^7.23.6",
     "@babel/preset-react": "^7.23.3",
     "@types/babel__core": "^7.20.2",
-    "@types/babel__standalone": "^7.1.5",
+    "@types/babel__standalone": "^7.1.7",
     "@types/fs-extra": "^11.0.4",
     "@types/ini": "^1.3.33",
     "@types/node": "^18.0.6",
