@@ -113,7 +113,7 @@
     "js-yaml-loader": "^1.2.2",
     "license-checker": "^25.0.1",
     "mini-css-extract-plugin": "^2.5.3",
-    "postcss-loader": "^7.0.0",
+    "postcss-loader": "^7.3.3",
     "raw-loader": "^4.0.2",
     "sass": "^1.49.8",
     "sass-loader": "^13.0.2",
