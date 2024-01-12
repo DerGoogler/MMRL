@@ -57,7 +57,7 @@
     "install": "^0.13.0",
     "localforage": "^1.10.0",
     "localized-strings": "^0.2.4",
-    "markdown-to-jsx": "^7.1.7",
+    "markdown-to-jsx": "^7.4.0",
     "marked-react": "^1.1.2",
     "material-icons": "^1.10.8",
     "material-ui-confirm": "^3.0.9",
