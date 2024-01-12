@@ -14,6 +14,7 @@
         <package android:name="com.topjohnwu.magisk" />
         <package android:name="io.github.huskydg.magisk" />
         <package android:name="me.weishu.kernelsu" />
+        <package android:name="me.bmax.apatch" />
     </queries>
 
     <application

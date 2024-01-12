@@ -1,5 +1,6 @@
 import { Alert, Box, Divider, List, ListSubheader } from "@mui/material";
-
+import AvatarGroup from "@mui/material/AvatarGroup";
+import Avatar from "@mui/material/Avatar";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import { Page } from "@Components/onsenui/Page";
 import { useActivity } from "@Hooks/useActivity";
@@ -7,9 +8,7 @@ import { ModConf, useModConf } from "@Hooks/useModConf";
 import { StyledListItemText } from "@Components/StyledListItemText";
 import { Shell } from "@Native/Shell";
 import { DialogEditTextListItem } from "@Components/DialogEditTextListItem";
-import { KernelSULogo } from "@Components/icon/KernelSULogo";
 import React from "react";
-import { MagiskSULogo } from "@Components/icon/MagiskSULogo";
 
 interface ModConfSections {
   sectionText: string;
@@ -22,7 +21,7 @@ interface ModConfListItem<K extends keyof ModConf> {
   /**
    * Used for the config requirement
    */
-  logoText?: typeof MagiskSULogo;
+  logoText?: string | Array<string>;
   disabled?: boolean;
 }
 
@@ -50,39 +49,57 @@ function ModConfActivity() {
           {
             text: "Magisk install CLI",
             disabled: !Shell.isMagiskSU(),
-            logoText: MagiskSULogo,
+            logoText: "assets/MagiskSULogo.png",
             confKey: "MSUCLI",
           },
           {
             text: "Magisk Busybox CLI",
             disabled: !Shell.isMagiskSU(),
-            logoText: MagiskSULogo,
+            logoText: "assets/MagiskSULogo.png",
             confKey: "MSUBSU",
           },
           {
             text: "Magisk ResetProp CLI",
             disabled: !Shell.isMagiskSU(),
-            logoText: MagiskSULogo,
+            logoText: "assets/MagiskSULogo.png",
             confKey: "MSURSP",
           },
           {
             text: "KernelSU install CLI",
             disabled: !Shell.isKernelSU(),
-            logoText: KernelSULogo,
+            logoText: "assets/KernelSULogo.png",
             confKey: "KSUCLI",
           },
           {
             text: "KernelSU Busybox CLI",
             disabled: !Shell.isKernelSU(),
-            logoText: KernelSULogo,
+            logoText: "assets/KernelSULogo.png",
             confKey: "KSUBSU",
-          }, 
+          },
           {
             text: "KernelSU ResetProp CLI",
             disabled: !Shell.isKernelSU(),
-            logoText: KernelSULogo,
+            logoText: "assets/KernelSULogo.png",
             confKey: "KSURSP",
-          },         
+          },
+          {
+            text: "APatch install CLI",
+            disabled: !Shell.isAPatchSU(),
+            logoText: "assets/APatchSULogo.png",
+            confKey: "ASUCLI",
+          },
+          {
+            text: "APatch Busybox CLI",
+            disabled: !Shell.isAPatchSU(),
+            logoText: "assets/APatchSULogo.png",
+            confKey: "ASUBSU",
+          },
+          {
+            text: "APatch ResetProp CLI",
+            disabled: !Shell.isAPatchSU(),
+            logoText: "assets/APatchSULogo.png",
+            confKey: "ASURSP",
+          },
         ],
       },
       {
@@ -127,14 +144,14 @@ function ModConfActivity() {
           },
           {
             text: "Post mount service path",
-            disabled: !Shell.isKernelSU(),
-            logoText: KernelSULogo,
+            disabled: !Shell.isKernelSU() || !Shell.isAPatchSU(),
+            logoText: ["assets/KernelSULogo.png", "assets/APatchSULogo.png"],
             confKey: "POSTMOUNT",
           },
           {
             text: "Boot complete service path",
-            disabled: !Shell.isKernelSU(),
-            logoText: KernelSULogo,
+            disabled: !Shell.isKernelSU() || !Shell.isAPatchSU(),
+            logoText: ["assets/KernelSULogo.png", "assets/APatchSULogo.png"],
             confKey: "BOOTCOMP",
           },
         ],
@@ -195,7 +212,20 @@ function ModConfActivity() {
                   <StyledListItemText
                     primary={
                       <Box sx={{ display: "flex", alignItems: "center", justifyItems: "center" }}>
-                        {item.logoText && <item.logoText sx={{ mr: 1 }} width="1rem" height="1rem" />}[{item.confKey}]: {item.text}
+                        {item.logoText && Array.isArray(item.logoText) ? (
+                          <>
+                            <AvatarGroup sx={{ mr: 1 }}>
+                              {item.logoText.map((logo) => (
+                                <Avatar sx={{ borderRadius: "unset", width: "1rem", height: "1rem" }} src={logo} />
+                              ))}
+                            </AvatarGroup>
+                          </>
+                        ) : (
+                          item.logoText && (
+                            <Avatar sx={{ borderRadius: "unset", mr: 1, width: "1rem", height: "1rem" }} src={item.logoText} />
+                          )
+                        )}
+                        [{item.confKey}]: {item.text}
                       </Box>
                     }
                     secondary={_modConf[item.confKey]}

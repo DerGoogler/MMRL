@@ -22,6 +22,7 @@ interface NativeShell {
   isSuAvailable(): boolean;
   isKernelSU(): boolean;
   isMagiskSU(): boolean;
+  isAPatchSU(): boolean;
   getenv(key: string): string;
   setenv(key: string, value: string, override: number): void;
   pw_uid(): number;
@@ -118,6 +119,8 @@ class ShellClass extends Native<NativeShell> {
       return "Magisk";
     } else if (this.isKernelSU()) {
       return "KernelSU";
+    } else if (this.isAPatchSU()) {
+      return "APatchSU";
     } else {
       return "Unknown";
     }
@@ -140,6 +143,17 @@ class ShellClass extends Native<NativeShell> {
   public isMagiskSU(): boolean {
     if (this.isAndroid) {
       return this.interface.isMagiskSU();
+    } else {
+      return false;
+    }
+  }
+
+  /**
+   * Determine if MMRL runs with APatch
+   */
+  public isAPatchSU(): boolean {
+    if (this.isAndroid) {
+      return this.interface.isAPatchSU();
     } else {
       return false;
     }

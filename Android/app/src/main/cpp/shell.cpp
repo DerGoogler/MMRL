@@ -142,6 +142,31 @@ Java_com_dergoogler_core_NativeShell_isKernelSU(JNIEnv *env, jclass clazz) {
 }
 
 extern "C"
+JNIEXPORT jboolean JNICALL
+Java_com_dergoogler_core_NativeShell_isAPatchSU(JNIEnv *env, jclass clazz) {
+    // ???
+    // static char *mounts[] = {};
+    static char *paths[] = {
+            "/data/adb/ap",
+            "/data/adb/apd",
+            "/data/adb/kpatch",
+            "/data/adb/ap/modules.img",
+            "/data/adb/ap/package_config",
+            "/data/adb/ap/version",
+            "/data/adb/ap/su_path",
+            "/data/adb/ap/bin/busybox",
+            "/data/adb/ap/bin/apd",
+            "/data/adb/ap/bin/resetprop"
+    };
+
+    if (path_detection(paths)) {
+        return JNI_TRUE;
+    } else {
+        return JNI_FALSE;
+    }
+}
+
+extern "C"
 JNIEXPORT jstring JNICALL
 Java_com_dergoogler_core_NativeShell_getenv(JNIEnv *env, jclass clazz, jstring key) {
     const char *name = env->GetStringUTFChars(key, nullptr);
@@ -189,3 +214,4 @@ Java_com_dergoogler_core_NativeShell_pw_1name(JNIEnv *env, jclass clazz) {
         return env->NewStringUTF(p->pw_name);
     }
 }
+

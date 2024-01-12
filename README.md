@@ -48,9 +48,10 @@ Introducing Magisk Module Repo Loader (MMRL) - the ultimate module manager for M
 
 ### Root Manager (Android)
 
-- [x] Magisk
-- [x] Magisk Delta
-- [x] KernelSU
+- [x] [Magisk](https://github.com/topjohnwu/Magisk)
+- [x] [Magisk Delta](https://github.com/HuskyDG/magisk-files)
+- [x] [KernelSU](https://github.com/tiann/KernelSU)
+- [x] [APatch](https://github.com/bmax121/APatch) (beta)
 
 # Screenshots
 

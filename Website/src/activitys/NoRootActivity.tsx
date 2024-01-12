@@ -28,6 +28,10 @@ const NoRootActivity = () => {
       name: "Open Magisk Delta",
       package: "io.github.huskydg.magisk",
     },
+    {
+      name: "Open APatch",
+      package: "me.bmax.apatch",
+    },
   ];
 
   const renderToolbar = () => {

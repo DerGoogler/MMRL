@@ -14,26 +14,22 @@ import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import CodeRoundedIcon from "@mui/icons-material/CodeRounded";
 import { useSettings } from "@Hooks/useSettings";
-import { KernelSULogo } from "@Components/icon/KernelSULogo";
 import { Shell } from "@Native/Shell";
 import DeviceUnknownIcon from "@mui/icons-material/DeviceUnknown";
-import { MagiskSULogo } from "@Components/icon/MagiskSULogo";
 import { ListSubheader, SxProps } from "@mui/material";
 import React from "react";
 import { BuildConfig } from "@Native/BuildConfig";
 import { useFormatDate } from "@Hooks/useFormatDate";
 
-interface CheckRootProps {
-  sx?: SxProps;
-}
-
-const CheckRoot = (props: CheckRootProps): React.JSX.Element => {
+const checkRoot = (): string | undefined => {
   if (Shell.isMagiskSU()) {
-    return <MagiskSULogo {...props} />;
+    return "assets/MagiskSULogo.png";
   } else if (Shell.isKernelSU()) {
-    return <KernelSULogo {...props} />;
+    return "assets/KernelSULogo.png";
+  } else if (Shell.isAPatchSU()) {
+    return "assets/APatchSULogo.png";
   } else {
-    return <DeviceUnknownIcon {...props} />;
+    return undefined;
   }
 };
 
@@ -107,13 +103,9 @@ const AboutActivity = () => {
                   borderRadius: "unset",
                   bgcolor: "transparent",
                 })}
+                src={checkRoot()}
               >
-                <CheckRoot
-                  sx={{
-                    width: 40,
-                    height: 40,
-                  }}
-                />
+                
               </Avatar>
             }
           >

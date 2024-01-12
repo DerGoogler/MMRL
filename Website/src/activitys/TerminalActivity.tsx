@@ -54,7 +54,7 @@ const TerminalActivity = () => {
       };
 
       Terminal.exec({
-        command: `${modConf("MMRLINI")}/system/usr/share/mmrl/bin/mmrl_explore_install_v2`,
+        command: `${modConf("MMRLINI")}/system/usr/share/mmrl/bin/mmrl_explore_install_v3`,
         env: envp_explore,
         onLine: (line) => {
           addLine(line);
@@ -75,7 +75,7 @@ const TerminalActivity = () => {
       };
 
       Terminal.exec({
-        command: `${modConf("MMRLINI")}/system/usr/share/mmrl/bin/mmrl_local_install_v2`,
+        command: `${modConf("MMRLINI")}/system/usr/share/mmrl/bin/mmrl_local_install_v3`,
         env: envp_local,
         onLine: (line) => {
           addLine(line);

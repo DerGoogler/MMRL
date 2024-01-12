@@ -11,6 +11,9 @@ export interface ModConf {
   KSUCLI: string;
   KSUBSU: string;
   KSURSP: string;
+  ASUCLI: string;
+  ASUBSU: string;
+  ASURSP: string;
 
   // default paths
   ADB: string;
@@ -47,6 +50,9 @@ export const INITIAL_MOD_CONF: ModConf = {
   KSUCLI: "<ADB>/ksu/bin/ksud",
   KSUBSU: "<ADB>/ksu/bin/busybox",
   KSURSP: "<ADB>/ksu/bin/resetprop",
+  ASUCLI: "<ADB>/ap/bin/apd",
+  ASUBSU: "<ADB>/ap/bin/busybox",
+  ASURSP: "<ADB>/ap/bin/resetprop",
 
   // default paths
   ADB: "/data/adb",
@@ -146,7 +152,7 @@ export function formatObjectEntries<O extends object = object>(object: O): O {
 }
 
 export const ModConfProvider = (props: React.PropsWithChildren) => {
-  const [modConf, setModConf] = useNativeStorage("modconf_v3", INITIAL_MOD_CONF);
+  const [modConf, setModConf] = useNativeStorage("modconf_v4", INITIAL_MOD_CONF);
 
   // Test purposes
   // React.useEffect(() => {
