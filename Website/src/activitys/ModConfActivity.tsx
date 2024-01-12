@@ -144,13 +144,13 @@ function ModConfActivity() {
           },
           {
             text: "Post mount service path",
-            disabled: !Shell.isKernelSU() || !Shell.isAPatchSU(),
+            disabled: !(Shell.isKernelSU() || Shell.isAPatchSU()),
             logoText: ["assets/KernelSULogo.png", "assets/APatchSULogo.png"],
             confKey: "POSTMOUNT",
           },
           {
             text: "Boot complete service path",
-            disabled: !Shell.isKernelSU() || !Shell.isAPatchSU(),
+            disabled: !(Shell.isKernelSU() || Shell.isAPatchSU()),
             logoText: ["assets/KernelSULogo.png", "assets/APatchSULogo.png"],
             confKey: "BOOTCOMP",
           },
