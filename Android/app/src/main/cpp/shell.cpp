@@ -144,8 +144,12 @@ Java_com_dergoogler_core_NativeShell_isKernelSU(JNIEnv *env, jclass clazz) {
 extern "C"
 JNIEXPORT jboolean JNICALL
 Java_com_dergoogler_core_NativeShell_isAPatchSU(JNIEnv *env, jclass clazz) {
-    // ???
-    // static char *mounts[] = {};
+    static char *mounts[] = {
+            "APD",
+            "apd",
+            "APatch",
+            "APATCH"
+    };
     static char *paths[] = {
             "/data/adb/ap",
             "/data/adb/apd",
@@ -159,7 +163,17 @@ Java_com_dergoogler_core_NativeShell_isAPatchSU(JNIEnv *env, jclass clazz) {
             "/data/adb/ap/bin/resetprop"
     };
 
-    if (path_detection(paths)) {
+    bool bRet = false;
+    do {
+        bRet = path_detection(paths);
+        if (bRet)
+            break;
+        bRet = mount_detection(mounts);
+        if (bRet)
+            break;
+    } while (false);
+
+    if (bRet) {
         return JNI_TRUE;
     } else {
         return JNI_FALSE;
