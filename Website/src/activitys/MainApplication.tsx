@@ -31,6 +31,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 import { useModConf } from "@Hooks/useModConf";
 import Fab from "@Components/onsenui/Fab";
 import { useLocalModules } from "@Hooks/useLocalModules";
+import { Shell } from "@Native/Shell";
 
 interface SearchbarRef {
   clear(): void;
@@ -117,6 +118,8 @@ const MainApplication = () => {
     }
   }, [modules]);
 
+  const hasInstallTools = SuFile.exist(`${modConf("MMRLINI")}/module.prop`);
+
   const renderTabs = (): TabbarRenderTab[] => {
     return [
       {
@@ -140,31 +143,33 @@ const MainApplication = () => {
                   modules={localModules}
                   renderItem={(module, key) => <DeviceModule key={key} module={module} />}
                   renderFixed={() => {
-                    return (
-                      <Fab
-                        onClick={() => {
-                          Chooser.getFile(
-                            "application/zip",
-                            (file) => {
-                              if (file !== "RESULT_CANCELED") {
-                                context.pushPage({
-                                  component: TerminalActivity,
-                                  key: "TerminalActivity",
-                                  extra: {
-                                    exploreInstall: false,
-                                    path: file.path,
-                                  },
-                                });
-                              }
-                            },
-                            null
-                          );
-                        }}
-                        position="bottom right"
-                      >
-                        <CreateNewFolderIcon />
-                      </Fab>
-                    );
+                    if (os.isAndroid && (Shell.isMagiskSU() || Shell.isKernelSU() || Shell.isAPatchSU()) && hasInstallTools) {
+                      return (
+                        <Fab
+                          onClick={() => {
+                            Chooser.getFile(
+                              "application/zip",
+                              (file) => {
+                                if (file !== "RESULT_CANCELED") {
+                                  context.pushPage({
+                                    component: TerminalActivity,
+                                    key: "TerminalActivity",
+                                    extra: {
+                                      exploreInstall: false,
+                                      path: file.path,
+                                    },
+                                  });
+                                }
+                              },
+                              null
+                            );
+                          }}
+                          position="bottom right"
+                        >
+                          <CreateNewFolderIcon />
+                        </Fab>
+                      );
+                    }
                   }}
                 />
               ),

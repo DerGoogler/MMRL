@@ -53,6 +53,7 @@ import { isLiteralObject } from "@Util/util";
 import { useLowQualityModule } from "@Hooks/useLowQualityModule";
 import AvatarGroup from "@mui/material/AvatarGroup";
 import ProfileActivty from "./ProfileActivity";
+import { useModConf } from "@Hooks/useModConf";
 
 function a11yProps(index: number) {
   return {
@@ -104,7 +105,9 @@ const ModuleViewActivity = () => {
   const { data } = useFetch<str>(readme);
   const formatLastUpdate = useFormatDate(last_update);
 
-  const hasInstallTools = SuFile.exist("/data/adb/modules/mmrl_install_tools/module.prop");
+  const { modConf, __modConf } = useModConf();
+  const hasInstallTools = SuFile.exist(`${modConf("MMRLINI")}/module.prop`);
+  
   const { SupportIcon, supportText } = useSupportIconForUrl(fox.support);
 
   const search = React.useMemo(() => new URLSearchParams(window.location.search), [window.location.search]);
@@ -347,7 +350,7 @@ const ModuleViewActivity = () => {
                 )}
 
                 <Stack direction="row" justifyContent="center" alignItems="center" spacing={1}>
-                  {os.isAndroid && (Shell.isMagiskSU() || Shell.isKernelSU()) && hasInstallTools && (
+                  {os.isAndroid && (Shell.isMagiskSU() || Shell.isKernelSU() || Shell.isAPatchSU()) && hasInstallTools && (
                     <Button
                       color="secondary"
                       sx={{
