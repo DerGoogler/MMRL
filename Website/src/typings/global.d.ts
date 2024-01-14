@@ -119,112 +119,175 @@ declare global {
 
   const __webpack__mode__: "production" | "development";
 
-  interface StoredRepo extends Omit<Repo, "modules"> {
-    modules: string;
-  }
-
-  interface Repo {
-    /**
-     * An required filed, to disply the repository name
-     */
+  export interface RepoConfig {
     name: string;
-    mmrlOwner?: string;
-    /**
-     * An given website link for the repository
-     */
     website?: string;
-    /**
-     * Given support link i.g. Telegram, Xda, GitHub or something
-     */
     support?: string;
     donate?: string;
-    submitModule?: string;
-    last_update: number;
-    modules: Module[];
+    submission?: any;
+    base_url: string;
+    max_num?: number;
+    enable_log?: boolean;
+    log_dir?: string;
   }
 
-  export interface Root {
-    last_update: number;
+  export interface Repo {
     name: string;
-    website: any;
-    support: any;
-    donate: any;
-    submitModule: string;
+    website: string;
+    support: string;
+    donate: string;
+    submission: any;
+    metadata: Metadata;
     modules: Module[];
   }
 
-  /** Allows developers to translate their description */
-  export type ModuleDescription = Record<AvailableStrs, string>;
+  export interface Metadata {
+    version: number;
+    timestamp: number;
+  }
 
   export interface Module {
     id: string;
     name: string;
-    version?: number;
+    version: string;
     versionCode: number;
-    author?: string;
-    description?: string | ModuleDescription;
-    valid: boolean;
-    verified: boolean;
-    hidden: boolean;
-    download: string;
-    last_update: number;
-    readme: string;
-    stars: number;
-    updateJson: string;
-    about: About;
-    mmrl: Mmrl;
-    fox: Fox;
+    author: string;
+    description: string;
+    track: Track;
+    versions: Version[];
   }
 
-  export interface UpdateJson {
+  export interface Track {
+    type: string;
+    added: number;
+    license: string;
+    homepage: string;
+    source: string;
+    support: string;
+    donate: string;
+    verified: boolean;
+    cover?: string;
+    logo?: string;
+    require?: string[];
+    screenshots?: string[];
+    category?: string;
+    categories?: string[];
+  }
+
+  export interface Version {
+    timestamp: number;
     version: string;
     versionCode: number;
     zipUrl: string;
     changelog: string;
   }
 
-  export interface About {
-    repo_source: string;
-    language: string;
-    issues?: string;
-    source: string;
-  }
+  // interface StoredRepo extends Omit<Repo, "modules"> {
+  //   modules: string;
+  // }
 
-  export interface MmrlAuthor {
-    name: string;
-    avatar: string;
-    bio: string;
-    followers: number;
-    verified: boolean;
-  }
+  // interface Repo {
+  //   /**
+  //    * An required filed, to disply the repository name
+  //    */
+  //   name: string;
+  //   mmrlOwner?: string;
+  //   /**
+  //    * An given website link for the repository
+  //    */
+  //   website?: string;
+  //   /**
+  //    * Given support link i.g. Telegram, Xda, GitHub or something
+  //    */
+  //   support?: string;
+  //   donate?: string;
+  //   submitModule?: string;
+  //   last_update: number;
+  //   modules: Module[];
+  // }
 
-  export interface Mmrl {
-    author?: MmrlAuthor;
-    contributors?: Array<MmrlAuthor>;
-    cover?: string;
-    logo?: string;
-    screenshots?: Array<string>;
-    categories?: Array<string>;
-    require?: Array<string>;
-    developerNote?: {
-      severity?: AlertColor;
-      note?: string;
-    };
-    minKernelSU?: number;
-    supportedRoots?: string
-  }
+  // export interface Root {
+  //   last_update: number;
+  //   name: string;
+  //   website: any;
+  //   support: any;
+  //   donate: any;
+  //   submitModule: string;
+  //   modules: Module[];
+  // }
 
-  export interface Fox {
-    minApi?: number;
-    maxApi?: number;
-    minMagisk?: number;
-    needRamdisk?: boolean;
-    support?: string;
-    donate?: string;
-    config?: string;
-    changeBoot?: boolean;
-    mmtReborn?: boolean;
-  }
+  // /** Allows developers to translate their description */
+  // export type ModuleDescription = Record<AvailableStrs, string>;
+
+  // export interface Module {
+  //   id: string;
+  //   name: string;
+  //   version?: number;
+  //   versionCode: number;
+  //   author?: string;
+  //   description?: string | ModuleDescription;
+  //   valid: boolean;
+  //   verified: boolean;
+  //   hidden: boolean;
+  //   download: string;
+  //   last_update: number;
+  //   readme: string;
+  //   stars: number;
+  //   updateJson: string;
+  //   about: About;
+  //   mmrl: Mmrl;
+  //   fox: Fox;
+  // }
+
+  // export interface UpdateJson {
+  //   version: string;
+  //   versionCode: number;
+  //   zipUrl: string;
+  //   changelog: string;
+  // }
+
+  // export interface About {
+  //   repo_source: string;
+  //   language: string;
+  //   issues?: string;
+  //   source: string;
+  // }
+
+  // export interface MmrlAuthor {
+  //   name: string;
+  //   avatar: string;
+  //   bio: string;
+  //   followers: number;
+  //   verified: boolean;
+  // }
+
+  // export interface Mmrl {
+  //   author?: MmrlAuthor;
+  //   contributors?: Array<MmrlAuthor>;
+  //   cover?: string;
+  //   logo?: string;
+  //   screenshots?: Array<string>;
+  //   categories?: Array<string>;
+  //   require?: Array<string>;
+  //   developerNote?: {
+  //     severity?: AlertColor;
+  //     note?: string;
+  //   };
+  //   minKernelSU?: number;
+  //   supportedRoots?: string
+  // }
+
+  // export interface Fox {
+  //   minApi?: number;
+  //   maxApi?: number;
+  //   minMagisk?: number;
+  //   needRamdisk?: boolean;
+  //   support?: string;
+  //   donate?: string;
+  //   config?: string;
+  //   changeBoot?: boolean;
+  //   mmtReborn?: boolean;
+  // }
 
   // OnsenUI Types
   /**

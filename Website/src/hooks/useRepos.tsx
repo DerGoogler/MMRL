@@ -13,8 +13,8 @@ export interface RepoContextActions {
 }
 
 interface RepoContextInterface {
-  repos: StoredRepo[];
-  setRepos: SetValue<StoredRepo[]>;
+  repos: RepoConfig[];
+  setRepos: SetValue<RepoConfig[]>;
   modules: Module[];
   actions: RepoContextActions;
 }
@@ -32,13 +32,13 @@ export const RepoContext = React.createContext<RepoContextInterface>({
 
 type AddRepoData = {
   url: string;
-  callback?: (state: StoredRepo[]) => void;
-  error?: (error: any) => void;
+  callback?: (state: RepoConfig[]) => void;
+  error?: (error: Error) => void;
 };
 
 type RemoveRepoData = {
   id: string;
-  callback?: (state: StoredRepo[]) => void;
+  callback?: (state: RepoConfig[]) => void;
 };
 
 type SetRepoStateData = {
@@ -49,15 +49,17 @@ type SetRepoStateData = {
 export const RepoProvider = (props: React.PropsWithChildren) => {
   const TAG = "RepoProvider";
   const log = useLog(TAG);
-  const [repos, setRepos] = useNativeStorage<StoredRepo[]>("repos_v2", [
+  const [repos, setRepos] = useNativeStorage<RepoConfig[]>("repos_v3", [
     {
-      name: "Magisk Modules Alt Repo (pre-configured)",
-      website: "",
-      support: "",
-      donate: "",
-      submitModule: "",
-      last_update: 1690995729000,
-      modules: "https://gr.dergoogler.com/magisk/mmar.json",
+      name: "Googlers Magisk Repo",
+      website: "https://mmrl.dergoogler.com",
+      support: "https://github.com/Googlers-Repo/repo/issues",
+      donate: "https://github.com/sponsors/DerGoogler",
+      submission: null,
+      base_url: "https://gr.dergoogler.com/repo/",
+      max_num: 3,
+      enable_log: true,
+      log_dir: "log",
     },
   ]);
 
@@ -65,27 +67,19 @@ export const RepoProvider = (props: React.PropsWithChildren) => {
   const [modules, setModules] = React.useState<Module[]>([]);
 
   const addRepo = (data: AddRepoData) => {
-    if (!repos.some((repo) => repo.modules === data.url)) {
+    if (!repos.some((repo) => repo.base_url === data.url)) {
       if (repos.length <= 4) {
         if (link.validURL(data.url)) {
-          fetch(data.url)
-            .then((response) => response.json())
+          fetch(`${data.url}json/config.json`)
             .then((response) => {
-              setRepos(
-                (prev) => [
-                  ...prev,
-                  {
-                    name: response.name || "Unknown Repository",
-                    website: response.website || null,
-                    support: response.support || null,
-                    donate: response.donate || null,
-                    submitModule: response.submitModules || null,
-                    last_update: response.last_update || 0,
-                    modules: data.url,
-                  },
-                ],
-                data.callback
-              );
+              if (response.status == 200) {
+                return response.json();
+              } else {
+                data.error && data.error(Error("Cannot find given repo link or your link isn't valid"));
+              }
+            })
+            .then((response) => {
+              setRepos((prev) => [...prev, response], data.callback);
             })
             .catch((e) => (data.callback ? data.callback(e) : log.e(e)));
         } else {
@@ -101,7 +95,7 @@ export const RepoProvider = (props: React.PropsWithChildren) => {
 
   const removeRepo = (data: RemoveRepoData) => {
     setRepos((tmp) => {
-      tmp = tmp.filter((remv) => remv.modules != data.id);
+      tmp = tmp.filter((remv) => remv.base_url != data.id);
       return tmp;
     }, data.callback);
   };
@@ -125,9 +119,9 @@ export const RepoProvider = (props: React.PropsWithChildren) => {
     setModules([]);
     const fetchData = async () => {
       for (const repo of repos) {
-        if (settings.disabled_repos.includes(repo.modules)) continue;
+        if (settings.disabled_repos.includes(repo.base_url)) continue;
 
-        fetch(repo.modules)
+        fetch(`${repo.base_url}json/modules.json`)
           .then((res) => {
             if (!res.ok) throw new Error(res.statusText);
             return res.json();

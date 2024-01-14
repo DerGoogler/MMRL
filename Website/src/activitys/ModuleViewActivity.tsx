@@ -52,7 +52,8 @@ import TerminalIcon from "@mui/icons-material/Terminal";
 import { isLiteralObject } from "@Util/util";
 import { useLowQualityModule } from "@Hooks/useLowQualityModule";
 import AvatarGroup from "@mui/material/AvatarGroup";
-import ProfileActivty from "./ProfileActivity";
+import FormatAlignLeftIcon from "@mui/icons-material/FormatAlignLeft";
+// import ProfileActivty from "./ProfileActivity";
 import { useModConf } from "@Hooks/useModConf";
 
 function a11yProps(index: number) {
@@ -62,17 +63,17 @@ function a11yProps(index: number) {
   };
 }
 
-function pickFourElements(jsonArray: Array<MmrlAuthor>): Array<MmrlAuthor> {
-  if (jsonArray.length <= 4) {
-    // Return the array as is if it contains 4 or fewer elements
-    return jsonArray;
-  } else {
-    // Shuffle the array to randomize the selection
-    const shuffledArray = jsonArray.sort(() => Math.random() - 0.5);
-    // Return the first four elements of the shuffled array
-    return shuffledArray.slice(0, 4);
-  }
-}
+// function pickFourElements(jsonArray: Array<MmrlAuthor>): Array<MmrlAuthor> {
+//   if (jsonArray.length <= 4) {
+//     // Return the array as is if it contains 4 or fewer elements
+//     return jsonArray;
+//   } else {
+//     // Shuffle the array to randomize the selection
+//     const shuffledArray = jsonArray.sort(() => Math.random() - 0.5);
+//     // Return the first four elements of the shuffled array
+//     return shuffledArray.slice(0, 4);
+//   }
+// }
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -98,17 +99,18 @@ const ModuleViewActivity = () => {
   const { context, extra } = useActivity<Module>();
 
   const log = useLog("ModuleViewActivity");
-  const { id, name, version, versionCode, description, author, readme, about, download, mmrl, fox, last_update, updateJson, verified } =
-    extra;
+  const { id, name, version, versionCode, description, author, versions, track } = extra;
 
-  const categories = useCategories(mmrl.categories);
-  const { data } = useFetch<str>(readme);
-  const formatLastUpdate = useFormatDate(last_update);
+  const categories = useCategories(track.categories);
+  // const { data } = useFetch<str>(readme);
+  const data = undefined;
+
+  const latestVersion = React.useMemo(() => versions[versions.length - 1], [versions]);
+
+  const formatLastUpdate = useFormatDate(latestVersion.timestamp);
 
   const { modConf, __modConf } = useModConf();
   const hasInstallTools = SuFile.exist(`${modConf("MMRLINI")}/module.prop`);
-  
-  const { SupportIcon, supportText } = useSupportIconForUrl(fox.support);
 
   const search = React.useMemo(() => new URLSearchParams(window.location.search), [window.location.search]);
 
@@ -176,7 +178,7 @@ const ModuleViewActivity = () => {
           color: "white",
         }}
       >
-        {mmrl.cover && (
+        {track.cover && (
           <Box
             sx={(theme) => ({
               background: `linear-gradient(to top,${theme.palette.primary.main} 0,rgba(0,0,0,0) 56%)`,
@@ -194,7 +196,7 @@ const ModuleViewActivity = () => {
                 },
                 objectFit: "cover",
               })}
-              image={mmrl.cover}
+              image={track.cover}
               alt={name}
             />
           </Box>
@@ -202,7 +204,7 @@ const ModuleViewActivity = () => {
 
         <Box
           sx={(theme) => ({
-            pt: mmrl.cover ? 0 : 2,
+            pt: track.cover ? 0 : 2,
             pl: 2,
             pr: 2,
             pb: 2,
@@ -230,7 +232,7 @@ const ModuleViewActivity = () => {
                 mr: 1.5,
                 fontSize: 50,
               })}
-              src={mmrl.logo}
+              src={track.logo}
             >
               {name.charAt(0).toUpperCase()}
             </Avatar>
@@ -240,7 +242,7 @@ const ModuleViewActivity = () => {
                 {name}
               </Disappear>
 
-              {mmrl.author ? (
+              {/* {track.author ? (
                 <Typography
                   variant="body2"
                   color="text.secondary"
@@ -255,18 +257,22 @@ const ModuleViewActivity = () => {
                   onClick={() => {
                     context.pushPage({
                       component: ProfileActivty,
-                      key: mmrl.author?.name + "_ProfileActivty",
-                      extra: mmrl.author,
+                      key: track.author?.name + "_ProfileActivty",
+                      extra: track.author,
                     });
                   }}
                 >
-                  {mmrl.author.name} {mmrl.author.verified && <VerifiedIcon sx={{ ml: 0.5, fontSize: "0.8rem" }} />}
+                  {track.author.name} {track.author.verified && <VerifiedIcon sx={{ ml: 0.5, fontSize: "0.8rem" }} />}
                 </Typography>
               ) : (
                 <Typography variant="body2" color="text.secondary">
                   {author}
                 </Typography>
-              )}
+              )} */}
+
+              <Typography variant="body2" color="text.secondary">
+                {author}
+              </Typography>
             </Box>
           </Box>
 
@@ -281,7 +287,7 @@ const ModuleViewActivity = () => {
             alignItems="flex-start"
             spacing={1}
           >
-            {mmrl.author && mmrl.contributors && (
+            {/* {track.author && track.contributors && (
               <Box>
                 <Typography color="text.secondary" variant="subtitle1">
                   Contributors
@@ -307,7 +313,7 @@ const ModuleViewActivity = () => {
                   ))}
                 </AvatarGroup>
               </Box>
-            )}
+            )} */}
 
             {/* DL SECTION */}
 
@@ -324,8 +330,8 @@ const ModuleViewActivity = () => {
                 {version} ({versionCode})
               </Typography>
 
-              <Stack direction={{ xs: "column", sm: "row" }} spacing={1}>
-                {fox.support && (
+              <Stack direction="row" justifyContent="center" alignItems="center" spacing={1}>
+                {os.isAndroid && (Shell.isMagiskSU() || Shell.isKernelSU() || Shell.isAPatchSU()) && hasInstallTools && (
                   <Button
                     color="secondary"
                     sx={{
@@ -334,69 +340,43 @@ const ModuleViewActivity = () => {
                       alignSelf: "flex-end",
                     }}
                     variant="contained"
-                    startIcon={<SupportIcon />}
                     disableElevation
                     onClick={() => {
-                      os.open(fox.support, {
-                        target: "_blank",
-                        features: {
-                          color: theme.palette.primary.main,
+                      context.pushPage({
+                        component: TerminalActivity,
+                        key: "TerminalActivity",
+                        extra: {
+                          exploreInstall: true,
+                          path: latestVersion.zipUrl,
                         },
                       });
                     }}
                   >
-                    {supportText}
+                    {strings("install")}
                   </Button>
                 )}
 
-                <Stack direction="row" justifyContent="center" alignItems="center" spacing={1}>
-                  {os.isAndroid && (Shell.isMagiskSU() || Shell.isKernelSU() || Shell.isAPatchSU()) && hasInstallTools && (
-                    <Button
-                      color="secondary"
-                      sx={{
-                        minWidth: 160,
-                        width: { sm: "unset", xs: "100%" },
-                        alignSelf: "flex-end",
-                      }}
-                      variant="contained"
-                      disableElevation
-                      onClick={() => {
-                        context.pushPage({
-                          component: TerminalActivity,
-                          key: "TerminalActivity",
-                          extra: {
-                            exploreInstall: true,
-                            path: download,
-                          },
-                        });
-                      }}
-                    >
-                      {strings("install")}
-                    </Button>
-                  )}
-
-                  <Button
-                    color="secondary"
-                    disabled={!download}
-                    onClick={() => {
-                      os.open(download, {
-                        target: "_blank",
-                        features: {
-                          color: theme.palette.primary.main,
-                        },
-                      });
-                    }}
-                    sx={{
-                      minWidth: 160,
-                      width: { sm: "unset", xs: "100%" },
-                      alignSelf: "flex-end",
-                    }}
-                    variant="contained"
-                    disableElevation
-                  >
-                    {strings("download")}
-                  </Button>
-                </Stack>
+                <Button
+                  color="secondary"
+                  disabled={!latestVersion.zipUrl}
+                  onClick={() => {
+                    os.open(latestVersion.zipUrl, {
+                      target: "_blank",
+                      features: {
+                        color: theme.palette.primary.main,
+                      },
+                    });
+                  }}
+                  sx={{
+                    minWidth: 160,
+                    width: { sm: "unset", xs: "100%" },
+                    alignSelf: "flex-end",
+                  }}
+                  variant="contained"
+                  disableElevation
+                >
+                  {strings("download")}
+                </Button>
               </Stack>
             </Stack>
           </Stack>
@@ -410,29 +390,6 @@ const ModuleViewActivity = () => {
       <Page.RelativeContent>
         <CustomTabPanel value={value} index={0}>
           <Stack direction="column" justifyContent="center" alignItems="flex-start" spacing={1}>
-            {mmrl.developerNote && (
-              <Alert
-                sx={{
-                  width: "100%",
-                }}
-                severity={mmrl.developerNote.severity}
-              >
-                <AlertTitle>Developer Note</AlertTitle>
-                {mmrl.developerNote.note}
-              </Alert>
-            )}
-            {fox.minApi && os.sdk <= fox.minApi && (
-              <Alert
-                sx={{
-                  width: "100%",
-                }}
-                severity="warning"
-              >
-                <AlertTitle>{strings("unsupported")}</AlertTitle>
-                {strings("require_sdk", { sdk: parseAndroidVersion(fox.minApi) })}
-              </Alert>
-            )}
-
             {isLowQuality && (
               <Alert severity="warning">
                 <AlertTitle>{strings("low_quality_module")}</AlertTitle>
@@ -440,7 +397,7 @@ const ModuleViewActivity = () => {
               </Alert>
             )}
 
-            {mmrl.screenshots && (
+            {track.screenshots && (
               <Card elevation={0} sx={{ /*width: { xs: "100%", sm: "100vh" },*/ width: "100%" }}>
                 <CardContent>
                   <Typography variant="h5" component="div">
@@ -459,7 +416,7 @@ const ModuleViewActivity = () => {
                     gridAutoColumns: "minmax(250px, 1fr)",
                   }}
                 >
-                  {mmrl.screenshots.map((image, i) => (
+                  {track.screenshots.map((image, i) => (
                     <ImageListItem
                       sx={(theme) => ({
                         ml: 1,
@@ -521,7 +478,7 @@ const ModuleViewActivity = () => {
                           extra: {
                             desc: data,
                             name: name,
-                            logo: mmrl.logo,
+                            logo: track.logo,
                           },
                         });
                       }}
@@ -532,7 +489,7 @@ const ModuleViewActivity = () => {
                   </Stack>
 
                   <Typography variant="body2" color="text.secondary">
-                    {isLiteralObject(description) ? String((description as ModuleDescription)[currentLanguage]) : String(description)}
+                    {description}
                   </Typography>
                   <Typography sx={{ mt: 3 }} variant="h6" component="div">
                     {strings("updated_on")}
@@ -558,7 +515,7 @@ const ModuleViewActivity = () => {
               </Card>
             ) : null}
 
-            {mmrl.require && (
+            {track.require && (
               <Card
                 elevation={0}
                 sx={{
@@ -583,7 +540,7 @@ const ModuleViewActivity = () => {
                   }}
                 >
                   <List disablePadding sx={{ width: { xs: "100%" } }}>
-                    {mmrl.require.map((req) => {
+                    {track.require.map((req) => {
                       const findRequire = React.useMemo(() => modules.find((module) => module.id === req), [modules]);
 
                       if (findRequire) {
@@ -615,91 +572,11 @@ const ModuleViewActivity = () => {
                 </Box>
               </Card>
             )}
-
-            <Card
-              elevation={0}
-              sx={{
-                // width: { xs: "100%", sm: "100vh" },
-
-                width: "100%",
-              }}
-            >
-              <CardContent>
-                <Typography variant="h5" component="div">
-                  {strings("requirements")}
-                </Typography>
-              </CardContent>
-
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: {
-                    xs: "column", // mobile
-                    sm: "row", // tablet and up
-                  },
-                }}
-              >
-                <List
-                  sx={{ width: { xs: "100%" } }}
-                  subheader={<ListSubheader sx={{ bgcolor: "transparent" }}>{strings("access")}</ListSubheader>}
-                >
-                  <ListItem>
-                    <StyledListItemText primary={strings("change_boot")} secondary={fox.changeBoot ? strings("yes") : strings("no")} />
-                  </ListItem>
-
-                  <ListItem>
-                    <StyledListItemText primary={strings("need_ramdisk")} secondary={fox.needRamdisk ? strings("yes") : strings("no")} />
-                  </ListItem>
-
-                  <ListItem>
-                    <StyledListItemText primary="MMT-Reborn" secondary={fox.mmtReborn ? strings("yes") : strings("no")} />
-                  </ListItem>
-                </List>
-
-                <List
-                  sx={{ width: { xs: "100%" } }}
-                  subheader={<ListSubheader sx={{ bgcolor: "transparent" }}>{strings("minimum")}</ListSubheader>}
-                >
-                  <ListItem>
-                    <StyledListItemText
-                      primary={strings("operating_sys")}
-                      secondary={fox.minApi ? parseAndroidVersion(fox.minApi) : strings("unset")}
-                    />
-                  </ListItem>
-
-                  <ListItem>
-                    <StyledListItemText
-                      primary="KernelSU"
-                      secondary={mmrl.minKernelSU ? String(mmrl.minKernelSU) : strings("unset")}
-                    />
-                  </ListItem>
-
-                  <ListItem>
-                    <StyledListItemText
-                      primary="Magisk"
-                      secondary={fox.minMagisk ? Magisk.PARSE_VERSION(String(fox.minMagisk)) : strings("unset")}
-                    />
-                  </ListItem>
-                </List>
-
-                <List
-                  sx={{ width: { xs: "100%" } }}
-                  subheader={<ListSubheader sx={{ bgcolor: "transparent" }}>{strings("recommended")}</ListSubheader>}
-                >
-                  <ListItem>
-                    <StyledListItemText
-                      primary={strings("operating_sys")}
-                      secondary={fox.maxApi ? parseAndroidVersion(fox.maxApi) : strings("unset")}
-                    />
-                  </ListItem>
-                </List>
-              </Box>
-            </Card>
           </Stack>
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
           <List>
-            {verified && (
+            {track.verified && (
               <ListItem>
                 <ListItemIcon>
                   <VerifiedIcon />
@@ -708,28 +585,19 @@ const ModuleViewActivity = () => {
               </ListItem>
             )}
 
-            {updateJson && (
+            {track.license && (
               <ListItem>
                 <ListItemIcon>
-                  <SecurityUpdateGoodIcon />
+                  <FormatAlignLeftIcon />
                 </ListItemIcon>
-                <StyledListItemText primary={strings("update_json")} secondary={strings("update_json_desc")} />
+                <StyledListItemText primary={strings("license")} secondary={track.license} />
               </ListItem>
             )}
 
-            {about.language && (
-              <ListItem>
-                <ListItemIcon>
-                  <TerminalIcon />
-                </ListItemIcon>
-                <StyledListItemText primary={strings("language")} secondary={about.language} />
-              </ListItem>
-            )}
-
-            {about.issues && (
+            {track.support && (
               <ListItemButton
                 onClick={() => {
-                  os.open(about.issues, {
+                  os.open(track.support, {
                     target: "_blank",
                     features: {
                       color: theme.palette.primary.main,
@@ -740,13 +608,13 @@ const ModuleViewActivity = () => {
                 <ListItemIcon>
                   <BugReportIcon />
                 </ListItemIcon>
-                <StyledListItemText primary="Issues" secondary={about.issues} />
+                <StyledListItemText primary="Issues" secondary={track.support} />
               </ListItemButton>
             )}
 
             <ListItemButton
               onClick={() => {
-                os.open(about.source, {
+                os.open(track.source, {
                   target: "_blank",
                   features: {
                     color: theme.palette.primary.main,
@@ -757,7 +625,7 @@ const ModuleViewActivity = () => {
               <ListItemIcon>
                 <GitHubIcon />
               </ListItemIcon>
-              <StyledListItemText primary={strings("source")} secondary={about.source} />
+              <StyledListItemText primary={strings("source")} secondary={track.source} />
             </ListItemButton>
           </List>
         </CustomTabPanel>

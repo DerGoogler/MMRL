@@ -25,18 +25,14 @@ export const ExploreModule = React.memo<Props>((props) => {
   const { settings } = useSettings();
   const { theme, scheme, shade } = useTheme();
 
-  const { id, name, version, versionCode, description, stars, author, last_update, mmrl, valid, hidden } = props.moduleProps;
+  const { id, name, version, versionCode, description, author, versions, track } = props.moduleProps;
 
   const isLowQuality = useLowQualityModule(props.moduleProps, !settings._low_quality_module);
-  const formatLastUpdate = useFormatDate(last_update);
+  const formatLastUpdate = useFormatDate(versions[versions.length - 1].timestamp);
 
-  if (hidden) {
-    return null;
-  }
-
-  if (!settings._invald_module && !valid) {
-    return null;
-  }
+  // if (!settings._invald_module && !valid) {
+  //   return null;
+  // }
 
   const handleOpen = () => {
     context.pushPage({
@@ -51,7 +47,7 @@ export const ExploreModule = React.memo<Props>((props) => {
       return null;
     }
 
-    if (mmrl.cover) {
+    if (track.cover) {
       return (
         <CardMedia
           component="img"
@@ -63,7 +59,7 @@ export const ExploreModule = React.memo<Props>((props) => {
             boxShadow: "0 1px 2px 0 rgba(60,64,67,.3), 0 1px 10px 1px rgba(60,64,67,.15)",
             width: "calc(100% - 16px)",
           })}
-          image={mmrl.cover}
+          image={track.cover}
           alt={name}
         />
       );
@@ -97,7 +93,7 @@ export const ExploreModule = React.memo<Props>((props) => {
               <span>
                 {version} ({versionCode}) /
               </span>
-              {mmrl.author ? (
+              {/* {track.author ? (
                 <Box
                   component="span"
                   sx={{
@@ -109,15 +105,16 @@ export const ExploreModule = React.memo<Props>((props) => {
                     },
                   }}
                 >
-                  {mmrl.author.name} {mmrl.author.verified && <VerifiedIcon sx={{ ml: 0.5, fontSize: "0.8rem" }} />}
+                  {track.author.name} {track.author.verified && <VerifiedIcon sx={{ ml: 0.5, fontSize: "0.8rem" }} />}
                 </Box>
               ) : (
                 <span>{author}</span>
-              )}
+              )} */}
+              <span>{author}</span>
             </Stack>
           </Typography>
           <Typography variant="body1" color="text.secondary">
-            {isLiteralObject(description) ? String((description as ModuleDescription)[currentLanguage]) : String(description)}
+            {description}
           </Typography>
         </Stack>
       </Box>
@@ -129,7 +126,7 @@ export const ExploreModule = React.memo<Props>((props) => {
           })}
           label={formatLastUpdate}
         />
-        <Stack spacing={0.8} direction="row">
+        {/* <Stack spacing={0.8} direction="row">
           <Stack
             direction="row"
             justifyContent="center"
@@ -158,7 +155,7 @@ export const ExploreModule = React.memo<Props>((props) => {
               {stars}
             </Typography>
           </Stack>
-        </Stack>
+        </Stack> */}
       </Stack>
       {isLowQuality && (
         <Alert sx={{ borderRadius: 0 }} severity="warning">

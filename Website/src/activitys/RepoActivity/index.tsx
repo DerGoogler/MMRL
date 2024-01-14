@@ -22,42 +22,8 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { os } from "@Native/Os";
 import { useStrings } from "@Hooks/useStrings";
 import { Page } from "@Components/onsenui/Page";
-import { RecommendedRepo } from "./components/RecommendedRepo";
 import { LocalRepository } from "./components/LocalRepository";
 import { useNetwork } from "@Hooks/useNetwork";
-
-const recommended_repos = [
-  {
-    name: "Magisk Modules Alternative Repository",
-    link: "https://gr.dergoogler.com/magisk/mmar.json",
-  },
-  {
-    name: "Googlers Magisk Repo",
-    link: "https://gr.dergoogler.com/magisk/gmr.json",
-  },
-  {
-    name: "Magisk Modules Repo (Official)",
-    link: "https://gr.dergoogler.com/magisk/mmr.json",
-  },
-];
-
-const MemoizdRecommendedRepos = React.memo<{ filteredRepos: StoredRepo[] }>((props) => {
-  const { strings } = useStrings();
-  return (
-    <>
-      {props.filteredRepos.length !== 0 && <Divider />}
-      <List
-        subheader={
-          <ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>{strings("explore_repositories")}</ListSubheader>
-        }
-      >
-        {recommended_repos.map((repo, index) => (
-          <RecommendedRepo key={repo.name + "_" + index} name={repo.name} link={repo.link} />
-        ))}
-      </List>
-    </>
-  );
-});
 
 const RepoActivity = () => {
   const { isNetworkAvailable } = useNetwork();
@@ -66,7 +32,6 @@ const RepoActivity = () => {
 
   const { repos, actions } = useRepos();
   const [repoLink, setRepoLink] = React.useState("");
-  const [search, setSearch] = React.useState("");
 
   const [open, setOpen] = React.useState(false);
 
@@ -86,11 +51,6 @@ const RepoActivity = () => {
     setRepoLink(event.target.value);
   };
 
-  const filteredRepos = React.useMemo(
-    () => repos.filter((item) => item.name.toLowerCase().includes(search.toLowerCase())),
-    [repos, search]
-  );
-
   const renderToolbar = () => {
     return (
       <Toolbar modifier="noshadow">
@@ -109,11 +69,9 @@ const RepoActivity = () => {
     <>
       <Page renderToolbar={renderToolbar}>
         <Page.RelativeContent zeroMargin>
-          {filteredRepos.map((repo, index) => (
+          {repos.map((repo, index) => (
             <LocalRepository key={"repo_" + repo.name + "_" + index} repo={repo} />
           ))}
-
-          {isNetworkAvailable && <MemoizdRecommendedRepos filteredRepos={filteredRepos} />}
         </Page.RelativeContent>
 
         <Dialog open={open} onClose={handleClose}>
@@ -144,7 +102,7 @@ const RepoActivity = () => {
                   },
                   error: (error) => {
                     setRepoLink("");
-                    os.toast(error, Toast.LENGTH_SHORT);
+                    os.toast(error.message, Toast.LENGTH_SHORT);
                     handleClose();
                   },
                 });

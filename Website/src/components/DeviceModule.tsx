@@ -45,7 +45,7 @@ const DeviceModule = React.memo<Props>((props) => {
 
   const log = useLog("DeviceModule");
 
-  const { id, name, version, versionCode, author, description, updateJson: __updateJson } = props.module;
+  const { id, name, version, versionCode, author, description } = props.module;
 
   const format = React.useCallback<<K extends keyof ModConf>(key: K) => ModConf[K]>((key) => modConf(key, { MODID: id }), []);
 
@@ -67,22 +67,8 @@ const DeviceModule = React.memo<Props>((props) => {
 
   const findOnlineModule = React.useMemo(() => modules.find((module) => module.id === id), [modules]) as Module;
 
-  const [updateJson, setUpdateJson] = React.useState<UpdateJson | null>(null);
-
-  if (__updateJson) {
-    React.useEffect(() => {
-      fetch(__updateJson)
-        .then((res) => res.json())
-        .then((json: UpdateJson) => setUpdateJson(json));
-    }, []);
-  }
-
   const hasUpdate = React.useMemo(() => {
-    if (updateJson) {
-      return findOnlineModule && versionCode < updateJson.versionCode;
-    } else {
-      return findOnlineModule && versionCode < findOnlineModule.versionCode;
-    }
+    return findOnlineModule && versionCode < findOnlineModule.versionCode;
   }, [findOnlineModule]);
 
   const isLowQuality = useLowQualityModule(props.module, !settings._low_quality_module);
@@ -230,7 +216,7 @@ const DeviceModule = React.memo<Props>((props) => {
                 key: "TerminalActivity",
                 extra: {
                   exploreInstall: true,
-                  path: findOnlineModule.download,
+                  path: findOnlineModule.versions[findOnlineModule.versions.length - 1].zipUrl,
                 },
               });
             }}
