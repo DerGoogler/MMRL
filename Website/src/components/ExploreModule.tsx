@@ -126,7 +126,7 @@ export const ExploreModule = React.memo<Props>((props) => {
           })}
           label={formatLastUpdate}
         />
-        {/* <Stack spacing={0.8} direction="row">
+        <Stack spacing={0.8} direction="row">
           <Stack
             direction="row"
             justifyContent="center"
@@ -152,10 +152,10 @@ export const ExploreModule = React.memo<Props>((props) => {
                 typography: "caption",
               }}
             >
-              {stars}
+              {track.stars}
             </Typography>
           </Stack>
-        </Stack> */}
+        </Stack>
       </Stack>
       {isLowQuality && (
         <Alert sx={{ borderRadius: 0 }} severity="warning">

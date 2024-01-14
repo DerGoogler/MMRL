@@ -102,8 +102,7 @@ const ModuleViewActivity = () => {
   const { id, name, version, versionCode, description, author, versions, track } = extra;
 
   const categories = useCategories(track.categories);
-  // const { data } = useFetch<str>(readme);
-  const data = undefined;
+  const { data } = useFetch<str>(track.readme);
 
   const latestVersion = React.useMemo(() => versions[versions.length - 1], [versions]);
 
@@ -397,58 +396,6 @@ const ModuleViewActivity = () => {
               </Alert>
             )}
 
-            {track.screenshots && (
-              <Card elevation={0} sx={{ /*width: { xs: "100%", sm: "100vh" },*/ width: "100%" }}>
-                <CardContent>
-                  <Typography variant="h5" component="div">
-                    {strings("images")}
-                  </Typography>
-                </CardContent>
-
-                <ImageList
-                  sx={{
-                    pt: 0,
-                    p: 1,
-                    overflow: "auto",
-                    whiteSpace: "nowrap",
-                    gridAutoFlow: "column",
-                    gridTemplateColumns: "repeat(auto-fill,minmax(250px,1fr)) !important",
-                    gridAutoColumns: "minmax(250px, 1fr)",
-                  }}
-                >
-                  {track.screenshots.map((image, i) => (
-                    <ImageListItem
-                      sx={(theme) => ({
-                        ml: 1,
-                        mr: 1,
-                      })}
-                    >
-                      <Box
-                        component="img"
-                        src={image}
-                        sx={(theme) => ({
-                          ":hover": {
-                            cursor: "pointer",
-                          },
-                          boxShadow: "0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15)",
-                          borderRadius: theme.shape.borderRadius / theme.shape.borderRadius,
-                        })}
-                        onClick={() => {
-                          context.pushPage({
-                            component: PicturePreviewActivity,
-                            key: "PicturePreviewActivity",
-                            extra: {
-                              picture: image,
-                            },
-                          });
-                        }}
-                      />
-                    </ImageListItem>
-                  ))}
-                </ImageList>
-              </Card>
-            )}
-
             {data ? (
               <Card
                 elevation={0}
@@ -570,6 +517,58 @@ const ModuleViewActivity = () => {
                     })}
                   </List>
                 </Box>
+              </Card>
+            )}
+
+            {track.screenshots && (
+              <Card elevation={0} sx={{ /*width: { xs: "100%", sm: "100vh" },*/ width: "100%" }}>
+                <CardContent>
+                  <Typography variant="h5" component="div">
+                    {strings("images")}
+                  </Typography>
+                </CardContent>
+
+                <ImageList
+                  sx={{
+                    pt: 0,
+                    p: 1,
+                    overflow: "auto",
+                    whiteSpace: "nowrap",
+                    gridAutoFlow: "column",
+                    gridTemplateColumns: "repeat(auto-fill,minmax(250px,1fr)) !important",
+                    gridAutoColumns: "minmax(250px, 1fr)",
+                  }}
+                >
+                  {track.screenshots.map((image, i) => (
+                    <ImageListItem
+                      sx={(theme) => ({
+                        ml: 1,
+                        mr: 1,
+                      })}
+                    >
+                      <Box
+                        component="img"
+                        src={image}
+                        sx={(theme) => ({
+                          ":hover": {
+                            cursor: "pointer",
+                          },
+                          boxShadow: "0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15)",
+                          borderRadius: theme.shape.borderRadius / theme.shape.borderRadius,
+                        })}
+                        onClick={() => {
+                          context.pushPage({
+                            component: PicturePreviewActivity,
+                            key: "PicturePreviewActivity",
+                            extra: {
+                              picture: image,
+                            },
+                          });
+                        }}
+                      />
+                    </ImageListItem>
+                  ))}
+                </ImageList>
               </Card>
             )}
           </Stack>

@@ -172,6 +172,8 @@ declare global {
     screenshots?: string[];
     category?: string;
     categories?: string[];
+    stars?: number;
+    readme?: string;
   }
 
   export interface Version {
