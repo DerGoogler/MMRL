@@ -52,7 +52,7 @@ export const LocalRepository = React.memo<LocalRepositoryProps>((props) => {
 
   const { data } = useFetch<Repo>(`${repo.base_url}json/modules.json`);
 
-  const formatLastUpdate = useFormatDate(data ? data.metadata.timestamp * 1000 : 0);
+  const formatLastUpdate = useFormatDate(data ? data.metadata.timestamp : 0);
 
   if (!data) {
     return (
