@@ -35,26 +35,20 @@ const TerminalActivity = () => {
   }
 
   const install = () => {
-    const { exploreInstall, path } = extra;
+    const { exploreInstall, path, id } = extra;
 
     if (exploreInstall) {
-      const url = new URL(path).pathname.split("/");
-
-      const name = url[2];
-      const branch = url[4].split(".").slice(0, -1).join(".");
-
       const envp_explore = {
         MMRL: "true",
         MMRL_VER: BuildConfig.VERSION_CODE.toString(),
-        NAME: name,
+        NAME: id,
         URL: path,
-        BRANCH: branch,
         ROOTMANAGER: Shell.getRootManager(),
         ...__modConf,
       };
 
       Terminal.exec({
-        command: `${modConf("MMRLINI")}/system/usr/share/mmrl/bin/mmrl_explore_install_v3`,
+        command: `${modConf("MMRLINI")}/system/usr/share/mmrl/bin/mmrl_explore_install_v4`,
         env: envp_explore,
         onLine: (line) => {
           addLine(line);
@@ -69,13 +63,14 @@ const TerminalActivity = () => {
       const envp_local = {
         MMRL: "true",
         MMRL_VER: BuildConfig.VERSION_CODE.toString(),
+        NAME: id,
         ZIPFILE: path,
         ROOTMANAGER: Shell.getRootManager(),
         ...__modConf,
       };
 
       Terminal.exec({
-        command: `${modConf("MMRLINI")}/system/usr/share/mmrl/bin/mmrl_local_install_v3`,
+        command: `${modConf("MMRLINI")}/system/usr/share/mmrl/bin/mmrl_local_install_v4`,
         env: envp_local,
         onLine: (line) => {
           addLine(line);
