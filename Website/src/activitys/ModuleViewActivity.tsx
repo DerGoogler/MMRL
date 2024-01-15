@@ -55,6 +55,9 @@ import AvatarGroup from "@mui/material/AvatarGroup";
 import FormatAlignLeftIcon from "@mui/icons-material/FormatAlignLeft";
 // import ProfileActivty from "./ProfileActivity";
 import { useModConf } from "@Hooks/useModConf";
+import { useConfirm } from "material-ui-confirm";
+import InstallMobileIcon from "@mui/icons-material/InstallMobile";
+import DownloadIcon from "@mui/icons-material/Download";
 
 function a11yProps(index: number) {
   return {
@@ -95,6 +98,7 @@ const ModuleViewActivity = () => {
   const { strings, currentLanguage } = useStrings();
   const { settings } = useSettings();
   const { modules } = useRepos();
+  const confirm = useConfirm();
   const { theme, scheme, shade } = useTheme();
   const { context, extra } = useActivity<Module>();
 
@@ -108,7 +112,7 @@ const ModuleViewActivity = () => {
 
   const formatLastUpdate = useFormatDate(latestVersion.timestamp);
 
-  const { modConf, __modConf } = useModConf();
+  const { modConf } = useModConf();
   const hasInstallTools = SuFile.exist(`${modConf("MMRLINI")}/module.prop`);
 
   const search = React.useMemo(() => new URLSearchParams(window.location.search), [window.location.search]);
@@ -341,14 +345,19 @@ const ModuleViewActivity = () => {
                     variant="contained"
                     disableElevation
                     onClick={() => {
-                      context.pushPage({
-                        component: TerminalActivity,
-                        key: "TerminalActivity",
-                        extra: {
-                          id: id,
-                          exploreInstall: true,
-                          path: latestVersion.zipUrl,
-                        },
+                      confirm({
+                        title: `Install ${name}?`,
+                        confirmationText: "Yes",
+                      }).then(() => {
+                        context.pushPage({
+                          component: TerminalActivity,
+                          key: "TerminalActivity",
+                          extra: {
+                            id: id,
+                            exploreInstall: true,
+                            path: latestVersion.zipUrl,
+                          },
+                        });
                       });
                     }}
                   >
@@ -383,6 +392,7 @@ const ModuleViewActivity = () => {
         </Box>
         <Tabs value={value} onChange={handleChange} indicatorColor="secondary" textColor="inherit" variant="fullWidth">
           <Tab label={strings("overview")} {...a11yProps(0)} />
+          <Tab label={strings("versions")} {...a11yProps(1)} />
           <Tab label={strings("about")} {...a11yProps(1)} />
         </Tabs>
       </Box>
@@ -576,6 +586,13 @@ const ModuleViewActivity = () => {
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
           <List>
+            {versions.map((version) => (
+              <VersionItem id={id} version={version} />
+            ))}
+          </List>
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={2}>
+          <List>
             {track.verified && (
               <ListItem>
                 <ListItemIcon>
@@ -633,6 +650,72 @@ const ModuleViewActivity = () => {
     </Page>
   );
 };
+
+interface VersionItemProps {
+  id: string;
+  version: Version;
+}
+
+const VersionItem = React.memo<VersionItemProps>(({ id, version }) => {
+  const ts = useFormatDate(version.timestamp);
+  const { context } = useActivity();
+  const confirm = useConfirm();
+  const { theme } = useTheme();
+
+  const { modConf, __modConf } = useModConf();
+  const hasInstallTools = SuFile.exist(`${modConf("MMRLINI")}/module.prop`);
+
+  const versionName = `${version.version} (${version.versionCode})`;
+
+  const handleInstall = () => {
+    confirm({
+      title: `Install ${versionName}?`,
+      confirmationText: "Yes",
+    }).then(() => {
+      context.pushPage({
+        component: TerminalActivity,
+        key: "TerminalActivity",
+        extra: {
+          id: id,
+          exploreInstall: true,
+          path: version.zipUrl,
+        },
+      });
+    });
+  };
+
+  return (
+    <ListItem
+      secondaryAction={
+        <Stack direction="row" justifyContent="center" alignItems="center" spacing={0.5}>
+          {os.isAndroid && (Shell.isMagiskSU() || Shell.isKernelSU() || Shell.isAPatchSU()) && hasInstallTools && (
+            <IconButton onClick={handleInstall} edge="end" aria-label="install">
+              <InstallMobileIcon />
+            </IconButton>
+          )}
+
+          <IconButton
+            disabled={!version.zipUrl}
+            onClick={() => {
+              os.open(version.zipUrl, {
+                target: "_blank",
+                features: {
+                  color: theme.palette.primary.main,
+                },
+              });
+            }}
+            edge="end"
+            aria-label="download"
+          >
+            <DownloadIcon />
+          </IconButton>
+        </Stack>
+      }
+    >
+      <StyledListItemText primary={versionName} secondary={ts} />
+    </ListItem>
+  );
+});
 
 interface State {
   data?: string;
