@@ -62,7 +62,7 @@
     "material-icons": "^1.10.8",
     "material-ui-confirm": "^3.0.9",
     "monaco-editor": "^0.45.0",
-    "monaco-editor-core": "^0.43.0",
+    "monaco-editor-core": "^0.45.0",
     "monaco-languageclient": "^6.5.0",
     "npm": "^9.8.0",
     "object-assign": "^4.1.1",
