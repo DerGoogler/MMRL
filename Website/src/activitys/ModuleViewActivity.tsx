@@ -345,6 +345,7 @@ const ModuleViewActivity = () => {
                         component: TerminalActivity,
                         key: "TerminalActivity",
                         extra: {
+                          id: id,
                           exploreInstall: true,
                           path: latestVersion.zipUrl,
                         },
