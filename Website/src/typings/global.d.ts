@@ -176,7 +176,21 @@ declare global {
     categories?: string[];
     stars?: number;
     readme?: string;
+    antifeatures?: AntiFeatures | AntiFeatures[];
   }
+
+  type AntiFeatures =
+    | "Ads"
+    | "Tracking"
+    | "Non-Free Network Services"
+    | "Non-Free Addons"
+    | "Non-Free Dependencies"
+    | "NSFW"
+    | "Upstream Non-Free"
+    | "NonßFree Assets"
+    | "Known Vulnerability"
+    | "Disabled Algorithm"
+    | "No Source Since";
 
   export interface Version {
     timestamp: number;

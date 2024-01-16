@@ -473,6 +473,37 @@ const ModuleViewActivity = () => {
               </Card>
             ) : null}
 
+            {track.antifeatures ? (
+              <Card
+                elevation={0}
+                sx={{
+                  width: "100%",
+                }}
+              >
+                <CardContent>
+                  <Stack
+                    component={Typography}
+                    sx={{
+                      alignItems: "center",
+                    }}
+                    variant="h5"
+                    direction="row"
+                    justifyContent={{ xs: "space-between", sm: "row" }}
+                    spacing={1}
+                    gutterBottom
+                  >
+                    Anti-Features
+                  </Stack>
+
+                  <Typography variant="body2" color="text.secondary">
+                    {typeof track.antifeatures === "string"
+                      ? track.antifeatures
+                      : Array.isArray(track.antifeatures) && track.antifeatures.join("\n")}
+                  </Typography>
+                </CardContent>
+              </Card>
+            ) : null}
+
             {track.require && (
               <Card
                 elevation={0}

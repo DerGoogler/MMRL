@@ -35,6 +35,7 @@ Introducing Magisk Module Repo Loader (MMRL) - the ultimate module manager for M
 - [x] Translation
 - [x] Dark mode
 - [x] Themes
+- [x] Anti-features (partial, needs improvement)
 
 ## Android only
 
