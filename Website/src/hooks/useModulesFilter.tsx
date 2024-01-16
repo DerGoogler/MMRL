@@ -46,18 +46,18 @@ export const filters = [
     value: "alphabetically_reverse",
     allowedIds: ["explore", "local"],
   },
-  {
-    name: "Most stars",
-    icon: StarIcon,
-    value: "most_stars",
-    allowedIds: ["explore"],
-  },
-  {
-    name: "Least stars",
-    icon: StarBorderIcon,
-    value: "least_stars",
-    allowedIds: ["explore"],
-  },
+  // {
+  //   name: "Most stars",
+  //   icon: StarIcon,
+  //   value: "most_stars",
+  //   allowedIds: ["explore"],
+  // },
+  // {
+  //   name: "Least stars",
+  //   icon: StarBorderIcon,
+  //   value: "least_stars",
+  //   allowedIds: ["explore"],
+  // },
 ];
 
 export const useModuleFilter = (key: string): [Array<any>, string, SetValue<string>] => {
@@ -66,12 +66,12 @@ export const useModuleFilter = (key: string): [Array<any>, string, SetValue<stri
   const f = React.useMemo(
     () => ({
       none: [{}],
-      date_oldest: [{ key: "last_update", descending: false }],
-      date_newest: [{ key: "last_update", descending: true }],
+      date_oldest: [{ key: "timestamp", descending: false }],
+      date_newest: [{ key: "timestamp", descending: true }],
       alphabetically: [{ key: "name", descending: false }],
       alphabetically_reverse: [{ key: "name", descending: true }],
-      least_stars: [{ key: "stars", descending: false }],
-      most_stars: [{ key: "stars", descending: true }],
+      // least_stars: [{ key: "stars", descending: false }],
+      // most_stars: [{ key: "stars", descending: true }],
     }),
     []
   );

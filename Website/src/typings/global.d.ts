@@ -153,6 +153,8 @@ declare global {
     versionCode: number;
     author: string;
     description: string;
+    added: number;
+    timestamp: number;
     track: Track;
     versions: Version[];
   }

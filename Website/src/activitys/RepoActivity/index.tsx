@@ -69,9 +69,11 @@ const RepoActivity = () => {
     <>
       <Page renderToolbar={renderToolbar}>
         <Page.RelativeContent zeroMargin>
-          {repos.map((repo, index) => (
-            <LocalRepository key={"repo_" + repo.name + "_" + index} repo={repo} />
-          ))}
+          <List sx={{ bgcolor: "transparent" }}>
+            {repos.map((repo, index) => (
+              <LocalRepository key={"repo_" + repo.name + "_" + index} repo={repo} />
+            ))}
+          </List>
         </Page.RelativeContent>
 
         <Dialog open={open} onClose={handleClose}>

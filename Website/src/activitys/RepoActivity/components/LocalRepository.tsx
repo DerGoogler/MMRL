@@ -6,7 +6,7 @@ import { StyledListItemText } from "@Components/StyledListItemText";
 import { useRepos } from "@Hooks/useRepos";
 import { useSettings } from "@Hooks/useSettings";
 import { useStrings } from "@Hooks/useStrings";
-import { List, ListItem, ListItemButton, ListItemIcon, ListSubheader } from "@mui/material";
+import { IconButton, List, ListItem, ListItemButton, ListItemIcon, ListSubheader } from "@mui/material";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { SvgIconTypeMap } from "@mui/material/SvgIcon/SvgIcon";
 import { DeleteRounded, LanguageRounded, SupportRounded, UploadFileRounded, VolunteerActivismRounded } from "@mui/icons-material";
@@ -15,9 +15,7 @@ import { os } from "@Native/Os";
 import { useFormatDate } from "@Hooks/useFormatDate";
 import { useConfirm } from "material-ui-confirm";
 import { useFetch } from "usehooks-ts";
-import { ProgressCircular } from "react-onsenui";
-import Box from "@mui/material/Box";
-import Skeleton from "@mui/material/Skeleton";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 interface ListItemProps {
   part?: any;
@@ -54,11 +52,31 @@ export const LocalRepository = React.memo<LocalRepositoryProps>((props) => {
 
   const formatLastUpdate = useFormatDate(data ? data.metadata.timestamp : 0);
 
+  const handleRepoDelete = () => {
+    confirm({
+      title: "Delete?",
+      confirmationText: "Sure",
+      description: strings("confirm_repo_delete", {
+        name: repo.name,
+      }),
+    }).then(() => {
+      actions.removeRepo({
+        id: repo.base_url,
+      });
+    });
+  };
+
   if (!data) {
     return (
-      <Box sx={{ width: "100%" }}>
-        <Skeleton height={70} />
-      </Box>
+      <ListItem
+        secondaryAction={
+          <IconButton onClick={handleRepoDelete} edge="end" aria-label="delete">
+            <DeleteIcon />
+          </IconButton>
+        }
+      >
+        <StyledListItemText primary="Loading..." />
+      </ListItem>
     );
   }
 
@@ -67,7 +85,7 @@ export const LocalRepository = React.memo<LocalRepositoryProps>((props) => {
   };
 
   return (
-    <List sx={{ bgcolor: "transparent" }}>
+    <>
       <ListItem>
         <ListItemIcon onClick={handleClick}>{open ? <ExpandLess /> : <ExpandMore />}</ListItemIcon>
         <StyledListItemText primary={repo.name} secondary={formatLastUpdate} />
@@ -127,26 +145,9 @@ export const LocalRepository = React.memo<LocalRepositoryProps>((props) => {
               }
             }}
           />
-          <MListItem
-            part
-            icon={DeleteRounded}
-            text={strings("remove")}
-            onClick={() => {
-              confirm({
-                title: "Delete?",
-                confirmationText: "Sure",
-                description: strings("confirm_repo_delete", {
-                  name: repo.name,
-                }),
-              }).then(() => {
-                actions.removeRepo({
-                  id: repo.base_url,
-                });
-              });
-            }}
-          />
+          <MListItem part icon={DeleteRounded} text={strings("remove")} onClick={handleRepoDelete} />
         </List>
       </Collapse>
-    </List>
+    </>
   );
 });
