@@ -22,8 +22,47 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { os } from "@Native/Os";
 import { useStrings } from "@Hooks/useStrings";
 import { Page } from "@Components/onsenui/Page";
+import { RecommendedRepo } from "./components/RecommendedRepo";
 import { LocalRepository } from "./components/LocalRepository";
 import { useNetwork } from "@Hooks/useNetwork";
+
+const recommended_repos = [
+  {
+    name: "Magisk Modules Alternative Repository",
+    link: "https://gr.dergoogler.com/mmar/",
+  },
+  {
+    name: "Googlers Magisk Repo",
+    link: "https://gr.dergoogler.com/gmr/",
+  },
+  {
+    name: "IzzyOnDroid Magisk Repository",
+    link: "https://apt.izzysoft.de/magisk/",
+  },
+  // {
+  //   name: "Magisk Modules Repo (Official)",
+  //   link: "https://gr.dergoogler.com/mmr/",
+  // },
+];
+
+const MemoizdRecommendedRepos = React.memo((props) => {
+  const { strings } = useStrings();
+  const { repos } = useRepos();
+  return (
+    <>
+      {repos.length !== 0 && <Divider />}
+      <List
+        subheader={
+          <ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>{strings("explore_repositories")}</ListSubheader>
+        }
+      >
+        {recommended_repos.map((repo, index) => (
+          <RecommendedRepo key={repo.name + "_" + index} name={repo.name} link={repo.link} />
+        ))}
+      </List>
+    </>
+  );
+});
 
 const RepoActivity = () => {
   const { isNetworkAvailable } = useNetwork();
@@ -74,6 +113,7 @@ const RepoActivity = () => {
               <LocalRepository key={"repo_" + repo.name + "_" + index} repo={repo} />
             ))}
           </List>
+          {isNetworkAvailable && <MemoizdRecommendedRepos />}
         </Page.RelativeContent>
 
         <Dialog open={open} onClose={handleClose}>
