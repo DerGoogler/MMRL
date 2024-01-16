@@ -17,7 +17,6 @@ import { useStrings } from "@Hooks/useStrings";
 import { Tabbar, TabbarRenderTab } from "@Components/onsenui/Tabbar";
 import { useRepos } from "@Hooks/useRepos";
 import { SuFile } from "@Native/SuFile";
-import { Properties } from "properties-file";
 import { useNativeStorage } from "@Hooks/useNativeStorage";
 import { BuildConfig } from "@Native/BuildConfig";
 import { useNewerVersion } from "@Hooks/useNewerVersion";

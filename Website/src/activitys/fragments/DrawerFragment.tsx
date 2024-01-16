@@ -14,7 +14,6 @@ import { Markup } from "@Components/Markdown";
 import { configureSample } from "@Util/configure-sample";
 import { dapiSample } from "@Util/dapi-sample";
 import ModConfActivity from "@Activitys/ModConfActivity";
-import { os } from "@Native/Os";
 
 type Props = {
   renderToolbar: () => JSX.Element;

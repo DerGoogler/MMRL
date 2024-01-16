@@ -13,7 +13,7 @@ type Extra = {
 
 const ConfigureActivity = () => {
   const { modConf } = useModConf();
-  const { context, extra } = useActivity<Extra>();
+  const { extra } = useActivity<Extra>();
 
   const config: string = React.useMemo(() => {
     if (!extra.raw_data) {
@@ -29,9 +29,7 @@ const ConfigureActivity = () => {
     }
   }, []);
 
-  return (
-    <PreviewErrorBoundary modid={extra.moduleid} children={config} renderElement={ConfigureView} />
-  );
+  return <PreviewErrorBoundary modid={extra.moduleid} children={config} renderElement={ConfigureView} />;
 };
 
 export { ConfigureActivity };

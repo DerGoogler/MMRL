@@ -6,7 +6,7 @@ import { StyledListItemText } from "@Components/StyledListItemText";
 import { useRepos } from "@Hooks/useRepos";
 import { useSettings } from "@Hooks/useSettings";
 import { useStrings } from "@Hooks/useStrings";
-import { IconButton, List, ListItem, ListItemButton, ListItemIcon, ListSubheader } from "@mui/material";
+import { IconButton, List, ListItem, ListItemButton, ListItemIcon } from "@mui/material";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { SvgIconTypeMap } from "@mui/material/SvgIcon/SvgIcon";
 import { DeleteRounded, LanguageRounded, SupportRounded, UploadFileRounded, VolunteerActivismRounded } from "@mui/icons-material";

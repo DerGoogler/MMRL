@@ -12,7 +12,6 @@ import ModuleViewActivity from "@Activitys/ModuleViewActivity";
 import ExtensionIcon from "@mui/icons-material/Extension";
 import { useRepos } from "@Hooks/useRepos";
 import FetchTextActivity from "@Activitys/FetchTextActivity";
-import { createRoot } from "react-dom/client";
 import React from "react";
 
 interface AnchorProps {

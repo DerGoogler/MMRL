@@ -1,12 +1,8 @@
-import Icon from "@Components/Icon";
-import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
 import AddIcon from "@mui/icons-material/Add";
-import { StyledCard } from "@Components/StyledCard";
 import { useRepos } from "@Hooks/useRepos";
 import { os } from "@Native/Os";
-import { ListItem, ListItemText } from "@mui/material";
+import { ListItem } from "@mui/material";
 import { StyledListItemText } from "@Components/StyledListItemText";
 
 interface RecommendedRepoProps {

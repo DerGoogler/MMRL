@@ -1,6 +1,5 @@
 import { Box, Stack, styled } from "@mui/material";
 import * as React from "react";
-import Button from "@mui/material/Button";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Toolbar } from "@Components/onsenui/Toolbar";
