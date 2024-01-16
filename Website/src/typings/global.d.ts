@@ -169,7 +169,7 @@ declare global {
     donate: string;
     verified: boolean;
     cover?: string;
-    logo?: string;
+    icon?: string;
     require?: string[];
     screenshots?: string[];
     category?: string;

@@ -235,7 +235,7 @@ const ModuleViewActivity = () => {
                 mr: 1.5,
                 fontSize: 50,
               })}
-              src={track.logo}
+              src={track.icon}
             >
               {name.charAt(0).toUpperCase()}
             </Avatar>
@@ -436,7 +436,7 @@ const ModuleViewActivity = () => {
                           extra: {
                             desc: data,
                             name: name,
-                            logo: track.logo,
+                            logo: track.icon,
                           },
                         });
                       }}
