@@ -393,7 +393,7 @@ const ModuleViewActivity = () => {
         <Tabs value={value} onChange={handleChange} indicatorColor="secondary" textColor="inherit" variant="fullWidth">
           <Tab label={strings("overview")} {...a11yProps(0)} />
           <Tab label={strings("versions")} {...a11yProps(1)} />
-          <Tab label={strings("about")} {...a11yProps(1)} />
+          <Tab label={strings("about")} {...a11yProps(2)} />
         </Tabs>
       </Box>
 
