@@ -145,9 +145,9 @@ extern "C"
 JNIEXPORT jboolean JNICALL
 Java_com_dergoogler_core_NativeShell_isAPatchSU(JNIEnv *env, jclass clazz) {
     static char *mounts[] = {
-            "APD",
-            "apd",
             "APatch",
+            "apd",
+            "APD",
             "APATCH"
     };
     static char *paths[] = {
