@@ -33,13 +33,13 @@ public class NativeShell {
     }
 
     @JavascriptInterface
-    public void isSuccess(String command) {
-        Shell.cmd(command).exec().isSuccess();
+    public boolean isSuccess(String command) {
+        return Shell.cmd(command).exec().isSuccess();
     }
 
     @JavascriptInterface
-    public void getCode(String command) {
-        Shell.cmd(command).exec().getCode();
+    public int getCode(String command) {
+        return Shell.cmd(command).exec().getCode();
     }
 
     @JavascriptInterface
