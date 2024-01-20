@@ -88,5 +88,6 @@
   "storage": "Speicher",
   "clear_repos": "Repositorys löschen",
   "patch_settings": "Einstellungen patchen",
-  "patch_settings_subtitle": "Fehlende Einstellungsschlüssel hinzufügen"
+  "patch_settings_subtitle": "Fehlende Einstellungsschlüssel hinzufügen",
+  "dm_update_json_fetch_warn": "{id} hat eine leere Eigenschaft „updateJson“ oder der Link ist ungültig"
 }

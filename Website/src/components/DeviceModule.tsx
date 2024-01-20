@@ -9,7 +9,7 @@ import { useActivity } from "@Hooks/useActivity";
 import { ConfigureActivity } from "@Activitys/ConfigureActivity";
 import { StyledIconButton } from "./StyledIconButton";
 import { useLog } from "@Hooks/native/useLog";
-import { Properties } from "properties-file";
+import { link } from "googlers-tools";
 import { colors, useSettings } from "@Hooks/useSettings";
 import { useTheme } from "@Hooks/useTheme";
 import TerminalActivity from "@Activitys/TerminalActivity";
@@ -39,13 +39,13 @@ const DeviceModule = React.memo<Props>((props) => {
   const { modConf } = useModConf();
   const { theme } = useTheme();
   const { context, extra } = useActivity<any>();
-  const { modules } = useRepos();
+  const { modules, repos } = useRepos();
   const [isEnabled, setIsEnabled] = React.useState(true);
   const [isSwitchDisabled, setIsSwitchDisabled] = React.useState(false);
 
   const log = useLog("DeviceModule");
 
-  const { id, name, version, versionCode, author, description } = props.module;
+  const { id, name, version, versionCode, author, description, updateJson: __updateJson } = props.module;
 
   const format = React.useCallback<<K extends keyof ModConf>(key: K) => ModConf[K]>((key) => modConf(key, { MODID: id }), []);
 
@@ -65,11 +65,41 @@ const DeviceModule = React.memo<Props>((props) => {
   const boot_complete = SuFile.exist(format("BOOTCOMP"));
   const module_config_file = SuFile.exist(format("CONFINDEX"));
 
-  const findOnlineModule = React.useMemo(() => modules.find((module) => module.id === id), [modules]) as Module;
+  const [updateJson, setUpdateJson] = React.useState<UpdateJson | null>(null);
+
+  if (__updateJson && link.validURL(__updateJson)) {
+    React.useEffect(() => {
+      fetch(__updateJson)
+        .then((res) => {
+          if (res.status == 200) {
+            return res.json();
+          } else {
+            log.e(res.statusText);
+          }
+        })
+        .then((json: UpdateJson) => setUpdateJson(json));
+    }, [repos]);
+  } else {
+    log.w(strings("dm_update_json_fetch_warn", { id: id }));
+  }
 
   const hasUpdate = React.useMemo(() => {
-    return findOnlineModule && versionCode < findOnlineModule.versionCode;
-  }, [findOnlineModule]);
+    const onlineModule = modules.find((module) => module.id === id);
+    if (__updateJson && updateJson) {
+      return versionCode < updateJson.versionCode;
+    } else {
+      return onlineModule && versionCode < onlineModule.versionCode;
+    }
+  }, [modules]);
+
+  const getDownload = React.useMemo(() => {
+    const onlineModule = modules.find((module) => module.id === id);
+    if (__updateJson && updateJson) {
+      return updateJson.zipUrl;
+    } else {
+      return onlineModule && onlineModule.versions[onlineModule.versions.length - 1].zipUrl;
+    }
+  }, [modules]);
 
   const isLowQuality = useLowQualityModule(props.module, !settings._low_quality_module);
 
@@ -216,7 +246,7 @@ const DeviceModule = React.memo<Props>((props) => {
                 key: "TerminalActivity",
                 extra: {
                   exploreInstall: true,
-                  path: findOnlineModule.versions[findOnlineModule.versions.length - 1].zipUrl,
+                  path: getDownload,
                 },
               });
             }}

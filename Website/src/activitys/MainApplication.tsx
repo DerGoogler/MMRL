@@ -31,6 +31,7 @@ import { useModConf } from "@Hooks/useModConf";
 import Fab from "@Components/onsenui/Fab";
 import { useLocalModules } from "@Hooks/useLocalModules";
 import { Shell } from "@Native/Shell";
+import Divider from "@mui/material/Divider";
 
 interface SearchbarRef {
   clear(): void;
@@ -169,6 +170,25 @@ const MainApplication = () => {
                         </Fab>
                       );
                     }
+                  }}
+                  group={{
+                    by: (grpMod) => {
+                      const onlineModule = modules.find((module) => module.id === grpMod.id);
+                      return onlineModule ? (grpMod.versionCode < onlineModule.versionCode ? "0" : "1") : "2";
+                    },
+                    separator: (group, idx, groupLabel) => {
+                      switch (groupLabel) {
+                        case "0":
+                          return <Divider variant="middle">Updateable</Divider>;
+                        case "1":
+                          return <Divider variant="middle" />;
+                        case "2":
+                          return <></>;
+                        default:
+                          return <></>;
+                      }
+                    },
+                    separatorAtTheBottom: false,
                   }}
                 />
               ),

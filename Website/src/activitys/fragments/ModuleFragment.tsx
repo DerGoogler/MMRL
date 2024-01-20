@@ -1,7 +1,7 @@
 import React from "react";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
-import FlatList from "flatlist-react";
+import FlatList, { FlatListProps } from "flatlist-react";
 import { useTheme } from "@Hooks/useTheme";
 import { Page, RenderFunction } from "@Components/onsenui/Page";
 import { MissingInternet } from "@Components/MissingInternet";
@@ -39,6 +39,7 @@ export interface ModuleFragmentProps {
   search: string;
   id: "explore" | "update" | "local";
   modules: Array<Module>;
+  group?: FlatListProps<Module>["group"];
   renderItem: renderFunc<Module>;
   renderFixed?: RenderFunction;
 }
@@ -168,6 +169,7 @@ const ModuleFragment = React.memo<ModuleFragmentProps>((props) => {
               row: true,
               rowGap: "8px",
             }}
+            group={props.group}
           />
         </Box>
       </Page.RelativeContent>
