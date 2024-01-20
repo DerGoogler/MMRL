@@ -22,9 +22,6 @@ const TerminalActivity = () => {
   const ref = React.useRef<HTMLDivElement>(null);
 
   const termEndRef = React.useRef<HTMLDivElement>(null);
-  const addLine = (line: string) => {
-    setLines((lines) => [...lines, line]);
-  };
 
   if (settings.term_scroll_bottom) {
     const termBehavior = React.useMemo(() => settings.term_scroll_behavior, [settings]);
@@ -33,6 +30,40 @@ const TerminalActivity = () => {
       termEndRef.current?.scrollIntoView({ behavior: termBehavior.value, block: "end", inline: "nearest" });
     }, [lines]);
   }
+
+  const processCommand = (rawCommand: string) => {
+    let arg: string | any[];
+    let command: string;
+    console.log(rawCommand);
+    const i = rawCommand.indexOf(" ");
+    if (i != -1 && rawCommand.length != i + 1) {
+      arg = rawCommand
+        .substring(i + 1)
+        .trim()
+        .split(" ");
+      command = rawCommand.substring(0, i);
+    } else {
+      arg = "";
+      command = rawCommand;
+    }
+
+    switch (command) {
+      case "clearTerminal":
+        setLines([]);
+        break;
+      case "log":
+        console.log(arg[0]);
+        break;
+    }
+  };
+
+  const addLine = (line: string) => {
+    if (line.startsWith("#!mmrl:")) {
+      processCommand(line.substring(7));
+    } else {
+      setLines((lines) => [...lines, line]);
+    }
+  };
 
   const install = () => {
     const { exploreInstall, path, id } = extra;
