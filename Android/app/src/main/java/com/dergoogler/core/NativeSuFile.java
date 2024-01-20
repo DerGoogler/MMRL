@@ -15,6 +15,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Date;
 
 public class NativeSuFile {
     private final MainActivity ctx;
@@ -65,6 +66,11 @@ public class NativeSuFile {
                 } else {
                     return String.join(delimiter, files);
                 }
+            }
+
+            @JavascriptInterface
+            public long lastModified() {
+                return file.lastModified();
             }
 
             @JavascriptInterface

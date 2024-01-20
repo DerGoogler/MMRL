@@ -18,6 +18,7 @@ interface NativeSuFileV2 {
     write(data: string): void;
     read(): string;
     list(delimiter: string | null): string;
+    lastModified(): number;
     create(): boolean;
     delete(): boolean;
     deleteRecursive(): void;
@@ -67,6 +68,14 @@ class SuFile extends Native<NativeSuFile> {
       return this._file.list(delimiter).split(delimiter);
     } else {
       return [""];
+    }
+  }
+
+  public lastModified(): number {
+    if (this.isAndroid) {
+      return this._file.lastModified();
+    } else {
+      return 0;
     }
   }
 

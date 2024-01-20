@@ -53,10 +53,10 @@ export const RepoProvider = (props: React.PropsWithChildren) => {
     {
       name: "Googlers Magisk Repo",
       website: "https://mmrl.dergoogler.com",
-      support: "https://github.com/Googlers-Repo/repo/issues",
+      support: "https://github.com/Googlers-Repo/gmr/issues",
       donate: "https://github.com/sponsors/DerGoogler",
       submission: null,
-      base_url: "https://gr.dergoogler.com/repo/",
+      base_url: "https://gr.dergoogler.com/gmr/",
       max_num: 3,
       enable_log: true,
       log_dir: "log",

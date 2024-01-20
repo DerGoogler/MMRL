@@ -26,13 +26,13 @@ export const filters = [
     name: "By date (newest)",
     icon: CalendarMonthIcon,
     value: "date_newest",
-    allowedIds: ["explore"],
+    allowedIds: ["explore", "local"],
   },
   {
     name: "By date (oldest)",
     icon: CalendarMonthIcon,
     value: "date_oldest",
-    allowedIds: ["explore"],
+    allowedIds: ["explore", "local"],
   },
   {
     name: "Alphabetically",

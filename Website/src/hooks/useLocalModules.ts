@@ -19,7 +19,12 @@ export function useLocalModules() {
           setLocalModules((prev) => {
             // Preventing duplicates
             const ids = new Set(prev.map((d) => d.id));
-            const merged = [...prev, ...[new Properties(properties.read()).toObject() as unknown as Module].filter((d) => !ids.has(d.id))];
+            const merged = [
+              ...prev,
+              ...[{ ...(new Properties(properties.read()).toObject() as unknown as Module), timestamp: properties.lastModified() }].filter(
+                (d) => !ids.has(d.id)
+              ),
+            ];
             return merged;
           });
         }
