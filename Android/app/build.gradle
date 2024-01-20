@@ -94,6 +94,7 @@ dependencies {
     implementation "androidx.appcompat:appcompat:1.6.1"
     implementation 'org.apache.cordova:framework:12.0.1'
     implementation 'androidx.webkit:webkit:1.9.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.0'
 }
 
 configurations.implementation.setCanBeResolved(true)

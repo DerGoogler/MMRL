@@ -5,7 +5,7 @@
     "application_id": "com.dergoogler.mmrl",
     "min_sdk": 26,
     "target_sdk": 34,
-    "version_name": "2.13.9_alpha-3",
+    "version_name": "2.13.9_alpha-4",
     "version_code": 2139
   },
   "main": "index.tsx",

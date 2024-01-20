@@ -65,42 +65,6 @@ const DeviceModule = React.memo<Props>((props) => {
   const boot_complete = SuFile.exist(format("BOOTCOMP"));
   const module_config_file = SuFile.exist(format("CONFINDEX"));
 
-  const [updateJson, setUpdateJson] = React.useState<UpdateJson | null>(null);
-
-  if (__updateJson && link.validURL(__updateJson)) {
-    React.useEffect(() => {
-      fetch(__updateJson)
-        .then((res) => {
-          if (res.status == 200) {
-            return res.json();
-          } else {
-            log.e(res.statusText);
-          }
-        })
-        .then((json: UpdateJson) => setUpdateJson(json));
-    }, [repos]);
-  } else {
-    log.w(strings("dm_update_json_fetch_warn", { id: id }));
-  }
-
-  const hasUpdate = React.useMemo(() => {
-    const onlineModule = modules.find((module) => module.id === id);
-    if (__updateJson && updateJson) {
-      return versionCode < updateJson.versionCode;
-    } else {
-      return onlineModule && versionCode < onlineModule.versionCode;
-    }
-  }, [modules]);
-
-  const getDownload = React.useMemo(() => {
-    const onlineModule = modules.find((module) => module.id === id);
-    if (__updateJson && updateJson) {
-      return updateJson.zipUrl;
-    } else {
-      return onlineModule && onlineModule.versions[onlineModule.versions.length - 1].zipUrl;
-    }
-  }, [modules]);
-
   const isLowQuality = useLowQualityModule(props.module, !settings._low_quality_module);
 
   return (
@@ -224,35 +188,10 @@ const DeviceModule = React.memo<Props>((props) => {
           </Stack>
         </Stack>
         {isLowQuality && (
-          <Alert
-            sx={{ borderRadius: hasUpdate ? 0 : `0px 0px ${theme.shape.borderRadius}px ${theme.shape.borderRadius}px` }}
-            severity="warning"
-          >
+          <Alert sx={{ borderRadius: `0px 0px ${theme.shape.borderRadius}px ${theme.shape.borderRadius}px` }} severity="warning">
             <AlertTitle>{strings("low_quality_module")}</AlertTitle>
             {strings("low_quality_module_warn")}
           </Alert>
-        )}
-        {hasUpdate && (
-          <Button
-            sx={{
-              borderRadius: `0px 0px ${theme.shape.borderRadius}px ${theme.shape.borderRadius}px`,
-            }}
-            fullWidth
-            variant="contained"
-            disableElevation
-            onClick={() => {
-              context.pushPage({
-                component: TerminalActivity,
-                key: "TerminalActivity",
-                extra: {
-                  exploreInstall: true,
-                  path: getDownload,
-                },
-              });
-            }}
-          >
-            {strings("update")}
-          </Button>
         )}
       </Card>
     </>

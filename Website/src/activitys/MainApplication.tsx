@@ -32,6 +32,7 @@ import Fab from "@Components/onsenui/Fab";
 import { useLocalModules } from "@Hooks/useLocalModules";
 import { Shell } from "@Native/Shell";
 import Divider from "@mui/material/Divider";
+import UpdateModule from "@Components/UpdateModule";
 
 interface SearchbarRef {
   clear(): void;
@@ -171,28 +172,20 @@ const MainApplication = () => {
                       );
                     }
                   }}
-                  group={{
-                    by: (grpMod) => {
-                      const onlineModule = modules.find((module) => module.id === grpMod.id);
-                      return onlineModule ? (grpMod.versionCode < onlineModule.versionCode ? "0" : "1") : "2";
-                    },
-                    separator: (group, idx, groupLabel) => {
-                      switch (groupLabel) {
-                        case "0":
-                          return <Divider variant="middle">Updateable</Divider>;
-                        case "1":
-                          return <Divider variant="middle" />;
-                        case "2":
-                          return <></>;
-                        default:
-                          return <></>;
-                      }
-                    },
-                    separatorAtTheBottom: false,
-                  }}
                 />
               ),
               tab: <Tabbar.Tab label={strings("installed")} />,
+            },
+            {
+              content: (
+                <ModuleFragment
+                  search={search}
+                  id="local"
+                  modules={localModules}
+                  renderItem={(module, key) => <UpdateModule key={key} module={module} />}
+                />
+              ),
+              tab: <Tabbar.Tab label={strings("updates")} />,
             },
           ]
         : []),
