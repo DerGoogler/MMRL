@@ -80,7 +80,7 @@ export const LightTheme = () => {
           bottom: "0",
           overflowX: "visible",
           overflowY: "hidden",
-          color: "#1f1f21",
+          // color: "#1f1f21",
           msOverflowStyle: "none",
         },
         ".page::-webkit-scrollbar": {

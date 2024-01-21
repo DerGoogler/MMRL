@@ -88,6 +88,10 @@ export const ThemeProvider = (props: React.PropsWithChildren) => {
               paper: shade(colors[settings.accent_scheme.value][600], settings.shade_value),
               default: shade(colors[settings.accent_scheme.value][700], settings.shade_value),
             },
+            text: {
+              primary: "#f9f9f9",
+              secondary: "#b7b7b7"
+            },
             divider: shade(colors[settings.accent_scheme.value][900], settings.shade_value),
             secondary: {
               main: colors[settings.accent_scheme.value][600],

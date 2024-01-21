@@ -158,6 +158,11 @@ declare global {
     timestamp: number;
     track: Track;
     versions: Version[];
+
+    /**
+     * Local modules only
+     */
+    __mmrl__local__module__?: boolean
   }
 
   export interface Track {

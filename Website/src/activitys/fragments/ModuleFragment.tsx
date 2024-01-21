@@ -17,26 +17,23 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 const RenderWhenEmpty = React.memo(() => {
   const { theme } = useTheme();
   return (
-    <Stack
+    <Box
       component="h4"
       sx={{
         color: theme.palette.secondary.dark,
-        width: "100%",
-        height: "100%",
-        m: "unset",
+        position: "absolute",
+        left: "50%",
+        top: "50%",
+        WebkitTransform: "translate(-50%, -50%)",
+        transform: "translate(-50%, -50%)",
       }}
-      direction="row"
-      justifyContent="center"
-      alignItems="center"
-      spacing={1}
     >
-      <Box>No modules were found</Box>
-    </Stack>
+      No modules were found
+    </Box>
   );
 });
 
 export interface ModuleFragmentProps {
-  search: string;
   id: "explore" | "update" | "local";
   modules: Array<Module>;
   group?: FlatListProps<Module>["group"];
@@ -159,11 +156,6 @@ const ModuleFragment = React.memo<ModuleFragmentProps>((props) => {
             renderItem={renderItem}
             renderOnScroll
             renderWhenEmpty={() => <RenderWhenEmpty />}
-            search={{
-              by: ["id", "name", "author", "description"],
-              term: props.search,
-              caseInsensitive: true,
-            }}
             sortBy={filter}
             display={{
               row: true,

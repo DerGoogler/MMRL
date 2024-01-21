@@ -21,9 +21,13 @@ export function useLocalModules() {
             const ids = new Set(prev.map((d) => d.id));
             const merged = [
               ...prev,
-              ...[{ ...(new Properties(properties.read()).toObject() as unknown as Module), timestamp: properties.lastModified() }].filter(
-                (d) => !ids.has(d.id)
-              ),
+              ...[
+                {
+                  ...(new Properties(properties.read()).toObject() as unknown as Module),
+                  timestamp: properties.lastModified(),
+                  __mmrl__local__module__: true,
+                },
+              ].filter((d) => !ids.has(d.id)),
             ];
             return merged;
           });
