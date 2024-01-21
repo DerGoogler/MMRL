@@ -40,6 +40,7 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import Chip from "@mui/material/Chip";
+import { ConfigureView } from "@Components/ConfigureView";
 
 const MainApplication = () => {
   const { strings } = useStrings();
@@ -128,21 +129,22 @@ const MainApplication = () => {
     ];
   };
 
-  const [storedCurrentVersion, setStoredCurrentVersion] = useNativeStorage<VersionType>("current_version", "0.0.0");
-  const isNewVersion = useNewerVersion(storedCurrentVersion);
-
   React.useEffect(() => {
-    if (isNewVersion) {
-      setStoredCurrentVersion(BuildConfig.VERSION_NAME);
-      context.pushPage({
-        component: FetchTextActivity,
-        key: "FetchTextActivity",
-        extra: {
-          url: "https://raw.githubusercontent.com/wiki/DerGoogler/MMRL/Changelog.md",
-          title: "Changelog",
-        },
+    fetch("https://raw.githubusercontent.com/DerGoogler/MMRL/master/Website/package.json")
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.config.version_code > BuildConfig.VERSION_CODE) {
+          context.pushPage({
+            component: FetchTextActivity,
+            key: "changelog",
+            extra: {
+              rendering: ConfigureView,
+              url: "https://raw.githubusercontent.com/wiki/DerGoogler/MMRL/JSX-Changelog.md",
+              modulename: "Update available!",
+            },
+          });
+        }
       });
-    }
   }, []);
 
   const handleOpenSearch = () => {
