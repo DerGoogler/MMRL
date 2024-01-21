@@ -48,7 +48,7 @@ function SearchActivity(props: SearchActivityProps) {
   const { placeholder, list, renderList } = props;
   const __placeholder = placeholder ? placeholder : strings("search");
 
-  const [search, setSearch] = React.useState<string | undefined>(undefined);
+  const [search, setSearch] = React.useState<string>("");
 
   React.useEffect(() => {
     os.setStatusBarColor(theme.palette.background.default);
@@ -107,7 +107,7 @@ function SearchActivity(props: SearchActivityProps) {
                 : {},
             }}
             onClick={() => {
-              setSearch(undefined);
+              setSearch("");
             }}
           />
         </Toolbar.Right>
