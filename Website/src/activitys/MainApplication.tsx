@@ -1,46 +1,44 @@
-import CodeRoundedIcon from "@mui/icons-material/CodeRounded";
 import React from "react";
-import Typography from "@mui/material/Typography";
-import MenuIcon from "@mui/icons-material/Menu";
-import FetchTextActivity from "./FetchTextActivity";
-import ModuleFragment from "./fragments/ModuleFragment";
-import TerminalActivity from "./TerminalActivity";
+
 import DeviceModule from "@Components/module/DeviceModule";
 import ExploreModule from "@Components/module/ExploreModule";
 import UpdateModule from "@Components/module/UpdateModule";
-import ModuleViewActivity from "./ModuleViewActivity";
-import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
-import { useActivity } from "@Hooks/useActivity";
-import { Toolbar } from "@Components/onsenui/Toolbar";
-import { os } from "@Native/Os";
-import { Page } from "@Components/onsenui/Page";
-import { useStrings } from "@Hooks/useStrings";
-import { Tabbar, TabbarRenderTab } from "@Components/onsenui/Tabbar";
-import { useRepos } from "@Hooks/useRepos";
-import { SuFile } from "@Native/SuFile";
-import { useNativeStorage } from "@Hooks/useNativeStorage";
-import { BuildConfig } from "@Native/BuildConfig";
-import { useNewerVersion } from "@Hooks/useNewerVersion";
-import { useSettings } from "@Hooks/useSettings";
-import { useTheme } from "@Hooks/useTheme";
-import { AnimatePresence, motion } from "framer-motion";
-import InputBase from "@mui/material/InputBase";
-import SearchIcon from "@mui/icons-material/Search";
-import ClearIcon from "@mui/icons-material/Clear";
-import { useModConf } from "@Hooks/useModConf";
 import Fab from "@Components/onsenui/Fab";
-import { useLocalModules } from "@Hooks/useLocalModules";
-import { Shell } from "@Native/Shell";
-import Divider from "@mui/material/Divider";
-import { SearchActivity } from "./SearchActivity";
-import ListItemButton from "@mui/material/ListItemButton";
+import { ConfigureView } from "@Components/ConfigureView";
+import { Toolbar } from "@Components/onsenui/Toolbar";
+import { Tabbar, TabbarRenderTab } from "@Components/onsenui/Tabbar";
+import { Page } from "@Components/onsenui/Page";
 import { StyledListItemText } from "@Components/StyledListItemText";
+
+import { os } from "@Native/Os";
+import { SuFile } from "@Native/SuFile";
+import { BuildConfig } from "@Native/BuildConfig";
+import { Shell } from "@Native/Shell";
+
+import FetchTextActivity from "./FetchTextActivity";
+import ModuleFragment from "./fragments/ModuleFragment";
+import TerminalActivity from "./TerminalActivity";
+import ModuleViewActivity from "./ModuleViewActivity";
+import { SearchActivity } from "./SearchActivity";
+
+import Typography from "@mui/material/Typography";
+import ListItemButton from "@mui/material/ListItemButton";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import Chip from "@mui/material/Chip";
-import { ConfigureView } from "@Components/ConfigureView";
+
+import CodeRoundedIcon from "@mui/icons-material/CodeRounded";
+import MenuIcon from "@mui/icons-material/Menu";
+import SearchIcon from "@mui/icons-material/Search";
+import AddIcon from "@mui/icons-material/Add";
+
+import { useLocalModules } from "@Hooks/useLocalModules";
+import { useActivity } from "@Hooks/useActivity";
+import { useStrings } from "@Hooks/useStrings";
+import { useRepos } from "@Hooks/useRepos";
+import { useModConf } from "@Hooks/useModConf";
 
 const MainApplication = () => {
   const { strings } = useStrings();
@@ -85,6 +83,11 @@ const MainApplication = () => {
                     if (os.isAndroid && (Shell.isMagiskSU() || Shell.isKernelSU() || Shell.isAPatchSU()) && hasInstallTools) {
                       return (
                         <Fab
+                          sx={{
+                            "& .fab__icon": {
+                              verticalAlign: "middle",
+                            },
+                          }}
                           onClick={() => {
                             Chooser.getFile(
                               "application/zip",
@@ -105,7 +108,7 @@ const MainApplication = () => {
                           }}
                           position="bottom right"
                         >
-                          <CreateNewFolderIcon />
+                          <AddIcon />
                         </Fab>
                       );
                     }
