@@ -1,5 +1,5 @@
 import { useTheme } from "@Hooks/useTheme";
-import { Box, Typography, styled } from "@mui/material";
+import { Box, Stack, Typography, styled } from "@mui/material";
 import { useActivity } from "../../hooks/useActivity";
 import Icon from "@Components/Icon";
 import NorthEastRoundedIcon from "@mui/icons-material/NorthEastRounded";
@@ -72,12 +72,14 @@ function Anchor(props: JSX.IntrinsicElements["a"] & AnchorProps) {
     <Box
       sx={{
         display: "inline-block",
-        "& mmrl-anchor[href]": s,
-        "& mmrl-anchor[page]": s,
+        "& div[href]": s,
+        "& div[page]": s,
       }}
     >
-      <Box
-        component="mmrl-anchor"
+      <Stack
+        component={"div" as any}
+        direction="row"
+        spacing={0.5}
         href={!(module && findModule) ? href : module}
         onClick={() => {
           if (module && findModule) {
@@ -99,23 +101,27 @@ function Anchor(props: JSX.IntrinsicElements["a"] & AnchorProps) {
         }}
         color={_color}
       >
-        <Typography component="span" color={_color}>
+        <Typography
+          component="span"
+          sx={{
+            fontSize: "unset",
+          }}
+          color={_color}
+        >
           {children}
         </Typography>
         {!noIcon && (
-          <>
-            <Icon
-              icon={!(module && findModule) ? LaunchRoundedIcon : ExtensionIcon}
-              sx={{
-                color: _color,
-                fill: _color,
-                fontSize: 16,
-                marginLeft: "3.7px",
-              }}
-            />
-          </>
+          <Typography
+            component={Icon}
+            icon={!(module && findModule) ? LaunchRoundedIcon : ExtensionIcon}
+            sx={{
+              color: _color,
+              fill: _color,
+              fontSize: "unset",
+            }}
+          />
         )}
-      </Box>
+      </Stack>
     </Box>
   );
 }
