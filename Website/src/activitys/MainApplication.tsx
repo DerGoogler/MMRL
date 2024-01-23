@@ -5,7 +5,9 @@ import MenuIcon from "@mui/icons-material/Menu";
 import FetchTextActivity from "./FetchTextActivity";
 import ModuleFragment from "./fragments/ModuleFragment";
 import TerminalActivity from "./TerminalActivity";
-import DeviceModule from "@Components/DeviceModule";
+import DeviceModule from "@Components/module/DeviceModule";
+import ExploreModule from "@Components/module/ExploreModule";
+import UpdateModule from "@Components/module/UpdateModule";
 import ModuleViewActivity from "./ModuleViewActivity";
 import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
 import { useActivity } from "@Hooks/useActivity";
@@ -19,7 +21,6 @@ import { SuFile } from "@Native/SuFile";
 import { useNativeStorage } from "@Hooks/useNativeStorage";
 import { BuildConfig } from "@Native/BuildConfig";
 import { useNewerVersion } from "@Hooks/useNewerVersion";
-import { ExploreModule } from "@Components/ExploreModule";
 import { useSettings } from "@Hooks/useSettings";
 import { useTheme } from "@Hooks/useTheme";
 import { AnimatePresence, motion } from "framer-motion";
@@ -31,7 +32,6 @@ import Fab from "@Components/onsenui/Fab";
 import { useLocalModules } from "@Hooks/useLocalModules";
 import { Shell } from "@Native/Shell";
 import Divider from "@mui/material/Divider";
-import UpdateModule from "@Components/UpdateModule";
 import { SearchActivity } from "./SearchActivity";
 import ListItemButton from "@mui/material/ListItemButton";
 import { StyledListItemText } from "@Components/StyledListItemText";
@@ -69,7 +69,7 @@ const MainApplication = () => {
     return [
       {
         content: (
-          <ModuleFragment id="explore" modules={modules} renderItem={(module, key) => <ExploreModule key={key} moduleProps={module} />} />
+          <ModuleFragment id="explore" modules={modules} renderItem={(module, key) => <ExploreModule key={key} module={module} />} />
         ),
         tab: <Tabbar.Tab label={strings("explore")} />,
       },
@@ -117,7 +117,7 @@ const MainApplication = () => {
             {
               content: (
                 <ModuleFragment
-                  id="local"
+                  id="update"
                   modules={localModules}
                   renderItem={(module, key) => <UpdateModule key={key} module={module} />}
                 />
