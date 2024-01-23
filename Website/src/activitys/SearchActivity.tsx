@@ -10,7 +10,6 @@ import { Box, List } from "@mui/material";
 import { renderFunc } from "flatlist-react/lib/___subComponents/uiFunctions";
 import { useTheme } from "@Hooks/useTheme";
 import { useSettings } from "@Hooks/useSettings";
-import { os } from "@Native/Os";
 
 const RenderWhenEmpty = React.memo(() => {
   const { theme } = useTheme();
@@ -41,7 +40,6 @@ interface SearchActivityProps {
 
 function SearchActivity(props: SearchActivityProps) {
   const { strings } = useStrings();
-  const { settings } = useSettings();
   const { context } = useActivity();
   const { theme } = useTheme();
 
@@ -50,31 +48,11 @@ function SearchActivity(props: SearchActivityProps) {
 
   const [search, setSearch] = React.useState<string>("");
 
-  React.useEffect(() => {
-    os.setStatusBarColor(theme.palette.background.default);
-
-    return function () {
-      os.setStatusBarColor(theme.palette.primary.main);
-    };
-  }, []);
-
   const renderToolbar = () => {
     return (
-      <Toolbar
-        sx={{ backgroundColor: theme.palette.background.default, borderBottom: `thin solid ${theme.palette.divider}` }}
-        modifier="noshadow"
-      >
+      <Toolbar modifier="noshadow">
         <Toolbar.Left>
-          <Toolbar.BackButton
-            iconProps={{
-              sx: !settings.darkmode
-                ? {
-                    color: theme.palette.secondary.dark,
-                  }
-                : {},
-            }}
-            onClick={context.popPage}
-          />
+          <Toolbar.BackButton onClick={context.popPage} />
         </Toolbar.Left>
         <Toolbar.Center
           sx={{
@@ -99,13 +77,6 @@ function SearchActivity(props: SearchActivityProps) {
         <Toolbar.Right>
           <Toolbar.Button
             icon={ClearIcon}
-            iconProps={{
-              sx: !settings.darkmode
-                ? {
-                    color: theme.palette.secondary.dark,
-                  }
-                : {},
-            }}
             onClick={() => {
               setSearch("");
             }}
