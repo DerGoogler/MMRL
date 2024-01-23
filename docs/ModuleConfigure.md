@@ -75,7 +75,7 @@ declare const modid: string;
 Usage
 
 ```js
-console.log(modid);
+log.i(modid);
 ```
 
 ### `modpath`
