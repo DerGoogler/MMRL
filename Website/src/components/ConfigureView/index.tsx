@@ -15,6 +15,9 @@ import { globals, libraries } from "./libs";
 import { DialogEditListItem, StyledListSubheader } from "./components";
 import { SuFile, wasmFs } from "@Native/SuFile";
 import { ModConf, useModConf } from "@Hooks/useModConf";
+import ini from "ini";
+import yaml from "yaml";
+import { useLog } from "@Hooks/native/useLog";
 
 function plugin({ types: t }): PluginObj {
   return {
@@ -70,6 +73,7 @@ const scope = {
 export const ConfigureView = React.memo<PreviewErrorBoundaryChildren>((props) => {
   const { theme } = useTheme();
   const { modConf } = useModConf();
+  const log = useLog(`Config-${props.modid}`);
 
   const format = React.useCallback<<K extends keyof ModConf>(key: K) => ModConf[K]>((key) => modConf(key, { MODID: props.modid }), []);
 
@@ -90,6 +94,7 @@ export const ConfigureView = React.memo<PreviewErrorBoundaryChildren>((props) =>
           parseCode(code),
           true
         )({
+          log: log,
           modid: props.modid,
           modpath: (path: string) => `${format("MODULECWD")}/${path}`,
           confpath: (path: string) => `${format("CONFCWD")}/${path}`,
@@ -114,6 +119,25 @@ export const ConfigureView = React.memo<PreviewErrorBoundaryChildren>((props) =>
               }
             } else {
               return libraries.find((lib) => id === lib.name)?.__esModule;
+            }
+          },
+          import(file: string, opt?: { ignoreCwd: boolean }) {
+            const __raw__filename = !opt?.ignoreCwd ? `${format("CONFCWD")}/${file}` : file;
+            const __file = new SuFile(__raw__filename);
+            if (__file.exist()) {
+              if (__raw__filename.endsWith(".jsx") || __raw__filename.endsWith(".js")) {
+                return box(__file.read());
+              } else if (__raw__filename.endsWith(".yaml") || __raw__filename.endsWith(".yml")) {
+                return yaml.parse(__file.read());
+              } else if (__raw__filename.endsWith(".json")) {
+                return JSON.parse(__file.read());
+              } else if (__raw__filename.endsWith(".prop") || __raw__filename.endsWith(".properties") || __raw__filename.endsWith(".ini")) {
+                return ini.parse(__file.read());
+              } else {
+                return __file.read();
+              }
+            } else {
+              throw new Error(__raw__filename + " not found");
             }
           },
           ...scope,
