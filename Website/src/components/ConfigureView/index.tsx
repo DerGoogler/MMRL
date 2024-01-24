@@ -7,6 +7,7 @@ import { Android12Switch } from "@Components/Android12Switch";
 import { PreviewErrorBoundaryChildren } from "@Activitys/PlaygroundsActivity";
 import { useTheme } from "@Hooks/useTheme";
 import { os } from "@Native/Os";
+import { Page } from "@Components/onsenui/Page";
 import Sandbox from "@nyariv/sandboxjs";
 import { transform, registerPlugin } from "@babel/standalone";
 import * as React from "react";
@@ -151,6 +152,6 @@ export const ConfigureView = React.memo<PreviewErrorBoundaryChildren>((props) =>
   if (Component) {
     return <Component />;
   } else {
-    return <div>export is undefined</div>;
+    return <Page><div>export is undefined</div></Page>;
   }
 });
