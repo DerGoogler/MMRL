@@ -46,7 +46,7 @@ export class PreviewErrorBoundary extends React.Component<PreviewErrorBoundaryPr
 
   public render() {
     if (this.state.hasError) {
-      return <div>{this.state.error?.message}</div>;
+      return <Page><div>{this.state.error?.message}</div></Page>;
     }
 
     return <this.props.renderElement modid={this.props.modid} children={this.props.children} hasError={this.state.hasError} />;
