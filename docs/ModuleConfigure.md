@@ -124,3 +124,83 @@ Will print
 /data/adb/modules/<ID>/system/share/mmrl/config/<ID>/Component.jsx
 ```
 
+# Setup a page
+
+Small sample to setup a page
+
+```jsx
+import React from "react";
+
+import { Page, Toolbar } from "@mmrl/ui";
+import { useActivity } from "@mmrl/hooks";
+
+import { Stack } from "@mui/material";
+import {
+  Timeline,
+  TimelineItem,
+  TimelineSeparator,
+  TimelineConnector,
+  TimelineContent,
+  TimelineDot,
+} from "@mui/lab";
+
+const Config = () => {
+  const { context } = useActivity();
+
+  const renderToolbar = () => {
+    return (
+      <Toolbar modifier="noshadow">
+        <Toolbar.Left>
+          {/* Pressing this here will close the editor */}
+          <Toolbar.BackButton onClick={context.popPage} />
+        </Toolbar.Left>
+        <Toolbar.Center>My config</Toolbar.Center>
+      </Toolbar>
+    );
+  };
+
+  return (
+    <Page renderToolbar={renderToolbar}>
+      <Stack
+        direction="column"
+        justifyContent="center"
+        alignItems="center"
+        spacing={1}
+        sx={{ height: "100%" }}
+      >
+        <Timeline position="alternate" sx={{ flexGrow: "unset" }}>
+          <TimelineItem>
+            <TimelineSeparator>
+              <TimelineDot />
+              <TimelineConnector />
+            </TimelineSeparator>
+            <TimelineContent>Eat</TimelineContent>
+          </TimelineItem>
+          <TimelineItem>
+            <TimelineSeparator>
+              <TimelineDot />
+              <TimelineConnector />
+            </TimelineSeparator>
+            <TimelineContent>Code</TimelineContent>
+          </TimelineItem>
+          <TimelineItem>
+            <TimelineSeparator>
+              <TimelineDot />
+              <TimelineConnector />
+            </TimelineSeparator>
+            <TimelineContent>Sleep</TimelineContent>
+          </TimelineItem>
+          <TimelineItem>
+            <TimelineSeparator>
+              <TimelineDot />
+            </TimelineSeparator>
+            <TimelineContent>Repeat</TimelineContent>
+          </TimelineItem>
+        </Timeline>
+      </Stack>
+    </Page>
+  );
+};
+
+export default Config;
+```
