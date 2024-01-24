@@ -14,6 +14,7 @@ import { Markup } from "@Components/Markdown";
 import { configureSample } from "@Util/configure-sample";
 import { dapiSample } from "@Util/dapi-sample";
 import ModConfActivity from "@Activitys/ModConfActivity";
+import ConfigurePlaygroundActivity from "@Activitys/ConfigurePlaygroundActivity";
 
 type Props = {
   renderToolbar: () => JSX.Element;
@@ -53,20 +54,20 @@ export const DrawerFragment = (props: Props) => {
           <StyledListItemText primary={strings("repositories")} />
         </ListItemButton>
         {/* {os.isAndroid && ( */}
-          <>
-            <ListItemButton
-              onClick={() => {
-                pushPage({
-                  component: ModConfActivity,
-                  key: "ModConfActivity",
-                  extra: {},
-                });
-                hide();
-              }}
-            >
-              <StyledListItemText primary={strings("modconf")} />
-            </ListItemButton>
-          </>
+        <>
+          <ListItemButton
+            onClick={() => {
+              pushPage({
+                component: ModConfActivity,
+                key: "ModConfActivity",
+                extra: {},
+              });
+              hide();
+            }}
+          >
+            <StyledListItemText primary={strings("modconf")} />
+          </ListItemButton>
+        </>
         {/* )} */}
       </List>
 
@@ -93,21 +94,18 @@ export const DrawerFragment = (props: Props) => {
         </ListItemButton>
         <ListItemButton
           onClick={() => {
-            pushPage<PlaygroundExtra, any>({
-              component: PlaygroundsActivity,
+            pushPage<any, any>({
+              component: ConfigurePlaygroundActivity,
               key: "configure_playground",
               extra: {
-                title: "Configure playground",
                 editorMode: "javascript",
                 defaultText: configureSample,
-                previewPage: ConfigureActivity,
-                preview: ConfigureView,
               },
             });
             hide();
           }}
         >
-          <StyledListItemText primary={"Configure playground"} />
+          <StyledListItemText primary={"Module Configure playground"} />
         </ListItemButton>
       </List>
 
