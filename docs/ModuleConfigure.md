@@ -34,11 +34,11 @@ const { Component } = require("!conf/Component.jsx");
 import { Component } from "!conf/Component.jsx";
 ```
 
-> Please do not use this, use `import` instead.
+> Please do not use this, use `include` instead.
 
 ---
 
-Using `import` way more stable and supports more including types like
+Using `include` way more stable and supports more including types like
 
 - `*.js`
 - `*.jsx`
@@ -48,10 +48,10 @@ Using `import` way more stable and supports more including types like
 - `*.properties`
 
 ```js
-const { Component } = import("Component.jsx");
+const { Component } = include("Component.jsx");
 
 // to ignore cwd restrictions
-const properties = import(`/data/adb/modules/${modid}/module.prop`, {
+const properties = include(`/data/adb/modules/${modid}/module.prop`, {
   ignoreCwd: true,
 });
 
@@ -89,7 +89,7 @@ declare function modpath(path: string): string;
 Usage
 
 ```js
-const properties = import(modpath("module.prop"), { ignoreCwd: true });
+const properties = include(modpath("module.prop"), { ignoreCwd: true });
 
 const { id, name, author } = properties;
 ```
@@ -113,7 +113,7 @@ declare function confpath(path: string): string;
 Usage
 
 ```js
-const properties = import(confpath("Component.jsx"), { ignoreCwd: true });
+const properties = include(confpath("Component.jsx"), { ignoreCwd: true });
 
 const { id, name, author } = properties;
 ```
