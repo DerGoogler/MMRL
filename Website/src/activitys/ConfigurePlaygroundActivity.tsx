@@ -10,6 +10,7 @@ import Editor, { Monaco } from "@monaco-editor/react";
 import { ErrorBoundaryProps, ErrorBoundaryState, errorBoundaryInitialState } from "@Components/ErrorBoundary";
 import editorTheme from "@Util/editorTheme";
 import { ConfigureView } from "@Components/ConfigureView";
+import { useNativeStorage } from "@Hooks/useNativeStorage";
 
 export interface PlaygroundExtra {
   title: string;
@@ -112,7 +113,7 @@ const editorDidMount = (editor: monacoEditor.editor.IStandaloneCodeEditor, monac
 const ConfigurePlaygroundActivity = () => {
   const { context, extra } = useActivity<PlaygroundExtra>();
 
-  const [description, setDescription] = React.useState(extra.defaultText || "");
+  const [description, setDescription] = useNativeStorage("module-configure-playground", extra.defaultText || "");
   const [errBoundKey, setErrBoundKey] = React.useState(0);
 
   const isLargeScreen = useMediaQuery("(min-width:600px)");
