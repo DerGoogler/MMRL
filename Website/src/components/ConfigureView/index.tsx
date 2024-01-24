@@ -121,7 +121,7 @@ export const ConfigureView = React.memo<PreviewErrorBoundaryChildren>((props) =>
               return libraries.find((lib) => id === lib.name)?.__esModule;
             }
           },
-          import(file: string, opt?: { ignoreCwd: boolean }) {
+          include(file: string, opt?: { ignoreCwd: boolean }) {
             const __raw__filename = !opt?.ignoreCwd ? `${format("CONFCWD")}/${file}` : file;
             const __file = new SuFile(__raw__filename);
             if (__file.exist()) {
@@ -137,7 +137,8 @@ export const ConfigureView = React.memo<PreviewErrorBoundaryChildren>((props) =>
                 return __file.read();
               }
             } else {
-              throw new Error(__raw__filename + " not found");
+              log.e(__raw__filename + " not found");
+              return undefined;
             }
           },
           ...scope,
