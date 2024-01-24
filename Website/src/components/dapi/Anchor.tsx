@@ -1,5 +1,5 @@
 import { useTheme } from "@Hooks/useTheme";
-import { Box, Stack, Typography, styled } from "@mui/material";
+import { Box, Stack, Tooltip, Typography, styled } from "@mui/material";
 import { useActivity } from "../../hooks/useActivity";
 import Icon from "@Components/Icon";
 import NorthEastRoundedIcon from "@mui/icons-material/NorthEastRounded";
@@ -68,61 +68,65 @@ function Anchor(props: JSX.IntrinsicElements["a"] & AnchorProps) {
 
   const findModule = React.useMemo(() => modules.find((m) => m.id === module), [module]);
 
+  const __href = !(module && findModule) ? href : module;
+
   return (
-    <Box
-      sx={{
-        display: "inline-block",
-        "& div[href]": s,
-        "& div[page]": s,
-      }}
-    >
-      <Stack
-        component={"div" as any}
-        direction="row"
-        spacing={0.5}
-        href={!(module && findModule) ? href : module}
-        onClick={() => {
-          if (module && findModule) {
-            context.pushPage({
-              component: ModuleViewActivity,
-              key: "ModuleViewActivity",
-              extra: findModule,
-            });
-          } else {
-            if (href) {
-              os.open(href, {
-                target: "_blank",
-                features: {
-                  color: theme.palette.primary.main,
-                },
-              });
-            }
-          }
+    <Tooltip title={__href} placement="bottom" arrow>
+      <Box
+        sx={{
+          display: "inline-block",
+          "& div[href]": s,
+          "& div[page]": s,
         }}
-        color={_color}
       >
-        <Typography
-          component="span"
-          sx={{
-            fontSize: "unset",
+        <Stack
+          component={"div" as any}
+          direction="row"
+          spacing={0.5}
+          href={__href}
+          onClick={() => {
+            if (module && findModule) {
+              context.pushPage({
+                component: ModuleViewActivity,
+                key: "ModuleViewActivity",
+                extra: findModule,
+              });
+            } else {
+              if (__href) {
+                os.open(__href, {
+                  target: "_blank",
+                  features: {
+                    color: theme.palette.primary.main,
+                  },
+                });
+              }
+            }
           }}
           color={_color}
         >
-          {children}
-        </Typography>
-        {!noIcon && (
           <Typography
-            component={Icon}
-            icon={!(module && findModule) ? LaunchRoundedIcon : ExtensionIcon}
+            component="span"
             sx={{
-              color: _color,
-              fill: _color,
               fontSize: "unset",
             }}
-          />
-        )}
-      </Stack>
-    </Box>
+            color={_color}
+          >
+            {children}
+          </Typography>
+          {!noIcon && (
+            <Typography
+              component={Icon}
+              icon={!(module && findModule) ? LaunchRoundedIcon : ExtensionIcon}
+              sx={{
+                color: _color,
+                fill: _color,
+                fontSize: "unset",
+              }}
+            />
+          )}
+        </Stack>
+      </Box>
+    </Tooltip>
   );
 }
 
