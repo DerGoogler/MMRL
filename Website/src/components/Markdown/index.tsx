@@ -9,6 +9,8 @@ import { Image } from "@Components/dapi/Image";
 import { StyledMarkdown } from "./StyledMarkdown";
 import { DiscordWidget } from "@Components/dapi/DiscordWidget";
 import { AlertIcon, BugIcon, CheckIcon, IssueClosedIcon, IssueOpenedIcon, IssueReopenedIcon, XIcon } from "@primer/octicons-react";
+import Code from "@Components/dapi/Code";
+import Pre from "@Components/dapi/Pre";
 
 type Props = {
   children: string;
@@ -75,7 +77,12 @@ export const MarkdownOverrides: MarkdownToJSX.Overrides | undefined = {
   stack: {
     component: Stack,
   },
-
+  code: {
+    component: Code,
+  },
+  pre: {
+    component: Pre,
+  },
   discordwidget: {
     component: DiscordWidget,
   },
