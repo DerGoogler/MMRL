@@ -9,7 +9,8 @@ import PreviewIcon from "@mui/icons-material/Preview";
 import * as monacoEditor from "monaco-editor/esm/vs/editor/editor.api";
 import Editor, { Monaco } from "@monaco-editor/react";
 import { ErrorBoundaryProps, ErrorBoundaryState, errorBoundaryInitialState } from "@Components/ErrorBoundary";
-import editorTheme from "@Util/editorTheme"; 
+import editorTheme from "@Util/editorTheme";
+import { useNativeStorage } from "@Hooks/useNativeStorage";
 
 export interface PlaygroundExtra {
   title: string;
@@ -46,7 +47,11 @@ export class PreviewErrorBoundary extends React.Component<PreviewErrorBoundaryPr
 
   public render() {
     if (this.state.hasError) {
-      return <Page><div>{this.state.error?.message}</div></Page>;
+      return (
+        <Page>
+          <div>{this.state.error?.message}</div>
+        </Page>
+      );
     }
 
     return <this.props.renderElement modid={this.props.modid} children={this.props.children} hasError={this.state.hasError} />;
@@ -112,7 +117,7 @@ const editorDidMount = (editor: monacoEditor.editor.IStandaloneCodeEditor, monac
 const PlaygroundsActivity = () => {
   const { context, extra } = useActivity<PlaygroundExtra>();
 
-  const [description, setDescription] = React.useState(extra.defaultText || "");
+  const [description, setDescription] = useNativeStorage("playground_" + extra.title, extra.defaultText || "");
   const [errBoundKey, setErrBoundKey] = React.useState(0);
 
   const isLargeScreen = useMediaQuery("(min-width:600px)");
