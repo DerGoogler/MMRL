@@ -244,35 +244,6 @@ const ModuleViewActivity = () => {
               <Disappear as={Typography} variant="body1" fontWeight="bold" onDisappear={(visible) => setIsNameVisible(!visible)}>
                 {name}
               </Disappear>
-
-              {/* {track.author ? (
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyItems: "center",
-                    ":hover": {
-                      cursor: "pointer",
-                    },
-                  }}
-                  onClick={() => {
-                    context.pushPage({
-                      component: ProfileActivty,
-                      key: track.author?.name + "_ProfileActivty",
-                      extra: track.author,
-                    });
-                  }}
-                >
-                  {track.author.name} {track.author.verified && <VerifiedIcon sx={{ ml: 0.5, fontSize: "0.8rem" }} />}
-                </Typography>
-              ) : (
-                <Typography variant="body2" color="text.secondary">
-                  {author}
-                </Typography>
-              )} */}
-
               <Typography variant="body2" color="text.secondary">
                 {author}
               </Typography>
@@ -290,36 +261,7 @@ const ModuleViewActivity = () => {
             alignItems="flex-start"
             spacing={1}
           >
-            {/* {track.author && track.contributors && (
-              <Box>
-                <Typography color="text.secondary" variant="subtitle1">
-                  Contributors
-                </Typography>
-                <AvatarGroup max={4} total={mmrl.contributors.length}>
-                  {pickFourElements(mmrl.contributors).map((contributor) => (
-                    <Avatar
-                      alt={contributor.name}
-                      src={contributor.avatar}
-                      sx={{
-                        ":hover": {
-                          cursor: "pointer",
-                        },
-                      }}
-                      onClick={() => {
-                        context.pushPage({
-                          component: ProfileActivty,
-                          key: contributor.name + "_ProfileActivty",
-                          extra: contributor,
-                        });
-                      }}
-                    />
-                  ))}
-                </AvatarGroup>
-              </Box>
-            )} */}
-
             {/* DL SECTION */}
-
             <Stack
               sx={{
                 display: "flex",
@@ -407,27 +349,27 @@ const ModuleViewActivity = () => {
               </Alert>
             )}
 
-            {data ? (
-              <Card
-                elevation={0}
-                sx={{
-                  width: "100%",
-                }}
-              >
-                <CardContent>
-                  <Stack
-                    component={Typography}
-                    sx={{
-                      alignItems: "center",
-                    }}
-                    direction="row"
-                    justifyContent={{ xs: "space-between", sm: "row" }}
-                    spacing={1}
-                    gutterBottom
-                  >
-                    <Typography variant="h5" component="div">
-                      {strings("about_this_module")}
-                    </Typography>
+            <Card
+              elevation={0}
+              sx={{
+                width: "100%",
+              }}
+            >
+              <CardContent>
+                <Stack
+                  component={Typography}
+                  sx={{
+                    alignItems: "center",
+                  }}
+                  direction="row"
+                  justifyContent={{ xs: "space-between", sm: "row" }}
+                  spacing={1}
+                  gutterBottom
+                >
+                  <Typography variant="h5" component="div">
+                    {strings("about_this_module")}
+                  </Typography>
+                  {data && (
                     <IconButton
                       onClick={() => {
                         context.pushPage({
@@ -444,34 +386,34 @@ const ModuleViewActivity = () => {
                     >
                       <ArrowForwardIcon />
                     </IconButton>
-                  </Stack>
-
-                  <Typography variant="body2" color="text.secondary">
-                    {description}
-                  </Typography>
-                  <Typography sx={{ mt: 3 }} variant="h6" component="div">
-                    {strings("updated_on")}
-                    <Typography sx={{ fontSize: "0.875rem" }} variant="body2" component="div" color="text.secondary">
-                      {formatLastUpdate}
-                    </Typography>
-                  </Typography>
-                  {categories.length !== 0 && (
-                    <Box
-                      sx={{
-                        display: "flex",
-                        flexWrap: "wrap",
-                        gap: "16px 12px",
-                        mt: 3.5,
-                      }}
-                    >
-                      {categories.map((category) => (
-                        <Chip label={category} variant="outlined" />
-                      ))}
-                    </Box>
                   )}
-                </CardContent>
-              </Card>
-            ) : null}
+                </Stack>
+
+                <Typography variant="body2" color="text.secondary">
+                  {description}
+                </Typography>
+                <Typography sx={{ mt: 3 }} variant="h6" component="div">
+                  {strings("updated_on")}
+                  <Typography sx={{ fontSize: "0.875rem" }} variant="body2" component="div" color="text.secondary">
+                    {formatLastUpdate}
+                  </Typography>
+                </Typography>
+                {categories.length !== 0 && (
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexWrap: "wrap",
+                      gap: "16px 12px",
+                      mt: 3.5,
+                    }}
+                  >
+                    {categories.map((category) => (
+                      <Chip label={category} variant="outlined" />
+                    ))}
+                  </Box>
+                )}
+              </CardContent>
+            </Card>
 
             {track.antifeatures ? (
               <Card
