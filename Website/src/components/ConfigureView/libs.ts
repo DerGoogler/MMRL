@@ -41,6 +41,10 @@ export const libraries = [
     __esModule: os.isAndroid ? Terminal : {},
   },
   {
+    name: "flatlist-react",
+    __esModule: require("flatlist-react"),
+  },
+  {
     name: "@mmrl/ui",
     __esModule: {
       Anchor: Anchor,

@@ -9,7 +9,6 @@ import ClearIcon from "@mui/icons-material/Clear";
 import { Box, List } from "@mui/material";
 import { renderFunc } from "flatlist-react/lib/___subComponents/uiFunctions";
 import { useTheme } from "@Hooks/useTheme";
-import { useSettings } from "@Hooks/useSettings";
 
 const RenderWhenEmpty = React.memo(() => {
   const { theme } = useTheme();
