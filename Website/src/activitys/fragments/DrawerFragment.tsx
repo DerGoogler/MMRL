@@ -15,6 +15,7 @@ import { configureSample } from "@Util/configure-sample";
 import { dapiSample } from "@Util/dapi-sample";
 import ModConfActivity from "@Activitys/ModConfActivity";
 import ConfigurePlaygroundActivity from "@Activitys/ConfigurePlaygroundActivity";
+import LicensesActivity from "@Activitys/LicensesActivity";
 
 type Props = {
   renderToolbar: () => JSX.Element;
@@ -122,22 +123,18 @@ export const DrawerFragment = (props: Props) => {
             hide();
           }}
         >
-          <StyledListItemText primary={"About"} />
+          <StyledListItemText primary={strings("about")} />
         </ListItemButton>
         <ListItemButton
           onClick={() => {
             pushPage({
-              component: FetchTextActivity,
+              component: LicensesActivity,
               key: "license",
-              extra: {
-                title: "License",
-                url: "https://raw.githubusercontent.com/wiki/DerGoogler/MMRL/License.md",
-              },
             });
             hide();
           }}
         >
-          <StyledListItemText primary={"License"} />
+          <StyledListItemText primary={strings("licenses")} />
         </ListItemButton>
         <ListItemButton
           onClick={() => {

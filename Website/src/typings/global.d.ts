@@ -213,6 +213,30 @@ declare global {
     changelog: string;
   }
 
+  export interface LicenseSPX {
+    isDeprecatedLicenseId: boolean
+    isFsfLibre: boolean
+    licenseText: string
+    standardLicenseTemplate: string
+    name: string
+    licenseId: string
+    crossRef: CrossRef[]
+    seeAlso: string[]
+    isOsiApproved: boolean
+    licenseTextHtml: string
+  }
+  
+  export interface CrossRef {
+    match: string
+    url: string
+    isValid: boolean
+    isLive: boolean
+    timestamp: string
+    isWayBackLink: boolean
+    order: number
+  }
+  
+
   // OnsenUI Types
   /**
    * @extends {Event}
