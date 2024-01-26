@@ -18,7 +18,6 @@ import { ModConf, useModConf } from "@Hooks/useModConf";
 import ini from "ini";
 import yaml from "yaml";
 import { useLog } from "@Hooks/native/useLog";
-import { useActivity } from "@Hooks/useActivity";
 
 function plugin({ types: t }): PluginObj {
   return {
@@ -50,7 +49,6 @@ function parseCode(data: string): string {
     });
     return code as string;
   } catch (err) {
-    console.error("Error parsing code: ", err);
     return "";
   }
 }
@@ -71,16 +69,38 @@ const scope = {
   Divider: Divider,
 };
 
-export const ConfigureView = React.memo<{ code: string; modid: string }>((props) => {
+export const ConfigureView = React.forwardRef<any, { code: string; modid: string }>((props, ref) => {
   const { theme } = useTheme();
   const { modConf } = useModConf();
 
   const log = useLog(`Config-${props.modid}`);
   const format = React.useCallback<<K extends keyof ModConf>(key: K) => ModConf[K]>((key) => modConf(key, { MODID: props.modid }), []);
 
+  const customRequire = React.useCallback((file: string, opt?: any) => {
+    const isLocalFile = /^[./]/.test(file);
+    const absolutePath = file;
+
+    if (SuFile.exist(absolutePath)) {
+      const fileExt = opt && opt.ignoreExt ? extname(absolutePath) : "";
+
+      if (fileExt === ".json") {
+        return JSON.parse(SuFile.read(absolutePath));
+      } else if (fileExt === ".yaml" || fileExt === ".yml") {
+        return yaml.parse(SuFile.read(absolutePath));
+      } else if (fileExt === ".ini" || fileExt === ".props") {
+        return ini.parse(SuFile.read(absolutePath));
+      } else {
+        const code = SuFile.read(absolutePath);
+        return box(code);
+      }
+    } else {
+      return libraries.find((lib) => absolutePath === lib.name)?.__esModule;
+    }
+  }, []);
+
   const box = React.useCallback(
-    (code: string) =>
-      sandbox
+    (code: string) => {
+      return sandbox
         .compile<React.FunctionComponent<any> | undefined>(
           parseCode(code),
           true
@@ -99,19 +119,8 @@ export const ConfigureView = React.memo<{ code: string; modid: string }>((props)
               });
             },
           },
-          require(id: string) {
-            if (id.startsWith("!conf/")) {
-              const filename = id.replace(/!conf\/(.+)/gm, `${format("CONFCWD")}/$1`);
-              const file = new SuFile(filename);
-              if (file.exist()) {
-                return box(file.read());
-              } else {
-                return `Imported \"${filename}\" file not found`;
-              }
-            } else {
-              return libraries.find((lib) => id === lib.name)?.__esModule;
-            }
-          },
+          document: document,
+          require: customRequire,
           include(file: string, opt?: { ignoreCwd: boolean }) {
             const __raw__filename = !opt?.ignoreCwd ? `${format("CONFCWD")}/${file}` : file;
             const __file = new SuFile(__raw__filename);
@@ -134,18 +143,80 @@ export const ConfigureView = React.memo<{ code: string; modid: string }>((props)
           },
           ...scope,
         })
-        .run(),
+        .run();
+    },
+
     []
   );
   const Component = box(props.code as string);
+  const container = React.useRef(null);
 
   if (Component) {
     return <Component />;
   } else {
     return (
       <Page>
-        <div>export is undefined</div>
+        <div>An error occurred, either there is a syntax mistake or something</div>
       </Page>
     );
   }
 });
+
+const CHAR_FORWARD_SLASH = 47; /* / */
+const CHAR_DOT = 46; /* . */
+
+function extname(path: string) {
+  if (typeof path !== "string") {
+    throw new TypeError(`The "path" argument must be of type string. Received type ${typeof path}`);
+  }
+
+  let startDot = -1;
+  let startPart = 0;
+  let end = -1;
+  let matchedSlash = true;
+  // Track the state of characters (if any) we see before our first dot and
+  // after any path separator we find
+  let preDotState = 0;
+  for (let i = path.length - 1; i >= 0; --i) {
+    let code = path.charCodeAt(i);
+    if (code === CHAR_FORWARD_SLASH) {
+      // If we reached a path separator that was not part of a set of path
+      // separators at the end of the string, stop now
+      if (!matchedSlash) {
+        startPart = i + 1;
+        break;
+      }
+      continue;
+    }
+    if (end === -1) {
+      // We saw the first non-path separator, mark this as the end of our
+      // extension
+      matchedSlash = false;
+      end = i + 1;
+    }
+    if (code === CHAR_DOT) {
+      // If this is our first dot, mark it as the start of our extension
+      if (startDot === -1) {
+        startDot = i;
+      } else if (preDotState !== 1) {
+        preDotState = 1;
+      }
+    } else if (startDot !== -1) {
+      // We saw a non-dot and non-path separator before our dot, so we should
+      // have a good chance at having a non-empty extension
+      preDotState = -1;
+    }
+  }
+
+  if (
+    startDot === -1 ||
+    end === -1 ||
+    // We saw a non-dot character immediately before the dot
+    preDotState === 0 ||
+    // The (right-most) trimmed path component is exactly '..'
+    (preDotState === 1 && startDot === end - 1 && startDot === startPart + 1)
+  ) {
+    return "";
+  }
+  return path.slice(startDot, end);
+}
