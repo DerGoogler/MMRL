@@ -52,7 +52,7 @@ public class NativeShell {
             return false;
         }
     }
-    
+
     @JavascriptInterface
     public static native String getenv(String key);
 
