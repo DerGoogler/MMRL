@@ -9,6 +9,8 @@ import android.util.Log;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
+import androidx.core.view.WindowCompat;
+
 import com.dergoogler.core.NativeEnvironment;
 import com.dergoogler.core.NativeSuFile;
 import com.dergoogler.core.NativeLog;
@@ -17,6 +19,7 @@ import com.dergoogler.core.NativeProperties;
 import com.dergoogler.core.NativeStorage;
 import com.dergoogler.core.NativeShell;
 import com.dergoogler.core.NativeBuildConfig;
+import com.dergoogler.core.NativeView;
 import com.topjohnwu.superuser.Shell;
 import com.topjohnwu.superuser.ShellUtils;
 
@@ -29,6 +32,7 @@ public class MainActivity extends CordovaActivity {
     @SuppressLint("SetJavaScriptEnabled")
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         appView = findViewById(R.id.mmrl_view);
         super.init();
 
@@ -73,6 +77,7 @@ public class MainActivity extends CordovaActivity {
         wv.addJavascriptInterface(new NativeShell(wv), "__shell__");
         wv.addJavascriptInterface(new NativeBuildConfig(), "__buildconfig__");
         wv.addJavascriptInterface(os, "__os__");
+        wv.addJavascriptInterface(new NativeView(this, wv), "__view__");
         wv.addJavascriptInterface(ns, "__nativeStorage__");
         wv.addJavascriptInterface(new NativeProperties(), "__properties__");
         wv.addJavascriptInterface(new NativeLog(), "__log__");

@@ -8,7 +8,6 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.4.2'
-        classpath "com.github.node-gradle:gradle-node-plugin:3.3.0"
     }
 }
 

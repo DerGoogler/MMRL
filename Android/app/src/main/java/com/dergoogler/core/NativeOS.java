@@ -143,52 +143,7 @@ public class NativeOS {
         }
     }
 
-    @JavascriptInterface
-    public int getStatusBarHeight() {
-        Resources res = ctx.getApplicationContext().getResources();
-        int statusBarHeight;
-        int resourceId = res.getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            statusBarHeight = res.getDimensionPixelSize(resourceId);
-            return (int) (statusBarHeight / res.getDisplayMetrics().density);
-        } else {
-            return 0;
-        }
-    }
-
-    @JavascriptInterface
-    public int getSafeAreaInsets(String type) {
-        float leftInset = 0, rightInset = 0, topInset = 0, bottomInset = 0;
-        Resources res = ctx.getApplicationContext().getResources();
-        WindowInsets windowInsets = ctx.getWindow().getDecorView().getRootWindowInsets();
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            if (windowInsets != null) {
-                final DisplayCutout cutout = windowInsets.getDisplayCutout();
-
-                leftInset = cutout != null ? cutout.getSafeInsetLeft() : 0;
-                rightInset = cutout != null ? cutout.getSafeInsetRight() : 0;
-                topInset = cutout != null ? cutout.getSafeInsetTop() : 0;
-                bottomInset = cutout != null ? cutout.getSafeInsetBottom() : 0;
-
-                @SuppressLint("RestrictedApi") Insets insets = Insets.wrap(windowInsets.getSystemWindowInsets());
-                leftInset = Math.max(leftInset, insets.left) / res.getDisplayMetrics().density;
-                rightInset = Math.max(rightInset, insets.right) / res.getDisplayMetrics().density;
-                topInset = Math.max(topInset, insets.top) / res.getDisplayMetrics().density;
-                bottomInset = Math.max(bottomInset, insets.bottom) / res.getDisplayMetrics().density;
-            }
-        }
-
-
-        if (type.equals("top")) {
-            return (int) topInset;
-        } else {
-
-            return (int) bottomInset;
-        }
-    }
-
-
+    @Deprecated
     @JavascriptInterface
     public void setStatusBarColor(String color, boolean white) {
         if (white) {
@@ -205,6 +160,7 @@ public class NativeOS {
         }
     }
 
+    @Deprecated
     @JavascriptInterface
     public void setNavigationBarColor(String color) {
         try {

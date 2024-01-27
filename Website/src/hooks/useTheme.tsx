@@ -99,8 +99,6 @@ export const ThemeProvider = (props: React.PropsWithChildren) => {
           },
     });
 
-    os.setStatusBarColor(THIS_IS_THE_THEME_OBJECT_OF_THIS_F_APP.palette.primary.main, false);
-    os.setNavigationBarColor(THIS_IS_THE_THEME_OBJECT_OF_THIS_F_APP.palette.background.default);
     setBackgroundColor(THIS_IS_THE_THEME_OBJECT_OF_THIS_F_APP.palette.background.default);
     setStatusBarColor(THIS_IS_THE_THEME_OBJECT_OF_THIS_F_APP.palette.primary.main);
     return THIS_IS_THE_THEME_OBJECT_OF_THIS_F_APP;

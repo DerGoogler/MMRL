@@ -1,4 +1,5 @@
 import { os } from "@Native/Os";
+import { view } from "@Native/View";
 import { GlobalStyles, Theme } from "@mui/material";
 
 // export const LightTheme = (theme: Theme): any => ({
@@ -873,16 +874,15 @@ export const LightTheme = () => {
         },
         ".toolbar--material": {
           display: "flex",
-
           webkitFlexWrap: "nowrap",
           flexWrap: "nowrap",
           webkitBoxPack: "justify",
           webkitJustifyContent: "space-between",
           justifyContent: "space-between",
-          height: "56px",
+          paddingTop: view.getWindowTopInsets(),
+          height: `calc(56px + ${view.getWindowTopInsets()}px)`,
           borderBottom: "0",
           boxShadow: "0 1px 5px rgba(0, 0, 0, 0.3)",
-          padding: "0",
           backgroundColor: theme.palette.primary.main,
           backgroundSize: "0",
         },
@@ -4505,10 +4505,12 @@ export const LightTheme = () => {
           bottom: "44px",
         },
         ".toolbar.toolbar--material + .page__background": {
-          top: "56px",
+          top: `calc(56px + ${view.getWindowTopInsets()}px)`,
+          paddingBottom: `${view.getWindowBottomInsets()}px`,
         },
         ".toolbar.toolbar--material + .page__background + .page__content": {
-          top: "56px",
+          top: `calc(56px + ${view.getWindowTopInsets()}px)`,
+          paddingBottom: `${view.getWindowBottomInsets()}px`,
           paddingTop: "0",
         },
         ".toolbar.toolbar--transparent + .page__background": {

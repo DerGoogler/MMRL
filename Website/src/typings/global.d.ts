@@ -72,6 +72,10 @@ declare global {
      * This is an Android only window object
      */
     readonly __os__: I;
+    /**
+     * TODO
+     */
+    readonly __view__: I;
     readonly __log__: I;
     readonly __properties__: I;
     /**

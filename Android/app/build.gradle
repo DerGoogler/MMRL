@@ -96,7 +96,7 @@ repositories {
 dependencies {
     implementation "androidx.browser:browser:1.7.0"
     implementation "androidx.appcompat:appcompat:1.6.1"
-    implementation "androidx.core:core:1.12.0"
+    implementation 'androidx.core:core:1.13.0-alpha04'
     implementation 'androidx.webkit:webkit:1.9.0'
 
     implementation "com.github.topjohnwu.libsu:core:5.2.1"
@@ -104,7 +104,7 @@ dependencies {
 
     implementation 'org.apache.cordova:framework:12.0.1'
     
-    implementation 'com.squareup.okhttp3:okhttp:4.9.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
 }
 
 configurations.implementation.setCanBeResolved(true)
