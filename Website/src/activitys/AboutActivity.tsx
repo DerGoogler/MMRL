@@ -47,7 +47,8 @@ const AboutActivity = () => {
     );
   };
 
-  const date = useFormatDate(BuildConfig.BUILD_DATE);
+  // false to ignore multiplying
+  const date = useFormatDate(BuildConfig.BUILD_DATE, false);
 
   type ListRender = {
     title: string;
