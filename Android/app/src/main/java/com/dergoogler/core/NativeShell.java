@@ -18,10 +18,6 @@ public class NativeShell {
         this.wv = wv;
     }
 
-    static {
-        System.loadLibrary("native-shell-lib");
-    }
-
     @JavascriptInterface
     public void exec(String command) {
         Shell.cmd(command).exec();
@@ -52,12 +48,6 @@ public class NativeShell {
             return false;
         }
     }
-
-    @JavascriptInterface
-    public static native String getenv(String key);
-
-    @JavascriptInterface
-    public static native void setenv(String key, String value, int override);
 
     @JavascriptInterface
     public boolean isAppGrantedRoot() {

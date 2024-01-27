@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.util.Log;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
@@ -15,17 +14,12 @@ import com.dergoogler.core.NativeEnvironment;
 import com.dergoogler.core.NativeSuFile;
 import com.dergoogler.core.NativeLog;
 import com.dergoogler.core.NativeOS;
-import com.dergoogler.core.NativeProperties;
 import com.dergoogler.core.NativeStorage;
 import com.dergoogler.core.NativeShell;
 import com.dergoogler.core.NativeBuildConfig;
 import com.dergoogler.core.NativeView;
-import com.topjohnwu.superuser.Shell;
-import com.topjohnwu.superuser.ShellUtils;
 
 import org.apache.cordova.*;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class MainActivity extends CordovaActivity {
     @Override
@@ -79,7 +73,6 @@ public class MainActivity extends CordovaActivity {
         wv.addJavascriptInterface(os, "__os__");
         wv.addJavascriptInterface(new NativeView(this, wv), "__view__");
         wv.addJavascriptInterface(ns, "__nativeStorage__");
-        wv.addJavascriptInterface(new NativeProperties(), "__properties__");
         wv.addJavascriptInterface(new NativeLog(), "__log__");
 
     }

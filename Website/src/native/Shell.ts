@@ -166,41 +166,27 @@ class ShellClass extends Native<NativeShell> {
     return this._mountDetect(/(APD|APatch)/i);
   }
 
-  public getenv(key: string): string {
-    if (this.isAndroid) {
-      return this.interface.getenv(key);
-    } else {
-      return "";
-    }
-  }
-
-  public setenv(key: string, value: string, override = 1): void {
-    if (this.isAndroid) {
-      this.interface.setenv(key, value, override);
-    }
-  }
-
   /**
    * Returns the current user id
-   * @returns {number} User ID
+   * @returns {strign} User ID
    */
-  public pw_uid(): number {
+  public pw_uid(): string {
     if (this.isAndroid) {
-      return this.interface.pw_uid();
+      return this.interface.result("id -u");
     } else {
-      return -1;
+      return "Unknown";
     }
   }
 
   /**
    * Returns the current group id
-   * @returns {number} Group ID
+   * @returns {string} Group ID
    */
-  public pw_gid(): number {
+  public pw_gid(): string {
     if (this.isAndroid) {
-      return this.interface.pw_gid();
+      return this.interface.result("id -g");
     } else {
-      return -1;
+      return "Unknown";
     }
   }
 
@@ -210,9 +196,9 @@ class ShellClass extends Native<NativeShell> {
    */
   public pw_name(): string {
     if (this.isAndroid) {
-      return this.interface.pw_name();
+      return this.interface.result("id -un");
     } else {
-      return "null";
+      return "Unknown";
     }
   }
 }
