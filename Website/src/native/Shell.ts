@@ -1,4 +1,5 @@
 import { Native } from "./Native";
+import { SuFile } from "./SuFile";
 
 interface NativeShell {
   /**
@@ -127,36 +128,42 @@ class ShellClass extends Native<NativeShell> {
   }
 
   /**
-   * Determine if MMRL runs with KernelSU
+   * Use regex for better detection
+   * @param searcher
+   * @returns
    */
-  public isKernelSU(): boolean {
-    if (this.isAndroid) {
-      return this.interface.isKernelSU();
+  private _mountDetect(searcher: { [Symbol.search](string: string): number }): boolean {
+    const proc = new SuFile("/proc/self/mounts");
+
+    if (proc.exist()) {
+      return proc.read().search(searcher) !== -1;
     } else {
       return false;
     }
+  }
+
+  /**
+   * Determine if MMRL runs with KernelSU
+   */
+  public isKernelSU(): boolean {
+    // `proc.exist()` is always `false` on browsers
+    return this._mountDetect(/(KSU|KernelSU)/i);
   }
 
   /**
    * Determine if MMRL runs with Magisk
    */
   public isMagiskSU(): boolean {
-    if (this.isAndroid) {
-      return this.interface.isMagiskSU();
-    } else {
-      return false;
-    }
+    // `proc.exist()` is always `false` on browsers
+    return this._mountDetect(/(magisk|core\/mirror|core\/img)/i);
   }
 
   /**
    * Determine if MMRL runs with APatch
    */
   public isAPatchSU(): boolean {
-    if (this.isAndroid) {
-      return this.interface.isAPatchSU();
-    } else {
-      return false;
-    }
+    // `proc.exist()` is always `false` on browsers
+    return this._mountDetect(/(APD|APatch)/i);
   }
 
   public getenv(key: string): string {

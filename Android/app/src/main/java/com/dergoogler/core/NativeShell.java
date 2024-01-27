@@ -52,16 +52,7 @@ public class NativeShell {
             return false;
         }
     }
-
-    @JavascriptInterface
-    public static native boolean isMagiskSU();
-
-    @JavascriptInterface
-    public static native boolean isKernelSU();
-
-    @JavascriptInterface
-    public static native boolean isAPatchSU();
-
+    
     @JavascriptInterface
     public static native String getenv(String key);
 
