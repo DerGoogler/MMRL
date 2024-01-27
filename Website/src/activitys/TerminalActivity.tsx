@@ -81,6 +81,7 @@ const TerminalActivity = () => {
       Terminal.exec({
         command: modConf("EXPLORE_INSTALL", {
           URL: path,
+          MODID: id,
         }),
         env: envp_explore,
         onLine: (line) => {
@@ -105,7 +106,6 @@ const TerminalActivity = () => {
       Terminal.exec({
         command: modConf("LOCAL_INSTALL", {
           ZIPFILE: path,
-          MODID: id,
         }),
         env: envp_local,
         onLine: (line) => {
