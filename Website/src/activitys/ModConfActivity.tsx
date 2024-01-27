@@ -1,4 +1,4 @@
-import { Alert, Box, Divider, List, ListSubheader } from "@mui/material";
+import { Alert, Box, Divider, List, ListSubheader, Stack, Typography } from "@mui/material";
 import AvatarGroup from "@mui/material/AvatarGroup";
 import Avatar from "@mui/material/Avatar";
 import { Toolbar } from "@Components/onsenui/Toolbar";
@@ -9,6 +9,7 @@ import { StyledListItemText } from "@Components/StyledListItemText";
 import { Shell } from "@Native/Shell";
 import { DialogEditTextListItem } from "@Components/DialogEditTextListItem";
 import React from "react";
+import Anchor from "@Components/dapi/Anchor";
 
 interface ModConfSections {
   sectionText: string;
@@ -18,6 +19,7 @@ interface ModConfSections {
 interface ModConfListItem<K extends keyof ModConf> {
   confKey: K;
   text: string;
+  dialogDesc?: React.ReactNode;
   /**
    * Used for the config requirement
    */
@@ -177,14 +179,68 @@ function ModConfActivity() {
           },
         ],
       },
+      {
+        sectionText: "Others",
+        items: [
+          {
+            text: "MMRL Install Tools",
+            confKey: "MMRLINI",
+          },
+          {
+            text: "Config working directory",
+            confKey: "CONFCWD",
+          },
+          {
+            text: "Config index file",
+            confKey: "CONFINDEX",
+          },
+          {
+            text: "Explore install script",
+            dialogDesc: (
+              <>
+                <Typography>
+                  Check the{" "}
+                  <Anchor href="https://github.com/DerGoogler/MMRL/tree/master/docs" noIcon>
+                    documentations
+                  </Anchor>{" "}
+                  for possible workarounds!<br />{"<URL> and <MODID> can also be used, "} shell supported.
+                </Typography>
+              </>
+            ),
+            confKey: "EXPLORE_INSTALL",
+          },
+          {
+            text: "Local install script",
+            dialogDesc: (
+              <>
+                <Typography>
+                  Check the{" "}
+                  <Anchor href="https://github.com/DerGoogler/MMRL/tree/master/docs" noIcon>
+                    documentations
+                  </Anchor>{" "}
+                  for possible workarounds!<br />{"<ZIPFILE> can also be used, "} shell supported.
+                </Typography>
+              </>
+            ),
+            confKey: "LOCAL_INSTALL",
+          },
+        ],
+      },
     ],
     []
   );
 
   return (
     <Page renderToolbar={renderToolbar}>
-      <Page.RelativeContent zeroMargin>
-        <Alert sx={{ m: { xs: 1, md: 1 } }} severity="error">
+      <Page.RelativeContent
+        zeroMargin
+        sx={{
+          textOverflow: "ellipsis",
+          overflow: "hidden",
+          whiteSpace: "nowrap",
+        }}
+      >
+        <Alert sx={{ m: { xs: 1, md: 1 }, whiteSpace: "normal" }} severity="error">
           I am not responsible for anything that may happen to your phone by changing these informations. You do it at your own risk and
           take the responsibility upon yourself and you are not to blame us or MMRL and its respected developers
         </Alert>
@@ -202,6 +258,7 @@ function ModConfActivity() {
                   type="text"
                   title={item.text}
                   disabled={item.disabled}
+                  description={item.dialogDesc}
                   initialValue={_modConf[item.confKey]}
                   onSuccess={(value) => {
                     if (value) {
@@ -211,22 +268,28 @@ function ModConfActivity() {
                 >
                   <StyledListItemText
                     primary={
-                      <Box sx={{ display: "flex", alignItems: "center", justifyItems: "center" }}>
-                        {item.logoText && Array.isArray(item.logoText) ? (
-                          <>
-                            <AvatarGroup sx={{ mr: 1 }}>
-                              {item.logoText.map((logo) => (
-                                <Avatar sx={{ borderRadius: "unset", width: "1rem", height: "1rem" }} src={logo} />
-                              ))}
-                            </AvatarGroup>
-                          </>
-                        ) : (
-                          item.logoText && (
-                            <Avatar sx={{ borderRadius: "unset", mr: 1, width: "1rem", height: "1rem" }} src={item.logoText} />
-                          )
-                        )}
-                        [{item.confKey}]: {item.text}
-                      </Box>
+                      <Stack direction="column" justifyContent="center" alignItems="flex-start" spacing={0}>
+                        <Typography variant="caption">{`<${item.confKey}>`}</Typography>
+                        <Typography sx={{ fontSize: "unset" }}>
+                          {" "}
+                          <Box sx={{ display: "flex", alignItems: "center", justifyItems: "center", whiteSpace: "normal" }}>
+                            {item.logoText && Array.isArray(item.logoText) ? (
+                              <>
+                                <AvatarGroup sx={{ mr: 1 }}>
+                                  {item.logoText.map((logo) => (
+                                    <Avatar sx={{ borderRadius: "unset", width: "1rem", height: "1rem" }} src={logo} />
+                                  ))}
+                                </AvatarGroup>
+                              </>
+                            ) : (
+                              item.logoText && (
+                                <Avatar sx={{ borderRadius: "unset", mr: 1, width: "1rem", height: "1rem" }} src={item.logoText} />
+                              )
+                            )}
+                            {item.text}
+                          </Box>
+                        </Typography>
+                      </Stack>
                     }
                     secondary={_modConf[item.confKey]}
                   />

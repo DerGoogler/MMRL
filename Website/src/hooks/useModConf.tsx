@@ -39,6 +39,8 @@ export interface ModConf {
 
   // others
   MMRLINI: string;
+  EXPLORE_INSTALL: string;
+  LOCAL_INSTALL: string;
   CONFCWD: string;
   CONFINDEX: string;
 }
@@ -79,6 +81,8 @@ export const INITIAL_MOD_CONF: ModConf = {
   // others
   MMRLINI: "<MODULES>/mmrl_install_tools",
   CONFCWD: "<MODULECWD>/system/usr/share/mmrl/config/<MODID>",
+  EXPLORE_INSTALL: "<MMRLINI>/system/usr/share/mmrl/bin/mmrl_explore_install_v5",
+  LOCAL_INSTALL: "<MMRLINI>/system/usr/share/mmrl/bin/mmrl_local_install_v5",
   CONFINDEX: "<CONFCWD>/index.jsx",
 };
 

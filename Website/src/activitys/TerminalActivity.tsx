@@ -79,7 +79,9 @@ const TerminalActivity = () => {
       };
 
       Terminal.exec({
-        command: `${modConf("MMRLINI")}/system/usr/share/mmrl/bin/mmrl_explore_install_v4`,
+        command: modConf("EXPLORE_INSTALL", {
+          URL: path,
+        }),
         env: envp_explore,
         onLine: (line) => {
           addLine(line);
@@ -101,7 +103,10 @@ const TerminalActivity = () => {
       };
 
       Terminal.exec({
-        command: `${modConf("MMRLINI")}/system/usr/share/mmrl/bin/mmrl_local_install_v4`,
+        command: modConf("LOCAL_INSTALL", {
+          ZIPFILE: path,
+          MODID: id,
+        }),
         env: envp_local,
         onLine: (line) => {
           addLine(line);

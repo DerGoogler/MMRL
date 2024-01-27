@@ -17,7 +17,7 @@ export interface DialogEditTextListItemProps extends React.PropsWithChildren {
   title: string;
   disabled?: boolean;
   initialValue: string;
-  description?: string;
+  description?: React.ReactNode;
   type?: React.HTMLInputTypeAttribute;
   onSuccess: (value: string) => void;
   InputProps?: Partial<InputBaseProps>;
@@ -50,7 +50,7 @@ export const DialogEditTextListItem = (props: DialogEditTextListItemProps) => {
       <ListItemButton disabled={props.disabled} onClick={handleClickOpen}>
         {props.children}
       </ListItemButton>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog open={open} maxWidth="md" fullWidth onClose={handleClose}>
         <DialogTitle>{props.title}</DialogTitle>
         <DialogContent>
           {props.description && <DialogContentText>{props.description}</DialogContentText>}
