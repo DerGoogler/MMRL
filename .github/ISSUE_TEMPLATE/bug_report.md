@@ -26,8 +26,8 @@ If applicable, add screenshots to help explain your problem.
 **Device info(please complete the following information):**
  - Device: [e.g. iPhone6]
  - OS: [ROM and version, ie Havoc-OS 4.12]
- - App Version [e.g. 22]
- - User Agent [e.g. Mozilla/5.0 (Linux; Android 11; Pixel 5) AppleWebKit/537.36]
+ - App Version: [e.g. 22]
+ - User Agent: [e.g. Mozilla/5.0 (Linux; Android 11; Pixel 5) AppleWebKit/537.36]
 
 **Additional context**
 Add any other context about the problem here.
