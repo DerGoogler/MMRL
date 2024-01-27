@@ -37,6 +37,12 @@ android {
         }
     }
 
+    applicationVariants.configureEach { variant ->
+        variant.outputs.configureEach { output ->
+            outputFileName = outputFileName.replace(".apk", "-${variant.versionName}-${variant.versionCode}.apk").replace("-unsigned", "")
+        }
+    }
+
     buildTypes {
         release {
             resValue "string", "app_name", "${app_name}"

@@ -13,20 +13,7 @@
       "attributes": [],
       "versionCode": 2139,
       "versionName": "2.13.9_alpha-5",
-      "outputFile": "app-default-universal-release.apk"
-    },
-    {
-      "type": "ONE_OF_MANY",
-      "filters": [
-        {
-          "filterType": "ABI",
-          "value": "x86_64"
-        }
-      ],
-      "attributes": [],
-      "versionCode": 2139,
-      "versionName": "2.13.9_alpha-5",
-      "outputFile": "app-default-x86_64-release.apk"
+      "outputFile": "app-default-universal-release-2.13.9_alpha-5-2139.apk"
     },
     {
       "type": "ONE_OF_MANY",
@@ -39,7 +26,7 @@
       "attributes": [],
       "versionCode": 2139,
       "versionName": "2.13.9_alpha-5",
-      "outputFile": "app-default-arm64-v8a-release.apk"
+      "outputFile": "app-default-arm64-v8a-release-2.13.9_alpha-5-2139.apk"
     },
     {
       "type": "ONE_OF_MANY",
@@ -52,7 +39,7 @@
       "attributes": [],
       "versionCode": 2139,
       "versionName": "2.13.9_alpha-5",
-      "outputFile": "app-default-x86-release.apk"
+      "outputFile": "app-default-x86-release-2.13.9_alpha-5-2139.apk"
     },
     {
       "type": "ONE_OF_MANY",
@@ -65,7 +52,20 @@
       "attributes": [],
       "versionCode": 2139,
       "versionName": "2.13.9_alpha-5",
-      "outputFile": "app-default-armeabi-v7a-release.apk"
+      "outputFile": "app-default-armeabi-v7a-release-2.13.9_alpha-5-2139.apk"
+    },
+    {
+      "type": "ONE_OF_MANY",
+      "filters": [
+        {
+          "filterType": "ABI",
+          "value": "x86_64"
+        }
+      ],
+      "attributes": [],
+      "versionCode": 2139,
+      "versionName": "2.13.9_alpha-5",
+      "outputFile": "app-default-x86_64-release-2.13.9_alpha-5-2139.apk"
     }
   ],
   "elementType": "File"
