@@ -108,6 +108,7 @@ const UpdateModule = React.memo<Props>((props) => {
                   component: TerminalActivity,
                   key: "TerminalActivity",
                   extra: {
+                    id: id,
                     exploreInstall: true,
                     path: updatedModule?.zipUrl,
                   },

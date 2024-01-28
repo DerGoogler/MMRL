@@ -82,7 +82,7 @@ export const INITIAL_MOD_CONF: ModFS = {
   // others
   MMRLINI: "<MODULES>/mmrl_install_tools",
   CONFCWD: "<MODULECWD>/system/usr/share/mmrl/config/<MODID>",
-  EXPLORE_INSTALL: "<INCLUDECORE>; FILE=\"/data/local/tmp/$NAME-$RANDOM.zip\"; download_file \"$FILE\"; install_cli \"$ZIPFILE\";",
+  EXPLORE_INSTALL: "<INCLUDECORE>; FILE=\"/data/local/tmp/$NAME-$RANDOM.zip\"; download_file \"$FILE\"; install_cli \"$FILE\";",
   LOCAL_INSTALL: "<INCLUDECORE>; install_cli \"$ZIPFILE\";",
   CONFINDEX: "<CONFCWD>/index.jsx",
 };
