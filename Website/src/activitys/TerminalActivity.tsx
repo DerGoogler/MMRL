@@ -85,6 +85,7 @@ const TerminalActivity = () => {
           URL: path,
           MODID: id,
         }),
+        cwd: "/data/local/tmp",
         env: envp_explore,
         onLine: (line) => {
           addLine(line);
@@ -111,6 +112,7 @@ const TerminalActivity = () => {
           ZIPFILE: path,
         }),
         env: envp_local,
+        cwd: "/data/local/tmp",
         onLine: (line) => {
           addLine(line);
         },

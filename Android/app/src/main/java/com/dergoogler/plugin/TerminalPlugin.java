@@ -2,6 +2,8 @@ package com.dergoogler.plugin;
 
 import android.util.Log;
 
+import com.topjohnwu.superuser.io.SuFile;
+
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.PluginResult;
@@ -28,13 +30,14 @@ public class TerminalPlugin extends CordovaPlugin {
             case "exec":
                 String cmd = data.getString(0);
                 JSONObject envp = data.getJSONObject(1);
+                String cwd = data.getString(2);
 
                 this.terminalCallbackContext = callbackContext;
                 String[] commands = {"su", "-p", "-c", cmd};
 
                 cordova.getThreadPool().execute(() -> {
                     try {
-                        run(envp, commands);
+                        run(envp, cwd, commands);
                         callbackContext.error(1);
                     } catch (IOException | JSONException e) {
                         callbackContext.error(0);
@@ -53,12 +56,13 @@ public class TerminalPlugin extends CordovaPlugin {
 
     }
 
-    public void run(JSONObject envp, String... command) throws IOException, JSONException {
+    public void run(JSONObject envp, String cwd, String... command) throws IOException, JSONException {
         ProcessBuilder pb = new ProcessBuilder(command).redirectErrorStream(true);
         if (envp != null) {
             Map<String, String> m = pb.environment();
             m.putAll(toMap(envp));
         }
+        pb.directory(new SuFile(cwd));
         Process process = pb.start();
         try (BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
             while (true) {

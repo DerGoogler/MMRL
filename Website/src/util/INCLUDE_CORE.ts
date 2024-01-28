@@ -7,8 +7,8 @@ RESET="\\x1b[0m"
 
 function ui_info { echo "$GREEN- $RESET$1"; }
 function ui_error { echo "RED! $RESET$2"; exit $1; }
-function ui_warn { echo "$YELLOW! $RESET$1"; }
-function mmrl { echo "#!mmrl:$@"; }
+function ui_warn { echo "$YELLOW? $RESET$1"; }
+function mmrl_exec { echo "#!mmrl:$@"; }
 
 echo "$GREEN    __  _____  _______  __ $RESET"
 echo "$GREEN   /  |/  /  |/  / __ \\/ / $RESET"
@@ -47,9 +47,6 @@ download_file() {
     bb wget $URL -O "$1"
     if [ $(echo $?) -eq 0 ]; then
         ui_info "Successful downloaded $GREEN$NAME$RESET"
-        if [ "$CLEAR_TERMINAL_AFTER_DL" = "true" ]; then
-          mmrl clearTerminal
-        fi
     else
         ui_error 1 "Something went wrong"
     fi
@@ -72,7 +69,6 @@ install_cli() {
         ;;
       "Unknown")
         ui_error 1 "Unable to find root manager"
-        exit 1
         ;;
       *)
         ui_error 1 "Install error"

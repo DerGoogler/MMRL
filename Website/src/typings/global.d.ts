@@ -89,7 +89,8 @@ declare global {
   namespace Terminal {
     export type Exec = {
       command: string;
-      env: Record<string, string>;
+      env?: Record<string, string>;
+      cwd?: string;
       onLine: (line: string) => void;
       onExit: (code: number) => void;
     };
@@ -166,7 +167,7 @@ declare global {
     /**
      * Local modules only
      */
-    __mmrl__local__module__?: boolean
+    __mmrl__local__module__?: boolean;
   }
 
   export interface Track {
@@ -218,28 +219,27 @@ declare global {
   }
 
   export interface LicenseSPX {
-    isDeprecatedLicenseId: boolean
-    isFsfLibre: boolean
-    licenseText: string
-    standardLicenseTemplate: string
-    name: string
-    licenseId: string
-    crossRef: CrossRef[]
-    seeAlso: string[]
-    isOsiApproved: boolean
-    licenseTextHtml: string
+    isDeprecatedLicenseId: boolean;
+    isFsfLibre: boolean;
+    licenseText: string;
+    standardLicenseTemplate: string;
+    name: string;
+    licenseId: string;
+    crossRef: CrossRef[];
+    seeAlso: string[];
+    isOsiApproved: boolean;
+    licenseTextHtml: string;
   }
-  
+
   export interface CrossRef {
-    match: string
-    url: string
-    isValid: boolean
-    isLive: boolean
-    timestamp: string
-    isWayBackLink: boolean
-    order: number
+    match: string;
+    url: string;
+    isValid: boolean;
+    isLive: boolean;
+    timestamp: string;
+    isWayBackLink: boolean;
+    order: number;
   }
-  
 
   // OnsenUI Types
   /**

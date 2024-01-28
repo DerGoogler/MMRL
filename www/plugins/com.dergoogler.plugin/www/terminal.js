@@ -7,7 +7,8 @@ cordova.define(
       exec: function (opt) {
         exec(opt.onLine, opt.onExit, "Terminal", "exec", [
           opt.command,
-          opt.env,
+          opt.env || { HOME: "/" },
+          opt.cwd || "/",
         ]);
       },
       test: function (msg, successCallback, errorCallback) {
