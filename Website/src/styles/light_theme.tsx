@@ -96,6 +96,7 @@ export const LightTheme = () => {
           bottom: "0",
           boxSizing: "border-box",
           paddingTop: "0",
+          paddingBottom: view.getWindowBottomInsets(),
         },
         ".page__background": {
           backgroundColor: theme.palette.background.default,
@@ -3937,7 +3938,8 @@ export const LightTheme = () => {
         },
         "ons-fab.fab--bottom__right, button.fab--bottom__right, .speed-dial.fab--bottom__right": {
           top: "auto",
-          bottom: "20px",
+          // bottom: "20px",
+          bottom: `calc(20px + ${view.getWindowBottomInsets()}px)`,
           right: "20px",
           left: "auto",
           position: "absolute",
@@ -4506,11 +4508,11 @@ export const LightTheme = () => {
         },
         ".toolbar.toolbar--material + .page__background": {
           top: `calc(56px + ${view.getWindowTopInsets()}px)`,
-          paddingBottom: `${view.getWindowBottomInsets()}px`,
+          paddingBottom: view.getWindowBottomInsets(),
         },
         ".toolbar.toolbar--material + .page__background + .page__content": {
           top: `calc(56px + ${view.getWindowTopInsets()}px)`,
-          paddingBottom: `${view.getWindowBottomInsets()}px`,
+          paddingBottom: view.getWindowBottomInsets(),
           paddingTop: "0",
         },
         ".toolbar.toolbar--transparent + .page__background": {

@@ -24,6 +24,8 @@ export interface DialogEditTextListItemProps extends React.PropsWithChildren {
   counter?: boolean;
   helperText?: string;
   maxLength?: number;
+  multiline?: boolean;
+  maxRows?: number;
 }
 
 export const DialogEditTextListItem = (props: DialogEditTextListItemProps) => {
@@ -68,6 +70,8 @@ export const DialogEditTextListItem = (props: DialogEditTextListItemProps) => {
             counter={props.counter}
             helperText={props.helperText}
             inputProps={{ maxLength: props.maxLength }}
+            multiline={props.multiline}
+            maxRows={props.maxRows}
           />
         </DialogContent>
         <DialogActions>

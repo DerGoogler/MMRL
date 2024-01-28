@@ -74,8 +74,16 @@ public class NativeSuFile {
             }
 
             @JavascriptInterface
-            public boolean create() {
-                return file.createNewFile();
+            public boolean create(int type) {
+                switch (type) {
+                    case 0:
+                        return file.createNewFile();
+                    case 1:
+                        return file.mkdirs();
+                    case 2:
+                        return file.mkdir();
+                }
+                return false;
             }
 
             @JavascriptInterface

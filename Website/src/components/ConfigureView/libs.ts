@@ -18,6 +18,7 @@ import Ansi from "ansi-to-react";
 import { os } from "@Native/Os";
 import { BuildConfig } from "@Native/BuildConfig";
 import { useSettings } from "@Hooks/useSettings";
+import { useNativeFileStorage } from "@Hooks/useNativeFileStorage";
 
 export const libraries = [
   {
@@ -64,6 +65,7 @@ export const libraries = [
     __esModule: {
       useActivity: useActivity,
       useNativeProperties: useNativeProperties,
+      useNativeFileStorage: useNativeFileStorage,
       useNativeStorage: useNativeStorage,
       useTheme: useTheme,
       useSettings: useSettings,

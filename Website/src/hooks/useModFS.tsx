@@ -3,6 +3,7 @@ import { defaultComposer } from "default-composer";
 import { useNativeStorage } from "./useNativeStorage";
 import { SetStateAction } from "./useStateCallback";
 import { formatObjectEntries, formatString } from "@Util/stringFormat";
+import { useNativeFileStorage } from "./useNativeFileStorage";
 
 export interface ModFS {
   //cli
@@ -90,7 +91,7 @@ export interface ModConfContext {
   _modFS: ModFS;
   __modFS: ModFS;
   modFS<K extends keyof ModFS>(key: K, adds?: Record<string, any>): ModFS[K];
-  setModFS<K extends keyof ModFS>(key: K, state: SetStateAction<ModFS[K]>, callback?: (state: ModFS[K]) => void): void;
+  setModFS<K extends keyof ModFS>(key: K, state: SetStateAction<ModFS[K]>): void;
 }
 
 export const ModConfContext = createContext<ModConfContext>({
@@ -99,7 +100,7 @@ export const ModConfContext = createContext<ModConfContext>({
   modFS<K extends keyof ModFS>(key: K, adds?: Record<string, any>) {
     return key;
   },
-  setModFS<K extends keyof ModFS>(key: K, state: SetStateAction<ModFS[K]>, callback?: (state: ModFS[K]) => void) {},
+  setModFS<K extends keyof ModFS>(key: K, state: SetStateAction<ModFS[K]>) {},
 });
 
 export const useModFS = () => {
@@ -107,7 +108,7 @@ export const useModFS = () => {
 };
 
 export const ModFSProvider = (props: React.PropsWithChildren) => {
-  const [modFS, setModFS] = useNativeStorage("modfs_v1", INITIAL_MOD_CONF);
+  const [modFS, setModFS] = useNativeFileStorage("/data/adb/mmrl/modfs.v1.json", INITIAL_MOD_CONF);
 
   const contextValue = React.useMemo(
     () => ({
@@ -116,17 +117,14 @@ export const ModFSProvider = (props: React.PropsWithChildren) => {
       modFS: (key, adds) => {
         return formatString(defaultComposer(INITIAL_MOD_CONF, modFS)[key], { ...modFS, ...adds });
       },
-      setModFS: (name, state, callback) => {
-        setModFS(
-          (prev) => {
-            const newValue = state instanceof Function ? state(prev[name]) : state;
-            return {
-              ...prev,
-              [name]: newValue,
-            };
-          },
-          (state) => callback && callback(state[name])
-        );
+      setModFS: (name, state) => {
+        setModFS((prev) => {
+          const newValue = state instanceof Function ? state(prev[name]) : state;
+          return {
+            ...prev,
+            [name]: newValue,
+          };
+        });
       },
     }),
     [modFS]

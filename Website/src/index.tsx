@@ -18,12 +18,19 @@ import { MMRLAnchor } from "./custom-elements/anchor";
 import "onsenui/css/onsenui.css";
 import "@Styles/default.scss";
 import { strs } from "./locales/declaration";
+import { SuFile } from "@Native/SuFile";
 
 ons.platform.select("android");
 
 ons.ready(() => {
   customElements.define("mmrl-app", MMRLApp);
   customElements.define("mmrl-anchor", MMRLAnchor);
+
+  const mmrlFolder = new SuFile("/data/adb/mmrl");
+
+  if (!mmrlFolder.exist()) {
+    mmrlFolder.create(SuFile.NEW_FOLDERS);
+  }
 
   render(
     <React.StrictMode>

@@ -26,6 +26,8 @@ interface ModFSListItem<K extends keyof ModFS> {
    */
   logoText?: string | Array<string>;
   disabled?: boolean;
+  multiline?: boolean;
+  maxRows?: number;
 }
 
 function ModFSActivity() {
@@ -198,16 +200,18 @@ function ModFSActivity() {
           },
           {
             text: "Explore install script",
+            multiline: true,
+            maxRows: 10,
             dialogDesc: (
               <>
                 <Typography>
                   Check the{" "}
                   <Anchor href="https://github.com/DerGoogler/MMRL/tree/master/docs" noIcon>
-                    documentations
+                    ModFS documentations
                   </Anchor>{" "}
-                  for possible workarounds!
+                  for more informations!
                   <br />
-                  {"<URL> and <MODID> can also be used, "} shell supported.
+                  <code>{"<URL>"}</code> and <code>{"<MODID>"}</code> can also be used, shell supported.
                 </Typography>
               </>
             ),
@@ -215,16 +219,18 @@ function ModFSActivity() {
           },
           {
             text: "Local install script",
+            multiline: true,
+            maxRows: 10,
             dialogDesc: (
               <>
                 <Typography>
                   Check the{" "}
                   <Anchor href="https://github.com/DerGoogler/MMRL/tree/master/docs" noIcon>
-                    documentations
+                    ModFS documentations
                   </Anchor>{" "}
-                  for possible workarounds!
+                  for more informations!
                   <br />
-                  {"<ZIPFILE> can also be used, "} shell supported.
+                  <code>{"<ZIPFILE>"}</code> can also be used, shell supported.
                 </Typography>
               </>
             ),
@@ -271,6 +277,8 @@ function ModFSActivity() {
                       setModFS(item.confKey, value);
                     }
                   }}
+                  multiline={item.multiline}
+                  maxRows={item.maxRows}
                 >
                   <StyledListItemText
                     primary={
