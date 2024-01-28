@@ -9,12 +9,12 @@ import React from "react";
 import { Shell } from "@Native/Shell";
 import { useSettings } from "@Hooks/useSettings";
 import { BuildConfig } from "@Native/BuildConfig";
-import { useModConf } from "@Hooks/useModConf";
+import { useModFS } from "@Hooks/useModFS";
 
 const TerminalActivity = () => {
   const { context, extra } = useActivity<any>();
   const { settings } = useSettings();
-  const { modConf, __modConf } = useModConf();
+  const { modFS, __modFS } = useModFS();
   const [active, setActive] = React.useState<bool>(true);
 
   const [lines, setLines] = React.useState<string[]>([]);
@@ -75,11 +75,11 @@ const TerminalActivity = () => {
         NAME: id,
         URL: path,
         ROOTMANAGER: Shell.getRootManager(),
-        ...__modConf,
+        ...__modFS,
       };
 
       Terminal.exec({
-        command: modConf("EXPLORE_INSTALL", {
+        command: modFS("EXPLORE_INSTALL", {
           URL: path,
           MODID: id,
         }),
@@ -100,11 +100,11 @@ const TerminalActivity = () => {
         NAME: id,
         ZIPFILE: path,
         ROOTMANAGER: Shell.getRootManager(),
-        ...__modConf,
+        ...__modFS,
       };
 
       Terminal.exec({
-        command: modConf("LOCAL_INSTALL", {
+        command: modFS("LOCAL_INSTALL", {
           ZIPFILE: path,
         }),
         env: envp_local,

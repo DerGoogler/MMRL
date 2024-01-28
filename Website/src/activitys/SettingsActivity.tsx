@@ -16,12 +16,12 @@ import { Shell } from "@Native/Shell";
 import { DialogEditTextListItem } from "@Components/DialogEditTextListItem";
 import { Properties } from "@Native/Properties";
 import { useLanguageMap } from "./../locales/declaration";
-import { useModConf } from "@Hooks/useModConf";
+import { useModFS } from "@Hooks/useModFS";
 import { useLocalModules } from "@Hooks/useLocalModules";
 
 function SettingsActivity() {
   const { context } = useActivity();
-  const { _modConf } = useModConf();
+  const { _modFS } = useModFS();
   const { strings } = useStrings();
   const availableLangs = useLanguageMap();
   const { setRepos } = useRepos();
@@ -197,7 +197,7 @@ function SettingsActivity() {
                       version_name: Shell.VERSION_NAME(),
                       version_code: Shell.VERSION_CODE(),
                     },
-                    modconf: _modConf,
+                    modconf: _modFS,
                     modules: localModules,
                   },
                   null,

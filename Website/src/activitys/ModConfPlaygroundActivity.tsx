@@ -11,6 +11,7 @@ import { ErrorBoundaryProps, ErrorBoundaryState, errorBoundaryInitialState } fro
 import editorTheme from "@Util/editorTheme";
 import { ConfigureView } from "@Components/ConfigureView";
 import { useNativeStorage } from "@Hooks/useNativeStorage";
+import { useStrings } from "@Hooks/useStrings";
 
 export interface PlaygroundExtra {
   title: string;
@@ -110,8 +111,9 @@ const editorDidMount = (editor: monacoEditor.editor.IStandaloneCodeEditor, monac
   editor.focus();
 };
 
-const ConfigurePlaygroundActivity = () => {
+const ModConfPlaygroundActivity = () => {
   const { context, extra } = useActivity<PlaygroundExtra>();
+  const { strings } = useStrings();
 
   const [description, setDescription] = useNativeStorage("module-configure-playground", extra.defaultText || "");
   const [errBoundKey, setErrBoundKey] = React.useState(0);
@@ -138,7 +140,7 @@ const ConfigurePlaygroundActivity = () => {
         <Toolbar.Left>
           <Toolbar.BackButton onClick={context.popPage} />
         </Toolbar.Left>
-        <Toolbar.Center>Module Configure Playground</Toolbar.Center>
+        <Toolbar.Center>{strings("modconf_playground")}</Toolbar.Center>
         <Toolbar.Right>{!isLargeScreen && <Toolbar.Button icon={PreviewIcon} onClick={handlePreview} />}</Toolbar.Right>
       </Toolbar>
     );
@@ -236,4 +238,4 @@ const Preview = styled("div")(({ theme }) => ({
   },
 }));
 
-export default ConfigurePlaygroundActivity;
+export default ModConfPlaygroundActivity;

@@ -14,7 +14,7 @@ import { PluginObj } from "@babel/core";
 import { globals, libraries } from "./libs";
 import { DialogEditListItem, StyledListSubheader } from "./components";
 import { SuFile, wasmFs } from "@Native/SuFile";
-import { ModConf, useModConf } from "@Hooks/useModConf";
+import { ModFS, useModFS } from "@Hooks/useModFS";
 import ini from "ini";
 import yaml from "yaml";
 import { useLog } from "@Hooks/native/useLog";
@@ -71,10 +71,10 @@ const scope = {
 
 export const ConfigureView = React.forwardRef<any, { code: string; modid: string }>((props, ref) => {
   const { theme } = useTheme();
-  const { modConf } = useModConf();
+  const { modFS: modConf } = useModFS();
 
   const log = useLog(`Config-${props.modid}`);
-  const format = React.useCallback<<K extends keyof ModConf>(key: K) => ModConf[K]>((key) => modConf(key, { MODID: props.modid }), []);
+  const format = React.useCallback<<K extends keyof ModFS>(key: K) => ModFS[K]>((key) => modConf(key, { MODID: props.modid }), []);
 
   const customRequire = React.useCallback((file: string, opt?: any) => {
     const isLocalFile = /^[./]/.test(file);

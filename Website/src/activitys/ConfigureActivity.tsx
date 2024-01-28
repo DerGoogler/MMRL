@@ -2,8 +2,8 @@ import { useActivity } from "@Hooks/useActivity";
 import React from "react";
 import { SuFile } from "@Native/SuFile";
 import { ConfigureView } from "@Components/ConfigureView";
-import { useModConf } from "@Hooks/useModConf";
-import { PreviewErrorBoundary } from "./ConfigurePlaygroundActivity";
+import { useModFS } from "@Hooks/useModFS";
+import { PreviewErrorBoundary } from "./ModConfPlaygroundActivity";
 
 type Extra = {
   code?: string;
@@ -12,12 +12,12 @@ type Extra = {
 };
 
 const ConfigureActivity = () => {
-  const { modConf } = useModConf();
+  const { modFS } = useModFS();
   const { extra } = useActivity<Extra>();
 
   const config: string = React.useMemo(() => {
     if (!extra.code) {
-      const file = new SuFile(modConf("CONFINDEX", { MODID: extra.moduleid }));
+      const file = new SuFile(modFS("CONFINDEX", { MODID: extra.moduleid }));
 
       if (file.exist()) {
         return file.read();

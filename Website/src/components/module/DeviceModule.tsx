@@ -18,7 +18,7 @@ import { useLowQualityModule } from "@Hooks/useLowQualityModule";
 import { useStrings } from "@Hooks/useStrings";
 import { useActivity } from "@Hooks/useActivity";
 import { useLog } from "@Hooks/native/useLog";
-import { ModConf, useModConf } from "@Hooks/useModConf";
+import { ModFS, useModFS } from "@Hooks/useModFS";
 
 import { SuFile } from "@Native/SuFile";
 // @ts-ignore
@@ -30,7 +30,7 @@ interface Props {
 
 const DeviceModule = React.memo<Props>((props) => {
   const { theme } = useTheme();
-  const { modConf } = useModConf();
+  const { modFS: modConf } = useModFS();
   const { strings } = useStrings();
   const { settings } = useSettings();
   const { context } = useActivity();
@@ -40,7 +40,7 @@ const DeviceModule = React.memo<Props>((props) => {
 
   const { id, name, author, version, versionCode, timestamp, description } = props.module;
 
-  const format = React.useCallback<<K extends keyof ModConf>(key: K) => ModConf[K]>((key) => modConf(key, { MODID: id }), []);
+  const format = React.useCallback<<K extends keyof ModFS>(key: K) => ModFS[K]>((key) => modConf(key, { MODID: id }), []);
 
   const remove = new SuFile(format("REMOVE"));
   const disable = new SuFile(format("DISABLE"));

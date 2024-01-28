@@ -28,7 +28,6 @@ import { useCategories } from "@Hooks/useCategories";
 import { useFormatDate } from "@Hooks/useFormatDate";
 import Chip from "@mui/material/Chip";
 import CardMedia from "@mui/material/CardMedia";
-import { useSupportIconForUrl } from "@Hooks/useSupportIconForUrl";
 import { useLog } from "@Hooks/native/useLog";
 import { SuFile } from "@Native/SuFile";
 import DescriptonActivity from "./DescriptonActivity";
@@ -43,18 +42,12 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import { Disappear } from "react-disappear";
 import Fade from "@mui/material/Fade";
 import TelegramIcon from "@mui/icons-material/Telegram";
-import SecurityUpdateGoodIcon from "@mui/icons-material/SecurityUpdateGood";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import { useRepos } from "@Hooks/useRepos";
 import PicturePreviewActivity from "./PicturePreviewActivity";
 import GitHubIcon from "@mui/icons-material/GitHub";
-import TerminalIcon from "@mui/icons-material/Terminal";
-import { isLiteralObject } from "@Util/util";
 import { useLowQualityModule } from "@Hooks/useLowQualityModule";
-import AvatarGroup from "@mui/material/AvatarGroup";
 import FormatAlignLeftIcon from "@mui/icons-material/FormatAlignLeft";
-// import ProfileActivty from "./ProfileActivity";
-import { useModConf } from "@Hooks/useModConf";
 import { useConfirm } from "material-ui-confirm";
 import InstallMobileIcon from "@mui/icons-material/InstallMobile";
 import DownloadIcon from "@mui/icons-material/Download";
@@ -65,18 +58,6 @@ function a11yProps(index: number) {
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
-
-// function pickFourElements(jsonArray: Array<MmrlAuthor>): Array<MmrlAuthor> {
-//   if (jsonArray.length <= 4) {
-//     // Return the array as is if it contains 4 or fewer elements
-//     return jsonArray;
-//   } else {
-//     // Shuffle the array to randomize the selection
-//     const shuffledArray = jsonArray.sort(() => Math.random() - 0.5);
-//     // Return the first four elements of the shuffled array
-//     return shuffledArray.slice(0, 4);
-//   }
-// }
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -111,9 +92,6 @@ const ModuleViewActivity = () => {
   const latestVersion = React.useMemo(() => versions[versions.length - 1], [versions]);
 
   const formatLastUpdate = useFormatDate(latestVersion.timestamp);
-
-  const { modConf } = useModConf();
-  const hasInstallTools = SuFile.exist(`${modConf("MMRLINI")}/module.prop`);
 
   const search = React.useMemo(() => new URLSearchParams(window.location.search), [window.location.search]);
 
@@ -276,7 +254,7 @@ const ModuleViewActivity = () => {
               </Typography>
 
               <Stack direction="row" justifyContent="center" alignItems="center" spacing={1}>
-                {os.isAndroid && (Shell.isMagiskSU() || Shell.isKernelSU() || Shell.isAPatchSU()) && hasInstallTools && (
+                {os.isAndroid && (Shell.isMagiskSU() || Shell.isKernelSU() || Shell.isAPatchSU()) && (
                   <Button
                     color="secondary"
                     sx={{
@@ -635,9 +613,6 @@ const VersionItem = React.memo<VersionItemProps>(({ id, version }) => {
   const confirm = useConfirm();
   const { theme } = useTheme();
 
-  const { modConf, __modConf } = useModConf();
-  const hasInstallTools = SuFile.exist(`${modConf("MMRLINI")}/module.prop`);
-
   const versionName = `${version.version} (${version.versionCode})`;
 
   const handleInstall = () => {
@@ -661,7 +636,7 @@ const VersionItem = React.memo<VersionItemProps>(({ id, version }) => {
     <ListItem
       secondaryAction={
         <Stack direction="row" justifyContent="center" alignItems="center" spacing={0.5}>
-          {os.isAndroid && (Shell.isMagiskSU() || Shell.isKernelSU() || Shell.isAPatchSU()) && hasInstallTools && (
+          {os.isAndroid && (Shell.isMagiskSU() || Shell.isKernelSU() || Shell.isAPatchSU()) && (
             <IconButton onClick={handleInstall} edge="end" aria-label="install">
               <InstallMobileIcon />
             </IconButton>

@@ -10,7 +10,7 @@ import { MainActivity } from "@Activitys/MainActivity";
 import { RepoProvider } from "@Hooks/useRepos";
 
 import { SettingsProvider } from "@Hooks/useSettings";
-import { ModConfProvider } from "@Hooks/useModConf";
+import { ModFSProvider } from "@Hooks/useModFS";
 
 import { MMRLApp } from "./custom-elements/app";
 import { MMRLAnchor } from "./custom-elements/anchor";
@@ -27,7 +27,7 @@ ons.ready(() => {
 
   render(
     <React.StrictMode>
-      <ModConfProvider>
+      <ModFSProvider>
         <SettingsProvider>
           <StringsProvider data={strs}>
             <ThemeProvider>
@@ -43,7 +43,7 @@ ons.ready(() => {
             </ThemeProvider>
           </StringsProvider>
         </SettingsProvider>
-      </ModConfProvider>
+      </ModFSProvider>
     </React.StrictMode>,
     "mmrl-app"
   );

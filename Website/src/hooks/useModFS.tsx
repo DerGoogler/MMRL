@@ -4,7 +4,7 @@ import { useNativeStorage } from "./useNativeStorage";
 import { SetStateAction } from "./useStateCallback";
 import { formatObjectEntries, formatString } from "@Util/stringFormat";
 
-export interface ModConf {
+export interface ModFS {
   //cli
   MSUCLI: string;
   MSUBSU: string;
@@ -45,7 +45,7 @@ export interface ModConf {
   CONFINDEX: string;
 }
 
-export const INITIAL_MOD_CONF: ModConf = {
+export const INITIAL_MOD_CONF: ModFS = {
   //cli
   MSUCLI: "/system/bin/magisk",
   MSUBSU: "<ADB>/magisk/busybox",
@@ -87,52 +87,37 @@ export const INITIAL_MOD_CONF: ModConf = {
 };
 
 export interface ModConfContext {
-  _modConf: ModConf;
-  __modConf: ModConf;
-  modConf<K extends keyof ModConf>(key: K, adds?: Record<string, any>): ModConf[K];
-  setModConf<K extends keyof ModConf>(key: K, state: SetStateAction<ModConf[K]>, callback?: (state: ModConf[K]) => void): void;
+  _modFS: ModFS;
+  __modFS: ModFS;
+  modFS<K extends keyof ModFS>(key: K, adds?: Record<string, any>): ModFS[K];
+  setModFS<K extends keyof ModFS>(key: K, state: SetStateAction<ModFS[K]>, callback?: (state: ModFS[K]) => void): void;
 }
 
 export const ModConfContext = createContext<ModConfContext>({
-  _modConf: INITIAL_MOD_CONF,
-  __modConf: INITIAL_MOD_CONF,
-  modConf<K extends keyof ModConf>(key: K, adds?: Record<string, any>) {
+  _modFS: INITIAL_MOD_CONF,
+  __modFS: INITIAL_MOD_CONF,
+  modFS<K extends keyof ModFS>(key: K, adds?: Record<string, any>) {
     return key;
   },
-  setModConf<K extends keyof ModConf>(key: K, state: SetStateAction<ModConf[K]>, callback?: (state: ModConf[K]) => void) {},
+  setModFS<K extends keyof ModFS>(key: K, state: SetStateAction<ModFS[K]>, callback?: (state: ModFS[K]) => void) {},
 });
 
-export const useModConf = () => {
+export const useModFS = () => {
   return useContext(ModConfContext);
 };
 
-export const ModConfProvider = (props: React.PropsWithChildren) => {
-  const [modConf, setModConf] = useNativeStorage("modconf_v4", INITIAL_MOD_CONF);
-
-  // Test purposes
-  // React.useEffect(() => {
-  //   for (const k in modConf) {
-  //     console.info(
-  //       formatString(defaultComposer(INITIAL_MOD_CONF, modConf)[k], {
-  //         ...modConf,
-  //         ...{
-  //           MODID: "node_on_android",
-  //           ZIPFILE: "/sdard/xh.zip",
-  //         },
-  //       })
-  //     );
-  //   }
-  // }, [modConf]);
+export const ModFSProvider = (props: React.PropsWithChildren) => {
+  const [modFS, setModFS] = useNativeStorage("modfs_v1", INITIAL_MOD_CONF);
 
   const contextValue = React.useMemo(
     () => ({
-      _modConf: defaultComposer(INITIAL_MOD_CONF, modConf),
-      __modConf: formatObjectEntries<ModConf>(defaultComposer(INITIAL_MOD_CONF, modConf)),
-      modConf: (key, adds) => {
-        return formatString(defaultComposer(INITIAL_MOD_CONF, modConf)[key], { ...modConf, ...adds });
+      _modFS: defaultComposer(INITIAL_MOD_CONF, modFS),
+      __modFS: formatObjectEntries<ModFS>(defaultComposer(INITIAL_MOD_CONF, modFS)),
+      modFS: (key, adds) => {
+        return formatString(defaultComposer(INITIAL_MOD_CONF, modFS)[key], { ...modFS, ...adds });
       },
-      setModConf: (name, state, callback) => {
-        setModConf(
+      setModFS: (name, state, callback) => {
+        setModFS(
           (prev) => {
             const newValue = state instanceof Function ? state(prev[name]) : state;
             return {
@@ -144,7 +129,7 @@ export const ModConfProvider = (props: React.PropsWithChildren) => {
         );
       },
     }),
-    [modConf]
+    [modFS]
   );
 
   return <ModConfContext.Provider value={contextValue} children={props.children} />;

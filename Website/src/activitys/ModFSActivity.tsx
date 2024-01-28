@@ -4,19 +4,20 @@ import Avatar from "@mui/material/Avatar";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import { Page } from "@Components/onsenui/Page";
 import { useActivity } from "@Hooks/useActivity";
-import { ModConf, useModConf } from "@Hooks/useModConf";
+import { ModFS, useModFS } from "@Hooks/useModFS";
 import { StyledListItemText } from "@Components/StyledListItemText";
 import { Shell } from "@Native/Shell";
 import { DialogEditTextListItem } from "@Components/DialogEditTextListItem";
 import React from "react";
 import Anchor from "@Components/dapi/Anchor";
+import { useStrings } from "@Hooks/useStrings";
 
-interface ModConfSections {
+interface ModFSSections {
   sectionText: string;
-  items: ModConfListItem<keyof ModConf>[];
+  items: ModFSListItem<keyof ModFS>[];
 }
 
-interface ModConfListItem<K extends keyof ModConf> {
+interface ModFSListItem<K extends keyof ModFS> {
   confKey: K;
   text: string;
   dialogDesc?: React.ReactNode;
@@ -27,10 +28,11 @@ interface ModConfListItem<K extends keyof ModConf> {
   disabled?: boolean;
 }
 
-function ModConfActivity() {
+function ModFSActivity() {
   const { context } = useActivity();
+  const { strings } = useStrings();
 
-  const { _modConf, setModConf } = useModConf();
+  const { _modFS, setModFS } = useModFS();
 
   const renderToolbar = () => {
     return (
@@ -38,12 +40,12 @@ function ModConfActivity() {
         <Toolbar.Left>
           <Toolbar.BackButton onClick={context.popPage} />
         </Toolbar.Left>
-        <Toolbar.Center>ModConf</Toolbar.Center>
+        <Toolbar.Center>{strings("modfs")}</Toolbar.Center>
       </Toolbar>
     );
   };
 
-  const items: ModConfSections[] = React.useMemo<ModConfSections[]>(
+  const items: ModFSSections[] = React.useMemo<ModFSSections[]>(
     () => [
       {
         sectionText: "Command line interfaces",
@@ -203,7 +205,9 @@ function ModConfActivity() {
                   <Anchor href="https://github.com/DerGoogler/MMRL/tree/master/docs" noIcon>
                     documentations
                   </Anchor>{" "}
-                  for possible workarounds!<br />{"<URL> and <MODID> can also be used, "} shell supported.
+                  for possible workarounds!
+                  <br />
+                  {"<URL> and <MODID> can also be used, "} shell supported.
                 </Typography>
               </>
             ),
@@ -218,7 +222,9 @@ function ModConfActivity() {
                   <Anchor href="https://github.com/DerGoogler/MMRL/tree/master/docs" noIcon>
                     documentations
                   </Anchor>{" "}
-                  for possible workarounds!<br />{"<ZIPFILE> can also be used, "} shell supported.
+                  for possible workarounds!
+                  <br />
+                  {"<ZIPFILE> can also be used, "} shell supported.
                 </Typography>
               </>
             ),
@@ -259,10 +265,10 @@ function ModConfActivity() {
                   title={item.text}
                   disabled={item.disabled}
                   description={item.dialogDesc}
-                  initialValue={_modConf[item.confKey]}
+                  initialValue={_modFS[item.confKey]}
                   onSuccess={(value) => {
                     if (value) {
-                      setModConf(item.confKey, value);
+                      setModFS(item.confKey, value);
                     }
                   }}
                 >
@@ -291,7 +297,7 @@ function ModConfActivity() {
                         </Typography>
                       </Stack>
                     }
-                    secondary={_modConf[item.confKey]}
+                    secondary={_modFS[item.confKey]}
                   />
                 </DialogEditTextListItem>
               ))}
@@ -304,4 +310,4 @@ function ModConfActivity() {
   );
 }
 
-export default ModConfActivity;
+export default ModFSActivity;

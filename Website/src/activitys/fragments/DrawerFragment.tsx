@@ -13,8 +13,8 @@ import { ConfigureActivity } from "@Activitys/ConfigureActivity";
 import { Markup } from "@Components/Markdown";
 import { configureSample } from "@Util/configure-sample";
 import { dapiSample } from "@Util/dapi-sample";
-import ModConfActivity from "@Activitys/ModConfActivity";
-import ConfigurePlaygroundActivity from "@Activitys/ConfigurePlaygroundActivity";
+import ModFSActivity from "@Activitys/ModFSActivity";
+import ModConfPlaygroundActivity from "@Activitys/ModConfPlaygroundActivity";
 import LicensesActivity from "@Activitys/LicensesActivity";
 
 type Props = {
@@ -54,22 +54,19 @@ export const DrawerFragment = (props: Props) => {
         >
           <StyledListItemText primary={strings("repositories")} />
         </ListItemButton>
-        {/* {os.isAndroid && ( */}
-        <>
-          <ListItemButton
-            onClick={() => {
-              pushPage({
-                component: ModConfActivity,
-                key: "ModConfActivity",
-                extra: {},
-              });
-              hide();
-            }}
-          >
-            <StyledListItemText primary={strings("modconf")} />
-          </ListItemButton>
-        </>
-        {/* )} */}
+
+        <ListItemButton
+          onClick={() => {
+            pushPage({
+              component: ModFSActivity,
+              key: "ModFSActivity",
+              extra: {},
+            });
+            hide();
+          }}
+        >
+          <StyledListItemText primary={strings("modfs")} />
+        </ListItemButton>
       </List>
 
       <Divider />
@@ -96,8 +93,8 @@ export const DrawerFragment = (props: Props) => {
         <ListItemButton
           onClick={() => {
             pushPage<any, any>({
-              component: ConfigurePlaygroundActivity,
-              key: "configure_playground",
+              component: ModConfPlaygroundActivity,
+              key: "ModConfPlaygroundActivity",
               extra: {
                 editorMode: "javascript",
                 defaultText: configureSample,
@@ -106,7 +103,7 @@ export const DrawerFragment = (props: Props) => {
             hide();
           }}
         >
-          <StyledListItemText primary={"Module Configure playground"} />
+          <StyledListItemText primary={strings("modconf_playground")} />
         </ListItemButton>
       </List>
 

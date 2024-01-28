@@ -20,7 +20,7 @@ import { useRepos } from "@Hooks/useRepos";
 import { SuFile } from "@Native/SuFile";
 import { BuildConfig } from "@Native/BuildConfig";
 import SearchIcon from "@mui/icons-material/Search";
-import { useModConf } from "@Hooks/useModConf";
+import { useModFS } from "@Hooks/useModFS";
 import Fab from "@Components/onsenui/Fab";
 import { useLocalModules } from "@Hooks/useLocalModules";
 import { Shell } from "@Native/Shell";
@@ -36,7 +36,7 @@ import { ConfigureView } from "@Components/ConfigureView";
 
 const MainApplication = () => {
   const { strings } = useStrings();
-  const { modConf } = useModConf();
+  const { modFS } = useModFS();
   const { context } = useActivity();
   const { modules } = useRepos();
   const [index, setIndex] = React.useState(0);
@@ -55,8 +55,6 @@ const MainApplication = () => {
     }
   }, [modules]);
 
-  const hasInstallTools = SuFile.exist(`${modConf("MMRLINI")}/module.prop`);
-
   const renderTabs = (): TabbarRenderTab[] => {
     return [
       {
@@ -74,7 +72,7 @@ const MainApplication = () => {
                   modules={localModules}
                   renderItem={(module, key) => <DeviceModule key={key} module={module} />}
                   renderFixed={() => {
-                    if (os.isAndroid && (Shell.isMagiskSU() || Shell.isKernelSU() || Shell.isAPatchSU()) && hasInstallTools) {
+                    if (os.isAndroid && (Shell.isMagiskSU() || Shell.isKernelSU() || Shell.isAPatchSU())) {
                       return (
                         <Fab
                           sx={{
@@ -192,7 +190,7 @@ const MainApplication = () => {
                   <Stack direction="column" justifyContent="center" alignItems="flex-start" spacing={0.5}>
                     <Typography variant="body2">{item.version}</Typography>
                     <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={0.5}>
-                      {SuFile.exist(modConf("PROPS", { MODID: item.id })) && <Chip size="small" label="Installed" />}
+                      {SuFile.exist(modFS("PROPS", { MODID: item.id })) && <Chip size="small" label="Installed" />}
                     </Stack>
                   </Stack>
                 }

@@ -2,19 +2,19 @@ import { os } from "@Native/Os";
 import { SuFile } from "@Native/SuFile";
 import { Properties } from "properties-file";
 import React from "react";
-import { useModConf } from "./useModConf";
+import { useModFS } from "./useModFS";
 import { useSettings } from "./useSettings";
 
 export function useLocalModules() {
-  const { modConf } = useModConf();
+  const { modFS } = useModFS();
   const { settings } = useSettings();
   const [localModules, setLocalModules] = React.useState<Module[]>([]);
 
   if (os.isAndroid) {
     React.useEffect(() => {
-      const folders = SuFile.list(modConf("MODULES"));
+      const folders = SuFile.list(modFS("MODULES"));
       folders.forEach((module) => {
-        const properties = new SuFile(modConf("PROPS", { MODID: module }));
+        const properties = new SuFile(modFS("PROPS", { MODID: module }));
         if (properties.exist()) {
           setLocalModules((prev) => {
             // Preventing duplicates
