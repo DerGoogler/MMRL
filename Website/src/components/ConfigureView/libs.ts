@@ -19,6 +19,7 @@ import { os } from "@Native/Os";
 import { BuildConfig } from "@Native/BuildConfig";
 import { useSettings } from "@Hooks/useSettings";
 import { useNativeFileStorage } from "@Hooks/useNativeFileStorage";
+import TextEditorActivity from "@Activitys/TextEditorActivity";
 
 export const libraries = [
   {
@@ -44,6 +45,16 @@ export const libraries = [
   {
     name: "flatlist-react",
     __esModule: require("flatlist-react"),
+  },
+  {
+    name: "onsenui",
+    __esModule: require("onsenui"),
+  },
+  {
+    name: "@mmrl/activity",
+    __esModule: {
+      TextEditorActivity: TextEditorActivity,
+    },
   },
   {
     name: "@mmrl/ui",

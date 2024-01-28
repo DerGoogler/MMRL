@@ -10,6 +10,7 @@ import { Shell } from "@Native/Shell";
 import { useSettings } from "@Hooks/useSettings";
 import { BuildConfig } from "@Native/BuildConfig";
 import { useModFS } from "@Hooks/useModFS";
+import { INCLUDE_CORE } from "@Util/INCLUDE_CORE";
 
 const TerminalActivity = () => {
   const { context, extra } = useActivity<any>();
@@ -80,6 +81,7 @@ const TerminalActivity = () => {
 
       Terminal.exec({
         command: modFS("EXPLORE_INSTALL", {
+          INCLUDECORE: INCLUDE_CORE,
           URL: path,
           MODID: id,
         }),
@@ -105,6 +107,7 @@ const TerminalActivity = () => {
 
       Terminal.exec({
         command: modFS("LOCAL_INSTALL", {
+          INCLUDECORE: INCLUDE_CORE,
           ZIPFILE: path,
         }),
         env: envp_local,

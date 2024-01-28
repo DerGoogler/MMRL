@@ -14,7 +14,7 @@ import { CustomTextField } from "./TextField";
 
 export interface DialogEditTextListItemProps extends React.PropsWithChildren {
   inputLabel: React.ReactNode;
-  title: string;
+  title: React.ReactNode;
   disabled?: boolean;
   initialValue: string;
   description?: React.ReactNode;

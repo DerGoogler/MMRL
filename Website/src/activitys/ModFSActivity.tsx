@@ -1,4 +1,4 @@
-import { Alert, Box, Divider, List, ListSubheader, Stack, Typography } from "@mui/material";
+import { Alert, Box, Button, Divider, List, ListSubheader, Stack, Typography } from "@mui/material";
 import AvatarGroup from "@mui/material/AvatarGroup";
 import Avatar from "@mui/material/Avatar";
 import { Toolbar } from "@Components/onsenui/Toolbar";
@@ -11,6 +11,7 @@ import { DialogEditTextListItem } from "@Components/DialogEditTextListItem";
 import React from "react";
 import Anchor from "@Components/dapi/Anchor";
 import { useStrings } from "@Hooks/useStrings";
+import TextEditorActivity, { TextEditorActivityExtra } from "./TextEditorActivity";
 
 interface ModFSSections {
   sectionText: string;
@@ -19,7 +20,7 @@ interface ModFSSections {
 
 interface ModFSListItem<K extends keyof ModFS> {
   confKey: K;
-  text: string;
+  text: React.ReactNode;
   dialogDesc?: React.ReactNode;
   /**
    * Used for the config requirement
@@ -46,6 +47,28 @@ function ModFSActivity() {
       </Toolbar>
     );
   };
+
+  const openInEditor = React.useCallback<<K extends keyof ModFS>(key: K) => () => void>(
+    (key) => {
+      return () => {
+        context.pushPage<TextEditorActivityExtra, any>({
+          component: TextEditorActivity,
+          key: "any",
+          extra: {
+            title: "Shell script editor",
+            initialValue: _modFS[key],
+            onSaveClick(_value, _context) {
+              if (_value) {
+                setModFS(key, _value);
+                _context.popPage();
+              }
+            },
+          },
+        });
+      };
+    },
+    [_modFS]
+  );
 
   const items: ModFSSections[] = React.useMemo<ModFSSections[]>(
     () => [
@@ -212,6 +235,10 @@ function ModFSActivity() {
                   for more informations!
                   <br />
                   <code>{"<URL>"}</code> and <code>{"<MODID>"}</code> can also be used, shell supported.
+                  <br />
+                  <Button sx={{ fontSize: 8 }} onClick={openInEditor("EXPLORE_INSTALL")} variant="outlined" size="small">
+                    Open editor
+                  </Button>
                 </Typography>
               </>
             ),
@@ -231,6 +258,10 @@ function ModFSActivity() {
                   for more informations!
                   <br />
                   <code>{"<ZIPFILE>"}</code> can also be used, shell supported.
+                  <br />
+                  <Button sx={{ fontSize: 8 }} onClick={openInEditor("LOCAL_INSTALL")} variant="outlined" size="small">
+                    Open editor
+                  </Button>
                 </Typography>
               </>
             ),
