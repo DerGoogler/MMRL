@@ -84,9 +84,6 @@ public class MainActivity extends CordovaActivity {
     private void applyTheme(WebView wv, NativeStorage ns, NativeOS os)  {
         String defColor = "#ce93d8";
         String bg = ns.getItem("background_color", defColor);
-        String sbg = ns.getItem("statusbar_color", defColor);
-        os.setStatusBarColor(sbg.replace("\"", ""),false);
-        os.setNavigationBarColor(bg.replace("\"", ""));
         wv.setBackgroundColor(Color.parseColor(bg.replace("\"", "")));
     }
 

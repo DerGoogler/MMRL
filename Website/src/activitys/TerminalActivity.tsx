@@ -11,6 +11,7 @@ import { useSettings } from "@Hooks/useSettings";
 import { BuildConfig } from "@Native/BuildConfig";
 import { useModFS } from "@Hooks/useModFS";
 import { INCLUDE_CORE } from "@Util/INCLUDE_CORE";
+import { view } from "@Native/View";
 
 const TerminalActivity = () => {
   const { context, extra } = useActivity<any>();
@@ -171,7 +172,7 @@ const TerminalActivity = () => {
           ))}
         </Stack>
       </div>
-      <div ref={termEndRef} />
+      <div style={{ height: view.getWindowBottomInsets() }} ref={termEndRef} />
     </Page>
   );
 };
