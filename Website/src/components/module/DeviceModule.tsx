@@ -88,7 +88,7 @@ const DeviceModule = React.memo<Props>((props) => {
             <Typography variant="h6" sx={{ ...isDisabledStyle }}>
               {name}
             </Typography>
-            <Typography variant="caption" sx={{ ...isDisabledStyle }}>
+            <Typography color="text.secondary" variant="caption" sx={{ ...isDisabledStyle }}>
               {version} ({versionCode}) / {author}
             </Typography>
           </Stack>
@@ -128,7 +128,7 @@ const DeviceModule = React.memo<Props>((props) => {
             />
           </Typography>
         </Stack>
-        <Typography variant="body2" display="block" sx={{ ...isDisabledStyle }}>
+        <Typography color="text.secondary" variant="body2" display="block" sx={{ ...isDisabledStyle }}>
           {description}
         </Typography>
         <Stack direction="column" justifyContent="center" spacing={1.2}>
@@ -141,10 +141,10 @@ const DeviceModule = React.memo<Props>((props) => {
               overflowY: "auto",
             }}
           >
-            {post_service && <Chip size="small" color="error" label="Post service" />}
-            {late_service && <Chip size="small" color="info" label="Late service" />}
-            {post_mount && <Chip size="small" color="warning" label="Post mount" />}
-            {boot_complete && <Chip size="small" color="success" label="Boot completed" />}
+            {post_service && <Chip variant="outlined" size="small" color="error" label="Post service" />}
+            {late_service && <Chip variant="outlined" size="small" color="info" label="Late service" />}
+            {post_mount && <Chip variant="outlined" size="small" color="warning" label="Post mount" />}
+            {boot_complete && <Chip variant="outlined" size="small" color="success" label="Boot completed" />}
           </Stack>
           <Divider variant="middle" />
           <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={1}>

@@ -14,7 +14,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
-import ListSubheader from "@mui/material/ListSubheader";
+import { Verified } from "@mui/icons-material";
 import Stack from "@mui/material/Stack";
 import { useActivity } from "@Hooks/useActivity";
 import { StyledListItemText } from "@Components/StyledListItemText";
@@ -51,6 +51,7 @@ import FormatAlignLeftIcon from "@mui/icons-material/FormatAlignLeft";
 import { useConfirm } from "material-ui-confirm";
 import InstallMobileIcon from "@mui/icons-material/InstallMobile";
 import DownloadIcon from "@mui/icons-material/Download";
+import Tooltip from "@mui/material/Tooltip";
 
 function a11yProps(index: number) {
   return {
@@ -155,14 +156,14 @@ const ModuleViewActivity = () => {
         sx={{
           position: "relative",
           zIndex: 9,
-          backgroundColor: theme.palette.primary.main,
+          backgroundColor: theme.palette.background.default,
           color: "white",
         }}
       >
         {track.cover && (
           <Box
             sx={(theme) => ({
-              background: `linear-gradient(to top,${theme.palette.primary.main} 0,rgba(0,0,0,0) 56%)`,
+              background: `linear-gradient(to top,${theme.palette.background.default} 0,rgba(0,0,0,0) 56%)`,
             })}
           >
             <CardMedia
@@ -189,7 +190,7 @@ const ModuleViewActivity = () => {
             pl: 2,
             pr: 2,
             pb: 2,
-            backgroundColor: theme.palette.primary.main,
+            backgroundColor: theme.palette.background.default,
             color: "white",
             display: "flex",
             flexDirection: "column",
@@ -205,7 +206,7 @@ const ModuleViewActivity = () => {
             <Avatar
               alt={name}
               sx={(theme) => ({
-                bgcolor: theme.palette.primary.light,
+                bgcolor: theme.palette.primary.dark,
                 width: 100,
                 height: 100,
                 boxShadow: "0 -1px 5px rgba(0,0,0,.09), 0 3px 5px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.3), 0 1px 3px rgba(0,0,0,.15)",
@@ -219,9 +220,16 @@ const ModuleViewActivity = () => {
             </Avatar>
 
             <Box sx={{ alignSelf: "center", ml: 0.5, mr: 0.5, width: "100%" }}>
-              <Disappear as={Typography} variant="body1" fontWeight="bold" onDisappear={(visible) => setIsNameVisible(!visible)}>
-                {name}
-              </Disappear>
+              <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={0.5}>
+                <Disappear as={Typography} variant="body1" fontWeight="bold" onDisappear={(visible) => setIsNameVisible(!visible)}>
+                  {name}
+                </Disappear>
+                {track.verified && (
+                  <Tooltip title={strings("verified_module")} placement="right" arrow>
+                    <Verified sx={{ fontSize: "unset", color: theme.palette.text.link }} />
+                  </Tooltip>
+                )}
+              </Stack>
               <Typography variant="body2" color="text.secondary">
                 {author}
               </Typography>

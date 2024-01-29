@@ -6,14 +6,18 @@ export const Android12Switch = styled(Switch)(() => {
   const { scheme, theme } = useTheme();
 
   return {
+    "& .MuiSwitch-switchBase": {
+      color: theme.palette.background.default,
+    },
     "& .MuiSwitch-switchBase.Mui-checked": {
-      color: scheme[500],
-      "&:hover": {
-        backgroundColor: alpha(scheme[500], theme.palette.action.hoverOpacity),
-      },
+      color: theme.palette.background.default,
     },
     "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
-      backgroundColor: scheme[500],
+      opacity: "unset",
+      backgroundColor: theme.palette.primary.main,
+    },
+    "& .MuiSwitch-switchBase + .MuiSwitch-track": {
+      backgroundColor: theme.palette.text.secondary,
     },
 
     padding: 8,

@@ -16,7 +16,7 @@ import { useActivity } from "@Hooks/useActivity";
 import Tooltip from "@mui/material/Tooltip";
 import { useStrings } from "@Hooks/useStrings";
 import { GestureDetector } from "@Components/onsenui/GestureDetector";
-import { useSettings } from "@Hooks/useSettings";
+import { useTheme } from "@Hooks/useTheme";
 
 interface Props {
   module: Module;
@@ -27,6 +27,7 @@ const ExploreModule = React.memo<Props>((props) => {
 
   const { context } = useActivity();
   const { strings } = useStrings();
+  const { theme } = useTheme();
 
   const formatLastUpdate = useFormatDate(timestamp ? timestamp : versions[versions.length - 1].timestamp);
 
@@ -71,22 +72,27 @@ const ExploreModule = React.memo<Props>((props) => {
             <Typography variant="h6">{name}</Typography>
             {track.verified && (
               <Tooltip title={strings("verified_module")} placement="right" arrow>
-                <Verified sx={{ fontSize: "unset" }} />
+                <Verified sx={{ fontSize: "unset", color: theme.palette.text.link }} />
               </Tooltip>
             )}
           </Stack>
 
-          <Typography variant="caption">
+          <Typography color="text.secondary" variant="caption">
             {version} ({versionCode}) / {author}
           </Typography>
         </Stack>
-        <Typography variant="body2" display="block">
+        <Typography color="text.secondary" variant="body2" display="block">
           {description}
         </Typography>
         <Stack direction="column" justifyContent="center" spacing={1.2}>
           <Divider variant="middle" />
           <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
-            <Chip label={formatLastUpdate} />
+            <Chip
+              sx={{
+                bgColor: "secondary.dark",
+              }}
+              label={formatLastUpdate}
+            />
           </Stack>
         </Stack>
       </Stack>

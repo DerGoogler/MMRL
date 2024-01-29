@@ -1,5 +1,6 @@
 import { AlertColor } from "@mui/material/Alert";
 import { AvailableStrs, strs } from "./../locales/declaration";
+import { Theme } from "@mui/material";
 
 export {};
 
@@ -85,6 +86,14 @@ declare global {
      */
     readonly __nativeStorage__: NativeStorage;
   }
+
+  export type MMRLTheme = Theme & {
+    palette?: {
+      text?: {
+        link?: string;
+      };
+    };
+  };
 
   namespace Terminal {
     export type Exec = {

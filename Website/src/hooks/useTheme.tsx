@@ -1,5 +1,5 @@
 import React from "react";
-import { useTheme as useMom, createTheme, ThemeProvider as MumProvider } from "@mui/material";
+import { useTheme as useMom, createTheme, ThemeProvider as MumProvider, Theme } from "@mui/material";
 import useShadeColor from "./useShadeColor";
 import { colors, useSettings } from "./useSettings";
 import { os } from "@Native/Os";
@@ -11,7 +11,7 @@ export const useTheme = () => {
 
   return {
     scheme: colors[settings.accent_scheme.value],
-    theme: theme,
+    theme: theme as MMRLTheme,
     shade: (color: string, percent: number) => {
       // Ignore shading if monet is enabled.
       if (settings.accent_scheme.value === "monet") {
@@ -49,55 +49,40 @@ export const ThemeProvider = (props: React.PropsWithChildren) => {
   const [, setBackgroundColor] = useNativeStorage("background_color", colors[settings.accent_scheme.value][200]);
   const [, setStatusBarColor] = useNativeStorage("statusbar_color", colors[settings.accent_scheme.value][500]);
 
-  const theme = React.useMemo(() => {
+  const theme = React.useMemo<MMRLTheme>(() => {
     const THIS_IS_THE_THEME_OBJECT_OF_THIS_F_APP = createTheme({
+      components: {
+        MuiCard: {
+          defaultProps: {
+            elevation: 0,
+          },
+        },
+      },
       shape: {
         borderRadius: 8,
       },
-      palette: !settings.darkmode
-        ? {
-            mode: "light",
-            primary: {
-              light: colors[settings.accent_scheme.value][300],
-              main: colors[settings.accent_scheme.value][500],
-              dark: colors[settings.accent_scheme.value][700],
-
-              // light: colors[settings.accent_scheme.value][300],
-              // main: colors[settings.accent_scheme.value][900],
-              // dark: colors[settings.accent_scheme.value][800],
-            },
-            background: {
-              default: colors[settings.accent_scheme.value][200],
-              paper: shade(colors[settings.accent_scheme.value][200], 14.5 * 2),
-            },
-            divider: colors[settings.accent_scheme.value][300],
-            secondary: {
-              main: colors[settings.accent_scheme.value][600],
-            },
-          }
-        : {
-            mode: "dark",
-            primary: {
-              main: shade(colors[settings.accent_scheme.value][200], settings.shade_value),
-              light: shade(colors[settings.accent_scheme.value][100], settings.shade_value),
-              dark: shade(colors[settings.accent_scheme.value][400], settings.shade_value),
-              // light: shade(colors[settings.accent_scheme.value][300], -10),
-              // main: shade(colors[settings.accent_scheme.value][500], -29),
-            },
-            background: {
-              paper: shade(colors[settings.accent_scheme.value][600], settings.shade_value),
-              default: shade(colors[settings.accent_scheme.value][700], settings.shade_value),
-            },
-            text: {
-              primary: "#f9f9f9",
-              secondary: "#b7b7b7"
-            },
-            divider: shade(colors[settings.accent_scheme.value][900], settings.shade_value),
-            secondary: {
-              main: colors[settings.accent_scheme.value][600],
-            },
-          },
-    });
+      palette: {
+        mode: "dark",
+        primary: {
+          main: "#ffffff",
+          dark: "#353535",
+        },
+        secondary: {
+          main: "#ffffff",
+          dark: "#0a0a0a",
+        },
+        background: {
+          paper: "#181818",
+          default: "#101010",
+        },
+        text: {
+          link: "#0095F6",
+          primary: "#f3f5f7",
+          secondary: "#777777",
+        },
+        divider: "#333638",
+      },
+    } as MMRLTheme);
 
     setBackgroundColor(THIS_IS_THE_THEME_OBJECT_OF_THIS_F_APP.palette.background.default);
     setStatusBarColor(THIS_IS_THE_THEME_OBJECT_OF_THIS_F_APP.palette.primary.main);

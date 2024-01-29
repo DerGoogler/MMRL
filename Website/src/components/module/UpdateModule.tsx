@@ -72,7 +72,7 @@ const UpdateModule = React.memo<Props>((props) => {
       <Stack direction="column" justifyContent="center" spacing={1}>
         <Stack direction="column" justifyContent="center" alignItems="flex-start">
           <Typography variant="h6">{name}</Typography>
-          <Typography variant="caption">{author}</Typography>
+          <Typography color="text.secondary" variant="caption">{author}</Typography>
         </Stack>
 
         <Stack direction="column" justifyContent="center" alignItems="flex-start" spacing={1}>

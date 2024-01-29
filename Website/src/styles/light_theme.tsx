@@ -12,6 +12,11 @@ export const LightTheme = () => {
   return (
     <GlobalStyles
       styles={(theme) => ({
+        // eruda tools
+        "eruda-dev-tools": {
+          paddingBottom: `${view.getWindowBottomInsets()}px !important`,
+        },
+
         html: {
           height: "100%",
           width: "100%",
@@ -882,9 +887,9 @@ export const LightTheme = () => {
           justifyContent: "space-between",
           paddingTop: view.getWindowTopInsets(),
           height: `calc(56px + ${view.getWindowTopInsets()}px)`,
-          borderBottom: "0",
           boxShadow: "0 1px 5px rgba(0, 0, 0, 0.3)",
-          backgroundColor: theme.palette.primary.main,
+          backgroundColor: theme.palette.background.default,
+          borderBottom: `1px solid ${theme.palette.divider} !important`,
           backgroundSize: "0",
         },
         ".toolbar--noshadow": {
@@ -1792,7 +1797,7 @@ export const LightTheme = () => {
         },
         ".tabbar--material": {
           background: "none",
-          backgroundColor: theme.palette.primary.main,
+          backgroundColor: theme.palette.background.default,
           borderBottomWidth: "0",
           // boxShadow: "0 4px 2px -2px rgba(0, 0, 0, 0.14), 0 3px 5px -2px rgba(0, 0, 0, 0.12),\r\n    0 5px 1px -4px rgba(0, 0, 0, 0.2)",
         },

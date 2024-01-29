@@ -169,7 +169,7 @@ const MainApplication = () => {
                 <Avatar
                   alt={item.name}
                   sx={(theme) => ({
-                    bgcolor: theme.palette.primary.light,
+                    bgcolor: theme.palette.primary.dark,
                     boxShadow: "0 -1px 5px rgba(0,0,0,.09), 0 3px 5px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.3), 0 1px 3px rgba(0,0,0,.15)",
                     borderRadius: "20%",
                     mr: 1.5,
@@ -204,7 +204,7 @@ const MainApplication = () => {
 
   const renderToolbar = () => {
     return (
-      <Toolbar modifier="noshadow">
+      <Toolbar modifier="noshadow" sx={{ boderBottom: "unset !important" }}>
         <Toolbar.Left>
           <Toolbar.Button icon={MenuIcon} onClick={context.splitter.show} />
         </Toolbar.Left>

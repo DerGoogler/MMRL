@@ -19,7 +19,6 @@ import { os } from "@Native/Os";
 import { BuildConfig } from "@Native/BuildConfig";
 import { useSettings } from "@Hooks/useSettings";
 import { useNativeFileStorage } from "@Hooks/useNativeFileStorage";
-import TextEditorActivity from "@Activitys/TextEditorActivity";
 
 export const libraries = [
   {
@@ -52,9 +51,7 @@ export const libraries = [
   },
   {
     name: "@mmrl/activity",
-    __esModule: {
-      TextEditorActivity: TextEditorActivity,
-    },
+    __esModule: {},
   },
   {
     name: "@mmrl/ui",

@@ -145,7 +145,6 @@ const TerminalActivity = () => {
       onShow={install}
       modifier="noshadow"
       renderToolbar={renderToolbar}
-      backgroundStyle="#000000"
     >
       <div
         ref={ref}

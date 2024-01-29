@@ -19,17 +19,15 @@ interface AnchorProps {
   module?: string;
 }
 
-const StyledAnchor = styled("div")(({ theme }) => {
+const StyledAnchor = styled("div")(({ theme }: { theme: MMRLTheme }) => {
   const { scheme } = useTheme();
   const { settings } = useSettings();
 
   const s = {
     cursor: "pointer",
-    color: settings.darkmode ? scheme[200] : scheme[700],
-    // color: !settings.darkmode ? "rgb(66, 66, 66)" : scheme[700],
+    color: theme.palette.text.link,
     display: "flex",
     alignItems: "center",
-
     ":hover": {
       textDecoration: "underline",
     },
@@ -45,21 +43,18 @@ const StyledAnchor = styled("div")(({ theme }) => {
 function Anchor(props: JSX.IntrinsicElements["a"] & AnchorProps) {
   const { href, children, noIcon, module, color } = props;
 
-  const { theme, scheme } = useTheme();
-  const { settings } = useSettings();
+  const { theme } = useTheme();
   const { modules } = useRepos();
   const { context } = useActivity();
-
-  const _color = !color ? (settings.darkmode ? scheme[200] : scheme[700]) : color;
 
   const s = React.useMemo(
     () => ({
       cursor: "pointer",
-      color: _color,
+      color: theme.palette.text.link,
       display: "flex",
       alignItems: "center",
       ":hover": {
-        textDecorationColor: _color,
+        textDecorationColor: theme.palette.text.link,
         textDecoration: "underline",
       },
     }),
@@ -96,20 +91,20 @@ function Anchor(props: JSX.IntrinsicElements["a"] & AnchorProps) {
                 os.open(__href, {
                   target: "_blank",
                   features: {
-                    color: theme.palette.primary.main,
+                    color: theme.palette.background.default,
                   },
                 });
               }
             }
           }}
-          color={_color}
+          color={theme.palette.text.link}
         >
           <Typography
             component="span"
             sx={{
               fontSize: "unset",
             }}
-            color={_color}
+            color={theme.palette.text.link}
           >
             {children}
           </Typography>
@@ -118,8 +113,8 @@ function Anchor(props: JSX.IntrinsicElements["a"] & AnchorProps) {
               component={Icon}
               icon={!(module && findModule) ? LaunchRoundedIcon : ExtensionIcon}
               sx={{
-                color: _color,
-                fill: _color,
+                color: theme.palette.text.link,
+                fill: theme.palette.text.link,
                 fontSize: "unset",
               }}
             />
