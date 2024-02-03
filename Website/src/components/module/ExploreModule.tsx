@@ -46,6 +46,7 @@ const ExploreModule = React.memo<Props>((props) => {
       sx={{
         p: 2,
         ":hover": {
+          opacity: ".8",
           cursor: "pointer",
         },
         width: "100%",
@@ -59,7 +60,7 @@ const ExploreModule = React.memo<Props>((props) => {
               height: "100%",
               objectFit: "cover",
               borderRadius: theme.shape.borderRadius / theme.shape.borderRadius,
-              boxShadow: "0 0px 1px 0 rgba(60,64,67,.3), 0 1px 10px 1px rgba(60,64,67,.15)",
+              border: `1px solid ${theme.palette.divider} !important`,
               width: "100%",
             })}
             image={track.cover}

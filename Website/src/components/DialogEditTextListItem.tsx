@@ -75,22 +75,8 @@ export const DialogEditTextListItem = (props: DialogEditTextListItemProps) => {
           />
         </DialogContent>
         <DialogActions>
-          <Button
-            sx={{
-              color: scheme[500],
-            }}
-            onClick={handleClose}
-          >
-            {strings("cancel")}
-          </Button>
-          <Button
-            sx={{
-              color: scheme[500],
-            }}
-            onClick={() => (props.onSuccess(textInput), handleClose())}
-          >
-            Apply
-          </Button>
+          <Button onClick={handleClose}>{strings("cancel")}</Button>
+          <Button onClick={() => (props.onSuccess(textInput), handleClose())}>Apply</Button>
         </DialogActions>
       </Dialog>
     </>

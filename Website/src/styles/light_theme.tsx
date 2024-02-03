@@ -889,7 +889,6 @@ export const LightTheme = () => {
           height: `calc(56px + ${view.getWindowTopInsets()}px)`,
           boxShadow: "0 1px 5px rgba(0, 0, 0, 0.3)",
           backgroundColor: theme.palette.background.default,
-          borderBottom: `1px solid ${theme.palette.divider} !important`,
           backgroundSize: "0",
         },
         ".toolbar--noshadow": {

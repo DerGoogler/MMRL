@@ -16,7 +16,7 @@ const RenderWhenEmpty = React.memo(() => {
     <Box
       component="h4"
       sx={{
-        color: theme.palette.secondary.dark,
+        color: theme.palette.text.secondary,
         position: "absolute",
         left: "50%",
         top: "50%",

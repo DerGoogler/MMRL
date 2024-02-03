@@ -271,7 +271,6 @@ const ModuleViewActivity = () => {
                       alignSelf: "flex-end",
                     }}
                     variant="contained"
-                    disableElevation
                     onClick={() => {
                       confirm({
                         title: `Install ${name}?`,
@@ -310,7 +309,6 @@ const ModuleViewActivity = () => {
                     alignSelf: "flex-end",
                   }}
                   variant="contained"
-                  disableElevation
                 >
                   {strings("download")}
                 </Button>

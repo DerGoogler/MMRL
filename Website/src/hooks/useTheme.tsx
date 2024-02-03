@@ -42,48 +42,81 @@ export const useTheme = () => {
   };
 };
 
+const THIS_IS_THE_THEME_OBJECT_OF_THIS_F_APP = createTheme({
+  components: {
+    MuiDialog: {
+      styleOverrides: {
+        root: {
+          "& .MuiDialog-paper": {
+            backgroundColor: "#101010",
+            border: `1px solid #333638`,
+            backgroundImage: "none",
+          },
+          "& .MuiDialogContent-root": {
+            borderTop: "none",
+            borderBottom: "none",
+          },
+          "& .MuiButtonBase-root": {
+            color: "#f3f5f7",
+          },
+        },
+      },
+    },
+    MuiCard: {
+      defaultProps: {
+        elevation: 0,
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          color: "black",
+          ":disabled": {
+            cursor: "not-allowed",
+            color: "black",
+            opacity: ".3",
+            backgroundColor: "#ffffff",
+          },
+        },
+      },
+      defaultProps: {
+        disableElevation: true,
+      },
+    },
+  },
+  shape: {
+    borderRadius: 8,
+  },
+  palette: {
+    mode: "dark",
+    primary: {
+      main: "#ffffff",
+      dark: "#353535",
+    },
+    secondary: {
+      main: "#ffffff",
+      dark: "#0a0a0a",
+    },
+    background: {
+      paper: "#181818",
+      default: "#101010",
+    },
+    text: {
+      link: "#0095F6",
+      primary: "#f3f5f7",
+      secondary: "#777777",
+    },
+    divider: "#333638",
+  },
+} as unknown as MMRLTheme);
+
 export const ThemeProvider = (props: React.PropsWithChildren) => {
   const { settings } = useSettings();
-  const shade = useShadeColor();
 
   const [, setBackgroundColor] = useNativeStorage("background_color", colors[settings.accent_scheme.value][200]);
   const [, setStatusBarColor] = useNativeStorage("statusbar_color", colors[settings.accent_scheme.value][500]);
 
   const theme = React.useMemo<MMRLTheme>(() => {
-    const THIS_IS_THE_THEME_OBJECT_OF_THIS_F_APP = createTheme({
-      components: {
-        MuiCard: {
-          defaultProps: {
-            elevation: 0,
-          },
-        },
-      },
-      shape: {
-        borderRadius: 8,
-      },
-      palette: {
-        mode: "dark",
-        primary: {
-          main: "#ffffff",
-          dark: "#353535",
-        },
-        secondary: {
-          main: "#ffffff",
-          dark: "#0a0a0a",
-        },
-        background: {
-          paper: "#181818",
-          default: "#101010",
-        },
-        text: {
-          link: "#0095F6",
-          primary: "#f3f5f7",
-          secondary: "#777777",
-        },
-        divider: "#333638",
-      },
-    } as MMRLTheme);
-
     setBackgroundColor(THIS_IS_THE_THEME_OBJECT_OF_THIS_F_APP.palette.background.default);
     setStatusBarColor(THIS_IS_THE_THEME_OBJECT_OF_THIS_F_APP.palette.primary.main);
     return THIS_IS_THE_THEME_OBJECT_OF_THIS_F_APP;

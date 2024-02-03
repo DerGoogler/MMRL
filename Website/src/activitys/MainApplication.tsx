@@ -183,7 +183,9 @@ const MainApplication = () => {
                 primary={
                   <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={0.5}>
                     <Typography>{item.name}</Typography>
-                    {item.track.verified && <VerifiedIcon sx={{ fontSize: "unset" }} />}
+                    {item.track.verified && (
+                      <VerifiedIcon sx={(theme: MMRLTheme) => ({ color: theme.palette.text.link, fontSize: "unset" })} />
+                    )}
                   </Stack>
                 }
                 secondary={

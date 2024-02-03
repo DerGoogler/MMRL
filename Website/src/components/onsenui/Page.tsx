@@ -42,21 +42,12 @@ const HTMLPage = onsCustomElement<HTMLElement, HTMLPage>("ons-page", {
 const _Page = React.forwardRef<HTMLElement, HTMLPage>((props, ref) => {
   const { theme } = useTheme();
   const { context } = useActivity();
-  const { renderToolbar, renderBottomToolbar, renderModal, renderFixed, sx, compSx, children, ...rest } = props;
-
-  React.useEffect(() => {
-    if (props.backgroundStyle) {
-      os.setNavigationBarColor(props.backgroundStyle);
-      return () => {
-        os.setNavigationBarColor(theme.palette.background.default);
-      };
-    }
-  }, [props.backgroundStyle]);
+  const { renderToolbar, renderBottomToolbar, renderModal, renderFixed, sx, compSx, children, backgroundStyle, ...rest } = props;
 
   return (
     <HTMLPage {...rest} sx={compSx} ref={ref}>
       {renderToolbar && renderToolbar(ref, context)}
-      <Box className="page__background" sx={{ backgroundColor: props.backgroundStyle }}></Box>
+      <Box className="page__background" sx={{ backgroundColor: backgroundStyle }}></Box>
       <Box className="page__content" sx={sx}>
         {children}
       </Box>
