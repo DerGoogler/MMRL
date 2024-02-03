@@ -18,7 +18,7 @@ interface HTMLPage {
    */
   compSx?: SxProps;
   sx?: SxProps;
-  backgroundStyle?: React.CSSProperties["backgroundColor"];
+  backgroundStyle?: SxProps;
   modifier?: string;
   renderModal?: RenderFunction;
   renderToolbar?: RenderFunction;
@@ -47,7 +47,7 @@ const _Page = React.forwardRef<HTMLElement, HTMLPage>((props, ref) => {
   return (
     <HTMLPage {...rest} sx={compSx} ref={ref}>
       {renderToolbar && renderToolbar(ref, context)}
-      <Box className="page__background" sx={{ backgroundColor: backgroundStyle }}></Box>
+      <Box className="page__background" sx={backgroundStyle}></Box>
       <Box className="page__content" sx={sx}>
         {children}
       </Box>

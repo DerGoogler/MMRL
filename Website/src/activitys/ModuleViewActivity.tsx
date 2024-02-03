@@ -52,6 +52,7 @@ import { useConfirm } from "material-ui-confirm";
 import InstallMobileIcon from "@mui/icons-material/InstallMobile";
 import DownloadIcon from "@mui/icons-material/Download";
 import Tooltip from "@mui/material/Tooltip";
+import { view } from "@Native/View";
 
 function a11yProps(index: number) {
   return {
@@ -111,7 +112,18 @@ const ModuleViewActivity = () => {
 
   const renderToolbar = () => {
     return (
-      <Toolbar modifier="noshadow">
+      <Toolbar
+        modifier="noshadow"
+        sx={{
+          ...(track.cover
+            ? {
+                // invert
+                backgroundColor: !isNameVisible ? "transparent" : theme.palette.background.default,
+                transition: " background-color 0.05s linear",
+              }
+            : {}),
+        }}
+      >
         <Toolbar.Left>
           <Toolbar.BackButton onClick={context.popPage} />
         </Toolbar.Left>
@@ -150,7 +162,16 @@ const ModuleViewActivity = () => {
   };
 
   return (
-    <Page modifier="noshadow" renderToolbar={renderToolbar}>
+    <Page
+      modifier="noshadow"
+      renderToolbar={renderToolbar}
+      backgroundStyle={{
+        ...(track.cover ? { top: `0px !important` } : {}),
+      }}
+      sx={{
+        ...(track.cover ? { top: `0px !important` } : {}),
+      }}
+    >
       <Box
         component="div"
         sx={{
@@ -163,7 +184,9 @@ const ModuleViewActivity = () => {
         {track.cover && (
           <Box
             sx={(theme) => ({
-              background: `linear-gradient(to top,${theme.palette.background.default} 0,rgba(0,0,0,0) 56%)`,
+              background: `linear-gradient(to top,${
+                theme.palette.background.default
+              } 0,rgba(0,0,0,0) calc(56% - ${view.getWindowTopInsets()}px))`,
             })}
           >
             <CardMedia
@@ -173,8 +196,8 @@ const ModuleViewActivity = () => {
                 display: "block",
                 position: "relative",
                 height: {
-                  sm: "calc(calc(50vw - 48px)*9/16)",
-                  xs: "calc(calc(100vw - 48px)*9/16)",
+                  sm: `calc(calc(50vw - 48px + ${view.getWindowTopInsets()}px)*9/16)`,
+                  xs: `calc(calc(100vw - 48px + ${view.getWindowTopInsets()}px)*9/16)`,
                 },
                 objectFit: "cover",
               })}
