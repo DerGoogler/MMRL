@@ -90,7 +90,7 @@ const RelativeContent = styled(Content)((props: ContentProps) => {
     minWidth: props.minWidth ? props.minWidth : 200,
     maxWidth: props.maxWidth ? props.maxWidth : 980,
     margin: "0 auto",
-    ...(matches ? { padding: props.zeroMargin ? 0 : 8 } : { padding: 45 }),
+    ...(matches ? { padding: props.zeroMargin ? 0 : 8 } : { padding: "8px 45px 8px 45px" }),
   };
 });
 

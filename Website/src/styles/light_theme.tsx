@@ -13,7 +13,7 @@ export const LightTheme = () => {
     <GlobalStyles
       styles={(theme) => ({
         // eruda tools
-        "eruda-dev-tools": {
+        ".eruda-dev-tools": {
           paddingBottom: `${view.getWindowBottomInsets()}px !important`,
         },
 
@@ -93,6 +93,8 @@ export const LightTheme = () => {
           display: "none",
         },
         ".page__content": {
+          containerType: "inline-size",
+          containerName: "ons-page-content",
           backgroundColor: theme.palette.background.default,
           position: "absolute",
           top: "0",
@@ -104,6 +106,8 @@ export const LightTheme = () => {
           paddingBottom: view.getWindowBottomInsets(),
         },
         ".page__background": {
+          containerType: "inline-size",
+          containerName: "ons-page-background",
           backgroundColor: theme.palette.background.default,
           position: "absolute",
           top: "0",
@@ -113,6 +117,8 @@ export const LightTheme = () => {
           boxSizing: "border-box",
         },
         ".page--material": {
+          containerType: "inline-size",
+          containerName: "ons-page",
           fontFamily: '"Roboto", "Noto", sans-serif',
           webkitFontSmoothing: "antialiased",
           fontWeight: "400",
