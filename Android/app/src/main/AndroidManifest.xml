@@ -25,6 +25,7 @@
         android:label="@string/app_name"
         android:requestLegacyExternalStorage="true"
         android:theme="@style/AppTheme"
+        android:windowSoftInputMode="adjustResize"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="q">
         <activity
