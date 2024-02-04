@@ -8,7 +8,7 @@ import Sandbox from "@nyariv/sandboxjs";
 import { useTheme } from "@Hooks/useTheme";
 import { useNativeStorage } from "@Hooks/useNativeStorage";
 import { useNativeProperties } from "@Hooks/useNativeProperties";
-import { Markdown, PromoBanner } from "./components";
+import { Markdown } from "./components";
 import { useActivity } from "@Hooks/useActivity";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import { SuFile } from "@Native/SuFile";
@@ -63,7 +63,6 @@ export const libraries = [
       Toolbar: Toolbar,
       Video: Video,
       DiscordWidget: DiscordWidget,
-      PromoBanner: PromoBanner,
       Markdown: Markdown,
       Ansi: Ansi,
     },

@@ -49,6 +49,7 @@ function parseCode(data: string): string {
     });
     return code as string;
   } catch (err) {
+    console.debug(err as any);
     return "";
   }
 }
@@ -69,7 +70,7 @@ const scope = {
   Divider: Divider,
 };
 
-export const ConfigureView = React.forwardRef<any, { code: string; modid: string }>((props, ref) => {
+export const ConfigureView = React.forwardRef<any, { children: string; modid: string }>((props, ref) => {
   const { theme } = useTheme();
   const { modFS: modConf } = useModFS();
 
@@ -148,8 +149,7 @@ export const ConfigureView = React.forwardRef<any, { code: string; modid: string
 
     []
   );
-  const Component = box(props.code as string);
-  const container = React.useRef(null);
+  const Component = box(props.children as string);
 
   if (Component) {
     return <Component />;

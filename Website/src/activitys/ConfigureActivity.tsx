@@ -31,7 +31,7 @@ const ConfigureActivity = () => {
 
   return (
     <PreviewErrorBoundary>
-      <ConfigureView modid={extra.moduleid} code={config} />
+      <ConfigureView modid={extra.moduleid} children={config} />
     </PreviewErrorBoundary>
   );
 };
