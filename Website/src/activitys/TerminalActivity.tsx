@@ -157,7 +157,6 @@ const TerminalActivity = () => {
           style={{
             whiteSpace: "pre",
             flex: "0 0 100%",
-            backgroundColor: "black",
             color: "white",
             height: "100%",
           }}
