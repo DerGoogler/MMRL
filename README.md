@@ -6,6 +6,7 @@
 <p align="center">
   <a href="https://play.google.com/store/apps/details?id=com.dergoogler.mmrl"><img height="75px" alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png"></a>
   <a href="https://github.com/DerGoogler/MMRL/releases"><img height="75px" alt="Get it on GitHub" src="https://dergoogler.com/bl-content/uploads/pages/e5f2cff5950bf12b7ecdcc9a54d0a348/get-it-on-github.png"></a>
+  <a href="https://android.izzysoft.de/repo/apk/com.dergoogler.mmrl"><img height="75px" alt="Get it on GitHub" src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png"></a>
 </p>
 
 <p align="center">
@@ -17,7 +18,6 @@
   </br>
   <img src="https://img.shields.io/github/downloads/DerGoogler/MMRL/total?label=All%20time%20downloads" alt="GitHub all releases">
 </p>
-
 
 # Summary
 
