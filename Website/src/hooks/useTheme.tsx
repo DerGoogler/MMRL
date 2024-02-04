@@ -67,6 +67,15 @@ const THIS_IS_THE_THEME_OBJECT_OF_THIS_F_APP = createTheme({
         elevation: 0,
       },
     },
+    MuiTabs: {
+      styleOverrides: {
+        root: {
+          "& .MuiButtonBase-root": {
+            borderBottom: "1px solid #f3f5f726",
+          },
+        },
+      },
+    },
     MuiButton: {
       styleOverrides: {
         root: {

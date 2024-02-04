@@ -1803,7 +1803,8 @@ export const LightTheme = () => {
         ".tabbar--material__button": {
           backgroundColor: "transparent",
           color: "rgba(255, 255, 255, 1)",
-
+          // color
+          borderBottom: "1px solid #f3f5f726",
           textTransform: "uppercase",
           fontSize: "14px",
           fontWeight: "400",
@@ -1832,7 +1833,7 @@ export const LightTheme = () => {
           backgroundColor: "rgba(49, 49, 58, 0.1)",
         },
         ".tabbar--material__border": {
-          height: "2px",
+          height: "1px",
           backgroundColor: "rgba(255, 255, 255, 1)",
         },
         ".tabbar--material__icon": {
