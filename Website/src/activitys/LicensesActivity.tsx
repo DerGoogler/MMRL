@@ -30,7 +30,7 @@ const DepCard = (props: { dep: (typeof li)[0] }) => {
   };
 
   const handleOpenLicense = () => {
-    fetch(`https://spdx.org/licenses/${dep.license}.json`)
+    fetch(`https://raw.githubusercontent.com/spdx/license-list-data/main/website/${dep.license}.json`)
       .then((res) => {
         if (res.status === 200) {
           return res.json();
@@ -48,9 +48,7 @@ const DepCard = (props: { dep: (typeof li)[0] }) => {
           },
         });
       })
-      .catch((err) => {
-        os.toast(err, Toast.LENGTH_SHORT);
-      });
+      .catch((err) => {});
   };
 
   return (
@@ -107,7 +105,7 @@ const LicensesActivity = () => {
 
   return (
     <Page renderToolbar={renderToolbar}>
-      <Page.RelativeContent zeroMargin>
+      <Page.RelativeContent>
         <FlatList
           list={li}
           renderItem={(dep) => <DepCard dep={dep} />}

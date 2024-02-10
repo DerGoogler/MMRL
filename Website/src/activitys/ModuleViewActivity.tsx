@@ -54,6 +54,7 @@ import DownloadIcon from "@mui/icons-material/Download";
 import Tooltip from "@mui/material/Tooltip";
 import { view } from "@Native/View";
 import AntiFeatureListItem from "@Components/AntiFeatureListItem";
+import FetchTextActivity from "./FetchTextActivity";
 
 function a11yProps(index: number) {
   return {
@@ -583,12 +584,34 @@ const ModuleViewActivity = () => {
             )}
 
             {track.license && (
-              <ListItem>
+              <ListItemButton
+                onClick={() => {
+                  fetch(`https://raw.githubusercontent.com/spdx/license-list-data/main/website/${track.license}.json`)
+                    .then((res) => {
+                      if (res.status === 200) {
+                        return res.json();
+                      } else {
+                        throw new Error("Fetching license failed");
+                      }
+                    })
+                    .then((json: LicenseSPX) => {
+                      context.pushPage({
+                        component: FetchTextActivity,
+                        key: "license_" + track.license,
+                        extra: {
+                          raw_data: json.licenseText,
+                          modulename: json.name,
+                        },
+                      });
+                    })
+                    .catch((err) => {});
+                }}
+              >
                 <ListItemIcon>
                   <FormatAlignLeftIcon />
                 </ListItemIcon>
                 <StyledListItemText primary={strings("license")} secondary={track.license} />
-              </ListItem>
+              </ListItemButton>
             )}
 
             {track.support && (
