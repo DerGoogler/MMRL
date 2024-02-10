@@ -102,4 +102,29 @@ export const en = {
   patch_settings_subtitle: "Add missing settings keys",
   sticky_search_bar: "Disable sticky search bar",
   dm_update_json_fetch_warn: "{id} has empty „updateJson“ property or the link isn't valid",
+
+  // Anti-Features
+  antifeature: "Anti-Feature",
+  antifeatures: "Anti-Features",
+  AntiFeature_Ads_desc:
+    "This Anti-Feature is applied to a module that contains advertising.\nNote that most modules that contain advertising are not Free Software because they use proprietary software (e.g., AdMob) to provide that advertising. Those modules will not be found in the repo at all, so the only time you would see this Anti-Feature applied would be a module that contains advertising without using Non-Free Software to do it.",
+  AntiFeature_Tracking_desc:
+    "This Anti-Feature is applied to modules that track you and/or report your activity to somewhere, either without your permission or by default (i.e., you'd have to actively seek out an option to disable it).",
+  AntiFeature_NSFW_desc:
+    "This Anti-Feature is applied to a module that contains content that the user may not want to be publicized or visible everywhere. The marked module may contain nudity, profanity, slurs, violence, intense sexuality, political incorrectness, or other potentially disturbing subject matter. This is especially relevant in environments like workplaces, schools, religious, and family settings. The name comes from the Internet term “Not safe for work.”",
+  "AntiFeature_Non-Free Network Services_desc":
+    "This Anti-Feature is applied to modules that promote or depend entirely on a Non-Free network service, which is impossible or not easy to replace. Replacement requires changes to the module or service. This anti-feature would not apply if there is a simple configuration option that allows pointing the module to a running instance of an alternative, publicly available, self-hostable, free software server solution.",
+  "AntiFeature_Non-Free Addons_desc":
+    "This Anti-Feature is applied to modules that, although Free Software themselves, promote other Non-Free applications or plugins.",
+  "AntiFeature_Non-Free Dependencies_desc":
+    "This Anti-Feature is applied to modules that require things that are not Free Software to run.\nThis does not mean that proprietary software is included in the module, but, for example, it may depend on other software already being installed on your device. A common example would be a module that doesn't run or is not useful unless you have Google Maps installed.",
+  "AntiFeature_Upstream Non-Free_desc":
+    "This Anti-Feature is applied to modules where the upstream source code includes proprietary software by default in their own releases.\nThis does not mean that proprietary software is included in the module. Most likely, the F-Droid build has been patched in some way to remove the Non-Free code/libraries, and/or some functionality may be missing. The module's description will usually go into more detail about this.\nIn our experience, where the upstream developer includes Non-Free libraries, sooner or later they will include more Non-Free libraries or other Anti-Features. Frequently, they become impossible to maintain/update in F-Droid. If there is an alternative, it is recommended that you avoid modules with this Anti-Feature if future updates are important to you.",
+  "AntiFeature_Non-Free Assets_desc":
+    "This Anti-Feature is applied to modules that contain and make use of Non-Free assets. The most common case is modules using artwork - images, sounds, music, etc. - under a license that restricts commercial usage or making derivative works (for example, any Creative Commons license with a “Non-Commercial” (NC) or “No Derivatives” (ND) restriction).",
+  "AntiFeature_Known Vulnerability_desc": "This Anti-Feature is applied to modules with a known security vulnerability.",
+  "AntiFeature_Disabled Algorithm_desc":
+    "This Anti-Feature is applied to modules that were signed using a signature algorithm that is considered outdated or unsafe.",
+  "AntiFeature_No Source Since_desc":
+    "The upstream source for this module is no longer available. Either the module went proprietary, the source repository was dropped, or it has moved to a location currently not known to us. This means there will not be further updates unless the source reappears.",
 };

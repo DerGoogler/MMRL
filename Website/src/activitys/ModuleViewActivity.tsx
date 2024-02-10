@@ -53,6 +53,7 @@ import InstallMobileIcon from "@mui/icons-material/InstallMobile";
 import DownloadIcon from "@mui/icons-material/Download";
 import Tooltip from "@mui/material/Tooltip";
 import { view } from "@Native/View";
+import AntiFeatureListItem from "@Components/AntiFeatureListItem";
 
 function a11yProps(index: number) {
   return {
@@ -357,7 +358,6 @@ const ModuleViewActivity = () => {
             )}
 
             <Card
-              elevation={0}
               sx={{
                 width: "100%",
               }}
@@ -424,7 +424,6 @@ const ModuleViewActivity = () => {
 
             {track.antifeatures ? (
               <Card
-                elevation={0}
                 sx={{
                   width: "100%",
                 }}
@@ -441,21 +440,22 @@ const ModuleViewActivity = () => {
                     spacing={1}
                     gutterBottom
                   >
-                    Anti-Features
+                    {strings("antifeatures")}
                   </Stack>
 
-                  <Typography variant="body2" color="text.secondary">
-                    {typeof track.antifeatures === "string"
-                      ? track.antifeatures
-                      : Array.isArray(track.antifeatures) && track.antifeatures.join("\n")}
-                  </Typography>
+                  <List disablePadding>
+                    {typeof track.antifeatures === "string" ? (
+                      <AntiFeatureListItem type={track.antifeatures} />
+                    ) : (
+                      Array.isArray(track.antifeatures) && track.antifeatures.map((anti) => <AntiFeatureListItem type={anti} />)
+                    )}
+                  </List>
                 </CardContent>
               </Card>
             ) : null}
 
             {track.require && (
               <Card
-                elevation={0}
                 sx={{
                   // width: { xs: "100%", sm: "100vh" },
 
@@ -512,7 +512,7 @@ const ModuleViewActivity = () => {
             )}
 
             {track.screenshots && (
-              <Card elevation={0} sx={{ /*width: { xs: "100%", sm: "100vh" },*/ width: "100%" }}>
+              <Card sx={{ /*width: { xs: "100%", sm: "100vh" },*/ width: "100%" }}>
                 <CardContent>
                   <Typography variant="h5" component="div">
                     {strings("images")}
@@ -544,7 +544,7 @@ const ModuleViewActivity = () => {
                           ":hover": {
                             cursor: "pointer",
                           },
-                          boxShadow: "0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15)",
+                          border: `1px solid ${theme.palette.divider} !important`,
                           borderRadius: theme.shape.borderRadius / theme.shape.borderRadius,
                         })}
                         onClick={() => {

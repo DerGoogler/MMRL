@@ -73,6 +73,9 @@ const THIS_IS_THE_THEME_OBJECT_OF_THIS_F_APP = createTheme({
           "& .MuiButtonBase-root": {
             borderBottom: "1px solid #f3f5f726",
           },
+          "& .MuiTabs-indicator": {
+            height: 1,
+          },
         },
       },
     },

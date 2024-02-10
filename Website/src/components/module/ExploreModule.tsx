@@ -6,6 +6,7 @@ import Stack from "@mui/material/Stack";
 import Chip from "@mui/material/Chip";
 import Divider from "@mui/material/Divider";
 import CardMedia from "@mui/material/CardMedia";
+import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 
 import { Verified } from "@mui/icons-material";
 
@@ -87,13 +88,19 @@ const ExploreModule = React.memo<Props>((props) => {
         </Typography>
         <Stack direction="column" justifyContent="center" spacing={1.2}>
           <Divider variant="middle" />
-          <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
+          <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={1}>
             <Chip
               sx={{
                 bgColor: "secondary.dark",
               }}
               label={formatLastUpdate}
             />
+
+            <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={1}>
+              {track.antifeatures && (
+                <Chip variant="outlined" color="warning" label="Anti-Features" size="small" icon={<WarningAmberIcon />} />
+              )}
+            </Stack>
           </Stack>
         </Stack>
       </Stack>
