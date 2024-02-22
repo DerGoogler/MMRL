@@ -1,4 +1,5 @@
 import Video from "@Components/dapi/Video";
+import { Image } from "@Components/dapi/Image";
 import Anchor from "@Components/dapi/Anchor";
 import { DiscordWidget } from "@Components/dapi/DiscordWidget";
 import { BottomToolbar } from "@Components/onsenui/BottomToolbar";
@@ -64,6 +65,7 @@ export const libraries = [
       Video: Video,
       DiscordWidget: DiscordWidget,
       Markdown: Markdown,
+      Image: Image,
       Ansi: Ansi,
     },
   },

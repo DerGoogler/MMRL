@@ -55,6 +55,8 @@ import Tooltip from "@mui/material/Tooltip";
 import { view } from "@Native/View";
 import AntiFeatureListItem from "@Components/AntiFeatureListItem";
 import FetchTextActivity from "./FetchTextActivity";
+import { Image } from "@Components/dapi/Image";
+import { useModFS } from "@Hooks/useModFS";
 
 function a11yProps(index: number) {
   return {
@@ -156,8 +158,10 @@ const ModuleViewActivity = () => {
     );
   };
 
+  const { modFS } = useModFS();
   const [value, setValue] = React.useState(0);
   const [isNameVisible, setIsNameVisible] = React.useState(true);
+  const hasInstallTools = SuFile.exist(`${modFS("MMRLINI")}/module.prop`);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -287,7 +291,7 @@ const ModuleViewActivity = () => {
               </Typography>
 
               <Stack direction="row" justifyContent="center" alignItems="center" spacing={1}>
-                {os.isAndroid && (Shell.isMagiskSU() || Shell.isKernelSU() || Shell.isAPatchSU()) && (
+                {os.isAndroid && (Shell.isMagiskSU() || Shell.isKernelSU() || Shell.isAPatchSU()) && hasInstallTools && (
                   <Button
                     color="secondary"
                     sx={{
@@ -538,26 +542,7 @@ const ModuleViewActivity = () => {
                         mr: 1,
                       })}
                     >
-                      <Box
-                        component="img"
-                        src={image}
-                        sx={(theme) => ({
-                          ":hover": {
-                            cursor: "pointer",
-                          },
-                          border: `1px solid ${theme.palette.divider} !important`,
-                          borderRadius: theme.shape.borderRadius / theme.shape.borderRadius,
-                        })}
-                        onClick={() => {
-                          context.pushPage({
-                            component: PicturePreviewActivity,
-                            key: "PicturePreviewActivity",
-                            extra: {
-                              picture: image,
-                            },
-                          });
-                        }}
-                      />
+                      <Box component={Image} src={image} />
                     </ImageListItem>
                   ))}
                 </ImageList>

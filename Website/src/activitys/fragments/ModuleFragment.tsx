@@ -13,6 +13,8 @@ import Button from "@mui/material/Button";
 import Menu, { MenuProps } from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
+import { os } from "@Native/Os";
 
 const RenderWhenEmpty = React.memo(() => {
   const { theme } = useTheme();
@@ -80,7 +82,7 @@ const StyledMenu = styled((props: MenuProps) => (
 
 const ModuleFragment = React.memo<ModuleFragmentProps>((props) => {
   const { isNetworkAvailable } = useNetwork();
-
+  const { theme } = useTheme();
   const renderItem = React.useCallback<renderFunc<Module>>((m, k) => props.renderItem(m, k), []);
   const [filter, _filter, setFilter] = useModuleFilter(`${props.id}_filter`);
 
@@ -105,7 +107,21 @@ const ModuleFragment = React.memo<ModuleFragmentProps>((props) => {
   return (
     <Page renderFixed={props.renderFixed}>
       <Page.RelativeContent>
-        <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={1}>
+        <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={1}>
+          <Button
+            onClick={() => {
+              os.open("https://github.com/sponsors/DerGoogler", {
+                target: "_blank",
+                features: {
+                  color: theme.palette.background.default,
+                },
+              });
+            }}
+            variant="outlined"
+            endIcon={<VolunteerActivismIcon />}
+          >
+            Sponsor
+          </Button>
           <Button
             id="demo-customized-button"
             aria-controls={open ? "demo-customized-menu" : undefined}

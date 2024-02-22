@@ -81,15 +81,22 @@ const THIS_IS_THE_THEME_OBJECT_OF_THIS_F_APP = createTheme({
     },
     MuiButton: {
       styleOverrides: {
-        root: {
-          color: "black",
-          ":disabled": {
-            cursor: "not-allowed",
+        root: ({ theme, ownerState }) => ({
+          ...(ownerState.variant === "outlined" && {
+            color: "white",
+            border: `1px solid ${theme.palette.divider}`,
+            boxShadow: "none",
+          }),
+          ...(ownerState.variant === "contained" && {
             color: "black",
-            opacity: ".3",
-            backgroundColor: "#ffffff",
-          },
-        },
+            ":disabled": {
+              cursor: "not-allowed",
+              color: "black",
+              opacity: ".3",
+              backgroundColor: "#ffffff",
+            },
+          }),
+        }),
       },
       defaultProps: {
         disableElevation: true,

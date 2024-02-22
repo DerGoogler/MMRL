@@ -82,8 +82,8 @@ export const INITIAL_MOD_CONF: ModFS = {
   // others
   MMRLINI: "<MODULES>/mmrl_install_tools",
   CONFCWD: "<MODULECWD>/system/usr/share/mmrl/config/<MODID>",
-  EXPLORE_INSTALL: "<INCLUDECORE>; bb wget -O $NAME.zip $URL -nc && install_cli \"$NAME.zip\"",
-  LOCAL_INSTALL: "<INCLUDECORE>; install_cli \"$ZIPFILE\";",
+  EXPLORE_INSTALL: "<MMRLINI>/system/usr/share/mmrl/bin/mmrl_explore_install_v6",
+  LOCAL_INSTALL: "<MMRLINI>/system/usr/share/mmrl/bin/mmrl_local_install_v6",
   CONFINDEX: "<CONFCWD>/index.jsx",
 };
 
@@ -108,7 +108,7 @@ export const useModFS = () => {
 };
 
 export const ModFSProvider = (props: React.PropsWithChildren) => {
-  const [modFS, setModFS] = useNativeFileStorage("/data/adb/mmrl/modfs.v1.json", INITIAL_MOD_CONF);
+  const [modFS, setModFS] = useNativeFileStorage("/data/adb/mmrl/modfs.v6.json", INITIAL_MOD_CONF);
 
   const contextValue = React.useMemo(
     () => ({

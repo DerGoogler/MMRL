@@ -55,6 +55,8 @@ const MainApplication = () => {
     }
   }, [modules]);
 
+  const hasInstallTools = SuFile.exist(`${modFS("MMRLINI")}/module.prop`);
+
   const renderTabs = (): TabbarRenderTab[] => {
     return [
       {
@@ -72,7 +74,7 @@ const MainApplication = () => {
                   modules={localModules}
                   renderItem={(module, key) => <DeviceModule key={key} module={module} />}
                   renderFixed={() => {
-                    if (os.isAndroid && (Shell.isMagiskSU() || Shell.isKernelSU() || Shell.isAPatchSU())) {
+                    if (os.isAndroid && (Shell.isMagiskSU() || Shell.isKernelSU() || Shell.isAPatchSU()) && hasInstallTools) {
                       return (
                         <Fab
                           sx={{
