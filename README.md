@@ -33,8 +33,8 @@ Introducing Magisk Module Repo Loader (MMRL) - the ultimate module manager for M
 
 - [x] Custom repo loading (Since 1.4.2 mutiple repositories are supported)
 - [x] Translation
-- [x] Dark mode
-- [x] Anti-features (partial, needs improvement)
+<!-- - [x] Dark mode-->
+- [x] Anti-features
 
 ## Android only
 
@@ -54,12 +54,15 @@ Introducing Magisk Module Repo Loader (MMRL) - the ultimate module manager for M
 
 # Screenshots
 
-<p float="left">
-  <img src="https://play-lh.googleusercontent.com/wqup-XYEono-6Uun3t0wjqTunR4P46d92mYzJEYU567MN-Ja0UBT3zFi8nQBtwnfcg=w5120-h2880-rw"  width="240" height="auto">
-  <img src="https://play-lh.googleusercontent.com/aGpvDDcFNWKvJ-f1kz_NsaUkzczVQXOlL2ia3IWG9CK3ghMJQHXg4ehbOrxUh26Ptg=w5120-h2880-rw" width="240" height="auto">
-  <img src="https://play-lh.googleusercontent.com/sIIYd-6yG2VOE9u1IjFK7ztE7dy8odOV_r1_bIl-7UIRSZMypZl40mkl7cwTyJAbE_U=w5120-h2880-rw" width="240" height="auto">
-  <img src="https://play-lh.googleusercontent.com/EFUFow1bVx1HxVFIVbUHAk0oy5xz_kfjZLeuKO5Y-VAcQFNCQMNezmBUuCAHlWAJ44g=w5120-h2880-rw" width="240" height="auto">
-  <img src="https://play-lh.googleusercontent.com/5blSZWEGs_o3w-_NL7qvxaVTrrN4dKjVKn-gr3eZZJT3070gfzie3Zm7axHh2igHW_KA=w5120-h2880-rw" width="240" height="auto">
+<p>
+  <img src="assets/screen_01.png" width="32%" />
+  <img src="assets/screen_02.png" width="32%" />
+  <img src="assets/screen_03.png" width="32%" />
+  <img src="assets/screen_04.png" width="32%" />
+  <img src="assets/screen_05.png" width="32%" />
+  <img src="assets/screen_06.png" width="32%" />
+  <img src="assets/screen_07.png" width="32%" />
+  <img src="assets/screen_08.png" width="32%" />
 </p>
 
 # Documentations
