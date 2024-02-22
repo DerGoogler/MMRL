@@ -8,17 +8,29 @@
         Der_Googler
     </author>
     <content src="index.html" />
+    <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
 
     <allow-navigation href="https://giscus.app/*" />
     <allow-navigation href="https://dergoogler.com/*" />
+    <allow-navigation href="https://mmrl.dergoogler.com/*" />
 
-    <feature name="Terminal">
-        <param name="android-package" value="com.dergoogler.plugin.TerminalPlugin" />
-    </feature>
+    <preference name="hostname" value="mmrl"/>
 
     <feature name="Chooser">
         <param name="android-package" value="com.dergoogler.plugin.ChooserPlugin" />
+    </feature>
+
+    <feature name="Fetch">
+        <param name="android-package" value="com.dergoogler.plugin.FetchPlugin" />
+    </feature>
+
+    <feature name="Terminal">
+        <param name="android-package" value="com.dergoogler.plugin.TerminalPlugin" />
     </feature>
 </widget>

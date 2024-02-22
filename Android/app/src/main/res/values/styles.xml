@@ -1,13 +1,15 @@
 <resources>
+    <style name="AppTheme.SplashScreen" parent="Theme.SplashScreen.IconBackground">
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_cdv_splashscreen</item>
+        <item name="windowSplashScreenAnimationDuration">200</item>
+        <item name="postSplashScreenTheme">@style/AppTheme</item>
+    </style>
 
     <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowActionBar">false</item>
-
-        <item name="android:colorPrimary">#4a148c</item>
-        <item name="android:colorPrimaryDark">#4a148c</item>
-
-<!--        <item name="android:windowTranslucentStatus">true</item>-->
-<!--        <item name="android:windowTranslucentNavigation">true</item>-->
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">false</item>
     </style>
 </resources>

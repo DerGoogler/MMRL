@@ -1,5 +1,5 @@
 import { useTheme } from "@Hooks/useTheme";
-import { Box, Typography, styled } from "@mui/material";
+import { Box, Stack, Tooltip, Typography, styled } from "@mui/material";
 import { useActivity } from "../../hooks/useActivity";
 import Icon from "@Components/Icon";
 import NorthEastRoundedIcon from "@mui/icons-material/NorthEastRounded";
@@ -12,7 +12,6 @@ import ModuleViewActivity from "@Activitys/ModuleViewActivity";
 import ExtensionIcon from "@mui/icons-material/Extension";
 import { useRepos } from "@Hooks/useRepos";
 import FetchTextActivity from "@Activitys/FetchTextActivity";
-import { createRoot } from "react-dom/client";
 import React from "react";
 
 interface AnchorProps {
@@ -20,17 +19,15 @@ interface AnchorProps {
   module?: string;
 }
 
-const StyledAnchor = styled("div")(({ theme }) => {
+const StyledAnchor = styled("div")(({ theme }: { theme: MMRLTheme }) => {
   const { scheme } = useTheme();
   const { settings } = useSettings();
 
   const s = {
     cursor: "pointer",
-    color: settings.darkmode ? scheme[200] : scheme[700],
-    // color: !settings.darkmode ? "rgb(66, 66, 66)" : scheme[700],
+    color: theme.palette.text.link,
     display: "flex",
     alignItems: "center",
-
     ":hover": {
       textDecoration: "underline",
     },
@@ -46,21 +43,18 @@ const StyledAnchor = styled("div")(({ theme }) => {
 function Anchor(props: JSX.IntrinsicElements["a"] & AnchorProps) {
   const { href, children, noIcon, module, color } = props;
 
-  const { theme, scheme } = useTheme();
-  const { settings } = useSettings();
+  const { theme } = useTheme();
   const { modules } = useRepos();
   const { context } = useActivity();
-
-  const _color = !color ? (settings.darkmode ? scheme[200] : scheme[700]) : color;
 
   const s = React.useMemo(
     () => ({
       cursor: "pointer",
-      color: _color,
+      color: theme.palette.text.link,
       display: "flex",
       alignItems: "center",
       ":hover": {
-        textDecorationColor: _color,
+        textDecorationColor: theme.palette.text.link,
         textDecoration: "underline",
       },
     }),
@@ -69,55 +63,65 @@ function Anchor(props: JSX.IntrinsicElements["a"] & AnchorProps) {
 
   const findModule = React.useMemo(() => modules.find((m) => m.id === module), [module]);
 
+  const __href = !(module && findModule) ? href : module;
+
   return (
-    <Box
-      sx={{
-        display: "inline-block",
-        "& mmrl-anchor[href]": s,
-        "& mmrl-anchor[page]": s,
-      }}
-    >
+    <Tooltip title={__href} placement="bottom" arrow>
       <Box
-        component="mmrl-anchor"
-        href={!(module && findModule) ? href : module}
-        onClick={() => {
-          if (module && findModule) {
-            context.pushPage({
-              component: ModuleViewActivity,
-              key: "ModuleViewActivity",
-              extra: findModule,
-            });
-          } else {
-            if (href) {
-              os.open(href, {
-                target: "_blank",
-                features: {
-                  color: theme.palette.primary.main,
-                },
-              });
-            }
-          }
+        sx={{
+          display: "inline-block",
+          "& div[href]": s,
+          "& div[page]": s,
         }}
-        color={_color}
       >
-        <Typography component="span" color={_color}>
-          {children}
-        </Typography>
-        {!noIcon && (
-          <>
-            <Icon
+        <Stack
+          component={"div" as any}
+          direction="row"
+          spacing={0.5}
+          href={__href}
+          onClick={() => {
+            if (module && findModule) {
+              context.pushPage({
+                component: ModuleViewActivity,
+                key: "ModuleViewActivity",
+                extra: findModule,
+              });
+            } else {
+              if (__href) {
+                os.open(__href, {
+                  target: "_blank",
+                  features: {
+                    color: theme.palette.background.default,
+                  },
+                });
+              }
+            }
+          }}
+          color={theme.palette.text.link}
+        >
+          <Typography
+            component="span"
+            sx={{
+              fontSize: "unset",
+            }}
+            color={theme.palette.text.link}
+          >
+            {children}
+          </Typography>
+          {!noIcon && (
+            <Typography
+              component={Icon}
               icon={!(module && findModule) ? LaunchRoundedIcon : ExtensionIcon}
               sx={{
-                color: _color,
-                fill: _color,
-                fontSize: 16,
-                marginLeft: "3.7px",
+                color: theme.palette.text.link,
+                fill: theme.palette.text.link,
+                fontSize: "unset",
               }}
             />
-          </>
-        )}
+          )}
+        </Stack>
       </Box>
-    </Box>
+    </Tooltip>
   );
 }
 

@@ -12,7 +12,7 @@ public class NativeStorage {
     private final SharedPreferences localStorage;
     private String localStorageName;
 
-    public NativeStorage(@NonNull Context ctx) {
+    public NativeStorage(Context ctx) {
         this.localStorage = ctx.getSharedPreferences("localstorage_v2", Activity.MODE_PRIVATE);
     }
 

@@ -1,4 +1,5 @@
 import { Native } from "./Native";
+import { SuFile } from "./SuFile";
 
 interface NativeShell {
   /**
@@ -127,73 +128,65 @@ class ShellClass extends Native<NativeShell> {
   }
 
   /**
-   * Determine if MMRL runs with KernelSU
+   * Use regex for better detection
+   * @param searcher
+   * @returns
    */
-  public isKernelSU(): boolean {
-    if (this.isAndroid) {
-      return this.interface.isKernelSU();
+  private _mountDetect(searcher: { [Symbol.search](string: string): number }): boolean {
+    const proc = new SuFile("/proc/self/mounts");
+
+    if (proc.exist()) {
+      return proc.read().search(searcher) !== -1;
     } else {
       return false;
     }
+  }
+
+  /**
+   * Determine if MMRL runs with KernelSU
+   */
+  public isKernelSU(): boolean {
+    // `proc.exist()` is always `false` on browsers
+    return this._mountDetect(/(KSU|KernelSU)/i);
   }
 
   /**
    * Determine if MMRL runs with Magisk
    */
   public isMagiskSU(): boolean {
-    if (this.isAndroid) {
-      return this.interface.isMagiskSU();
-    } else {
-      return false;
-    }
+    // `proc.exist()` is always `false` on browsers
+    return this._mountDetect(/(magisk|core\/mirror|core\/img)/i);
   }
 
   /**
    * Determine if MMRL runs with APatch
    */
   public isAPatchSU(): boolean {
-    if (this.isAndroid) {
-      return this.interface.isAPatchSU();
-    } else {
-      return false;
-    }
-  }
-
-  public getenv(key: string): string {
-    if (this.isAndroid) {
-      return this.interface.getenv(key);
-    } else {
-      return "";
-    }
-  }
-
-  public setenv(key: string, value: string, override = 1): void {
-    if (this.isAndroid) {
-      this.interface.setenv(key, value, override);
-    }
+    // `proc.exist()` is always `false` on browsers
+    return this._mountDetect(/(APD|APatch)/i);
   }
 
   /**
    * Returns the current user id
-   * @returns {number} User ID
+   * @returns {strign} User ID
    */
-  public pw_uid(): number {
+  public pw_uid(): string {
     if (this.isAndroid) {
-      return this.interface.pw_uid();
+      return this.interface.result("id -u");
     } else {
-      return -1;
+      return "Unknown";
     }
   }
 
   /**
    * Returns the current group id
-   * @returns {number} Group ID
+   * @returns {string} Group ID
    */
-  public pw_gid(): number {
+  public pw_gid(): string {
     if (this.isAndroid) {
-      return this.interface.pw_gid();
+      return this.interface.result("id -g");
     } else {
-      return -1;
+      return "Unknown";
     }
   }
 
@@ -203,9 +196,9 @@ class ShellClass extends Native<NativeShell> {
    */
   public pw_name(): string {
     if (this.isAndroid) {
-      return this.interface.pw_name();
+      return this.interface.result("id -un");
     } else {
-      return "null";
+      return "Unknown";
     }
   }
 }

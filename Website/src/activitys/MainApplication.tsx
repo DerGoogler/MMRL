@@ -1,14 +1,15 @@
 import CodeRoundedIcon from "@mui/icons-material/CodeRounded";
 import React from "react";
 import Typography from "@mui/material/Typography";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import MenuIcon from "@mui/icons-material/Menu";
 import FetchTextActivity from "./FetchTextActivity";
 import ModuleFragment from "./fragments/ModuleFragment";
 import TerminalActivity from "./TerminalActivity";
-import DeviceModule from "@Components/DeviceModule";
+import DeviceModule from "@Components/module/DeviceModule";
+import ExploreModule from "@Components/module/ExploreModule";
+import UpdateModule from "@Components/module/UpdateModule";
 import ModuleViewActivity from "./ModuleViewActivity";
 import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
-import { Menu } from "@mui/icons-material";
 import { useActivity } from "@Hooks/useActivity";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import { os } from "@Native/Os";
@@ -17,93 +18,29 @@ import { useStrings } from "@Hooks/useStrings";
 import { Tabbar, TabbarRenderTab } from "@Components/onsenui/Tabbar";
 import { useRepos } from "@Hooks/useRepos";
 import { SuFile } from "@Native/SuFile";
-import { Properties } from "properties-file";
-import { useNativeStorage } from "@Hooks/useNativeStorage";
 import { BuildConfig } from "@Native/BuildConfig";
-import { useNewerVersion } from "@Hooks/useNewerVersion";
-import { ExploreModule } from "@Components/ExploreModule";
-import { useSettings } from "@Hooks/useSettings";
-import { useTheme } from "@Hooks/useTheme";
-import { AnimatePresence, motion } from "framer-motion";
-import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
-import ClearIcon from "@mui/icons-material/Clear";
-import { useModConf } from "@Hooks/useModConf";
+import { useModFS } from "@Hooks/useModFS";
 import Fab from "@Components/onsenui/Fab";
 import { useLocalModules } from "@Hooks/useLocalModules";
 import { Shell } from "@Native/Shell";
-
-interface SearchbarRef {
-  clear(): void;
-}
-
-interface SearchbarProps {
-  value: string;
-  onSearch(term: string): void;
-  placeholder: string;
-}
-
-const Clear = motion(ClearIcon);
-const Search = motion(SearchIcon);
-const MotionTypography = motion(Typography);
-const MotionInputBase = motion(InputBase);
-const SearchBar = React.forwardRef<SearchbarRef, SearchbarProps>((props, ref) => {
-  const { onSearch, placeholder, value } = props;
-  const [term, setTerm] = React.useState(value);
-
-  const handleTermChange = (e) => {
-    setTerm(e.target.value);
-  };
-
-  React.useImperativeHandle(
-    ref,
-    () => ({
-      clear() {
-        setTerm("");
-      },
-    }),
-    []
-  );
-
-  return (
-    <MotionInputBase
-      ref={ref as any}
-      key="inputshit"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      autoFocus
-      fullWidth
-      value={term}
-      inputProps={{
-        "aria-label": placeholder,
-        onKeyDown(e) {
-          if (e.key === "Enter") {
-            e.preventDefault();
-            onSearch(term);
-          }
-        },
-      }}
-      onChange={handleTermChange}
-      placeholder={placeholder}
-    />
-  );
-});
+import { SearchActivity } from "./SearchActivity";
+import ListItemButton from "@mui/material/ListItemButton";
+import { StyledListItemText } from "@Components/StyledListItemText";
+import VerifiedIcon from "@mui/icons-material/Verified";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import Avatar from "@mui/material/Avatar";
+import Stack from "@mui/material/Stack";
+import Chip from "@mui/material/Chip";
+import { ConfigureView } from "@Components/ConfigureView";
 
 const MainApplication = () => {
   const { strings } = useStrings();
-  const { settings } = useSettings();
-  const { modConf } = useModConf();
+  const { modFS } = useModFS();
   const { context } = useActivity();
-  const { theme } = useTheme();
   const { modules } = useRepos();
   const [index, setIndex] = React.useState(0);
   const localModules = useLocalModules();
-
-  const searchRef = React.useRef<SearchbarRef | null>(null);
-
-  const [isVisible, setVisible] = React.useState(false);
-  const [search, setSearch] = React.useState("");
 
   React.useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -118,18 +55,13 @@ const MainApplication = () => {
     }
   }, [modules]);
 
-  const hasInstallTools = SuFile.exist(`${modConf("MMRLINI")}/module.prop`);
+  const hasInstallTools = SuFile.exist(`${modFS("MMRLINI")}/module.prop`);
 
   const renderTabs = (): TabbarRenderTab[] => {
     return [
       {
         content: (
-          <ModuleFragment
-            search={search}
-            id="explore"
-            modules={modules}
-            renderItem={(module, key) => <ExploreModule key={key} moduleProps={module} />}
-          />
+          <ModuleFragment id="explore" modules={modules} renderItem={(module, key) => <ExploreModule key={key} module={module} />} />
         ),
         tab: <Tabbar.Tab label={strings("explore")} />,
       },
@@ -138,7 +70,6 @@ const MainApplication = () => {
             {
               content: (
                 <ModuleFragment
-                  search={search}
                   id="local"
                   modules={localModules}
                   renderItem={(module, key) => <DeviceModule key={key} module={module} />}
@@ -146,6 +77,11 @@ const MainApplication = () => {
                     if (os.isAndroid && (Shell.isMagiskSU() || Shell.isKernelSU() || Shell.isAPatchSU()) && hasInstallTools) {
                       return (
                         <Fab
+                          sx={{
+                            "& .fab__icon": {
+                              verticalAlign: "middle",
+                            },
+                          }}
                           onClick={() => {
                             Chooser.getFile(
                               "application/zip",
@@ -175,71 +111,116 @@ const MainApplication = () => {
               ),
               tab: <Tabbar.Tab label={strings("installed")} />,
             },
+            {
+              content: (
+                <ModuleFragment
+                  id="update"
+                  modules={localModules}
+                  renderItem={(module, key) => <UpdateModule key={key} module={module} />}
+                />
+              ),
+              tab: <Tabbar.Tab label={strings("updates")} />,
+            },
           ]
         : []),
     ];
   };
 
-  const [storedCurrentVersion, setStoredCurrentVersion] = useNativeStorage<VersionType>("current_version", "0.0.0");
-  const isNewVersion = useNewerVersion(storedCurrentVersion);
-
   React.useEffect(() => {
-    if (isNewVersion) {
-      setStoredCurrentVersion(BuildConfig.VERSION_NAME);
-      context.pushPage({
-        component: FetchTextActivity,
-        key: "FetchTextActivity",
-        extra: {
-          url: "https://raw.githubusercontent.com/wiki/DerGoogler/MMRL/Changelog.md",
-          title: "Changelog",
-        },
+    fetch("https://raw.githubusercontent.com/DerGoogler/MMRL/master/Website/package.json")
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.config.version_code > BuildConfig.VERSION_CODE) {
+          context.pushPage({
+            component: FetchTextActivity,
+            key: "changelog",
+            extra: {
+              rendering: ConfigureView,
+              url: "https://raw.githubusercontent.com/wiki/DerGoogler/MMRL/JSX-Changelog.md",
+              modulename: "Update available!",
+            },
+          });
+        }
       });
-    }
   }, []);
 
   const handleOpenSearch = () => {
-    if (isVisible) {
-      if (searchRef.current) {
-        setSearch("");
-        searchRef.current.clear();
-      }
-    } else {
-      setVisible((prev) => !prev);
-    }
-  };
+    context.pushPage({
+      component: SearchActivity,
+      key: "SearchActivity",
+      props: {
+        list: modules,
+        search: {
+          by: ["id", "name", "author", "description"],
+          caseInsensitive: true,
+        },
 
-  const handleSearch = () => {
-    if (isVisible) {
-      setVisible((prev) => {
-        if (prev && searchRef.current) {
-          setSearch("");
-          searchRef.current.clear();
-        }
-        return !prev;
-      });
-    } else {
-      context.splitter.show();
-    }
+        renderList(item: Module, index) {
+          return (
+            <ListItemButton
+              key={item.id}
+              onClick={() => {
+                context.pushPage({
+                  component: ModuleViewActivity,
+                  key: "ModuleViewActivity",
+                  extra: item,
+                });
+              }}
+            >
+              <ListItemAvatar>
+                <Avatar
+                  alt={item.name}
+                  sx={(theme) => ({
+                    bgcolor: theme.palette.primary.dark,
+                    boxShadow: "0 -1px 5px rgba(0,0,0,.09), 0 3px 5px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.3), 0 1px 3px rgba(0,0,0,.15)",
+                    borderRadius: "20%",
+                    mr: 1.5,
+                  })}
+                  src={item.track.icon}
+                >
+                  {item.name.charAt(0).toUpperCase()}
+                </Avatar>
+              </ListItemAvatar>
+              <StyledListItemText
+                primary={
+                  <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={0.5}>
+                    <Typography>{item.name}</Typography>
+                    {item.track.verified && (
+                      <VerifiedIcon sx={(theme: MMRLTheme) => ({ color: theme.palette.text.link, fontSize: "unset" })} />
+                    )}
+                  </Stack>
+                }
+                secondary={
+                  <Stack direction="column" justifyContent="center" alignItems="flex-start" spacing={0.5}>
+                    <Typography variant="body2">{item.version}</Typography>
+                    <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={0.5}>
+                      {SuFile.exist(modFS("PROPS", { MODID: item.id })) && <Chip size="small" label="Installed" />}
+                    </Stack>
+                  </Stack>
+                }
+              />
+            </ListItemButton>
+          );
+        },
+      },
+    });
   };
 
   const renderToolbar = () => {
     return (
-      <Toolbar modifier="noshadow">
-        <AnimatePresence key="idontknowman">
-          <Toolbar.Left>
-            <Toolbar.Button
-              iconProps={{
-                key: "sdlfgkhjdok;gfhjseoif",
-                initial: { opacity: 0 },
-                animate: { opacity: 1 },
-                exit: { opacity: 0 },
-              }}
-              // @ts-ignore
-              icon={isVisible ? ArrowBackIcon : Menu}
-              onClick={handleSearch}
-            />
-          </Toolbar.Left>
-          <Toolbar.Center
+      <Toolbar modifier="noshadow" sx={{ boderBottom: "unset !important" }}>
+        <Toolbar.Left>
+          <Toolbar.Button icon={MenuIcon} onClick={context.splitter.show} />
+        </Toolbar.Left>
+        <Toolbar.Center
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignSelf: "center",
+            alignItems: "center",
+          }}
+        >
+          <Typography
             sx={{
               display: "flex",
               justifyContent: "center",
@@ -247,61 +228,28 @@ const MainApplication = () => {
               alignItems: "center",
             }}
           >
-            {!isVisible ? (
-              <MotionTypography
-                key="fckthisdipshit"
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignSelf: "center",
-                  alignItems: "center",
-                }}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-              >
-                <CodeRoundedIcon sx={{ display: "flex", mr: 1 }} />
-                <Typography
-                  variant="h6"
-                  noWrap
-                  component="div"
-                  sx={{
-                    mr: 2,
-                    display: "flex",
-                    fontFamily: "monospace",
-                    fontWeight: 700,
-                    letterSpacing: ".3rem",
-                    color: "inherit",
-                    textDecoration: "none",
-                  }}
-                >
-                  MMRL
-                </Typography>
-              </MotionTypography>
-            ) : (
-              <SearchBar
-                ref={searchRef as any}
-                value={search}
-                onSearch={(term) => setSearch(term)}
-                placeholder={strings("search_modules")}
-              />
-            )}
-          </Toolbar.Center>
-
-          <Toolbar.Right>
-            <Toolbar.Button
-              iconProps={{
-                key: "sldjgfhdlkfughskdjfbn",
-                initial: { opacity: 0 },
-                animate: { opacity: 1 },
-                exit: { opacity: 0 },
+            <CodeRoundedIcon sx={{ display: "flex", mr: 1 }} />
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{
+                mr: 2,
+                display: "flex",
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".3rem",
+                color: "inherit",
+                textDecoration: "none",
               }}
-              // @ts-ignore
-              icon={isVisible ? Clear : Search}
-              onClick={handleOpenSearch}
-            />
-          </Toolbar.Right>
-        </AnimatePresence>
+            >
+              MMRL
+            </Typography>
+          </Typography>
+        </Toolbar.Center>
+        <Toolbar.Right>
+          <Toolbar.Button icon={SearchIcon} onClick={handleOpenSearch} />
+        </Toolbar.Right>
       </Toolbar>
     );
   };

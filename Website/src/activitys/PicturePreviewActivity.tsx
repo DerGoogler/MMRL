@@ -19,11 +19,7 @@ const PicturePreviewActivity = () => {
   };
 
   return (
-    <Page
-      modifier="noshadow"
-      backgroundStyle="#000000"
-      renderToolbar={renderToolbar}
-    >
+    <Page modifier="noshadow" renderToolbar={renderToolbar}>
       <TransformWrapper>
         <TransformComponent
           wrapperStyle={{ width: "100%", height: "100%" }}

@@ -6,6 +6,7 @@
 <p align="center">
   <a href="https://play.google.com/store/apps/details?id=com.dergoogler.mmrl"><img height="75px" alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png"></a>
   <a href="https://github.com/DerGoogler/MMRL/releases"><img height="75px" alt="Get it on GitHub" src="https://dergoogler.com/bl-content/uploads/pages/e5f2cff5950bf12b7ecdcc9a54d0a348/get-it-on-github.png"></a>
+  <a href="https://android.izzysoft.de/repo/apk/com.dergoogler.mmrl"><img height="75px" alt="Get it on GitHub" src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png"></a>
 </p>
 
 <p align="center">
@@ -17,7 +18,6 @@
   </br>
   <img src="https://img.shields.io/github/downloads/DerGoogler/MMRL/total?label=All%20time%20downloads" alt="GitHub all releases">
 </p>
-
 
 # Summary
 
@@ -34,7 +34,7 @@ Introducing Magisk Module Repo Loader (MMRL) - the ultimate module manager for M
 - [x] Custom repo loading (Since 1.4.2 mutiple repositories are supported)
 - [x] Translation
 - [x] Dark mode
-- [x] Themes
+- [x] Anti-features (partial, needs improvement)
 
 ## Android only
 
@@ -42,8 +42,7 @@ Introducing Magisk Module Repo Loader (MMRL) - the ultimate module manager for M
 - [x] Remove installed modules
 - [x] Enable/Disable installed modules
 - [x] Dynamic module configuration
-- [x] Module install
-- [x] Monet theming
+- [x] Installing modules
 - [x] Logcat logger ([MMRL Install Tools](https://github.com/Googlers-Repo/mmrl_install_tools) required)
 
 ### Root Manager (Android)
@@ -63,31 +62,10 @@ Introducing Magisk Module Repo Loader (MMRL) - the ultimate module manager for M
   <img src="https://play-lh.googleusercontent.com/5blSZWEGs_o3w-_NL7qvxaVTrrN4dKjVKn-gr3eZZJT3070gfzie3Zm7axHh2igHW_KA=w5120-h2880-rw" width="240" height="auto">
 </p>
 
-# Supported `module.prop` properties
+# Documentations
 
-```properties
-# Magisk supported properties
-id=<string>
-name=<string>
-version=<string>
-versionCode=<int>
-author=<string>
-description=<string>
-
-# MMRL supported properties
-minKernelSU=<boolean>
-
-# Fox's Mmm supported properties
-minApi=<int>
-maxApi=<int>
-minMagisk=<int>
-needRamdisk=<boolean>
-support=<url>
-donate=<url>
-config=<package>
-changeBoot=<boolean>
-mmtReborn=<boolean>
-```
+- [ModFS](https://github.com/DerGoogler/MMRL/tree/master/docs/ModFS.md)
+- [ModConf](https://github.com/DerGoogler/MMRL/tree/master/docs/ModConf.md)
 
 # Credits & Thanks
 

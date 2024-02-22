@@ -4,6 +4,7 @@ import Icon from "@Components/Icon";
 import React from "react";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import Button from "@mui/material/Button";
 import { SvgIconTypeMap } from "@mui/material/SvgIcon";
 import { SxProps, Theme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -32,13 +33,10 @@ const HTMLToolbar = onsCustomElement<HTMLElement, HTMLToolbar>("ons-toolbar", { 
 const HTMLToolbarButton = onsCustomElement<HTMLElement, HTMLToolbarButton>("ons-toolbar-button")({});
 
 const ToolbarButton = React.forwardRef((props: HTMLToolbarButton, ref: React.Ref<HTMLElement>) => {
-  return (
-    <HTMLToolbarButton sx={props.sx} ref={ref} id={props.id} style={{ fontFamily: "unset" }} onClick={props.onClick}>
-      {props.icon ? (
-        <Icon icon={props.icon} {...props.iconProps} keepLight={!props.keepLight ? true : props.keepLight} />
-      ) : (
-        <>{props.children}</>
-      )}
+  const { icon, iconProps, keepLight, children, ...rest } = props;
+  return ( 
+    <HTMLToolbarButton ref={ref} style={{ fontFamily: "unset" }} {...rest}>
+      {icon ? <Icon icon={icon} {...iconProps} keepLight={!keepLight ? true : keepLight} /> : <>{children}</>}
     </HTMLToolbarButton>
   );
 });

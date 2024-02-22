@@ -5,24 +5,25 @@
     "application_id": "com.dergoogler.mmrl",
     "min_sdk": 26,
     "target_sdk": 34,
-    "version_name": "1.13.9",
-    "version_code": 1139
+    "version_name": "2.13.9_alpha-7",
+    "version_code": 2139
   },
   "main": "index.tsx",
   "keywords": [],
   "author": "Der_Googler",
   "license": "GPL-3.0",
   "scripts": {
-    "start:dev": "webpack-dev-server --open --config webpack.dev.ts",
-    "start:prod": "webpack-dev-server --open --config webpack.prod.ts",
+    "start:dev": "npm run licensefix && webpack-dev-server --open --config webpack.dev.ts",
+    "start:prod": "npm run licensefix && webpack-dev-server --open --config webpack.prod.ts",
     "web:dev": "webpack --config webpack.dev.ts",
     "web:prod": "webpack --config webpack.prod.ts",
-    "web:dev-app": "npm run web:dev && npm run assetfix:android-clean && npm run assetfix:android-build",
-    "web:prod-app": "npm run web:prod && npm run assetfix:android-clean && npm run assetfix:android-build",
+    "web:dev-app": "npm run licensefix && npm run web:dev && npm run assetfix:android-clean && npm run assetfix:android-build",
+    "web:prod-app": "npm run licensefix && npm run web:prod && npm run assetfix:android-clean && npm run assetfix:android-build",
     "assetfix:android-build": "node assetfix.js android --build",
     "assetfix:android-clean": "node assetfix.js android --clean",
     "assetfix:web-build": "node assetfix.js web --build",
-    "assetfix:web-clean": "node assetfix.js web --clean"
+    "assetfix:web-clean": "node assetfix.js web --clean",
+    "licensefix": "node licensefix.js"
   },
   "resolutions": {
     "react": "^18.2.0",
@@ -60,7 +61,7 @@
     "markdown-to-jsx": "^7.4.0",
     "marked-react": "^1.1.2",
     "material-icons": "^1.10.8",
-    "material-ui-confirm": "^3.0.9",
+    "material-ui-confirm": "^3.0.10",
     "monaco-editor": "^0.45.0",
     "monaco-editor-core": "^0.43.0",
     "monaco-languageclient": "^6.5.0",

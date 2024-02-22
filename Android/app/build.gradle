@@ -17,15 +17,6 @@ android {
         targetSdk pkg.config.target_sdk
         versionName pkg.config.version_name
         versionCode pkg.config.version_code
-        externalNativeBuild {
-            cmake {
-                cppFlags "-llog"
-                arguments "-DANDROID_STL=c++_shared"
-            }
-        }
-        ndk {
-            abiFilters "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
-        }
     }
 
     splits {
@@ -37,13 +28,18 @@ android {
         }
     }
 
+    applicationVariants.configureEach { variant ->
+        variant.outputs.configureEach { output ->
+            outputFileName = outputFileName.replace(".apk", "-${variant.versionName}-${variant.versionCode}.apk").replace("-unsigned", "")
+        }
+    }
+
     buildTypes {
         release {
             resValue "string", "app_name", "${app_name}"
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             multiDexEnabled true
-            // project.tasks.preBuild.dependsOn("webProd")
         }
         debug {
             resValue "string", "app_name", "${app_name} Debug"
@@ -52,12 +48,6 @@ android {
             minifyEnabled false
             multiDexEnabled false
             applicationIdSuffix '.debug'
-            // project.tasks.preBuild.dependsOn("webDev")
-        }
-    }
-    externalNativeBuild {
-        cmake {
-            path = file("src/main/cpp/CMakeLists.txt")
         }
     }
     compileOptions {
@@ -65,9 +55,6 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     packagingOptions {
-        jniLibs {
-            keepDebugSymbols += ['*/armeabi/*.so', '*/armeabi-v7a/*.so', '*/arm64-v8a/*.so', '*/mips/*.so', '*/mips64/*.so', '*/x86/*.so', '*/x86_64/*.so']
-        }
         resources {
             excludes += ['META-INF/DEPENDENCIES.txt', 'META-INF/DEPENDENCIES', 'META-INF/LICENSE', 'META-INF/LICENSE.txt', 'META-INF/MANIFEST.MF', 'META-INF/NOTICE', 'META-INF/NOTICE.txt', 'META-INF/ASL2.0']
         }
@@ -89,11 +76,16 @@ repositories {
 
 dependencies {
     implementation "androidx.browser:browser:1.7.0"
+    implementation "androidx.appcompat:appcompat:1.6.1"
+    implementation 'androidx.core:core:1.13.0-alpha04'
+    implementation 'androidx.webkit:webkit:1.9.0'
+
     implementation "com.github.topjohnwu.libsu:core:5.2.1"
     implementation "com.github.topjohnwu.libsu:io:5.2.1"
-    implementation "androidx.appcompat:appcompat:1.6.1"
+
     implementation 'org.apache.cordova:framework:12.0.1'
-    implementation 'androidx.webkit:webkit:1.9.0'
+    
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
 }
 
 configurations.implementation.setCanBeResolved(true)

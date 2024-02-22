@@ -4,9 +4,6 @@ import { useActivity } from "@Hooks/useActivity";
 import React from "react";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import { Page } from "@Components/onsenui/Page";
-import Stack from "@mui/material/Stack";
-import Box from "@mui/material/Box";
-import Icon from "@Components/Icon";
 import { useNetwork } from "@Hooks/useNetwork";
 import { MissingInternet } from "@Components/MissingInternet";
 

@@ -14,16 +14,18 @@ import { CustomTextField } from "./TextField";
 
 export interface DialogEditTextListItemProps extends React.PropsWithChildren {
   inputLabel: React.ReactNode;
-  title: string;
+  title: React.ReactNode;
   disabled?: boolean;
   initialValue: string;
-  description?: string;
+  description?: React.ReactNode;
   type?: React.HTMLInputTypeAttribute;
   onSuccess: (value: string) => void;
   InputProps?: Partial<InputBaseProps>;
   counter?: boolean;
   helperText?: string;
   maxLength?: number;
+  multiline?: boolean;
+  maxRows?: number;
 }
 
 export const DialogEditTextListItem = (props: DialogEditTextListItemProps) => {
@@ -50,7 +52,7 @@ export const DialogEditTextListItem = (props: DialogEditTextListItemProps) => {
       <ListItemButton disabled={props.disabled} onClick={handleClickOpen}>
         {props.children}
       </ListItemButton>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog open={open} maxWidth="md" fullWidth onClose={handleClose}>
         <DialogTitle>{props.title}</DialogTitle>
         <DialogContent>
           {props.description && <DialogContentText>{props.description}</DialogContentText>}
@@ -68,25 +70,13 @@ export const DialogEditTextListItem = (props: DialogEditTextListItemProps) => {
             counter={props.counter}
             helperText={props.helperText}
             inputProps={{ maxLength: props.maxLength }}
+            multiline={props.multiline}
+            maxRows={props.maxRows}
           />
         </DialogContent>
         <DialogActions>
-          <Button
-            sx={{
-              color: scheme[500],
-            }}
-            onClick={handleClose}
-          >
-            {strings("cancel")}
-          </Button>
-          <Button
-            sx={{
-              color: scheme[500],
-            }}
-            onClick={() => (props.onSuccess(textInput), handleClose())}
-          >
-            Apply
-          </Button>
+          <Button onClick={handleClose}>{strings("cancel")}</Button>
+          <Button onClick={() => (props.onSuccess(textInput), handleClose())}>Apply</Button>
         </DialogActions>
       </Dialog>
     </>

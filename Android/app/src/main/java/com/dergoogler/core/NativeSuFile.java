@@ -15,6 +15,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Date;
 
 public class NativeSuFile {
     private final MainActivity ctx;
@@ -68,8 +69,21 @@ public class NativeSuFile {
             }
 
             @JavascriptInterface
-            public boolean create() {
-                return file.createNewFile();
+            public long lastModified() {
+                return file.lastModified();
+            }
+
+            @JavascriptInterface
+            public boolean create(int type) {
+                switch (type) {
+                    case 0:
+                        return file.createNewFile();
+                    case 1:
+                        return file.mkdirs();
+                    case 2:
+                        return file.mkdir();
+                }
+                return false;
             }
 
             @JavascriptInterface

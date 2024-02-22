@@ -18,7 +18,8 @@ interface NativeSuFileV2 {
     write(data: string): void;
     read(): string;
     list(delimiter: string | null): string;
-    create(): boolean;
+    lastModified(): number;
+    create(type: number): boolean;
     delete(): boolean;
     deleteRecursive(): void;
     exists(): boolean;
@@ -34,6 +35,19 @@ class SuFile extends Native<NativeSuFile> {
   private _file: ReturnType<NativeSuFile["v2"]>;
   private _fs: IFs = wasmFs.fs;
   private _path: string;
+
+  /**
+   * @returns `0` as number to create a new file
+   */
+  public static readonly NEW_FILE: number = 0;
+  /**
+   * @returns `1` as number to create a new folder with parent folders
+   */
+  public static readonly NEW_FOLDERS: number = 1;
+  /**
+   * @returns `2` as number to create a new folder
+   */
+  public static readonly NEW_FOLDER: number = 2;
 
   public constructor(path?: string) {
     super(window.__sufile__);
@@ -70,6 +84,14 @@ class SuFile extends Native<NativeSuFile> {
     }
   }
 
+  public lastModified(): number {
+    if (this.isAndroid) {
+      return this._file.lastModified();
+    } else {
+      return 0;
+    }
+  }
+
   public exist(): boolean {
     if (this.isAndroid) {
       return this._file.exists();
@@ -91,10 +113,20 @@ class SuFile extends Native<NativeSuFile> {
       this._file.deleteRecursive();
     }
   }
-
-  public create(): boolean {
+  /**
+   * Creates a new file or folder
+   * ```
+   * SuFile.NEW_FILE
+   * SuFile.NEW_FOLDER
+   * SuFile.NEW_FOLDERS
+   * ```
+   * @param type
+   * @default SuFile.NEW_FILE
+   * @returns {boolean}
+   */
+  public create(type: number = SuFile.NEW_FILE): boolean {
     if (this.isAndroid) {
-      return this._file.create();
+      return this._file.create(type);
     } else {
       return false;
     }

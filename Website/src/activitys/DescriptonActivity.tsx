@@ -40,7 +40,7 @@ function DescriptonActivity() {
             <Avatar
               alt={name}
               sx={(theme) => ({
-                bgcolor: theme.palette.primary.light,
+                bgcolor: theme.palette.primary.dark,
                 width: 40,
                 height: 40,
                 boxShadow: "0 -1px 5px rgba(0,0,0,.09), 0 3px 5px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.3), 0 1px 3px rgba(0,0,0,.15)",

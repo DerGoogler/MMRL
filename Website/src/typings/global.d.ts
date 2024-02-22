@@ -1,5 +1,6 @@
 import { AlertColor } from "@mui/material/Alert";
 import { AvailableStrs, strs } from "./../locales/declaration";
+import { Theme } from "@mui/material";
 
 export {};
 
@@ -72,6 +73,10 @@ declare global {
      * This is an Android only window object
      */
     readonly __os__: I;
+    /**
+     * TODO
+     */
+    readonly __view__: I;
     readonly __log__: I;
     readonly __properties__: I;
     /**
@@ -82,10 +87,19 @@ declare global {
     readonly __nativeStorage__: NativeStorage;
   }
 
+  export type MMRLTheme = Theme & {
+    palette?: {
+      text?: {
+        link?: string;
+      };
+    };
+  };
+
   namespace Terminal {
     export type Exec = {
       command: string;
-      env: Record<string, string>;
+      env?: Record<string, string>;
+      cwd?: string;
       onLine: (line: string) => void;
       onExit: (code: number) => void;
     };
@@ -119,61 +133,91 @@ declare global {
 
   const __webpack__mode__: "production" | "development";
 
-  interface StoredRepo extends Omit<Repo, "modules"> {
-    modules: string;
-  }
-
-  interface Repo {
-    /**
-     * An required filed, to disply the repository name
-     */
+  export interface RepoConfig {
     name: string;
-    mmrlOwner?: string;
-    /**
-     * An given website link for the repository
-     */
     website?: string;
-    /**
-     * Given support link i.g. Telegram, Xda, GitHub or something
-     */
     support?: string;
     donate?: string;
-    submitModule?: string;
-    last_update: number;
-    modules: Module[];
+    submission?: any;
+    base_url: string;
+    max_num?: number;
+    enable_log?: boolean;
+    log_dir?: string;
   }
 
-  export interface Root {
-    last_update: number;
+  export interface Repo {
     name: string;
-    website: any;
-    support: any;
-    donate: any;
-    submitModule: string;
+    website: string;
+    support: string;
+    donate: string;
+    submission: any;
+    metadata: Metadata;
     modules: Module[];
   }
 
-  /** Allows developers to translate their description */
-  export type ModuleDescription = Record<AvailableStrs, string>;
+  export interface Metadata {
+    version: number;
+    timestamp: number;
+  }
 
   export interface Module {
     id: string;
     name: string;
-    version?: number;
+    version: string;
     versionCode: number;
-    author?: string;
-    description?: string | ModuleDescription;
-    valid: boolean;
+    author: string;
+    description: string;
+    updateJson?: string;
+    added: number;
+    timestamp: number;
+    track: Track;
+    versions: Version[];
+
+    /**
+     * Local modules only
+     */
+    __mmrl__local__module__?: boolean;
+  }
+
+  export interface Track {
+    type: string;
+    added: number;
+    license: string;
+    homepage: string;
+    source: string;
+    support: string;
+    donate: string;
     verified: boolean;
-    hidden: boolean;
-    download: string;
-    last_update: number;
-    readme: string;
-    stars: number;
-    updateJson: string;
-    about: About;
-    mmrl: Mmrl;
-    fox: Fox;
+    cover?: string;
+    icon?: string;
+    require?: string[];
+    screenshots?: string[];
+    category?: string;
+    categories?: string[];
+    stars?: number;
+    readme?: string;
+    antifeatures?: AntiFeatures | AntiFeatures[];
+  }
+
+  type AntiFeatures =
+    | "Ads"
+    | "Tracking"
+    | "Non-Free Network Services"
+    | "Non-Free Addons"
+    | "Non-Free Dependencies"
+    | "NSFW"
+    | "Upstream Non-Free"
+    | "NonßFree Assets"
+    | "Known Vulnerability"
+    | "Disabled Algorithm"
+    | "No Source Since";
+
+  export interface Version {
+    timestamp: number;
+    version: string;
+    versionCode: number;
+    zipUrl: string;
+    changelog: string;
   }
 
   export interface UpdateJson {
@@ -183,47 +227,27 @@ declare global {
     changelog: string;
   }
 
-  export interface About {
-    repo_source: string;
-    language: string;
-    issues?: string;
-    source: string;
-  }
-
-  export interface MmrlAuthor {
+  export interface LicenseSPX {
+    isDeprecatedLicenseId: boolean;
+    isFsfLibre: boolean;
+    licenseText: string;
+    standardLicenseTemplate: string;
     name: string;
-    avatar: string;
-    bio: string;
-    followers: number;
-    verified: boolean;
+    licenseId: string;
+    crossRef: CrossRef[];
+    seeAlso: string[];
+    isOsiApproved: boolean;
+    licenseTextHtml: string;
   }
 
-  export interface Mmrl {
-    author?: MmrlAuthor;
-    contributors?: Array<MmrlAuthor>;
-    cover?: string;
-    logo?: string;
-    screenshots?: Array<string>;
-    categories?: Array<string>;
-    require?: Array<string>;
-    developerNote?: {
-      severity?: AlertColor;
-      note?: string;
-    };
-    minKernelSU?: number;
-    supportedRoots?: string
-  }
-
-  export interface Fox {
-    minApi?: number;
-    maxApi?: number;
-    minMagisk?: number;
-    needRamdisk?: boolean;
-    support?: string;
-    donate?: string;
-    config?: string;
-    changeBoot?: boolean;
-    mmtReborn?: boolean;
+  export interface CrossRef {
+    match: string;
+    url: string;
+    isValid: boolean;
+    isLive: boolean;
+    timestamp: string;
+    isWayBackLink: boolean;
+    order: number;
   }
 
   // OnsenUI Types

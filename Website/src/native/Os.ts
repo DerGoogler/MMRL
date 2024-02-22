@@ -115,13 +115,18 @@ class OsClass extends Native {
 
   /**
    * Changes the status bar color
+   * @deprecated
    * @param color Your color
    * @param white `true` makes the status bar white
    */
-  public setStatusBarColor(color: string, white: boolean): void {
+  public setStatusBarColor(color: string, white: boolean = false): void {
     this.isAndroid ? this.interface.setStatusBarColor(color, white) : null;
   }
 
+  /**
+   * @deprecated
+   * @param color
+   */
   public setNavigationBarColor(color: string): void {
     this.isAndroid ? this.interface.setNavigationBarColor(color) : null;
   }

@@ -20,44 +20,44 @@ export const filters = [
     name: "No filter",
     icon: UpdateDisabledIcon,
     value: "none",
-    allowedIds: ["explore", "local"],
+    allowedIds: ["explore", "local", "update"],
   },
   {
-    name: "By date (newest)",
+    name: "Newest date first",
     icon: CalendarMonthIcon,
     value: "date_newest",
-    allowedIds: ["explore"],
+    allowedIds: ["explore", "local", "update"],
   },
   {
-    name: "By date (oldest)",
+    name: "Oldest date first",
     icon: CalendarMonthIcon,
     value: "date_oldest",
-    allowedIds: ["explore"],
+    allowedIds: ["explore", "local", "update"],
   },
   {
-    name: "Alphabetically",
+    name: "Name (A to Z)",
     icon: AbcIcon,
     value: "alphabetically",
-    allowedIds: ["explore", "local"],
+    allowedIds: ["explore", "local", "update"],
   },
   {
-    name: "Alphabetically (reverse)",
+    name: "Name (Z to A)",
     icon: AbcIcon,
     value: "alphabetically_reverse",
-    allowedIds: ["explore", "local"],
+    allowedIds: ["explore", "local", "update"],
   },
-  {
-    name: "Most stars",
-    icon: StarIcon,
-    value: "most_stars",
-    allowedIds: ["explore"],
-  },
-  {
-    name: "Least stars",
-    icon: StarBorderIcon,
-    value: "least_stars",
-    allowedIds: ["explore"],
-  },
+  // {
+  //   name: "Most stars",
+  //   icon: StarIcon,
+  //   value: "most_stars",
+  //   allowedIds: ["explore"],
+  // },
+  // {
+  //   name: "Least stars",
+  //   icon: StarBorderIcon,
+  //   value: "least_stars",
+  //   allowedIds: ["explore"],
+  // },
 ];
 
 export const useModuleFilter = (key: string): [Array<any>, string, SetValue<string>] => {
@@ -66,12 +66,12 @@ export const useModuleFilter = (key: string): [Array<any>, string, SetValue<stri
   const f = React.useMemo(
     () => ({
       none: [{}],
-      date_oldest: [{ key: "last_update", descending: false }],
-      date_newest: [{ key: "last_update", descending: true }],
+      date_oldest: [{ key: "timestamp", descending: false }],
+      date_newest: [{ key: "timestamp", descending: true }],
       alphabetically: [{ key: "name", descending: false }],
       alphabetically_reverse: [{ key: "name", descending: true }],
-      least_stars: [{ key: "stars", descending: false }],
-      most_stars: [{ key: "stars", descending: true }],
+      // least_stars: [{ key: "stars", descending: false }],
+      // most_stars: [{ key: "stars", descending: true }],
     }),
     []
   );

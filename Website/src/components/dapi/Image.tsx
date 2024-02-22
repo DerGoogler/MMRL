@@ -24,6 +24,7 @@ function Image(props: Props) {
           cursor: !noOpen ? "pointer" : "unset",
         },
         borderRadius: theme.shape.borderRadius / theme.shape.borderRadius,
+        border: `1px solid ${theme.palette.divider} !important`,
         boxShadow: theme.shadows[shadow || 0],
       }}
       src={src}

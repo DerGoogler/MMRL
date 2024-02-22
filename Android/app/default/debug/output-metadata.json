@@ -11,22 +11,9 @@
       "type": "UNIVERSAL",
       "filters": [],
       "attributes": [],
-      "versionCode": 171,
-      "versionName": "1.7.1",
-      "outputFile": "app-default-universal-debug.apk"
-    },
-    {
-      "type": "ONE_OF_MANY",
-      "filters": [
-        {
-          "filterType": "ABI",
-          "value": "armeabi-v7a"
-        }
-      ],
-      "attributes": [],
-      "versionCode": 171,
-      "versionName": "1.7.1",
-      "outputFile": "app-default-armeabi-v7a-debug.apk"
+      "versionCode": 2139,
+      "versionName": "2.13.9_alpha-7",
+      "outputFile": "app-default-universal-debug-2.13.9_alpha-7-2139.apk"
     },
     {
       "type": "ONE_OF_MANY",
@@ -37,22 +24,9 @@
         }
       ],
       "attributes": [],
-      "versionCode": 171,
-      "versionName": "1.7.1",
-      "outputFile": "app-default-x86-debug.apk"
-    },
-    {
-      "type": "ONE_OF_MANY",
-      "filters": [
-        {
-          "filterType": "ABI",
-          "value": "arm64-v8a"
-        }
-      ],
-      "attributes": [],
-      "versionCode": 171,
-      "versionName": "1.7.1",
-      "outputFile": "app-default-arm64-v8a-debug.apk"
+      "versionCode": 2139,
+      "versionName": "2.13.9_alpha-7",
+      "outputFile": "app-default-x86-debug-2.13.9_alpha-7-2139.apk"
     },
     {
       "type": "ONE_OF_MANY",
@@ -63,9 +37,35 @@
         }
       ],
       "attributes": [],
-      "versionCode": 171,
-      "versionName": "1.7.1",
-      "outputFile": "app-default-x86_64-debug.apk"
+      "versionCode": 2139,
+      "versionName": "2.13.9_alpha-7",
+      "outputFile": "app-default-x86_64-debug-2.13.9_alpha-7-2139.apk"
+    },
+    {
+      "type": "ONE_OF_MANY",
+      "filters": [
+        {
+          "filterType": "ABI",
+          "value": "armeabi-v7a"
+        }
+      ],
+      "attributes": [],
+      "versionCode": 2139,
+      "versionName": "2.13.9_alpha-7",
+      "outputFile": "app-default-armeabi-v7a-debug-2.13.9_alpha-7-2139.apk"
+    },
+    {
+      "type": "ONE_OF_MANY",
+      "filters": [
+        {
+          "filterType": "ABI",
+          "value": "arm64-v8a"
+        }
+      ],
+      "attributes": [],
+      "versionCode": 2139,
+      "versionName": "2.13.9_alpha-7",
+      "outputFile": "app-default-arm64-v8a-debug-2.13.9_alpha-7-2139.apk"
     }
   ],
   "elementType": "File"

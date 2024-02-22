@@ -1,4 +1,5 @@
 import { os } from "@Native/Os";
+import { view } from "@Native/View";
 import { GlobalStyles, Theme } from "@mui/material";
 
 // export const LightTheme = (theme: Theme): any => ({
@@ -11,6 +12,11 @@ export const LightTheme = () => {
   return (
     <GlobalStyles
       styles={(theme) => ({
+        // eruda tools
+        ".eruda-dev-tools": {
+          paddingBottom: `${view.getWindowBottomInsets()}px !important`,
+        },
+
         html: {
           height: "100%",
           width: "100%",
@@ -80,13 +86,15 @@ export const LightTheme = () => {
           bottom: "0",
           overflowX: "visible",
           overflowY: "hidden",
-          color: "#1f1f21",
+          // color: "#1f1f21",
           msOverflowStyle: "none",
         },
         ".page::-webkit-scrollbar": {
           display: "none",
         },
         ".page__content": {
+          containerType: "inline-size",
+          containerName: "ons-page-content",
           backgroundColor: theme.palette.background.default,
           position: "absolute",
           top: "0",
@@ -95,8 +103,11 @@ export const LightTheme = () => {
           bottom: "0",
           boxSizing: "border-box",
           paddingTop: "0",
+          paddingBottom: view.getWindowBottomInsets(),
         },
         ".page__background": {
+          containerType: "inline-size",
+          containerName: "ons-page-background",
           backgroundColor: theme.palette.background.default,
           position: "absolute",
           top: "0",
@@ -106,6 +117,8 @@ export const LightTheme = () => {
           boxSizing: "border-box",
         },
         ".page--material": {
+          containerType: "inline-size",
+          containerName: "ons-page",
           fontFamily: '"Roboto", "Noto", sans-serif',
           webkitFontSmoothing: "antialiased",
           fontWeight: "400",
@@ -873,17 +886,15 @@ export const LightTheme = () => {
         },
         ".toolbar--material": {
           display: "flex",
-
           webkitFlexWrap: "nowrap",
           flexWrap: "nowrap",
           webkitBoxPack: "justify",
           webkitJustifyContent: "space-between",
           justifyContent: "space-between",
-          height: "56px",
-          borderBottom: "0",
+          paddingTop: view.getWindowTopInsets(),
+          height: `calc(56px + ${view.getWindowTopInsets()}px)`,
           boxShadow: "0 1px 5px rgba(0, 0, 0, 0.3)",
-          padding: "0",
-          backgroundColor: theme.palette.primary.main,
+          backgroundColor: theme.palette.background.default,
           backgroundSize: "0",
         },
         ".toolbar--noshadow": {
@@ -1791,14 +1802,15 @@ export const LightTheme = () => {
         },
         ".tabbar--material": {
           background: "none",
-          backgroundColor: theme.palette.primary.main,
+          backgroundColor: theme.palette.background.default,
           borderBottomWidth: "0",
           // boxShadow: "0 4px 2px -2px rgba(0, 0, 0, 0.14), 0 3px 5px -2px rgba(0, 0, 0, 0.12),\r\n    0 5px 1px -4px rgba(0, 0, 0, 0.2)",
         },
         ".tabbar--material__button": {
           backgroundColor: "transparent",
           color: "rgba(255, 255, 255, 1)",
-
+          // color
+          borderBottom: "1px solid #f3f5f726",
           textTransform: "uppercase",
           fontSize: "14px",
           fontWeight: "400",
@@ -1827,7 +1839,7 @@ export const LightTheme = () => {
           backgroundColor: "rgba(49, 49, 58, 0.1)",
         },
         ".tabbar--material__border": {
-          height: "2px",
+          height: "1px",
           backgroundColor: "rgba(255, 255, 255, 1)",
         },
         ".tabbar--material__icon": {
@@ -3937,7 +3949,8 @@ export const LightTheme = () => {
         },
         "ons-fab.fab--bottom__right, button.fab--bottom__right, .speed-dial.fab--bottom__right": {
           top: "auto",
-          bottom: "20px",
+          // bottom: "20px",
+          bottom: `calc(20px + ${view.getWindowBottomInsets()}px)`,
           right: "20px",
           left: "auto",
           position: "absolute",
@@ -4505,10 +4518,12 @@ export const LightTheme = () => {
           bottom: "44px",
         },
         ".toolbar.toolbar--material + .page__background": {
-          top: "56px",
+          top: `calc(56px + ${view.getWindowTopInsets()}px)`,
+          paddingBottom: view.getWindowBottomInsets(),
         },
         ".toolbar.toolbar--material + .page__background + .page__content": {
-          top: "56px",
+          top: `calc(56px + ${view.getWindowTopInsets()}px)`,
+          paddingBottom: view.getWindowBottomInsets(),
           paddingTop: "0",
         },
         ".toolbar.toolbar--transparent + .page__background": {

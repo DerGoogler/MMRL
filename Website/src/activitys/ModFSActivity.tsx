@@ -1,34 +1,40 @@
-import { Alert, Box, Divider, List, ListSubheader } from "@mui/material";
+import { Alert, Box, Button, Divider, List, ListSubheader, Stack, Typography } from "@mui/material";
 import AvatarGroup from "@mui/material/AvatarGroup";
 import Avatar from "@mui/material/Avatar";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import { Page } from "@Components/onsenui/Page";
 import { useActivity } from "@Hooks/useActivity";
-import { ModConf, useModConf } from "@Hooks/useModConf";
+import { ModFS, useModFS } from "@Hooks/useModFS";
 import { StyledListItemText } from "@Components/StyledListItemText";
 import { Shell } from "@Native/Shell";
 import { DialogEditTextListItem } from "@Components/DialogEditTextListItem";
 import React from "react";
+import Anchor from "@Components/dapi/Anchor";
+import { useStrings } from "@Hooks/useStrings";
 
-interface ModConfSections {
+interface ModFSSections {
   sectionText: string;
-  items: ModConfListItem<keyof ModConf>[];
+  items: ModFSListItem<keyof ModFS>[];
 }
 
-interface ModConfListItem<K extends keyof ModConf> {
+interface ModFSListItem<K extends keyof ModFS> {
   confKey: K;
-  text: string;
+  text: React.ReactNode;
+  dialogDesc?: React.ReactNode;
   /**
    * Used for the config requirement
    */
   logoText?: string | Array<string>;
   disabled?: boolean;
+  multiline?: boolean;
+  maxRows?: number;
 }
 
-function ModConfActivity() {
+function ModFSActivity() {
   const { context } = useActivity();
+  const { strings } = useStrings();
 
-  const { _modConf, setModConf } = useModConf();
+  const { _modFS, setModFS } = useModFS();
 
   const renderToolbar = () => {
     return (
@@ -36,12 +42,12 @@ function ModConfActivity() {
         <Toolbar.Left>
           <Toolbar.BackButton onClick={context.popPage} />
         </Toolbar.Left>
-        <Toolbar.Center>ModConf</Toolbar.Center>
+        <Toolbar.Center>{strings("modfs")}</Toolbar.Center>
       </Toolbar>
     );
   };
 
-  const items: ModConfSections[] = React.useMemo<ModConfSections[]>(
+  const items: ModFSSections[] = React.useMemo<ModFSSections[]>(
     () => [
       {
         sectionText: "Command line interfaces",
@@ -177,14 +183,76 @@ function ModConfActivity() {
           },
         ],
       },
+      {
+        sectionText: "Others",
+        items: [
+          {
+            text: "MMRL Install Tools",
+            confKey: "MMRLINI",
+          },
+          {
+            text: "Config working directory",
+            confKey: "CONFCWD",
+          },
+          {
+            text: "Config index file",
+            confKey: "CONFINDEX",
+          },
+          {
+            text: "Explore install script",
+            multiline: true,
+            maxRows: 10,
+            dialogDesc: (
+              <>
+                <Typography>
+                  Check the{" "}
+                  <Anchor href="https://github.com/DerGoogler/MMRL/tree/master/docs" noIcon>
+                    ModFS documentations
+                  </Anchor>{" "}
+                  for more informations!
+                  <br />
+                  <code>{"<URL>"}</code> and <code>{"<MODID>"}</code> can also be used, shell supported.
+                </Typography>
+              </>
+            ),
+            confKey: "EXPLORE_INSTALL",
+          },
+          {
+            text: "Local install script",
+            multiline: true,
+            maxRows: 10,
+            dialogDesc: (
+              <>
+                <Typography>
+                  Check the{" "}
+                  <Anchor href="https://github.com/DerGoogler/MMRL/tree/master/docs" noIcon>
+                    ModFS documentations
+                  </Anchor>{" "}
+                  for more informations!
+                  <br />
+                  <code>{"<ZIPFILE>"}</code> can also be used, shell supported.
+                </Typography>
+              </>
+            ),
+            confKey: "LOCAL_INSTALL",
+          },
+        ],
+      },
     ],
     []
   );
 
   return (
     <Page renderToolbar={renderToolbar}>
-      <Page.RelativeContent zeroMargin>
-        <Alert sx={{ m: { xs: 1, md: 1 } }} severity="error">
+      <Page.RelativeContent
+        zeroMargin
+        sx={{
+          textOverflow: "ellipsis",
+          overflow: "hidden",
+          whiteSpace: "nowrap",
+        }}
+      >
+        <Alert sx={{ m: { xs: 1, md: 1 }, whiteSpace: "normal" }} severity="error">
           I am not responsible for anything that may happen to your phone by changing these informations. You do it at your own risk and
           take the responsibility upon yourself and you are not to blame us or MMRL and its respected developers
         </Alert>
@@ -202,33 +270,42 @@ function ModConfActivity() {
                   type="text"
                   title={item.text}
                   disabled={item.disabled}
-                  initialValue={_modConf[item.confKey]}
+                  description={item.dialogDesc}
+                  initialValue={_modFS[item.confKey]}
                   onSuccess={(value) => {
                     if (value) {
-                      setModConf(item.confKey, value);
+                      setModFS(item.confKey, value);
                     }
                   }}
+                  multiline={item.multiline}
+                  maxRows={item.maxRows}
                 >
                   <StyledListItemText
                     primary={
-                      <Box sx={{ display: "flex", alignItems: "center", justifyItems: "center" }}>
-                        {item.logoText && Array.isArray(item.logoText) ? (
-                          <>
-                            <AvatarGroup sx={{ mr: 1 }}>
-                              {item.logoText.map((logo) => (
-                                <Avatar sx={{ borderRadius: "unset", width: "1rem", height: "1rem" }} src={logo} />
-                              ))}
-                            </AvatarGroup>
-                          </>
-                        ) : (
-                          item.logoText && (
-                            <Avatar sx={{ borderRadius: "unset", mr: 1, width: "1rem", height: "1rem" }} src={item.logoText} />
-                          )
-                        )}
-                        [{item.confKey}]: {item.text}
-                      </Box>
+                      <Stack direction="column" justifyContent="center" alignItems="flex-start" spacing={0}>
+                        <Typography variant="caption">{`<${item.confKey}>`}</Typography>
+                        <Typography sx={{ fontSize: "unset" }}>
+                          {" "}
+                          <Box sx={{ display: "flex", alignItems: "center", justifyItems: "center", whiteSpace: "normal" }}>
+                            {item.logoText && Array.isArray(item.logoText) ? (
+                              <>
+                                <AvatarGroup sx={{ mr: 1 }}>
+                                  {item.logoText.map((logo) => (
+                                    <Avatar sx={{ borderRadius: "unset", width: "1rem", height: "1rem" }} src={logo} />
+                                  ))}
+                                </AvatarGroup>
+                              </>
+                            ) : (
+                              item.logoText && (
+                                <Avatar sx={{ borderRadius: "unset", mr: 1, width: "1rem", height: "1rem" }} src={item.logoText} />
+                              )
+                            )}
+                            {item.text}
+                          </Box>
+                        </Typography>
+                      </Stack>
                     }
-                    secondary={_modConf[item.confKey]}
+                    secondary={_modFS[item.confKey]}
                   />
                 </DialogEditTextListItem>
               ))}
@@ -241,4 +318,4 @@ function ModConfActivity() {
   );
 }
 
-export default ModConfActivity;
+export default ModFSActivity;

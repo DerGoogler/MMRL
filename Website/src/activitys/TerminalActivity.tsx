@@ -9,12 +9,14 @@ import React from "react";
 import { Shell } from "@Native/Shell";
 import { useSettings } from "@Hooks/useSettings";
 import { BuildConfig } from "@Native/BuildConfig";
-import { useModConf } from "@Hooks/useModConf";
+import { useModFS } from "@Hooks/useModFS";
+import { INCLUDE_CORE } from "@Util/INCLUDE_CORE";
+import { view } from "@Native/View";
 
 const TerminalActivity = () => {
   const { context, extra } = useActivity<any>();
   const { settings } = useSettings();
-  const { modConf, __modConf } = useModConf();
+  const { modFS, __modFS } = useModFS();
   const [active, setActive] = React.useState<bool>(true);
 
   const [lines, setLines] = React.useState<string[]>([]);
@@ -22,9 +24,6 @@ const TerminalActivity = () => {
   const ref = React.useRef<HTMLDivElement>(null);
 
   const termEndRef = React.useRef<HTMLDivElement>(null);
-  const addLine = (line: string) => {
-    setLines((lines) => [...lines, line]);
-  };
 
   if (settings.term_scroll_bottom) {
     const termBehavior = React.useMemo(() => settings.term_scroll_behavior, [settings]);
@@ -34,27 +33,60 @@ const TerminalActivity = () => {
     }, [lines]);
   }
 
+  const processCommand = (rawCommand: string) => {
+    let arg: string | any[];
+    let command: string;
+    console.log(rawCommand);
+    const i = rawCommand.indexOf(" ");
+    if (i != -1 && rawCommand.length != i + 1) {
+      arg = rawCommand
+        .substring(i + 1)
+        .trim()
+        .split(" ");
+      command = rawCommand.substring(0, i);
+    } else {
+      arg = "";
+      command = rawCommand;
+    }
+
+    switch (command) {
+      case "clearTerminal":
+        setLines([]);
+        break;
+      case "log":
+        console.log(arg[0]);
+        break;
+    }
+  };
+
+  const addLine = (line: string) => {
+    if (line.startsWith("#!mmrl:")) {
+      processCommand(line.substring(7));
+    } else {
+      setLines((lines) => [...lines, line]);
+    }
+  };
+
   const install = () => {
-    const { exploreInstall, path } = extra;
+    const { exploreInstall, path, id } = extra;
 
     if (exploreInstall) {
-      const url = new URL(path).pathname.split("/");
-
-      const name = url[2];
-      const branch = url[4].split(".").slice(0, -1).join(".");
-
       const envp_explore = {
         MMRL: "true",
         MMRL_VER: BuildConfig.VERSION_CODE.toString(),
-        NAME: name,
+        NAME: id,
         URL: path,
-        BRANCH: branch,
         ROOTMANAGER: Shell.getRootManager(),
-        ...__modConf,
+        ...__modFS,
       };
 
       Terminal.exec({
-        command: `${modConf("MMRLINI")}/system/usr/share/mmrl/bin/mmrl_explore_install_v3`,
+        command: modFS("EXPLORE_INSTALL", {
+          INCLUDECORE: INCLUDE_CORE,
+          URL: path,
+          MODID: id,
+        }),
+        cwd: "/data/local/tmp",
         env: envp_explore,
         onLine: (line) => {
           addLine(line);
@@ -69,14 +101,19 @@ const TerminalActivity = () => {
       const envp_local = {
         MMRL: "true",
         MMRL_VER: BuildConfig.VERSION_CODE.toString(),
+        NAME: id,
         ZIPFILE: path,
         ROOTMANAGER: Shell.getRootManager(),
-        ...__modConf,
+        ...__modFS,
       };
 
       Terminal.exec({
-        command: `${modConf("MMRLINI")}/system/usr/share/mmrl/bin/mmrl_local_install_v3`,
+        command: modFS("LOCAL_INSTALL", {
+          INCLUDECORE: INCLUDE_CORE,
+          ZIPFILE: path,
+        }),
         env: envp_local,
+        cwd: "/data/local/tmp",
         onLine: (line) => {
           addLine(line);
         },
@@ -108,7 +145,6 @@ const TerminalActivity = () => {
       onShow={install}
       modifier="noshadow"
       renderToolbar={renderToolbar}
-      backgroundStyle="#000000"
     >
       <div
         ref={ref}
@@ -121,7 +157,6 @@ const TerminalActivity = () => {
           style={{
             whiteSpace: "pre",
             flex: "0 0 100%",
-            backgroundColor: "black",
             color: "white",
             height: "100%",
           }}
@@ -135,7 +170,7 @@ const TerminalActivity = () => {
           ))}
         </Stack>
       </div>
-      <div ref={termEndRef} />
+      <div style={{ height: view.getWindowBottomInsets() }} ref={termEndRef} />
     </Page>
   );
 };

@@ -1,7 +1,7 @@
 import React from "react";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
-import FlatList from "flatlist-react";
+import FlatList, { FlatListProps } from "flatlist-react";
 import { useTheme } from "@Hooks/useTheme";
 import { Page, RenderFunction } from "@Components/onsenui/Page";
 import { MissingInternet } from "@Components/MissingInternet";
@@ -13,32 +13,32 @@ import Button from "@mui/material/Button";
 import Menu, { MenuProps } from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
+import { os } from "@Native/Os";
 
 const RenderWhenEmpty = React.memo(() => {
   const { theme } = useTheme();
   return (
-    <Stack
+    <Box
       component="h4"
       sx={{
-        color: theme.palette.secondary.dark,
-        width: "100%",
-        height: "100%",
-        m: "unset",
+        color: theme.palette.text.secondary,
+        position: "absolute",
+        left: "50%",
+        top: "50%",
+        WebkitTransform: "translate(-50%, -50%)",
+        transform: "translate(-50%, -50%)",
       }}
-      direction="row"
-      justifyContent="center"
-      alignItems="center"
-      spacing={1}
     >
-      <Box>No modules were found</Box>
-    </Stack>
+      No modules were found
+    </Box>
   );
 });
 
 export interface ModuleFragmentProps {
-  search: string;
   id: "explore" | "update" | "local";
   modules: Array<Module>;
+  group?: FlatListProps<Module>["group"];
   renderItem: renderFunc<Module>;
   renderFixed?: RenderFunction;
 }
@@ -82,7 +82,7 @@ const StyledMenu = styled((props: MenuProps) => (
 
 const ModuleFragment = React.memo<ModuleFragmentProps>((props) => {
   const { isNetworkAvailable } = useNetwork();
-
+  const { theme } = useTheme();
   const renderItem = React.useCallback<renderFunc<Module>>((m, k) => props.renderItem(m, k), []);
   const [filter, _filter, setFilter] = useModuleFilter(`${props.id}_filter`);
 
@@ -107,14 +107,27 @@ const ModuleFragment = React.memo<ModuleFragmentProps>((props) => {
   return (
     <Page renderFixed={props.renderFixed}>
       <Page.RelativeContent>
-        <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={1}>
+        <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={1}>
+          <Button
+            onClick={() => {
+              os.open("https://github.com/sponsors/DerGoogler", {
+                target: "_blank",
+                features: {
+                  color: theme.palette.background.default,
+                },
+              });
+            }}
+            variant="outlined"
+            endIcon={<VolunteerActivismIcon />}
+          >
+            Sponsor
+          </Button>
           <Button
             id="demo-customized-button"
             aria-controls={open ? "demo-customized-menu" : undefined}
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
             variant="contained"
-            disableElevation
             onClick={handleClick}
             endIcon={<KeyboardArrowDownIcon />}
           >
@@ -158,16 +171,12 @@ const ModuleFragment = React.memo<ModuleFragmentProps>((props) => {
             renderItem={renderItem}
             renderOnScroll
             renderWhenEmpty={() => <RenderWhenEmpty />}
-            search={{
-              by: ["id", "name", "author", "description"],
-              term: props.search,
-              caseInsensitive: true,
-            }}
             sortBy={filter}
             display={{
               row: true,
               rowGap: "8px",
             }}
+            group={props.group}
           />
         </Box>
       </Page.RelativeContent>

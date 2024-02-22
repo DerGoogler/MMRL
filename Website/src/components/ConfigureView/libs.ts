@@ -1,4 +1,5 @@
 import Video from "@Components/dapi/Video";
+import { Image } from "@Components/dapi/Image";
 import Anchor from "@Components/dapi/Anchor";
 import { DiscordWidget } from "@Components/dapi/DiscordWidget";
 import { BottomToolbar } from "@Components/onsenui/BottomToolbar";
@@ -8,7 +9,7 @@ import Sandbox from "@nyariv/sandboxjs";
 import { useTheme } from "@Hooks/useTheme";
 import { useNativeStorage } from "@Hooks/useNativeStorage";
 import { useNativeProperties } from "@Hooks/useNativeProperties";
-import { Markdown, PromoBanner } from "./components";
+import { Markdown } from "./components";
 import { useActivity } from "@Hooks/useActivity";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import { SuFile } from "@Native/SuFile";
@@ -18,6 +19,7 @@ import Ansi from "ansi-to-react";
 import { os } from "@Native/Os";
 import { BuildConfig } from "@Native/BuildConfig";
 import { useSettings } from "@Hooks/useSettings";
+import { useNativeFileStorage } from "@Hooks/useNativeFileStorage";
 
 export const libraries = [
   {
@@ -41,6 +43,18 @@ export const libraries = [
     __esModule: os.isAndroid ? Terminal : {},
   },
   {
+    name: "flatlist-react",
+    __esModule: require("flatlist-react"),
+  },
+  {
+    name: "onsenui",
+    __esModule: require("onsenui"),
+  },
+  {
+    name: "@mmrl/activity",
+    __esModule: {},
+  },
+  {
     name: "@mmrl/ui",
     __esModule: {
       Anchor: Anchor,
@@ -50,8 +64,8 @@ export const libraries = [
       Toolbar: Toolbar,
       Video: Video,
       DiscordWidget: DiscordWidget,
-      PromoBanner: PromoBanner,
       Markdown: Markdown,
+      Image: Image,
       Ansi: Ansi,
     },
   },
@@ -60,6 +74,7 @@ export const libraries = [
     __esModule: {
       useActivity: useActivity,
       useNativeProperties: useNativeProperties,
+      useNativeFileStorage: useNativeFileStorage,
       useNativeStorage: useNativeStorage,
       useTheme: useTheme,
       useSettings: useSettings,

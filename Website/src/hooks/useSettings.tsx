@@ -159,7 +159,6 @@ export interface StorageDeclaration {
   disabled_repos: string[];
   _low_quality_module: boolean;
   _invald_module: boolean;
-  repos: StoredRepo[];
   shade_value: number;
   term_scroll_bottom: boolean;
   term_scroll_behavior: { name: string; value: ScrollBehavior };
@@ -213,7 +212,6 @@ export const SettingsProvider = (props: React.PropsWithChildren) => {
       disabled_repos: [],
       _low_quality_module: true,
       _invald_module: false,
-      repos: [],
       shade_value: -80,
       term_scroll_bottom: true,
       term_scroll_behavior: termScrollBehaviors[0],

@@ -18,10 +18,6 @@ public class NativeShell {
         this.wv = wv;
     }
 
-    static {
-        System.loadLibrary("native-shell-lib");
-    }
-
     @JavascriptInterface
     public void exec(String command) {
         Shell.cmd(command).exec();
@@ -33,13 +29,13 @@ public class NativeShell {
     }
 
     @JavascriptInterface
-    public void isSuccess(String command) {
-        Shell.cmd(command).exec().isSuccess();
+    public boolean isSuccess(String command) {
+        return Shell.cmd(command).exec().isSuccess();
     }
 
     @JavascriptInterface
-    public void getCode(String command) {
-        Shell.cmd(command).exec().getCode();
+    public int getCode(String command) {
+        return Shell.cmd(command).exec().getCode();
     }
 
     @JavascriptInterface
@@ -52,21 +48,6 @@ public class NativeShell {
             return false;
         }
     }
-
-    @JavascriptInterface
-    public static native boolean isMagiskSU();
-
-    @JavascriptInterface
-    public static native boolean isKernelSU();
-
-    @JavascriptInterface
-    public static native boolean isAPatchSU();
-
-    @JavascriptInterface
-    public static native String getenv(String key);
-
-    @JavascriptInterface
-    public static native void setenv(String key, String value, int override);
 
     @JavascriptInterface
     public boolean isAppGrantedRoot() {

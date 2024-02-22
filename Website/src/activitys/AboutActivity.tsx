@@ -7,7 +7,6 @@ import { useTheme } from "@Hooks/useTheme";
 import Badge from "@mui/material/Badge";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import Divider from "@mui/material/Divider";
 import ListItemText from "@mui/material/ListItemText";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
@@ -15,8 +14,7 @@ import Stack from "@mui/material/Stack";
 import CodeRoundedIcon from "@mui/icons-material/CodeRounded";
 import { useSettings } from "@Hooks/useSettings";
 import { Shell } from "@Native/Shell";
-import DeviceUnknownIcon from "@mui/icons-material/DeviceUnknown";
-import { ListSubheader, SxProps } from "@mui/material";
+import { ListSubheader } from "@mui/material";
 import React from "react";
 import { BuildConfig } from "@Native/BuildConfig";
 import { useFormatDate } from "@Hooks/useFormatDate";
@@ -36,8 +34,7 @@ const checkRoot = (): string | undefined => {
 const AboutActivity = () => {
   const { strings } = useStrings();
   const { settings } = useSettings();
-  const { theme } = useTheme();
-  const { context, extra } = useActivity();
+  const { context } = useActivity();
 
   const renderToolbar = () => {
     return (
@@ -50,7 +47,8 @@ const AboutActivity = () => {
     );
   };
 
-  const date = useFormatDate(BuildConfig.BUILD_DATE);
+  // false to ignore multiplying
+  const date = useFormatDate(BuildConfig.BUILD_DATE, false);
 
   type ListRender = {
     title: string;

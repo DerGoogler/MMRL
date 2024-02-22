@@ -13,8 +13,9 @@ import { ConfigureActivity } from "@Activitys/ConfigureActivity";
 import { Markup } from "@Components/Markdown";
 import { configureSample } from "@Util/configure-sample";
 import { dapiSample } from "@Util/dapi-sample";
-import ModConfActivity from "@Activitys/ModConfActivity";
-import { os } from "@Native/Os";
+import ModFSActivity from "@Activitys/ModFSActivity";
+import ModConfPlaygroundActivity from "@Activitys/ModConfPlaygroundActivity";
+import LicensesActivity from "@Activitys/LicensesActivity";
 
 type Props = {
   renderToolbar: () => JSX.Element;
@@ -53,22 +54,19 @@ export const DrawerFragment = (props: Props) => {
         >
           <StyledListItemText primary={strings("repositories")} />
         </ListItemButton>
-        {/* {os.isAndroid && ( */}
-          <>
-            <ListItemButton
-              onClick={() => {
-                pushPage({
-                  component: ModConfActivity,
-                  key: "ModConfActivity",
-                  extra: {},
-                });
-                hide();
-              }}
-            >
-              <StyledListItemText primary={strings("modconf")} />
-            </ListItemButton>
-          </>
-        {/* )} */}
+
+        <ListItemButton
+          onClick={() => {
+            pushPage({
+              component: ModFSActivity,
+              key: "ModFSActivity",
+              extra: {},
+            });
+            hide();
+          }}
+        >
+          <StyledListItemText primary={strings("modfs")} />
+        </ListItemButton>
       </List>
 
       <Divider />
@@ -94,21 +92,18 @@ export const DrawerFragment = (props: Props) => {
         </ListItemButton>
         <ListItemButton
           onClick={() => {
-            pushPage<PlaygroundExtra, any>({
-              component: PlaygroundsActivity,
-              key: "configure_playground",
+            pushPage<any, any>({
+              component: ModConfPlaygroundActivity,
+              key: "ModConfPlaygroundActivity",
               extra: {
-                title: "Configure playground",
                 editorMode: "javascript",
                 defaultText: configureSample,
-                previewPage: ConfigureActivity,
-                preview: ConfigureView,
               },
             });
             hide();
           }}
         >
-          <StyledListItemText primary={"Configure playground"} />
+          <StyledListItemText primary={strings("modconf_playground")} />
         </ListItemButton>
       </List>
 
@@ -125,22 +120,18 @@ export const DrawerFragment = (props: Props) => {
             hide();
           }}
         >
-          <StyledListItemText primary={"About"} />
+          <StyledListItemText primary={strings("about")} />
         </ListItemButton>
         <ListItemButton
           onClick={() => {
             pushPage({
-              component: FetchTextActivity,
+              component: LicensesActivity,
               key: "license",
-              extra: {
-                title: "License",
-                url: "https://raw.githubusercontent.com/wiki/DerGoogler/MMRL/License.md",
-              },
             });
             hide();
           }}
         >
-          <StyledListItemText primary={"License"} />
+          <StyledListItemText primary={strings("licenses")} />
         </ListItemButton>
         <ListItemButton
           onClick={() => {

@@ -16,12 +16,12 @@ import { Shell } from "@Native/Shell";
 import { DialogEditTextListItem } from "@Components/DialogEditTextListItem";
 import { Properties } from "@Native/Properties";
 import { useLanguageMap } from "./../locales/declaration";
-import { useModConf } from "@Hooks/useModConf";
+import { useModFS } from "@Hooks/useModFS";
 import { useLocalModules } from "@Hooks/useLocalModules";
 
 function SettingsActivity() {
   const { context } = useActivity();
-  const { _modConf } = useModConf();
+  const { _modFS } = useModFS();
   const { strings } = useStrings();
   const availableLangs = useLanguageMap();
   const { setRepos } = useRepos();
@@ -51,7 +51,7 @@ function SettingsActivity() {
         <List
           subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>{strings("appearance")}</ListSubheader>}
         >
-          <ListItem>
+          {/* <ListItem>
             <StyledListItemText id="switch-list-label-wifi" primary={strings("dark_theme")} />
             <Android12Switch
               edge="end"
@@ -81,7 +81,7 @@ function SettingsActivity() {
             </DialogEditTextListItem>
           )}
 
-          <ListPickerItem id="accent-color" targetSetting="accent_scheme" title={strings("accent_color")} contentMap={accent_colors} />
+          <ListPickerItem id="accent-color" targetSetting="accent_scheme" title={strings("accent_color")} contentMap={accent_colors} /> */}
           <ListPickerItem id="language" targetSetting="language" title={strings("language")} contentMap={availableLangs} />
         </List>
 
@@ -197,7 +197,7 @@ function SettingsActivity() {
                       version_name: Shell.VERSION_NAME(),
                       version_code: Shell.VERSION_CODE(),
                     },
-                    modconf: _modConf,
+                    modconf: _modFS,
                     modules: localModules,
                   },
                   null,
