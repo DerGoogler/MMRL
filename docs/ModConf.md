@@ -204,3 +204,11 @@ const Config = () => {
 
 export default Config;
 ```
+
+# Export current work
+
+- Enable eruda console
+
+```js
+__sufile__.v2("/data/adb/wpd.js").write(JSON.parse(__nativeStorage__.getItem("module-configure-playground")))
+```
