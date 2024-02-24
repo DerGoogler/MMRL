@@ -37,10 +37,9 @@ public class TerminalPlugin extends CordovaPlugin {
 
                 cordova.getThreadPool().execute(() -> {
                     try {
-                        run(envp, cwd, commands);
-                        callbackContext.error(1);
+                        callbackContext.error(run(envp, cwd, commands));
                     } catch (IOException | JSONException e) {
-                        callbackContext.error(0);
+                        callbackContext.error(500);
                         e.printStackTrace();
                     }
                 });
@@ -56,7 +55,7 @@ public class TerminalPlugin extends CordovaPlugin {
 
     }
 
-    public void run(JSONObject envp, String cwd, String... command) throws IOException, JSONException {
+    public int run(JSONObject envp, String cwd, String... command) throws IOException, JSONException {
         ProcessBuilder pb = new ProcessBuilder(command).redirectErrorStream(true);
         if (envp != null) {
             Map<String, String> m = pb.environment();
@@ -72,6 +71,7 @@ public class TerminalPlugin extends CordovaPlugin {
                 updateTerminal(line);
             }
         }
+        return process.exitValue();
     }
 
     private void updateTerminal(String line) {

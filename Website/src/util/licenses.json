@@ -93,14 +93,6 @@
     "source": "https://www.npmjs.com/package/@wasmer/wasmfs"
   },
   {
-    "name": "ace-builds",
-    "author": null,
-    "license": "BSD-3-Clause",
-    "description": "Ace (Ajax.org Cloud9 Editor)",
-    "version": "1.32.3",
-    "source": "https://www.npmjs.com/package/ace-builds"
-  },
-  {
     "name": "ajv",
     "author": null,
     "license": "MIT",
@@ -109,12 +101,12 @@
     "source": "https://www.npmjs.com/package/ajv"
   },
   {
-    "name": "ansi-to-react",
+    "name": "anser",
     "author": null,
-    "license": "BSD-3-Clause",
-    "description": "ANSI to React Elements",
-    "version": "6.1.6",
-    "source": "https://www.npmjs.com/package/ansi-to-react"
+    "license": "MIT",
+    "description": "A low level parser for ANSI sequences.",
+    "version": "2.1.1",
+    "source": "https://www.npmjs.com/package/anser"
   },
   {
     "name": "axios",
@@ -141,28 +133,20 @@
     "source": "https://www.npmjs.com/package/eruda"
   },
   {
+    "name": "escape-carriage",
+    "author": null,
+    "license": "MIT",
+    "description": "Escape carriage return the right way.",
+    "version": "1.3.1",
+    "source": "https://www.npmjs.com/package/escape-carriage"
+  },
+  {
     "name": "flatlist-react",
     "author": null,
     "license": "MIT",
     "description": "A helpful utility component to handle lists in react like a champ",
     "version": "1.5.14",
     "source": "https://www.npmjs.com/package/flatlist-react"
-  },
-  {
-    "name": "framer-motion",
-    "author": null,
-    "license": "MIT",
-    "description": "A simple and powerful JavaScript animation library",
-    "version": "10.18.0",
-    "source": "https://www.npmjs.com/package/framer-motion"
-  },
-  {
-    "name": "fs-monkey",
-    "author": null,
-    "license": "Unlicense",
-    "description": "Monkey patches for file system related things.",
-    "version": "1.0.5",
-    "source": "https://www.npmjs.com/package/fs-monkey"
   },
   {
     "name": "googlers-tools",
@@ -189,12 +173,12 @@
     "source": "https://www.npmjs.com/package/ini"
   },
   {
-    "name": "install",
-    "author": "Ben Newman",
+    "name": "linkify-it",
+    "author": null,
     "license": "MIT",
-    "description": "Minimal JavaScript module loader",
-    "version": "0.13.0",
-    "source": "https://www.npmjs.com/package/install"
+    "description": "Links recognition library with FULL unicode support",
+    "version": "5.0.0",
+    "source": "https://www.npmjs.com/package/linkify-it"
   },
   {
     "name": "localforage",
@@ -205,28 +189,12 @@
     "source": "https://www.npmjs.com/package/localforage"
   },
   {
-    "name": "localized-strings",
-    "author": null,
-    "license": "MIT",
-    "description": "Simple module to localize the strings of any JS based program using the same syntax used in the ReactLocalization and ReactNativeLocalization module, use 'npm run build' before publishing",
-    "version": "0.2.4",
-    "source": "https://www.npmjs.com/package/localized-strings"
-  },
-  {
     "name": "markdown-to-jsx",
     "author": null,
     "license": "MIT",
     "description": "Convert markdown to JSX with ease for React and React-like projects. Super lightweight and highly configurable.",
     "version": "7.4.0",
     "source": "https://www.npmjs.com/package/markdown-to-jsx"
-  },
-  {
-    "name": "marked-react",
-    "author": null,
-    "license": "MIT",
-    "description": "Render Markdown as React components",
-    "version": "1.4.0",
-    "source": "https://www.npmjs.com/package/marked-react"
   },
   {
     "name": "material-icons",
@@ -257,7 +225,7 @@
     "author": null,
     "license": "MIT",
     "description": "A browser based code editor",
-    "version": "0.43.0",
+    "version": "0.46.0",
     "source": "https://www.npmjs.com/package/monaco-editor-core"
   },
   {
@@ -267,14 +235,6 @@
     "description": "Monaco Language client implementation",
     "version": "6.6.1",
     "source": "https://www.npmjs.com/package/monaco-languageclient"
-  },
-  {
-    "name": "npm",
-    "author": null,
-    "license": "Artistic-2.0",
-    "description": "a package manager for JavaScript",
-    "version": "9.9.2",
-    "source": "https://www.npmjs.com/package/npm"
   },
   {
     "name": "object-assign",
@@ -309,14 +269,6 @@
     "source": "https://www.npmjs.com/package/react"
   },
   {
-    "name": "react-ace",
-    "author": null,
-    "license": "MIT",
-    "description": "A react component for Ace Editor",
-    "version": "10.1.0",
-    "source": "https://www.npmjs.com/package/react-ace"
-  },
-  {
     "name": "react-device-detect",
     "author": "Michael Laktionov",
     "license": "MIT",
@@ -347,22 +299,6 @@
     "description": "A lightweight React component that utilizes the power of CSS animations to create silky smooth marquees.",
     "version": "1.6.2",
     "source": "https://www.npmjs.com/package/react-fast-marquee"
-  },
-  {
-    "name": "react-from-json",
-    "author": null,
-    "license": "MIT",
-    "description": "Declare your React component tree in JSON",
-    "version": "0.7.2",
-    "source": "https://www.npmjs.com/package/react-from-json"
-  },
-  {
-    "name": "react-jsx-parser",
-    "author": null,
-    "license": "MIT",
-    "description": "A React component which can parse JSX and output rendered React Components",
-    "version": "1.29.0",
-    "source": "https://www.npmjs.com/package/react-jsx-parser"
   },
   {
     "name": "react-onsenui",
@@ -405,14 +341,6 @@
     "source": "https://www.npmjs.com/package/react-zoom-pan-pinch"
   },
   {
-    "name": "textarea-markdown-editor",
-    "author": null,
-    "license": "MIT",
-    "description": "UI headless React markdown editor using only textarea",
-    "version": "1.0.4",
-    "source": "https://www.npmjs.com/package/textarea-markdown-editor"
-  },
-  {
     "name": "underscore",
     "author": null,
     "license": "MIT",
@@ -421,19 +349,11 @@
     "source": "https://www.npmjs.com/package/underscore"
   },
   {
-    "name": "uninstall",
-    "author": null,
-    "license": "MIT",
-    "description": "",
-    "version": "0.0.0",
-    "source": "https://www.npmjs.com/package/uninstall"
-  },
-  {
     "name": "usehooks-ts",
     "author": null,
     "license": "MIT",
     "description": "React hook library, ready to use, written in Typescript.",
-    "version": "2.9.2",
+    "version": "2.14.0",
     "source": "https://www.npmjs.com/package/usehooks-ts"
   },
   {

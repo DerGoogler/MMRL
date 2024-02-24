@@ -16,3 +16,13 @@
 ::-webkit-scrollbar {
   display: none;
 }
+
+::-moz-selection {
+  color: #000;
+  background: #fff;
+}
+
+::selection {
+  color: #000;
+  background: #fff;
+}

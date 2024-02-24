@@ -1,3 +1,4 @@
+import Box from "@mui/material/Box";
 import React, { useRef } from "react";
 
 const Code = React.forwardRef<HTMLElement, React.JSX.IntrinsicElements["code"]>((props, _ref) => {
@@ -21,7 +22,14 @@ const Code = React.forwardRef<HTMLElement, React.JSX.IntrinsicElements["code"]>(
     }
   }, []);
 
-  return <code ref={ref} {...props} />;
+  return (
+    <Box
+      // @ts-ignore
+      ref={ref}
+      component="code"
+      {...props}
+    />
+  );
 });
 
 export default Code;

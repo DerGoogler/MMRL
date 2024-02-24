@@ -42,6 +42,11 @@ interface IShell {
 
 class ShellClass extends Native<NativeShell> {
   private _command: string;
+
+  public readonly MODULE_INSTALL_SUCCESS = 0;
+  public readonly MODULE_INSTALL_FAILURE = 1;
+  public readonly TERMINAL_INTERNAL_ERROR = 500;
+
   public constructor() {
     super(window.__shell__);
     this._command = "";

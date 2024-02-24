@@ -19,6 +19,7 @@ import { Toolbar } from "@Components/onsenui/Toolbar";
 import CodeRoundedIcon from "@mui/icons-material/CodeRounded";
 import { Page } from "@Components/onsenui/Page";
 import eruda from "eruda";
+import TestTerminalActivity from "./TestTerminalActivity";
 
 const MainActivity = (): JSX.Element => {
   const { settings } = useSettings();

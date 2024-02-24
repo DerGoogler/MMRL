@@ -32,7 +32,7 @@ import { useLog } from "@Hooks/native/useLog";
 import { SuFile } from "@Native/SuFile";
 import DescriptonActivity from "./DescriptonActivity";
 import { useSettings } from "@Hooks/useSettings";
-import TerminalActivity from "./TerminalActivity";
+import TerminalActivity, { TerminalActivityExtra } from "./TerminalActivity";
 import { Shell } from "@Native/Shell";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -305,10 +305,12 @@ const ModuleViewActivity = () => {
                         title: `Install ${name}?`,
                         confirmationText: "Yes",
                       }).then(() => {
-                        context.pushPage({
+                        context.pushPage<TerminalActivityExtra, {}>({
                           component: TerminalActivity,
                           key: "TerminalActivity",
                           extra: {
+                            issues: track.support,
+                            source: track.source,
                             id: id,
                             exploreInstall: true,
                             path: latestVersion.zipUrl,
@@ -459,11 +461,9 @@ const ModuleViewActivity = () => {
               </Card>
             ) : null}
 
-            {track.require && (
+            {track.require && track.require.length !== 0 && (
               <Card
                 sx={{
-                  // width: { xs: "100%", sm: "100vh" },
-
                   width: "100%",
                 }}
               >
@@ -517,7 +517,7 @@ const ModuleViewActivity = () => {
             )}
 
             {track.screenshots && (
-              <Card sx={{ /*width: { xs: "100%", sm: "100vh" },*/ width: "100%" }}>
+              <Card sx={{ width: "100%" }}>
                 <CardContent>
                   <Typography variant="h5" component="div">
                     {strings("images")}
@@ -646,9 +646,11 @@ interface VersionItemProps {
 
 const VersionItem = React.memo<VersionItemProps>(({ id, version }) => {
   const ts = useFormatDate(version.timestamp);
-  const { context } = useActivity();
+  const { context, extra } = useActivity<Module>();
   const confirm = useConfirm();
   const { theme } = useTheme();
+
+  const { track } = extra;
 
   const versionName = `${version.version} (${version.versionCode})`;
 
@@ -661,6 +663,8 @@ const VersionItem = React.memo<VersionItemProps>(({ id, version }) => {
         component: TerminalActivity,
         key: "TerminalActivity",
         extra: {
+          issues: track.support,
+          source: track.source,
           id: id,
           exploreInstall: true,
           path: version.zipUrl,

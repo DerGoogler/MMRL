@@ -41,20 +41,20 @@ const StyledAnchor = styled("div")(({ theme }: { theme: MMRLTheme }) => {
 });
 
 function Anchor(props: JSX.IntrinsicElements["a"] & AnchorProps) {
-  const { href, children, noIcon, module, color } = props;
-
   const { theme } = useTheme();
+  const { href, children, noIcon, module, color = theme.palette.text.link, target = "_blank" } = props;
+
   const { modules } = useRepos();
   const { context } = useActivity();
 
   const s = React.useMemo(
     () => ({
       cursor: "pointer",
-      color: theme.palette.text.link,
+      color: color,
       display: "flex",
       alignItems: "center",
       ":hover": {
-        textDecorationColor: theme.palette.text.link,
+        textDecorationColor: color,
         textDecoration: "underline",
       },
     }),
@@ -89,7 +89,7 @@ function Anchor(props: JSX.IntrinsicElements["a"] & AnchorProps) {
             } else {
               if (__href) {
                 os.open(__href, {
-                  target: "_blank",
+                  target: target,
                   features: {
                     color: theme.palette.background.default,
                   },
@@ -97,14 +97,14 @@ function Anchor(props: JSX.IntrinsicElements["a"] & AnchorProps) {
               }
             }
           }}
-          color={theme.palette.text.link}
+          color={color}
         >
           <Typography
             component="span"
             sx={{
               fontSize: "unset",
             }}
-            color={theme.palette.text.link}
+            color={color}
           >
             {children}
           </Typography>
@@ -113,8 +113,8 @@ function Anchor(props: JSX.IntrinsicElements["a"] & AnchorProps) {
               component={Icon}
               icon={!(module && findModule) ? LaunchRoundedIcon : ExtensionIcon}
               sx={{
-                color: theme.palette.text.link,
-                fill: theme.palette.text.link,
+                color: color,
+                fill: color,
                 fontSize: "unset",
               }}
             />

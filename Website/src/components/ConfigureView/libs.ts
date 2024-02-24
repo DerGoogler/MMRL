@@ -15,7 +15,7 @@ import { Toolbar } from "@Components/onsenui/Toolbar";
 import { SuFile } from "@Native/SuFile";
 import { StringsProvider, useStrings } from "@Hooks/useStrings";
 import { Shell } from "@Native/Shell";
-import Ansi from "ansi-to-react";
+import { Ansi } from "@Components/Ansi";
 import { os } from "@Native/Os";
 import { BuildConfig } from "@Native/BuildConfig";
 import { useSettings } from "@Hooks/useSettings";
