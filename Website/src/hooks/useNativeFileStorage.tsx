@@ -3,8 +3,10 @@ import { useLog } from "./native/useLog";
 import { SuFile } from "@Native/SuFile";
 import { SetValue, parseJSON } from "./useNativeStorage";
 
-export function useNativeFileStorage<T>(key: string, initialValue: T): [T, SetValue<T>] {
+export function useNativeFileStorage<T>(key: string, initialValue: T, opt: { json: boolean } = { json: true }): [T, SetValue<T>] {
   const log = useLog("useNativeStorage");
+
+  const { json } = opt;
 
   const file = new SuFile(key);
 
@@ -14,7 +16,7 @@ export function useNativeFileStorage<T>(key: string, initialValue: T): [T, SetVa
     }
 
     try {
-      return file.exist() ? (parseJSON(file.read()) as T) : initialValue;
+      return file.exist() ? (json ? (parseJSON(file.read()) as T) : (file.read() as T)) : initialValue;
     } catch (error) {
       log.w(`Error reading file “${key}”: ${error}`);
 
@@ -31,7 +33,7 @@ export function useNativeFileStorage<T>(key: string, initialValue: T): [T, SetVa
 
     try {
       const newValue = value instanceof Function ? value(storedValue) : value;
-      file.write(JSON.stringify(newValue));
+      file.write(json ? JSON.stringify(newValue) : String(newValue));
       setStoredValue(newValue);
     } catch (error) {
       log.w(`Error writing file “${key}”: ${error}`);

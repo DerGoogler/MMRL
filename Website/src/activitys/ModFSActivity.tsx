@@ -236,6 +236,21 @@ function ModFSActivity() {
             ),
             confKey: "LOCAL_INSTALL",
           },
+          {
+            text: "ModConf Playground Root",
+            dialogDesc: (
+              <>
+                <Typography>
+                  Check the{" "}
+                  <Anchor href="https://github.com/DerGoogler/MMRL/tree/master/docs" noIcon>
+                    ModConf documentations
+                  </Anchor>{" "}
+                  for more informations!
+                </Typography>
+              </>
+            ),
+            confKey: "MODCONF_PLAYGROUND",
+          },
         ],
       },
     ],

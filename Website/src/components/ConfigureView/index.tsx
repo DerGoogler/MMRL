@@ -19,6 +19,8 @@ import ini from "ini";
 import yaml from "yaml";
 import { useLog } from "@Hooks/native/useLog";
 import { extname } from "@Util/extname";
+import { formatString } from "@Util/stringFormat";
+import { Toolbar } from "@Components/onsenui/Toolbar";
 
 function plugin({ types: t }): PluginObj {
   return {
@@ -50,7 +52,7 @@ function parseCode(data: string): string {
     });
     return code as string;
   } catch (err) {
-    console.debug(err as any);
+    console.info((err as Error).message);
     return "";
   }
 }
@@ -73,32 +75,10 @@ const scope = {
 
 export const ConfigureView = React.forwardRef<any, { children: string; modid: string }>((props, ref) => {
   const { theme } = useTheme();
-  const { modFS: modConf } = useModFS();
+  const { modFS, _modFS } = useModFS();
 
   const log = useLog(`Config-${props.modid}`);
-  const format = React.useCallback<<K extends keyof ModFS>(key: K) => ModFS[K]>((key) => modConf(key, { MODID: props.modid }), []);
-
-  const customRequire = React.useCallback((file: string, opt?: any) => {
-    const isLocalFile = /^[./]/.test(file);
-    const absolutePath = file;
-
-    if (SuFile.exist(absolutePath)) {
-      const fileExt = opt && opt.ignoreExt ? extname(absolutePath) : "";
-
-      if (fileExt === ".json") {
-        return JSON.parse(SuFile.read(absolutePath));
-      } else if (fileExt === ".yaml" || fileExt === ".yml") {
-        return yaml.parse(SuFile.read(absolutePath));
-      } else if (fileExt === ".ini" || fileExt === ".props") {
-        return ini.parse(SuFile.read(absolutePath));
-      } else {
-        const code = SuFile.read(absolutePath);
-        return box(code);
-      }
-    } else {
-      return libraries.find((lib) => absolutePath === lib.name)?.__esModule;
-    }
-  }, []);
+  const format = React.useCallback<<K extends keyof ModFS>(key: K) => ModFS[K]>((key) => modFS(key, { MODID: props.modid }), []);
 
   const box = React.useCallback(
     (code: string) => {
@@ -121,26 +101,27 @@ export const ConfigureView = React.forwardRef<any, { children: string; modid: st
               });
             },
           },
-          document: document,
-          require: customRequire,
-          include(file: string, opt?: { ignoreCwd: boolean }) {
-            const __raw__filename = !opt?.ignoreCwd ? `${format("CONFCWD")}/${file}` : file;
-            const __file = new SuFile(__raw__filename);
-            if (__file.exist()) {
-              if (__raw__filename.endsWith(".jsx") || __raw__filename.endsWith(".js")) {
-                return box(__file.read());
-              } else if (__raw__filename.endsWith(".yaml") || __raw__filename.endsWith(".yml")) {
-                return yaml.parse(__file.read());
-              } else if (__raw__filename.endsWith(".json")) {
-                return JSON.parse(__file.read());
-              } else if (__raw__filename.endsWith(".prop") || __raw__filename.endsWith(".properties") || __raw__filename.endsWith(".ini")) {
-                return ini.parse(__file.read());
-              } else {
-                return __file.read();
+          require: (file: string) => {
+            const impFile = new SuFile(formatString(file, { MODID: props.modid, ..._modFS }));
+
+            if (impFile.exist()) {
+              switch (extname(file)) {
+                case ".json":
+                  return JSON.parse(impFile.read());
+                case ".yml":
+                case ".yaml":
+                  return yaml.parse(impFile.read());
+                case ".prop":
+                case ".ini":
+                  return ini.parse(impFile.read());
+                case ".js":
+                case ".jsx":
+                  return box(impFile.read());
+                default:
+                  return impFile.read();
               }
             } else {
-              log.e(__raw__filename + " not found");
-              return undefined;
+              return libraries.find((lib) => file === lib.name)?.__esModule;
             }
           },
           ...scope,
@@ -156,7 +137,13 @@ export const ConfigureView = React.forwardRef<any, { children: string; modid: st
     return <Component />;
   } else {
     return (
-      <Page>
+      <Page
+        renderToolbar={() => (
+          <Toolbar>
+            <Toolbar.Center>Error</Toolbar.Center>
+          </Toolbar>
+        )}
+      >
         <div>An error occurred, either there is a syntax mistake or something</div>
       </Page>
     );

@@ -12,6 +12,8 @@ import editorTheme from "@Util/editorTheme";
 import { ConfigureView } from "@Components/ConfigureView";
 import { useNativeStorage } from "@Hooks/useNativeStorage";
 import { useStrings } from "@Hooks/useStrings";
+import { useNativeFileStorage } from "@Hooks/useNativeFileStorage";
+import { useModFS } from "@Hooks/useModFS";
 
 export interface PlaygroundExtra {
   title: string;
@@ -114,8 +116,8 @@ const editorDidMount = (editor: monacoEditor.editor.IStandaloneCodeEditor, monac
 const ModConfPlaygroundActivity = () => {
   const { context, extra } = useActivity<PlaygroundExtra>();
   const { strings } = useStrings();
-
-  const [description, setDescription] = useNativeStorage("module-configure-playground", extra.defaultText || "");
+  const { modFS } = useModFS();
+  const [description, setDescription] = useNativeFileStorage(modFS("MODCONF_PLAYGROUND"), extra.defaultText || "", { json: false });
   const [errBoundKey, setErrBoundKey] = React.useState(0);
 
   const isLargeScreen = useMediaQuery("(min-width:600px)");
