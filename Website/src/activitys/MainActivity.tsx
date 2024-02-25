@@ -20,9 +20,13 @@ import CodeRoundedIcon from "@mui/icons-material/CodeRounded";
 import { Page } from "@Components/onsenui/Page";
 import eruda from "eruda";
 import TestTerminalActivity from "./TestTerminalActivity";
+import { useTheme } from "@Hooks/useTheme";
+import Pre from "@Components/dapi/Pre";
+import Code from "@Components/dapi/Code";
 
 const MainActivity = (): JSX.Element => {
   const { settings } = useSettings();
+  const { theme } = useTheme();
 
   const [isSplitterOpen, setIsSplitterOpen] = useState(false);
 
@@ -195,11 +199,12 @@ const MainActivity = (): JSX.Element => {
 
   const fallback = (error: Error, errorInfo: React.ErrorInfo, resetErrorBoundary) => {
     const style = {
-      backgroundColor: "#ebeced",
-      borderRadius: 6,
+      backgroundColor: theme.palette.background.paper,
+      color: theme.palette.text.primary,
+      borderRadius: theme.shape.borderRadius / theme.shape.borderRadius,
       lineHeight: 1.45,
       overflow: "auto",
-      padding: 16,
+      padding: 2,
     };
 
     const handleOpenSettings = () => {
@@ -221,9 +226,9 @@ const MainActivity = (): JSX.Element => {
         }}
       >
         <Page.RelativeContent>
-          <pre style={style}>
+          <Pre sx={style}>
             <span>{error.message}</span>
-          </pre>
+          </Pre>
 
           <Button fullWidth variant="contained" disableElevation onClick={resetErrorBoundary}>
             Try again
@@ -232,9 +237,9 @@ const MainActivity = (): JSX.Element => {
             Open settings
           </Button>
 
-          <pre style={style}>
-            <code>{errorInfo.componentStack}</code>
-          </pre>
+          <Pre sx={style}>
+            <Code>{errorInfo.componentStack}</Code>
+          </Pre>
         </Page.RelativeContent>
       </Page>
     );

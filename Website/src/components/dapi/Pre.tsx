@@ -1,6 +1,12 @@
+import { SxProps } from "@mui/material";
+import Box from "@mui/material/Box";
 import React, { useRef } from "react";
 
-const Pre = React.forwardRef<HTMLElement, React.JSX.IntrinsicElements["pre"]>((props, _ref) => {
+export type PreProps = React.JSX.IntrinsicElements["pre"] & {
+  sx?: SxProps;
+};
+
+const Pre = React.forwardRef<HTMLElement, PreProps>((props, _ref) => {
   const ref = (_ref as React.MutableRefObject<HTMLPreElement | null>) || useRef<HTMLPreElement | null>(null);
 
   React.useEffect(() => {
@@ -21,7 +27,14 @@ const Pre = React.forwardRef<HTMLElement, React.JSX.IntrinsicElements["pre"]>((p
     }
   }, []);
 
-  return <pre ref={ref} {...props} />;
+  return (
+    <Box
+      // @ts-ignore
+      ref={ref}
+      component="pre"
+      {...props}
+    />
+  );
 });
 
 export default Pre;

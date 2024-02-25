@@ -1,7 +1,12 @@
+import { SxProps } from "@mui/material";
 import Box from "@mui/material/Box";
 import React, { useRef } from "react";
 
-const Code = React.forwardRef<HTMLElement, React.JSX.IntrinsicElements["code"]>((props, _ref) => {
+export type CodeProps = React.JSX.IntrinsicElements["code"] & {
+  sx?: SxProps;
+};
+
+const Code = React.forwardRef<HTMLElement, CodeProps>((props, _ref) => {
   const ref = (_ref as React.MutableRefObject<HTMLElement | null>) || useRef<HTMLElement | null>(null);
 
   React.useEffect(() => {

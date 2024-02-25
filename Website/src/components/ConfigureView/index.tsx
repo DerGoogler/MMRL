@@ -80,6 +80,11 @@ export const ConfigureView = React.forwardRef<any, { children: string; modid: st
   const log = useLog(`Config-${props.modid}`);
   const format = React.useCallback<<K extends keyof ModFS>(key: K) => ModFS[K]>((key) => modFS(key, { MODID: props.modid }), []);
 
+const internalRequire = () => {
+  
+}
+
+
   const box = React.useCallback(
     (code: string) => {
       return sandbox
