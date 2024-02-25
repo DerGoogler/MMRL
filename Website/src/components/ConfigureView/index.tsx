@@ -131,6 +131,7 @@ export const ConfigureView = React.forwardRef<any, { children: string; modid: st
           parseCode(code),
           true
         )({
+          console: console,
           log: log,
           modid: props.modid,
           modpath: (path: string) => `${format("MODULECWD")}/${path}`,

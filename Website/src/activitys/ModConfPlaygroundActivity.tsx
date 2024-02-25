@@ -117,7 +117,7 @@ const ModConfPlaygroundActivity = () => {
   const { context, extra } = useActivity<PlaygroundExtra>();
   const { strings } = useStrings();
   const { modFS } = useModFS();
-  const [description, setDescription] = useNativeFileStorage(modFS("MODCONF_PLAYGROUND"), extra.defaultText || "", { json: false });
+  const [description, setDescription] = useNativeFileStorage(modFS("MODCONF_PLAYGROUND"), extra.defaultText || "");
   const [errBoundKey, setErrBoundKey] = React.useState(0);
 
   const isLargeScreen = useMediaQuery("(min-width:600px)");

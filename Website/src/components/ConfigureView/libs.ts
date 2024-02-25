@@ -19,7 +19,7 @@ import { Ansi } from "@Components/Ansi";
 import { os } from "@Native/Os";
 import { BuildConfig } from "@Native/BuildConfig";
 import { useSettings } from "@Hooks/useSettings";
-import { useNativeFileStorage } from "@Hooks/useNativeFileStorage";
+import { ConfigProvider, useConfig, useNativeFileStorage } from "@Hooks/useNativeFileStorage";
 import { useModFS } from "@Hooks/useModFS";
 import PicturePreviewActivity from "@Activitys/PicturePreviewActivity";
 
@@ -76,6 +76,7 @@ export const libraries = [
   {
     name: "@mmrl/hooks",
     __esModule: {
+      useConfig: useConfig,
       useModFS: useModFS,
       useActivity: useActivity,
       useNativeProperties: useNativeProperties,
@@ -89,6 +90,7 @@ export const libraries = [
   {
     name: "@mmrl/providers",
     __esModule: {
+      ConfigProvider: ConfigProvider,
       StringsProvider: StringsProvider,
     },
   },

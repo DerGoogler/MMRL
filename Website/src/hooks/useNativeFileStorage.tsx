@@ -1,26 +1,35 @@
-import { useCallback, useEffect, useState } from "react";
+import { SetStateAction, useCallback, useEffect, useState } from "react";
 import { useLog } from "./native/useLog";
 import { SuFile } from "@Native/SuFile";
-import { SetValue, parseJSON } from "./useNativeStorage";
+import INI from "ini";
+import YMAL from "yaml";
 import { os } from "@Native/Os";
+import { SetValue } from "./useNativeStorage";
+import React from "react";
 
-export function useNativeFileStorage<T>(key: string, initialValue: T, opt: { json: boolean } = { json: true }): [T, SetValue<T>] {
-  const log = useLog("useNativeStorage");
+type Loader = typeof JSON | typeof INI | typeof YMAL | null;
 
-  const { json } = opt;
+export function useNativeFileStorage<T = string>(
+  key: string,
+  initialValue: T,
+  opt: { loader: Loader } = { loader: null }
+): [T, SetValue<T>] {
+  const { loader } = opt;
 
   const file = new SuFile(key);
 
   const readValue = useCallback((): T => {
-    if (typeof window === "undefined") {
-      return initialValue;
-    }
-
     try {
-      return file.exist() ? (json ? (parseJSON(file.read()) as T) : (file.read() as T)) : initialValue;
+      if (file.exist()) {
+        if (loader) {
+          return loader.parse(file.read());
+        } else {
+          return file.read() as T;
+        }
+      } else {
+        return initialValue;
+      }
     } catch (error) {
-      log.w(`Error reading file “${key}”: ${error}`);
-
       return initialValue;
     }
   }, [initialValue, key]);
@@ -28,16 +37,16 @@ export function useNativeFileStorage<T>(key: string, initialValue: T, opt: { jso
   const [storedValue, setStoredValue] = useState<T>(readValue);
 
   const setValue: SetValue<T> = (value) => {
-    if (typeof window === "undefined") {
-      log.w(`Tried setting localStorage key “${key}” even though environment is not a client`);
-    }
-
     try {
       const newValue = value instanceof Function ? value(storedValue) : value;
-      file.write(json ? JSON.stringify(newValue) : String(newValue));
+      if (loader) {
+        file.write((loader as any).stringify(newValue));
+      } else {
+        file.write(String(newValue));
+      }
       setStoredValue(newValue);
     } catch (error) {
-      log.w(`Error writing file “${key}”: ${error}`);
+      throw new Error(`Error writing file “${key}”: ${error}`);
     }
   };
 
@@ -47,3 +56,55 @@ export function useNativeFileStorage<T>(key: string, initialValue: T, opt: { jso
 
   return [storedValue, setValue];
 }
+
+export interface ConfigContext {
+  config: object;
+  setConfig(key: string, state: SetStateAction<object>): void;
+}
+
+export const ConfigContext = React.createContext<ConfigContext>({
+  config: {},
+  setConfig(key: string, state: SetStateAction<object>) {},
+});
+
+export const useConfig = () => {
+  return React.useContext(ConfigContext);
+};
+
+export interface ConfigProvider extends React.PropsWithChildren {
+  loadFromFile: string;
+  loader: Loader;
+  initialConfig: object;
+}
+
+export const ConfigProvider = (props: ConfigProvider) => {
+  const { loadFromFile, loader = JSON, initialConfig } = props;
+
+  if (!loadFromFile) {
+    throw new TypeError('"loadFromFile" is undefined');
+  }
+
+  if (!initialConfig) {
+    throw new TypeError('"initialConfig" is undefined');
+  }
+
+  const [config, setConfig] = useNativeFileStorage<object>(loadFromFile, initialConfig, { loader: loader });
+
+  const contextValue = React.useMemo(
+    () => ({
+      config: config,
+      setConfig: (name, state) => {
+        setConfig((prev) => {
+          const newValue = state instanceof Function ? state(prev[name]) : state;
+          return {
+            ...prev,
+            [name]: newValue,
+          };
+        });
+      },
+    }),
+    [config]
+  );
+
+  return <ConfigContext.Provider value={contextValue} children={props.children} />;
+};
