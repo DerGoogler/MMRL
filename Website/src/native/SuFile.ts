@@ -64,7 +64,7 @@ class SuFile extends Native<NativeSuFile> {
     if (this.isAndroid) {
       return this._file.read();
     } else {
-      return this._fs.readFileSync(this._path).toString();
+      return localStorage.getItem(this._path) || "";
     }
   }
 
@@ -72,7 +72,7 @@ class SuFile extends Native<NativeSuFile> {
     if (this.isAndroid) {
       this._file.write(content);
     } else {
-      this._fs.writeFileSync(this._path, content);
+      localStorage.setItem(this._path, content);
     }
   }
 
@@ -96,7 +96,7 @@ class SuFile extends Native<NativeSuFile> {
     if (this.isAndroid) {
       return this._file.exists();
     } else {
-      return this._fs.existsSync(this._path);
+      return this._path in localStorage;
     }
   }
 

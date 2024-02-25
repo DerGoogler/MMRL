@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useLog } from "./native/useLog";
 import { SuFile } from "@Native/SuFile";
 import { SetValue, parseJSON } from "./useNativeStorage";
+import { os } from "@Native/Os";
 
 export function useNativeFileStorage<T>(key: string, initialValue: T, opt: { json: boolean } = { json: true }): [T, SetValue<T>] {
   const log = useLog("useNativeStorage");
