@@ -850,7 +850,8 @@ export const LightTheme = () => {
           userSelect: "none",
           zIndex: "2",
           display: "block",
-          height: "44px",
+          paddingBottom: view.getWindowBottomInsets(),
+          height: `calc(44px + ${view.getWindowBottomInsets()}px)`,
           paddingLeft: "0",
           paddingRight: "0",
 
@@ -865,7 +866,6 @@ export const LightTheme = () => {
           backgroundRepeat: "no-repeat",
           backgroundPosition: "top",
           backgroundImage: "linear-gradient(180deg, #b2b2b2, #b2b2b2 100%)",
-          paddingBottom: "0",
         },
         ".bottom-bar__line-height": {
           lineHeight: "44px",
