@@ -184,12 +184,8 @@ function ModFSActivity() {
         ],
       },
       {
-        sectionText: "Others",
+        sectionText: "ModConf",
         items: [
-          {
-            text: "MMRL Install Tools",
-            confKey: "MMRLINI",
-          },
           {
             text: "Config working directory",
             confKey: "CONFCWD",
@@ -197,6 +193,34 @@ function ModFSActivity() {
           {
             text: "Config index file",
             confKey: "CONFINDEX",
+          },
+          {
+            text: "ModConf Playground Root",
+            dialogDesc: (
+              <>
+                <Typography>
+                  Check the{" "}
+                  <Anchor href="https://github.com/DerGoogler/MMRL/tree/master/docs" noIcon>
+                    ModConf documentations
+                  </Anchor>{" "}
+                  for more informations!
+                </Typography>
+              </>
+            ),
+            confKey: "MODCONF_PLAYGROUND",
+          },
+          {
+            text: "ModConf Playground Module ID",
+            confKey: "MODCONF_PLAYGROUND_MODID",
+          },
+        ],
+      },
+      {
+        sectionText: "Others",
+        items: [
+          {
+            text: "MMRL Install Tools",
+            confKey: "MMRLINI",
           },
           {
             text: "Explore install script",
@@ -235,21 +259,6 @@ function ModFSActivity() {
               </>
             ),
             confKey: "LOCAL_INSTALL",
-          },
-          {
-            text: "ModConf Playground Root",
-            dialogDesc: (
-              <>
-                <Typography>
-                  Check the{" "}
-                  <Anchor href="https://github.com/DerGoogler/MMRL/tree/master/docs" noIcon>
-                    ModConf documentations
-                  </Anchor>{" "}
-                  for more informations!
-                </Typography>
-              </>
-            ),
-            confKey: "MODCONF_PLAYGROUND",
           },
         ],
       },

@@ -38,13 +38,16 @@ export interface ModFS {
   REMOVE: string;
   UPDATE: string;
 
+  //modconf
+  CONFCWD: string;
+  CONFINDEX: string;
+  MODCONF_PLAYGROUND: string;
+  MODCONF_PLAYGROUND_MODID: string;
+
   // others
   MMRLINI: string;
   EXPLORE_INSTALL: string;
   LOCAL_INSTALL: string;
-  CONFCWD: string;
-  CONFINDEX: string;
-  MODCONF_PLAYGROUND: string;
 }
 
 export const INITIAL_MOD_CONF: ModFS = {
@@ -80,13 +83,16 @@ export const INITIAL_MOD_CONF: ModFS = {
   REMOVE: "<MODULECWD>/remove",
   UPDATE: "<MODULECWD>/update",
 
-  // others
-  MMRLINI: "<MODULES>/mmrl_install_tools",
+  // modconf
   CONFCWD: "<MODULECWD>/system/usr/share/mmrl/config/<MODID>",
-  EXPLORE_INSTALL: "<MMRLINI>/system/usr/share/mmrl/bin/mmrl_explore_install_v6",
-  LOCAL_INSTALL: "<MMRLINI>/system/usr/share/mmrl/bin/mmrl_local_install_v6",
   CONFINDEX: "<CONFCWD>/index.jsx",
   MODCONF_PLAYGROUND: "/data/adb/mmrl/modconf-playground.jsx",
+  MODCONF_PLAYGROUND_MODID: "playground",
+
+  // others
+  MMRLINI: "<MODULES>/mmrl_install_tools",
+  EXPLORE_INSTALL: "<MMRLINI>/system/usr/share/mmrl/bin/mmrl_explore_install_v6",
+  LOCAL_INSTALL: "<MMRLINI>/system/usr/share/mmrl/bin/mmrl_local_install_v6",
 };
 
 export interface ModConfContext {

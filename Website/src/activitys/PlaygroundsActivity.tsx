@@ -11,6 +11,7 @@ import Editor, { Monaco } from "@monaco-editor/react";
 import { ErrorBoundaryProps, ErrorBoundaryState, errorBoundaryInitialState } from "@Components/ErrorBoundary";
 import editorTheme from "@Util/editorTheme";
 import { useNativeStorage } from "@Hooks/useNativeStorage";
+import { useModFS } from "@Hooks/useModFS";
 
 export interface PlaygroundExtra {
   title: string;
@@ -116,6 +117,7 @@ const editorDidMount = (editor: monacoEditor.editor.IStandaloneCodeEditor, monac
 
 const PlaygroundsActivity = () => {
   const { context, extra } = useActivity<PlaygroundExtra>();
+  const { modFS } = useModFS();
 
   const [description, setDescription] = useNativeStorage("playground_" + extra.title, extra.defaultText || "");
   const [errBoundKey, setErrBoundKey] = React.useState(0);
@@ -201,7 +203,7 @@ const PlaygroundsActivity = () => {
                 <Box component="section" sx={{ width: "100%", height: "100%" }}>
                   <PreviewErrorBoundary
                     key={"preview_error_bound_key_" + errBoundKey}
-                    modid="preview"
+                    modid={modFS("MODCONF_PLAYGROUND_MODID")}
                     children={description}
                     renderElement={extra.preview}
                   />

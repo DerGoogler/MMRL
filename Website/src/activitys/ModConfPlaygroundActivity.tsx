@@ -130,7 +130,7 @@ const ModConfPlaygroundActivity = () => {
         modulename: "Preview",
       },
       props: {
-        modid: "preview",
+        modid: modFS("MODCONF_PLAYGROUND_MODID"),
         children: description,
       },
     });
@@ -203,7 +203,7 @@ const ModConfPlaygroundActivity = () => {
               <Preview>
                 <Box component="section" sx={{ width: "100%", height: "100%" }}>
                   <PreviewErrorBoundary key={"preview_error_bound_key_" + errBoundKey}>
-                    <ConfigureView modid="preview" children={description} />
+                    <ConfigureView modid={modFS("MODCONF_PLAYGROUND_MODID")} children={description} />
                   </PreviewErrorBoundary>
                 </Box>
               </Preview>
