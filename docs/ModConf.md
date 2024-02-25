@@ -4,17 +4,7 @@
 
 ## Available libaries
 
-- `@mmrl/ui`
-- `@mmrl/hooks`
-- `@mmrl/sufile`
-- `@mmrl/terminal`
-- `@mmrl/shell`
-- `@mmrl/buildconfig`
-- `@mmrl/os`
-- `@mmrl/providers`
-- `@mui/material`
-- `@mui/icons-material`
-- `react`
+See [`libs.ts`](https://github.com/DerGoogler/MMRL/blob/master/Website/src/components/ConfigureView/libs.ts) to see all usable modules
 
 ## Diff. between `require` and `import`
 
@@ -43,6 +33,8 @@ Using `include` way more stable and supports more including types like
 - `*.js`
 - `*.jsx`
 - `*.json`
+- `*.yaml`
+- `*.yml`
 - `*.ini`
 - `*.prop`
 - `*.properties`
@@ -52,7 +44,7 @@ const { Component } = include("Component.jsx");
 
 // to ignore cwd restrictions
 const properties = include(`/data/adb/modules/${modid}/module.prop`, {
-  ignoreCwd: true,
+  isolate: false,
 });
 
 const { id, name, author } = properties;
@@ -89,7 +81,7 @@ declare function modpath(path: string): string;
 Usage
 
 ```js
-const properties = include(modpath("module.prop"), { ignoreCwd: true });
+const properties = include(modpath("module.prop"), { isolate: false });
 
 const { id, name, author } = properties;
 ```
@@ -113,7 +105,7 @@ declare function confpath(path: string): string;
 Usage
 
 ```js
-const properties = include(confpath("Component.jsx"), { ignoreCwd: true });
+const properties = include(confpath("Component.jsx"), { isolate: false });
 
 const { id, name, author } = properties;
 ```
@@ -203,12 +195,4 @@ const Config = () => {
 };
 
 export default Config;
-```
-
-# Export current work
-
-- Enable eruda console
-
-```js
-__sufile__.v2("/data/adb/wpd.js").write(JSON.parse(__nativeStorage__.getItem("module-configure-playground")))
 ```

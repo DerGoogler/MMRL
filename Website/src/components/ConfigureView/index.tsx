@@ -19,7 +19,6 @@ import ini from "ini";
 import yaml from "yaml";
 import { useLog } from "@Hooks/native/useLog";
 import { extname } from "@Util/extname";
-import { formatString } from "@Util/stringFormat";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 
 function plugin({ types: t }): PluginObj {
@@ -42,6 +41,7 @@ function parseCode(data: string): string {
       plugins: [
         "plugin",
         "transform-computed-properties",
+        "syntax-import-attributes",
         ["transform-destructuring", { loose: true }],
         "transform-modules-commonjs",
         "transform-object-rest-spread",
@@ -52,7 +52,6 @@ function parseCode(data: string): string {
     });
     return code as string;
   } catch (err) {
-    console.info((err as Error).message);
     return "";
   }
 }
@@ -80,10 +79,50 @@ export const ConfigureView = React.forwardRef<any, { children: string; modid: st
   const log = useLog(`Config-${props.modid}`);
   const format = React.useCallback<<K extends keyof ModFS>(key: K) => ModFS[K]>((key) => modFS(key, { MODID: props.modid }), []);
 
-const internalRequire = () => {
-  
-}
+  const internalRequire = React.useCallback(
+    (library: string) => {
+      const findLib = libraries.find((lib) => library === lib.name);
 
+      if (findLib) {
+        return findLib.__esModule;
+      } else {
+        throw new Error(`Unable to find a library named "${library}"`);
+      }
+    },
+    [props.modid]
+  );
+
+  const internalInclude = React.useCallback(
+    (file: string, opt: { isolate: boolean } = { isolate: true }) => {
+      if (opt.isolate) {
+        file = `${format("CONFCWD")}/${file}`;
+      }
+
+      const impFile = new SuFile(file);
+
+      if (impFile.exist()) {
+        switch (extname(file)) {
+          case ".json":
+            return JSON.parse(impFile.read());
+          case ".yml":
+          case ".yaml":
+            return yaml.parse(impFile.read());
+          case ".properties":
+          case ".prop":
+          case ".ini":
+            return ini.parse(impFile.read());
+          case ".js":
+          case ".jsx":
+            return box(impFile.read());
+          default:
+            return impFile.read();
+        }
+      } else {
+        throw new Error(`Unable to find a file named "${file}"`);
+      }
+    },
+    [props.modid]
+  );
 
   const box = React.useCallback(
     (code: string) => {
@@ -106,29 +145,8 @@ const internalRequire = () => {
               });
             },
           },
-          require: (file: string) => {
-            const impFile = new SuFile(formatString(file, { MODID: props.modid, ..._modFS }));
-
-            if (impFile.exist()) {
-              switch (extname(file)) {
-                case ".json":
-                  return JSON.parse(impFile.read());
-                case ".yml":
-                case ".yaml":
-                  return yaml.parse(impFile.read());
-                case ".prop":
-                case ".ini":
-                  return ini.parse(impFile.read());
-                case ".js":
-                case ".jsx":
-                  return box(impFile.read());
-                default:
-                  return impFile.read();
-              }
-            } else {
-              return libraries.find((lib) => file === lib.name)?.__esModule;
-            }
-          },
+          require: internalRequire,
+          include: internalInclude,
           ...scope,
         })
         .run();

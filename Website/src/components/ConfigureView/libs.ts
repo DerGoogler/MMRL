@@ -20,6 +20,8 @@ import { os } from "@Native/Os";
 import { BuildConfig } from "@Native/BuildConfig";
 import { useSettings } from "@Hooks/useSettings";
 import { useNativeFileStorage } from "@Hooks/useNativeFileStorage";
+import { useModFS } from "@Hooks/useModFS";
+import PicturePreviewActivity from "@Activitys/PicturePreviewActivity";
 
 export const libraries = [
   {
@@ -52,7 +54,9 @@ export const libraries = [
   },
   {
     name: "@mmrl/activity",
-    __esModule: {},
+    __esModule: {
+      PicturePreviewActivity: PicturePreviewActivity,
+    },
   },
   {
     name: "@mmrl/ui",
@@ -72,6 +76,7 @@ export const libraries = [
   {
     name: "@mmrl/hooks",
     __esModule: {
+      useModFS: useModFS,
       useActivity: useActivity,
       useNativeProperties: useNativeProperties,
       useNativeFileStorage: useNativeFileStorage,
