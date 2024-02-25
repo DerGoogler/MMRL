@@ -116,7 +116,7 @@ export const useModFS = () => {
 };
 
 export const ModFSProvider = (props: React.PropsWithChildren) => {
-  const [modFS, setModFS] = useNativeFileStorage("/data/adb/mmrl/modfs.v7.json", INITIAL_MOD_CONF, { loader: JSON });
+  const [modFS, setModFS] = useNativeFileStorage("/data/adb/mmrl/modfs.v7.json", INITIAL_MOD_CONF, { loader: "json" });
 
   const contextValue = React.useMemo(
     () => ({
