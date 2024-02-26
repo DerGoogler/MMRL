@@ -58,14 +58,11 @@ function parseCode(data: string): string {
 
 const prototypeWhitelist = Sandbox.SAFE_PROTOTYPES;
 prototypeWhitelist.set(Object, new Set());
+prototypeWhitelist.set(Response, new Set());
 
 const sandbox = new Sandbox({ globals, prototypeWhitelist });
 
 const scope = {
-  List: List,
-  ListItem: ListItem,
-  ListItemButton: ListItemButton,
-  ListItemText: StyledListItemText,
   ListItemDialogEditText: DialogEditListItem,
   ListSubheader: StyledListSubheader,
   Switch: Android12Switch,
@@ -74,7 +71,7 @@ const scope = {
 
 export const ConfigureView = React.forwardRef<any, { children: string; modid: string }>((props, ref) => {
   const { theme } = useTheme();
-  const { modFS, _modFS } = useModFS();
+  const { modFS } = useModFS();
 
   const log = useLog(`Config-${props.modid}`);
   const format = React.useCallback<<K extends keyof ModFS>(key: K) => ModFS[K]>((key) => modFS(key, { MODID: props.modid }), []);
@@ -124,6 +121,13 @@ export const ConfigureView = React.forwardRef<any, { children: string; modid: st
     [props.modid]
   );
 
+  const internalFetch = React.useCallback(
+    (input: string | URL | Request, init?: RequestInit | undefined) => {
+      return fetch(input, init);
+    },
+    [props.modid]
+  );
+
   const box = React.useCallback(
     (code: string) => {
       return sandbox
@@ -137,6 +141,7 @@ export const ConfigureView = React.forwardRef<any, { children: string; modid: st
           modpath: (path: string) => `${format("MODULECWD")}/${path}`,
           confpath: (path: string) => `${format("CONFCWD")}/${path}`,
           window: {
+            fetch: internalFetch,
             open(href: string) {
               os.open(href, {
                 target: "_blank",
@@ -148,6 +153,10 @@ export const ConfigureView = React.forwardRef<any, { children: string; modid: st
           },
           require: internalRequire,
           include: internalInclude,
+          fetch: internalFetch,
+          eval: () => {
+            throw new Error("Module tried to execute eval()!")
+          },
           ...scope,
         })
         .run();

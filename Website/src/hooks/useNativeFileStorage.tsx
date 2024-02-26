@@ -49,7 +49,6 @@ export function useNativeFileStorage<T = string>(
       const newValue = value instanceof Function ? value(storedValue) : value;
       switch (loader) {
         case "json":
-          console.log(JSON.stringify(newValue, null, 4));
           file.write(JSON.stringify(newValue, null, 4));
           break;
         case "properties":

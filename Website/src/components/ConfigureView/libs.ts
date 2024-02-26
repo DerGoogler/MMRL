@@ -22,6 +22,7 @@ import { useSettings } from "@Hooks/useSettings";
 import { ConfigProvider, useConfig, useNativeFileStorage } from "@Hooks/useNativeFileStorage";
 import { useModFS } from "@Hooks/useModFS";
 import PicturePreviewActivity from "@Activitys/PicturePreviewActivity";
+import { useConfirm } from "material-ui-confirm";
 
 export const libraries = [
   {
@@ -76,6 +77,7 @@ export const libraries = [
   {
     name: "@mmrl/hooks",
     __esModule: {
+      useConfirm: useConfirm,
       useConfig: useConfig,
       useModFS: useModFS,
       useActivity: useActivity,
