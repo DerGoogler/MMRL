@@ -14,15 +14,17 @@ import { useActivity } from "@Hooks/useActivity";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import { SuFile } from "@Native/SuFile";
 import { StringsProvider, useStrings } from "@Hooks/useStrings";
-import { Shell } from "@Native/Shell";
+import { Shell, ShellClass } from "@Native/Shell";
 import { Ansi } from "@Components/Ansi";
-import { os } from "@Native/Os";
-import { BuildConfig } from "@Native/BuildConfig";
+import { OsClass, os } from "@Native/Os";
+import { BuildConfig, BuildConfigClass } from "@Native/BuildConfig";
 import { useSettings } from "@Hooks/useSettings";
 import { ConfigProvider, useConfig, useNativeFileStorage } from "@Hooks/useNativeFileStorage";
 import { useModFS } from "@Hooks/useModFS";
 import PicturePreviewActivity from "@Activitys/PicturePreviewActivity";
 import { useConfirm } from "material-ui-confirm";
+import { View, view } from "@Native/View";
+import { Build } from "@Native/Build";
 
 export const libraries = [
   {
@@ -96,59 +98,35 @@ export const libraries = [
       StringsProvider: StringsProvider,
     },
   },
-
-  {
-    name: "@mmrl/sufile",
-    __esModule: {
-      read: SuFile.read,
-      write: SuFile.write,
-      list: SuFile.list,
-      exist: SuFile.exist,
-      delete: SuFile.delete,
-      deleteRecursive: SuFile.deleteRecursive,
-    },
-  },
-  {
-    name: "@mmrl/shell",
-    __esModule: {
-      getRootManager: Shell.getRootManager,
-      isKernelSU: Shell.isKernelSU,
-      isMagiskSU: Shell.isMagiskSU,
-      VERSION_CODE: Shell.VERSION_CODE,
-      VERSION_NAME: Shell.VERSION_NAME,
-      pw_uid: Shell.pw_uid,
-      pw_gid: Shell.pw_gid,
-      pw_name: Shell.pw_name,
-    },
-  },
-  {
-    name: "@mmrl/os",
-    __esModule: {
-      toast: os.toast,
-      sdk: os.sdk,
-    },
-  },
-  {
-    name: "@mmrl/buildconfig",
-    __esModule: {
-      BUILD_DATE: BuildConfig.BUILD_DATE,
-      VERSION_NAME: BuildConfig.VERSION_NAME,
-      VERSION_CODE: BuildConfig.VERSION_CODE,
-      APPLICATION_ID: BuildConfig.APPLICATION_ID,
-      DEBUG: BuildConfig.DEBUG,
-      BUILD_TYPE: BuildConfig.BUILD_TYPE,
-    },
-  },
 ];
 
-const prototypeWhitelist = Sandbox.SAFE_PROTOTYPES;
+export const prototypeWhitelist = Sandbox.SAFE_PROTOTYPES;
 prototypeWhitelist.set(Node, new Set());
+prototypeWhitelist.set(Object, new Set());
+prototypeWhitelist.set(Document, new Set());
+prototypeWhitelist.set(Response, new Set());
+prototypeWhitelist.set(Element, new Set());
+prototypeWhitelist.set(SuFile, new Set());
+prototypeWhitelist.set(View, new Set());
+prototypeWhitelist.set(ShellClass, new Set());
+prototypeWhitelist.set(OsClass, new Set());
+prototypeWhitelist.set(BuildConfigClass, new Set());
+prototypeWhitelist.set(Build, new Set());
 
 export const globals = {
   ...Sandbox.SAFE_GLOBALS,
   JSON: JSON,
   YAML: require("yaml"),
   INI: require("ini"),
+  Element: Element,
+  document: document,
   Toast: Toast,
-  Object,
+  view: view,
+  os: os,
+  Shell: Shell,
+  Build: Build,
+  BuildConfig: BuildConfig,
+  SuFile: SuFile,
+  Object: Object,
+  Response: Response,
 };

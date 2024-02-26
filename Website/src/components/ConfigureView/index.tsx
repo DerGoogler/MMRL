@@ -1,8 +1,4 @@
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
 import Divider from "@mui/material/Divider";
-import { StyledListItemText } from "@Components/StyledListItemText";
 import { Android12Switch } from "@Components/Android12Switch";
 import { useTheme } from "@Hooks/useTheme";
 import { os } from "@Native/Os";
@@ -11,9 +7,9 @@ import Sandbox from "@nyariv/sandboxjs";
 import { transform, registerPlugin } from "@babel/standalone";
 import * as React from "react";
 import { PluginObj } from "@babel/core";
-import { globals, libraries } from "./libs";
+import { globals, libraries, prototypeWhitelist } from "./libs";
 import { DialogEditListItem, StyledListSubheader } from "./components";
-import { SuFile, wasmFs } from "@Native/SuFile";
+import { SuFile } from "@Native/SuFile";
 import { ModFS, useModFS } from "@Hooks/useModFS";
 import ini from "ini";
 import yaml from "yaml";
@@ -46,6 +42,7 @@ function parseCode(data: string): string {
         "transform-modules-commonjs",
         "transform-object-rest-spread",
         "syntax-class-properties",
+        ["transform-classes", { loose: true }],
         "transform-class-properties",
         "syntax-object-rest-spread",
       ],
@@ -55,10 +52,6 @@ function parseCode(data: string): string {
     return "";
   }
 }
-
-const prototypeWhitelist = Sandbox.SAFE_PROTOTYPES;
-prototypeWhitelist.set(Object, new Set());
-prototypeWhitelist.set(Response, new Set());
 
 const sandbox = new Sandbox({ globals, prototypeWhitelist });
 
@@ -155,7 +148,7 @@ export const ConfigureView = React.forwardRef<any, { children: string; modid: st
           include: internalInclude,
           fetch: internalFetch,
           eval: () => {
-            throw new Error("Module tried to execute eval()!")
+            throw new Error("Module tried to execute eval()!");
           },
           ...scope,
         })

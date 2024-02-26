@@ -208,4 +208,5 @@ class ShellClass extends Native<NativeShell> {
   }
 }
 
-export const Shell: ShellClass = new ShellClass();
+const Shell: ShellClass = new ShellClass();
+export { Shell, ShellClass };

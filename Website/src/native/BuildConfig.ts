@@ -57,4 +57,5 @@ class BuildConfigClass extends Native {
   }
 }
 
-export const BuildConfig: BuildConfigClass = new BuildConfigClass();
+const BuildConfig: BuildConfigClass = new BuildConfigClass();
+export { BuildConfig, BuildConfigClass };

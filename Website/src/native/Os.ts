@@ -150,4 +150,6 @@ class OsClass extends Native {
   }
 }
 
-export const os: OsClass = new OsClass();
+const os: OsClass = new OsClass();
+
+export { os, OsClass };

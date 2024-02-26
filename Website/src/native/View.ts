@@ -131,4 +131,5 @@ class View extends Native<NativeView> {
   }
 }
 
-export const view: View = new View();
+const view: View = new View();
+export { view, View };
