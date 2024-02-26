@@ -49,13 +49,13 @@ export function useNativeFileStorage<T = string>(
       const newValue = value instanceof Function ? value(storedValue) : value;
       switch (loader) {
         case "json":
-          console.log(JSON.stringify(newValue, null, 4))
+          console.log(JSON.stringify(newValue, null, 4));
           file.write(JSON.stringify(newValue, null, 4));
           break;
         case "properties":
         case "prop":
         case "ini":
-          file.write(INI.stringify(newValue, { whitespace:true, newline: true }));
+          file.write(INI.stringify(newValue, { whitespace: true, newline: true }));
           break;
         case "yml":
         case "yaml":
@@ -78,15 +78,13 @@ export function useNativeFileStorage<T = string>(
   return [storedValue, setValue];
 }
 
-export interface ConfigContext {
-  config: object;
-  setConfig(key: string, state: SetStateAction<object>): void;
-}
+export type ConfigContext = [object, (key: string, state: SetStateAction<object>) => void, SetValue<object>];
 
-export const ConfigContext = React.createContext<ConfigContext>({
-  config: {},
-  setConfig(key: string, state: SetStateAction<object>) {},
-});
+export const ConfigContext = React.createContext<ConfigContext>([
+  {},
+  (key: string, state: SetStateAction<object>) => {},
+  (state: SetStateAction<object>) => {},
+]);
 
 export const useConfig = () => {
   return React.useContext(ConfigContext);
@@ -111,10 +109,10 @@ export const ConfigProvider = (props: ConfigProvider) => {
 
   const [config, setConfig] = useNativeFileStorage<object>(loadFromFile, initialConfig, { loader: loader });
 
-  const contextValue = React.useMemo(
-    () => ({
-      config: config,
-      setConfig: (name, state) => {
+  const contextValue = React.useMemo<ConfigContext>(
+    () => [
+      config,
+      (name, state) => {
         setConfig((prev) => {
           const newValue = state instanceof Function ? state(prev[name]) : state;
           return {
@@ -123,7 +121,8 @@ export const ConfigProvider = (props: ConfigProvider) => {
           };
         });
       },
-    }),
+      setConfig,
+    ],
     [config]
   );
 
