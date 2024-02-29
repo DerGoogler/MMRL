@@ -29,28 +29,21 @@ Introducing Magisk Module Repo Loader (MMRL) - the ultimate module manager for M
 - [MMRL Install Tools](https://github.com/Googlers-Repo/mmrl_install_tools)
 - 4-5 GB RAM (lower may possible)
 
-# What MMRL Supports (Roadmap)
+# Features
 
-- [x] Custom repo loading (Since 1.4.2 mutiple repositories are supported)
-- [x] Translation
-<!-- - [x] Dark mode-->
-- [x] Anti-features
+- Basics: Literally basics
+- [ModFS](https://github.com/DerGoogler/MMRL/tree/master/docs/ModFS.md): Customizable Module Filesystem
+- [ModConf](https://github.com/DerGoogler/MMRL/tree/master/docs/ModConf.md): Provide dynamic created pages for modules
+- Custom Repos: Load any repo that uses the MRepo or the GR Fork
 
-## Android only
+> Read the [documentation](https://github.com/DerGoogler/MMRL/tree/master/docs) to explore more of our functions like `Shell`, `SuFile` and more
 
-- [x] View installed modules
-- [x] Remove installed modules
-- [x] Enable/Disable installed modules
-- [x] Dynamic module configuration
-- [x] Installing modules
-- [x] Logcat logger ([MMRL Install Tools](https://github.com/Googlers-Repo/mmrl_install_tools) required)
-
-### Root Manager (Android)
+### Supported root manager
 
 - [x] [Magisk](https://github.com/topjohnwu/Magisk)
 - [x] [Magisk Delta](https://github.com/HuskyDG/magisk-files)
 - [x] [KernelSU](https://github.com/tiann/KernelSU)
-- [x] [APatch](https://github.com/bmax121/APatch) (beta)
+- [x] [APatch](https://github.com/bmax121/APatch)
 
 # Screenshots
 
@@ -64,11 +57,6 @@ Introducing Magisk Module Repo Loader (MMRL) - the ultimate module manager for M
   <img src="assets/screen_07.png" width="32%" />
   <img src="assets/screen_08.png" width="32%" />
 </p>
-
-# Documentations
-
-- [ModFS](https://github.com/DerGoogler/MMRL/tree/master/docs/ModFS.md)
-- [ModConf](https://github.com/DerGoogler/MMRL/tree/master/docs/ModConf.md)
 
 # Credits & Thanks
 
