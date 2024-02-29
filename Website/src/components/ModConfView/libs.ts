@@ -126,6 +126,7 @@ export const globals = {
   YAML: require("yaml"),
   INI: require("ini"),
   Element: Element,
+  Document: Document,
   document: document,
   DOMParser: DOMParser,
   Toast: Toast,
