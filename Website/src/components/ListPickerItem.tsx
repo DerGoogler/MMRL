@@ -8,9 +8,8 @@ import Radio from "@mui/material/Radio";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import React from "react";
 
-import { ListItemButton } from "@mui/material";
+import { ListItemButton, ListItemText } from "@mui/material";
 import { useSettings } from "@Hooks/useSettings";
-import { StyledListItemText } from "./StyledListItemText";
 
 type ContentMap = {
   name: string;
@@ -51,7 +50,7 @@ export function ListPickerItem(props: PickerItemProps) {
   return (
     <>
       <ListItemButton disabled={props.disabled} onClick={handleOpen}>
-        <StyledListItemText primary={props.title} secondary={settings[props.targetSetting].name} />
+        <ListItemText primary={props.title} secondary={settings[props.targetSetting].name} />
       </ListItemButton>
       <ConfirmationDialogRaw
         id={props.id}

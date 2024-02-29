@@ -13,7 +13,8 @@ import Code from "@Components/dapi/Code";
 import Pre from "@Components/dapi/Pre";
 
 type Props = {
-  children: string;
+  fetch?: string;
+  children?: string;
   sx?: SxProps<Theme>;
   styleMd?: React.CSSProperties;
 };
@@ -90,6 +91,7 @@ export const MarkdownOverrides: MarkdownToJSX.Overrides | undefined = {
 
 export const Markup = (props: Props) => {
   const ref = React.useRef<HTMLDivElement>(null);
+  const [text, setText] = React.useState<string>(props.children ? props.children : "");
 
   React.useEffect(() => {
     if (ref.current) {
@@ -97,7 +99,15 @@ export const Markup = (props: Props) => {
         hljs.highlightBlock(block);
       });
     }
-  });
+
+    if (props.fetch) {
+      fetch(props.fetch)
+        .then((res) => res.text())
+        .then((t) => {
+          setText(t);
+        });
+    }
+  }, [fetch]);
 
   return (
     <StyledMarkdown ref={ref} sx={props.sx}>
@@ -106,7 +116,7 @@ export const Markup = (props: Props) => {
         options={{
           overrides: MarkdownOverrides,
         }}
-        children={props.children}
+        children={text}
       />
     </StyledMarkdown>
   );

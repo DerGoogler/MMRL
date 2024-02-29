@@ -9,7 +9,6 @@ import Sandbox from "@nyariv/sandboxjs";
 import { useTheme } from "@Hooks/useTheme";
 import { useNativeStorage } from "@Hooks/useNativeStorage";
 import { useNativeProperties } from "@Hooks/useNativeProperties";
-import { Markdown } from "./components";
 import { useActivity } from "@Hooks/useActivity";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import { SuFile } from "@Native/SuFile";
@@ -25,6 +24,8 @@ import PicturePreviewActivity from "@Activitys/PicturePreviewActivity";
 import { useConfirm } from "material-ui-confirm";
 import { View, view } from "@Native/View";
 import { Build } from "@Native/Build";
+import { Markup } from "@Components/Markdown";
+import { DialogEditTextListItem } from "@Components/DialogEditTextListItem";
 
 export const libraries = [
   {
@@ -71,7 +72,8 @@ export const libraries = [
       Toolbar: Toolbar,
       Video: Video,
       DiscordWidget: DiscordWidget,
-      Markdown: Markdown,
+      Markdown: Markup,
+      ListItemDialogEditText: DialogEditTextListItem,
       Image: Image,
       Ansi: Ansi,
     },

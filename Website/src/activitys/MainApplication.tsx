@@ -26,13 +26,13 @@ import { useLocalModules } from "@Hooks/useLocalModules";
 import { Shell } from "@Native/Shell";
 import { SearchActivity } from "./SearchActivity";
 import ListItemButton from "@mui/material/ListItemButton";
-import { StyledListItemText } from "@Components/StyledListItemText";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import Chip from "@mui/material/Chip";
 import { ModConfView } from "@Components/ModConfView";
+import ListItemText from "@mui/material/ListItemText";
 
 const MainApplication = () => {
   const { strings } = useStrings();
@@ -181,7 +181,7 @@ const MainApplication = () => {
                   {item.name.charAt(0).toUpperCase()}
                 </Avatar>
               </ListItemAvatar>
-              <StyledListItemText
+              <ListItemText
                 primary={
                   <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={0.5}>
                     <Typography>{item.name}</Typography>

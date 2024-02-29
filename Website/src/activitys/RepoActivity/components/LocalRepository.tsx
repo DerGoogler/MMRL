@@ -2,15 +2,13 @@ import React from "react";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import Collapse from "@mui/material/Collapse";
-import { StyledListItemText } from "@Components/StyledListItemText";
 import { useRepos } from "@Hooks/useRepos";
 import { useSettings } from "@Hooks/useSettings";
 import { useStrings } from "@Hooks/useStrings";
-import { IconButton, List, ListItem, ListItemButton, ListItemIcon } from "@mui/material";
+import { IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Switch } from "@mui/material";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { SvgIconTypeMap } from "@mui/material/SvgIcon/SvgIcon";
 import { DeleteRounded, LanguageRounded, SupportRounded, UploadFileRounded, VolunteerActivismRounded } from "@mui/icons-material";
-import { Android12Switch } from "@Components/Android12Switch";
 import { os } from "@Native/Os";
 import { useFormatDate } from "@Hooks/useFormatDate";
 import { useConfirm } from "material-ui-confirm";
@@ -34,7 +32,7 @@ const MListItem = React.memo<ListItemProps>((props) => {
       <ListItemIcon>
         <props.icon />
       </ListItemIcon>
-      <StyledListItemText primary={props.text} />
+      <ListItemText primary={props.text} />
     </ListItemButton>
   ) : null;
 });
@@ -75,7 +73,7 @@ export const LocalRepository = React.memo<LocalRepositoryProps>((props) => {
           </IconButton>
         }
       >
-        <StyledListItemText primary="Loading..." />
+        <ListItemText primary="Loading..." />
       </ListItem>
     );
   }
@@ -88,9 +86,9 @@ export const LocalRepository = React.memo<LocalRepositoryProps>((props) => {
     <>
       <ListItem>
         <ListItemIcon onClick={handleClick}>{open ? <ExpandLess /> : <ExpandMore />}</ListItemIcon>
-        <StyledListItemText primary={repo.name} secondary={formatLastUpdate} />
+        <ListItemText primary={repo.name} secondary={formatLastUpdate} />
 
-        <Android12Switch
+        <Switch
           edge="end"
           onChange={(e: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
             actions.setRepoEnabled({

@@ -1,5 +1,4 @@
 import Divider from "@mui/material/Divider";
-import { Android12Switch } from "@Components/Android12Switch";
 import { useTheme } from "@Hooks/useTheme";
 import { os } from "@Native/Os";
 import { Page } from "@Components/onsenui/Page";
@@ -8,7 +7,6 @@ import { transform, registerPlugin } from "@babel/standalone";
 import * as React from "react";
 import { PluginObj } from "@babel/core";
 import { globals, libraries, prototypeWhitelist } from "./libs";
-import { DialogEditListItem, StyledListSubheader } from "./components";
 import { SuFile } from "@Native/SuFile";
 import { ModFS, useModFS } from "@Hooks/useModFS";
 import ini from "ini";
@@ -54,13 +52,6 @@ function parseCode(data: string): string {
 }
 
 const sandbox = new Sandbox({ globals, prototypeWhitelist });
-
-const scope = {
-  ListItemDialogEditText: DialogEditListItem,
-  ListSubheader: StyledListSubheader,
-  Switch: Android12Switch,
-  Divider: Divider,
-};
 
 export const ModConfView = React.forwardRef<any, { children: string; modid: string }>((props, ref) => {
   const { theme } = useTheme();
@@ -150,7 +141,6 @@ export const ModConfView = React.forwardRef<any, { children: string; modid: stri
           eval: () => {
             throw new Error("Module tried to execute eval()!");
           },
-          ...scope,
         })
         .run();
     },

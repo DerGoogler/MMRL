@@ -1,11 +1,10 @@
-import { Alert, Box, Button, Divider, List, ListSubheader, Stack, Typography } from "@mui/material";
+import { Alert, Box, Button, Divider, List, ListItemText, ListSubheader, Stack, Typography } from "@mui/material";
 import AvatarGroup from "@mui/material/AvatarGroup";
 import Avatar from "@mui/material/Avatar";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import { Page } from "@Components/onsenui/Page";
 import { useActivity } from "@Hooks/useActivity";
 import { ModFS, useModFS } from "@Hooks/useModFS";
-import { StyledListItemText } from "@Components/StyledListItemText";
 import { Shell } from "@Native/Shell";
 import { DialogEditTextListItem } from "@Components/DialogEditTextListItem";
 import React from "react";
@@ -304,7 +303,7 @@ function ModFSActivity() {
                   multiline={item.multiline}
                   maxRows={item.maxRows}
                 >
-                  <StyledListItemText
+                  <ListItemText
                     primary={
                       <Stack direction="column" justifyContent="center" alignItems="flex-start" spacing={0}>
                         <Typography variant="caption">{`<${item.confKey}>`}</Typography>

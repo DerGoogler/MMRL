@@ -1,8 +1,7 @@
 import RepoActivity from "@Activitys/RepoActivity";
 import SettingsActivity from "@Activitys/SettingsActivity";
-import { StyledListItemText } from "@Components/StyledListItemText";
 import { useStrings } from "@Hooks/useStrings";
-import { Divider, List, ListItemButton, ListSubheader } from "@mui/material";
+import { Divider, List, ListItemButton, ListItemText, ListSubheader } from "@mui/material";
 import { Page } from "react-onsenui";
 import { IntentPusher } from "@Hooks/useActivity";
 import FetchTextActivity, { FetchTextActivityExtra } from "@Activitys/FetchTextActivity";
@@ -30,7 +29,7 @@ export const DrawerFragment = (props: Props) => {
 
   return (
     <Page renderToolbar={props.renderToolbar}>
-      <List subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>App</ListSubheader>}>
+      <List subheader={<ListSubheader>App</ListSubheader>}>
         <ListItemButton
           onClick={() => {
             pushPage({
@@ -40,7 +39,7 @@ export const DrawerFragment = (props: Props) => {
             hide();
           }}
         >
-          <StyledListItemText primary={strings("settings")} />
+          <ListItemText primary={strings("settings")} />
         </ListItemButton>
         <ListItemButton
           onClick={() => {
@@ -51,7 +50,7 @@ export const DrawerFragment = (props: Props) => {
             hide();
           }}
         >
-          <StyledListItemText primary={strings("repositories")} />
+          <ListItemText primary={strings("repositories")} />
         </ListItemButton>
 
         <ListItemButton
@@ -64,13 +63,13 @@ export const DrawerFragment = (props: Props) => {
             hide();
           }}
         >
-          <StyledListItemText primary={strings("modfs")} />
+          <ListItemText primary={strings("modfs")} />
         </ListItemButton>
       </List>
 
       <Divider />
 
-      <List subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>Components</ListSubheader>}>
+      <List subheader={<ListSubheader>Components</ListSubheader>}>
         <ListItemButton
           onClick={() => {
             pushPage<PlaygroundExtra, any>({
@@ -87,7 +86,7 @@ export const DrawerFragment = (props: Props) => {
             hide();
           }}
         >
-          <StyledListItemText primary={"DAPI Tester"} />
+          <ListItemText primary={"DAPI Tester"} />
         </ListItemButton>
         <ListItemButton
           onClick={() => {
@@ -102,13 +101,13 @@ export const DrawerFragment = (props: Props) => {
             hide();
           }}
         >
-          <StyledListItemText primary={strings("modconf_playground")} />
+          <ListItemText primary={strings("modconf_playground")} />
         </ListItemButton>
       </List>
 
       <Divider />
 
-      <List subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>Other</ListSubheader>}>
+      <List subheader={<ListSubheader>Other</ListSubheader>}>
         <ListItemButton
           onClick={() => {
             pushPage({
@@ -119,7 +118,7 @@ export const DrawerFragment = (props: Props) => {
             hide();
           }}
         >
-          <StyledListItemText primary={strings("about")} />
+          <ListItemText primary={strings("about")} />
         </ListItemButton>
         <ListItemButton
           onClick={() => {
@@ -130,7 +129,7 @@ export const DrawerFragment = (props: Props) => {
             hide();
           }}
         >
-          <StyledListItemText primary={strings("licenses")} />
+          <ListItemText primary={strings("licenses")} />
         </ListItemButton>
         <ListItemButton
           onClick={() => {
@@ -146,7 +145,7 @@ export const DrawerFragment = (props: Props) => {
             hide();
           }}
         >
-          <StyledListItemText primary={"Changelog"} />
+          <ListItemText primary={"Changelog"} />
         </ListItemButton>
       </List>
 

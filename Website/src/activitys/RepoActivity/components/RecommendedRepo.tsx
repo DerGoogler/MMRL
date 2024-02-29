@@ -2,8 +2,7 @@ import IconButton from "@mui/material/IconButton";
 import AddIcon from "@mui/icons-material/Add";
 import { useRepos } from "@Hooks/useRepos";
 import { os } from "@Native/Os";
-import { ListItem } from "@mui/material";
-import { StyledListItemText } from "@Components/StyledListItemText";
+import { ListItem, ListItemText } from "@mui/material";
 
 interface RecommendedRepoProps {
   name: string;
@@ -33,7 +32,7 @@ export const RecommendedRepo = (props: RecommendedRepoProps) => {
         </IconButton>
       }
     >
-      <StyledListItemText primary={props.name} secondary={props.link} />
+      <ListItemText primary={props.name} secondary={props.link} />
     </ListItem>
   );
 };

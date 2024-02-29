@@ -1,19 +1,16 @@
-import { Divider, InputAdornment, List, ListItem, ListItemButton, ListSubheader } from "@mui/material";
+import { Divider, List, ListItem, ListItemButton, ListItemText, ListSubheader, Switch } from "@mui/material";
 import { BuildConfig } from "@Native/BuildConfig";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Page } from "@Components/onsenui/Page";
 import { useStrings } from "@Hooks/useStrings";
 import { useActivity } from "@Hooks/useActivity";
-import { accent_colors, termScrollBehaviors, useSettings } from "@Hooks/useSettings";
-import { StyledListItemText } from "@Components/StyledListItemText";
+import { termScrollBehaviors, useSettings } from "@Hooks/useSettings";
 import { ListPickerItem } from "@Components/ListPickerItem";
 import { os } from "@Native/Os";
-import { Android12Switch } from "@Components/Android12Switch";
 import { useTheme } from "@Hooks/useTheme";
 import { useRepos } from "@Hooks/useRepos";
 import { Shell } from "@Native/Shell";
-import { DialogEditTextListItem } from "@Components/DialogEditTextListItem";
 import { Properties } from "@Native/Properties";
 import { useLanguageMap } from "./../locales/declaration";
 import { useModFS } from "@Hooks/useModFS";
@@ -48,9 +45,7 @@ function SettingsActivity() {
   return (
     <Page renderToolbar={renderToolbar}>
       <Page.RelativeContent zeroMargin>
-        <List
-          subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>{strings("appearance")}</ListSubheader>}
-        >
+        <List subheader={<ListSubheader>{strings("appearance")}</ListSubheader>}>
           {/* <ListItem>
             <StyledListItemText id="switch-list-label-wifi" primary={strings("dark_theme")} />
             <Android12Switch
@@ -86,12 +81,10 @@ function SettingsActivity() {
         </List>
 
         <Divider />
-        <List
-          subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>{strings("module")}</ListSubheader>}
-        >
+        <List subheader={<ListSubheader>{strings("module")}</ListSubheader>}>
           <ListItem>
-            <StyledListItemText primary={strings("low_quality_modules")} secondary={strings("low_quality_modules_subtitle")} />
-            <Android12Switch
+            <ListItemText primary={strings("low_quality_modules")} secondary={strings("low_quality_modules_subtitle")} />
+            <Switch
               edge="end"
               onChange={(e: any) => {
                 setSettings("_low_quality_module", e.target.checked);
@@ -100,8 +93,8 @@ function SettingsActivity() {
             />
           </ListItem>
           <ListItem>
-            <StyledListItemText primary={strings("invaild_modules")} secondary={strings("invaild_modules_subtitle")} />
-            <Android12Switch
+            <ListItemText primary={strings("invaild_modules")} secondary={strings("invaild_modules_subtitle")} />
+            <Switch
               edge="end"
               onChange={(e: any) => {
                 setSettings("_invald_module", e.target.checked);
@@ -114,14 +107,10 @@ function SettingsActivity() {
         {os.isAndroid && (
           <>
             <Divider />
-            <List
-              subheader={
-                <ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>{strings("terminal")}</ListSubheader>
-              }
-            >
+            <List subheader={<ListSubheader>{strings("terminal")}</ListSubheader>}>
               <ListItem>
-                <StyledListItemText primary={strings("scroll_to_bottom")} secondary={strings("scroll_to_bottom_subtitle")} />
-                <Android12Switch
+                <ListItemText primary={strings("scroll_to_bottom")} secondary={strings("scroll_to_bottom_subtitle")} />
+                <Switch
                   edge="end"
                   onChange={(e: any) => {
                     setSettings("term_scroll_bottom", e.target.checked);
@@ -141,18 +130,10 @@ function SettingsActivity() {
 
         <Divider />
 
-        <List
-          subheader={
-            <ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>{strings("development")}</ListSubheader>
-          }
-        >
+        <List subheader={<ListSubheader>{strings("development")}</ListSubheader>}>
           <ListItem>
-            <StyledListItemText
-              id="switch-list-label-eruda"
-              primary={strings("eruda_console")}
-              secondary={strings("eruda_console_subtitle")}
-            />
-            <Android12Switch
+            <ListItemText id="switch-list-label-eruda" primary={strings("eruda_console")} secondary={strings("eruda_console_subtitle")} />
+            <Switch
               edge="end"
               onChange={(e: any) => {
                 setSettings("eruda_console_enabled", e.target.checked);
@@ -173,7 +154,7 @@ function SettingsActivity() {
               });
             }}
           >
-            <StyledListItemText id="switch-list-label-wifi" primary="Issues" secondary="Track our issues" />
+            <ListItemText id="switch-list-label-wifi" primary="Issues" secondary="Track our issues" />
           </ListItemButton>
           <ListItemButton
             onClick={() => {
@@ -206,7 +187,7 @@ function SettingsActivity() {
               );
             }}
           >
-            <StyledListItemText primary={strings("share_device_infos")} secondary={strings("share_device_infos_subtilte")} />
+            <ListItemText primary={strings("share_device_infos")} secondary={strings("share_device_infos_subtilte")} />
           </ListItemButton>
         </List>
 
@@ -220,21 +201,21 @@ function SettingsActivity() {
               setRepos([]);
             }}
           >
-            <StyledListItemText primary={strings("clear_repos")} />
+            <ListItemText primary={strings("clear_repos")} />
           </ListItemButton>{" "}
           <ListItemButton
             onClick={() => {
               patchSettings();
             }}
           >
-            <StyledListItemText primary={strings("patch_settings")} secondary={strings("patch_settings_subtitle")} />
+            <ListItemText primary={strings("patch_settings")} secondary={strings("patch_settings_subtitle")} />
           </ListItemButton>
         </List>
 
         <Divider />
 
         <ListItem>
-          <StyledListItemText
+          <ListItemText
             primary={
               <span>
                 {BuildConfig.APPLICATION_ID} v{BuildConfig.VERSION_NAME} ({BuildConfig.VERSION_CODE})<br />

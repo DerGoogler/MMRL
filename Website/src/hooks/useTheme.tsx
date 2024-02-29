@@ -44,6 +44,51 @@ export const useTheme = () => {
 
 const THIS_IS_THE_THEME_OBJECT_OF_THIS_F_APP = createTheme({
   components: {
+    MuiListSubheader: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          backgroundColor: theme.palette.background.default,
+        }),
+      },
+    },
+    MuiSwitch: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          "& .MuiSwitch-switchBase": {
+            color: theme.palette.background.default,
+          },
+          "& .MuiSwitch-switchBase.Mui-checked": {
+            color: theme.palette.background.default,
+          },
+          "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
+            opacity: "unset",
+            backgroundColor: theme.palette.primary.main,
+          },
+          "& .MuiSwitch-switchBase + .MuiSwitch-track": {
+            backgroundColor: theme.palette.text.secondary,
+          },
+
+          padding: 8,
+          "& .MuiSwitch-track": {
+            borderRadius: 22 / 2,
+            "&:before, &:after": {
+              content: '""',
+              position: "absolute",
+              top: "50%",
+              transform: "translateY(-50%)",
+              width: 16,
+              height: 16,
+            },
+          },
+          "& .MuiSwitch-thumb": {
+            boxShadow: "none",
+            width: 16,
+            height: 16,
+            margin: 2,
+          },
+        }),
+      },
+    },
     MuiDialog: {
       styleOverrides: {
         root: {

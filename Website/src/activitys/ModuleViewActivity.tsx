@@ -17,9 +17,7 @@ import ImageListItem from "@mui/material/ImageListItem";
 import { Verified } from "@mui/icons-material";
 import Stack from "@mui/material/Stack";
 import { useActivity } from "@Hooks/useActivity";
-import { StyledListItemText } from "@Components/StyledListItemText";
-import { parseAndroidVersion } from "@Util/parseAndroidVersion";
-import { Magisk } from "@Native/Magisk";
+import ListItemText from "@mui/material/ListItemText";
 import { useTheme } from "@Hooks/useTheme";
 import { os } from "@Native/Os";
 import Alert from "@mui/material/Alert";
@@ -497,16 +495,13 @@ const ModuleViewActivity = () => {
                               });
                             }}
                           >
-                            <StyledListItemText
-                              primary={findRequire.name}
-                              secondary={`${findRequire.version} (${findRequire.versionCode})`}
-                            />
+                            <ListItemText primary={findRequire.name} secondary={`${findRequire.version} (${findRequire.versionCode})`} />
                           </ListItemButton>
                         );
                       } else {
                         return (
                           <ListItem>
-                            <StyledListItemText primary={req} />
+                            <ListItemText primary={req} />
                           </ListItem>
                         );
                       }
@@ -564,7 +559,7 @@ const ModuleViewActivity = () => {
                 <ListItemIcon>
                   <VerifiedIcon />
                 </ListItemIcon>
-                <StyledListItemText primary={strings("verified_module")} secondary={strings("verified_module_desc")} />
+                <ListItemText primary={strings("verified_module")} secondary={strings("verified_module_desc")} />
               </ListItem>
             )}
 
@@ -595,7 +590,7 @@ const ModuleViewActivity = () => {
                 <ListItemIcon>
                   <FormatAlignLeftIcon />
                 </ListItemIcon>
-                <StyledListItemText primary={strings("license")} secondary={track.license} />
+                <ListItemText primary={strings("license")} secondary={track.license} />
               </ListItemButton>
             )}
 
@@ -613,7 +608,7 @@ const ModuleViewActivity = () => {
                 <ListItemIcon>
                   <BugReportIcon />
                 </ListItemIcon>
-                <StyledListItemText primary="Issues" secondary={track.support} />
+                <ListItemText primary="Issues" secondary={track.support} />
               </ListItemButton>
             )}
 
@@ -630,7 +625,7 @@ const ModuleViewActivity = () => {
               <ListItemIcon>
                 <GitHubIcon />
               </ListItemIcon>
-              <StyledListItemText primary={strings("source")} secondary={track.source} />
+              <ListItemText primary={strings("source")} secondary={track.source} />
             </ListItemButton>
           </List>
         </CustomTabPanel>
@@ -701,7 +696,7 @@ const VersionItem = React.memo<VersionItemProps>(({ id, version }) => {
         </Stack>
       }
     >
-      <StyledListItemText primary={versionName} secondary={ts} />
+      <ListItemText primary={versionName} secondary={ts} />
     </ListItem>
   );
 });

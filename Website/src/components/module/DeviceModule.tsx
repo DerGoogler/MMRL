@@ -8,8 +8,6 @@ import Button from "@mui/material/Button";
 
 import { ModConfActivity } from "@Activitys/ModConfActivity";
 
-import { Android12Switch } from "@Components/Android12Switch";
-
 import { Delete, Settings, RefreshRounded } from "@mui/icons-material";
 
 import { useTheme } from "@Hooks/useTheme";
@@ -23,6 +21,7 @@ import { ModFS, useModFS } from "@Hooks/useModFS";
 import { SuFile } from "@Native/SuFile";
 // @ts-ignore
 import { useConfirm } from "material-ui-confirm";
+import Switch from "@mui/material/Switch";
 
 interface Props {
   module: Module;
@@ -93,7 +92,7 @@ const DeviceModule = React.memo<Props>((props) => {
             </Typography>
           </Stack>
           <Typography variant="caption" display="block">
-            <Android12Switch
+            <Switch
               checked={isEnabled}
               disabled={isSwitchDisabled}
               onChange={(e) => {
