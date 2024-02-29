@@ -32,7 +32,7 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import Chip from "@mui/material/Chip";
-import { ConfigureView } from "@Components/ConfigureView";
+import { ModConfView } from "@Components/ModConfView";
 
 const MainApplication = () => {
   const { strings } = useStrings();
@@ -135,7 +135,7 @@ const MainApplication = () => {
             component: FetchTextActivity,
             key: "changelog",
             extra: {
-              rendering: ConfigureView,
+              rendering: ModConfView,
               url: "https://raw.githubusercontent.com/wiki/DerGoogler/MMRL/JSX-Changelog.md",
               modulename: "Update available!",
             },

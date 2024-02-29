@@ -1,7 +1,7 @@
 import { useActivity } from "@Hooks/useActivity";
 import React from "react";
 import { SuFile } from "@Native/SuFile";
-import { ConfigureView } from "@Components/ConfigureView";
+import { ModConfView } from "@Components/ModConfView";
 import { useModFS } from "@Hooks/useModFS";
 import { PreviewErrorBoundary } from "./ModConfPlaygroundActivity";
 
@@ -11,7 +11,7 @@ type Extra = {
   moduleid: string;
 };
 
-const ConfigureActivity = () => {
+const ModConfActivity = () => {
   const { modFS } = useModFS();
   const { extra } = useActivity<Extra>();
 
@@ -31,9 +31,9 @@ const ConfigureActivity = () => {
 
   return (
     <PreviewErrorBoundary>
-      <ConfigureView modid={extra.moduleid} children={config} />
+      <ModConfView modid={extra.moduleid} children={config} />
     </PreviewErrorBoundary>
   );
 };
 
-export { ConfigureActivity };
+export { ModConfActivity };

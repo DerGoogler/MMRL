@@ -33,8 +33,8 @@ interface NativeSuFileV2 {
 class SuFile extends Native<NativeSuFile> {
   // @ts-ignore - Won't get even called
   private _file: ReturnType<NativeSuFile["v2"]>;
-  private _fs: IFs = wasmFs.fs;
   private _path: string;
+  private _imgblob: string | ArrayBuffer | null = null;
 
   /**
    * @returns `0` as number to create a new file
@@ -66,6 +66,18 @@ class SuFile extends Native<NativeSuFile> {
     } else {
       return localStorage.getItem(this._path) || "";
     }
+  }
+
+  public readAsDataURL(type: string) {
+    const fileReader = new FileReader();
+    const imgBlob = new Blob([this.read()], { type: type });
+    fileReader.readAsDataURL(imgBlob);
+    fileReader.onload = (e) => {
+      if (e.target) {
+        this._imgblob = e.target.result;
+      }
+    };
+    return this._imgblob;
   }
 
   public write(content: string): void {
@@ -156,8 +168,8 @@ class SuFile extends Native<NativeSuFile> {
     new SuFile(path).deleteRecursive();
   }
 
-  public static create(path: string): boolean {
-    return new SuFile(path).create();
+  public static create(path: string, type: number = SuFile.NEW_FILE): boolean {
+    return new SuFile(path).create(type);
   }
 }
 

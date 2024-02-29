@@ -6,7 +6,7 @@ import Chip from "@mui/material/Chip";
 import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 
-import { ConfigureActivity } from "@Activitys/ConfigureActivity";
+import { ModConfActivity } from "@Activitys/ModConfActivity";
 
 import { Android12Switch } from "@Components/Android12Switch";
 
@@ -151,7 +151,7 @@ const DeviceModule = React.memo<Props>((props) => {
             <Button
               onClick={() => {
                 context.pushPage({
-                  component: ConfigureActivity,
+                  component: ModConfActivity,
                   key: `${id}_configure`,
                   extra: {
                     modulename: name,

@@ -106,12 +106,17 @@ prototypeWhitelist.set(Object, new Set());
 prototypeWhitelist.set(Document, new Set());
 prototypeWhitelist.set(Response, new Set());
 prototypeWhitelist.set(Element, new Set());
+prototypeWhitelist.set(FileReader, new Set());
+prototypeWhitelist.set(Blob, new Set());
 prototypeWhitelist.set(SuFile, new Set());
+prototypeWhitelist.set(Event, new Set());
 prototypeWhitelist.set(View, new Set());
+prototypeWhitelist.set(DOMParser, new Set());
 prototypeWhitelist.set(ShellClass, new Set());
 prototypeWhitelist.set(OsClass, new Set());
 prototypeWhitelist.set(BuildConfigClass, new Set());
 prototypeWhitelist.set(Build, new Set());
+prototypeWhitelist.set(NamedNodeMap, new Set());
 
 export const globals = {
   ...Sandbox.SAFE_GLOBALS,
@@ -120,12 +125,17 @@ export const globals = {
   INI: require("ini"),
   Element: Element,
   document: document,
+  DOMParser: DOMParser,
   Toast: Toast,
   view: view,
   os: os,
   Shell: Shell,
   Build: Build,
   BuildConfig: BuildConfig,
+  Blob: Blob,
+  Event: Event,
+  NamedNodeMap: NamedNodeMap,
+  FileReader: FileReader,
   SuFile: SuFile,
   Object: Object,
   Response: Response,

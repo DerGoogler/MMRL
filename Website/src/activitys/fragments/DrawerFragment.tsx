@@ -8,8 +8,7 @@ import { IntentPusher } from "@Hooks/useActivity";
 import FetchTextActivity, { FetchTextActivityExtra } from "@Activitys/FetchTextActivity";
 import AboutActivity from "@Activitys/AboutActivity";
 import PlaygroundsActivity, { PlaygroundExtra } from "@Activitys/PlaygroundsActivity";
-import { ConfigureView } from "@Components/ConfigureView";
-import { ConfigureActivity } from "@Activitys/ConfigureActivity";
+import { ModConfView } from "@Components/ModConfView";
 import { Markup } from "@Components/Markdown";
 import { configureSample } from "@Util/configure-sample";
 import { dapiSample } from "@Util/dapi-sample";
@@ -139,7 +138,7 @@ export const DrawerFragment = (props: Props) => {
               component: FetchTextActivity,
               key: "changelog",
               extra: {
-                rendering: ConfigureView,
+                rendering: ModConfView,
                 url: "https://raw.githubusercontent.com/wiki/DerGoogler/MMRL/JSX-Changelog.md",
                 modulename: "Changelog",
               },

@@ -9,7 +9,7 @@ import * as monacoEditor from "monaco-editor/esm/vs/editor/editor.api";
 import Editor, { Monaco } from "@monaco-editor/react";
 import { ErrorBoundaryProps, ErrorBoundaryState, errorBoundaryInitialState } from "@Components/ErrorBoundary";
 import editorTheme from "@Util/editorTheme";
-import { ConfigureView } from "@Components/ConfigureView";
+import { ModConfView } from "@Components/ModConfView";
 import { useNativeStorage } from "@Hooks/useNativeStorage";
 import { useStrings } from "@Hooks/useStrings";
 import { useNativeFileStorage } from "@Hooks/useNativeFileStorage";
@@ -124,7 +124,7 @@ const ModConfPlaygroundActivity = () => {
 
   const handlePreview = () => {
     context.pushPage({
-      component: ConfigureView,
+      component: ModConfView,
       key: extra.title,
       extra: {
         modulename: "Preview",
@@ -203,7 +203,7 @@ const ModConfPlaygroundActivity = () => {
               <Preview>
                 <Box component="section" sx={{ width: "100%", height: "100%" }}>
                   <PreviewErrorBoundary key={"preview_error_bound_key_" + errBoundKey}>
-                    <ConfigureView modid={modFS("MODCONF_PLAYGROUND_MODID")} children={description} />
+                    <ModConfView modid={modFS("MODCONF_PLAYGROUND_MODID")} children={description} />
                   </PreviewErrorBoundary>
                 </Box>
               </Preview>

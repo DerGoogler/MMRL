@@ -62,7 +62,7 @@ const scope = {
   Divider: Divider,
 };
 
-export const ConfigureView = React.forwardRef<any, { children: string; modid: string }>((props, ref) => {
+export const ModConfView = React.forwardRef<any, { children: string; modid: string }>((props, ref) => {
   const { theme } = useTheme();
   const { modFS } = useModFS();
 
