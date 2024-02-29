@@ -5,8 +5,6 @@ Here will you learn, how `SuFile` works in MMRL.
 > [!NOTE]
 > `SuFile` is a global part in ModConf. No need to import it.
 
-> `SuFile` will support ModFS syntax in future version's.
-
 ## Reading files
 
 Files can easily be read within MMRL, it returns a empty string if the file does not exists.
