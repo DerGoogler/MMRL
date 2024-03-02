@@ -34,8 +34,7 @@ public class NativeSuFile {
                     OutputStream outputStream = SuFileOutputStream.open(file);
                     outputStream.write(data.getBytes(StandardCharsets.UTF_8));
                     outputStream.flush();
-                }
-                catch (IOException e) {
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
@@ -61,7 +60,7 @@ public class NativeSuFile {
             @JavascriptInterface
             public String list(String delimiter) {
                 String[] files = file.list();
-                if(delimiter == null) {
+                if (delimiter == null) {
                     return String.join(",", files);
                 } else {
                     return String.join(delimiter, files);
@@ -97,10 +96,61 @@ public class NativeSuFile {
                 return file.deleteRecursive();
             }
 
-
             @JavascriptInterface
             public boolean exists() {
                 return file.exists();
+            }
+
+            @JavascriptInterface
+            public boolean canTypeMethod(int type) {
+                switch (type) {
+                    case 0:
+                        return file.canRead();
+                    case 1:
+                        return file.canWrite();
+                    case 2:
+                        return file.canExecute();
+                }
+                return false;
+            }
+
+            @JavascriptInterface
+            public boolean _is_TypeMethod(int type) {
+                switch (type) {
+                    case 0:
+                        return file.isFile();
+                    case 1:
+                        return file.isSymlink();
+                    case 2:
+                        return file.isDirectory();
+                    case 3:
+                        return file.isBlock();
+                    case 4:
+                        return file.isCharacter();
+                    case 5:
+                        return file.isNamedPipe();
+                    case 6:
+                        return file.isSocket();
+                    case 7:
+                        return file.isHidden();
+                }
+                return false;
+            }
+
+            @JavascriptInterface
+            public boolean createNewSym_link(int type, String existing) {
+                switch (type) {
+                    case 0:
+                        return file.createNewLink(existing);
+                    case 1:
+                        return file.createNewSymlink(existing);
+                }
+                return false;
+            }
+
+            @JavascriptInterface
+            public int hasCode() {
+                return file.hashCode();
             }
         };
     }

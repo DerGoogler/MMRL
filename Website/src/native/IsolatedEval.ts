@@ -41,17 +41,8 @@ class IsolatedEval<T = any> {
 
   public constructor() {
     this._exportReplacerPlugin = this._exportReplacerPlugin.bind(this);
-    this._updateProtoTypeWhitelist = this._updateProtoTypeWhitelist.bind(this);
     this._parseCode = this._parseCode.bind(this);
 
-    this._sandbox = new Sandbox({ globals: this._globals, prototypeWhitelist: this._prototypeWhitelist });
-
-    this._updateProtoTypeWhitelist();
-
-    registerPlugin("plugin", this._exportReplacerPlugin);
-  }
-
-  private _updateProtoTypeWhitelist() {
     this._prototypeWhitelist.set(Node, new Set());
     this._prototypeWhitelist.set(Object, new Set());
     this._prototypeWhitelist.set(Document, new Set());
@@ -70,6 +61,10 @@ class IsolatedEval<T = any> {
     this._prototypeWhitelist.set(BuildConfigClass, new Set());
     this._prototypeWhitelist.set(Build, new Set());
     this._prototypeWhitelist.set(Native, new Set());
+
+    this._sandbox = new Sandbox({ globals: this._globals, prototypeWhitelist: this._prototypeWhitelist });
+
+    registerPlugin("plugin", this._exportReplacerPlugin);
   }
 
   public compile(code: string, scope: IScope): T | undefined {
@@ -82,7 +77,7 @@ class IsolatedEval<T = any> {
     }
   }
 
-  private _parseCode(data: string): string | undefined {
+  private _parseCode(data: string, filename?: string): string | undefined {
     return transform(data, {
       filename: "index.jsx",
       presets: ["typescript", "react"],
