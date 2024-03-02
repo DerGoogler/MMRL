@@ -8,6 +8,7 @@ import { OsClass, os } from "./Os";
 import { BuildConfig, BuildConfigClass } from "./BuildConfig";
 import { Build } from "./Build";
 import { IScope } from "@nyariv/sandboxjs/dist/node/executor";
+import { Native } from "./Native";
 
 class IsolatedEval<T = any> {
   private readonly _sandbox: Sandbox = new Sandbox();
@@ -25,6 +26,7 @@ class IsolatedEval<T = any> {
     FileReader: FileReader,
     Blob: Blob,
     Event: Event,
+    EventTarget: EventTarget,
     NamedNodeMap: NamedNodeMap,
     DOMParser: DOMParser,
     SuFile: SuFile,
@@ -33,6 +35,7 @@ class IsolatedEval<T = any> {
     os: os,
     BuildConfig: BuildConfig,
     Build: Build,
+    Native: Native,
   };
   private readonly _prototypeWhitelist = Sandbox.SAFE_PROTOTYPES;
 
@@ -57,6 +60,7 @@ class IsolatedEval<T = any> {
     this._prototypeWhitelist.set(FileReader, new Set());
     this._prototypeWhitelist.set(Blob, new Set());
     this._prototypeWhitelist.set(Event, new Set());
+    this._prototypeWhitelist.set(EventTarget, new Set());
     this._prototypeWhitelist.set(NamedNodeMap, new Set());
     this._prototypeWhitelist.set(DOMParser, new Set());
     this._prototypeWhitelist.set(SuFile, new Set());
@@ -65,6 +69,7 @@ class IsolatedEval<T = any> {
     this._prototypeWhitelist.set(OsClass, new Set());
     this._prototypeWhitelist.set(BuildConfigClass, new Set());
     this._prototypeWhitelist.set(Build, new Set());
+    this._prototypeWhitelist.set(Native, new Set());
   }
 
   public compile(code: string, scope: IScope): T | undefined {
