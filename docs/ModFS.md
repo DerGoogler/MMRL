@@ -31,3 +31,17 @@ Based on your selected root method
 ```shell
 FILE="/data/local/tmp/<MODID>.zip"; <MSUBSU> wget "<URL>" -O $FILE; <MSUCLI> --install-module $FILE;
 ```
+
+# Add a local cover to your module
+
+> [!IMPORTANT]
+> Do not hardcode your cover path
+
+```properties
+id=mkshrc
+# ...
+
+cover=<MODULECWD>/system/usr/share/mmrl/covers/cover.png
+# If stored in ModConf cwd
+# cover=<CONFCWD>/assets/cover.png
+```

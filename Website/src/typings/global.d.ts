@@ -161,6 +161,10 @@ declare global {
   }
 
   export interface Module {
+    /**
+     * # This is local prop only
+     */
+    cover?: string;
     id: string;
     name: string;
     version: string;
