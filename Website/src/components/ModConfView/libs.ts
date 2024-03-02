@@ -5,25 +5,19 @@ import { DiscordWidget } from "@Components/dapi/DiscordWidget";
 import { BottomToolbar } from "@Components/onsenui/BottomToolbar";
 import { Page } from "@Components/onsenui/Page";
 import { Tabbar } from "@Components/onsenui/Tabbar";
-import Sandbox from "@nyariv/sandboxjs";
 import { useTheme } from "@Hooks/useTheme";
 import { useNativeStorage } from "@Hooks/useNativeStorage";
 import { useNativeProperties } from "@Hooks/useNativeProperties";
 import { useActivity } from "@Hooks/useActivity";
 import { Toolbar } from "@Components/onsenui/Toolbar";
-import { SuFile } from "@Native/SuFile";
 import { StringsProvider, useStrings } from "@Hooks/useStrings";
-import { Shell, ShellClass } from "@Native/Shell";
 import { Ansi } from "@Components/Ansi";
-import { OsClass, os } from "@Native/Os";
-import { BuildConfig, BuildConfigClass } from "@Native/BuildConfig";
+import { os } from "@Native/Os";
 import { useSettings } from "@Hooks/useSettings";
 import { ConfigProvider, useConfig, useNativeFileStorage } from "@Hooks/useNativeFileStorage";
 import { useModFS } from "@Hooks/useModFS";
 import PicturePreviewActivity from "@Activitys/PicturePreviewActivity";
 import { useConfirm } from "material-ui-confirm";
-import { View, view } from "@Native/View";
-import { Build } from "@Native/Build";
 import { Markup } from "@Components/Markdown";
 import { DialogEditTextListItem } from "@Components/DialogEditTextListItem";
 
@@ -101,45 +95,3 @@ export const libraries = [
     },
   },
 ];
-
-export const prototypeWhitelist = Sandbox.SAFE_PROTOTYPES;
-prototypeWhitelist.set(Node, new Set());
-prototypeWhitelist.set(Object, new Set());
-prototypeWhitelist.set(Document, new Set());
-prototypeWhitelist.set(Response, new Set());
-prototypeWhitelist.set(Element, new Set());
-prototypeWhitelist.set(FileReader, new Set());
-prototypeWhitelist.set(Blob, new Set());
-prototypeWhitelist.set(SuFile, new Set());
-prototypeWhitelist.set(Event, new Set());
-prototypeWhitelist.set(View, new Set());
-prototypeWhitelist.set(DOMParser, new Set());
-prototypeWhitelist.set(ShellClass, new Set());
-prototypeWhitelist.set(OsClass, new Set());
-prototypeWhitelist.set(BuildConfigClass, new Set());
-prototypeWhitelist.set(Build, new Set());
-prototypeWhitelist.set(NamedNodeMap, new Set());
-
-export const globals = {
-  ...Sandbox.SAFE_GLOBALS,
-  JSON: JSON,
-  YAML: require("yaml"),
-  INI: require("ini"),
-  Element: Element,
-  Document: Document,
-  document: document,
-  DOMParser: DOMParser,
-  Toast: Toast,
-  view: view,
-  os: os,
-  Shell: Shell,
-  Build: Build,
-  BuildConfig: BuildConfig,
-  Blob: Blob,
-  Event: Event,
-  NamedNodeMap: NamedNodeMap,
-  FileReader: FileReader,
-  SuFile: SuFile,
-  Object: Object,
-  Response: Response,
-};

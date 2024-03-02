@@ -227,7 +227,7 @@ const MainActivity = (): JSX.Element => {
       >
         <Page.RelativeContent>
           <Pre sx={style}>
-            <span>{error.message}</span>
+            <Code>{error.message}</Code>
           </Pre>
 
           <Button fullWidth variant="contained" disableElevation onClick={resetErrorBoundary}>

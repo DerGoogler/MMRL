@@ -6,7 +6,7 @@ import Sandbox from "@nyariv/sandboxjs";
 import { transform, registerPlugin } from "@babel/standalone";
 import * as React from "react";
 import { PluginObj } from "@babel/core";
-import { globals, libraries, prototypeWhitelist } from "./libs";
+import { libraries } from "./libs";
 import { SuFile } from "@Native/SuFile";
 import { ModFS, useModFS } from "@Hooks/useModFS";
 import ini from "ini";
@@ -14,44 +14,10 @@ import yaml from "yaml";
 import { useLog } from "@Hooks/native/useLog";
 import { extname } from "@Util/extname";
 import { Toolbar } from "@Components/onsenui/Toolbar";
+import { IsolatedEval } from "@Native/IsolatedEval";
+import { Typography } from "@mui/material";
 
-function plugin({ types: t }): PluginObj {
-  return {
-    visitor: {
-      ExportDefaultDeclaration(path) {
-        path.replaceWith(t.returnStatement(path.node.declaration));
-      },
-    },
-  };
-}
-
-registerPlugin("plugin", plugin);
-
-function parseCode(data: string): string {
-  try {
-    const { code } = transform(data, {
-      filename: "index.jsx",
-      presets: ["typescript", "react"],
-      plugins: [
-        "plugin",
-        "transform-computed-properties",
-        "syntax-import-attributes",
-        ["transform-destructuring", { loose: true }],
-        "transform-modules-commonjs",
-        "transform-object-rest-spread",
-        "syntax-class-properties",
-        ["transform-classes", { loose: true }],
-        "transform-class-properties",
-        "syntax-object-rest-spread",
-      ],
-    });
-    return code as string;
-  } catch (err) {
-    return "";
-  }
-}
-
-const sandbox = new Sandbox({ globals, prototypeWhitelist });
+const isoEval = new IsolatedEval<React.FunctionComponent<any> | undefined>();
 
 export const ModConfView = React.forwardRef<any, { children: string; modid: string }>((props, ref) => {
   const { theme } = useTheme();
@@ -113,38 +79,30 @@ export const ModConfView = React.forwardRef<any, { children: string; modid: stri
   );
 
   const box = React.useCallback(
-    (code: string) => {
-      return sandbox
-        .compile<React.FunctionComponent<any> | undefined>(
-          parseCode(code),
-          true
-        )({
-          console: console,
-          log: log,
-          modid: props.modid,
-          modpath: (path: string) => `${format("MODULECWD")}/${path}`,
-          confpath: (path: string) => `${format("CONFCWD")}/${path}`,
-          window: {
-            fetch: internalFetch,
-            open(href: string) {
-              os.open(href, {
-                target: "_blank",
-                features: {
-                  color: theme.palette.primary.main,
-                },
-              });
-            },
-          },
-          require: internalRequire,
-          include: internalInclude,
+    (code: string) =>
+      isoEval.compile(code, {
+        log: log,
+        modid: props.modid,
+        modpath: (path: string) => `${format("MODULECWD")}/${path}`,
+        confpath: (path: string) => `${format("CONFCWD")}/${path}`,
+        window: {
           fetch: internalFetch,
-          eval: () => {
-            throw new Error("Module tried to execute eval()!");
+          open(href: string) {
+            os.open(href, {
+              target: "_blank",
+              features: {
+                color: theme.palette.primary.main,
+              },
+            });
           },
-        })
-        .run();
-    },
-
+        },
+        require: internalRequire,
+        include: internalInclude,
+        fetch: internalFetch,
+        eval: () => {
+          throw new Error("Module tried to execute eval()!");
+        },
+      }),
     []
   );
   const Component = box(props.children as string);
@@ -154,13 +112,14 @@ export const ModConfView = React.forwardRef<any, { children: string; modid: stri
   } else {
     return (
       <Page
+        sx={{ p: 1 }}
         renderToolbar={() => (
-          <Toolbar>
+          <Toolbar modifier="noshadow">
             <Toolbar.Center>Error</Toolbar.Center>
           </Toolbar>
         )}
       >
-        <div>An error occurred, either there is a syntax mistake or something</div>
+        <Typography>An error occurred, either there is a syntax mistake or something</Typography>
       </Page>
     );
   }

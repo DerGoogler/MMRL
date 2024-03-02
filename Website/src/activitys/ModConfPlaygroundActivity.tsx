@@ -14,6 +14,8 @@ import { useNativeStorage } from "@Hooks/useNativeStorage";
 import { useStrings } from "@Hooks/useStrings";
 import { useNativeFileStorage } from "@Hooks/useNativeFileStorage";
 import { useModFS } from "@Hooks/useModFS";
+import Pre from "@Components/dapi/Pre";
+import Code from "@Components/dapi/Code";
 
 export interface PlaygroundExtra {
   title: string;
@@ -29,6 +31,15 @@ export interface PreviewErrorBoundaryChildren extends React.PropsWithChildren {
 
 interface PreviewErrorBoundaryProps extends Omit<ErrorBoundaryProps, "fallback"> {}
 interface PreviewErrorBoundaryState extends ErrorBoundaryState {}
+
+const preElementStyle = (theme: any) => ({
+  backgroundColor: theme.palette.background.paper,
+  color: theme.palette.text.primary,
+  borderRadius: theme.shape.borderRadius / theme.shape.borderRadius,
+  lineHeight: 1.45,
+  overflow: "auto",
+  padding: 2,
+});
 
 export class PreviewErrorBoundary extends React.Component<PreviewErrorBoundaryProps, PreviewErrorBoundaryState> {
   public constructor(props: PreviewErrorBoundaryProps) {
@@ -47,8 +58,23 @@ export class PreviewErrorBoundary extends React.Component<PreviewErrorBoundaryPr
   public render() {
     if (this.state.hasError) {
       return (
-        <Page>
-          <div>{this.state.error?.message}</div>
+        <Page
+          sx={{ p: 1 }}
+          renderToolbar={() => {
+            return (
+              <Toolbar modifier="noshadow">
+                <Toolbar.Center>Complile error</Toolbar.Center>
+              </Toolbar>
+            );
+          }}
+        >
+          <Pre sx={preElementStyle}>
+            <Code>{this.state.error.message}</Code>
+          </Pre>
+
+          <Pre sx={preElementStyle}>
+            <Code>{this.state.errorInfo.componentStack}</Code>
+          </Pre>
         </Page>
       );
     }
@@ -227,7 +253,7 @@ const Preview = styled("div")(({ theme }) => ({
   borderWidth: "1px",
   minWidth: "0%",
   overflow: "auto",
-  borderColor: "rgba(0, 0, 0, 0.23)",
+  borderColor: theme.palette.divider,
   section: {
     position: "absolute",
     overflowY: "scroll",
