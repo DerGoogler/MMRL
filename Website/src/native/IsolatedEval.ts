@@ -17,6 +17,7 @@ class IsolatedEval<T = any> {
     JSON: JSON,
     YAML: require("yaml"),
     INI: require("ini"),
+    console: console,
     document: document,
     Toast: Toast,
     Object: Object,

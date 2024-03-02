@@ -86,7 +86,7 @@ export const INITIAL_MOD_CONF: ModFS = {
   // modconf
   CONFCWD: "<MODULECWD>/system/usr/share/mmrl/config/<MODID>",
   CONFINDEX: "<CONFCWD>/index.jsx",
-  MODCONF_PLAYGROUND: "/data/adb/mmrl/modconf-playground.jsx",
+  MODCONF_PLAYGROUND: "<ADB>/mmrl/modconf-playground.jsx",
   MODCONF_PLAYGROUND_MODID: "playground",
 
   // others

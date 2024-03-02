@@ -16,7 +16,8 @@ interface NativeSuFile extends NativeSuFileV2 {
 interface NativeSuFileV2 {
   v2(path: string): {
     write(data: string): void;
-    read(): string;
+    read(def: string): string;
+    readAsBase64(): string;
     list(delimiter: string | null): string;
     lastModified(): number;
     create(type: number): boolean;
@@ -24,6 +25,13 @@ interface NativeSuFileV2 {
     deleteRecursive(): void;
     exists(): boolean;
   };
+}
+
+export interface SuFileoptions {
+  /**
+   * This should be always a string
+   */
+  readDefaultValue: string;
 }
 
 /**
@@ -35,6 +43,7 @@ class SuFile extends Native<NativeSuFile> {
   private _file: ReturnType<NativeSuFile["v2"]>;
   private _path: string;
   private _imgblob: string | ArrayBuffer | null = null;
+  private _readDefaultValue: string;
 
   /**
    * @returns `0` as number to create a new file
@@ -49,8 +58,9 @@ class SuFile extends Native<NativeSuFile> {
    */
   public static readonly NEW_FOLDER: number = 2;
 
-  public constructor(path?: string) {
+  public constructor(path: string, opt?: SuFileoptions) {
     super(window.__sufile__);
+    this._readDefaultValue = opt?.readDefaultValue || "";
 
     if (typeof path !== "string") throw new TypeError("Path name isn't a string");
 
@@ -62,22 +72,18 @@ class SuFile extends Native<NativeSuFile> {
 
   public read(): string {
     if (this.isAndroid) {
-      return this._file.read();
+      return this._file.read(this._readDefaultValue);
     } else {
-      return localStorage.getItem(this._path) || "";
+      return localStorage.getItem(this._path) || this._readDefaultValue;
     }
   }
 
-  public readAsDataURL(type: string) {
-    const fileReader = new FileReader();
-    const imgBlob = new Blob([this.read()], { type: type });
-    fileReader.readAsDataURL(imgBlob);
-    fileReader.onload = (e) => {
-      if (e.target) {
-        this._imgblob = e.target.result;
-      }
-    };
-    return this._imgblob;
+  public readAsBase64() {
+    if (this.isAndroid) {
+      return this._file.readAsBase64();
+    } else {
+      return "";
+    }
   }
 
   public write(content: string): void {

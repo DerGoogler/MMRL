@@ -1,5 +1,8 @@
 package com.dergoogler.core;
 
+import android.graphics.BitmapFactory;
+import android.util.Base64;
+import android.util.Base64OutputStream;
 import android.webkit.JavascriptInterface;
 
 import androidx.annotation.NonNull;
@@ -10,7 +13,11 @@ import com.topjohnwu.superuser.io.SuFileInputStream;
 import com.topjohnwu.superuser.io.SuFileOutputStream;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.Closeable;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 
@@ -40,7 +47,7 @@ public class NativeSuFile {
             }
 
             @JavascriptInterface
-            public String read() {
+            public String read(String def) {
                 try {
                     try (BufferedReader br = new BufferedReader(new InputStreamReader(SuFileInputStream.open(file)))) {
                         StringBuilder sb = new StringBuilder();
@@ -53,7 +60,40 @@ public class NativeSuFile {
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
+                    return def;
+                }
+            }
+
+            @JavascriptInterface
+            public String readAsBase64() {
+                try {
+                    InputStream is = SuFileInputStream.open(file);
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    Base64OutputStream b64os = new Base64OutputStream(baos, Base64.DEFAULT);
+                    byte[] buffer = new byte[8192];
+                    int bytesRead;
+                    try {
+                        while ((bytesRead = is.read(buffer)) > -1) {
+                            b64os.write(buffer, 0, bytesRead);
+                        }
+                        return baos.toString();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        return "";
+                    } finally {
+                        closeQuietly(is);
+                        closeQuietly(b64os); // This also closes baos
+                    }
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
                     return "";
+                }
+            }
+
+            private  void closeQuietly(Closeable closeable) {
+                try {
+                    closeable.close();
+                } catch (IOException e) {
                 }
             }
 

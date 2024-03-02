@@ -6,6 +6,7 @@ import YAML from "yaml";
 import { os } from "@Native/Os";
 import { SetValue } from "./useNativeStorage";
 import React from "react";
+import { INITIAL_MOD_CONF } from "./useModFS";
 
 type Loader = "json" | "yaml" | "yml" | "prop" | "properties" | "ini" | null;
 
@@ -16,7 +17,13 @@ export function useNativeFileStorage<T = string>(
 ): [T, SetValue<T>] {
   const { loader } = opt;
 
-  const file = new SuFile(key);
+  const file = React.useMemo(() => new SuFile(key, { readDefaultValue: JSON.stringify(INITIAL_MOD_CONF) }), [key]);
+
+  React.useEffect(() => {
+    if (!file.exist()) {
+      file.create(SuFile.NEW_FILE);
+    }
+  }, [key]);
 
   const readValue = useCallback((): T => {
     try {
