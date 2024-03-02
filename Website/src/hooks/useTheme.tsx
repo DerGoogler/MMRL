@@ -44,6 +44,13 @@ export const useTheme = () => {
 
 const THIS_IS_THE_THEME_OBJECT_OF_THIS_F_APP = createTheme({
   components: {
+    MuiListItemText: {
+      styleOverrides: {
+        root: {
+          wordWrap: "break-word",
+        },
+      },
+    },
     MuiListSubheader: {
       styleOverrides: {
         root: ({ theme }) => ({

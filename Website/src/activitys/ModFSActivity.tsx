@@ -267,14 +267,7 @@ function ModFSActivity() {
 
   return (
     <Page renderToolbar={renderToolbar}>
-      <Page.RelativeContent
-        zeroMargin
-        sx={{
-          textOverflow: "ellipsis",
-          overflow: "hidden",
-          whiteSpace: "nowrap",
-        }}
-      >
+      <Page.RelativeContent zeroMargin>
         <Alert sx={{ m: { xs: 1, md: 1 }, whiteSpace: "normal" }} severity="error">
           I am not responsible for anything that may happen to your phone by changing these informations. You do it at your own risk and
           take the responsibility upon yourself and you are not to blame us or MMRL and its respected developers
