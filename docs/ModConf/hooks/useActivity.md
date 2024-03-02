@@ -1,6 +1,6 @@
 # Activity Managment
 
-TODO
+Simple manage multiple activities with this hook.
 
 ## Setup
 
@@ -16,8 +16,21 @@ import { useActivity } from "@mmrl/hooks";
 import { Page, Toolbar } from "@mmrl/ui";
 import { Button } from "@mui/material";
 
+function RenderToolbar() {
+  const { context, extra } = useActivity()
+  const { title = "Default" } = extra
+  return (
+    <Toolbar modifier="noshadow">
+      <Toolbar.Left>
+        <Toolbar.BackButton onClick={context.popPage} />
+      </Toolbar.Left>
+      <Toolbar.Center>{title}</Toolbar.Center>
+    </Toolbar>
+  )
+}
+
 function App() {
-  const { context } = useActivtiy();
+  const { context } = useActivity();
 
   const handleOpen = () => {
     context.pushPage({
@@ -34,8 +47,8 @@ function App() {
   };
 
   return (
-    <Page>
-      <Button onClick={handleOpen}>Push</Button>
+    <Page renderToolbar={RenderToolbar}>
+      <Button variant="contained" onClick={handleOpen}>Push</Button>
     </Page>
   );
 }
@@ -43,9 +56,6 @@ function App() {
 const allowBack = false;
 
 function NewPage() {
-  // get here your extras
-  const { context, extra } = useActivtiy();
-
   return (
     <Page
       // if you want override the back event
@@ -54,19 +64,12 @@ function NewPage() {
           e.callParentHandler();
         }
       }}
-      renderToolbar={() => {
-        return (
-          <Toolbar>
-            <Toolbar.Left>
-              <Toolbar.BackButton onClick={context.popPage} />
-            </Toolbar.Left>
-            <Toolbar.Center>{extra.title}</Toolbar.Center>
-          </Toolbar>
-        );
-      }}
+      renderToolbar={RenderToolbar}
     >
-      Hello World
+      Try to use your back button
     </Page>
   );
 }
+
+export default App
 ```
