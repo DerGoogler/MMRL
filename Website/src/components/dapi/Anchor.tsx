@@ -3,6 +3,7 @@ import { Box, Stack, Tooltip, Typography, createSvgIcon } from "@mui/material";
 import { os } from "@Native/Os";
 import { useRepos } from "@Hooks/useRepos";
 import React from "react";
+import { useConfirm } from "material-ui-confirm";
 import { createRegexURL } from "@Util/createRegexURL";
 
 import {
@@ -18,6 +19,10 @@ import {
   Email,
   LocalPhone,
 } from "@mui/icons-material";
+import { useStrings } from "@Hooks/useStrings";
+import { useActivity } from "@Hooks/useActivity";
+import ModuleViewActivity from "@Activitys/ModuleViewActivity";
+import { useSettings } from "@Hooks/useSettings";
 
 interface AnchorProps {
   noIcon?: boolean;
@@ -79,7 +84,11 @@ function increase_brightness(hex, percent) {
 }
 
 function Anchor(props) {
+  const confirm = useConfirm();
   const { theme } = useTheme();
+  const { context } = useActivity();
+  const { settings } = useSettings();
+  const { strings } = useStrings();
   const { href, children, noIcon, module, color = theme.palette.text.link, target = "_blank" } = props;
 
   const { modules } = useRepos();
@@ -109,6 +118,15 @@ function Anchor(props) {
 
   const __href = React.useMemo(() => (!(module && findModule) ? href : module), [href]);
 
+  const openLink = React.useCallback(() => {
+    os.open(__href, {
+      target: target,
+      features: {
+        color: theme.palette.background.default,
+      },
+    });
+  }, [__href]);
+
   return (
     <Tooltip title={__href} placement="bottom" arrow disableInteractive>
       <Box sx={s}>
@@ -118,15 +136,21 @@ function Anchor(props) {
           spacing={0.5}
           href={__href}
           onClick={() => {
-            if (module && findModule) {
+            if (__href && module && findModule) {
+              context.pushPage({
+                component: ModuleViewActivity,
+                key: "ModuleViewActivity",
+                extra: findModule,
+              });
             } else {
-              if (__href) {
-                os.open(__href, {
-                  target: target,
-                  features: {
-                    color: theme.palette.background.default,
-                  },
-                });
+              if (settings.link_protection) {
+                confirm({
+                  title: strings("anchor_confirm_title"),
+                  description: strings("anchor_confirm_desc"),
+                  confirmationText: strings("yes"),
+                }).then(() => openLink());
+              } else {
+                openLink();
               }
             }
           }}

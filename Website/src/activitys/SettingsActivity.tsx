@@ -81,6 +81,22 @@ function SettingsActivity() {
         </List>
 
         <Divider />
+
+        <List subheader={<ListSubheader>{strings("security")}</ListSubheader>}>
+          <ListItem>
+            <ListItemText primary={strings("link_protection_title")} secondary={strings("link_protection_desc")} />
+            <Switch
+              edge="end"
+              onChange={(e: any) => {
+                setSettings("link_protection", e.target.checked);
+              }}
+              checked={settings.link_protection}
+            />
+          </ListItem>
+        </List>
+
+        <Divider />
+
         <List subheader={<ListSubheader>{strings("module")}</ListSubheader>}>
           <ListItem>
             <ListItemText primary={strings("low_quality_modules")} secondary={strings("low_quality_modules_subtitle")} />

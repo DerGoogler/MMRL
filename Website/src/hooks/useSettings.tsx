@@ -5,6 +5,7 @@ import { os } from "@Native/Os";
 import { SetStateAction } from "./useStateCallback";
 import { useLanguageMap } from "./../locales/declaration";
 import { useNativeStorage } from "./useNativeStorage";
+import { useNativeFileStorage } from "./useNativeFileStorage";
 
 export const accent_colors: Picker<string, any>[] = [
   {
@@ -162,6 +163,7 @@ export interface StorageDeclaration {
   shade_value: number;
   term_scroll_bottom: boolean;
   term_scroll_behavior: { name: string; value: ScrollBehavior };
+  link_protection: boolean;
 }
 
 export const termScrollBehaviors: StorageDeclaration["term_scroll_behavior"][] = [
@@ -215,11 +217,12 @@ export const SettingsProvider = (props: React.PropsWithChildren) => {
       shade_value: -80,
       term_scroll_bottom: true,
       term_scroll_behavior: termScrollBehaviors[0],
+      link_protection: true,
     }),
     []
   );
 
-  const [settings, setSettings] = useNativeStorage("settings", INITIAL_SETTINGS);
+  const [settings, setSettings] = useNativeFileStorage("/data/adb/mmrl/settings.v1.json", INITIAL_SETTINGS, { loader: "json" });
 
   const _setSettings = (name, state, callback) => {
     setSettings(

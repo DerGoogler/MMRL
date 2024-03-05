@@ -61,6 +61,7 @@
     "monaco-editor": "^0.45.0",
     "monaco-editor-core": "^0.46.0",
     "monaco-languageclient": "^6.5.0",
+    "obfuscation-detector": "^1.1.6",
     "object-assign": "^4.1.1",
     "onsenui": "^2.12.8",
     "properties-file": "^3.2.10",

@@ -37,7 +37,7 @@ const NoRootActivity = () => {
   const renderToolbar = () => {
     return (
       <Toolbar modifier="noshadow">
-        <Toolbar.Center>Missing root</Toolbar.Center>
+        <Toolbar.Center>{strings("no_root")}</Toolbar.Center>
       </Toolbar>
     );
   };

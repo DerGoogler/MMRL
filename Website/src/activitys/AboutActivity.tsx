@@ -42,7 +42,7 @@ const AboutActivity = () => {
         <Toolbar.Left>
           <Toolbar.BackButton onClick={context.popPage} />
         </Toolbar.Left>
-        <Toolbar.Center>About</Toolbar.Center>
+        <Toolbar.Center>{strings("about")}</Toolbar.Center>
       </Toolbar>
     );
   };

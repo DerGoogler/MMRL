@@ -1,4 +1,5 @@
 export const en = {
+  security: "Security",
   changelog: "Changelog",
   new: "New",
   search: "Search",
@@ -127,4 +128,13 @@ export const en = {
     "This Anti-Feature is applied to modules that were signed using a signature algorithm that is considered outdated or unsafe.",
   "AntiFeature_No Source Since_desc":
     "The upstream source for this module is no longer available. Either the module went proprietary, the source repository was dropped, or it has moved to a location currently not known to us. This means there will not be further updates unless the source reappears.",
+
+  // Anchor link confirm
+  anchor_confirm_title: "External link!",
+  anchor_confirm_desc: "Are you sure that you want to open this link?",
+  link_protection_title: "Link protection",
+  link_protection_desc: "Prevent link that are accidentally clicked with a extra confirm dialog. This setting also affects ModConf.",
+
+  // modconf
+  compile_error: "Compile error!",
 };
