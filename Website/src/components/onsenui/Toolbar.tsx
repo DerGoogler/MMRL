@@ -7,7 +7,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Button from "@mui/material/Button";
 import { SvgIconTypeMap } from "@mui/material/SvgIcon";
 import { SxProps, Theme } from "@mui/material/styles";
-import Box from "@mui/material/Box";
+import { Box, BoxProps } from "@mui/material";
 
 interface HTMLToolbar {
   modifier?: string;
@@ -34,7 +34,7 @@ const HTMLToolbarButton = onsCustomElement<HTMLElement, HTMLToolbarButton>("ons-
 
 const ToolbarButton = React.forwardRef((props: HTMLToolbarButton, ref: React.Ref<HTMLElement>) => {
   const { icon, iconProps, keepLight, children, ...rest } = props;
-  return ( 
+  return (
     <HTMLToolbarButton ref={ref} style={{ fontFamily: "unset" }} {...rest}>
       {icon ? <Icon icon={icon} {...iconProps} keepLight={!keepLight ? true : keepLight} /> : <>{children}</>}
     </HTMLToolbarButton>
@@ -45,17 +45,20 @@ interface ToolbarElementsProps extends React.PropsWithChildren {
   sx?: SxProps<Theme>;
 }
 
-const ToolbarLeft = React.forwardRef<HTMLDivElement, ToolbarElementsProps>((props, ref) => {
-  return <Box ref={ref} component="div" {...props} className="left" children={props.children} />;
+const ToolbarLeft = React.forwardRef<HTMLDivElement, BoxProps<"div", ToolbarElementsProps>>((props, ref) => {
+  const { component = "div", ...rest } = props;
+  return <Box ref={ref} component={component} className="left" {...rest} />;
 });
 
-const ToolbarCenter = React.forwardRef<HTMLDivElement, ToolbarElementsProps>((props, ref) => (
-  <Box ref={ref} component="div" {...props} className="center" children={props.children} />
-));
+const ToolbarCenter = React.forwardRef<HTMLDivElement, BoxProps<"div", ToolbarElementsProps>>((props, ref) => {
+  const { component = "div", ...rest } = props;
+  return <Box ref={ref} component={component} className="center" {...rest} />;
+});
 
-const ToolbarRight = React.forwardRef<HTMLDivElement, ToolbarElementsProps>((props, ref) => (
-  <Box ref={ref} component="div" {...props} className="right" children={props.children} />
-));
+const ToolbarRight = React.forwardRef<HTMLDivElement, BoxProps<"div", ToolbarElementsProps>>((props, ref) => {
+  const { component = "div", ...rest } = props;
+  return <Box ref={ref} component={component} className="right" {...rest} />;
+});
 
 const ToolbarBackButton = React.forwardRef<HTMLElement, Omit<HTMLToolbarButton, "children">>((props, ref) => (
   <ToolbarButton ref={ref} icon={ArrowBackIcon} {...props} />

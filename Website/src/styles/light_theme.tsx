@@ -4523,7 +4523,7 @@ export const LightTheme = () => {
         },
         ".toolbar.toolbar--material + .page__background + .page__content": {
           top: `calc(56px + ${view.getWindowTopInsets()}px)`,
-          paddingBottom: view.getWindowBottomInsets(),
+          // paddingBottom: view.getWindowBottomInsets(),
           paddingTop: "0",
         },
         ".toolbar.toolbar--transparent + .page__background": {

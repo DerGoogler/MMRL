@@ -11,6 +11,21 @@ interface NativeView {
   setAppearanceLightNavigationBars(isLight: boolean): void;
   isAppearanceLightStatusBars(): boolean;
   setAppearanceLightStatusBars(isLight: boolean): void;
+  showSystemBars(type: number): void;
+  hideSystemBars(type: number): void;
+}
+
+class ViewInsetsCompat {
+  public static systemBars(): number {
+    return this.Type.STATUS_BARS | this.Type.NAVIGATION_BARS | this.Type.CAPTION_BAR;
+  }
+
+  public static Type = class {
+    public static readonly FIRST = 1;
+    public static readonly STATUS_BARS = this.FIRST;
+    public static readonly NAVIGATION_BARS = 1 << 1;
+    public static readonly CAPTION_BAR = 1 << 2;
+  };
 }
 
 class View extends Native<NativeView> {
@@ -50,6 +65,15 @@ class View extends Native<NativeView> {
     }
   }
 
+  public fullscreen(enable: boolean) {
+    if (this.isAndroid) {
+      if (enable) {
+        this.interface.hideSystemBars(ViewInsetsCompat.systemBars());
+      } else {
+        this.interface.showSystemBars(ViewInsetsCompat.systemBars());
+      }
+    }
+  }
   /**
    * Checks if the foreground of the navigation bar is set to light.
    * ```
@@ -132,4 +156,4 @@ class View extends Native<NativeView> {
 }
 
 const view: View = new View();
-export { view, View };
+export { view, View, ViewInsetsCompat };

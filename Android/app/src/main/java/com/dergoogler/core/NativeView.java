@@ -26,17 +26,20 @@ import java.util.ArrayList;
 
 public class NativeView {
 
-    private final MainActivity ctx;
+    private final Activity ctx;
     private Insets insets;
     private final WindowInsetsControllerCompat windowInsetsController;
 
-    public NativeView(MainActivity ctx, WebView wv) {
+    public NativeView(Activity ctx, WebView wv) {
         this.ctx = ctx;
         ViewCompat.setOnApplyWindowInsetsListener(wv, (v, windowInsets) -> {
             this.insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
             return WindowInsetsCompat.CONSUMED;
         });
-        this.windowInsetsController = WindowCompat.getInsetsController(this.ctx.getWindow(), wv);
+        this.windowInsetsController = WindowCompat.getInsetsController(ctx.getWindow(), wv);
+        WindowCompat.setDecorFitsSystemWindows(ctx.getWindow(), false);
+        this.windowInsetsController.setSystemBarsBehavior(WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
+
     }
 
     private int dpToPx(int dp) {
@@ -82,6 +85,14 @@ public class NativeView {
     @JavascriptInterface
     public void setAppearanceLightStatusBars(boolean isLight) {
         windowInsetsController.setAppearanceLightStatusBars(isLight);
+    }
+
+    private void hideSystemBars(int type) {
+        windowInsetsController.hide(type);
+    }
+
+    private void showSystemBars(int type) {
+        windowInsetsController.show(type);
     }
 
     @JavascriptInterface

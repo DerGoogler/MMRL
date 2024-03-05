@@ -1,10 +1,6 @@
 import { useTheme } from "@Hooks/useTheme";
-import { Box, Stack, Tooltip, Typography, createSvgIcon, styled } from "@mui/material";
-import { useActivity } from "../../hooks/useActivity";
-import Icon from "@Components/Icon";
-import LaunchRoundedIcon from "@mui/icons-material/LaunchRounded";
+import { Box, Stack, Tooltip, Typography, createSvgIcon } from "@mui/material";
 import { os } from "@Native/Os";
-import ModuleViewActivity from "@Activitys/ModuleViewActivity";
 import { useRepos } from "@Hooks/useRepos";
 import React from "react";
 import { createRegexURL } from "@Util/createRegexURL";
