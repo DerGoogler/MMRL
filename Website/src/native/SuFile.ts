@@ -70,6 +70,10 @@ class SuFile extends Native<NativeSuFile> {
     }
   }
 
+  public getPath(): string {
+    return this._path;
+  }
+
   public read(): string {
     if (this.isAndroid) {
       return this._file.read(this._readDefaultValue);
