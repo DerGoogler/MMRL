@@ -1,14 +1,16 @@
 import Sandbox from "@nyariv/sandboxjs";
 import { transform, registerPlugin } from "@babel/standalone";
 import { PluginObj } from "@babel/core";
-import { SuFile } from "./SuFile";
-import { View, view } from "./View";
-import { Shell, ShellClass } from "./Shell";
-import { OsClass, os } from "./Os";
-import { BuildConfig, BuildConfigClass } from "./BuildConfig";
-import { Build } from "./Build";
+import { SuFile } from "../SuFile";
+import { View, view } from "../View";
+import { Shell, ShellClass } from "../Shell";
+import { OsClass, os } from "../Os";
+import { BuildConfig, BuildConfigClass } from "../BuildConfig";
+import { Build } from "../Build";
 import { IScope } from "@nyariv/sandboxjs/dist/node/executor";
-import { Native } from "./Native";
+import { Native } from "../Native";
+import { IsoDocument } from "./IsoDocument";
+import { IsolatedEvalError } from "./IsolatedEvalError";
 
 class IsolatedEval<T = any> {
   private readonly _sandbox: Sandbox = new Sandbox();
@@ -18,10 +20,10 @@ class IsolatedEval<T = any> {
     YAML: require("yaml"),
     INI: require("ini"),
     console: console,
-    document: document,
+    document: new IsoDocument(),
     Toast: Toast,
     Object: Object,
-    Document: Document,
+    Document: IsoDocument,
     Response: Response,
     Element: Element,
     FileReader: FileReader,
@@ -37,6 +39,27 @@ class IsolatedEval<T = any> {
     BuildConfig: BuildConfig,
     Build: Build,
     Native: Native,
+    eval() {
+      throw new IsolatedEvalError(`"eval()" has been blacklisted.`);
+    },
+    atob() {
+      throw new IsolatedEvalError(`"atob()" has been blacklisted.`);
+    },
+    btoa() {
+      throw new IsolatedEvalError(`"btoa()" has been blacklisted.`);
+    },
+    encodeURI() {
+      throw new IsolatedEvalError(`"encodeURI()" has been blacklisted.`);
+    },
+    encodeURIComponent() {
+      throw new IsolatedEvalError(`"encodeURIComponent()" has been blacklisted.`);
+    },
+    decodeURI() {
+      throw new IsolatedEvalError(`"decodeURI()" has been blacklisted.`);
+    },
+    decodeURIComponent() {
+      throw new IsolatedEvalError(`"decodeURIComponent()" has been blacklisted.`);
+    },
   };
   private readonly _prototypeWhitelist = Sandbox.SAFE_PROTOTYPES;
 
@@ -47,6 +70,7 @@ class IsolatedEval<T = any> {
     this._prototypeWhitelist.set(Node, new Set());
     this._prototypeWhitelist.set(Object, new Set());
     this._prototypeWhitelist.set(Document, new Set());
+    this._prototypeWhitelist.set(IsoDocument, new Set());
     this._prototypeWhitelist.set(Response, new Set());
     this._prototypeWhitelist.set(Element, new Set());
     this._prototypeWhitelist.set(FileReader, new Set());

@@ -237,14 +237,6 @@
     "source": "https://www.npmjs.com/package/monaco-languageclient"
   },
   {
-    "name": "obfuscation-detector",
-    "author": null,
-    "license": "MIT",
-    "description": "Javascript obfuscation detector",
-    "version": "1.1.6",
-    "source": "https://www.npmjs.com/package/obfuscation-detector"
-  },
-  {
     "name": "object-assign",
     "author": "Sindre Sorhus",
     "license": "MIT",

@@ -115,3 +115,17 @@ Will print
 ```
 /data/adb/modules/<ID>/system/share/mmrl/config/<ID>/Component.jsx
 ```
+
+# Blacklisted functions
+
+- `eval()`
+- `document.write()`
+- `document.writeln()`
+- `decodeURI()`
+- `decodeURIComponent()`
+- `endodeURI()`
+- `encodeURIComponent()`
+- `atob()`
+- `bota()`
+
+These function will throw a `IsolatedEvalError` and your config will stop immediately after calling the function
