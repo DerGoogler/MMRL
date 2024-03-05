@@ -1,91 +1,128 @@
 import { useTheme } from "@Hooks/useTheme";
-import { Box, Stack, Tooltip, Typography, styled } from "@mui/material";
+import { Box, Stack, Tooltip, Typography, createSvgIcon, styled } from "@mui/material";
 import { useActivity } from "../../hooks/useActivity";
 import Icon from "@Components/Icon";
-import NorthEastRoundedIcon from "@mui/icons-material/NorthEastRounded";
 import LaunchRoundedIcon from "@mui/icons-material/LaunchRounded";
 import { os } from "@Native/Os";
-import SettingsActivity from "@Activitys/SettingsActivity";
-import RepoActivity from "@Activitys/RepoActivity";
-import { useSettings } from "@Hooks/useSettings";
 import ModuleViewActivity from "@Activitys/ModuleViewActivity";
-import ExtensionIcon from "@mui/icons-material/Extension";
 import { useRepos } from "@Hooks/useRepos";
-import FetchTextActivity from "@Activitys/FetchTextActivity";
 import React from "react";
+import { createRegexURL } from "@Util/createRegexURL";
+
+import {
+  VolunteerActivism,
+  LaunchRounded,
+  Extension,
+  GitHub,
+  Telegram,
+  YouTube,
+  X,
+  Facebook,
+  Instagram,
+  Email,
+  LocalPhone,
+} from "@mui/icons-material";
 
 interface AnchorProps {
   noIcon?: boolean;
   module?: string;
 }
 
-const StyledAnchor = styled("div")(({ theme }: { theme: MMRLTheme }) => {
-  const { scheme } = useTheme();
-  const { settings } = useSettings();
+const Xda = createSvgIcon(
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1026 1024" version="1.1">
+    <path d="M0 716.373333l138.24-162.986666-138.24-162.986667L66.133333 335.36l128 151.466667 128-151.466667 66.133334 55.04-138.24 162.986667 138.24 162.986666-66.133334 54.613334-128-152.32-128 152.32-66.133333-54.613334M1026.133333 725.333333a42.666667 42.666667 0 0 1-42.666666 42.666667h-128a85.333333 85.333333 0 0 1-85.333334-85.333333v-85.333334a85.333333 85.333333 0 0 1 85.333334-85.333333h85.333333v-85.333333h-170.666667V341.333333h213.333334a42.666667 42.666667 0 0 1 42.666666 42.666667m-85.333333 213.333333h-85.333333v85.333334h85.333333v-85.333334m-256 128a42.666667 42.666667 0 0 1-42.666667 42.666667h-128a85.333333 85.333333 0 0 1-85.333333-85.333333v-256a85.333333 85.333333 0 0 1 85.333333-85.333334h85.333334V213.333333h85.333333v512m-85.333333-42.666666v-256h-85.333334v256h85.333334z" />
+  </svg>,
+  "Xda"
+);
 
-  const s = {
-    cursor: "pointer",
-    color: theme.palette.text.link,
-    display: "flex",
-    alignItems: "center",
-    ":hover": {
-      textDecoration: "underline",
-    },
-  };
+function useIcon(link) {
+  if (createRegexURL("github", "com").test(link)) {
+    return GitHub;
+  } else if (createRegexURL(["xdaforums", "forum.xda-developers"], "com").test(link)) {
+    return Xda;
+  } else if (createRegexURL("(\\/[w-]+\\.)?t", "me").test(link)) {
+    return Telegram;
+  } else if (createRegexURL("paypal", ["me", "com"]).test(link)) {
+    return VolunteerActivism;
+  } else if (createRegexURL(["youtube", "youtu"], ["com", "be"]).test(link)) {
+    return YouTube;
+  } else if (createRegexURL(["x", "twitter"], "com").test(link)) {
+    return X;
+  } else if (createRegexURL("facebook", "com").test(link)) {
+    return Facebook;
+  } else if (createRegexURL(["instagram", "ig"], ["com", "me"]).test(link)) {
+    return Instagram;
+  } else if (/mailto:[\w-]+/i.test(link)) {
+    return Email;
+  } else if (/tel:\+?[\d-]+/i.test(link)) {
+    return LocalPhone;
+  } else {
+    return LaunchRounded;
+  }
+}
 
-  return {
-    display: "inline-block",
-    "& mmrl-anchor[href]": s,
-    "& mmrl-anchor[page]": s,
-  };
-});
+function increase_brightness(hex, percent) {
+  // strip the leading # if it's there
+  hex = hex.replace(/^\s*#|\s*$/g, "");
 
-function Anchor(props: JSX.IntrinsicElements["a"] & AnchorProps) {
+  // convert 3 char codes --> 6, e.g. `E0F` --> `EE00FF`
+  if (hex.length == 3) {
+    hex = hex.replace(/(.)/g, "$1$1");
+  }
+
+  var r = parseInt(hex.substr(0, 2), 16),
+    g = parseInt(hex.substr(2, 2), 16),
+    b = parseInt(hex.substr(4, 2), 16);
+
+  return (
+    "#" +
+    (0 | ((1 << 8) + r + ((256 - r) * percent) / 100)).toString(16).substr(1) +
+    (0 | ((1 << 8) + g + ((256 - g) * percent) / 100)).toString(16).substr(1) +
+    (0 | ((1 << 8) + b + ((256 - b) * percent) / 100)).toString(16).substr(1)
+  );
+}
+
+function Anchor(props) {
   const { theme } = useTheme();
   const { href, children, noIcon, module, color = theme.palette.text.link, target = "_blank" } = props;
 
   const { modules } = useRepos();
-  const { context } = useActivity();
+  const findModule = React.useMemo(() => modules.find((m) => m.id === module), [module]);
+  const icon = useIcon(href);
 
   const s = React.useMemo(
     () => ({
-      cursor: "pointer",
-      color: color,
-      display: "flex",
-      alignItems: "center",
-      ":hover": {
-        textDecorationColor: color,
-        textDecoration: "underline",
+      display: "inline-block",
+      "& span[href]": {
+        cursor: "pointer",
+        color: color,
+        display: "flex",
+        alignItems: "center",
+        fontWeight: "unset",
+        ":hover": {
+          background: `linear-gradient(${color}, ${color}) 0 100% / 0.1em 0.1em repeat-x`,
+        },
+        "& code": {
+          color: increase_brightness(color, 75.09),
+          backgroundColor: `${color}4d`,
+        },
       },
     }),
     [color]
   );
 
-  const findModule = React.useMemo(() => modules.find((m) => m.id === module), [module]);
-
-  const __href = !(module && findModule) ? href : module;
+  const __href = React.useMemo(() => (!(module && findModule) ? href : module), [href]);
 
   return (
-    <Tooltip title={__href} placement="bottom" arrow>
-      <Box
-        sx={{
-          display: "inline-block",
-          "& div[href]": s,
-          "& div[page]": s,
-        }}
-      >
+    <Tooltip title={__href} placement="bottom" arrow disableInteractive>
+      <Box sx={s}>
         <Stack
-          component={"div" as any}
+          component={"span" as any}
           direction="row"
           spacing={0.5}
           href={__href}
           onClick={() => {
             if (module && findModule) {
-              context.pushPage({
-                component: ModuleViewActivity,
-                key: "ModuleViewActivity",
-                extra: findModule,
-              });
             } else {
               if (__href) {
                 os.open(__href, {
@@ -109,9 +146,8 @@ function Anchor(props: JSX.IntrinsicElements["a"] & AnchorProps) {
             {children}
           </Typography>
           {!noIcon && (
-            <Typography
-              component={Icon}
-              icon={!(module && findModule) ? LaunchRoundedIcon : ExtensionIcon}
+            <Box
+              component={!(module && findModule) ? icon : Extension}
               sx={{
                 color: color,
                 fill: color,
@@ -122,73 +158,6 @@ function Anchor(props: JSX.IntrinsicElements["a"] & AnchorProps) {
         </Stack>
       </Box>
     </Tooltip>
-  );
-}
-
-interface OpenProps extends React.PropsWithChildren, AnchorProps {
-  page: string;
-  url?: string;
-  title?: string;
-}
-
-export function Open(props: OpenProps) {
-  const { page, children, noIcon } = props;
-  const { context } = useActivity();
-
-  return (
-    <StyledAnchor>
-      <Box
-        component="mmrl-anchor"
-        page={page}
-        onClick={() => {
-          switch (page) {
-            case "settings":
-              context.pushPage({
-                component: SettingsActivity,
-                key: "SettingsActivity",
-              });
-              break;
-
-            case "repos":
-              context.pushPage({
-                component: RepoActivity,
-                key: "RepoActivity",
-              });
-              break;
-            case "request":
-              if (!props.url) {
-                os.toast("Missing Url!", "short");
-              } else {
-                context.pushPage({
-                  component: FetchTextActivity,
-                  key: "FetchTextActivity",
-                  extra: {
-                    url: props.url,
-                    title: props.title,
-                  },
-                });
-              }
-              break;
-            default:
-              break;
-          }
-        }}
-      >
-        {children}
-        {!noIcon && (
-          <>
-            {" "}
-            <Icon
-              icon={NorthEastRoundedIcon}
-              sx={{
-                fontSize: 16,
-                marginLeft: "2px",
-              }}
-            />
-          </>
-        )}
-      </Box>
-    </StyledAnchor>
   );
 }
 

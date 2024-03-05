@@ -1,5 +1,5 @@
 import Markdown, { MarkdownToJSX, compiler } from "markdown-to-jsx";
-import Anchor, { Open } from "../dapi/Anchor";
+import Anchor from "../dapi/Anchor";
 import Video from "../dapi/Video";
 import React from "react";
 import { Alert, Divider, Paper, Stack, SxProps, Theme } from "@mui/material";
@@ -59,9 +59,6 @@ export const MarkdownOverrides: MarkdownToJSX.Overrides | undefined = {
   },
   a: {
     component: Anchor,
-  },
-  open: {
-    component: Open,
   },
   img: {
     component: Image,
