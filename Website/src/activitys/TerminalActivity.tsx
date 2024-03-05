@@ -123,7 +123,6 @@ const TerminalActivity = () => {
         MMRL_VER: BuildConfig.VERSION_CODE.toString(),
         NAME: id,
         URL: path,
-        ASH_STANDALONE: String(1),
         ROOTMANAGER: Shell.getRootManager(),
         ...__modFS,
       };
@@ -222,7 +221,6 @@ const TerminalActivity = () => {
         MMRL_VER: BuildConfig.VERSION_CODE.toString(),
         NAME: id,
         ZIPFILE: path,
-        ASH_STANDALONE: String(1),
         ROOTMANAGER: Shell.getRootManager(),
         ...__modFS,
       };
