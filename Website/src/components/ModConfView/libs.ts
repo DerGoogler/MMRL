@@ -20,6 +20,7 @@ import PicturePreviewActivity from "@Activitys/PicturePreviewActivity";
 import { useConfirm } from "material-ui-confirm";
 import { Markup } from "@Components/Markdown";
 import { DialogEditTextListItem } from "@Components/DialogEditTextListItem";
+import { SearchActivity } from "@Activitys/SearchActivity";
 
 export const libraries = [
   {
@@ -53,6 +54,7 @@ export const libraries = [
   {
     name: "@mmrl/activity",
     __esModule: {
+      SearchActivity: SearchActivity,
       PicturePreviewActivity: PicturePreviewActivity,
     },
   },
@@ -93,5 +95,9 @@ export const libraries = [
       ConfigProvider: ConfigProvider,
       StringsProvider: StringsProvider,
     },
+  },
+  {
+    name: "default-composer",
+    __esModule: require("default-composer"),
   },
 ];

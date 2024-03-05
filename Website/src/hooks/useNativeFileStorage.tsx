@@ -1,5 +1,5 @@
 import { SetStateAction, useCallback, useEffect, useState } from "react";
-import { useLog } from "./native/useLog";
+import { defaultComposer } from "default-composer";
 import { SuFile } from "@Native/SuFile";
 import INI from "ini";
 import YAML from "yaml";
@@ -117,7 +117,7 @@ export const ConfigProvider = (props: ConfigProvider) => {
 
   const contextValue = React.useMemo<ConfigContext>(
     () => [
-      config,
+      defaultComposer<object>(initialConfig, config),
       (name, state) => {
         setConfig((prev) => {
           const newValue = state instanceof Function ? state(prev[name]) : state;
