@@ -4,7 +4,7 @@
 
 ## Available libaries
 
-See [`libs.ts`](https://github.com/DerGoogler/MMRL/blob/master/Website/src/components/ConfigureView/libs.ts) to see all usable modules
+See [`libs.ts`](https://github.com/DerGoogler/MMRL/blob/master/Website/src/components/ModConfView/libs.ts) to see all usable modules
 
 ## Diff. between `require` and `import`
 
