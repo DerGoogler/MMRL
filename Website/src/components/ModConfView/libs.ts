@@ -21,11 +21,23 @@ import { useConfirm } from "material-ui-confirm";
 import { Markup } from "@Components/Markdown";
 import { DialogEditTextListItem } from "@Components/DialogEditTextListItem";
 import { SearchActivity } from "@Activitys/SearchActivity";
+import React from "react";
 
 export const libraries = [
   {
     name: "react",
-    __esModule: require("react"),
+    __esModule: {
+      ...require("react"),
+      createElement(type: any, props: any, ...children: any[]) {
+        switch (type) {
+          // prevents webview url change
+          case "a":
+            return React.createElement(Anchor, props, ...children);
+          default:
+            return React.createElement(type, props, ...children);
+        }
+      },
+    },
   },
   {
     name: "@mui/material",
