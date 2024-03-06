@@ -22,6 +22,7 @@ import { Markup } from "@Components/Markdown";
 import { DialogEditTextListItem } from "@Components/DialogEditTextListItem";
 import { SearchActivity } from "@Activitys/SearchActivity";
 import React from "react";
+import { withRequireNewVersion } from "../../hoc/withRequireNewVersion";
 
 export const libraries = [
   {
@@ -68,6 +69,13 @@ export const libraries = [
     __esModule: {
       SearchActivity: SearchActivity,
       PicturePreviewActivity: PicturePreviewActivity,
+    },
+  },
+  {
+    // high order components
+    name: "@mmrl/hoc",
+    __esModule: {
+      withRequireNewVersion: withRequireNewVersion,
     },
   },
   {
