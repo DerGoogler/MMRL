@@ -97,3 +97,10 @@ hello.create(SuFile.NEW_FOLDER)
 // create folder with parent folders
 hello.create(SuFile.NEW_FOLDERS) 
 ```
+
+## Access native methods
+
+```js
+const native = new SuFile.create("/sdcard/hello.txt")
+native.interface
+```

@@ -11,14 +11,36 @@ import { Image } from "@mmrl/ui";
 ## Usage
 
 ```js
-function App() {
-  // type is actually not required
-  return (
-    <Page>
-      <Image src="/sdcard/image.png" type="image/png" />
-    </Page>
-  );
+import React from "react"
+import { useActivity } from "@mmrl/hooks"
+import { Image, Page, Toolbar } from "@mmrl/ui";
+
+function RenderToolbar() {
+    const { context, extra } = useActivity()
+    const { title = "Default" } = extra
+    return (
+        <Toolbar modifier="noshadow">
+            <Toolbar.Left>
+                <Toolbar.BackButton onClick={context.popPage} />
+            </Toolbar.Left>
+            <Toolbar.Center>{title}</Toolbar.Center>
+        </Toolbar>
+    )
 }
+
+function App() {
+    return (
+        <Page renderToolbar={RenderToolbar}>
+            <Image src="/sdcard/image.png" type="image/png" />
+            <br />
+            <Image src="https://picsum.photos/536/354" />
+            <h1>Disable opening</h1>
+            <Image src="https://picsum.photos/536/354" noOpen />
+        </Page>
+    );
+}
+
+export default App
 ```
 
 ## API
