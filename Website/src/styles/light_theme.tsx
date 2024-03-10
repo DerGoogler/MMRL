@@ -4321,6 +4321,10 @@ export const LightTheme = () => {
           zIndex: "1",
         },
         ".action-sheet--material": {
+          paddingBottom: view.getWindowBottomInsets(),
+          backgroundColor: theme.palette.background.default,
+          borderTop: `1px solid ${theme.palette.divider}`,
+          borderRadius: `${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0px 0px`,
           left: "0",
           right: "0",
           bottom: "0",
@@ -4330,18 +4334,18 @@ export const LightTheme = () => {
           fontFamily: '"Roboto", "Noto", sans-serif',
           webkitFontSmoothing: "antialiased",
           fontWeight: "400",
-          borderRadius: "0",
           backgroundImage: "none",
           textAlign: "left",
           height: "56px",
           lineHeight: "56px",
           fontSize: "16px",
           padding: "0 0 0 16px",
-          color: "#686868",
-          backgroundColor: "white",
+          borderRadius: `${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0px 0px`,
+          color: theme.palette.text.primary,
+          backgroundColor: theme.palette.background.default,
         },
         ".action-sheet-title--material:first-of-type": {
-          borderRadius: "0",
+          borderRadius: `${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0px 0px`,
         },
         ".action-sheet-button--material": {
           fontFamily: '"Roboto", "Noto", sans-serif',
@@ -4354,20 +4358,19 @@ export const LightTheme = () => {
           textAlign: "left",
           fontSize: "16px",
           padding: "0 0 0 16px",
-          color: "#686868",
-
-          backgroundColor: "white",
+          color: theme.palette.text.primary,
+          backgroundColor: theme.palette.background.default,
         },
         ".action-sheet-button--material:first-of-type": {
-          borderRadius: "0",
+          borderRadius: `${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0px 0px`,
         },
         ".action-sheet-button--material:nth-last-of-type(2)": {
-          borderRadius: "0",
+          borderRadius: 0,
         },
         ".action-sheet-button--material:last-of-type": {
           margin: "0",
-          borderRadius: "8px",
-          backgroundColor: "white",
+          borderRadius: 0,
+          backgroundColor: theme.palette.background.default,
         },
         ".action-sheet-icon--material": {
           display: "inline-block",
@@ -4380,7 +4383,7 @@ export const LightTheme = () => {
           textAlign: "center",
         },
         ".action-sheet-mask--material": {
-          backgroundColor: "rgba(0, 0, 0, 0.2)",
+          backgroundColor: "rgba(0, 0, 0, 0.5)",
         },
         ".card": {
           fontFamily: '-apple-system, "Helvetica Neue", "Helvetica", "Arial", "Lucida Grande", sans-serif',

@@ -23,6 +23,8 @@ import { useStrings } from "@Hooks/useStrings";
 import { useActivity } from "@Hooks/useActivity";
 import ModuleViewActivity from "@Activitys/ModuleViewActivity";
 import { useSettings } from "@Hooks/useSettings";
+import { GestureDetector } from "@Components/onsenui/GestureDetector";
+import ons from "onsenui";
 
 interface AnchorProps {
   noIcon?: boolean;
@@ -98,7 +100,7 @@ function Anchor(props) {
   const s = React.useMemo(
     () => ({
       display: "inline-block",
-      "& span[href]": {
+      "& ons-gesture-detector[href]": {
         cursor: "pointer",
         color: color,
         display: "flex",
@@ -131,11 +133,25 @@ function Anchor(props) {
     <Tooltip title={__href} placement="bottom" arrow disableInteractive>
       <Box sx={s}>
         <Stack
-          component={"span" as any}
+          component={GestureDetector as any}
           direction="row"
           spacing={0.5}
           href={__href}
-          onClick={() => {
+          // onHold={() => {
+          //   ons
+          //     .openActionSheet({
+          //       cancelable: true,
+          //       buttons: ["Copy link"],
+          //     })
+          //     .then((index) => {
+          //       switch (index) {
+          //         case 0:
+          //           console.log("link copied");
+          //           break;
+          //       }
+          //     });
+          // }}
+          onTap={() => {
             if (__href && module && findModule) {
               context.pushPage({
                 component: ModuleViewActivity,

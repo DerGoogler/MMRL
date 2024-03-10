@@ -1,27 +1,29 @@
 import "onsenui/esm/elements/ons-gesture-detector";
 import onsCustomElement from "@Util/onsCustomElement";
 
+export type HTMLGestureDetectorEvent = (e?: Event) => void;
+
 interface HTMLGestureDetector extends React.PropsWithChildren {
-  onDrag?: () => void;
-  onDragLeft?: () => void;
-  onDragRight?: () => void;
-  onDragUp?: () => void;
-  onDragDown?: () => void;
-  onHold?: () => void;
-  onRelease?: () => void;
-  onSwipe?: (ev?: any) => void;
-  onSwipeLeft?: () => void;
-  onSwipeRight?: () => void;
-  onSwipeUp?: () => void;
-  onSwipeDown?: () => void;
-  onTap?: () => void;
-  onDoubleTap?: () => void;
-  onPinch?: () => void;
-  onPinchIn?: () => void;
-  onPinchOut?: () => void;
-  onTouch?: () => void;
-  onTransform?: () => void;
-  onRotate?: () => void;
+  onDrag?: HTMLGestureDetectorEvent;
+  onDragLeft?: HTMLGestureDetectorEvent;
+  onDragRight?: HTMLGestureDetectorEvent;
+  onDragUp?: HTMLGestureDetectorEvent;
+  onDragDown?: HTMLGestureDetectorEvent;
+  onHold?: HTMLGestureDetectorEvent;
+  onRelease?: HTMLGestureDetectorEvent;
+  onSwipe?: HTMLGestureDetectorEvent;
+  onSwipeLeft?: HTMLGestureDetectorEvent;
+  onSwipeRight?: HTMLGestureDetectorEvent;
+  onSwipeUp?: HTMLGestureDetectorEvent;
+  onSwipeDown?: HTMLGestureDetectorEvent;
+  onTap?: HTMLGestureDetectorEvent;
+  onDoubleTap?: HTMLGestureDetectorEvent;
+  onPinch?: HTMLGestureDetectorEvent;
+  onPinchIn?: HTMLGestureDetectorEvent;
+  onPinchOut?: HTMLGestureDetectorEvent;
+  onTouch?: HTMLGestureDetectorEvent;
+  onTransform?: HTMLGestureDetectorEvent;
+  onRotate?: HTMLGestureDetectorEvent;
 }
 
 export const GestureDetector = onsCustomElement<HTMLElement, HTMLGestureDetector>("ons-gesture-detector")({});
