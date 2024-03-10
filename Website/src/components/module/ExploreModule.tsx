@@ -10,7 +10,7 @@ import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 
 import { Verified } from "@mui/icons-material";
 
-import ModuleViewActivity from "@Activitys/ModuleViewActivity";
+import ModuleViewActivity from "@Activitys/ModuleViewActivity/index";
 
 import { useFormatDate } from "@Hooks/useFormatDate";
 import { useActivity } from "@Hooks/useActivity";

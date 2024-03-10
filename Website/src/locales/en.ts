@@ -76,6 +76,8 @@ export const en = {
   shading_title: "Apply custom shading",
   shading_desc: "Use with care, if to dark you may not able to see the UI anymore.",
   module: "Module",
+  swipeable_tabs: "Swipeable tabs",
+  swipeable_tabs_subtitle: "Make all tabs swipeable. This make break user experience",
   low_quality_module: "Low quality module",
   low_quality_modules: "Low quality modules",
   low_quality_modules_subtitle: "Shows a alert below the module if it has a low quality",

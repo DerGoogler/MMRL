@@ -164,6 +164,7 @@ export interface StorageDeclaration {
   term_scroll_bottom: boolean;
   term_scroll_behavior: { name: string; value: ScrollBehavior };
   link_protection: boolean;
+  swipeable_tabs: boolean;
 }
 
 export const termScrollBehaviors: StorageDeclaration["term_scroll_behavior"][] = [
@@ -218,6 +219,7 @@ export const SettingsProvider = (props: React.PropsWithChildren) => {
       term_scroll_bottom: true,
       term_scroll_behavior: termScrollBehaviors[0],
       link_protection: true,
+      swipeable_tabs: false,
     }),
     []
   );

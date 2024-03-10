@@ -33,9 +33,11 @@ import Stack from "@mui/material/Stack";
 import Chip from "@mui/material/Chip";
 import { ModConfView } from "@Components/ModConfView";
 import ListItemText from "@mui/material/ListItemText";
+import { useSettings } from "@Hooks/useSettings";
 
 const MainApplication = () => {
   const { strings } = useStrings();
+  const { settings } = useSettings();
   const { modFS } = useModFS();
   const { context } = useActivity();
   const { modules } = useRepos();
@@ -259,7 +261,7 @@ const MainApplication = () => {
       <Tabbar
         modifier="noshadow"
         hideTabs={!os.isAndroid}
-        swipeable={false}
+        swipeable={settings.swipeable_tabs}
         position={"top"}
         index={index}
         onPreChange={(event) => {

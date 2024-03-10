@@ -21,7 +21,7 @@ import {
 } from "@mui/icons-material";
 import { useStrings } from "@Hooks/useStrings";
 import { useActivity } from "@Hooks/useActivity";
-import ModuleViewActivity from "@Activitys/ModuleViewActivity";
+import ModuleViewActivity from "@Activitys/ModuleViewActivity/index";
 import { useSettings } from "@Hooks/useSettings";
 import { GestureDetector } from "@Components/onsenui/GestureDetector";
 import ons from "onsenui";

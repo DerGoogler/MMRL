@@ -77,6 +77,16 @@ function SettingsActivity() {
           )}
 
           <ListPickerItem id="accent-color" targetSetting="accent_scheme" title={strings("accent_color")} contentMap={accent_colors} /> */}
+          <ListItem>
+            <ListItemText primary={strings("swipeable_tabs")} secondary={strings("swipeable_tabs_subtitle")} />
+            <Switch
+              edge="end"
+              onChange={(e) => {
+                setSettings("swipeable_tabs", e.target.checked);
+              }}
+              checked={settings.swipeable_tabs}
+            />
+          </ListItem>
           <ListPickerItem id="language" targetSetting="language" title={strings("language")} contentMap={availableLangs} />
         </List>
 
@@ -87,7 +97,7 @@ function SettingsActivity() {
             <ListItemText primary={strings("link_protection_title")} secondary={strings("link_protection_desc")} />
             <Switch
               edge="end"
-              onChange={(e: any) => {
+              onChange={(e) => {
                 setSettings("link_protection", e.target.checked);
               }}
               checked={settings.link_protection}
@@ -102,7 +112,7 @@ function SettingsActivity() {
             <ListItemText primary={strings("low_quality_modules")} secondary={strings("low_quality_modules_subtitle")} />
             <Switch
               edge="end"
-              onChange={(e: any) => {
+              onChange={(e) => {
                 setSettings("_low_quality_module", e.target.checked);
               }}
               checked={settings._low_quality_module}
@@ -112,7 +122,7 @@ function SettingsActivity() {
             <ListItemText primary={strings("invaild_modules")} secondary={strings("invaild_modules_subtitle")} />
             <Switch
               edge="end"
-              onChange={(e: any) => {
+              onChange={(e) => {
                 setSettings("_invald_module", e.target.checked);
               }}
               checked={settings._invald_module}
@@ -128,7 +138,7 @@ function SettingsActivity() {
                 <ListItemText primary={strings("scroll_to_bottom")} secondary={strings("scroll_to_bottom_subtitle")} />
                 <Switch
                   edge="end"
-                  onChange={(e: any) => {
+                  onChange={(e) => {
                     setSettings("term_scroll_bottom", e.target.checked);
                   }}
                   checked={settings.term_scroll_bottom}
@@ -151,7 +161,7 @@ function SettingsActivity() {
             <ListItemText id="switch-list-label-eruda" primary={strings("eruda_console")} secondary={strings("eruda_console_subtitle")} />
             <Switch
               edge="end"
-              onChange={(e: any) => {
+              onChange={(e) => {
                 setSettings("eruda_console_enabled", e.target.checked);
               }}
               checked={settings.eruda_console_enabled}
