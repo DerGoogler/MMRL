@@ -55,7 +55,7 @@ export const RepoProvider = (props: React.PropsWithChildren) => {
       website: "https://mmrl.dergoogler.com",
       support: "https://github.com/Googlers-Repo/gmr/issues",
       donate: "https://github.com/sponsors/DerGoogler",
-      submission: null,
+      submission: "https://github.com/Googlers-Repo/gmr/issues/new?assignees=&labels=module&projects=&template=submission.yml&title=%5BModule%5D%3A+",
       base_url: "https://gr.dergoogler.com/gmr/",
       max_num: 3,
       enable_log: true,
