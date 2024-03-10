@@ -547,8 +547,8 @@ const ModuleViewActivity = () => {
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
           <List>
-            {versions.map((version) => (
-              <VersionItem id={id} version={version} />
+            {versions.toReversed().map((version, index) => (
+              <VersionItem id={id} version={version} index={index} />
             ))}
           </List>
         </CustomTabPanel>
@@ -635,14 +635,16 @@ const ModuleViewActivity = () => {
 };
 
 interface VersionItemProps {
+  index: number;
   id: string;
   version: Version;
 }
 
-const VersionItem = React.memo<VersionItemProps>(({ id, version }) => {
+const VersionItem = React.memo<VersionItemProps>(({ id, version, index }) => {
   const ts = useFormatDate(version.timestamp);
   const { context, extra } = useActivity<Module>();
   const confirm = useConfirm();
+  const { strings } = useStrings();
   const { theme } = useTheme();
 
   const { track } = extra;
@@ -696,7 +698,15 @@ const VersionItem = React.memo<VersionItemProps>(({ id, version }) => {
         </Stack>
       }
     >
-      <ListItemText primary={versionName} secondary={ts} />
+      <ListItemText
+        primary={
+          <Typography component={Stack} variant="body1" direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
+            <span>{versionName}</span>
+            {index === 0 && <Chip variant="outlined" color="success" size="small" label={strings("latest")} />}
+          </Typography>
+        }
+        secondary={ts}
+      />
     </ListItem>
   );
 });

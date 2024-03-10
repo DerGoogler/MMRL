@@ -1,4 +1,5 @@
 export const en = {
+  latest: "Latest",
   security: "Security",
   changelog: "Changelog",
   new: "New",
