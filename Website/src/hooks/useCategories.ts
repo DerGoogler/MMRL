@@ -35,11 +35,11 @@ export function useCategories(input?: arr<str>) {
     "Advanced Audio Mods",
     "Custom Kernels",
     "Boot Animation",
-    "Privacy Enhancements"
+    "Privacy Enhancements",
   ];
   if (input) {
-    return categories.filter((i) => input.indexOf(i) !== -1);
+    return { allCategories: categories, filteredCategories: categories.filter((i) => input.indexOf(i) !== -1) };
   } else {
-    return [];
+    return { allCategories: categories, filteredCategories: [] };
   }
 }

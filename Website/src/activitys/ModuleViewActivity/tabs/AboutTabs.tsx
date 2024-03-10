@@ -22,85 +22,81 @@ const AboutTab = () => {
   const { id, name, version, versionCode, description, author, versions, track } = extra;
 
   return (
-    <Page>
-      <Page.RelativeContent zeroMargin>
-        <List>
-          {track.verified && (
-            <ListItem>
-              <ListItemIcon>
-                <VerifiedIcon />
-              </ListItemIcon>
-              <ListItemText primary={strings("verified_module")} secondary={strings("verified_module_desc")} />
-            </ListItem>
-          )}
+    <List>
+      {track.verified && (
+        <ListItem>
+          <ListItemIcon>
+            <VerifiedIcon />
+          </ListItemIcon>
+          <ListItemText primary={strings("verified_module")} secondary={strings("verified_module_desc")} />
+        </ListItem>
+      )}
 
-          {track.license && (
-            <ListItemButton
-              onClick={() => {
-                fetch(`https://raw.githubusercontent.com/spdx/license-list-data/main/website/${track.license}.json`)
-                  .then((res) => {
-                    if (res.status === 200) {
-                      return res.json();
-                    } else {
-                      throw new Error("Fetching license failed");
-                    }
-                  })
-                  .then((json: LicenseSPX) => {
-                    context.pushPage({
-                      component: FetchTextActivity,
-                      key: "license_" + track.license,
-                      extra: {
-                        raw_data: json.licenseText,
-                        modulename: json.name,
-                      },
-                    });
-                  })
-                  .catch((err) => {});
-              }}
-            >
-              <ListItemIcon>
-                <FormatAlignLeftIcon />
-              </ListItemIcon>
-              <ListItemText primary={strings("license")} secondary={track.license} />
-            </ListItemButton>
-          )}
-
-          {track.support && (
-            <ListItemButton
-              onClick={() => {
-                os.open(track.support, {
-                  target: "_blank",
-                  features: {
-                    color: theme.palette.primary.main,
+      {track.license && (
+        <ListItemButton
+          onClick={() => {
+            fetch(`https://raw.githubusercontent.com/spdx/license-list-data/main/website/${track.license}.json`)
+              .then((res) => {
+                if (res.status === 200) {
+                  return res.json();
+                } else {
+                  throw new Error("Fetching license failed");
+                }
+              })
+              .then((json: LicenseSPX) => {
+                context.pushPage({
+                  component: FetchTextActivity,
+                  key: "license_" + track.license,
+                  extra: {
+                    raw_data: json.licenseText,
+                    modulename: json.name,
                   },
                 });
-              }}
-            >
-              <ListItemIcon>
-                <BugReportIcon />
-              </ListItemIcon>
-              <ListItemText primary="Issues" secondary={track.support} />
-            </ListItemButton>
-          )}
+              })
+              .catch((err) => {});
+          }}
+        >
+          <ListItemIcon>
+            <FormatAlignLeftIcon />
+          </ListItemIcon>
+          <ListItemText primary={strings("license")} secondary={track.license} />
+        </ListItemButton>
+      )}
 
-          <ListItemButton
-            onClick={() => {
-              os.open(track.source, {
-                target: "_blank",
-                features: {
-                  color: theme.palette.primary.main,
-                },
-              });
-            }}
-          >
-            <ListItemIcon>
-              <GitHubIcon />
-            </ListItemIcon>
-            <ListItemText primary={strings("source")} secondary={track.source} />
-          </ListItemButton>
-        </List>
-      </Page.RelativeContent>
-    </Page>
+      {track.support && (
+        <ListItemButton
+          onClick={() => {
+            os.open(track.support, {
+              target: "_blank",
+              features: {
+                color: theme.palette.primary.main,
+              },
+            });
+          }}
+        >
+          <ListItemIcon>
+            <BugReportIcon />
+          </ListItemIcon>
+          <ListItemText primary="Issues" secondary={track.support} />
+        </ListItemButton>
+      )}
+
+      <ListItemButton
+        onClick={() => {
+          os.open(track.source, {
+            target: "_blank",
+            features: {
+              color: theme.palette.primary.main,
+            },
+          });
+        }}
+      >
+        <ListItemIcon>
+          <GitHubIcon />
+        </ListItemIcon>
+        <ListItemText primary={strings("source")} secondary={track.source} />
+      </ListItemButton>
+    </List>
   );
 };
 

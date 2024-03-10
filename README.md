@@ -60,6 +60,7 @@ Introducing Magisk Module Repo Loader (MMRL) - the ultimate module manager for M
 
 # Credits & Thanks
 
+- [tabler/tabler-icons](https://github.com/tabler/tabler-icons.git)
 - [Googlers-Repo/node-native](https://github.com/Googlers-Repo/node-native)
 - [topjohnwu/libsu](https://github.com/topjohnwu/libsu)
 - [Fox2Code/FoxMagiskModuleManager](https://github.com/Fox2Code/FoxMagiskModuleManager)

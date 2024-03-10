@@ -15,8 +15,8 @@ import { ModFSProvider } from "@Hooks/useModFS";
 import { MMRLApp } from "./custom-elements/app";
 import { MMRLAnchor } from "./custom-elements/anchor";
 
-import "onsenui/css/onsenui.css";
-import "@Styles/default.scss";
+import "@Styles/onsenui.scss";
+import "@Styles/default.scss"; 
 import { strs } from "./locales/declaration";
 import { SuFile } from "@Native/SuFile";
 

@@ -5,6 +5,10 @@ export const Extra = React.createContext({});
 
 export interface IntentPusher<E = {}, P = {}> {
   key: string;
+  /**
+   * Prevents the activity from being memoized
+   */
+  noMemo?: boolean;
   component: React.FunctionComponent<P> | React.ComponentType<P>;
   options?: any;
   extra?: E;

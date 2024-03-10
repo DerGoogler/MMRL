@@ -121,7 +121,7 @@ const MainActivity = (): JSX.Element => {
 
   const pushPage = <E, P>(props: IntentPusher<E, P>): void => {
     const route = {
-      component: React.memo(props.component),
+      component: !props.noMemo ? React.memo(props.component) : props.component,
       props: {
         key: props.component.name || props.key,
       },

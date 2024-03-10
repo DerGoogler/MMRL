@@ -23,15 +23,11 @@ const VersionsTab = () => {
   const { id, versions } = extra;
 
   return (
-    <Page>
-      <Page.RelativeContent zeroMargin>
-        <List>
-          {versions.toReversed().map((version, index) => (
-            <VersionItem id={id} version={version} index={index} />
-          ))}
-        </List>
-      </Page.RelativeContent>
-    </Page>
+    <List>
+      {versions.toReversed().map((version, index) => (
+        <VersionItem id={id} version={version} index={index} />
+      ))}
+    </List>
   );
 };
 

@@ -22,11 +22,35 @@ import { useConfirm } from "material-ui-confirm";
 import Tooltip from "@mui/material/Tooltip";
 import { view } from "@Native/View";
 import { useModFS } from "@Hooks/useModFS";
-import { Tabbar, TabbarRenderTab } from "@Components/onsenui/Tabbar";
 import { OverviewTab } from "./tabs/OverviewTab";
 import { VersionsTab } from "./tabs/VersionsTab";
 import { AboutTab } from "./tabs/AboutTabs";
 import { useSettings } from "@Hooks/useSettings";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+
+function a11yProps(index: number) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
+
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
+
+function CustomTabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div role="tabpanel" hidden={value !== index} id={`simple-tabpanel-${index}`} aria-labelledby={`simple-tab-${index}`} {...other}>
+      {value === index && <Box>{children}</Box>}
+    </div>
+  );
+}
 
 const ModuleViewActivity = () => {
   const { strings } = useStrings();
@@ -100,24 +124,9 @@ const ModuleViewActivity = () => {
   const hasInstallTools = SuFile.exist(`${modFS("MMRLINI")}/module.prop`);
 
   const boxRef = React.useRef<HTMLDivElement | null>(null);
-
-  const [index, setIndex] = React.useState(0);
-
-  const renderTabs = (): TabbarRenderTab[] => {
-    return [
-      {
-        content: <OverviewTab />,
-        tab: <Tabbar.Tab label={strings("overview")} />,
-      },
-      {
-        content: <VersionsTab />,
-        tab: <Tabbar.Tab label={strings("versions")} />,
-      },
-      {
-        content: <AboutTab />,
-        tab: <Tabbar.Tab label={strings("about")} />,
-      },
-    ];
+  const [value, setValue] = React.useState(0);
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
   };
 
   return (
@@ -301,25 +310,23 @@ const ModuleViewActivity = () => {
             </Stack>
           </Stack>
         </Box>
+        <Tabs value={value} onChange={handleChange} indicatorColor="secondary" textColor="inherit" variant="fullWidth">
+          <Tab label={strings("overview")} {...a11yProps(0)} />
+          <Tab label={strings("versions")} {...a11yProps(1)} />
+          <Tab label={strings("about")} {...a11yProps(2)} />
+        </Tabs>
       </Box>
-      <Tabbar
-        sx={{
-          position: "unset",
-          "& .tabbar--top__content": {
-            top: boxRef.current ? boxRef.current.clientHeight + 49 : 0,
-          },
-        }}
-        modifier="noshadow"
-        swipeable={settings.swipeable_tabs}
-        position="top"
-        index={index}
-        onPreChange={(event) => {
-          if (event.index != index) {
-            setIndex(event.index);
-          }
-        }}
-        renderTabs={renderTabs}
-      />
+      <Page.RelativeContent>
+        <CustomTabPanel value={value} index={0}>
+          <OverviewTab />
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={1}>
+          <VersionsTab />
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={2}>
+          <AboutTab />
+        </CustomTabPanel>
+      </Page.RelativeContent>
     </Page>
   );
 };

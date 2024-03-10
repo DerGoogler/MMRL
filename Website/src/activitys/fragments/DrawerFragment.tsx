@@ -14,6 +14,7 @@ import { dapiSample } from "@Util/dapi-sample";
 import ModFSActivity from "@Activitys/ModFSActivity";
 import ModConfPlaygroundActivity from "@Activitys/ModConfPlaygroundActivity";
 import LicensesActivity from "@Activitys/LicensesActivity";
+import { SubmitModuleActivity } from "@Activitys/SubmitModuleActivity";
 
 type Props = {
   renderToolbar: () => JSX.Element;
@@ -70,6 +71,19 @@ export const DrawerFragment = (props: Props) => {
       <Divider />
 
       <List subheader={<ListSubheader>Components</ListSubheader>}>
+        <ListItemButton
+          onClick={() => {
+            pushPage({
+              noMemo: true,
+              component: SubmitModuleActivity,
+              key: "SubmitModuleActivity",
+              extra: {},
+            });
+            hide();
+          }}
+        >
+          <ListItemText primary={strings("submit_module")} />
+        </ListItemButton>
         <ListItemButton
           onClick={() => {
             pushPage<PlaygroundExtra, any>({
