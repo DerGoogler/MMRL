@@ -317,14 +317,6 @@
     "source": "https://www.npmjs.com/package/react-render-tools"
   },
   {
-    "name": "react-router-dom",
-    "author": null,
-    "license": "MIT",
-    "description": "Declarative routing for React web applications",
-    "version": "6.21.2",
-    "source": "https://www.npmjs.com/package/react-router-dom"
-  },
-  {
     "name": "react-syntax-highlighter",
     "author": null,
     "license": "MIT",

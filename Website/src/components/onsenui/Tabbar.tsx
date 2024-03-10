@@ -41,7 +41,7 @@ const _Tabbar = React.forwardRef<HTMLElement, HTMLTabbar>((props, ref) => {
 
   const tabs = renderTabs(props.activeIndex, ref);
 
-  useEffect(() => {
+  React.useEffect(() => {
     // visible is deprecated in favour of hideTabs, but if visible is defined and
     // hideTabs is not, we use its negation as the value of hideTabs
     if (hideTabs === undefined && visible !== undefined) {

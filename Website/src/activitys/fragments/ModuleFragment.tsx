@@ -39,6 +39,7 @@ export interface ModuleFragmentProps {
   id: "explore" | "update" | "local";
   modules: Array<Module>;
   group?: FlatListProps<Module>["group"];
+  disableNoInternet?: boolean;
   renderItem: renderFunc<Module>;
   renderFixed?: RenderFunction;
 }
@@ -86,7 +87,7 @@ const ModuleFragment = React.memo<ModuleFragmentProps>((props) => {
   const renderItem = React.useCallback<renderFunc<Module>>((m, k) => props.renderItem(m, k), []);
   const [filter, _filter, setFilter] = useModuleFilter(`${props.id}_filter`);
 
-  if (!isNetworkAvailable) {
+  if (!isNetworkAvailable && !props.disableNoInternet) {
     return (
       <Page>
         <MissingInternet />

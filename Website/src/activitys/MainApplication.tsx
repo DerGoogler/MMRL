@@ -72,6 +72,7 @@ const MainApplication = () => {
             {
               content: (
                 <ModuleFragment
+                  disableNoInternet
                   id="local"
                   modules={localModules}
                   renderItem={(module, key) => <DeviceModule key={key} module={module} />}
