@@ -74,7 +74,7 @@
     "react-syntax-highlighter": "^15.5.0",
     "react-zoom-pan-pinch": "^3.3.0",
     "underscore": "^1.13.6",
-    "usehooks-ts": "^2.14.0",
+    "usehooks-ts": "^3.0.1",
     "yaml": "^2.3.4"
   },
   "devDependencies": {
