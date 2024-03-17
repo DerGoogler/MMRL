@@ -1,12 +1,24 @@
 import React from "react";
-import { TextField, Autocomplete, Card, Chip, Stack, Avatar, Typography, CardContent } from "@mui/material";
+import {
+  TextField,
+  Autocomplete,
+  Card,
+  Chip,
+  Stack,
+  Avatar,
+  Typography,
+  CardContent,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+} from "@mui/material";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import { Page } from "@Components/onsenui/Page";
 import { useCategories } from "@Hooks/useCategories";
 import { useActivity } from "@Hooks/useActivity";
 import { useStrings } from "@Hooks/useStrings";
-import { useNativeStorage } from "@Hooks/useNativeStorage";
-import { Markup } from "@Components/Markdown";
+import FlatList, { FlatListProps } from "flatlist-react";
 import { useTheme } from "@Hooks/useTheme";
 import { MMRL } from "@Components/icons/MMRL";
 import { MRepo } from "@Components/icons/MRepo";
@@ -15,10 +27,14 @@ import Code from "@Components/dapi/Code";
 import Pre from "@Components/dapi/Pre";
 import hljs from "highlight.js";
 import { StyledMarkdown } from "@Components/Markdown/StyledMarkdown";
+import { licenseTypes } from "@Util/licenseTypes";
+import { CodeBlock } from "@Components/CodeBlock";
 
 interface FormTypes {
   id: string;
   enable: boolean;
+  verified: boolean;
+  license: string;
   update_to: string;
   source: string;
   support: string;
@@ -35,6 +51,8 @@ interface FormTypes {
 const INITIAL_FORM: FormTypes = {
   id: "",
   enable: true,
+  verified: false,
+  license: "",
   update_to: "",
   source: "",
   support: "",
@@ -88,6 +106,8 @@ const SubmitModuleActivity = () => {
     setFormData((prevState) => ({ ...prevState, [name]: value }));
   };
 
+  const handleLicenseError = React.useMemo(() => !licenseTypes.includes(formData.license), [formData.license]);
+
   React.useEffect(() => {
     if (ref.current) {
       ref.current.querySelectorAll<HTMLElement>("pre code").forEach((block) => {
@@ -97,23 +117,19 @@ const SubmitModuleActivity = () => {
     }
   }, [formData]);
 
-  const jsonString = React.useMemo(() => JSON.stringify(formData, null, 4), [formData]);
-
   return (
     <Page sx={{ p: 1 }} renderToolbar={renderToolbar}>
       <Page.RelativeContent>
-        <StyledMarkdown
-          ref={ref}
+        <CodeBlock
           sx={{
             "& pre": {
               borderRadius: `${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0px 0px `,
             },
           }}
+          lang="json"
         >
-          <Pre>
-            <Code className="lang-json hljs language-json">{jsonString}</Code>
-          </Pre>
-        </StyledMarkdown>
+          {JSON.stringify(formData, null, 4)}
+        </CodeBlock>
         <Card sx={{ mb: 2, borderRadius: `0px 0px ${theme.shape.borderRadius}px ${theme.shape.borderRadius}px` }}>
           <CardContent sx={{ pt: 0 }} component={Stack} direction="column" alignItems="flex-start" spacing={1}>
             <Stack direction="row" alignItems="center" spacing={1}>
@@ -156,6 +172,20 @@ const SubmitModuleActivity = () => {
 
           <Stack sx={{ width: "100%" }} direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
             <TextField
+              error={handleLicenseError}
+              helperText={handleLicenseError && "Invalid license!"}
+              placeholder="MIT"
+              fullWidth
+              label="License"
+              name="license"
+              value={formData.license}
+              onChange={handleChange}
+            />
+            <MMRL /> <MRepo />
+          </Stack>
+
+          <Stack sx={{ width: "100%" }} direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
+            <TextField
               placeholder="https://..."
               fullWidth
               label="Support URL"
@@ -176,6 +206,37 @@ const SubmitModuleActivity = () => {
               onChange={handleChange}
             />
             <MRepo />
+          </Stack>
+
+          <Stack sx={{ width: "100%" }} direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
+            <Autocomplete
+              multiple
+              sx={{ width: "100%" }}
+              value={formData.categories}
+              options={allCategories}
+              onChange={(e, value) => {
+                setFormData((prevState) => ({ ...prevState, categories: value }));
+              }}
+              disableCloseOnSelect
+              filterSelectedOptions
+              renderInput={(params) => <TextField {...params} label="Categories" />}
+            />
+            <MMRL />
+          </Stack>
+          <Stack sx={{ width: "100%" }} direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
+            <Autocomplete
+              multiple
+              sx={{ width: "100%" }}
+              value={formData.antifeatures}
+              options={antifeatures}
+              onChange={(e, value) => {
+                setFormData((prevState) => ({ ...prevState, antifeatures: value }));
+              }}
+              filterSelectedOptions
+              disableCloseOnSelect
+              renderInput={(params) => <TextField {...params} label="Anti-Features" />}
+            />
+            <MMRL />
           </Stack>
 
           <Stack sx={{ width: "100%" }} direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
@@ -269,38 +330,6 @@ const SubmitModuleActivity = () => {
                 </Stack>
               )}
               renderInput={(params) => <TextField {...params} fullWidth label="Require Modules" placeholder="mkshrc" />}
-            />
-            <MMRL />
-          </Stack>
-
-          <Stack sx={{ width: "100%" }} direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
-            <Autocomplete
-              multiple
-              sx={{ width: "100%" }}
-              value={formData.categories}
-              options={allCategories}
-              onChange={(e, value) => {
-                setFormData((prevState) => ({ ...prevState, categories: value }));
-              }}
-              disableCloseOnSelect
-              filterSelectedOptions
-              renderInput={(params) => <TextField {...params} label="Categories" />}
-            />
-            <MMRL />
-          </Stack>
-
-          <Stack sx={{ width: "100%" }} direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
-            <Autocomplete
-              multiple
-              sx={{ width: "100%" }}
-              value={formData.antifeatures}
-              options={antifeatures}
-              onChange={(e, value) => {
-                setFormData((prevState) => ({ ...prevState, antifeatures: value }));
-              }}
-              filterSelectedOptions
-              disableCloseOnSelect
-              renderInput={(params) => <TextField {...params} label="Anti-Features" />}
             />
             <MMRL />
           </Stack>

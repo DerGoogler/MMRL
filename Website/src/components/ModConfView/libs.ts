@@ -23,6 +23,7 @@ import { DialogEditTextListItem } from "@Components/DialogEditTextListItem";
 import { SearchActivity } from "@Activitys/SearchActivity";
 import React from "react";
 import { withRequireNewVersion } from "../../hoc/withRequireNewVersion";
+import { CodeBlock } from "@Components/CodeBlock";
 
 export const libraries = [
   {
@@ -92,6 +93,7 @@ export const libraries = [
       ListItemDialogEditText: DialogEditTextListItem,
       Image: Image,
       Ansi: Ansi,
+      CodeBlock: CodeBlock,
     },
   },
   {
