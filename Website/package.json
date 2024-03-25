@@ -57,7 +57,7 @@
     "localforage": "^1.10.0",
     "markdown-to-jsx": "^7.4.0",
     "material-icons": "^1.10.8",
-    "material-ui-confirm": "^3.0.10",
+    "material-ui-confirm": "^3.0.11",
     "monaco-editor": "^0.45.0",
     "monaco-editor-core": "^0.46.0",
     "monaco-languageclient": "^6.5.0",
