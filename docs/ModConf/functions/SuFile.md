@@ -85,7 +85,7 @@ file.deleteRecursive(); // void
 This method can multiple things like creating files, folders and parent folders
 
 ```js
-const hello = new SuFile.create("/sdcard/hello.txt");
+const hello = new SuFile("/sdcard/hello.txt");
 
 // create a file (default)
 hello.create(); // hello.create(SuFile.NEW_FILE)
@@ -100,6 +100,6 @@ hello.create(SuFile.NEW_FOLDERS);
 ## Access native methods
 
 ```js
-const native = new SuFile.create("/sdcard/hello.txt");
-native.interface;
+const native = new SuFile("/sdcard/hello.txt");
+native.interface
 ```

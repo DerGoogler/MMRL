@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.23.2",
-    "@babel/standalone": "^7.23.6",
+    "@babel/standalone": "^7.24.0",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "@giscus/react": "^2.4.0",
@@ -57,7 +57,7 @@
     "localforage": "^1.10.0",
     "markdown-to-jsx": "^7.4.0",
     "material-icons": "^1.10.8",
-    "material-ui-confirm": "^3.0.10",
+    "material-ui-confirm": "^3.0.11",
     "monaco-editor": "^0.45.0",
     "monaco-editor-core": "^0.46.0",
     "monaco-languageclient": "^6.5.0",
@@ -78,7 +78,7 @@
     "yaml": "^2.3.4"
   },
   "devDependencies": {
-    "@babel/core": "^7.16.5",
+    "@babel/core": "^7.24.0",
     "@babel/preset-env": "^7.23.6",
     "@babel/preset-react": "^7.23.3",
     "@types/babel__core": "^7.20.2",
@@ -87,7 +87,7 @@
     "@types/ini": "^4.1.0",
     "@types/node": "^18.0.6",
     "@types/object-assign": "^4.0.30",
-    "@types/react": "^18.2.47",
+    "@types/react": "^18.2.67",
     "@types/react-dom": "^18.0.2",
     "@types/react-onsenui": "^2.9.17",
     "@types/react-syntax-highlighter": "^15.5.2",
