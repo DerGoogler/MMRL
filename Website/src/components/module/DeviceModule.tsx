@@ -122,8 +122,8 @@ const DeviceModule = React.memo<Props>((props) => {
                       if (disable.delete()) {
                         log.d(
                           strings("module_enabled_LOG", {
-                            name: module,
-                          })
+                            name: id,
+                          }) as string
                         );
                       }
                     }
@@ -132,8 +132,8 @@ const DeviceModule = React.memo<Props>((props) => {
                       if (disable.create()) {
                         log.d(
                           strings("module_disabled_LOG", {
-                            name: module,
-                          })
+                            name: id,
+                          }) as string
                         );
                       }
                     }

@@ -24,13 +24,14 @@ import { useActivity } from "@Hooks/useActivity";
 import ModuleViewActivity from "@Activitys/ModuleViewActivity/index";
 import { useSettings } from "@Hooks/useSettings";
 import { GestureDetector } from "@Components/onsenui/GestureDetector";
-import ons from "onsenui";
 import { Xda } from "@Components/icons/Xda";
+import { CodeBlock } from "@Components/CodeBlock";
 
-interface AnchorProps {
+type AnchorProps = React.JSX.IntrinsicElements["a"] & {
   noIcon?: boolean;
+  icon?: typeof Xda;
   module?: string;
-}
+};
 
 function useIcon(link) {
   if (createRegexURL("github", "com").test(link)) {
@@ -79,7 +80,7 @@ function increase_brightness(hex, percent) {
   );
 }
 
-function Anchor(props) {
+const Anchor = React.memo<AnchorProps>((props) => {
   const confirm = useConfirm();
   const { theme } = useTheme();
   const { context } = useActivity();
@@ -89,7 +90,7 @@ function Anchor(props) {
 
   const { modules } = useRepos();
   const findModule = React.useMemo(() => modules.find((m) => m.id === module), [module]);
-  const icon = useIcon(href);
+  const icon = !props.icon ? useIcon(href) : props.icon;
 
   const s = React.useMemo(
     () => ({
@@ -156,7 +157,13 @@ function Anchor(props) {
               if (settings.link_protection) {
                 confirm({
                   title: strings("anchor_confirm_title"),
-                  description: strings("anchor_confirm_desc"),
+                  description: strings("anchor_confirm_desc", {
+                    codeblock: (
+                      <CodeBlock sx={{ mt: 1 }} lang="url">
+                        {__href}
+                      </CodeBlock>
+                    ),
+                  }),
                   confirmationText: strings("yes"),
                 }).then(() => openLink());
               } else {
@@ -189,6 +196,6 @@ function Anchor(props) {
       </Box>
     </Tooltip>
   );
-}
+});
 
 export default Anchor;

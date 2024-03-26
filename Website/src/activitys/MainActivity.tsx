@@ -19,14 +19,36 @@ import { Toolbar } from "@Components/onsenui/Toolbar";
 import CodeRoundedIcon from "@mui/icons-material/CodeRounded";
 import { Page } from "@Components/onsenui/Page";
 import eruda from "eruda";
-import TestTerminalActivity from "./TestTerminalActivity";
 import { useTheme } from "@Hooks/useTheme";
 import Pre from "@Components/dapi/Pre";
 import Code from "@Components/dapi/Code";
 
+import pkg from "@Package";
+import UnverifiedHostActivity from "./UnverifiedHostActivity";
+import { useModFS } from "@Hooks/useModFS";
+import { SuFile } from "@Native/SuFile";
+
+const CheckRoot = () => {
+  if (pkg.config.verified_hosts.includes(location.hostname)) {
+    if (os.isAndroid) {
+      // Shell.isAppGrantedRoot() doesn't work on KSU
+      if (Shell.isSuAvailable()) {
+        return React.memo(MainApplication);
+      } else {
+        return React.memo(NoRootActivity);
+      }
+    } else {
+      return React.memo(MainApplication);
+    }
+  } else {
+    return React.memo(UnverifiedHostActivity);
+  }
+};
+
 const MainActivity = (): JSX.Element => {
   const { settings } = useSettings();
   const { theme } = useTheme();
+  const { modFS } = useModFS();
 
   const [isSplitterOpen, setIsSplitterOpen] = useState(false);
 
@@ -54,25 +76,6 @@ const MainActivity = (): JSX.Element => {
       }
     }
   }, [settings.eruda_console_enabled]);
-
-  React.useEffect(() => {
-    if (!os.hasStoragePermission()) {
-      os.requestStoargePermission();
-    }
-  }, []);
-
-  const CheckRoot = () => {
-    if (os.isAndroid) {
-      // Shell.isAppGrantedRoot() doesn't work on KSU
-      if (Shell.isSuAvailable()) {
-        return React.memo(MainApplication);
-      } else {
-        return React.memo(NoRootActivity);
-      }
-    } else {
-      return React.memo(MainApplication);
-    }
-  };
 
   const pushContext = {
     pushPage: (props: IntentPusher) => pushPage(props),
@@ -246,7 +249,15 @@ const MainActivity = (): JSX.Element => {
   };
 
   return (
-    <Page>
+    <Page
+      onInit={() => {
+        const mmrlFolder = new SuFile(`${modFS("ADB")}/mmrl`);
+
+        if (!mmrlFolder.exist()) {
+          mmrlFolder.create(SuFile.NEW_FOLDERS);
+        }
+      }}
+    >
       <Splitter>
         <Splitter.Side
           side="left"

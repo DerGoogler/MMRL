@@ -17,7 +17,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 
 interface ListItemProps {
   part?: any;
-  text: string;
+  text: React.ReactNode;
   icon: OverridableComponent<SvgIconTypeMap<{}, "svg">>;
   onClick: () => void;
 }

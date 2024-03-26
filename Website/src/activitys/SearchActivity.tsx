@@ -43,7 +43,7 @@ function SearchActivity(props: SearchActivityProps) {
   const { theme } = useTheme();
 
   const { placeholder, list, renderList } = props;
-  const __placeholder = placeholder ? placeholder : strings("search");
+  const __placeholder = placeholder ? placeholder : (strings("search") as string);
 
   const [search, setSearch] = React.useState<string>("");
 

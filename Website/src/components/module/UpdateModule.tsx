@@ -44,7 +44,7 @@ const UpdateModule = React.memo<Props>((props) => {
         .then((json: UpdateJson) => setUpdateJson(json));
     }, [repos]);
   } else {
-    log.d(strings("dm_update_json_fetch_warn", { id: id }));
+    log.d(strings("dm_update_json_fetch_warn", { id: id }) as string);
   }
 
   const hasUpdate = React.useMemo(() => {
@@ -72,7 +72,9 @@ const UpdateModule = React.memo<Props>((props) => {
       <Stack direction="column" justifyContent="center" spacing={1}>
         <Stack direction="column" justifyContent="center" alignItems="flex-start">
           <Typography variant="h6">{name}</Typography>
-          <Typography color="text.secondary" variant="caption">{author}</Typography>
+          <Typography color="text.secondary" variant="caption">
+            {author}
+          </Typography>
         </Stack>
 
         <Stack direction="column" justifyContent="center" alignItems="flex-start" spacing={1}>

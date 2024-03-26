@@ -5,8 +5,13 @@
     "application_id": "com.dergoogler.mmrl",
     "min_sdk": 26,
     "target_sdk": 34,
-    "version_name": "2.14.10",
-    "version_code": 21410
+    "version_name": "2.15.10",
+    "version_code": 21510,
+    "verified_hosts": [
+      "mmrl",
+      "localhost",
+      "mmrl.dergoogler.com"
+    ]
   },
   "main": "index.tsx",
   "keywords": [],

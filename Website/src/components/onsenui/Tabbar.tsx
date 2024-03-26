@@ -68,7 +68,7 @@ const _Tabbar = React.forwardRef<HTMLElement, HTMLTabbar>((props, ref) => {
 interface HTMLTab {
   icon?: string;
   activeIcon?: string;
-  label?: string;
+  label?: React.ReactNode;
   badge?: string;
 }
 

@@ -21,7 +21,7 @@ interface PickerItemProps {
   disabled?: boolean;
   contentMap: ContentMap[];
   targetSetting: "language" | "accent_scheme" | "term_scroll_behavior";
-  title: string;
+  title: React.ReactNode;
 }
 
 /**
@@ -68,7 +68,7 @@ export function ListPickerItem(props: PickerItemProps) {
 export interface ConfirmationDialogRawProps {
   id: string;
   keepMounted: boolean;
-  title: string;
+  title: React.ReactNode;
   value: ContentMap;
   open: boolean;
   contentMap: ContentMap[];

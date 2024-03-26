@@ -27,6 +27,7 @@ import { useNativeFileStorage } from "@Hooks/useNativeFileStorage";
 import hljs from "highlight.js";
 import { licenseTypes } from "@Util/licenseTypes";
 import { CodeBlock } from "@Components/CodeBlock";
+import { useModFS } from "@Hooks/useModFS";
 
 interface FormTypes {
   id: string;
@@ -107,6 +108,7 @@ const SubmitModuleActivity = () => {
   const { context } = useActivity();
   const { strings } = useStrings();
   const { theme } = useTheme();
+  const { modFS } = useModFS();
 
   const ref = React.useRef<HTMLDivElement | null>(null);
 
@@ -120,7 +122,7 @@ const SubmitModuleActivity = () => {
       </Toolbar>
     );
   };
-  const [formData, setFormData] = useNativeFileStorage("/data/adb/mmrl/submit-form.json", INITIAL_FORM, { loader: "json" });
+  const [formData, setFormData] = useNativeFileStorage(`${modFS("ADB")}/mmrl/submit-form.json`, INITIAL_FORM, { loader: "json" });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;

@@ -1,4 +1,6 @@
 export const en = {
+  continue: "Continue",
+  caution: "Caution",
   latest: "Latest",
   security: "Security",
   changelog: "Changelog",
@@ -133,11 +135,16 @@ export const en = {
     "The upstream source for this module is no longer available. Either the module went proprietary, the source repository was dropped, or it has moved to a location currently not known to us. This means there will not be further updates unless the source reappears.",
 
   // Anchor link confirm
-  anchor_confirm_title: "External link!",
-  anchor_confirm_desc: "Are you sure that you want to open this link?",
+  anchor_confirm_title: "Leaving MMRL",
+  anchor_confirm_desc: "This link is taking you the following website {codeblock}",
   link_protection_title: "Link protection",
   link_protection_desc: "Prevent link that are accidentally clicked with a extra confirm dialog. This setting also affects ModConf.",
 
   // modconf
   compile_error: "Compile error!",
+
+  unverified_host: "Unverified host!",
+  unverified_host_text:
+    "You're accessing MMRL from {url} which isn't a verified host. Only use MMRL from it's origial source and not from thrid-party sources.",
+  unverified_host_text_help: "Noticed any issues or you know that the accessed host safe for use is? Then report it under our {issues}",
 };
