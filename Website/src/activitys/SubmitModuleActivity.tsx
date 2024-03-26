@@ -12,21 +12,19 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  Divider,
+  Box,
 } from "@mui/material";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import { Page } from "@Components/onsenui/Page";
 import { useCategories } from "@Hooks/useCategories";
 import { useActivity } from "@Hooks/useActivity";
 import { useStrings } from "@Hooks/useStrings";
-import FlatList, { FlatListProps } from "flatlist-react";
 import { useTheme } from "@Hooks/useTheme";
 import { MMRL } from "@Components/icons/MMRL";
 import { MRepo } from "@Components/icons/MRepo";
 import { useNativeFileStorage } from "@Hooks/useNativeFileStorage";
-import Code from "@Components/dapi/Code";
-import Pre from "@Components/dapi/Pre";
 import hljs from "highlight.js";
-import { StyledMarkdown } from "@Components/Markdown/StyledMarkdown";
 import { licenseTypes } from "@Util/licenseTypes";
 import { CodeBlock } from "@Components/CodeBlock";
 
@@ -79,6 +77,30 @@ const antifeatures = [
   "Disabled Algorithm",
   "No Source Since",
 ];
+
+const SupportedApp = React.memo<{ mmrl?: boolean; mrepo?: boolean }>((props) => {
+  return (
+    <Stack
+      direction="row"
+      alignItems="center"
+      divider={
+        <Divider sx={{ marginTop: "4px !important", marginBottom: "4px !important" }} orientation="vertical" variant="middle" flexItem />
+      }
+      spacing={1}
+    >
+      {props.mmrl && (
+        <Stack direction="row" justifyContent="center" alignItems="center" spacing={0.5}>
+          <MMRL sx={{ fontSize: "unset" }} /> <span>MMRL</span>
+        </Stack>
+      )}
+      {props.mrepo && (
+        <Stack direction="row" justifyContent="center" alignItems="center" spacing={0.5}>
+          <MRepo sx={{ fontSize: "unset" }} /> <span>MRepo</span>
+        </Stack>
+      )}
+    </Stack>
+  );
+});
 
 const SubmitModuleActivity = () => {
   const { allCategories } = useCategories();
@@ -140,199 +162,187 @@ const SubmitModuleActivity = () => {
             </Stack>
           </CardContent>
         </Card>
-        <Stack direction="column" justifyContent="center" alignItems="center" spacing={2.2}>
-          <Stack sx={{ width: "100%" }} direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
-            <TextField placeholder="mkshrc" fullWidth label="Module ID" name="id" value={formData.id} onChange={handleChange} />
-            <MMRL /> <MRepo />
-          </Stack>
+        <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
+          <TextField
+            placeholder="mkshrc"
+            fullWidth
+            label="Module ID"
+            name="id"
+            value={formData.id}
+            onChange={handleChange}
+            helperText={<SupportedApp mmrl mrepo />}
+          />
 
-          <Stack sx={{ width: "100%" }} direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
-            <TextField
-              placeholder="https://..."
-              fullWidth
-              label="Module Source URL"
-              name="source"
-              value={formData.source}
-              onChange={handleChange}
-            />
-            <MMRL /> <MRepo />
-          </Stack>
+          <TextField
+            placeholder="https://..."
+            fullWidth
+            label="Module Source URL"
+            name="source"
+            value={formData.source}
+            onChange={handleChange}
+            helperText={<SupportedApp mmrl mrepo />}
+          />
 
-          <Stack sx={{ width: "100%" }} direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
-            <TextField
-              fullWidth
-              label="Update to"
-              name="update_to"
-              value={formData.update_to}
-              onChange={handleChange}
-              placeholder="Git repositores needs to end with '.git' or you pass a valid 'update.json'"
-            />
-            <MMRL /> <MRepo />
-          </Stack>
+          <TextField
+            fullWidth
+            label="Update to"
+            name="update_to"
+            value={formData.update_to}
+            onChange={handleChange}
+            placeholder="Git repositores needs to end with '.git' or you pass a valid 'update.json'"
+            helperText={<SupportedApp mmrl mrepo />}
+          />
 
-          <Stack sx={{ width: "100%" }} direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
-            <TextField
-              error={handleLicenseError}
-              helperText={handleLicenseError && "Invalid license!"}
-              placeholder="MIT"
-              fullWidth
-              label="License"
-              name="license"
-              value={formData.license}
-              onChange={handleChange}
-            />
-            <MMRL /> <MRepo />
-          </Stack>
+          <TextField
+            error={handleLicenseError}
+            placeholder="MIT"
+            fullWidth
+            label={handleLicenseError ? "License" : "License (invalid)"}
+            name="license"
+            value={formData.license}
+            onChange={handleChange}
+            helperText={<SupportedApp mmrl mrepo />}
+          />
 
-          <Stack sx={{ width: "100%" }} direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
-            <TextField
-              placeholder="https://..."
-              fullWidth
-              label="Support URL"
-              name="support"
-              value={formData.support}
-              onChange={handleChange}
-            />
-            <MMRL /> <MRepo />
-          </Stack>
+          <TextField
+            placeholder="https://..."
+            fullWidth
+            label="Support URL"
+            name="support"
+            value={formData.support}
+            onChange={handleChange}
+            helperText={<SupportedApp mmrl mrepo />}
+          />
 
-          <Stack sx={{ width: "100%" }} direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
-            <TextField
-              placeholder="https://..."
-              fullWidth
-              label="Donate URL"
-              name="donate"
-              value={formData.donate}
-              onChange={handleChange}
-            />
-            <MRepo />
-          </Stack>
+          <TextField
+            placeholder="https://..."
+            fullWidth
+            label="Donate URL"
+            name="donate"
+            value={formData.donate}
+            onChange={handleChange}
+            helperText={<SupportedApp mmrl mrepo />}
+          />
 
-          <Stack sx={{ width: "100%" }} direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
-            <Autocomplete
-              multiple
-              sx={{ width: "100%" }}
-              value={formData.categories}
-              options={allCategories}
-              onChange={(e, value) => {
-                setFormData((prevState) => ({ ...prevState, categories: value }));
-              }}
-              disableCloseOnSelect
-              filterSelectedOptions
-              renderInput={(params) => <TextField {...params} label="Categories" />}
-            />
-            <MMRL />
-          </Stack>
-          <Stack sx={{ width: "100%" }} direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
-            <Autocomplete
-              multiple
-              sx={{ width: "100%" }}
-              value={formData.antifeatures}
-              options={antifeatures}
-              onChange={(e, value) => {
-                setFormData((prevState) => ({ ...prevState, antifeatures: value }));
-              }}
-              filterSelectedOptions
-              disableCloseOnSelect
-              renderInput={(params) => <TextField {...params} label="Anti-Features" />}
-            />
-            <MMRL />
-          </Stack>
+          <Autocomplete
+            multiple
+            sx={{ width: "100%" }}
+            value={formData.categories}
+            options={allCategories}
+            onChange={(e, value) => {
+              setFormData((prevState) => ({ ...prevState, categories: value }));
+            }}
+            disableCloseOnSelect
+            filterSelectedOptions
+            renderInput={(params) => <TextField {...params} label="Categories" helperText={<SupportedApp mmrl />} />}
+          />
 
-          <Stack sx={{ width: "100%" }} direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
-            <TextField
-              placeholder="https://..."
-              fullWidth
-              label="Module Cover"
-              name="cover"
-              value={formData.cover}
-              onChange={handleChange}
-            />
-            <MMRL />
-          </Stack>
+          <Autocomplete
+            multiple
+            sx={{ width: "100%" }}
+            value={formData.antifeatures}
+            options={antifeatures}
+            onChange={(e, value) => {
+              setFormData((prevState) => ({ ...prevState, antifeatures: value }));
+            }}
+            filterSelectedOptions
+            disableCloseOnSelect
+            renderInput={(params) => <TextField {...params} label="Anti-Features" helperText={<SupportedApp mmrl />} />}
+          />
 
-          <Stack sx={{ width: "100%" }} direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
-            <TextField placeholder="https://..." fullWidth label="Module Icon" name="icon" value={formData.icon} onChange={handleChange} />
-            <MMRL />
-          </Stack>
+          <TextField
+            placeholder="https://..."
+            fullWidth
+            label="Module Cover"
+            name="cover"
+            value={formData.cover}
+            onChange={handleChange}
+            helperText={<SupportedApp mmrl />}
+          />
 
-          <Stack sx={{ width: "100%" }} direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
-            <TextField
-              placeholder="https://..."
-              fullWidth
-              label="Raw README.md URL"
-              name="readme"
-              value={formData.readme}
-              onChange={handleChange}
-            />
-            <MMRL />
-          </Stack>
+          <TextField
+            placeholder="https://..."
+            fullWidth
+            label="Module Icon"
+            name="icon"
+            value={formData.icon}
+            onChange={handleChange}
+            helperText={<SupportedApp mmrl />}
+          />
 
-          <Stack sx={{ width: "100%" }} direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
-            <Autocomplete
-              style={{ width: "100%" }}
-              sx={{
-                "& .MuiInputBase-root": {
-                  flexDirection: "column-reverse",
-                  WebkitAlignItems: "stretch",
-                  alignItems: "stretch",
-                  width: "100% !important",
-                },
-                "& .MuiInputBase-input": {
-                  width: "100% !important",
-                },
-              }}
-              multiple
-              value={formData.screenshots}
-              onChange={(e, value) => {
-                setFormData((prevState) => ({ ...prevState, screenshots: value }));
-              }}
-              options={[]}
-              freeSolo
-              renderTags={(value, getTagProps) => (
-                <Stack direction="column" justifyContent="flex-start" alignItems="flex-start" spacing={1} useFlexGap flexWrap="wrap">
-                  {value.map((option, index) => (
-                    <Chip variant="outlined" label={option} avatar={<Avatar alt={option} src={option} />} {...getTagProps({ index })} />
-                  ))}
-                </Stack>
-              )}
-              renderInput={(params) => <TextField {...params} fullWidth label="Screenshots" placeholder="https://..." />}
-            />
-            <MMRL />
-          </Stack>
+          <TextField
+            placeholder="https://..."
+            fullWidth
+            label="Raw README.md URL"
+            name="readme"
+            value={formData.readme}
+            onChange={handleChange}
+            helperText={<SupportedApp mmrl />}
+          />
 
-          <Stack sx={{ width: "100%" }} direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
-            <Autocomplete
-              style={{ width: "100%" }}
-              sx={{
-                "& .MuiInputBase-root": {
-                  flexDirection: "column-reverse",
-                  WebkitAlignItems: "stretch",
-                  alignItems: "stretch",
-                  width: "100% !important",
-                },
-                "& .MuiInputBase-input": {
-                  width: "100% !important",
-                },
-              }}
-              multiple
-              value={formData.require}
-              onChange={(e, value) => {
-                setFormData((prevState) => ({ ...prevState, require: value }));
-              }}
-              options={[]}
-              freeSolo
-              renderTags={(value, getTagProps) => (
-                <Stack direction="column" justifyContent="flex-start" alignItems="flex-start" spacing={1} useFlexGap flexWrap="wrap">
-                  {value.map((option, index) => (
-                    <Chip variant="outlined" label={option} {...getTagProps({ index })} />
-                  ))}
-                </Stack>
-              )}
-              renderInput={(params) => <TextField {...params} fullWidth label="Require Modules" placeholder="mkshrc" />}
-            />
-            <MMRL />
-          </Stack>
+          <Autocomplete
+            style={{ width: "100%" }}
+            sx={{
+              "& .MuiInputBase-root": {
+                flexDirection: "column-reverse",
+                WebkitAlignItems: "stretch",
+                alignItems: "stretch",
+                width: "100% !important",
+              },
+              "& .MuiInputBase-input": {
+                width: "100% !important",
+              },
+            }}
+            multiple
+            value={formData.screenshots}
+            onChange={(e, value) => {
+              setFormData((prevState) => ({ ...prevState, screenshots: value }));
+            }}
+            options={[]}
+            freeSolo
+            renderTags={(value, getTagProps) => (
+              <Stack direction="column" justifyContent="flex-start" alignItems="flex-start" spacing={1} useFlexGap flexWrap="wrap">
+                {value.map((option, index) => (
+                  <Chip variant="outlined" label={option} avatar={<Avatar alt={option} src={option} />} {...getTagProps({ index })} />
+                ))}
+              </Stack>
+            )}
+            renderInput={(params) => (
+              <TextField {...params} fullWidth label="Screenshots" placeholder="https://..." helperText={<SupportedApp mmrl />} />
+            )}
+          />
+
+          <Autocomplete
+            style={{ width: "100%" }}
+            sx={{
+              "& .MuiInputBase-root": {
+                flexDirection: "column-reverse",
+                WebkitAlignItems: "stretch",
+                alignItems: "stretch",
+                width: "100% !important",
+              },
+              "& .MuiInputBase-input": {
+                width: "100% !important",
+              },
+            }}
+            multiple
+            value={formData.require}
+            onChange={(e, value) => {
+              setFormData((prevState) => ({ ...prevState, require: value }));
+            }}
+            options={[]}
+            freeSolo
+            renderTags={(value, getTagProps) => (
+              <Stack direction="column" justifyContent="flex-start" alignItems="flex-start" spacing={1} useFlexGap flexWrap="wrap">
+                {value.map((option, index) => (
+                  <Chip variant="outlined" label={option} {...getTagProps({ index })} />
+                ))}
+              </Stack>
+            )}
+            renderInput={(params) => (
+              <TextField {...params} fullWidth label="Require Modules" placeholder="mkshrc" helperText={<SupportedApp mmrl />} />
+            )}
+          />
         </Stack>
       </Page.RelativeContent>
     </Page>

@@ -6,7 +6,7 @@ import React from "react";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
-import { Verified } from "@mui/icons-material";
+import { Verified, VolunteerActivism } from "@mui/icons-material";
 import Stack from "@mui/material/Stack";
 import { useActivity } from "@Hooks/useActivity";
 import { useTheme } from "@Hooks/useTheme";
@@ -306,6 +306,21 @@ const ModuleViewActivity = () => {
                 >
                   {strings("download")}
                 </Button>
+                {track.donate && (
+                  <Button
+                    variant="contained"
+                    onClick={() => {
+                      os.open(track.donate, {
+                        target: "_blank",
+                        features: {
+                          color: theme.palette.primary.main,
+                        },
+                      });
+                    }}
+                  >
+                    <VolunteerActivism />
+                  </Button>
+                )}
               </Stack>
             </Stack>
           </Stack>
