@@ -24,7 +24,7 @@ public class TerminalPlugin extends CordovaPlugin {
     private static final String LOG_TAG = "TerminalPlugin";
     private CallbackContext terminalCallbackContext = null;
 
-    private int ProcessCode = 1;
+    private int ProcessCode = 1000;
 
     @Override
     public boolean execute(String action, JSONArray data, CallbackContext callbackContext) throws JSONException {
@@ -33,17 +33,23 @@ public class TerminalPlugin extends CordovaPlugin {
                 String cmd = data.getString(0);
                 JSONObject envp = data.getJSONObject(1);
                 String cwd = data.getString(2);
+                boolean printError = data.getBoolean(3);
 
                 this.terminalCallbackContext = callbackContext;
                 String[] commands = {"su", "-p", "-c", cmd};
 
+
                 cordova.getThreadPool().execute(() -> {
                     try {
-                        run(envp, cwd, commands);
-                        callbackContext.error(ProcessCode);
+                        if (run(envp, cwd, commands)) {
+                            callbackContext.error(ProcessCode);
+                        }
                     } catch (IOException | JSONException e) {
-                        callbackContext.error(500);
                         e.printStackTrace();
+                        if (printError) {
+                            updateTerminal(e.toString());
+                        }
+                        callbackContext.error(500);
                     }
                 });
                 return true;
@@ -58,7 +64,7 @@ public class TerminalPlugin extends CordovaPlugin {
 
     }
 
-    public void run(JSONObject envp, String cwd, String... command) throws IOException, JSONException {
+    public boolean run(JSONObject envp, String cwd, String... command) throws IOException, JSONException {
         ProcessBuilder pb = new ProcessBuilder(command).redirectErrorStream(true);
         if (envp != null) {
             Map<String, String> m = pb.environment();
@@ -77,6 +83,8 @@ public class TerminalPlugin extends CordovaPlugin {
         } catch (Exception e) {
             ProcessCode = 500;
         }
+
+        return !process.isAlive();
     }
 
     private void updateTerminal(String line) {

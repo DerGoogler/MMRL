@@ -4,7 +4,7 @@ import { SetValue, useNativeStorage } from "./useNativeStorage";
 import { StringDeclaration, Strs, useLanguageMap } from "./../locales/declaration";
 import { useSettings } from "./useSettings";
 
-type ReplacementObject = {
+export type ReplacementObject = {
   [key: string]: React.ReactNode;
 };
 

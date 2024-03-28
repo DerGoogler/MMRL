@@ -98,8 +98,19 @@ declare global {
   namespace Terminal {
     export type Exec = {
       command: string;
+      /**
+       * Environment variables that should be used in your command execution
+       */
       env?: Record<string, string>;
+      /**
+       * Working directory
+       */
       cwd?: string;
+      /**
+       * Prints the error to the console or the `onLine` argument
+       * @default true
+       */
+      printError?: boolean;
       onLine: (line: string) => void;
       onExit: (code: number) => void;
     };

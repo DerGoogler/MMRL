@@ -147,4 +147,8 @@ export const en = {
   unverified_host_text:
     "You're accessing MMRL from {url} which isn't a verified host. Only use MMRL from it's origial source and not from thrid-party sources.",
   unverified_host_text_help: "Noticed any issues or you know that the accessed host safe for use is? Then report it under our {issues}",
+
+  // terminal activity
+  reboot_device: "Reboot device?",
+  reboot_device_desc: "Are you sure to reboot your device?",
 };

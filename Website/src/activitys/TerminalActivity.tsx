@@ -13,6 +13,8 @@ import { useModFS } from "@Hooks/useModFS";
 import { INCLUDE_CORE } from "@Util/INCLUDE_CORE";
 import { view } from "@Native/View";
 import { useConfirm } from "material-ui-confirm";
+import { ReplacementObject, useStrings } from "@Hooks/useStrings";
+import { StringDeclaration } from "./../locales/declaration";
 
 export interface TerminalActivityExtra {
   exploreInstall: boolean;
@@ -25,6 +27,7 @@ export interface TerminalActivityExtra {
 const TerminalActivity = () => {
   const { context, extra } = useActivity<TerminalActivityExtra>();
   const { settings } = useSettings();
+  const { strings } = useStrings();
   const { modFS, __modFS } = useModFS();
   const [active, setActive] = React.useState<bool>(true);
 
@@ -106,9 +109,10 @@ const TerminalActivity = () => {
   const rebootDevice = React.useCallback(() => {
     const reason = "";
     confirm({
-      title: "Reboot device?",
-      description: "Are you sure to reboot your device?",
-      confirmationText: "Yes",
+      title: strings("reboot_device"),
+      description: strings("reboot_device_desc"),
+      confirmationText: strings("yes"),
+      cancellationText: strings("cancel"),
     }).then(() => {
       Shell.cmd(`/system/bin/svc power reboot ${reason} || /system/bin/reboot ${reason}`).exec();
     });
@@ -211,8 +215,6 @@ const TerminalActivity = () => {
               setActive(false);
               break;
           }
-
-          addText({ children: String(code) });
         },
       });
     } else {
@@ -333,7 +335,7 @@ const TerminalActivity = () => {
           ))}
         </Stack>
       </div>
-      <div style={{ height: view.getWindowBottomInsets() }} ref={termEndRef} />
+      <div ref={termEndRef} />
     </Page>
   );
 };
