@@ -11,35 +11,9 @@
       "type": "UNIVERSAL",
       "filters": [],
       "attributes": [],
-      "versionCode": 21510,
-      "versionName": "2.15.10",
-      "outputFile": "app-default-universal-release-2.15.10-21510.apk"
-    },
-    {
-      "type": "ONE_OF_MANY",
-      "filters": [
-        {
-          "filterType": "ABI",
-          "value": "arm64-v8a"
-        }
-      ],
-      "attributes": [],
-      "versionCode": 21510,
-      "versionName": "2.15.10",
-      "outputFile": "app-default-arm64-v8a-release-2.15.10-21510.apk"
-    },
-    {
-      "type": "ONE_OF_MANY",
-      "filters": [
-        {
-          "filterType": "ABI",
-          "value": "x86_64"
-        }
-      ],
-      "attributes": [],
-      "versionCode": 21510,
-      "versionName": "2.15.10",
-      "outputFile": "app-default-x86_64-release-2.15.10-21510.apk"
+      "versionCode": 21511,
+      "versionName": "2.15.11",
+      "outputFile": "app-default-universal-release-2.15.11-21511.apk"
     },
     {
       "type": "ONE_OF_MANY",
@@ -50,9 +24,35 @@
         }
       ],
       "attributes": [],
-      "versionCode": 21510,
-      "versionName": "2.15.10",
-      "outputFile": "app-default-x86-release-2.15.10-21510.apk"
+      "versionCode": 21511,
+      "versionName": "2.15.11",
+      "outputFile": "app-default-x86-release-2.15.11-21511.apk"
+    },
+    {
+      "type": "ONE_OF_MANY",
+      "filters": [
+        {
+          "filterType": "ABI",
+          "value": "arm64-v8a"
+        }
+      ],
+      "attributes": [],
+      "versionCode": 21511,
+      "versionName": "2.15.11",
+      "outputFile": "app-default-arm64-v8a-release-2.15.11-21511.apk"
+    },
+    {
+      "type": "ONE_OF_MANY",
+      "filters": [
+        {
+          "filterType": "ABI",
+          "value": "x86_64"
+        }
+      ],
+      "attributes": [],
+      "versionCode": 21511,
+      "versionName": "2.15.11",
+      "outputFile": "app-default-x86_64-release-2.15.11-21511.apk"
     },
     {
       "type": "ONE_OF_MANY",
@@ -63,9 +63,9 @@
         }
       ],
       "attributes": [],
-      "versionCode": 21510,
-      "versionName": "2.15.10",
-      "outputFile": "app-default-armeabi-v7a-release-2.15.10-21510.apk"
+      "versionCode": 21511,
+      "versionName": "2.15.11",
+      "outputFile": "app-default-armeabi-v7a-release-2.15.11-21511.apk"
     }
   ],
   "elementType": "File"

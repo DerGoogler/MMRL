@@ -5,12 +5,16 @@
     "application_id": "com.dergoogler.mmrl",
     "min_sdk": 26,
     "target_sdk": 34,
-    "version_name": "2.15.10",
-    "version_code": 21510,
+    "version_name": "2.15.11",
+    "version_code": 21511,
     "verified_hosts": [
       "mmrl",
       "localhost",
-      "mmrl.dergoogler.com"
+      "mmrl.dergoogler.com",
+      "dergoogler.com",
+      "dergoogler.github.io",
+      "gr.dergoogler.com",
+      "googlers-repo.github.io"
     ]
   },
   "main": "index.tsx",
