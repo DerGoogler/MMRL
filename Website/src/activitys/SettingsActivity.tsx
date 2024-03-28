@@ -219,9 +219,7 @@ function SettingsActivity() {
 
         <Divider />
 
-        <List
-          subheader={<ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>{strings("storage")}</ListSubheader>}
-        >
+        <List subheader={<ListSubheader>{strings("storage")}</ListSubheader>}>
           <ListItemButton
             onClick={() => {
               setRepos([]);
@@ -239,6 +237,22 @@ function SettingsActivity() {
         </List>
 
         <Divider />
+
+        {BuildConfig.DEBUG && (
+          <>
+            <List subheader={<ListSubheader>Debug</ListSubheader>}>
+              <ListItemButton
+                onClick={() => {
+                  throw new Error("Test error thrown!");
+                }}
+              >
+                <ListItemText primary="Throw error" />
+              </ListItemButton>
+            </List>
+
+            <Divider />
+          </>
+        )}
 
         <ListItem>
           <ListItemText

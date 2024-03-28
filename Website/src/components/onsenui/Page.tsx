@@ -24,10 +24,10 @@ interface HTMLPage {
   renderToolbar?: RenderFunction;
   renderBottomToolbar?: RenderFunction;
   renderFixed?: RenderFunction;
-  onInit?: Function;
-  onShow?: Function;
-  onHide?: Function;
-  onInfiniteScroll?: Function;
+  onInit?: void | Function;
+  onShow?: void | Function;
+  onHide?: void | Function;
+  onInfiniteScroll?: () => void;
   onDeviceBackButton?: (event: DeviceBackButtonEvent) => void;
   children?: React.ReactNode;
   statusbarColor?: string;

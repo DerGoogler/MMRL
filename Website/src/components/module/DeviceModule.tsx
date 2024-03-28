@@ -8,7 +8,7 @@ import Button from "@mui/material/Button";
 
 import { ModConfActivity } from "@Activitys/ModConfActivity";
 
-import { Delete, Settings, RefreshRounded } from "@mui/icons-material";
+import { Delete, Settings, RefreshRounded, Loop } from "@mui/icons-material";
 
 import { useTheme } from "@Hooks/useTheme";
 import { useSettings } from "@Hooks/useSettings";
@@ -44,6 +44,7 @@ const DeviceModule = React.memo<Props>((props) => {
 
   const remove = new SuFile(format("REMOVE"));
   const disable = new SuFile(format("DISABLE"));
+  const has_update = SuFile.exist(format("UPDATE"));
 
   const [isEnabled, setIsEnabled] = React.useState(!disable.exist());
   const [isSwitchDisabled, setIsSwitchDisabled] = React.useState(remove.exist());
@@ -59,8 +60,8 @@ const DeviceModule = React.memo<Props>((props) => {
   const module_config_file = SuFile.exist(format("CONFINDEX"));
 
   return (
-    <Card sx={{ p: 2, width: "100%" }}>
-      <Stack direction="column" justifyContent="center" spacing={1}>
+    <Card sx={{ position: "relative", p: 2, width: "100%" }}>
+      <Stack sx={{ position: "relative", zIndex: 1 }} direction="column" justifyContent="center" spacing={1}>
         {cover && (
           <Image
             sx={(theme) => ({
@@ -113,7 +114,7 @@ const DeviceModule = React.memo<Props>((props) => {
             <Typography variant="caption" display="block">
               <Switch
                 checked={isEnabled}
-                disabled={isSwitchDisabled}
+                disabled={isSwitchDisabled || has_update}
                 onChange={(e) => {
                   const checked = e.target.checked;
 
@@ -228,6 +229,20 @@ const DeviceModule = React.memo<Props>((props) => {
           </Stack>
         </Stack>
       </Stack>
+      {has_update && (
+        <Loop
+          sx={{
+            position: "absolute",
+            left: "50%",
+            top: "50%",
+            fill: theme.palette.background.default,
+            color: theme.palette.background.default,
+            WebkitTransform: "translate(-50%, -50%)",
+            transform: "translate(-50%, -50%)",
+            fontSize: "50cqmin",
+          }}
+        />
+      )}
     </Card>
   );
 });

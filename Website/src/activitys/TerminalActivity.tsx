@@ -3,6 +3,7 @@ import { Toolbar } from "@Components/onsenui/Toolbar";
 import { useActivity } from "@Hooks/useActivity";
 import { Button, styled } from "@mui/material";
 import Stack from "@mui/material/Stack";
+import Box from "@mui/material/Box";
 import { Ansi } from "@Components/Ansi";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import React from "react";
@@ -307,6 +308,10 @@ const TerminalActivity = () => {
           e.callParentHandler();
         }
       }}
+      sx={{
+        // removing bottom window insets
+        pb: "0px !important",
+      }}
       onShow={install}
       modifier="noshadow"
       renderToolbar={renderToolbar}
@@ -335,7 +340,7 @@ const TerminalActivity = () => {
           ))}
         </Stack>
       </div>
-      <div ref={termEndRef} />
+      <Box sx={{ height: view.getWindowBottomInsets() }} ref={termEndRef} />
     </Page>
   );
 };

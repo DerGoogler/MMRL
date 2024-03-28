@@ -27,6 +27,7 @@ import pkg from "@Package";
 import UnverifiedHostActivity from "./UnverifiedHostActivity";
 import { useModFS } from "@Hooks/useModFS";
 import { SuFile } from "@Native/SuFile";
+import { LogcatActivity } from "./LogcatActivity";
 
 const CheckRoot = () => {
   if (pkg.config.verified_hosts.includes(location.hostname)) {
@@ -213,7 +214,14 @@ const MainActivity = (): JSX.Element => {
     const handleOpenSettings = () => {
       pushPage({
         component: SettingsActivity,
-        key: "settings",
+        key: "SettingsActivity",
+      });
+    };
+
+    const handleOpenLogcat = () => {
+      pushPage({
+        component: LogcatActivity,
+        key: "LogcatActivity",
       });
     };
 
@@ -236,9 +244,14 @@ const MainActivity = (): JSX.Element => {
           <Button fullWidth variant="contained" disableElevation onClick={resetErrorBoundary}>
             Try again
           </Button>
-          <Button style={{ marginTop: 16 }} fullWidth variant="contained" disableElevation onClick={handleOpenSettings}>
+          <Button sx={{ mt: 2 }} fullWidth variant="contained" disableElevation onClick={handleOpenSettings}>
             Open settings
           </Button>
+          {os.isAndroid && (
+            <Button sx={{ mt: 2 }} fullWidth variant="contained" disableElevation onClick={handleOpenLogcat}>
+              Open Logcat
+            </Button>
+          )}
 
           <Pre sx={style}>
             <Code>{errorInfo.componentStack}</Code>
