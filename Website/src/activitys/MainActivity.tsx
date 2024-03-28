@@ -29,8 +29,18 @@ import { useModFS } from "@Hooks/useModFS";
 import { SuFile } from "@Native/SuFile";
 import { LogcatActivity } from "./LogcatActivity";
 
+const getLocation = () => {
+  if (window.location !== window.parent.location) {
+    return window.parent.location;
+  } else if (window.self !== window.top && window.top) {
+    return window.top.location;
+  } else {
+    return window.location;
+  }
+};
+
 const CheckRoot = () => {
-  if (pkg.config.verified_hosts.includes(location.hostname)) {
+  if (pkg.config.verified_hosts.includes(getLocation().hostname)) {
     if (os.isAndroid) {
       // Shell.isAppGrantedRoot() doesn't work on KSU
       if (Shell.isSuAvailable()) {
