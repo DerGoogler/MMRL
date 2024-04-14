@@ -1,3 +1,8 @@
+> [!IMPORTANT]
+> Due to my upcoming final exams, it is not possible to provide you with updates. The MMRL Explore installer is editable, so you need to find a workaround yourself for the next 1-3 weeks.
+>        
+> G
+
 <p align="center">
   <img width="550" height="auto" src="https://mmrl.dergoogler.com/assets/MMRL-Cover.png">
   <br/>Your highly customizable module manager</b>
