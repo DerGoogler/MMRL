@@ -111,7 +111,7 @@
     "fs-extra": "^11.2.0",
     "js-yaml-loader": "^1.2.2",
     "license-checker": "^25.0.1",
-    "mini-css-extract-plugin": "^2.5.3",
+    "mini-css-extract-plugin": "^2.9.0",
     "postcss-loader": "^7.3.3",
     "raw-loader": "^4.0.2",
     "sass": "^1.49.8",
