@@ -152,7 +152,7 @@ class ShellClass extends Native<NativeShell> {
    */
   public isKernelSU(): boolean {
     // `proc.exist()` is always `false` on browsers
-    return this._mountDetect(/(KSU|KernelSU)/i);
+    return this._mountDetect(/(KSU|KernelSU)/);
   }
 
   /**
@@ -160,7 +160,7 @@ class ShellClass extends Native<NativeShell> {
    */
   public isMagiskSU(): boolean {
     // `proc.exist()` is always `false` on browsers
-    return this._mountDetect(/(magisk|core\/mirror|core\/img)/i);
+    return this._mountDetect(/(magisk|core\/mirror|core\/img)/);
   }
 
   /**
@@ -168,7 +168,7 @@ class ShellClass extends Native<NativeShell> {
    */
   public isAPatchSU(): boolean {
     // `proc.exist()` is always `false` on browsers
-    return this._mountDetect(/(APD|APatch)/i);
+    return this._mountDetect(/(APD|APatch)/);
   }
 
   /**
