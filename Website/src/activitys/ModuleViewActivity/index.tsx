@@ -28,6 +28,7 @@ import { AboutTab } from "./tabs/AboutTabs";
 import { useSettings } from "@Hooks/useSettings";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
+import Divider from "@mui/material/Divider";
 
 function a11yProps(index: number) {
   return {
@@ -249,9 +250,66 @@ const ModuleViewActivity = () => {
               justifyContent="space-between"
               spacing={1}
             >
-              <Typography sx={{ display: "flex", justifyContent: "flex-start", alignItems: "center" }} color="text.secondary">
-                {version} ({versionCode})
-              </Typography>
+              <Stack
+                sx={{ display: "flex" }}
+                direction="row"
+                divider={
+                  <Divider
+                    sx={{
+                      height: "24px",
+                      alignSelf: "center",
+                    }}
+                    orientation="vertical"
+                  />
+                }
+                spacing={2}
+              >
+                <Stack direction="column" justifyContent="center" alignItems="stretch" spacing={0}>
+                  <Typography variant="body2" align="center">
+                    {version}
+                  </Typography>
+                  <Typography variant="caption" display="block" align="center" color="text.secondary">
+                    name
+                  </Typography>
+                </Stack>
+
+                <Stack direction="column" justifyContent="center" alignItems="stretch" spacing={0}>
+                  <Typography variant="body2" align="center">
+                    {versionCode}
+                  </Typography>
+                  <Typography variant="caption" display="block" align="center" color="text.secondary">
+                    code
+                  </Typography>
+                </Stack>
+                {track.donate && (
+                  <Stack
+                    direction="column"
+                    justifyContent="center"
+                    alignItems="stretch"
+                    spacing={0}
+                    onClick={() => {
+                      os.open(track.donate, {
+                        target: "_blank",
+                        features: {
+                          color: theme.palette.primary.main,
+                        },
+                      });
+                    }}
+                    sx={{ cursor: "pointer" }}
+                  >
+                    <Typography variant="body2" align="center">
+                      <VolunteerActivism sx={{ fontSize: "0.875rem" }} />
+                    </Typography>
+                    <Typography variant="caption" display="block" align="center" color="text.secondary">
+                      donate
+                    </Typography>
+                  </Stack>
+                )}
+              </Stack>
+
+              {/* <Typography sx={{ display: "flex", justifyContent: "flex-start", alignItems: "center" }} color="text.secondary">
+                ({versionCode})
+              </Typography> */}
 
               <Stack direction="row" justifyContent="center" alignItems="center" spacing={1}>
                 {os.isAndroid && (Shell.isMagiskSU() || Shell.isKernelSU() || Shell.isAPatchSU()) && hasInstallTools && (
@@ -306,21 +364,6 @@ const ModuleViewActivity = () => {
                 >
                   {strings("download")}
                 </Button>
-                {track.donate && (
-                  <Button
-                    variant="contained"
-                    onClick={() => {
-                      os.open(track.donate, {
-                        target: "_blank",
-                        features: {
-                          color: theme.palette.primary.main,
-                        },
-                      });
-                    }}
-                  >
-                    <VolunteerActivism />
-                  </Button>
-                )}
               </Stack>
             </Stack>
           </Stack>
