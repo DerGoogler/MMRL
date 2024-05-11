@@ -96,6 +96,26 @@ const THIS_IS_THE_THEME_OBJECT_OF_THIS_F_APP = createTheme({
         }),
       },
     },
+    MuiPopover: {
+      styleOverrides: {
+        root: {
+          "& .MuiBackdrop-root": {
+            position: "fixed",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            right: "0",
+            bottom: "0",
+            top: "0",
+            left: "0",
+            zIndex: "-1",
+            backdropFilter: "blur(1px)",
+            filter: "blur(2px)",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+          },
+        },
+      },
+    },
     MuiDialog: {
       styleOverrides: {
         root: {
