@@ -5,8 +5,8 @@
     "application_id": "com.dergoogler.mmrl",
     "min_sdk": 26,
     "target_sdk": 34,
-    "version_name": "2.15.11",
-    "version_code": 21511,
+    "version_name": "2.15.12",
+    "version_code": 21512,
     "verified_hosts": [
       "mmrl",
       "localhost",
