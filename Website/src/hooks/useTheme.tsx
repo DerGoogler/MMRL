@@ -99,6 +99,20 @@ const THIS_IS_THE_THEME_OBJECT_OF_THIS_F_APP = createTheme({
     MuiDialog: {
       styleOverrides: {
         root: {
+          "& .MuiModal-backdrop": {
+            position: "fixed",
+            display: "flex",
+            WebkitBoxAlign: "center",
+            alignItems: "center",
+            WebkitBoxPack: "center",
+            justifyContent: "center",
+            inset: "0px",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            WebkitTapHighlightColor: "transparent",
+            zIndex: "-1",
+            filter: "blur(3px)",
+            backdropFilter: "blur(1px)",
+          },
           "& .MuiDialog-paper": {
             backgroundColor: "#101010",
             border: `1px solid #333638`,
