@@ -32,6 +32,7 @@ const RenderWhenEmpty = React.memo(() => {
 interface SearchActivityProps {
   list: any[];
   placeholder?: string;
+  initialSearch?: string;
   search?: SearchOptionsInterface<any>;
   group?: FlatListProps<any>["group"];
   renderList: renderFunc<any>;
@@ -40,12 +41,11 @@ interface SearchActivityProps {
 function SearchActivity(props: SearchActivityProps) {
   const { strings } = useStrings();
   const { context } = useActivity();
-  const { theme } = useTheme();
 
-  const { placeholder, list, renderList } = props;
+  const { placeholder, list, renderList, initialSearch = "" } = props;
   const __placeholder = placeholder ? placeholder : (strings("search") as string);
 
-  const [search, setSearch] = React.useState<string>("");
+  const [search, setSearch] = React.useState<string>(initialSearch);
 
   const renderToolbar = () => {
     return (
