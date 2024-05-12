@@ -15,6 +15,8 @@ import ModFSActivity from "@Activitys/ModFSActivity";
 import ModConfPlaygroundActivity from "@Activitys/ModConfPlaygroundActivity";
 import LicensesActivity from "@Activitys/LicensesActivity";
 import { SubmitModuleActivity } from "@Activitys/SubmitModuleActivity";
+import { os } from "@Native/Os";
+import { useTheme } from "@Hooks/useTheme";
 
 type Props = {
   renderToolbar: () => JSX.Element;
@@ -25,7 +27,7 @@ type Props = {
 export const DrawerFragment = (props: Props) => {
   const hide = props.hideSplitter;
   const pushPage = props.pushPage;
-
+  const { theme } = useTheme();
   const { strings } = useStrings();
 
   return (
@@ -122,6 +124,19 @@ export const DrawerFragment = (props: Props) => {
       <Divider />
 
       <List subheader={<ListSubheader>Other</ListSubheader>}>
+        <ListItemButton
+          onClick={() => {
+            os.open("https://dergoogler.com/legal/privacy-policy", {
+              target: "_blank",
+              features: {
+                color: theme.palette.background.default,
+              },
+            });
+            hide();
+          }}
+        >
+          <ListItemText primary={strings("privacy_privacy")} />
+        </ListItemButton>
         <ListItemButton
           onClick={() => {
             pushPage({
