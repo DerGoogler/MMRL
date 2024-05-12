@@ -5,6 +5,7 @@ import { Toolbar } from "@Components/onsenui/Toolbar";
 import { useActivity } from "@Hooks/useActivity";
 import { BuildConfig } from "@Native/BuildConfig";
 import Box from "@mui/material/Box";
+import { useStrings } from "@Hooks/useStrings";
 
 interface HOC_Options<P = {}> {
   versionCode?: number;
@@ -14,17 +15,16 @@ interface HOC_Options<P = {}> {
 }
 
 function withRequireNewVersion<P = {}>(opt: HOC_Options<P>): HOC_Options<P>["component"] {
+  const { strings } = useStrings();
   const {
     versionCode = BuildConfig.VERSION_CODE,
     component,
     title = "New version required!",
-    text = (
-      <>
-        This config requires MMRL above {versionCode} (versionCode)
-        <br />
-        Check the latest <Anchor href="https://github.com/DerGoogler/MMRL/releases">release</Anchor>
-      </>
-    ),
+    text = strings("hoc_with_require_new_version", {
+      versionCode,
+      br: <br />,
+      url: <Anchor href="https://github.com/DerGoogler/MMRL/releases">release</Anchor>,
+    }),
   } = opt;
   const { context } = useActivity();
 

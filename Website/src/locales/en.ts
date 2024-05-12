@@ -151,5 +151,6 @@ export const en = {
   // terminal activity
   reboot_device: "Reboot device?",
   reboot_device_desc: "Are you sure to reboot your device?",
-  privacy_privacy: "Privacy Privacy"
+  privacy_privacy: "Privacy Privacy",
+  hoc_with_require_new_version: "This config requires MMRL above {versionCode} (versionCode){br}Check the latest {url}"
 };
