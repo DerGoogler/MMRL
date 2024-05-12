@@ -8,13 +8,14 @@
     "version_name": "2.15.12",
     "version_code": 21512,
     "verified_hosts": [
-      "mmrl",
-      "localhost",
-      "mmrl.dergoogler.com",
-      "dergoogler.com",
-      "dergoogler.github.io",
-      "gr.dergoogler.com",
-      "googlers-repo.github.io"
+      ["mmrl", "i"],
+      ["localhost", "i"],
+      ["mmrl.dergoogler.com", "i"],
+      ["dergoogler.com", "i"],
+      ["dergoogler.github.io", "i"],
+      ["gr.dergoogler.com", "i"],
+      ["googlers-repo.github.io", "i"],
+      ["(localhost|\\b(?:(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.){3}(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)(?::\\d{0,4})?\\b)", "g"]
     ]
   },
   "main": "index.tsx",

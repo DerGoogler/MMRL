@@ -40,7 +40,7 @@ const getLocation = () => {
 };
 
 const CheckRoot = () => {
-  if (pkg.config.verified_hosts.includes(getLocation().hostname)) {
+  if (pkg.config.verified_hosts.some((e) => new RegExp(e[0], e[1]).test(getLocation().hostname))) {
     if (os.isAndroid) {
       // Shell.isAppGrantedRoot() doesn't work on KSU
       if (Shell.isSuAvailable()) {
