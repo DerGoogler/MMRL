@@ -26,7 +26,7 @@ import { useLocalModules } from "@Hooks/useLocalModules";
 import { Shell } from "@Native/Shell";
 import { ModConfView } from "@Components/ModConfView";
 import { useSettings } from "@Hooks/useSettings";
-import { useOpenModuleSearch } from "@Hooks/useOpenSearch";
+import { useOpenModuleSearch } from "@Hooks/useOpenModuleSearch";
 
 const MainApplication = () => {
   const { strings } = useStrings();

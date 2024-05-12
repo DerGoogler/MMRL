@@ -7,17 +7,13 @@ import Chip from "@mui/material/Chip";
 import Divider from "@mui/material/Divider";
 import CardMedia from "@mui/material/CardMedia";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
-
-import { Verified } from "@mui/icons-material";
-
 import ModuleViewActivity from "@Activitys/ModuleViewActivity/index";
-
 import { useFormatDate } from "@Hooks/useFormatDate";
 import { useActivity } from "@Hooks/useActivity";
-import Tooltip from "@mui/material/Tooltip";
 import { useStrings } from "@Hooks/useStrings";
 import { GestureDetector } from "@Components/onsenui/GestureDetector";
 import { useTheme } from "@Hooks/useTheme";
+import { VerifiedIcon } from "@Components/icons/VerifiedIcon";
 
 interface Props {
   module: Module;
@@ -72,11 +68,7 @@ const ExploreModule = React.memo<Props>((props) => {
         <Stack direction="column" justifyContent="center" alignItems="flex-start">
           <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={0.5}>
             <Typography variant="h6">{name}</Typography>
-            {track.verified && (
-              <Tooltip title={strings("verified_module")} placement="right" arrow>
-                <Verified sx={{ fontSize: "unset", color: theme.palette.text.link }} />
-              </Tooltip>
-            )}
+            <VerifiedIcon isVerified={track.verified} />
           </Stack>
 
           <Typography color="text.secondary" variant="caption">

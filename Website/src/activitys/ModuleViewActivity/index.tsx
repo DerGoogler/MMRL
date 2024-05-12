@@ -6,7 +6,7 @@ import React from "react";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
-import { Verified, VolunteerActivism } from "@mui/icons-material";
+import { VolunteerActivism } from "@mui/icons-material";
 import Stack from "@mui/material/Stack";
 import { useActivity } from "@Hooks/useActivity";
 import { useTheme } from "@Hooks/useTheme";
@@ -25,10 +25,12 @@ import { useModFS } from "@Hooks/useModFS";
 import { OverviewTab } from "./tabs/OverviewTab";
 import { VersionsTab } from "./tabs/VersionsTab";
 import { AboutTab } from "./tabs/AboutTabs";
-import { useSettings } from "@Hooks/useSettings";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Divider from "@mui/material/Divider";
+import { useRepos } from "@Hooks/useRepos";
+import { useOpenModuleSearch } from "@Hooks/useOpenModuleSearch";
+import { VerifiedIcon } from "@Components/icons/VerifiedIcon";
 
 function a11yProps(index: number) {
   return {
@@ -55,15 +57,16 @@ function CustomTabPanel(props: TabPanelProps) {
 
 const ModuleViewActivity = () => {
   const { strings } = useStrings();
-  const { settings } = useSettings();
   const confirm = useConfirm();
   const { theme } = useTheme();
+  const { modules } = useRepos();
   const { context, extra } = useActivity<Module>();
 
   const { id, name, version, versionCode, author, versions, track } = extra;
   const latestVersion = React.useMemo(() => versions[versions.length - 1], [versions]);
 
   const search = React.useMemo(() => new URLSearchParams(window.location.search), [window.location.search]);
+  const handleOpenModuleSearch = useOpenModuleSearch(modules);
 
   React.useEffect(() => {
     search.set("module", id);
@@ -217,13 +220,18 @@ const ModuleViewActivity = () => {
                 <Disappear as={Typography} variant="body1" fontWeight="bold" onDisappear={(visible) => setIsNameVisible(!visible)}>
                   {name}
                 </Disappear>
-                {track.verified && (
-                  <Tooltip title={strings("verified_module")} placement="right" arrow>
-                    <Verified sx={{ fontSize: "unset", color: theme.palette.text.link }} />
-                  </Tooltip>
-                )}
+                <VerifiedIcon isVerified={track.verified} />
               </Stack>
-              <Typography variant="body2" color="text.secondary">
+              <Typography
+                variant="body2"
+                onClick={() => handleOpenModuleSearch(author)}
+                sx={{
+                  ":hover": {
+                    cursor: "pointer",
+                  },
+                }}
+                color="text.link"
+              >
                 {author}
               </Typography>
             </Box>

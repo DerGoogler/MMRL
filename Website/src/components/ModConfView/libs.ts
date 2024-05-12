@@ -24,6 +24,7 @@ import { SearchActivity } from "@Activitys/SearchActivity";
 import React from "react";
 import { withRequireNewVersion } from "../../hoc/withRequireNewVersion";
 import { CodeBlock } from "@Components/CodeBlock";
+import { VerifiedIcon } from "@Components/icons/VerifiedIcon";
 
 export const libraries = [
   {
@@ -77,6 +78,12 @@ export const libraries = [
     name: "@mmrl/hoc",
     __esModule: {
       withRequireNewVersion: withRequireNewVersion,
+    },
+  },
+  {
+    name: "@mmrl/icons",
+    __esModule: {
+      VerifiedIcon: VerifiedIcon,
     },
   },
   {

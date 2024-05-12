@@ -9,8 +9,8 @@ import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import ListItemText from "@mui/material/ListItemText";
 import { SuFile } from "@Native/SuFile";
-import VerifiedIcon from "@mui/icons-material/Verified";
 import { useModFS } from "./useModFS";
+import { VerifiedIcon } from "@Components/icons/VerifiedIcon";
 
 export function useOpenModuleSearch<L extends Module[]>(list: L) {
   const { context } = useActivity();
@@ -58,9 +58,8 @@ export function useOpenModuleSearch<L extends Module[]>(list: L) {
                 primary={
                   <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={0.5}>
                     <Typography>{item.name}</Typography>
-                    {item.track.verified && (
-                      <VerifiedIcon sx={(theme: MMRLTheme) => ({ color: theme.palette.text.link, fontSize: "unset" })} />
-                    )}
+
+                    <VerifiedIcon isVerified={item.track.verified} />
                   </Stack>
                 }
                 secondary={
