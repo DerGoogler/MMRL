@@ -142,9 +142,14 @@ ons-splitter, ons-splitter-mask, ons-splitter-content, ons-splitter-side {
 }
 ons-splitter-mask {
   z-index: 4;
-  background-color: rgba(0, 0, 0, 0.1);
+  // background-color: rgba(0, 0, 0, 0.1);
   display: none;
   opacity: 0;
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  filter: blur(2px);
+  -webkit-filter: blur(2px);
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
 }
 ons-splitter-content {
   z-index: 2;
