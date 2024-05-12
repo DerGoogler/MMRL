@@ -8,7 +8,6 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { InputBaseProps } from "@mui/material/InputBase";
 import ListItemButton from "@mui/material/ListItemButton";
-import TextField from "@mui/material/TextField";
 import React from "react";
 import { CustomTextField } from "./TextField";
 
@@ -52,7 +51,21 @@ export const DialogEditTextListItem = (props: DialogEditTextListItemProps) => {
       <ListItemButton disabled={props.disabled} onClick={handleClickOpen}>
         {props.children}
       </ListItemButton>
-      <Dialog open={open} maxWidth="md" fullWidth onClose={handleClose}>
+      <Dialog
+        sx={{ position: "absolute" }}
+        slotProps={{
+          backdrop: {
+            sx: {
+              position: "absolute",
+            },
+          },
+        }}
+        container={() => document.getElementById("ModConf-Container")}
+        open={open}
+        maxWidth="md"
+        fullWidth
+        onClose={handleClose}
+      >
         <DialogTitle>{props.title}</DialogTitle>
         <DialogContent>
           {props.description && <DialogContentText>{props.description}</DialogContentText>}

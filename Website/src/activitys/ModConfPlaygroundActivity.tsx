@@ -227,7 +227,7 @@ const ModConfPlaygroundActivity = () => {
 
             {isLargeScreen && (
               <Preview>
-                <Box component="section" sx={{ width: "100%", height: "100%" }}>
+                <Box id="ModConf-Container" component="section" sx={{ position: "relative", width: "100%", height: "100%" }}>
                   <PreviewErrorBoundary key={"preview_error_bound_key_" + errBoundKey}>
                     <ModConfView modid={modFS("MODCONF_PLAYGROUND_MODID")} children={description} />
                   </PreviewErrorBoundary>

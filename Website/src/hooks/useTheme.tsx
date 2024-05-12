@@ -119,7 +119,8 @@ const THIS_IS_THE_THEME_OBJECT_OF_THIS_F_APP = createTheme({
       styleOverrides: {
         root: {
           "& .MuiModal-backdrop": {
-            position: "fixed",
+            // position: "fixed",
+            position: "absolute",
             display: "flex",
             WebkitBoxAlign: "center",
             alignItems: "center",
