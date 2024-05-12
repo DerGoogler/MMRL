@@ -5,7 +5,7 @@ import Collapse from "@mui/material/Collapse";
 import { useRepos } from "@Hooks/useRepos";
 import { useSettings } from "@Hooks/useSettings";
 import { useStrings } from "@Hooks/useStrings";
-import { IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Switch } from "@mui/material";
+import { IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Switch, Typography } from "@mui/material";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { SvgIconTypeMap } from "@mui/material/SvgIcon/SvgIcon";
 import { DeleteRounded, LanguageRounded, SupportRounded, UploadFileRounded, VolunteerActivismRounded } from "@mui/icons-material";
@@ -86,7 +86,30 @@ export const LocalRepository = React.memo<LocalRepositoryProps>((props) => {
     <>
       <ListItem>
         <ListItemIcon onClick={handleClick}>{open ? <ExpandLess /> : <ExpandMore />}</ListItemIcon>
-        <ListItemText primary={repo.name} secondary={formatLastUpdate} />
+        <ListItemText
+          primary={repo.name}
+          secondary={
+            <>
+              <Typography variant="body2">{formatLastUpdate}</Typography>
+
+              <Typography variant="body2" sx={{}}>
+                Holds{" "}
+                <Typography
+                  component="span"
+                  variant="body2"
+                  sx={{
+                    background: "-webkit-linear-gradient(132deg, rgba(188,2,194,1) 10%,rgba(255,255,255,1) 100%, rgba(74,20,140,0.5) 50%)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                  }}
+                >
+                  {data.modules.length.toString()}
+                </Typography>{" "}
+                modules
+              </Typography>
+            </>
+          }
+        />
 
         <Switch
           edge="end"
