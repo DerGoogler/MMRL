@@ -179,6 +179,10 @@ const THIS_IS_THE_THEME_OBJECT_OF_THIS_F_APP = createTheme({
               opacity: ".3",
               backgroundColor: "#ffffff",
             },
+            ":hover":{
+              cursor: "pointer",
+              backgroundColor: "#999999",
+            }
           }),
         }),
       },
