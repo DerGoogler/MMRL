@@ -19,6 +19,12 @@
   <img src="https://img.shields.io/github/downloads/DerGoogler/MMRL/total?label=All%20time%20downloads" alt="GitHub all releases">
 </p>
 
+<p align="center">
+  <a href="https://github.com/DerGoogler/MMRL/blob/master/docs/faq.md">FAQ</a> • 
+  <a href="https://github.com/DerGoogler/MMRL/blob/master/docs/ModConf/README.md">ModConf</a> • 
+  <a href="https://github.com/DerGoogler/MMRL/blob/master/docs/ModFS.md">ModFS</a>
+</p>
+
 # Summary
 
 Introducing Magisk Module Repo Loader (MMRL) - the ultimate module manager for Magisk, KernelSU and APatch on Android. This highly configurable app allows users to manage modules effortlessly, all while being completely free of ads.
@@ -33,7 +39,7 @@ Introducing Magisk Module Repo Loader (MMRL) - the ultimate module manager for M
 
 - Basics: Literally basics
 - [ModFS](https://github.com/DerGoogler/MMRL/tree/master/docs/ModFS.md): Customizable Module Filesystem
-- [ModConf](https://github.com/DerGoogler/MMRL/tree/master/docs/ModConf.md): Provide dynamic created pages for modules
+- [ModConf](https://github.com/DerGoogler/MMRL/blob/master/docs/ModConf/README.md): Provide dynamic created pages for modules
 - Custom Repos: Load any repo that uses the MRepo or the GR Fork
 
 > Read the [documentation](https://github.com/DerGoogler/MMRL/tree/master/docs) to explore more of our functions like `Shell`, `SuFile` and more
