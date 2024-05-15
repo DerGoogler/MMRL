@@ -180,10 +180,10 @@ const THIS_IS_THE_THEME_OBJECT_OF_THIS_F_APP = createTheme({
               opacity: ".3",
               backgroundColor: "#ffffff",
             },
-            ":hover":{
+            ":hover": {
               cursor: "pointer",
               backgroundColor: "#999999",
-            }
+            },
           }),
         }),
       },
@@ -198,6 +198,7 @@ const THIS_IS_THE_THEME_OBJECT_OF_THIS_F_APP = createTheme({
   palette: {
     mode: "dark",
     primary: {
+      header: "#101010d9",
       main: "#ffffff",
       dark: "#353535",
     },
@@ -214,7 +215,7 @@ const THIS_IS_THE_THEME_OBJECT_OF_THIS_F_APP = createTheme({
       primary: "#f3f5f7",
       secondary: "#777777",
     },
-    divider: "#333638",
+    divider: "#f3f5f726",
   },
 } as unknown as MMRLTheme);
 

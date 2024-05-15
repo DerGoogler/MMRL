@@ -14,6 +14,7 @@ import { useStrings } from "@Hooks/useStrings";
 import { GestureDetector } from "@Components/onsenui/GestureDetector";
 import { useTheme } from "@Hooks/useTheme";
 import { VerifiedIcon } from "@Components/icons/VerifiedIcon";
+import { Image } from "@Components/dapi/Image";
 
 interface Props {
   module: Module;
@@ -51,17 +52,15 @@ const ExploreModule = React.memo<Props>((props) => {
     >
       <Stack direction="column" justifyContent="center" spacing={1}>
         {track.cover && (
-          <CardMedia
-            component="img"
-            sx={(theme) => ({
+          <Image
+            sx={{
               height: "100%",
               objectFit: "cover",
-              borderRadius: theme.shape.borderRadius / theme.shape.borderRadius,
-              border: `1px solid ${theme.palette.divider} !important`,
               width: "100%",
-            })}
-            image={track.cover}
+            }}
+            src={track.cover}
             alt={name}
+            noOpen
           />
         )}
 

@@ -11,6 +11,7 @@ import Stack from "@mui/material/Stack";
 import { useActivity } from "@Hooks/useActivity";
 import { useTheme } from "@Hooks/useTheme";
 import { os } from "@Native/Os";
+import SvgIcon from "@mui/material/SvgIcon";
 import CardMedia from "@mui/material/CardMedia";
 import { SuFile } from "@Native/SuFile";
 import TerminalActivity, { TerminalActivityExtra } from "../TerminalActivity";
@@ -164,7 +165,8 @@ const ModuleViewActivity = () => {
           >
             <CardMedia
               component="img"
-              sx={(theme) => ({
+              sx={{
+                filter: `url(#${id}-cover-blur)`,
                 zIndex: -1,
                 display: "block",
                 position: "relative",
@@ -173,10 +175,21 @@ const ModuleViewActivity = () => {
                   xs: `calc(calc(100vw - 48px + ${view.getWindowTopInsets()}px)*9/16)`,
                 },
                 objectFit: "cover",
-              })}
+              }}
               image={track.cover}
               alt={name}
             />
+            <SvgIcon sx={{ display: "none" }}>
+              <svg>
+                <defs>
+                  <filter id={`${id}-cover-blur`}>
+                    <feGaussianBlur stdDeviation="3"></feGaussianBlur>
+                    <feColorMatrix type="matrix" values="1 0 0 0 0, 0 1 0 0 0, 0 0 1 0 0, 0 0 0 9 0"></feColorMatrix>
+                    <feComposite in2="SourceGraphic" operator="in"></feComposite>
+                  </filter>
+                </defs>
+              </svg>
+            </SvgIcon>
           </Box>
         )}
 

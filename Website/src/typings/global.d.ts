@@ -89,6 +89,9 @@ declare global {
 
   export type MMRLTheme = Theme & {
     palette?: {
+      primary?: {
+        header?: string;
+      };
       text?: {
         link?: string;
       };

@@ -12,7 +12,9 @@ type Props = BoxProps<"img", JSX.IntrinsicElements["img"]> & {
   shadow?: string;
   title?: string;
   caption?: string;
+  noOutline?: boolean;
   noOpen?: boolean;
+  blur?: number;
   modFSAdds?: Partial<ModFS & { MODID: string }>;
 };
 
@@ -20,7 +22,7 @@ function Image(props: Props) {
   const { theme } = useTheme();
   const { _modFS } = useModFS();
   const { context } = useActivity();
-  const { type = "image/png", src, shadow, noOpen, sx, modFSAdds, ...rest } = props;
+  const { type = "image/png", src, shadow, noOpen, sx, blur, modFSAdds, noOutline, ...rest } = props;
 
   const [newSrc, setNewSrc] = React.useState(src);
 
@@ -41,7 +43,7 @@ function Image(props: Props) {
           cursor: !noOpen ? "pointer" : "unset",
         },
         borderRadius: theme.shape.borderRadius / theme.shape.borderRadius,
-        border: `1px solid ${theme.palette.divider} !important`,
+        ...(!noOutline && { outlineOffset: -1, outline: `1px solid ${theme.palette.divider} !important` }),
         boxShadow: theme.shadows[shadow || 0],
         ...sx,
       }}
