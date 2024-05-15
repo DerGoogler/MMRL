@@ -216,6 +216,7 @@ const THIS_IS_THE_THEME_OBJECT_OF_THIS_F_APP = createTheme({
       secondary: "#777777",
     },
     divider: "#f3f5f726",
+    menuoutline: "#333638",
   },
 } as unknown as MMRLTheme);
 
