@@ -1,26 +1,21 @@
 import { useStrings } from "@Hooks/useStrings";
-import Avatar from "@mui/material/Avatar";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
 import ListItem from "@mui/material/ListItem";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import ListItemText from "@mui/material/ListItemText";
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
-import ImageIcon from "@mui/icons-material/Image";
+import { en_antifeatures } from "./../locales/antifeatures/en";
 import React from "react";
+import { ListItemText } from "@mui/material";
 
 interface AntiFeatureListItemProps {
   type: string;
 }
 
 const AntiFeatureListItem = (props: AntiFeatureListItemProps) => {
-  const { strings } = useStrings();
+  const find = React.useMemo(() => en_antifeatures.find((anti) => anti.id === props.type), []);
+
+  if (!find) return null;
 
   return (
     <ListItem disablePadding>
-      {/* @ts-ignore */}
-      <ListItemText primary={props.type} secondary={strings(`AntiFeature_${props.type}_desc`)} />
+      <ListItemText primary={find.name} secondary={find.desc} />
     </ListItem>
   );
 };

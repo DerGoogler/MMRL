@@ -214,7 +214,7 @@ declare global {
     categories?: string[];
     stars?: number;
     readme?: string;
-    antifeatures?: AntiFeatures | AntiFeatures[];
+    antifeatures?: string | string[] | AntiFeatures | AntiFeatures[];
   }
 
   type AntiFeatures =

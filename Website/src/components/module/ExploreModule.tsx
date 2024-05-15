@@ -5,7 +5,6 @@ import Card from "@mui/material/Card";
 import Stack from "@mui/material/Stack";
 import Chip from "@mui/material/Chip";
 import Divider from "@mui/material/Divider";
-import CardMedia from "@mui/material/CardMedia";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import ModuleViewActivity from "@Activitys/ModuleViewActivity/index";
 import { useFormatDate } from "@Hooks/useFormatDate";
@@ -15,6 +14,9 @@ import { GestureDetector } from "@Components/onsenui/GestureDetector";
 import { useTheme } from "@Hooks/useTheme";
 import { VerifiedIcon } from "@Components/icons/VerifiedIcon";
 import { Image } from "@Components/dapi/Image";
+import Box from "@mui/material/Box";
+import { AntifeatureButton } from "@Components/AntifeaturesButton";
+import { blacklistedModules } from "@Util/blacklisted-modules";
 
 interface Props {
   module: Module;
@@ -29,6 +31,10 @@ const ExploreModule = React.memo<Props>((props) => {
 
   const formatLastUpdate = useFormatDate(timestamp ? timestamp : versions[versions.length - 1].timestamp);
 
+  const findHardCodedAntifeature = React.useMemo<Track["antifeatures"]>(() => {
+    return [...(track.antifeatures || []), ...(blacklistedModules[id]?.antifeatures || [])];
+  }, [id, track.antifeatures]);
+
   const handleOpenModule = () => {
     context.pushPage({
       component: ModuleViewActivity,
@@ -38,64 +44,73 @@ const ExploreModule = React.memo<Props>((props) => {
   };
 
   return (
-    <Card
-      onTap={handleOpenModule}
-      component={GestureDetector}
-      sx={{
-        p: 2,
-        ":hover": {
-          opacity: ".8",
-          cursor: "pointer",
-        },
-        width: "100%",
-      }}
-    >
-      <Stack direction="column" justifyContent="center" spacing={1}>
-        {track.cover && (
-          <Image
-            sx={{
-              height: "100%",
-              objectFit: "cover",
-              width: "100%",
-            }}
-            src={track.cover}
-            alt={name}
-            noOpen
-          />
-        )}
-
-        <Stack direction="column" justifyContent="center" alignItems="flex-start">
-          <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={0.5}>
-            <Typography variant="h6">{name}</Typography>
-            <VerifiedIcon isVerified={track.verified} />
-          </Stack>
-
-          <Typography color="text.secondary" variant="caption">
-            {version} ({versionCode}) / {author}
-          </Typography>
-        </Stack>
-        <Typography color="text.secondary" variant="body2" display="block">
-          {description}
-        </Typography>
-        <Stack direction="column" justifyContent="center" spacing={1.2}>
-          <Divider variant="middle" />
-          <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={1}>
-            <Chip
+    <Box>
+      <Card
+        onTap={handleOpenModule}
+        component={GestureDetector}
+        sx={{
+          ...(track.antifeatures && {
+            borderRadius: `${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0px ${theme.shape.borderRadius}px`,
+          }),
+          p: 2,
+          ":hover": {
+            opacity: ".8",
+            cursor: "pointer",
+          },
+          width: "100%",
+        }}
+      >
+        <Stack direction="column" justifyContent="center" spacing={1}>
+          {track.cover && (
+            <Image
               sx={{
-                bgColor: "secondary.dark",
+                height: "100%",
+                objectFit: "cover",
+                width: "100%",
               }}
-              label={formatLastUpdate}
+              src={track.cover}
+              alt={name}
+              noOpen
             />
+          )}
 
-            <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={1}>
-              {track.antifeatures && (
-                <Chip variant="outlined" color="warning" label="Anti-Features" size="small" icon={<WarningAmberIcon />} />
-              )}
+          <Stack direction="column" justifyContent="center" alignItems="flex-start">
+            <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={0.5}>
+              <Typography variant="h6">{name}</Typography>
+              <VerifiedIcon isVerified={track.verified} />
+            </Stack>
+
+            <Typography color="text.secondary" variant="caption">
+              {version} ({versionCode}) / {author}
+            </Typography>
+          </Stack>
+          <Typography color="text.secondary" variant="body2" display="block">
+            {description}
+          </Typography>
+          <Stack direction="column" justifyContent="center" spacing={1.2}>
+            <Divider variant="middle" />
+            <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={1}>
+              <Chip
+                sx={{
+                  bgColor: "secondary.dark",
+                }}
+                label={formatLastUpdate}
+              />
+
+              <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={1}></Stack>
             </Stack>
           </Stack>
         </Stack>
-      </Stack>
-    </Card>
+      </Card>
+      {findHardCodedAntifeature && findHardCodedAntifeature.length !== 0 && (
+        <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={2}>
+          <AntifeatureButton
+            antifeatures={findHardCodedAntifeature}
+            sx={{ borderRadius: `0px 0px ${theme.shape.borderRadius}px ${theme.shape.borderRadius}px` }}
+          />
+        </Stack>
+      )}
+    </Box>
   );
 });
 

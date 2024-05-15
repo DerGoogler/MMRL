@@ -23,6 +23,8 @@ import { SuFile } from "@Native/SuFile";
 import { useConfirm } from "material-ui-confirm";
 import Switch from "@mui/material/Switch";
 import { Image } from "@Components/dapi/Image";
+import { blacklistedModules } from "@Util/blacklisted-modules";
+import { AntifeatureButton } from "@Components/AntifeaturesButton";
 
 interface Props {
   module: Module;
@@ -58,6 +60,10 @@ const DeviceModule = React.memo<Props>((props) => {
   const post_mount = SuFile.exist(format("POSTMOUNT"));
   const boot_complete = SuFile.exist(format("BOOTCOMP"));
   const module_config_file = SuFile.exist(format("CONFINDEX"));
+
+  const findHardCodedAntifeature = React.useMemo<Track["antifeatures"]>(() => {
+    return blacklistedModules[id]?.antifeatures || [];
+  }, [id]);
 
   return (
     <Card sx={{ position: "relative", p: 2, width: "100%" }}>
@@ -167,6 +173,11 @@ const DeviceModule = React.memo<Props>((props) => {
             </Stack>
             <Divider variant="middle" />
             <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={1}>
+              {findHardCodedAntifeature && findHardCodedAntifeature.length !== 0 && (
+                <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={2}>
+                  <AntifeatureButton antifeatures={findHardCodedAntifeature} />
+                </Stack>
+              )}
               <Button
                 onClick={() => {
                   context.pushPage({
