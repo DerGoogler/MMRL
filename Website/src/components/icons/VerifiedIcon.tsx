@@ -25,40 +25,6 @@ const VerifiedIcon = (props: VerifiedIconProps) => {
                 <stop stopColor="hsl(298.13deg 97.96% 38.43%)" stopOpacity="1" offset="0%" />
                 <stop stopColor="hsl(267deg 75% 31.37%)" stopOpacity="1" offset="100%" />
               </linearGradient>
-              <filter
-                id={`${verifiedId}-filter`}
-                x="-20%"
-                y="-20%"
-                width="140%"
-                height="140%"
-                filterUnits="objectBoundingBox"
-                primitiveUnits="userSpaceOnUse"
-                color-interpolation-filters="sRGB"
-              >
-                <feTurbulence
-                  type="fractalNoise"
-                  baseFrequency="0.007 0.007"
-                  numOctaves="2"
-                  seed="2"
-                  stitchTiles="stitch"
-                  x="0%"
-                  y="0%"
-                  width="100%"
-                  height="100%"
-                  result="turbulence"
-                />
-                <feGaussianBlur
-                  stdDeviation="38 23"
-                  x="0%"
-                  y="0%"
-                  width="100%"
-                  height="100%"
-                  in="turbulence"
-                  edgeMode="duplicate"
-                  result="blur"
-                />
-                <feBlend mode="color-dodge" x="0%" y="0%" width="100%" height="100%" in="SourceGraphic" in2="blur" result="blend" />
-              </filter>
             </defs>
             <path
               fill={`url(#${verifiedId}-gradient) ${theme.palette.text.link}`}
