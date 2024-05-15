@@ -1,4 +1,5 @@
 import onsCustomElement from "@Util/onsCustomElement";
+import { SxProps } from "@mui/material";
 import "onsenui/esm/elements/ons-splitter";
 import React from "react";
 
@@ -9,6 +10,7 @@ interface HTMLSplitter {
 interface HTMLSplitterContent {}
 
 interface HTMLSplitterSide {
+  sx?: SxProps;
   collapse?: boolean | "portrait" | "landscape";
   swipeable?: boolean;
   isOpen?: boolean;

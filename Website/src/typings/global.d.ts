@@ -92,6 +92,7 @@ declare global {
       primary?: {
         header?: string;
       };
+      menuoutline?: string;
       text?: {
         link?: string;
       };
