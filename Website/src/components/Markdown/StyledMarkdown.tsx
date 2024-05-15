@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const StyledMarkdown = styled("article")(() => {
-  const { theme, scheme, shade } = useTheme();
+  const { theme } = useTheme();
   const { settings } = useSettings();
 
   return {

@@ -140,6 +140,7 @@ const TerminalActivity = () => {
         }),
         cwd: "/data/local/tmp",
         env: envp_explore,
+        printError: settings.print_terminal_error,
         onLine: (line) => {
           if (line.startsWith("#!mmrl:")) {
             processCommand(line.substring(7));
@@ -234,6 +235,7 @@ const TerminalActivity = () => {
           ZIPFILE: path,
         }),
         env: envp_local,
+        printError: settings.print_terminal_error,
         cwd: "/data/local/tmp",
         onLine: (line) => {
           if (line.startsWith("#!mmrl:")) {

@@ -28,7 +28,6 @@ import UnverifiedHostActivity from "./UnverifiedHostActivity";
 import { useModFS } from "@Hooks/useModFS";
 import { SuFile } from "@Native/SuFile";
 import { LogcatActivity } from "./LogcatActivity";
-import { view } from "@Native/View";
 
 const getLocation = () => {
   if (window.location !== window.parent.location) {
@@ -285,18 +284,6 @@ const MainActivity = (): JSX.Element => {
       <Splitter>
         <Splitter.Side
           side="left"
-          sx={{
-            borderColor: theme.palette.menuoutline,
-            borderStyle: "solid",
-            borderLeft: "0px",
-            borderWidth: "1px",
-            borderRadius: `0px ${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0px`,
-            mt: `calc(${view.getWindowTopInsets() || 8}px + 0.5% - 2px)`,
-            mb: `calc(${view.getWindowBottomInsets() || 8}px + 0.5% - 2px)`,
-            ".page--material": {
-              borderRadius: `0px ${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0px`,
-            },
-          }}
           width={250}
           collapse={true}
           swipeable={false}

@@ -144,6 +144,16 @@ function SettingsActivity() {
                   checked={settings.term_scroll_bottom}
                 />
               </ListItem>
+              <ListItem>
+                <ListItemText primary={strings("print_errors")} secondary={strings("print_errors_desc")} />
+                <Switch
+                  edge="end"
+                  onChange={(e) => {
+                    setSettings("term_scroll_bottom", e.target.checked);
+                  }}
+                  checked={settings.term_scroll_bottom}
+                />
+              </ListItem>
               <ListPickerItem
                 id="term-scroll-behavior"
                 targetSetting="term_scroll_behavior"

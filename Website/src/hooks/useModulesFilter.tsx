@@ -87,7 +87,7 @@ interface FilterDialogProps {
 }
 
 export const FilterDialog = (props: FilterDialogProps) => {
-  const { scheme, theme } = useTheme();
+  const { theme } = useTheme();
   const { onClose, selectedValue, open } = props;
 
   const handleClose = () => {
@@ -106,13 +106,7 @@ export const FilterDialog = (props: FilterDialogProps) => {
           <ListItem disableGutters key={filter.value}>
             <ListItemButton onClick={() => handleListItemClick(filter.value)}>
               <ListItemAvatar>
-                <Avatar
-                  sx={{
-                    bgcolor: scheme[100],
-                    color: scheme[600],
-                    border: filter.value === selectedValue ? `2px solid ${scheme[600]}` : "unset",
-                  }}
-                >
+                <Avatar>
                   <filter.icon />
                 </Avatar>
               </ListItemAvatar>

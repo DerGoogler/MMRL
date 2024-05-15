@@ -29,7 +29,6 @@ export interface DialogEditTextListItemProps extends React.PropsWithChildren {
 
 export const DialogEditTextListItem = (props: DialogEditTextListItemProps) => {
   const { strings } = useStrings();
-  const { scheme, shade } = useTheme();
 
   const [textInput, setTextInput] = React.useState(props.initialValue);
   const [open, setOpen] = React.useState(false);

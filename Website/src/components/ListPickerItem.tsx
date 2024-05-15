@@ -20,7 +20,7 @@ interface PickerItemProps {
   id: string;
   disabled?: boolean;
   contentMap: ContentMap[];
-  targetSetting: "language" | "accent_scheme" | "term_scroll_behavior";
+  targetSetting: "language" | "term_scroll_behavior";
   title: React.ReactNode;
 }
 
