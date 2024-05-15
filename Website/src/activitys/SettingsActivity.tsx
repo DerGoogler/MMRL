@@ -149,9 +149,9 @@ function SettingsActivity() {
                 <Switch
                   edge="end"
                   onChange={(e) => {
-                    setSettings("term_scroll_bottom", e.target.checked);
+                    setSettings("print_terminal_error", e.target.checked);
                   }}
-                  checked={settings.term_scroll_bottom}
+                  checked={settings.print_terminal_error}
                 />
               </ListItem>
               <ListPickerItem
