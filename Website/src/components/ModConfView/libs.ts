@@ -25,6 +25,7 @@ import React from "react";
 import { withRequireNewVersion } from "../../hoc/withRequireNewVersion";
 import { CodeBlock } from "@Components/CodeBlock";
 import { VerifiedIcon } from "@Components/icons/VerifiedIcon";
+import { IsolatedFunctionBlockError } from "@Native/IsolatedEval/IsolatedFunctionBlockError";
 
 export const libraries = [
   {
@@ -36,6 +37,8 @@ export const libraries = [
           // prevents webview url change
           case "a":
             return React.createElement(Anchor, props, ...children);
+          case "iframe":
+            throw new IsolatedFunctionBlockError("iframe");
           default:
             return React.createElement(type, props, ...children);
         }
