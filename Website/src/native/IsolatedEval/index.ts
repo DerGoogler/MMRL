@@ -10,7 +10,7 @@ import { Build } from "../Build";
 import { IScope } from "@nyariv/sandboxjs/dist/node/executor";
 import { Native } from "../Native";
 import { IsoDocument } from "./IsoDocument";
-import { IsolatedEvalError } from "./IsolatedEvalError";
+import { IsolatedFunctionBlockError } from "./IsolatedFunctionBlockError";
 
 class IsolatedEval<T = any> {
   private readonly _sandbox: Sandbox = new Sandbox();
@@ -40,25 +40,25 @@ class IsolatedEval<T = any> {
     Build: Build,
     Native: Native,
     eval() {
-      throw new IsolatedEvalError(`"eval()" has been blacklisted.`);
+      throw new IsolatedFunctionBlockError("eval()");
     },
     atob() {
-      throw new IsolatedEvalError(`"atob()" has been blacklisted.`);
+      throw new IsolatedFunctionBlockError("atob()");
     },
     btoa() {
-      throw new IsolatedEvalError(`"btoa()" has been blacklisted.`);
+      throw new IsolatedFunctionBlockError("btoa()");
     },
     encodeURI() {
-      throw new IsolatedEvalError(`"encodeURI()" has been blacklisted.`);
+      throw new IsolatedFunctionBlockError("encodeURI()");
     },
     encodeURIComponent() {
-      throw new IsolatedEvalError(`"encodeURIComponent()" has been blacklisted.`);
+      throw new IsolatedFunctionBlockError("encodeURIComponent()");
     },
     decodeURI() {
-      throw new IsolatedEvalError(`"decodeURI()" has been blacklisted.`);
+      throw new IsolatedFunctionBlockError("decodeURI()");
     },
     decodeURIComponent() {
-      throw new IsolatedEvalError(`"decodeURIComponent()" has been blacklisted.`);
+      throw new IsolatedFunctionBlockError("decodeURIComponent()");
     },
   };
   private readonly _prototypeWhitelist = Sandbox.SAFE_PROTOTYPES;

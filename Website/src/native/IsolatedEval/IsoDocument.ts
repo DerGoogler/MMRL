@@ -1,4 +1,4 @@
-import { IsolatedEvalError } from "./IsolatedEvalError";
+import { IsolatedFunctionBlockError } from "./IsolatedFunctionBlockError";
 
 class IsoDocument extends Document {
   public constructor() {
@@ -6,11 +6,11 @@ class IsoDocument extends Document {
   }
 
   public write(...text: string[]): void {
-    throw new IsolatedEvalError(`"document.write()" has been blacklisted.`);
+    throw new IsolatedFunctionBlockError("document.write()");
   }
 
   public writeln(...text: string[]): void {
-    throw new IsolatedEvalError(`"document.writeln()" has been blacklisted.`);
+    throw new IsolatedFunctionBlockError("document.writeln()");
   }
 }
 

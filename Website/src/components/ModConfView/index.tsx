@@ -99,9 +99,6 @@ export const ModConfView = React.forwardRef<any, { children: string; modid: stri
         require: internalRequire,
         include: internalInclude,
         fetch: internalFetch,
-        eval: () => {
-          throw new Error("Module tried to execute eval()!");
-        },
       }),
     []
   );
