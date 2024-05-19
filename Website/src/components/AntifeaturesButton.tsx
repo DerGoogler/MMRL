@@ -4,6 +4,7 @@ import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import React from "react";
 import { useStrings } from "@Hooks/useStrings";
 import AntiFeatureListItem from "./AntiFeatureListItem";
+import { GestureDetector } from "./onsenui/GestureDetector";
 
 type Props = {
   sx?: SxProps;
@@ -15,7 +16,8 @@ export const AntifeatureButton = (props: Props) => {
 
   const { strings } = useStrings();
 
-  const handleClickOpen = () => {
+  const handleClickOpen = (e: any) => {
+    e.preventDefault();
     setOpen(true);
   };
 
@@ -25,9 +27,11 @@ export const AntifeatureButton = (props: Props) => {
 
   return (
     <>
-      <Button onClick={handleClickOpen} sx={props.sx} variant="contained" color="error" startIcon={<WarningAmberIcon />}>
-        {strings("antifeatures")}
-      </Button>
+      <GestureDetector onHold={handleClickOpen}>
+        <Button sx={props.sx} variant="contained" color="error" size="small">
+          <WarningAmberIcon />
+        </Button>
+      </GestureDetector>
       <Dialog open={open} onClose={handleClose} scroll="paper">
         <DialogTitle>{strings("antifeatures")}</DialogTitle>
         <DialogContent dividers>

@@ -25,6 +25,7 @@ import Switch from "@mui/material/Switch";
 import { Image } from "@Components/dapi/Image";
 import { blacklistedModules } from "@Util/blacklisted-modules";
 import { AntifeatureButton } from "@Components/AntifeaturesButton";
+import Box from "@mui/material/Box";
 
 interface Props {
   module: Module;
@@ -66,7 +67,13 @@ const DeviceModule = React.memo<Props>((props) => {
   }, [id]);
 
   return (
-    <Card sx={{ position: "relative", p: 2, width: "100%" }}>
+    <Card
+      sx={{
+        position: "relative",
+        p: 2,
+        width: "100%",
+      }}
+    >
       <Stack sx={{ position: "relative", zIndex: 1 }} direction="column" justifyContent="center" spacing={1}>
         {cover && (
           <Image
@@ -174,9 +181,7 @@ const DeviceModule = React.memo<Props>((props) => {
             <Divider variant="middle" />
             <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={1}>
               {findHardCodedAntifeature && findHardCodedAntifeature.length !== 0 && (
-                <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={2}>
-                  <AntifeatureButton antifeatures={findHardCodedAntifeature} />
-                </Stack>
+                <AntifeatureButton antifeatures={findHardCodedAntifeature} />
               )}
               <Button
                 onClick={() => {
