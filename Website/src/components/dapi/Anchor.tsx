@@ -177,6 +177,7 @@ const Anchor = React.memo<AnchorProps>((props) => {
             component="span"
             sx={{
               fontSize: "unset",
+              fontFamily: "unset",
             }}
             color={color}
           >
