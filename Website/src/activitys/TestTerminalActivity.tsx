@@ -5,7 +5,9 @@ import { Toolbar } from "@Components/onsenui/Toolbar";
 import { Page } from "@Components/onsenui/Page";
 import { Ansi } from "@Components/Ansi";
 import { useConfirm } from "material-ui-confirm";
-import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
+import { GestureDetector } from "@Components/onsenui/GestureDetector";
+import { useNativeStorage } from "@Hooks/useNativeStorage";
 
 function TestTerminalActivity() {
   const { context } = useActivity();
@@ -75,7 +77,7 @@ function TestTerminalActivity() {
     });
     addButton({
       children: "Reboot",
-      startIcon: <RestartAltIcon/>,
+      startIcon: <RestartAltIcon />,
       onClick: () => {
         confirm({
           title: "Reboot device?",
@@ -88,9 +90,9 @@ function TestTerminalActivity() {
     });
 
     addText({
-        children:
-          "\x1b[2mModules that causes issues after installing belog not to \x1b[35;4mMMRL\x1b[0;2m!\nPlease report these issues to thier support page\x1b[2m",
-      });
+      children:
+        "\x1b[2mModules that causes issues after installing belog not to \x1b[35;4mMMRL\x1b[0;2m!\nPlease report these issues to thier support page\x1b[2m",
+    });
     addText({
       children: "Support for this module:",
     });
@@ -102,16 +104,27 @@ function TestTerminalActivity() {
     });
   }, []);
 
+  const [fontSize, setFontSize] = useNativeStorage("term_fodnt_size", 12);
+
   return (
     <Page onShow={startLog} renderToolbar={renderToolbar} modifier="noshadow">
-      <div
-        style={{
+      <Box
+        component={GestureDetector}
+        onPinch={(e: any) => {
+          setFontSize((init) => {
+            const newFontSize = init * (1 + (e.gesture.scale - 1) * 0.5);
+            return Math.min(Math.max(newFontSize, 12), 100);
+          });
+        }}
+        sx={{
           display: "flex",
           flexWrap: "wrap",
+          height: "100%",
         }}
       >
         <Stack
-          style={{
+          sx={{
+            fontSize: fontSize,
             whiteSpace: "pre",
             flex: "0 0 100%",
             color: "white",
@@ -126,7 +139,7 @@ function TestTerminalActivity() {
             <line.component {...line.props} />
           ))}
         </Stack>
-      </div>
+      </Box>
     </Page>
   );
 }

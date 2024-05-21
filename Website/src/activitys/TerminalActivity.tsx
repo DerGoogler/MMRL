@@ -1,8 +1,10 @@
 import { Ansi } from "@Components/Ansi";
+import { GestureDetector } from "@Components/onsenui/GestureDetector";
 import { Page } from "@Components/onsenui/Page";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import { useActivity } from "@Hooks/useActivity";
 import { useModFS } from "@Hooks/useModFS";
+import { useNativeStorage } from "@Hooks/useNativeStorage";
 import { useSettings } from "@Hooks/useSettings";
 import { useStrings } from "@Hooks/useStrings";
 import { BuildConfig } from "@Native/BuildConfig";
@@ -29,8 +31,9 @@ const TerminalActivity = () => {
   const { settings } = useSettings();
   const { strings } = useStrings();
   const { modFS, __modFS } = useModFS();
-  const [active, setActive] = React.useState<bool>(true);
 
+  const [fontSize, setFontSize] = useNativeStorage("term_font_size", 12);
+  const [active, setActive] = React.useState<bool>(true);
   const [lines, setLines] = React.useState<any[]>([]);
 
   const confirm = useConfirm();
@@ -316,9 +319,17 @@ const TerminalActivity = () => {
       renderToolbar={renderToolbar}
     >
       <Box
+        component={GestureDetector}
+        onPinch={(e: any) => {
+          setFontSize((init) => {
+            const newFontSize = init * (1 + (e.gesture.scale - 1) * 0.5);
+            return Math.min(Math.max(newFontSize, 12), 100);
+          });
+        }}
         sx={{
           display: "flex",
           flexWrap: "wrap",
+          height: "100%",
         }}
       >
         <Stack
@@ -329,6 +340,7 @@ const TerminalActivity = () => {
             flex: "0 0 100%",
             color: "white",
             height: "100%",
+            fontSize: fontSize,
           }}
           direction="column"
           justifyContent="flex-start"
