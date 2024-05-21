@@ -91,8 +91,8 @@ export const INITIAL_MOD_CONF: ModFS = {
 
   // others
   MMRLINI: "<MODULES>/mmrl_install_tools",
-  EXPLORE_INSTALL: "<MMRLINI>/system/usr/share/mmrl/bin/mmrl_explore_install_v6",
-  LOCAL_INSTALL: "<MMRLINI>/system/usr/share/mmrl/bin/mmrl_local_install_v6",
+  EXPLORE_INSTALL: "sh <MMRLINI>/system/usr/share/mmrl/bin/mmrl_explore_install_v8.sh",
+  LOCAL_INSTALL: "sh <MMRLINI>/system/usr/share/mmrl/bin/mmrl_local_install_v8.sh",
 };
 
 export interface ModConfContext {

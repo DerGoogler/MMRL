@@ -36,20 +36,18 @@ public class TerminalPlugin extends CordovaPlugin {
                 boolean printError = data.getBoolean(3);
 
                 this.terminalCallbackContext = callbackContext;
-                String[] commands = {"su", "-p", "-c", cmd};
+                String[] commands = {"su", "-c", cmd};
 
 
                 cordova.getThreadPool().execute(() -> {
                     try {
-                        if (run(envp, cwd, commands)) {
-                            callbackContext.error(ProcessCode);
-                        }
+                        run(envp, cwd, commands);
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
                         if (printError) {
-                            updateTerminal(e.toString());
+                            updateTerminalLine(e.toString());
                         }
-                        callbackContext.error(500);
+                        updateTerminalExit(500);
                     }
                 });
                 return true;
@@ -64,12 +62,13 @@ public class TerminalPlugin extends CordovaPlugin {
 
     }
 
-    public boolean run(JSONObject envp, String cwd, String... command) throws IOException, JSONException {
+    public void run(JSONObject envp, String cwd, String... command) throws IOException, JSONException {
         ProcessBuilder pb = new ProcessBuilder(command).redirectErrorStream(true);
         if (envp != null) {
             Map<String, String> m = pb.environment();
             m.putAll(toMap(envp));
         }
+
         pb.directory(new SuFile(cwd));
         Process process = pb.start();
         try (BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
@@ -77,24 +76,35 @@ public class TerminalPlugin extends CordovaPlugin {
                 String line = in.readLine();
                 if (line == null)
                     break;
-                updateTerminal(line);
+                updateTerminalLine(line);
             }
-            ProcessCode = process.exitValue();
+            updateTerminalExit(process.exitValue());
         } catch (Exception e) {
-            ProcessCode = 500;
+            updateTerminalExit(500);
         }
-
-        return !process.isAlive();
     }
 
-    private void updateTerminal(String line) {
-        sendUpdate(line, true);
+    private void updateTerminalLine(String line) {
+        sendUpdate(PluginResult.Status.OK, line);
     }
 
-    private void sendUpdate(String line, boolean keepCallback) {
+    private void updateTerminalExit(int code) {
+        sendUpdate(PluginResult.Status.ERROR, code);
+    }
+
+    private void sendUpdate(PluginResult.Status status, int line) {
         if (this.terminalCallbackContext != null) {
-            PluginResult result = new PluginResult(PluginResult.Status.OK, line);
-            result.setKeepCallback(keepCallback);
+            PluginResult result = new PluginResult(status, line);
+            result.setKeepCallback(true);
+            this.terminalCallbackContext.sendPluginResult(result);
+        }
+    }
+
+
+    private void sendUpdate(PluginResult.Status status, String line) {
+        if (this.terminalCallbackContext != null) {
+            PluginResult result = new PluginResult(status, line);
+            result.setKeepCallback(true);
             this.terminalCallbackContext.sendPluginResult(result);
         }
     }

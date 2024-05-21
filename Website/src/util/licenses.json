@@ -12,7 +12,7 @@
     "author": null,
     "license": "MIT",
     "description": "Standalone build of Babel for use in non-Node.js environments.",
-    "version": "7.23.8",
+    "version": "7.24.0",
     "source": "https://www.npmjs.com/package/@babel/standalone"
   },
   {
@@ -81,7 +81,7 @@
     "author": null,
     "license": "MIT",
     "description": "A scalable set of icons handcrafted with <3 by GitHub.",
-    "version": "19.8.0",
+    "version": "19.9.0",
     "source": "https://www.npmjs.com/package/@primer/octicons-react"
   },
   {
@@ -208,8 +208,8 @@
     "name": "material-ui-confirm",
     "author": null,
     "license": "MIT",
-    "description": "Higher order component for straightforward use of @material-ui/core confirmation dialogs.",
-    "version": "3.0.10",
+    "description": "Simple confirmation dialogs built on top of @mui/material",
+    "version": "3.0.11",
     "source": "https://www.npmjs.com/package/material-ui-confirm"
   },
   {
@@ -217,7 +217,7 @@
     "author": null,
     "license": "MIT",
     "description": "A browser based code editor",
-    "version": "0.45.0",
+    "version": "0.48.0",
     "source": "https://www.npmjs.com/package/monaco-editor"
   },
   {

@@ -5,8 +5,12 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.util.Log;
+import android.webkit.ConsoleMessage;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import androidx.core.view.WindowCompat;
 
@@ -20,6 +24,8 @@ import com.dergoogler.core.NativeBuildConfig;
 import com.dergoogler.core.NativeView;
 
 import org.apache.cordova.*;
+import org.apache.cordova.engine.SystemWebChromeClient;
+import org.apache.cordova.engine.SystemWebViewEngine;
 
 public class MainActivity extends CordovaActivity {
     @Override
@@ -36,6 +42,7 @@ public class MainActivity extends CordovaActivity {
         }
 
         WebView wv = (WebView) appView.getEngine().getView();
+        CordovaWebViewEngine wve = appView.getEngine();
 
 
         NativeStorage ns = new NativeStorage(this);
@@ -75,6 +82,20 @@ public class MainActivity extends CordovaActivity {
         wv.addJavascriptInterface(ns, "__nativeStorage__");
         wv.addJavascriptInterface(new NativeLog(), "__log__");
 
+
+       wv.setWebChromeClient(new SystemWebChromeClient((SystemWebViewEngine) wve) {
+           @Override
+           public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
+               switch (consoleMessage.messageLevel()) {
+                   case TIP -> Log.i("MMRLWebViewClient", consoleMessage.message());
+                   case LOG -> Log.d("MMRLWebViewClient", consoleMessage.message());
+                   case WARNING -> Log.w("MMRLWebViewClient", consoleMessage.message());
+                   case ERROR -> Log.e("MMRLWebViewClient", consoleMessage.message());
+                   default -> Log.v("MMRLWebViewClient", consoleMessage.message());
+               }
+               return true;
+           }
+       });
     }
 
     private String mmrlUserAgent() {

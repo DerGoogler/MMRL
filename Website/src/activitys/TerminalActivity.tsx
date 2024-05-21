@@ -10,7 +10,6 @@ import { useStrings } from "@Hooks/useStrings";
 import { BuildConfig } from "@Native/BuildConfig";
 import { Shell } from "@Native/Shell";
 import { view } from "@Native/View";
-import { INCLUDE_CORE } from "@Util/INCLUDE_CORE";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import { Button } from "@mui/material";
 import Box from "@mui/material/Box";
@@ -82,7 +81,6 @@ const TerminalActivity = () => {
         component: Ansi,
         props: {
           linkify: true,
-
           ...props,
         },
       },
@@ -134,7 +132,6 @@ const TerminalActivity = () => {
 
       Terminal.exec({
         command: modFS("EXPLORE_INSTALL", {
-          INCLUDECORE: INCLUDE_CORE,
           URL: path,
           MODID: id,
         }),
@@ -231,7 +228,6 @@ const TerminalActivity = () => {
 
       Terminal.exec({
         command: modFS("LOCAL_INSTALL", {
-          INCLUDECORE: INCLUDE_CORE,
           ZIPFILE: path,
         }),
         env: envp_local,
@@ -311,6 +307,8 @@ const TerminalActivity = () => {
         }
       }}
       sx={{
+        pl: 1,
+        pr: 1,
         // removing bottom window insets
         pb: "0px !important",
       }}
@@ -318,29 +316,26 @@ const TerminalActivity = () => {
       modifier="noshadow"
       renderToolbar={renderToolbar}
     >
-      <Box
-        component={GestureDetector}
+      {/* <GestureDetector
         onPinch={(e: any) => {
           setFontSize((init) => {
             const newFontSize = init * (1 + (e.gesture.scale - 1) * 0.5);
             return Math.min(Math.max(newFontSize, 12), 100);
           });
         }}
+      > */}
+      <Box
         sx={{
           display: "flex",
           flexWrap: "wrap",
-          height: "100%",
         }}
       >
         <Stack
           sx={{
-            pl: 1,
-            pr: 1,
             whiteSpace: "pre",
             flex: "0 0 100%",
             color: "white",
-            height: "100%",
-            fontSize: fontSize,
+            // fontSize: fontSize,
           }}
           direction="column"
           justifyContent="flex-start"
@@ -353,6 +348,7 @@ const TerminalActivity = () => {
         </Stack>
       </Box>
       <Box sx={{ height: view.getWindowBottomInsets() }} ref={termEndRef} />
+      {/* </GestureDetector> */}
     </Page>
   );
 };

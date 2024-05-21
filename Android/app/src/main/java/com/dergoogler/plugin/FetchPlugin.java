@@ -39,20 +39,20 @@ public class FetchPlugin extends CordovaPlugin {
 
             try {
                 String method = data.getString(0);
-                Log.v(LOG_TAG, "execute: method = " + method.toString());
+                // Log.v(LOG_TAG, "execute: method = " + method.toString());
 
                 String urlString = data.getString(1);
-                Log.v(LOG_TAG, "execute: urlString = " + urlString.toString());
+                // Log.v(LOG_TAG, "execute: urlString = " + urlString.toString());
 
                 String postBody = data.getString(2);
-                Log.v(LOG_TAG, "execute: postBody = " + postBody.toString());
+                // Log.v(LOG_TAG, "execute: postBody = " + postBody.toString());
 
                 JSONObject headers = data.getJSONObject(3);
                 if (headers.has("map") && headers.getJSONObject("map") != null) {
                     headers = headers.getJSONObject("map");
                 }
 
-                Log.v(LOG_TAG, "execute: headers = " + headers.toString());
+                // Log.v(LOG_TAG, "execute: headers = " + headers.toString());
 
                 Request.Builder requestBuilder = new Request.Builder();
 
@@ -83,7 +83,7 @@ public class FetchPlugin extends CordovaPlugin {
 
                         if (headerValues.length() > 0) {
                             String headerValue = headerValues.getString(0);
-                            Log.v(LOG_TAG, "key = " + headerName + " value = " + headerValue);
+                            // Log.v(LOG_TAG, "key = " + headerName + " value = " + headerValue);
                             requestBuilder.addHeader(headerName, headerValue);
                         }
                     }
@@ -135,8 +135,8 @@ public class FetchPlugin extends CordovaPlugin {
                             e.printStackTrace();
                         }
 
-                        Log.v(LOG_TAG, "HTTP code: " + response.code());
-                        Log.v(LOG_TAG, "returning: " + result.toString());
+                        // Log.v(LOG_TAG, "HTTP code: " + response.code());
+                        // Log.v(LOG_TAG, "returning: " + result.toString());
 
                         callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, result));
                     }
@@ -159,7 +159,7 @@ public class FetchPlugin extends CordovaPlugin {
     }
 
     private void setTimeout(long seconds) {
-        Log.v(LOG_TAG, "setTimeout: " + seconds);
+        // Log.v(LOG_TAG, "setTimeout: " + seconds);
 
         mClient = mClient.newBuilder()
                 .connectTimeout(seconds, TimeUnit.SECONDS)
