@@ -32,7 +32,7 @@ const ExploreModule = React.memo<Props>((props) => {
   const formatLastUpdate = useFormatDate(timestamp ? timestamp : versions[versions.length - 1].timestamp);
 
   const findHardCodedAntifeature = React.useMemo<Track["antifeatures"]>(() => {
-    return [...(track.antifeatures || []), ...(blacklistedModules[id]?.antifeatures || [])];
+    return [...(track.antifeatures || []), ...(blacklistedModules.find((mod) => mod.id === id)?.antifeatures || [])];
   }, [id, track.antifeatures]);
 
   const handleOpenModule = () => {

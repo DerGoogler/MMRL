@@ -17,6 +17,7 @@ import LicensesActivity from "@Activitys/LicensesActivity";
 import { SubmitModuleActivity } from "@Activitys/SubmitModuleActivity";
 import { os } from "@Native/Os";
 import { useTheme } from "@Hooks/useTheme";
+import ViewBlacklistedModulesActivity from "@Activitys/ViewBlacklistedModulesActivity";
 
 type Props = {
   renderToolbar: () => JSX.Element;
@@ -67,6 +68,19 @@ export const DrawerFragment = (props: Props) => {
           }}
         >
           <ListItemText primary={strings("modfs")} />
+        </ListItemButton>
+
+        <ListItemButton
+          onClick={() => {
+            pushPage({
+              component: ViewBlacklistedModulesActivity,
+              key: "ViewBlacklistedModulesActivity",
+              extra: {},
+            });
+            hide();
+          }}
+        >
+          <ListItemText primary={strings("blacklisted_modules")} />
         </ListItemButton>
       </List>
 

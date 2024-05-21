@@ -2,9 +2,10 @@ import { useStrings } from "@Hooks/useStrings";
 import ListItem from "@mui/material/ListItem";
 import { en_antifeatures } from "./../locales/antifeatures/en";
 import React from "react";
-import { ListItemText } from "@mui/material";
+import { ListItemText, SxProps } from "@mui/material";
 
 interface AntiFeatureListItemProps {
+  sx?: SxProps;
   type: string;
 }
 
@@ -14,7 +15,7 @@ const AntiFeatureListItem = (props: AntiFeatureListItemProps) => {
   if (!find) return null;
 
   return (
-    <ListItem disablePadding>
+    <ListItem sx={props.sx} disablePadding>
       <ListItemText primary={find.name} secondary={find.desc} />
     </ListItem>
   );

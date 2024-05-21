@@ -135,4 +135,6 @@ export const en = {
 
   print_errors: "Print errors",
   print_errors_desc: "Prints terminal and MMRL Install Tools error to the console",
+
+  blacklisted_modules: "Blacklisted modules",
 };

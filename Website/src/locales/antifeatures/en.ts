@@ -7,12 +7,12 @@ export const en_antifeatures = [
   {
     id: "KnownVuln",
     name: "Known Vulnerability",
-    desc: "This app contains a known security vulnerability",
+    desc: "This module contains a known security vulnerability",
   },
   {
     id: "NSFW",
     name: "NSFW",
-    desc: "This app contains content that should not be publicized or visible everywhere",
+    desc: "This module contains content that should not be publicized or visible everywhere",
   },
   {
     id: "NoSourceSince",
@@ -22,27 +22,27 @@ export const en_antifeatures = [
   {
     id: "NonFreeAdd",
     name: "Non-Free Addons",
-    desc: "This app promotes non-free add-ons",
+    desc: "This module promotes non-free add-ons",
   },
   {
     id: "NonFreeAssets",
     name: "Non-Free Assets",
-    desc: "This app contains non-free assets",
+    desc: "This module contains non-free assets",
   },
   {
     id: "NonFreeDep",
     name: "Non-Free Dependencies",
-    desc: "This app depends on other non-free apps",
+    desc: "This module depends on other non-free modules",
   },
   {
     id: "NonFreeNet",
     name: "Non-Free Network Services",
-    desc: "This app promotes or depends entirely on a non-changeable or non-free network service",
+    desc: "This module promotes or depends entirely on a non-changeable or non-free network service",
   },
   {
     id: "Tracking",
     name: "Tracking",
-    desc: "This app tracks and reports your activity",
+    desc: "This module tracks and reports your activity",
   },
   {
     id: "UpstreamNonFree",
@@ -52,6 +52,6 @@ export const en_antifeatures = [
   {
     id: "Obfuscation",
     name: "Obfuscation",
-    desc: "The app source code is may obfuscated, making it difficult to understand, audit, or modify.",
+    desc: "The module source code is may obfuscated, making it difficult to understand, audit, or modify.",
   },
 ];
