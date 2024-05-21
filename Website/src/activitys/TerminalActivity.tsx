@@ -1,21 +1,20 @@
+import { Ansi } from "@Components/Ansi";
 import { Page } from "@Components/onsenui/Page";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import { useActivity } from "@Hooks/useActivity";
-import { Button, styled } from "@mui/material";
-import Stack from "@mui/material/Stack";
-import Box from "@mui/material/Box";
-import { Ansi } from "@Components/Ansi";
-import RestartAltIcon from "@mui/icons-material/RestartAlt";
-import React from "react";
-import { Shell } from "@Native/Shell";
-import { useSettings } from "@Hooks/useSettings";
-import { BuildConfig } from "@Native/BuildConfig";
 import { useModFS } from "@Hooks/useModFS";
-import { INCLUDE_CORE } from "@Util/INCLUDE_CORE";
+import { useSettings } from "@Hooks/useSettings";
+import { useStrings } from "@Hooks/useStrings";
+import { BuildConfig } from "@Native/BuildConfig";
+import { Shell } from "@Native/Shell";
 import { view } from "@Native/View";
+import { INCLUDE_CORE } from "@Util/INCLUDE_CORE";
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
+import { Button } from "@mui/material";
+import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
 import { useConfirm } from "material-ui-confirm";
-import { ReplacementObject, useStrings } from "@Hooks/useStrings";
-import { StringDeclaration } from "./../locales/declaration";
+import React from "react";
 
 export interface TerminalActivityExtra {
   exploreInstall: boolean;
@@ -80,10 +79,7 @@ const TerminalActivity = () => {
         component: Ansi,
         props: {
           linkify: true,
-          sx: {
-            ml: 1,
-            mr: 1,
-          },
+
           ...props,
         },
       },
@@ -99,7 +95,8 @@ const TerminalActivity = () => {
           variant: "contained",
           sx: {
             width: "50vmin",
-            m: 1,
+            mt: 1,
+            mb: 1,
           },
           ...props,
         },
@@ -318,15 +315,16 @@ const TerminalActivity = () => {
       modifier="noshadow"
       renderToolbar={renderToolbar}
     >
-      <div
-        ref={ref}
-        style={{
+      <Box
+        sx={{
           display: "flex",
           flexWrap: "wrap",
         }}
       >
         <Stack
-          style={{
+          sx={{
+            pl: 1,
+            pr: 1,
             whiteSpace: "pre",
             flex: "0 0 100%",
             color: "white",
@@ -341,7 +339,7 @@ const TerminalActivity = () => {
             <line.component {...line.props} />
           ))}
         </Stack>
-      </div>
+      </Box>
       <Box sx={{ height: view.getWindowBottomInsets() }} ref={termEndRef} />
     </Page>
   );
