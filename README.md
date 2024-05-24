@@ -11,11 +11,7 @@
 
 <p align="center">
   <a href=""><img src="https://img.shields.io/github/actions/workflow/status/DerGoogler/MMRL/.github%2Fworkflows%2Fwebpack.yml?logo=github&amp;label=Build%20with%20Webpack" alt="Build with Webpack"></a>
-  <a href="https://github.com/DerGoogler/MMRL/actions/workflows/codeql-analysis.yml"><img src="https://img.shields.io/github/actions/workflow/status/DerGoogler/MMRL/.github%2Fworkflows%2Fcodeql-analysis.yml?logo=github&amp;label=CodeQL" alt="CodeQL"></a>
-  </br>
-  <a href="https://github.com/DerGoogler/MMRL/actions/workflows/android.yml"><img src="https://img.shields.io/github/actions/workflow/status/DerGoogler/MMRL/.github%2Fworkflows%2Fandroid.yml?logo=github&amp;label=Android%20CI" alt="Android CI"></a>
   <a href="https://github.com/DerGoogler/MMRL/actions/workflows/build-debug.yml"><img src="https://img.shields.io/github/actions/workflow/status/DerGoogler/MMRL/.github%2Fworkflows%2Fbuild-debug.yml?logo=github&amp;label=Generate%20APK%20Debug" alt="Generate APK Debug"></a>
-  </br>
   <img src="https://img.shields.io/github/downloads/DerGoogler/MMRL/total?label=All%20time%20downloads" alt="GitHub all releases">
 </p>
 
