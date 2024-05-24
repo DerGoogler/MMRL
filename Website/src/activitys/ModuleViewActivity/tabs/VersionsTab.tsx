@@ -1,22 +1,23 @@
-import { Page } from "@Components/onsenui/Page";
+import FetchTextActivity from "@Activitys/FetchTextActivity";
+import TerminalActivity from "@Activitys/TerminalActivity";
+import { useActivity } from "@Hooks/useActivity";
+import { useFormatDate } from "@Hooks/useFormatDate";
 import { useStrings } from "@Hooks/useStrings";
-import React from "react";
+import { useTheme } from "@Hooks/useTheme";
+import { os } from "@Native/Os";
+import { Shell } from "@Native/Shell";
+import DownloadIcon from "@mui/icons-material/Download";
+import InstallMobileIcon from "@mui/icons-material/InstallMobile";
+import ManageHistoryIcon from "@mui/icons-material/ManageHistory";
+import Chip from "@mui/material/Chip";
 import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import Typography from "@mui/material/Typography";
-import Stack from "@mui/material/Stack";
-import { useActivity } from "@Hooks/useActivity";
 import ListItemText from "@mui/material/ListItemText";
-import { useTheme } from "@Hooks/useTheme";
-import { os } from "@Native/Os";
-import { useFormatDate } from "@Hooks/useFormatDate";
-import Chip from "@mui/material/Chip";
-import { Shell } from "@Native/Shell";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 import { useConfirm } from "material-ui-confirm";
-import InstallMobileIcon from "@mui/icons-material/InstallMobile";
-import DownloadIcon from "@mui/icons-material/Download";
-import TerminalActivity from "@Activitys/TerminalActivity";
+import React from "react";
 
 const VersionsTab = () => {
   const { context, extra } = useActivity<Module>();
@@ -71,6 +72,26 @@ const VersionItem = React.memo<VersionItemProps>(({ id, version, index }) => {
     <ListItem
       secondaryAction={
         <Stack direction="row" justifyContent="center" alignItems="center" spacing={0.5}>
+          {version.changelog && (
+            <IconButton
+              disabled={!version.changelog}
+              onClick={() => {
+                context.pushPage({
+                  component: FetchTextActivity,
+                  key: `changelog_${id}`,
+                  extra: {
+                    title: version.version,
+                    url: version.changelog,
+                  },
+                });
+              }}
+              edge="end"
+              aria-label="download"
+            >
+              <ManageHistoryIcon />
+            </IconButton>
+          )}
+
           {os.isAndroid && (Shell.isMagiskSU() || Shell.isKernelSU() || Shell.isAPatchSU()) && (
             <IconButton onClick={handleInstall} edge="end" aria-label="install">
               <InstallMobileIcon />

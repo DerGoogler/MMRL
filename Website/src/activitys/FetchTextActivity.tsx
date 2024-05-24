@@ -9,7 +9,8 @@ import { MissingInternet } from "@Components/MissingInternet";
 
 export type FetchTextActivityExtra = {
   rendering?: React.FunctionComponent<any> | React.ComponentType<any>;
-  modulename: string;
+  modulename?: string;
+  title?: string;
   raw_data?: string;
   url?: string;
 };
@@ -25,7 +26,7 @@ type Action<T> = { type: "loading" } | { type: "fetched"; payload: T } | { type:
 function FetchTextActivity() {
   const { context, extra } = useActivity<FetchTextActivityExtra>();
   const { isNetworkAvailable } = useNetwork();
-  const { modulename, url } = extra;
+  const { title, modulename, url } = extra;
 
   const initialState: State<string> = {
     error: undefined,
@@ -103,7 +104,7 @@ function FetchTextActivity() {
         <Toolbar.Left>
           <Toolbar.BackButton onClick={context.popPage} />
         </Toolbar.Left>
-        <Toolbar.Center>{modulename}</Toolbar.Center>
+        <Toolbar.Center>{title || modulename}</Toolbar.Center>
       </Toolbar>
     );
   };
