@@ -11,6 +11,7 @@ import { IScope } from "@nyariv/sandboxjs/dist/node/executor";
 import { Native } from "../Native";
 import { IsoDocument } from "./IsoDocument";
 import { IsolatedFunctionBlockError } from "./IsolatedFunctionBlockError";
+import { IsoAudio } from "./IsoAudio";
 
 class IsolatedEval<T = any> {
   private readonly _sandbox: Sandbox = new Sandbox();
@@ -26,6 +27,8 @@ class IsolatedEval<T = any> {
     Document: IsoDocument,
     Response: Response,
     Element: Element,
+    Audio: IsoAudio,
+    HTMLMediaElement: HTMLMediaElement,
     FileReader: FileReader,
     Blob: Blob,
     Event: Event,
@@ -73,6 +76,8 @@ class IsolatedEval<T = any> {
     this._prototypeWhitelist.set(IsoDocument, new Set());
     this._prototypeWhitelist.set(Response, new Set());
     this._prototypeWhitelist.set(Element, new Set());
+    this._prototypeWhitelist.set(HTMLMediaElement, new Set());
+    this._prototypeWhitelist.set(IsoAudio, new Set());
     this._prototypeWhitelist.set(FileReader, new Set());
     this._prototypeWhitelist.set(Blob, new Set());
     this._prototypeWhitelist.set(Event, new Set());
