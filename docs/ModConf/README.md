@@ -1,6 +1,34 @@
-# Module Configure (ModConf)
+# What is ModConf?
 
-- TODO
+ModConf stands for **Module Configuration**, this feature in MMRL allows you to create dynamic configuration pages for individual modules. Essentially, it provides a way to customize how information about a module is displayed within the MMRL app.
+
+Think of it like this: By default, MMRL might display basic details about a module, like its name and description. With ModConf, developers of modules can create custom pages that show additional information relevant to their specific module. This could include things like:
+
+- Screenshots or icons for the module
+- Detailed descriptions of what the module does and its functionalities
+- Configuration options specific to the module
+- Verification details to ensure the module's authenticity
+- Dependency information, listing other modules required for this one to function
+
+While MMRL itself doesn't directly create these ModConf pages, it provides the framework for developers to implement them for their modules.
+
+## Getting started
+
+Your `index.jsx` needs to be placed inside `<MODDIR>/system/usr/share/mmrl/config/<MODID>/index.jsx`.
+
+Simple starter:
+
+```jsx
+import React from "react";
+import { Page } from "@mmrl/ui";
+
+export default () => {
+  return <Page>Test</Page>;
+};
+```
+
+> [!IMPORTANT]
+> Always wrap your content with `<Page></Page>` otherwise your page won't start corretly
 
 ## Available libaries
 
@@ -8,7 +36,7 @@ See [`libs.ts`](https://github.com/DerGoogler/MMRL/blob/master/Website/src/compo
 
 ## Diff. between `require` and `import`
 
-With `require` you only can import predefined libaries, you can't includes files with this method anymore.
+With `require` you only can import predefined libaries. You can't include files with this method anymore.
 
 ```js
 const React = require("react");
