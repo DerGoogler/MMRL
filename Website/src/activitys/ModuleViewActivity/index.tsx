@@ -14,7 +14,7 @@ import { os } from "@Native/Os";
 import SvgIcon from "@mui/material/SvgIcon";
 import CardMedia from "@mui/material/CardMedia";
 import { SuFile } from "@Native/SuFile";
-import TerminalActivity, { TerminalActivityExtra } from "../TerminalActivity";
+import InstallTerminalActivity, { TerminalActivityExtra } from "../InstallTerminalActivity";
 import { Shell } from "@Native/Shell";
 import { Disappear } from "react-disappear";
 import Fade from "@mui/material/Fade";
@@ -348,8 +348,8 @@ const ModuleViewActivity = () => {
                         confirmationText: "Yes",
                       }).then(() => {
                         context.pushPage<TerminalActivityExtra, {}>({
-                          component: TerminalActivity,
-                          key: "TerminalActivity",
+                          component: InstallTerminalActivity,
+                          key: "InstallTerminalActivity",
                           extra: {
                             issues: track.support,
                             source: track.source,

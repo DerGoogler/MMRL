@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import MenuIcon from "@mui/icons-material/Menu";
 import FetchTextActivity from "./FetchTextActivity";
 import ModuleFragment from "./fragments/ModuleFragment";
-import TerminalActivity from "./TerminalActivity";
+import InstallTerminalActivity from "./InstallTerminalActivity";
 import DeviceModule from "@Components/module/DeviceModule";
 import ExploreModule from "@Components/module/ExploreModule";
 import UpdateModule from "@Components/module/UpdateModule";
@@ -86,8 +86,8 @@ const MainApplication = () => {
                               (file) => {
                                 if (file !== "RESULT_CANCELED") {
                                   context.pushPage({
-                                    component: TerminalActivity,
-                                    key: "TerminalActivity",
+                                    component: InstallTerminalActivity,
+                                    key: "InstallTerminalActivity",
                                     extra: {
                                       exploreInstall: false,
                                       path: file.path,

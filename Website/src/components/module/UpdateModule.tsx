@@ -16,7 +16,7 @@ import { useStrings } from "@Hooks/useStrings";
 import { useActivity } from "@Hooks/useActivity";
 import { useRepos } from "@Hooks/useRepos";
 
-import TerminalActivity from "@Activitys/TerminalActivity";
+import InstallTerminalActivity from "@Activitys/InstallTerminalActivity";
 import FetchTextActivity from "@Activitys/FetchTextActivity";
 
 import { link } from "googlers-tools";
@@ -107,8 +107,8 @@ const UpdateModule = React.memo<Props>((props) => {
             <Button
               onClick={() => {
                 context.pushPage({
-                  component: TerminalActivity,
-                  key: "TerminalActivity",
+                  component: InstallTerminalActivity,
+                  key: "InstallTerminalActivity",
                   extra: {
                     id: id,
                     exploreInstall: true,

@@ -25,7 +25,7 @@ export interface TerminalActivityExtra {
   issues?: string;
 }
 
-const TerminalActivity = () => {
+const InstallTerminalActivity = () => {
   const { context, extra } = useActivity<TerminalActivityExtra>();
   const { settings } = useSettings();
   const { strings } = useStrings();
@@ -353,4 +353,4 @@ const TerminalActivity = () => {
   );
 };
 
-export default TerminalActivity;
+export default InstallTerminalActivity;
