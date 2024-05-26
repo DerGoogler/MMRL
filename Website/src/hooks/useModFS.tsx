@@ -44,8 +44,7 @@ export interface ModFS {
   MODCONF_PLAYGROUND: string;
   MODCONF_PLAYGROUND_MODID: string;
 
-  // others
-  MMRLINI: string;
+  // Installer
   EXPLORE_INSTALL: string;
   LOCAL_INSTALL: string;
 }
@@ -89,10 +88,9 @@ export const INITIAL_MOD_CONF: ModFS = {
   MODCONF_PLAYGROUND: "<ADB>/mmrl/modconf-playground.jsx",
   MODCONF_PLAYGROUND_MODID: "playground",
 
-  // others
-  MMRLINI: "<MODULES>/mmrl_install_tools",
-  EXPLORE_INSTALL: "sh <MMRLINI>/system/usr/share/mmrl/bin/mmrl_explore_install_v8.sh",
-  LOCAL_INSTALL: "sh <MMRLINI>/system/usr/share/mmrl/bin/mmrl_local_install_v8.sh",
+  // Installer
+  EXPLORE_INSTALL: 'mmrl install -y "<URL>"',
+  LOCAL_INSTALL: 'mmrl install local -y "<ZIPFILE>"',
 };
 
 export interface ModConfContext {
@@ -116,7 +114,7 @@ export const useModFS = () => {
 };
 
 export const ModFSProvider = (props: React.PropsWithChildren) => {
-  const [modFS, setModFS] = useNativeFileStorage("/data/adb/mmrl/modfs.v7.json", INITIAL_MOD_CONF, { loader: "json" });
+  const [modFS, setModFS] = useNativeFileStorage("/data/adb/mmrl/modfs.v8.json", INITIAL_MOD_CONF, { loader: "json" });
 
   const contextValue = React.useMemo(
     () => ({

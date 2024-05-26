@@ -49,6 +49,49 @@ function ModFSActivity() {
   const items: ModFSSections[] = React.useMemo<ModFSSections[]>(
     () => [
       {
+        sectionText: "Installer",
+        items: [
+          {
+            text: "Explore install script",
+            multiline: true,
+            maxRows: 10,
+            dialogDesc: (
+              <>
+                <Typography>
+                  Check the{" "}
+                  <Anchor href="https://github.com/DerGoogler/MMRL/tree/master/docs" noIcon>
+                    ModFS documentations
+                  </Anchor>{" "}
+                  for more informations!
+                  <br />
+                  <code>{"<URL>"}</code> and <code>{"<MODID>"}</code> can also be used, shell supported.
+                </Typography>
+              </>
+            ),
+            confKey: "EXPLORE_INSTALL",
+          },
+          {
+            text: "Local install script",
+            multiline: true,
+            maxRows: 10,
+            dialogDesc: (
+              <>
+                <Typography>
+                  Check the{" "}
+                  <Anchor href="https://github.com/DerGoogler/MMRL/tree/master/docs" noIcon>
+                    ModFS documentations
+                  </Anchor>{" "}
+                  for more informations!
+                  <br />
+                  <code>{"<ZIPFILE>"}</code> can also be used, shell supported.
+                </Typography>
+              </>
+            ),
+            confKey: "LOCAL_INSTALL",
+          },
+        ],
+      },
+      {
         sectionText: "Command line interfaces",
         items: [
           {
@@ -211,53 +254,6 @@ function ModFSActivity() {
           {
             text: "ModConf Playground Module ID",
             confKey: "MODCONF_PLAYGROUND_MODID",
-          },
-        ],
-      },
-      {
-        sectionText: "Others",
-        items: [
-          {
-            text: "MMRL Install Tools",
-            confKey: "MMRLINI",
-          },
-          {
-            text: "Explore install script",
-            multiline: true,
-            maxRows: 10,
-            dialogDesc: (
-              <>
-                <Typography>
-                  Check the{" "}
-                  <Anchor href="https://github.com/DerGoogler/MMRL/tree/master/docs" noIcon>
-                    ModFS documentations
-                  </Anchor>{" "}
-                  for more informations!
-                  <br />
-                  <code>{"<URL>"}</code> and <code>{"<MODID>"}</code> can also be used, shell supported.
-                </Typography>
-              </>
-            ),
-            confKey: "EXPLORE_INSTALL",
-          },
-          {
-            text: "Local install script",
-            multiline: true,
-            maxRows: 10,
-            dialogDesc: (
-              <>
-                <Typography>
-                  Check the{" "}
-                  <Anchor href="https://github.com/DerGoogler/MMRL/tree/master/docs" noIcon>
-                    ModFS documentations
-                  </Anchor>{" "}
-                  for more informations!
-                  <br />
-                  <code>{"<ZIPFILE>"}</code> can also be used, shell supported.
-                </Typography>
-              </>
-            ),
-            confKey: "LOCAL_INSTALL",
           },
         ],
       },

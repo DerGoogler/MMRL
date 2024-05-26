@@ -124,9 +124,7 @@ const ModuleViewActivity = () => {
     );
   };
 
-  const { modFS } = useModFS();
   const [isNameVisible, setIsNameVisible] = React.useState(true);
-  const hasInstallTools = SuFile.exist(`${modFS("MMRLINI")}/module.prop`);
 
   const boxRef = React.useRef<HTMLDivElement | null>(null);
   const [value, setValue] = React.useState(0);
@@ -328,12 +326,8 @@ const ModuleViewActivity = () => {
                 )}
               </Stack>
 
-              {/* <Typography sx={{ display: "flex", justifyContent: "flex-start", alignItems: "center" }} color="text.secondary">
-                ({versionCode})
-              </Typography> */}
-
               <Stack direction="row" justifyContent="center" alignItems="center" spacing={1}>
-                {os.isAndroid && (Shell.isMagiskSU() || Shell.isKernelSU() || Shell.isAPatchSU()) && hasInstallTools && (
+                {os.isAndroid && (Shell.isMagiskSU() || Shell.isKernelSU() || Shell.isAPatchSU()) && (
                   <Button
                     color="secondary"
                     sx={{
