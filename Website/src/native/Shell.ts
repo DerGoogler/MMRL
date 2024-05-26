@@ -43,9 +43,48 @@ interface IShell {
 class ShellClass extends Native<NativeShell> {
   private _command: string;
 
+  /**
+   * @deprecated Use
+   * ```ts
+   * Shell.M_INS_SUCCESS
+   * ```
+   */
   public readonly MODULE_INSTALL_SUCCESS = 0;
+  /**
+   * @deprecated Use
+   * ```ts
+   * Shell.M_INS_FAILURE
+   * ```
+   */
   public readonly MODULE_INSTALL_FAILURE = 1;
+  /**
+   * @deprecated Use
+   * ```ts
+   * Shell.TERM_INTR_ERR
+   * ```
+   */
   public readonly TERMINAL_INTERNAL_ERROR = 500;
+
+  /**
+   * Successful module install exit code
+   */
+  public readonly M_INS_SUCCESS: number = 0;
+  /**
+   * Failed module install exit code
+   */
+  public readonly M_INS_FAILURE: number = 1;
+  /**
+   * Failed file download exit code
+   */
+  public readonly M_DWL_FAILURE: number = 2;
+  /**
+   * File creation exit code
+   */
+  public readonly FILE_CRA_ERRO: number = 3;
+  /**
+   * Internal terminal error exit code
+   */
+  public readonly TERM_INTR_ERR: number = 500;
 
   public constructor() {
     super(window.__shell__);

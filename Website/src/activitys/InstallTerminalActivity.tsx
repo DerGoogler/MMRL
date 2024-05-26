@@ -147,7 +147,7 @@ const InstallTerminalActivity = () => {
         },
         onExit: (code) => {
           switch (code) {
-            case Shell.MODULE_INSTALL_SUCCESS:
+            case Shell.M_INS_SUCCESS:
               addText({ children: " " });
 
               addText({
@@ -181,7 +181,7 @@ const InstallTerminalActivity = () => {
               setActive(false);
               break;
 
-            case Shell.MODULE_INSTALL_FAILURE:
+            case Shell.M_INS_FAILURE:
               addText({ children: " " });
 
               addText({
@@ -204,7 +204,7 @@ const InstallTerminalActivity = () => {
               setActive(false);
               break;
 
-            case Shell.TERMINAL_INTERNAL_ERROR:
+            case Shell.TERM_INTR_ERR:
               addText({ children: "! \x1b[31mInternal error!\x1b[0m" });
               setActive(false);
               break;
@@ -242,7 +242,7 @@ const InstallTerminalActivity = () => {
         },
         onExit: (code) => {
           switch (code) {
-            case Shell.MODULE_INSTALL_SUCCESS:
+            case Shell.M_INS_SUCCESS:
               addText({ children: " " });
 
               addText({
@@ -264,7 +264,7 @@ const InstallTerminalActivity = () => {
               setActive(false);
               break;
 
-            case Shell.MODULE_INSTALL_FAILURE:
+            case Shell.M_INS_FAILURE:
               addText({ children: " " });
 
               addText({
@@ -275,7 +275,7 @@ const InstallTerminalActivity = () => {
               setActive(false);
               break;
 
-            case Shell.TERMINAL_INTERNAL_ERROR:
+            case Shell.TERM_INTR_ERR:
               addText({ children: "! \x1b[31mInternal error!\x1b[0m" });
               setActive(false);
               break;
