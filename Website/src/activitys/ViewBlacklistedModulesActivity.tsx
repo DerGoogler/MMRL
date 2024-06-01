@@ -6,7 +6,7 @@ import { useActivity } from "@Hooks/useActivity";
 import { useStrings } from "@Hooks/useStrings";
 import { BlacklistedModule, blacklistedModules } from "@Util/blacklisted-modules";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
-import { Collapse, List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
+import { Card, CardContent, Collapse, List, ListItem, ListItemIcon, ListItemText, Typography } from "@mui/material";
 import FlatList from "flatlist-react";
 import React from "react";
 
@@ -32,6 +32,18 @@ function BlacklistItem({ module }: BlacklistItemProps) {
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List disablePadding>
+          {module.notes && (
+            <ListItem>
+              <Card>
+                <CardContent>
+                  <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                    Additional notes
+                  </Typography>
+                  <Typography variant="body2">{module.notes}</Typography>
+                </CardContent>
+              </Card>
+            </ListItem>
+          )}
           {typeof module.antifeatures === "string" ? (
             <AntiFeatureListItem sx={{ pl: 4 }} type={module.antifeatures} />
           ) : (

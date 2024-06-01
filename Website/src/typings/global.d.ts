@@ -1,6 +1,7 @@
 import { AlertColor } from "@mui/material/Alert";
 import { AvailableStrs, strs } from "./../locales/declaration";
 import { Theme } from "@mui/material";
+import { en_antifeatures } from "locales/antifeatures/en";
 
 export {};
 
@@ -215,21 +216,8 @@ declare global {
     categories?: string[];
     stars?: number;
     readme?: string;
-    antifeatures?: string | string[] | AntiFeatures | AntiFeatures[];
+    antifeatures?: string | string[];
   }
-
-  type AntiFeatures =
-    | "Ads"
-    | "Tracking"
-    | "Non-Free Network Services"
-    | "Non-Free Addons"
-    | "Non-Free Dependencies"
-    | "NSFW"
-    | "Upstream Non-Free"
-    | "NonßFree Assets"
-    | "Known Vulnerability"
-    | "Disabled Algorithm"
-    | "No Source Since";
 
   export interface Version {
     timestamp: number;

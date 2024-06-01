@@ -54,4 +54,9 @@ export const en_antifeatures = [
     name: "Obfuscation",
     desc: "The module source code is may obfuscated, making it difficult to understand, audit, or modify.",
   },
+  {
+    id: "UnaskedRemoval",
+    name: "Unasked Removal",
+    desc: "The module removes apps, files, or other modules without user consent.",
+  },
 ];
