@@ -51,14 +51,13 @@ Introducing Magisk Module Repo Loader (MMRL) - the ultimate module manager for M
 # Screenshots
 
 <p>
-  <img src="assets/screen_01.png" width="32%" />
-  <img src="assets/screen_02.png" width="32%" />
-  <img src="assets/screen_03.png" width="32%" />
-  <img src="assets/screen_04.png" width="32%" />
-  <img src="assets/screen_05.png" width="32%" />
-  <img src="assets/screen_06.png" width="32%" />
-  <img src="assets/screen_07.png" width="32%" />
-  <img src="assets/screen_08.png" width="32%" />
+  <img src="assets/store_ready/1.png" width="32%" />
+  <img src="assets/store_ready/2.png" width="32%" />
+  <img src="assets/store_ready/3.png" width="32%" />
+  <img src="assets/store_ready/4.png" width="32%" />
+  <img src="assets/store_ready/5.png" width="32%" />
+  <img src="assets/store_ready/6.png" width="32%" />
+  <img src="assets/store_ready/7.png" width="32%" />
 </p>
 
 # Credits & Thanks
