@@ -19,14 +19,14 @@ android {
         versionCode pkg.config.version_code
     }
 
-//    splits {
-//        abi {
-//            enable true
-//            reset()
-//            include "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
-//            universalApk true
-//        }
-//    }
+    splits {
+        abi {
+            enable true
+            reset()
+            include "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
+            universalApk true
+        }
+    }
 
     applicationVariants.configureEach { variant ->
         variant.outputs.configureEach { output ->
