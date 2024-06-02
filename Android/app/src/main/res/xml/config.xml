@@ -20,7 +20,8 @@
     <allow-navigation href="https://dergoogler.com/*" />
     <allow-navigation href="https://mmrl.dergoogler.com/*" />
 
-    <preference name="hostname" value="mmrl"/>
+    <preference name="scheme" value="https"/>
+    <preference name="hostname" value="mmrl.dergoogler.com"/>
 
     <feature name="Chooser">
         <param name="android-package" value="com.dergoogler.plugin.ChooserPlugin" />
