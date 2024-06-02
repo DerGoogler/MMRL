@@ -112,7 +112,7 @@ const UpdateModule = React.memo<Props>((props) => {
                   extra: {
                     id: id,
                     exploreInstall: true,
-                    path: updatedModule?.zipUrl,
+                    modSource: [updatedModule?.zipUrl],
                   },
                 });
               }}

@@ -62,7 +62,7 @@ const VersionItem = React.memo<VersionItemProps>(({ id, version, index }) => {
           source: track.source,
           id: id,
           exploreInstall: true,
-          path: version.zipUrl,
+          modSource: [version.zipUrl],
         },
       });
     });

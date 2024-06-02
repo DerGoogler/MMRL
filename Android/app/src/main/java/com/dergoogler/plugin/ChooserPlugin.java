@@ -2,6 +2,7 @@ package com.dergoogler.plugin;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ClipData;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
@@ -25,6 +26,7 @@ import java.io.InputStream;
 import java.io.IOException;
 import java.lang.Exception;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
@@ -78,7 +80,7 @@ public class ChooserPlugin extends CordovaPlugin {
             intent.putExtra(Intent.EXTRA_MIME_TYPES, accept.split(","));
         }
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false);
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
         intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
         this.includeData = includeData;
 
@@ -114,22 +116,20 @@ public class ChooserPlugin extends CordovaPlugin {
         try {
             if (requestCode == ChooserPlugin.PICK_FILE_REQUEST && this.callback != null) {
                 if (resultCode == Activity.RESULT_OK) {
-                    Uri uri = data.getData();
+                    ClipData clipdata = data.getClipData();
 
-                    if (uri != null) {
-                        ContentResolver contentResolver =
-                                this.cordova.getActivity().getContentResolver();
-
-                        String name = ChooserPlugin.getDisplayName(contentResolver, uri);
-
+                    if (clipdata != null) {
                         Context appContext = this.cordova.getActivity().getApplicationContext();
-                        String filePath = getPath(appContext, uri);
 
-                        JSONObject result = new JSONObject();
+                        JSONArray result = new JSONArray();
 
-                        result.put("name", name);
-                        result.put("uri", uri.toString());
-                        result.put("path", filePath);
+                        int count = data.getClipData().getItemCount();
+                        int currentItem = 0;
+                        while (currentItem < count) {
+                            Uri uri = data.getClipData().getItemAt(currentItem).getUri();
+                            currentItem = currentItem + 1;
+                            result.put("\"" + getPath(appContext, uri) + "\"");
+                        }
 
                         this.callback.success(result);
                     } else {
@@ -344,10 +344,8 @@ public class ChooserPlugin extends CordovaPlugin {
                 ", Segments: " + uri.getPathSegments().toString()
         );
 
-        final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
-
         // DocumentProvider
-        if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
+        if (DocumentsContract.isDocumentUri(context, uri)) {
             // ExternalStorageProvider
             if (isExternalStorageDocument(uri)) {
                 final String docId = DocumentsContract.getDocumentId(uri);
@@ -383,7 +381,7 @@ public class ChooserPlugin extends CordovaPlugin {
 
                 // sometimes in raw type, the second part is a valid filepath
                 final String rawFilepath = getRawFilepath(id);
-                if (rawFilepath != "") {
+                if (!Objects.equals(rawFilepath, "")) {
                     return rawFilepath;
                 }
 
@@ -393,13 +391,13 @@ public class ChooserPlugin extends CordovaPlugin {
                 };
 
                 for (String contentUriPrefix : contentUriPrefixesToTry) {
-                    Uri contentUri = ContentUris.withAppendedId(Uri.parse(contentUriPrefix), Long.valueOf(id));
+                    Uri contentUri = ContentUris.withAppendedId(Uri.parse(contentUriPrefix), Long.parseLong(id));
                     try {
                         String path = getDataColumn(context, contentUri, null, null);
                         if (path != null) {
                             return path;
                         }
-                    } catch (Exception e) {
+                    } catch (Exception ignored) {
                     }
                 }
 
@@ -445,8 +443,8 @@ public class ChooserPlugin extends CordovaPlugin {
                 if (uri.toString().contains("mediakey")) {
                     return getDriveFilePath(uri, context);
                 } else {
-                    String contentPath = getContentFromSegments((List) uri.getPathSegments());
-                    if (contentPath != "") {
+                    String contentPath = getContentFromSegments(uri.getPathSegments());
+                    if (!Objects.equals(contentPath, "")) {
                         return getPath(context, Uri.parse(contentPath));
                     } else {
                         return null;

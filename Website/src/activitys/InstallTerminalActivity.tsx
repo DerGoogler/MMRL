@@ -15,11 +15,12 @@ import { Button } from "@mui/material";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import { useConfirm } from "material-ui-confirm";
+import { join } from "path";
 import React from "react";
 
 export interface TerminalActivityExtra {
   exploreInstall: boolean;
-  path: string;
+  modSource: string[];
   id: string;
   source?: string;
   issues?: string;
@@ -118,21 +119,26 @@ const InstallTerminalActivity = () => {
   }, []);
 
   const install = () => {
-    const { exploreInstall, path, id, source, issues } = extra;
+    const { exploreInstall, modSource, id, source, issues } = extra;
 
     if (exploreInstall) {
+      const url = modSource[0];
+      const urls = modSource.join(" ");
+
       const envp_explore = {
         MMRL: "true",
         MMRL_VER: BuildConfig.VERSION_CODE.toString(),
         NAME: id,
-        URL: path,
+        URL: url,
+        URLS: urls,
         ROOTMANAGER: Shell.getRootManager(),
         ...__modFS,
       };
 
       Terminal.exec({
         command: modFS("EXPLORE_INSTALL", {
-          URL: path,
+          URL: url,
+          URLS: urls,
           MODID: id,
         }),
         cwd: "/data/local/tmp",
@@ -217,18 +223,23 @@ const InstallTerminalActivity = () => {
         },
       });
     } else {
+      const zipfile = modSource[0];
+      const zipfiles = modSource.join(" ");
+
       const envp_local = {
         MMRL: "true",
         MMRL_VER: BuildConfig.VERSION_CODE.toString(),
         NAME: id,
-        ZIPFILE: path,
+        ZIPFILE: zipfile,
+        ZIPFILES: zipfiles,
         ROOTMANAGER: Shell.getRootManager(),
         ...__modFS,
       };
 
       Terminal.exec({
         command: modFS("LOCAL_INSTALL", {
-          ZIPFILE: path,
+          ZIPFILE: zipfile,
+          ZIPFILES: zipfiles,
         }),
         env: envp_local,
         printError: settings.print_terminal_error,

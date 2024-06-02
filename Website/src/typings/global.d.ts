@@ -124,13 +124,7 @@ declare global {
   }
 
   namespace Chooser {
-    export type File = {
-      name: string;
-      uri: string;
-      path: string;
-    };
-
-    export type SuccessCallback = (file: File | "RESULT_CANCELED") => void;
+    export type SuccessCallback = (file: string[] | "RESULT_CANCELED") => void;
     export type ErrorCallback = ((code: number) => void) | null;
 
     export function getFile(type: string, successCallback: SuccessCallback, ErrorCallback: ErrorCallback): any;

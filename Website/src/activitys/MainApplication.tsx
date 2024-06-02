@@ -81,14 +81,14 @@ const MainApplication = () => {
                           onClick={() => {
                             Chooser.getFile(
                               "application/zip",
-                              (file) => {
-                                if (file !== "RESULT_CANCELED") {
+                              (files) => {
+                                if (files !== "RESULT_CANCELED") {
                                   context.pushPage({
                                     component: InstallTerminalActivity,
                                     key: "InstallTerminalActivity",
                                     extra: {
                                       exploreInstall: false,
-                                      path: file.path,
+                                      modSource: files,
                                     },
                                   });
                                 }

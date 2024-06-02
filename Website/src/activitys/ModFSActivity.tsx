@@ -64,7 +64,7 @@ function ModFSActivity() {
                   </Anchor>{" "}
                   for more informations!
                   <br />
-                  <code>{"<URL>"}</code> and <code>{"<MODID>"}</code> can also be used, shell supported.
+                  <code>{"<URL>"}</code>, <code>{"<URLS>"}</code> and <code>{"<MODID>"}</code> can also be used, shell supported.
                 </Typography>
               </>
             ),
@@ -83,7 +83,7 @@ function ModFSActivity() {
                   </Anchor>{" "}
                   for more informations!
                   <br />
-                  <code>{"<ZIPFILE>"}</code> can also be used, shell supported.
+                  <code>{"<ZIPFILE>"}</code> and <code>{"<ZIPFILES>"}</code> can also be used, shell supported.
                 </Typography>
               </>
             ),

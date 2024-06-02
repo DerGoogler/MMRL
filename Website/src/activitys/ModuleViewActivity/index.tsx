@@ -349,7 +349,7 @@ const ModuleViewActivity = () => {
                             source: track.source,
                             id: id,
                             exploreInstall: true,
-                            path: latestVersion.zipUrl,
+                            modSource: [latestVersion.zipUrl],
                           },
                         });
                       });
