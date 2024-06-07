@@ -1,7 +1,7 @@
 import { SearchActivity } from "@Activitys/SearchActivity";
 import { useActivity } from "./useActivity";
 import ListItemButton from "@mui/material/ListItemButton";
-import ModuleViewActivity from "@Activitys/ModuleViewActivity";
+import { ModuleViewActivity } from "@Activitys/ModuleViewActivity";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Chip from "@mui/material/Chip";

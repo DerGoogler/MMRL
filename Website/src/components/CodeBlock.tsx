@@ -1,7 +1,7 @@
 import React from "react";
 import { StyledMarkdown } from "./Markdown/StyledMarkdown";
-import Pre from "./dapi/Pre";
-import Code from "./dapi/Code";
+import { Pre } from "./dapi/Pre";
+import { Code } from "./dapi/Code";
 import { SxProps } from "@mui/material";
 import hljs from "highlight.js";
 

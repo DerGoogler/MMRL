@@ -1,5 +1,5 @@
 import AntiFeatureListItem from "@Components/AntiFeatureListItem";
-import Anchor from "@Components/dapi/Anchor";
+import { Anchor } from "@Components/dapi/Anchor";
 import { Page } from "@Components/onsenui/Page";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import { useActivity } from "@Hooks/useActivity";

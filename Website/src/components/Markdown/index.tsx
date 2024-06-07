@@ -1,6 +1,5 @@
 import Markdown, { MarkdownToJSX, compiler } from "markdown-to-jsx";
-import Anchor from "../dapi/Anchor";
-import Video from "../dapi/Video";
+import { Video } from "@Components/dapi/Video";
 import React from "react";
 import { Alert, Divider, Paper, Stack, SxProps, Theme } from "@mui/material";
 import styled from "@emotion/styled";
@@ -9,8 +8,9 @@ import { Image } from "@Components/dapi/Image";
 import { StyledMarkdown } from "./StyledMarkdown";
 import { DiscordWidget } from "@Components/dapi/DiscordWidget";
 import { AlertIcon, BugIcon, CheckIcon, IssueClosedIcon, IssueOpenedIcon, IssueReopenedIcon, XIcon } from "@primer/octicons-react";
-import Code from "@Components/dapi/Code";
-import Pre from "@Components/dapi/Pre";
+import { Code } from "@Components/dapi/Code";
+import { Pre } from "@Components/dapi/Pre";
+import { Anchor } from "@Components/dapi/Anchor";
 
 type Props = {
   fetch?: string;
@@ -57,9 +57,9 @@ export const MarkdownOverrides: MarkdownToJSX.Overrides | undefined = {
       );
     },
   },
-  a: {
-    component: Anchor,
-  },
+  // a: {
+  //   component: Anchor,
+  // },
   img: {
     component: Image,
   },

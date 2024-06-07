@@ -404,4 +404,4 @@ const ModuleViewActivity = () => {
   );
 };
 
-export default ModuleViewActivity;
+export { ModuleViewActivity };

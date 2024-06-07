@@ -20,8 +20,8 @@ import CodeRoundedIcon from "@mui/icons-material/CodeRounded";
 import { Page } from "@Components/onsenui/Page";
 import eruda from "eruda";
 import { useTheme } from "@Hooks/useTheme";
-import Pre from "@Components/dapi/Pre";
-import Code from "@Components/dapi/Code";
+import { Pre } from "@Components/dapi/Pre";
+import { Code } from "@Components/dapi/Code";
 
 import pkg from "@Package";
 import UnverifiedHostActivity from "./UnverifiedHostActivity";

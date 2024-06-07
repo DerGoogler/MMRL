@@ -25,7 +25,7 @@ import AntiFeatureListItem from "@Components/AntiFeatureListItem";
 import { Image } from "@Components/dapi/Image";
 import { useCategories } from "@Hooks/useCategories";
 import { useFormatDate } from "@Hooks/useFormatDate";
-import ModuleViewActivity from "..";
+import { ModuleViewActivity } from "..";
 import { useRepos } from "@Hooks/useRepos";
 
 const OverviewTab = () => {

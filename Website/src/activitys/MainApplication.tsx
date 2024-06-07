@@ -2,13 +2,12 @@ import CodeRoundedIcon from "@mui/icons-material/CodeRounded";
 import React from "react";
 import Typography from "@mui/material/Typography";
 import MenuIcon from "@mui/icons-material/Menu";
-import FetchTextActivity from "./FetchTextActivity";
 import ModuleFragment from "./fragments/ModuleFragment";
 import InstallTerminalActivity from "./InstallTerminalActivity";
 import DeviceModule from "@Components/module/DeviceModule";
 import ExploreModule from "@Components/module/ExploreModule";
 import UpdateModule from "@Components/module/UpdateModule";
-import ModuleViewActivity from "./ModuleViewActivity";
+import { ModuleViewActivity } from "./ModuleViewActivity";
 import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
 import { useActivity } from "@Hooks/useActivity";
 import { Toolbar } from "@Components/onsenui/Toolbar";
@@ -17,22 +16,17 @@ import { Page } from "@Components/onsenui/Page";
 import { useStrings } from "@Hooks/useStrings";
 import { Tabbar, TabbarRenderTab } from "@Components/onsenui/Tabbar";
 import { useRepos } from "@Hooks/useRepos";
-import { SuFile } from "@Native/SuFile";
-import { BuildConfig } from "@Native/BuildConfig";
 import SearchIcon from "@mui/icons-material/Search";
-import { useModFS } from "@Hooks/useModFS";
 import Fab from "@Components/onsenui/Fab";
 import { useLocalModules } from "@Hooks/useLocalModules";
 import { Shell } from "@Native/Shell";
-import { ModConfView } from "@Components/ModConfView";
 import { useSettings } from "@Hooks/useSettings";
 import { useOpenModuleSearch } from "@Hooks/useOpenModuleSearch";
 
 const MainApplication = () => {
+  const { context } = useActivity();
   const { strings } = useStrings();
   const { settings } = useSettings();
-  const { modFS } = useModFS();
-  const { context } = useActivity();
   const { modules } = useRepos();
   const [index, setIndex] = React.useState(0);
   const localModules = useLocalModules();
@@ -121,24 +115,6 @@ const MainApplication = () => {
         : []),
     ];
   };
-
-  React.useEffect(() => {
-    fetch("https://raw.githubusercontent.com/DerGoogler/MMRL/master/Website/package.json")
-      .then((res) => res.json())
-      .then((json) => {
-        if (json.config.version_code > BuildConfig.VERSION_CODE) {
-          context.pushPage({
-            component: FetchTextActivity,
-            key: "changelog",
-            extra: {
-              rendering: ModConfView,
-              url: "https://raw.githubusercontent.com/wiki/DerGoogler/MMRL/JSX-Changelog.md",
-              modulename: "Update available!",
-            },
-          });
-        }
-      });
-  }, []);
 
   const renderToolbar = () => {
     return (

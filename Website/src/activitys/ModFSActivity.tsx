@@ -8,7 +8,7 @@ import { ModFS, useModFS } from "@Hooks/useModFS";
 import { Shell } from "@Native/Shell";
 import { DialogEditTextListItem } from "@Components/DialogEditTextListItem";
 import React from "react";
-import Anchor from "@Components/dapi/Anchor";
+import { Anchor } from "@Components/dapi/Anchor";
 import { useStrings } from "@Hooks/useStrings";
 
 interface ModFSSections {

@@ -51,4 +51,4 @@ const Video = (props: VideoProps) => {
   }
 };
 
-export default Video;
+export { Video };
