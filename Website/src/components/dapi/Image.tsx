@@ -1,4 +1,5 @@
 import PicturePreviewActivity from "@Activitys/PicturePreviewActivity";
+import { GestureDetector } from "@Components/onsenui/GestureDetector";
 import { useActivity } from "@Hooks/useActivity";
 import { ModFS, useModFS } from "@Hooks/useModFS";
 import { useTheme } from "@Hooks/useTheme";
@@ -36,19 +37,8 @@ function Image(props: Props) {
   }, [src]);
 
   return (
-    <Box
-      component={"img"}
-      sx={{
-        ":hover": {
-          cursor: !noOpen ? "pointer" : "unset",
-        },
-        borderRadius: theme.shape.borderRadius / theme.shape.borderRadius,
-        ...(!noOutline && { outlineOffset: -1, outline: `1px solid ${theme.palette.divider} !important` }),
-        boxShadow: theme.shadows[shadow || 0],
-        ...sx,
-      }}
-      src={newSrc}
-      onClick={() => {
+    <GestureDetector
+      onTap={() => {
         if (!noOpen) {
           context.pushPage({
             component: PicturePreviewActivity,
@@ -59,8 +49,22 @@ function Image(props: Props) {
           });
         }
       }}
-      {...rest}
-    />
+    >
+      <Box
+        component={"img"}
+        sx={{
+          ":hover": {
+            cursor: !noOpen ? "pointer" : "unset",
+          },
+          borderRadius: theme.shape.borderRadius / theme.shape.borderRadius,
+          ...(!noOutline && { outlineOffset: -1, outline: `1px solid ${theme.palette.divider} !important` }),
+          boxShadow: theme.shadows[shadow || 0],
+          ...sx,
+        }}
+        src={newSrc}
+        {...rest}
+      />
+    </GestureDetector>
   );
 }
 

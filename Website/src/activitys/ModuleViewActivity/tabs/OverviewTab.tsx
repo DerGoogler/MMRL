@@ -27,6 +27,8 @@ import { useCategories } from "@Hooks/useCategories";
 import { useFormatDate } from "@Hooks/useFormatDate";
 import { ModuleViewActivity } from "..";
 import { useRepos } from "@Hooks/useRepos";
+import { Carousel } from "@Components/onsenui/Carousel";
+import { CarouselItem } from "@Components/onsenui/CarouselItem";
 
 const OverviewTab = () => {
   const { strings } = useStrings();
@@ -223,24 +225,31 @@ const OverviewTab = () => {
             </CardContent>
 
             <ImageList
+              component={Carousel}
+              swipeable
+              autoScrollRatio={0}
+              overscrollable
               sx={{
                 pt: 0,
                 p: 1,
+                mt: 0,
                 overflow: "auto",
                 whiteSpace: "nowrap",
                 gridAutoFlow: "column",
-                gridTemplateColumns: "repeat(auto-fill,minmax(250px,1fr)) !important",
+                gridTemplateColumns: `repeat(${track.screenshots.length}, minmax(250px,1fr)) !important`,
                 gridAutoColumns: "minmax(250px, 1fr)",
               }}
             >
               {track.screenshots.map((image, i) => (
                 <ImageListItem
-                  sx={(theme) => ({
+                  component={CarouselItem}
+                  key={i}
+                  sx={{
                     ml: 1,
                     mr: 1,
-                  })}
+                  }}
                 >
-                  <Box component={Image} src={image} />
+                  <Box sx={{ width: "100%" }} component={Image} src={image} />
                 </ImageListItem>
               ))}
             </ImageList>

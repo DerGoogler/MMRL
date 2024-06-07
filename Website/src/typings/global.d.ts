@@ -42,6 +42,8 @@ declare global {
       "ons-gesture-detector": HTMLAttributes<HTMLElement>;
       "ons-bottom-toolbar": HTMLAttributes<HTMLElement>;
       "ons-fab": HTMLAttributes<HTMLElement>;
+      "ons-carousel": HTMLAttributes<HTMLElement>;
+      "ons-carousel-item": HTMLAttributes<HTMLElement>;
     }
   }
 
