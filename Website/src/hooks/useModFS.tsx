@@ -90,7 +90,7 @@ export const INITIAL_MOD_CONF: ModFS = {
 
   // Installer
   EXPLORE_INSTALL: 'mmrl install -y "<URL>"',
-  LOCAL_INSTALL: 'mmrl install local -y "<ZIPFILE>"',
+  LOCAL_INSTALL: 'mmrl install local -y <ZIPFILES>',
 };
 
 export interface ModConfContext {
