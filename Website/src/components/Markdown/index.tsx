@@ -57,9 +57,6 @@ export const MarkdownOverrides: MarkdownToJSX.Overrides | undefined = {
       );
     },
   },
-  // a: {
-  //   component: Anchor,
-  // },
   img: {
     component: Image,
   },
@@ -112,6 +109,14 @@ export const Markup = (props: Props) => {
         style={props.styleMd}
         options={{
           overrides: MarkdownOverrides,
+          createElement(type: any, props: any, ...children: any[]) {
+            switch (type) {
+              case "a":
+                return React.createElement(Anchor, props, ...children);
+              default:
+                return React.createElement(type, props, ...children);
+            }
+          },
         }}
         children={text}
       />

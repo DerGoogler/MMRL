@@ -80,7 +80,7 @@ function increase_brightness(hex, percent) {
   );
 }
 
-const Anchor = React.memo<AnchorProps>((props) => {
+const Anchor: React.FC<AnchorProps> = (props) => {
   const confirm = useConfirm();
   const { theme } = useTheme();
   const { context } = useActivity();
@@ -197,6 +197,6 @@ const Anchor = React.memo<AnchorProps>((props) => {
       </Box>
     </Tooltip>
   );
-});
+};
 
 export { Anchor };
