@@ -129,8 +129,6 @@ const InstallTerminalActivity = () => {
         MMRL: "true",
         MMRL_VER: BuildConfig.VERSION_CODE.toString(),
         NAME: id,
-        URL: url,
-        URLS: urls,
         ROOTMANAGER: Shell.getRootManager(),
         ...__modFS,
       };
@@ -230,8 +228,6 @@ const InstallTerminalActivity = () => {
         MMRL: "true",
         MMRL_VER: BuildConfig.VERSION_CODE.toString(),
         NAME: id,
-        ZIPFILE: zipfile,
-        ZIPFILES: zipfiles,
         ROOTMANAGER: Shell.getRootManager(),
         ...__modFS,
       };
