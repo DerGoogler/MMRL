@@ -225,29 +225,23 @@ const OverviewTab = () => {
             </CardContent>
 
             <ImageList
-              component={Carousel}
-              swipeable
-              autoScrollRatio={0}
-              overscrollable
               sx={{
+                mt: 0,
                 pt: 0,
                 p: 1,
-                mt: 0,
                 overflow: "auto",
                 whiteSpace: "nowrap",
                 gridAutoFlow: "column",
-                gridTemplateColumns: `repeat(${track.screenshots.length}, minmax(250px,1fr)) !important`,
+                gridTemplateColumns: "repeat(auto-fill,minmax(250px,1fr)) !important",
                 gridAutoColumns: "minmax(250px, 1fr)",
               }}
             >
               {track.screenshots.map((image, i) => (
                 <ImageListItem
-                  component={CarouselItem}
-                  key={i}
-                  sx={{
+                  sx={(theme) => ({
                     ml: 1,
                     mr: 1,
-                  }}
+                  })}
                 >
                   <Box sx={{ width: "100%" }} component={Image} src={image} />
                 </ImageListItem>
