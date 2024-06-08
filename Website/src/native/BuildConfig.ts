@@ -52,7 +52,7 @@ class BuildConfigClass extends Native {
     if (this.isAndroid) {
       return this.interface.BUILD_TYPE;
     } else {
-      return "unknown";
+      return __webpack__mode__;
     }
   }
 }

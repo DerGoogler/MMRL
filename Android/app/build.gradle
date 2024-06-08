@@ -42,6 +42,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             multiDexEnabled true
             buildConfigField "long", "BUILD_DATE", "${cur_time}"
+            buildConfigField "String", "BUILD_TYPE", "production"
         }
         debug {
             resValue "string", "app_name", "${app_name} Debug"
@@ -51,6 +52,7 @@ android {
             multiDexEnabled false
             applicationIdSuffix '.debug'
             buildConfigField "long", "BUILD_DATE", "${cur_time}"
+            buildConfigField "String", "BUILD_TYPE", "development"
         }
     }
     compileOptions {
