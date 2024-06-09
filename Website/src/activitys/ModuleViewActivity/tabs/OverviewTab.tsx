@@ -137,7 +137,7 @@ const OverviewTab = () => {
           </CardContent>
         </Card>
 
-        {findHardCodedAntifeature ? (
+        {findHardCodedAntifeature && findHardCodedAntifeature.length !== 0 && (
           <Card
             sx={{
               width: "100%",
@@ -167,7 +167,7 @@ const OverviewTab = () => {
               </List>
             </CardContent>
           </Card>
-        ) : null}
+        )}
 
         {track.require && track.require.length !== 0 && (
           <Card

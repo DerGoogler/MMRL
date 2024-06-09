@@ -79,7 +79,6 @@ const MainActivity = (): JSX.Element => {
     if (settings.eruda_console_enabled) {
       _eruda.init({
         container: erudaRef.current as HTMLElement,
-        useShadowDom: false,
         tool: ["console", "elements", "resources", "info"],
       });
     } else {
