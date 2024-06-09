@@ -117,11 +117,12 @@ public class ChooserPlugin extends CordovaPlugin {
             if (requestCode == ChooserPlugin.PICK_FILE_REQUEST && this.callback != null) {
                 if (resultCode == Activity.RESULT_OK) {
                     ClipData clipdata = data.getClipData();
+                    Uri uriData = data.getData();
+                    JSONArray result = new JSONArray();
+
+                    Context appContext = this.cordova.getActivity().getApplicationContext();
 
                     if (clipdata != null) {
-                        Context appContext = this.cordova.getActivity().getApplicationContext();
-
-                        JSONArray result = new JSONArray();
 
                         int count = data.getClipData().getItemCount();
                         int currentItem = 0;
@@ -131,6 +132,9 @@ public class ChooserPlugin extends CordovaPlugin {
                             result.put("\"" + getPath(appContext, uri) + "\"");
                         }
 
+                        this.callback.success(result);
+                    } else if (uriData != null) {
+                        result.put("\"" + getPath(appContext, uriData) + "\"");
                         this.callback.success(result);
                     } else {
                         this.callback.error("File URI was null.");
