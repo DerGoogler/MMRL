@@ -6,17 +6,11 @@ Implantation
 if [ "$MMRL_INTR" = "true" ]; then
     ui_print "#!useInternal"
     mmrl_exec() { ui_print "#!mmrl:$*"; }
+    gui_print() { ui_print "$@"; }
 else
     mmrl_exec() { true; }
+    gui_print() { ui_print "$@" | sed 's/<[A-Z.]*>//g'; }
 fi
-
-gui_print() {
-  if [ "$MMRL_INTR" = "true" ]; then
-    ui_print "$@"
-  else
-    ui_print "$@" | sed 's/<[A-Z.]*>//g';
-  fi
-}
 ```
 
 ## Internal commands
