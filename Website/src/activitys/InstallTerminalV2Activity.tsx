@@ -100,15 +100,7 @@ const useLines = (cmds: Record<string, IntrCommand>) => {
   };
 
   const processCommand = (rawCommand: string) => {
-    if (rawCommand.trim() === "#!useInternal" || rawCommand.trim() === "#!useInt") {
-      setUseInt(true);
-      if (!useInt) {
-        addText("\x1b[32mInternal \x1b[4mMMRL\x1b[0;32m commands available\x1b[0m");
-      }
-      return;
-    }
-
-    if (useInt && rawCommand.startsWith("#!mmrl:")) {
+    if (rawCommand.startsWith("#!mmrl:")) {
       let args: string[] = [];
       let options = {};
       let command: string;
@@ -207,6 +199,9 @@ export const InstallTerminalV2Activity = () => {
 
   const [active, setActive] = React.useState<bool>(true);
   const { lines, addText, addButton } = useLines({
+    color: (args, _, add) => {
+      add.addText(formatString(args[0], colors));
+    },
     clearTerminal: (_, __, add) => {
       add.setLines([]);
     },
@@ -219,7 +214,6 @@ export const InstallTerminalV2Activity = () => {
     },
     addButton: (args, opt, add) => {
       const { variant } = opt;
-      console.log(args[0]);
       add.addButton(args[0], {
         sx: {
           width: "50vmin",
@@ -277,7 +271,7 @@ export const InstallTerminalV2Activity = () => {
         env: envp_explore,
         printError: settings.print_terminal_error,
         onLine: (line) => {
-          addText(formatString(line, colors));
+          addText(line);
         },
         onExit: (code) => {
           switch (code) {
@@ -361,7 +355,7 @@ export const InstallTerminalV2Activity = () => {
         printError: settings.print_terminal_error,
         cwd: "/data/local/tmp",
         onLine: (line) => {
-          addText(formatString(line, colors));
+          addText(line);
         },
         onExit: (code) => {
           switch (code) {
