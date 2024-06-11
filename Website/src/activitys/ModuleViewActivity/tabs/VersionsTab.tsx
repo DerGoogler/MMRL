@@ -1,5 +1,6 @@
 import FetchTextActivity from "@Activitys/FetchTextActivity";
 import InstallTerminalActivity from "@Activitys/InstallTerminalActivity";
+import InstallTerminalV2Activity from "@Activitys/InstallTerminalV2Activity";
 import { useActivity } from "@Hooks/useActivity";
 import { useFormatDate } from "@Hooks/useFormatDate";
 import { useStrings } from "@Hooks/useStrings";
@@ -55,8 +56,8 @@ const VersionItem = React.memo<VersionItemProps>(({ id, version, index }) => {
       confirmationText: "Yes",
     }).then(() => {
       context.pushPage({
-        component: InstallTerminalActivity,
-        key: "InstallTerminalActivity",
+        component: InstallTerminalV2Activity,
+        key: "InstallTerminalV2Activity",
         extra: {
           issues: track.support,
           source: track.source,

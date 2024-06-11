@@ -20,7 +20,8 @@
 <p align="center">
   <a href="https://github.com/DerGoogler/MMRL/blob/master/docs/faq.md">FAQ</a> • 
   <a href="https://github.com/DerGoogler/MMRL/blob/master/docs/ModConf/README.md">ModConf</a> • 
-  <a href="https://github.com/DerGoogler/MMRL/blob/master/docs/ModFS.md">ModFS</a>
+  <a href="https://github.com/DerGoogler/MMRL/blob/master/docs/ModFS.md">ModFS</a> • 
+  <a href="https://github.com/DerGoogler/MMRL/blob/master/docs/Installer/README.md">Installer</a>
 </p>
 
 # Summary

@@ -22,6 +22,7 @@ import { useLocalModules } from "@Hooks/useLocalModules";
 import { Shell } from "@Native/Shell";
 import { useSettings } from "@Hooks/useSettings";
 import { useOpenModuleSearch } from "@Hooks/useOpenModuleSearch";
+import InstallTerminalV2Activity from "./InstallTerminalV2Activity";
 
 const MainApplication = () => {
   const { context } = useActivity();
@@ -78,8 +79,8 @@ const MainApplication = () => {
                               (files) => {
                                 if (files !== "RESULT_CANCELED") {
                                   context.pushPage({
-                                    component: InstallTerminalActivity,
-                                    key: "InstallTerminalActivity",
+                                    component: InstallTerminalV2Activity,
+                                    key: "InstallTerminalV2Activity",
                                     extra: {
                                       exploreInstall: false,
                                       modSource: files,

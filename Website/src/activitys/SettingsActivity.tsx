@@ -154,6 +154,26 @@ function SettingsActivity() {
                   checked={settings.print_terminal_error}
                 />
               </ListItem>
+              <ListItem>
+                <ListItemText primary={strings("word_wrap_title")} />
+                <Switch
+                  edge="end"
+                  onChange={(e) => {
+                    setSettings("terminal_word_wrap", e.target.checked);
+                  }}
+                  checked={settings.terminal_word_wrap}
+                />
+              </ListItem>
+              <ListItem>
+                <ListItemText primary={strings("numberic_lines_title")} secondary={strings("numberic_lines_desc")} />
+                <Switch
+                  edge="end"
+                  onChange={(e) => {
+                    setSettings("terminal_numberic_lines", e.target.checked);
+                  }}
+                  checked={settings.terminal_numberic_lines}
+                />
+              </ListItem>
               <ListPickerItem
                 id="term-scroll-behavior"
                 targetSetting="term_scroll_behavior"

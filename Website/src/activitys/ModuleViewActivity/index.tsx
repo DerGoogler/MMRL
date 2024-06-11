@@ -32,6 +32,7 @@ import Divider from "@mui/material/Divider";
 import { useRepos } from "@Hooks/useRepos";
 import { useOpenModuleSearch } from "@Hooks/useOpenModuleSearch";
 import { VerifiedIcon } from "@Components/icons/VerifiedIcon";
+import { InstallTerminalV2Activity } from "@Activitys/InstallTerminalV2Activity";
 
 function a11yProps(index: number) {
   return {
@@ -342,8 +343,8 @@ const ModuleViewActivity = () => {
                         confirmationText: "Yes",
                       }).then(() => {
                         context.pushPage<TerminalActivityExtra, {}>({
-                          component: InstallTerminalActivity,
-                          key: "InstallTerminalActivity",
+                          component: InstallTerminalV2Activity,
+                          key: "InstallTerminalV2Activity",
                           extra: {
                             issues: track.support,
                             source: track.source,

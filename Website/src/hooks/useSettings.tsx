@@ -22,6 +22,8 @@ export interface StorageDeclaration {
   link_protection: boolean;
   swipeable_tabs: boolean;
   print_terminal_error: boolean;
+  terminal_word_wrap: boolean;
+  terminal_numberic_lines: boolean;
 }
 
 export const termScrollBehaviors: StorageDeclaration["term_scroll_behavior"][] = [
@@ -77,6 +79,8 @@ export const SettingsProvider = (props: React.PropsWithChildren) => {
       link_protection: true,
       swipeable_tabs: false,
       print_terminal_error: false,
+      terminal_word_wrap: false,
+      terminal_numberic_lines: true,
     }),
     []
   );
