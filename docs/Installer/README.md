@@ -5,10 +5,12 @@ Implantation
 ```shell
 if [ "$MMRL_INTR" = "true" ]; then
     mmrl_exec() { ui_print "#!mmrl:$*"; }
-    gui_print() { mmrl_exec color "$@"; }
+    gui_print() { mmrl_exec color "\"$@\""; }
+    mmrl_setLastLine() { mmrl_exec setLastLine "\"$@\""; }
 else
     mmrl_exec() { true; }
     gui_print() { ui_print "$@" | sed 's/<[A-Z.]*>//g'; }
+    mmrl_setLastLine() { true; }
 fi
 ```
 
