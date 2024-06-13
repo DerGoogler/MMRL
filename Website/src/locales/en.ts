@@ -141,4 +141,7 @@ export const en = {
   print_errors_desc: "Prints terminal and MMRL Install Tools error to the console",
 
   blacklisted_modules: "Blacklisted modules",
+
+  install_module: "Install {name}?",
+  install_module_dialog_desc: "Are you sure that you what to install {name}?"
 };

@@ -1,38 +1,35 @@
+import { InstallTerminalV2Activity, TerminalActivityExtra } from "@Activitys/InstallTerminalV2Activity";
+import { VerifiedIcon } from "@Components/icons/VerifiedIcon";
 import { Page } from "@Components/onsenui/Page";
 import { Toolbar } from "@Components/onsenui/Toolbar";
-import { useStrings } from "@Hooks/useStrings";
-import Box from "@mui/material/Box";
-import React from "react";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import Avatar from "@mui/material/Avatar";
-import { VolunteerActivism } from "@mui/icons-material";
-import Stack from "@mui/material/Stack";
 import { useActivity } from "@Hooks/useActivity";
+import { useOpenModuleSearch } from "@Hooks/useOpenModuleSearch";
+import { useRepos } from "@Hooks/useRepos";
+import { useStrings } from "@Hooks/useStrings";
 import { useTheme } from "@Hooks/useTheme";
 import { os } from "@Native/Os";
-import SvgIcon from "@mui/material/SvgIcon";
-import CardMedia from "@mui/material/CardMedia";
-import { SuFile } from "@Native/SuFile";
-import InstallTerminalActivity, { TerminalActivityExtra } from "../InstallTerminalActivity";
 import { Shell } from "@Native/Shell";
-import { Disappear } from "react-disappear";
-import Fade from "@mui/material/Fade";
-import TelegramIcon from "@mui/icons-material/Telegram";
-import { useConfirm } from "material-ui-confirm";
-import Tooltip from "@mui/material/Tooltip";
 import { view } from "@Native/View";
-import { useModFS } from "@Hooks/useModFS";
+import { VolunteerActivism } from "@mui/icons-material";
+import TelegramIcon from "@mui/icons-material/Telegram";
+import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import CardMedia from "@mui/material/CardMedia";
+import Divider from "@mui/material/Divider";
+import Fade from "@mui/material/Fade";
+import Stack from "@mui/material/Stack";
+import SvgIcon from "@mui/material/SvgIcon";
+import Tab from "@mui/material/Tab";
+import Tabs from "@mui/material/Tabs";
+import Typography from "@mui/material/Typography";
+import { useConfirm } from "material-ui-confirm";
+import React from "react";
+import { Disappear } from "react-disappear";
+import { AboutTab } from "./tabs/AboutTabs";
 import { OverviewTab } from "./tabs/OverviewTab";
 import { VersionsTab } from "./tabs/VersionsTab";
-import { AboutTab } from "./tabs/AboutTabs";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Divider from "@mui/material/Divider";
-import { useRepos } from "@Hooks/useRepos";
-import { useOpenModuleSearch } from "@Hooks/useOpenModuleSearch";
-import { VerifiedIcon } from "@Components/icons/VerifiedIcon";
-import { InstallTerminalV2Activity } from "@Activitys/InstallTerminalV2Activity";
+import { DropdownButton } from "@Components/DropdownButton";
 
 function a11yProps(index: number) {
   return {
@@ -328,58 +325,61 @@ const ModuleViewActivity = () => {
               </Stack>
 
               <Stack direction="row" justifyContent="center" alignItems="center" spacing={1}>
-                {os.isAndroid && (Shell.isMagiskSU() || Shell.isKernelSU() || Shell.isAPatchSU()) && (
-                  <Button
-                    color="secondary"
-                    sx={{
-                      minWidth: 160,
-                      width: { sm: "unset", xs: "100%" },
-                      alignSelf: "flex-end",
-                    }}
-                    variant="contained"
-                    onClick={() => {
-                      confirm({
-                        title: `Install ${name}?`,
-                        confirmationText: "Yes",
-                      }).then(() => {
-                        context.pushPage<TerminalActivityExtra, {}>({
-                          component: InstallTerminalV2Activity,
-                          key: "InstallTerminalV2Activity",
-                          extra: {
-                            issues: track.support,
-                            source: track.source,
-                            id: id,
-                            exploreInstall: true,
-                            modSource: [latestVersion.zipUrl],
+                <DropdownButton
+                  sx={{
+                    width: "100%",
+                    "& .MuiButtonGroup-root": {
+                      width: "100%",
+                    },
+                    "& .MuiButton-root:first-child": {
+                      width: "100%",
+                    },
+                  }}
+                  options={[
+                    {
+                      title: strings("download"),
+                      disabled: !latestVersion.zipUrl,
+                      onClick: () => {
+                        os.open(latestVersion.zipUrl, {
+                          target: "_blank",
+                          features: {
+                            color: theme.palette.primary.main,
                           },
                         });
-                      });
-                    }}
-                  >
-                    {strings("install")}
-                  </Button>
-                )}
-
-                <Button
-                  color="secondary"
-                  disabled={!latestVersion.zipUrl}
-                  onClick={() => {
-                    os.open(latestVersion.zipUrl, {
-                      target: "_blank",
-                      features: {
-                        color: theme.palette.primary.main,
                       },
-                    });
-                  }}
-                  sx={{
-                    minWidth: 160,
-                    width: { sm: "unset", xs: "100%" },
-                    alignSelf: "flex-end",
-                  }}
-                  variant="contained"
-                >
-                  {strings("download")}
-                </Button>
+                    },
+                    {
+                      title: strings("install"),
+                      //disabled: !(os.isAndroid && (Shell.isMagiskSU() || Shell.isKernelSU() || Shell.isAPatchSU())),
+                      onClick: () => {
+                        confirm({
+                          title: strings("install_module", { name: name }),
+                          description: strings("install_module_dialog_desc", { name: <strong>{name}</strong> }),
+                          confirmationText: "Yes",
+                        }).then(() => {
+                          context.pushPage<TerminalActivityExtra, {}>({
+                            component: InstallTerminalV2Activity,
+                            key: "InstallTerminalV2Activity",
+                            extra: {
+                              issues: track.support,
+                              source: track.source,
+                              id: id,
+                              exploreInstall: true,
+                              modSource: [latestVersion.zipUrl],
+                            },
+                          });
+                        });
+                      },
+                    },
+                    {
+                      title: strings("update"),
+                      disabled: true,
+                      onClick: () => {
+                        console.log("Rebase and merge");
+                      },
+                    },
+                  ]}
+                />
               </Stack>
             </Stack>
           </Stack>
