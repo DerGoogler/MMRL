@@ -8,14 +8,15 @@ import MenuItem from "@mui/material/MenuItem";
 import { alpha, styled } from "@mui/material/styles";
 import * as React from "react";
 
+interface DropdownButtonPropsOptions extends React.PropsWithChildren {
+  type?: "divider" | "item";
+  disabled?: boolean;
+  onClick?: React.MouseEventHandler<HTMLElement>;
+}
+
 interface DropdownButtonProps {
   sx?: SxProps;
-  options: Array<{
-    type?: "divider" | "item";
-    disabled?: boolean;
-    title?: React.ReactNode;
-    onClick?: React.MouseEventHandler<HTMLElement>;
-  }>;
+  options: DropdownButtonPropsOptions[];
 }
 
 export const StyledMenu = styled((props: MenuProps) => (
@@ -80,7 +81,8 @@ export const DropdownButton = (props: DropdownButtonProps) => {
   return (
     <Box sx={props.sx}>
       <ButtonGroup variant="contained" aria-label="Button group with a nested menu">
-        <Button onClick={props.options[selectedIndex].onClick}>{props.options[selectedIndex].title}</Button>
+        {/* @ts-ignore */}
+        <Button {...props.options[selectedIndex]} />
         <Button
           ref={anchorRef as any}
           size="small"
@@ -108,7 +110,7 @@ export const DropdownButton = (props: DropdownButtonProps) => {
                   selected={index === selectedIndex}
                   onClick={(event) => handleMenuItemClick(event, index)}
                 >
-                  {option.title}
+                  {option.children}
                 </MenuItem>
               );
           }

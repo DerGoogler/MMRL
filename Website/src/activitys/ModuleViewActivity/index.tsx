@@ -337,7 +337,7 @@ const ModuleViewActivity = () => {
                   }}
                   options={[
                     {
-                      title: strings("download"),
+                      children: strings("download"),
                       disabled: !latestVersion.zipUrl,
                       onClick: () => {
                         os.open(latestVersion.zipUrl, {
@@ -349,7 +349,7 @@ const ModuleViewActivity = () => {
                       },
                     },
                     {
-                      title: strings("install"),
+                      children: strings("install"),
                       disabled: !(os.isAndroid && (Shell.isMagiskSU() || Shell.isKernelSU() || Shell.isAPatchSU())),
                       onClick: () => {
                         confirm({
@@ -372,7 +372,7 @@ const ModuleViewActivity = () => {
                       },
                     },
                     {
-                      title: strings("update"),
+                      children: strings("update"),
                       disabled: true,
                       onClick: () => {
                         console.log("Rebase and merge");

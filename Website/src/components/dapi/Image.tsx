@@ -37,8 +37,19 @@ function Image(props: Props) {
   }, [src]);
 
   return (
-    <GestureDetector
-      onTap={() => {
+    <Box
+      component={"img"}
+      sx={{
+        ":hover": {
+          cursor: !noOpen ? "pointer" : "unset",
+        },
+        borderRadius: theme.shape.borderRadius / theme.shape.borderRadius,
+        ...(!noOutline && { outlineOffset: -1, outline: `1px solid ${theme.palette.divider} !important` }),
+        boxShadow: theme.shadows[shadow || 0],
+        ...sx,
+      }}
+      src={newSrc}
+      onClick={() => {
         if (!noOpen) {
           context.pushPage({
             component: PicturePreviewActivity,
@@ -49,22 +60,8 @@ function Image(props: Props) {
           });
         }
       }}
-    >
-      <Box
-        component={"img"}
-        sx={{
-          ":hover": {
-            cursor: !noOpen ? "pointer" : "unset",
-          },
-          borderRadius: theme.shape.borderRadius / theme.shape.borderRadius,
-          ...(!noOutline && { outlineOffset: -1, outline: `1px solid ${theme.palette.divider} !important` }),
-          boxShadow: theme.shadows[shadow || 0],
-          ...sx,
-        }}
-        src={newSrc}
-        {...rest}
-      />
-    </GestureDetector>
+      {...rest}
+    />
   );
 }
 
