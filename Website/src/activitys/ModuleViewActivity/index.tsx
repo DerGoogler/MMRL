@@ -350,7 +350,7 @@ const ModuleViewActivity = () => {
                     },
                     {
                       title: strings("install"),
-                      //disabled: !(os.isAndroid && (Shell.isMagiskSU() || Shell.isKernelSU() || Shell.isAPatchSU())),
+                      disabled: !(os.isAndroid && (Shell.isMagiskSU() || Shell.isKernelSU() || Shell.isAPatchSU())),
                       onClick: () => {
                         confirm({
                           title: strings("install_module", { name: name }),
