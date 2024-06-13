@@ -9,6 +9,8 @@ interface ChooserNative {
 
 class Chooser extends Native<ChooserNative> {
   public type: string;
+  private _onChose: SuccessCallback | undefined;
+  private _onError: ErrorCallback = null;
 
   public constructor(type: string) {
     super(window.__chooser__);
@@ -18,9 +20,23 @@ class Chooser extends Native<ChooserNative> {
     this.type = type;
   }
 
-  public getFile(successCallback: SuccessCallback, errorCallback: ErrorCallback = null) {
+  public set onChose(func: SuccessCallback) {
+    this._onChose = func;
+  }
+
+  public set onError(func: ErrorCallback) {
+    this._onError = func;
+  }
+
+  public static isSuccess(arg: string[] | "RESULT_CANCELED") {
+    return arg !== "RESULT_CANCELED";
+  }
+
+  public getFiles() {
     if (this.isAndroid) {
-      this.interface.getFile(this.type, successCallback, errorCallback);
+      if (typeof this._onChose !== "function") throw new TypeError("Chooser 'onChose' is not a function");
+
+      this.interface.getFile(this.type, this._onChose, this._onError);
     }
   }
 }

@@ -76,8 +76,9 @@ const MainApplication = () => {
                           }}
                           onClick={() => {
                             const chooseModule = new Chooser("application/zip");
-                            chooseModule.getFile((files) => {
-                              if (files !== "RESULT_CANCELED") {
+
+                            chooseModule.onChose = (files) => {
+                              if (Chooser.isSuccess(files)) {
                                 context.pushPage({
                                   component: InstallTerminalV2Activity,
                                   key: "InstallTerminalV2Activity",
@@ -87,7 +88,9 @@ const MainApplication = () => {
                                   },
                                 });
                               }
-                            });
+                            };
+
+                            chooseModule.getFiles();
                           }}
                           position="bottom right"
                         >

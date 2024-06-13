@@ -19,6 +19,8 @@ import android.util.Log;
 
 import androidx.loader.content.CursorLoader;
 
+import com.topjohnwu.superuser.io.SuFile;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -259,7 +261,7 @@ public class ChooserPlugin extends CordovaPlugin {
      * @param filePath The absolute file path
      */
     private static boolean fileExists(String filePath) {
-        File file = new File(filePath);
+        File file = new SuFile(filePath);
 
         return file.exists();
     }
