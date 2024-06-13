@@ -1,21 +1,22 @@
 import React from "react";
 
-import Typography from "@mui/material/Typography";
+import { ModuleViewActivity } from "@Activitys/ModuleViewActivity";
+import { AntifeatureButton } from "@Components/AntifeaturesButton";
+import { Image } from "@Components/dapi/Image";
+import { VerifiedIcon } from "@Components/icons/VerifiedIcon";
+import { GestureDetector } from "@Components/onsenui/GestureDetector";
+import { useActivity } from "@Hooks/useActivity";
+import { useFormatDate } from "@Hooks/useFormatDate";
+import { useStrings } from "@Hooks/useStrings";
+import { useTheme } from "@Hooks/useTheme";
+import { blacklistedModules } from "@Util/blacklisted-modules";
 import Card from "@mui/material/Card";
-import Stack from "@mui/material/Stack";
 import Chip from "@mui/material/Chip";
 import Divider from "@mui/material/Divider";
-import { ModuleViewActivity } from "@Activitys/ModuleViewActivity";
-import { useFormatDate } from "@Hooks/useFormatDate";
-import { useActivity } from "@Hooks/useActivity";
-import { useStrings } from "@Hooks/useStrings";
-import { GestureDetector } from "@Components/onsenui/GestureDetector";
-import { useTheme } from "@Hooks/useTheme";
-import { VerifiedIcon } from "@Components/icons/VerifiedIcon";
-import { Image } from "@Components/dapi/Image";
-import Box from "@mui/material/Box";
-import { AntifeatureButton } from "@Components/AntifeaturesButton";
-import { blacklistedModules } from "@Util/blacklisted-modules";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+import { SuFile } from "@Native/SuFile";
+import { useModFS } from "@Hooks/useModFS";
 
 interface Props {
   module: Module;
@@ -27,6 +28,7 @@ const ExploreModule = React.memo<Props>((props) => {
   const { context } = useActivity();
   const { strings } = useStrings();
   const { theme } = useTheme();
+  const { modFS } = useModFS();
 
   const formatLastUpdate = useFormatDate(timestamp ? timestamp : versions[versions.length - 1].timestamp);
 
@@ -85,12 +87,26 @@ const ExploreModule = React.memo<Props>((props) => {
         <Stack direction="column" justifyContent="center" spacing={1.2}>
           <Divider variant="middle" />
           <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={1}>
-            <Chip
-              sx={{
-                bgColor: "secondary.dark",
-              }}
-              label={formatLastUpdate}
-            />
+            <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
+              <Chip
+                sx={{
+                  color: theme.palette.text.secondary,
+                  backgroundColor: theme.palette.secondary.dark,
+                }}
+                label={formatLastUpdate}
+              />
+
+              {SuFile.exist(modFS("PROPS", { MODID: id })) && (
+                <Chip
+                  sx={{
+                    background: `linear-gradient(333deg, ${theme.palette.secondary.dark} 0%, ${theme.palette.secondary.dark} 83%) padding-box,linear-gradient(22deg, rgba(188,2,194,0.4) 0%, rgba(74,20,140,0.4) 100%) border-box`,
+                    color: theme.palette.text.secondary,
+                    border: "1px solid transparent",
+                  }}
+                  label={strings("installed")}
+                />
+              )}
+            </Stack>
 
             <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={1}>
               {findHardCodedAntifeature && findHardCodedAntifeature.length !== 0 && (

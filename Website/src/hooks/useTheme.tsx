@@ -170,7 +170,8 @@ const THIS_IS_THE_THEME_OBJECT_OF_THIS_F_APP = createTheme({
     },
     secondary: {
       main: "#ffffff",
-      dark: "#0a0a0a",
+      light: "#0a0a0a",
+      dark: "#1e1e1e",
     },
     background: {
       paper: "#181818",
