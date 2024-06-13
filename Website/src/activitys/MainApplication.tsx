@@ -23,6 +23,7 @@ import { Shell } from "@Native/Shell";
 import { useSettings } from "@Hooks/useSettings";
 import { useOpenModuleSearch } from "@Hooks/useOpenModuleSearch";
 import InstallTerminalV2Activity from "./InstallTerminalV2Activity";
+import { Chooser } from "@Native/Chooser";
 
 const MainApplication = () => {
   const { context } = useActivity();
@@ -74,22 +75,19 @@ const MainApplication = () => {
                             },
                           }}
                           onClick={() => {
-                            Chooser.getFile(
-                              "application/zip",
-                              (files) => {
-                                if (files !== "RESULT_CANCELED") {
-                                  context.pushPage({
-                                    component: InstallTerminalV2Activity,
-                                    key: "InstallTerminalV2Activity",
-                                    extra: {
-                                      exploreInstall: false,
-                                      modSource: files,
-                                    },
-                                  });
-                                }
-                              },
-                              null
-                            );
+                            const chooseModule = new Chooser("application/zip");
+                            chooseModule.getFile((files) => {
+                              if (files !== "RESULT_CANCELED") {
+                                context.pushPage({
+                                  component: InstallTerminalV2Activity,
+                                  key: "InstallTerminalV2Activity",
+                                  extra: {
+                                    exploreInstall: false,
+                                    modSource: files,
+                                  },
+                                });
+                              }
+                            });
                           }}
                           position="bottom right"
                         >

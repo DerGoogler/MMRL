@@ -26,6 +26,7 @@ import { withRequireNewVersion } from "../../hoc/withRequireNewVersion";
 import { CodeBlock } from "@Components/CodeBlock";
 import { VerifiedIcon } from "@Components/icons/VerifiedIcon";
 import { IsolatedFunctionBlockError } from "@Native/IsolatedEval/IsolatedFunctionBlockError";
+import { Terminal } from "@Native/Terminal";
 
 export const libraries = [
   {

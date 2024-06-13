@@ -12,6 +12,8 @@ import { Native } from "../Native";
 import { IsoDocument } from "./IsoDocument";
 import { IsolatedFunctionBlockError } from "./IsolatedFunctionBlockError";
 import { IsoAudio } from "./IsoAudio";
+import { Terminal } from "@Native/Terminal";
+import { Chooser } from "@Native/Chooser";
 
 class IsolatedEval<T = any> {
   private readonly _sandbox: Sandbox = new Sandbox();
@@ -36,6 +38,8 @@ class IsolatedEval<T = any> {
     NamedNodeMap: NamedNodeMap,
     DOMParser: DOMParser,
     SuFile: SuFile,
+    Terminal: Terminal,
+    Chooser: Chooser,
     Shell: Shell,
     view: view,
     os: os,
@@ -91,6 +95,8 @@ class IsolatedEval<T = any> {
     this._prototypeWhitelist.set(BuildConfigClass, new Set());
     this._prototypeWhitelist.set(Build, new Set());
     this._prototypeWhitelist.set(Native, new Set());
+    this._prototypeWhitelist.set(Terminal, new Set());
+    this._prototypeWhitelist.set(Chooser, new Set());
 
     this._sandbox = new Sandbox({ globals: this._globals, prototypeWhitelist: this._prototypeWhitelist });
 

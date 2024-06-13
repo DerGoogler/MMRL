@@ -11,6 +11,7 @@ import { useTheme } from "@Hooks/useTheme";
 import { useNativeStorage } from "@Hooks/useNativeStorage";
 import { useSettings } from "@Hooks/useSettings";
 import { Ansi } from "@Components/Ansi";
+import { Terminal } from "@Native/Terminal";
 
 const LogcatActivity = () => {
   const [fontSize, setFontSize] = useNativeStorage("mmrlini_log_terminal", 100);
@@ -34,19 +35,15 @@ const LogcatActivity = () => {
   };
 
   const startLog = () => {
-    const envp = {
+    const logcat = new Terminal();
+    logcat.env = {
       PACKAGENAME: BuildConfig.APPLICATION_ID,
     };
-
-    Terminal.exec({
-      command: "logcat --pid=`pidof -s $PACKAGENAME` -v color",
-      env: envp,
-      printError: false,
-      onLine: (line) => {
-        addLine(line);
-      },
-      onExit: (code) => {},
-    });
+    logcat.onLine = (line) => {
+      addLine(line);
+    };
+    logcat.onExit = (code) => {};
+    logcat.exec("logcat --pid=`pidof -s $PACKAGENAME` -v color");
   };
 
   return (

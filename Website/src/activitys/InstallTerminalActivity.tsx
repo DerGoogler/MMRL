@@ -118,184 +118,184 @@ const InstallTerminalActivity = () => {
     });
   }, []);
 
-  const install = () => {
-    const { exploreInstall, modSource, id, source, issues } = extra;
+  // const install = () => {
+  //   const { exploreInstall, modSource, id, source, issues } = extra;
 
-    if (exploreInstall) {
-      const url = modSource[0];
-      const urls = modSource.join(" ");
+  //   if (exploreInstall) {
+  //     const url = modSource[0];
+  //     const urls = modSource.join(" ");
 
-      const envp_explore = {
-        MMRL: "true",
-        MMRL_VER: BuildConfig.VERSION_CODE.toString(),
-        NAME: id,
-        ROOTMANAGER: Shell.getRootManager(),
-        ...__modFS,
-      };
+  //     const envp_explore = {
+  //       MMRL: "true",
+  //       MMRL_VER: BuildConfig.VERSION_CODE.toString(),
+  //       NAME: id,
+  //       ROOTMANAGER: Shell.getRootManager(),
+  //       ...__modFS,
+  //     };
 
-      Terminal.exec({
-        command: modFS("EXPLORE_INSTALL", {
-          URL: url,
-          URLS: urls,
-          MODID: id,
-        }),
-        cwd: "/data/local/tmp",
-        env: envp_explore,
-        printError: settings.print_terminal_error,
-        onLine: (line) => {
-          if (line.startsWith("#!mmrl:")) {
-            processCommand(line.substring(7));
-          } else {
-            addText({ children: line.trim() });
-          }
-        },
-        onExit: (code) => {
-          switch (code) {
-            case Shell.M_INS_SUCCESS:
-              addText({ children: " " });
+  //     Terminal.exec({
+  //       command: modFS("EXPLORE_INSTALL", {
+  //         URL: url,
+  //         URLS: urls,
+  //         MODID: id,
+  //       }),
+  //       cwd: "/data/local/tmp",
+  //       env: envp_explore,
+  //       printError: settings.print_terminal_error,
+  //       onLine: (line) => {
+  //         if (line.startsWith("#!mmrl:")) {
+  //           processCommand(line.substring(7));
+  //         } else {
+  //           addText({ children: line.trim() });
+  //         }
+  //       },
+  //       onExit: (code) => {
+  //         switch (code) {
+  //           case Shell.M_INS_SUCCESS:
+  //             addText({ children: " " });
 
-              addText({
-                children:
-                  "\x1b[93mYou can press the \x1b[33;4mbutton\x1b[93;0m\x1b[93m below to \x1b[33;4mreboot\x1b[93;0m\x1b[93m your device\x1b[0m",
-              });
+  //             addText({
+  //               children:
+  //                 "\x1b[93mYou can press the \x1b[33;4mbutton\x1b[93;0m\x1b[93m below to \x1b[33;4mreboot\x1b[93;0m\x1b[93m your device\x1b[0m",
+  //             });
 
-              addButton({
-                children: "Reboot",
-                startIcon: <RestartAltIcon />,
-                onClick: rebootDevice,
-              });
+  //             addButton({
+  //               children: "Reboot",
+  //               startIcon: <RestartAltIcon />,
+  //               onClick: rebootDevice,
+  //             });
 
-              addText({
-                children:
-                  "\x1b[2mModules that causes issues after installing belog not to \x1b[35;4mMMRL\x1b[0;2m!\nPlease report these issues to thier support page\x1b[2m",
-              });
+  //             addText({
+  //               children:
+  //                 "\x1b[2mModules that causes issues after installing belog not to \x1b[35;4mMMRL\x1b[0;2m!\nPlease report these issues to thier support page\x1b[2m",
+  //             });
 
-              if (issues) {
-                addText({
-                  children: `> \x1b[32mIssues: \x1b[33m${issues}\x1b[0m`,
-                });
-              }
+  //             if (issues) {
+  //               addText({
+  //                 children: `> \x1b[32mIssues: \x1b[33m${issues}\x1b[0m`,
+  //               });
+  //             }
 
-              if (source) {
-                addText({
-                  children: `> \x1b[32mSource: \x1b[33m${source}\x1b[0m`,
-                });
-              }
+  //             if (source) {
+  //               addText({
+  //                 children: `> \x1b[32mSource: \x1b[33m${source}\x1b[0m`,
+  //               });
+  //             }
 
-              setActive(false);
-              break;
+  //             setActive(false);
+  //             break;
 
-            case Shell.M_INS_FAILURE:
-              addText({ children: " " });
+  //           case Shell.M_INS_FAILURE:
+  //             addText({ children: " " });
 
-              addText({
-                children:
-                  "\x1b[2mModules that causes issues after installing belog not to \x1b[35;4mMMRL\x1b[0;2m!\nPlease report these issues to thier support page\x1b[2m",
-              });
+  //             addText({
+  //               children:
+  //                 "\x1b[2mModules that causes issues after installing belog not to \x1b[35;4mMMRL\x1b[0;2m!\nPlease report these issues to thier support page\x1b[2m",
+  //             });
 
-              if (issues) {
-                addText({
-                  children: `> \x1b[32mIssues: \x1b[33m${issues}\x1b[0m`,
-                });
-              }
+  //             if (issues) {
+  //               addText({
+  //                 children: `> \x1b[32mIssues: \x1b[33m${issues}\x1b[0m`,
+  //               });
+  //             }
 
-              if (source) {
-                addText({
-                  children: `> \x1b[32mSource: \x1b[33m${source}\x1b[0m`,
-                });
-              }
+  //             if (source) {
+  //               addText({
+  //                 children: `> \x1b[32mSource: \x1b[33m${source}\x1b[0m`,
+  //               });
+  //             }
 
-              setActive(false);
-              break;
+  //             setActive(false);
+  //             break;
 
-            case Shell.TERM_INTR_ERR:
-              addText({ children: "! \x1b[31mInternal error!\x1b[0m" });
-              setActive(false);
-              break;
+  //           case Shell.TERM_INTR_ERR:
+  //             addText({ children: "! \x1b[31mInternal error!\x1b[0m" });
+  //             setActive(false);
+  //             break;
 
-            default:
-              addText({ children: "- Unknown code returned" });
-              setActive(false);
-              break;
-          }
-        },
-      });
-    } else {
-      const zipfile = modSource[0];
-      const zipfiles = modSource.join(" ");
+  //           default:
+  //             addText({ children: "- Unknown code returned" });
+  //             setActive(false);
+  //             break;
+  //         }
+  //       },
+  //     });
+  //   } else {
+  //     const zipfile = modSource[0];
+  //     const zipfiles = modSource.join(" ");
 
-      const envp_local = {
-        MMRL: "true",
-        MMRL_VER: BuildConfig.VERSION_CODE.toString(),
-        NAME: id,
-        ROOTMANAGER: Shell.getRootManager(),
-        ...__modFS,
-      };
+  //     const envp_local = {
+  //       MMRL: "true",
+  //       MMRL_VER: BuildConfig.VERSION_CODE.toString(),
+  //       NAME: id,
+  //       ROOTMANAGER: Shell.getRootManager(),
+  //       ...__modFS,
+  //     };
 
-      Terminal.exec({
-        command: modFS("LOCAL_INSTALL", {
-          ZIPFILE: zipfile,
-          ZIPFILES: zipfiles,
-        }),
-        env: envp_local,
-        printError: settings.print_terminal_error,
-        cwd: "/data/local/tmp",
-        onLine: (line) => {
-          if (line.startsWith("#!mmrl:")) {
-            processCommand(line.substring(7));
-          } else {
-            addText({ children: line.trim() });
-          }
-        },
-        onExit: (code) => {
-          switch (code) {
-            case Shell.M_INS_SUCCESS:
-              addText({ children: " " });
+  //     Terminal.exec({
+  //       command: modFS("LOCAL_INSTALL", {
+  //         ZIPFILE: zipfile,
+  //         ZIPFILES: zipfiles,
+  //       }),
+  //       env: envp_local,
+  //       printError: settings.print_terminal_error,
+  //       cwd: "/data/local/tmp",
+  //       onLine: (line) => {
+  //         if (line.startsWith("#!mmrl:")) {
+  //           processCommand(line.substring(7));
+  //         } else {
+  //           addText({ children: line.trim() });
+  //         }
+  //       },
+  //       onExit: (code) => {
+  //         switch (code) {
+  //           case Shell.M_INS_SUCCESS:
+  //             addText({ children: " " });
 
-              addText({
-                children:
-                  "\x1b[93mYou can press the \x1b[33;4mbutton\x1b[93;0m\x1b[93m below to \x1b[33;4mreboot\x1b[93;0m\x1b[93m your device\x1b[0m",
-              });
+  //             addText({
+  //               children:
+  //                 "\x1b[93mYou can press the \x1b[33;4mbutton\x1b[93;0m\x1b[93m below to \x1b[33;4mreboot\x1b[93;0m\x1b[93m your device\x1b[0m",
+  //             });
 
-              addButton({
-                children: "Reboot",
-                startIcon: <RestartAltIcon />,
-                onClick: rebootDevice,
-              });
+  //             addButton({
+  //               children: "Reboot",
+  //               startIcon: <RestartAltIcon />,
+  //               onClick: rebootDevice,
+  //             });
 
-              addText({
-                children:
-                  "\x1b[2mModules that causes issues after installing belog not to \x1b[35;4mMMRL\x1b[0;2m!\nPlease report these issues to thier support page\x1b[2m",
-              });
+  //             addText({
+  //               children:
+  //                 "\x1b[2mModules that causes issues after installing belog not to \x1b[35;4mMMRL\x1b[0;2m!\nPlease report these issues to thier support page\x1b[2m",
+  //             });
 
-              setActive(false);
-              break;
+  //             setActive(false);
+  //             break;
 
-            case Shell.M_INS_FAILURE:
-              addText({ children: " " });
+  //           case Shell.M_INS_FAILURE:
+  //             addText({ children: " " });
 
-              addText({
-                children:
-                  "\x1b[2mModules that causes issues after installing belog not to \x1b[35;4mMMRL\x1b[0;2m!\nPlease report these issues to thier support page\x1b[2m",
-              });
+  //             addText({
+  //               children:
+  //                 "\x1b[2mModules that causes issues after installing belog not to \x1b[35;4mMMRL\x1b[0;2m!\nPlease report these issues to thier support page\x1b[2m",
+  //             });
 
-              setActive(false);
-              break;
+  //             setActive(false);
+  //             break;
 
-            case Shell.TERM_INTR_ERR:
-              addText({ children: "! \x1b[31mInternal error!\x1b[0m" });
-              setActive(false);
-              break;
+  //           case Shell.TERM_INTR_ERR:
+  //             addText({ children: "! \x1b[31mInternal error!\x1b[0m" });
+  //             setActive(false);
+  //             break;
 
-            default:
-              addText({ children: "- Unknown code returned" });
-              setActive(false);
-              break;
-          }
-        },
-      });
-    }
-  };
+  //           default:
+  //             addText({ children: "- Unknown code returned" });
+  //             setActive(false);
+  //             break;
+  //         }
+  //       },
+  //     });
+  //   }
+  // };
 
   const renderToolbar = () => {
     return (
@@ -319,7 +319,7 @@ const InstallTerminalActivity = () => {
         // removing bottom window insets
         pb: "0px !important",
       }}
-      onShow={install}
+      // onShow={install}
       modifier="noshadow"
       renderToolbar={renderToolbar}
     >

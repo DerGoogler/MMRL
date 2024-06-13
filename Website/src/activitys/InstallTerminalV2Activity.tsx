@@ -15,6 +15,7 @@ import { Shell } from "@Native/Shell";
 import { BuildConfig } from "@Native/BuildConfig";
 import { useModFS } from "@Hooks/useModFS";
 import { formatString } from "@Util/stringFormat";
+import { Terminal } from "@Native/Terminal";
 
 type IntrCommand = (args: string[], options: Record<string, string>, add: any) => void;
 
@@ -251,7 +252,12 @@ export const InstallTerminalV2Activity = () => {
       const url = modSource[0];
       const urls = modSource.join(" ");
 
-      const envp_explore = {
+      const explore_install = new Terminal({
+        cwd: "/data/local/tmp",
+        printError: settings.print_terminal_error,
+      });
+
+      explore_install.env = {
         ASH_STANDALONE: "1",
         MMRL: "true",
         MMRL_INTR: "true",
@@ -261,82 +267,73 @@ export const InstallTerminalV2Activity = () => {
         ...__modFS,
       };
 
-      Terminal.exec({
-        command: modFS("EXPLORE_INSTALL", {
+      explore_install.onLine = (line) => {
+        addText(line);
+      };
+
+      explore_install.onExit = (code) => {
+        switch (code) {
+          case Shell.M_INS_SUCCESS:
+            addText(" ");
+            addText(
+              "\x1b[93mYou can press the \x1b[33;4mbutton\x1b[93;0m\x1b[93m below to \x1b[33;4mreboot\x1b[93;0m\x1b[93m your device\x1b[0m"
+            );
+            addButton("Reboot", {
+              startIcon: <RestartAlt />,
+              onClick: rebootDevice,
+            });
+            addText(
+              "\x1b[2mModules that causes issues after installing belog not to \x1b[35;4mMMRL\x1b[0;2m!\nPlease report these issues to thier support page\x1b[2m"
+            );
+            if (issues) {
+              addText(`> \x1b[32mIssues: \x1b[33m${issues}\x1b[0m`);
+            }
+            if (source) {
+              addText(`> \x1b[32mSource: \x1b[33m${source}\x1b[0m`);
+            }
+            setActive(false);
+            break;
+          case Shell.M_INS_FAILURE:
+            addText(" ");
+            addText(
+              "\x1b[2mModules that causes issues after installing belog not to \x1b[35;4mMMRL\x1b[0;2m!\nPlease report these issues to thier support page\x1b[2m"
+            );
+            if (issues) {
+              addText(`> \x1b[32mIssues: \x1b[33m${issues}\x1b[0m`);
+            }
+            if (source) {
+              addText(`> \x1b[32mSource: \x1b[33m${source}\x1b[0m`);
+            }
+            setActive(false);
+            break;
+          case Shell.TERM_INTR_ERR:
+            addText("! \x1b[31mInternal error!\x1b[0m");
+            setActive(false);
+            break;
+          default:
+            addText("? Unknown code returned");
+            setActive(false);
+            break;
+        }
+      };
+
+      explore_install.exec(
+        modFS("EXPLORE_INSTALL", {
           URL: url,
           URLS: urls,
           MODID: id,
-        }),
-        cwd: "/data/local/tmp",
-        env: envp_explore,
-        printError: settings.print_terminal_error,
-        onLine: (line) => {
-          addText(line);
-        },
-        onExit: (code) => {
-          switch (code) {
-            case Shell.M_INS_SUCCESS:
-              addText(" ");
-
-              addText(
-                "\x1b[93mYou can press the \x1b[33;4mbutton\x1b[93;0m\x1b[93m below to \x1b[33;4mreboot\x1b[93;0m\x1b[93m your device\x1b[0m"
-              );
-
-              addButton("Reboot", {
-                startIcon: <RestartAlt />,
-                onClick: rebootDevice,
-              });
-
-              addText(
-                "\x1b[2mModules that causes issues after installing belog not to \x1b[35;4mMMRL\x1b[0;2m!\nPlease report these issues to thier support page\x1b[2m"
-              );
-
-              if (issues) {
-                addText(`> \x1b[32mIssues: \x1b[33m${issues}\x1b[0m`);
-              }
-
-              if (source) {
-                addText(`> \x1b[32mSource: \x1b[33m${source}\x1b[0m`);
-              }
-
-              setActive(false);
-              break;
-
-            case Shell.M_INS_FAILURE:
-              addText(" ");
-
-              addText(
-                "\x1b[2mModules that causes issues after installing belog not to \x1b[35;4mMMRL\x1b[0;2m!\nPlease report these issues to thier support page\x1b[2m"
-              );
-
-              if (issues) {
-                addText(`> \x1b[32mIssues: \x1b[33m${issues}\x1b[0m`);
-              }
-
-              if (source) {
-                addText(`> \x1b[32mSource: \x1b[33m${source}\x1b[0m`);
-              }
-
-              setActive(false);
-              break;
-
-            case Shell.TERM_INTR_ERR:
-              addText("! \x1b[31mInternal error!\x1b[0m");
-              setActive(false);
-              break;
-
-            default:
-              addText("? Unknown code returned");
-              setActive(false);
-              break;
-          }
-        },
-      });
+        })
+      );
     } else {
       const zipfile = modSource[0];
       const zipfiles = modSource.join(" ");
 
-      const envp_local = {
+      const local_install = new Terminal({
+        cwd: "/data/local/tmp",
+        printError: settings.print_terminal_error,
+      });
+
+      local_install.env = {
         ASH_STANDALONE: "1",
         MMRL: "true",
         MMRL_INTR: "true",
@@ -346,60 +343,59 @@ export const InstallTerminalV2Activity = () => {
         ...__modFS,
       };
 
-      Terminal.exec({
-        command: modFS("LOCAL_INSTALL", {
+      local_install.onLine = (line) => {
+        addText(line);
+      };
+
+      local_install.onExit = (code) => {
+        switch (code) {
+          case Shell.M_INS_SUCCESS:
+            addText(" ");
+
+            addText(
+              "\x1b[93mYou can press the \x1b[33;4mbutton\x1b[93;0m\x1b[93m below to \x1b[33;4mreboot\x1b[93;0m\x1b[93m your device\x1b[0m"
+            );
+
+            addButton("Reboot", {
+              startIcon: <RestartAlt />,
+              onClick: rebootDevice,
+            });
+
+            addText(
+              "\x1b[2mModules that causes issues after installing belog not to \x1b[35;4mMMRL\x1b[0;2m!\nPlease report these issues to thier support page\x1b[2m"
+            );
+
+            setActive(false);
+            break;
+
+          case Shell.M_INS_FAILURE:
+            addText(" ");
+
+            addText(
+              "\x1b[2mModules that causes issues after installing belog not to \x1b[35;4mMMRL\x1b[0;2m!\nPlease report these issues to thier support page\x1b[2m"
+            );
+
+            setActive(false);
+            break;
+
+          case Shell.TERM_INTR_ERR:
+            addText("! \x1b[31mInternal error!\x1b[0m");
+            setActive(false);
+            break;
+
+          default:
+            addText("- Unknown code returned");
+            setActive(false);
+            break;
+        }
+      };
+
+      local_install.exec(
+        modFS("LOCAL_INSTALL", {
           ZIPFILE: zipfile,
           ZIPFILES: zipfiles,
-        }),
-        env: envp_local,
-        printError: settings.print_terminal_error,
-        cwd: "/data/local/tmp",
-        onLine: (line) => {
-          addText(line);
-        },
-        onExit: (code) => {
-          switch (code) {
-            case Shell.M_INS_SUCCESS:
-              addText(" ");
-
-              addText(
-                "\x1b[93mYou can press the \x1b[33;4mbutton\x1b[93;0m\x1b[93m below to \x1b[33;4mreboot\x1b[93;0m\x1b[93m your device\x1b[0m"
-              );
-
-              addButton("Reboot", {
-                startIcon: <RestartAlt />,
-                onClick: rebootDevice,
-              });
-
-              addText(
-                "\x1b[2mModules that causes issues after installing belog not to \x1b[35;4mMMRL\x1b[0;2m!\nPlease report these issues to thier support page\x1b[2m"
-              );
-
-              setActive(false);
-              break;
-
-            case Shell.M_INS_FAILURE:
-              addText(" ");
-
-              addText(
-                "\x1b[2mModules that causes issues after installing belog not to \x1b[35;4mMMRL\x1b[0;2m!\nPlease report these issues to thier support page\x1b[2m"
-              );
-
-              setActive(false);
-              break;
-
-            case Shell.TERM_INTR_ERR:
-              addText("! \x1b[31mInternal error!\x1b[0m");
-              setActive(false);
-              break;
-
-            default:
-              addText("- Unknown code returned");
-              setActive(false);
-              break;
-          }
-        },
-      });
+        })
+      );
     }
   };
 
