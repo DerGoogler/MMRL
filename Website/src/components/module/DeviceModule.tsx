@@ -187,8 +187,7 @@ const DeviceModule = React.memo<Props>((props) => {
                     component: ModConfActivity,
                     key: `${id}_configure`,
                     extra: {
-                      modulename: name,
-                      moduleid: id,
+                      modId: id,
                     },
                   });
                 }}

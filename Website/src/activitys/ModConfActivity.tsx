@@ -5,33 +5,23 @@ import { ModConfView } from "@Components/ModConfView";
 import { useModFS } from "@Hooks/useModFS";
 import { PreviewErrorBoundary } from "./ModConfPlaygroundActivity";
 
-type Extra = {
-  code?: string;
-  modulename: string;
-  moduleid: string;
-};
-
 const ModConfActivity = () => {
   const { modFS } = useModFS();
-  const { extra } = useActivity<Extra>();
+  const { extra } = useActivity<{ modId: string }>();
 
   const config: string = React.useMemo(() => {
-    if (!extra.code) {
-      const file = new SuFile(modFS("CONFINDEX", { MODID: extra.moduleid }));
+    const file = new SuFile(modFS("CONFINDEX", { MODID: extra.modId }));
 
-      if (file.exist()) {
-        return file.read();
-      } else {
-        return `<p>Config file not found</p>`;
-      }
+    if (file.exist()) {
+      return file.read();
     } else {
-      return extra.code;
+      return `export default () => <p>Config file not found</p>`;
     }
   }, []);
 
   return (
     <PreviewErrorBoundary>
-      <ModConfView modid={extra.moduleid} children={config} />
+      <ModConfView modid={extra.modId} children={config} />
     </PreviewErrorBoundary>
   );
 };

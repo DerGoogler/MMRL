@@ -1,19 +1,33 @@
+import { Chooser } from "@Native/Chooser";
+import { Terminal } from "@Native/Terminal";
+import path from "@Util/path.js";
+import { transform } from "@babel/standalone";
 import Sandbox from "@nyariv/sandboxjs";
-import { transform, registerPlugin } from "@babel/standalone";
-import { PluginObj } from "@babel/core";
+import { IScope } from "@nyariv/sandboxjs/dist/node/executor";
+import ini from "ini";
+import React from "react";
+import yaml from "yaml";
+import { Build } from "../Build";
+import { BuildConfig, BuildConfigClass } from "../BuildConfig";
+import { Native } from "../Native";
+import { OsClass, os } from "../Os";
+import { Shell, ShellClass } from "../Shell";
 import { SuFile } from "../SuFile";
 import { View, view } from "../View";
-import { Shell, ShellClass } from "../Shell";
-import { OsClass, os } from "../Os";
-import { BuildConfig, BuildConfigClass } from "../BuildConfig";
-import { Build } from "../Build";
-import { IScope } from "@nyariv/sandboxjs/dist/node/executor";
-import { Native } from "../Native";
-import { IsoDocument } from "./IsoDocument";
-import { IsolatedFunctionBlockError } from "./IsolatedFunctionBlockError";
 import { IsoAudio } from "./IsoAudio";
-import { Terminal } from "@Native/Terminal";
-import { Chooser } from "@Native/Chooser";
+import { IsoDocument } from "./IsoDocument";
+import { IsolatedEvalError } from "./IsolatedEvalError";
+import { IsolatedFunctionBlockError } from "./IsolatedFunctionBlockError";
+
+type IsoModule =
+  | {
+      exports: {
+        default?: any;
+      };
+    }
+  | {
+      exports: Record<string, any>;
+    };
 
 class IsolatedEval<T = any> {
   private readonly _sandbox: Sandbox = new Sandbox();
@@ -46,6 +60,7 @@ class IsolatedEval<T = any> {
     BuildConfig: BuildConfig,
     Build: Build,
     Native: Native,
+    React: React,
     eval() {
       throw new IsolatedFunctionBlockError("eval()");
     },
@@ -69,11 +84,14 @@ class IsolatedEval<T = any> {
     },
   };
   private readonly _prototypeWhitelist = Sandbox.SAFE_PROTOTYPES;
+  public moduleCache: {};
+  public module: IsoModule;
+  public path: typeof path;
+  public libraries: Record<string, any>;
+  public indexFile: string;
+  public scope: IScope;
 
-  public constructor() {
-    this._exportReplacerPlugin = this._exportReplacerPlugin.bind(this);
-    this._parseCode = this._parseCode.bind(this);
-
+  public constructor(libraries: Record<string, any>, indexFile: string, cwd: string, scope: IScope) {
     this._prototypeWhitelist.set(Node, new Set());
     this._prototypeWhitelist.set(Object, new Set());
     this._prototypeWhitelist.set(Document, new Set());
@@ -97,49 +115,167 @@ class IsolatedEval<T = any> {
     this._prototypeWhitelist.set(Native, new Set());
     this._prototypeWhitelist.set(Terminal, new Set());
     this._prototypeWhitelist.set(Chooser, new Set());
+    this._prototypeWhitelist.set(React, new Set());
+
+    this.require = this.require.bind(this);
+    this._resolveModulePath = this._resolveModulePath.bind(this);
 
     this._sandbox = new Sandbox({ globals: this._globals, prototypeWhitelist: this._prototypeWhitelist });
 
-    registerPlugin("plugin", this._exportReplacerPlugin);
+    this.module = {
+      exports: {
+        __esModule: true,
+      },
+    };
+    this.moduleCache = {};
+
+    this.path = path;
+    // @ts-ignore
+    this.path.cwd = cwd;
+
+    this.libraries = libraries;
+    this.indexFile = indexFile;
+    this.scope = {
+      ...scope,
+      module: this.module,
+      exports: this.module.exports,
+      path: this.path,
+      require: this.require,
+    };
   }
 
-  public compile(code: string, scope: IScope): T | undefined {
-    const parseCode = this._parseCode(code);
+  public require(modulePath: string) {
+    // Check if the module is a core module
+    if (this.libraries[modulePath]) {
+      return this.libraries[modulePath];
+    }
 
-    if (typeof parseCode != "undefined") {
-      return this._sandbox.compile<T>(parseCode, false)(scope).run();
+    // Resolve the module path
+    const resolvedPath = this._resolveModulePath(modulePath);
+    if (!resolvedPath) {
+      throw new IsolatedEvalError(`Cannot find module '${modulePath}'`);
+    }
+
+    // Check if module is already cached
+    if (this.moduleCache[resolvedPath]) {
+      return this.moduleCache[resolvedPath].exports;
+    }
+
+    // Create a new module and cache it
+    const module: IsoModule = { exports: {} };
+    this.moduleCache[resolvedPath] = module;
+
+    // Read and execute module content based on file extension
+    const extension = this.path.extname(resolvedPath);
+
+    const readResolvedPath = new SuFile(resolvedPath);
+
+    switch (extension) {
+      case ".json":
+        const jsonContent = readResolvedPath.read();
+        module.exports = JSON.parse(jsonContent);
+        break;
+
+      case ".yml":
+      case ".yaml":
+        module.exports = yaml.parse(readResolvedPath.read());
+        break;
+      case ".properties":
+      case ".prop":
+      case ".ini":
+        module.exports = ini.parse(readResolvedPath.read());
+        break;
+      case ".js":
+      case ".jsx":
+        const moduleContent = readResolvedPath.read();
+        const transformed = this.transform(moduleContent);
+        if (transformed) {
+          const moduleWrapper = new Function("exports", "require", "module", "__filename", "__dirname", transformed);
+          this.compile<typeof moduleWrapper>(`return ${moduleWrapper}`)(
+            module.exports,
+            this.require,
+            module,
+            resolvedPath,
+            this.path.dirname(resolvedPath)
+          );
+        } else {
+          throw new IsolatedEvalError("An error occurred, either there is a syntax mistake or something");
+        }
+        break;
+      default:
+        module.exports.default = readResolvedPath.read();
+        break;
+    }
+
+    // Handle default modules
+    if (module.exports.default) {
+      return module.exports.default;
     } else {
-      return undefined;
+      // Return the exported module
+      return module.exports;
     }
   }
 
-  private _parseCode(data: string, filename?: string): string | undefined {
+  private _resolveModulePath(modulePath: string): string | null {
+    const extensions = [".js", ".jsx", ".json", "yml", ".yaml", ".properties", ".prop", ".ini"];
+    const resolvedPath = new SuFile(this.path.resolve(modulePath));
+
+    // Check if the exact file exists
+    if (resolvedPath.exist() && resolvedPath.isFile()) {
+      return resolvedPath.getPath();
+    }
+
+    // Check if file with extensions exists
+    for (let ext of extensions) {
+      const pth = new SuFile(resolvedPath.getPath() + ext);
+      if (pth.exist() && pth.isFile()) {
+        return pth.getPath();
+      }
+    }
+
+    // Check if it's a directory and has an index file
+    if (resolvedPath.exist() && resolvedPath.isDirectory()) {
+      for (let ext of extensions) {
+        const ifp = new SuFile(this.path.join(resolvedPath.getPath(), "index" + ext));
+        if (ifp.exist() && ifp.isFile()) {
+          return ifp.getPath();
+        }
+      }
+    }
+
+    return null;
+  }
+
+  public compileTransform(code: string) {
+    const parseCode = this.transform(code);
+
+    if (typeof parseCode != "undefined") {
+      this._sandbox.compile<T>(parseCode, false)(this.scope).run();
+    }
+
+    return this.module;
+  }
+
+  public compile<F = any>(code: string, ...scopes: IScope[]) {
+    return this._sandbox.compile<F>(code, false)(this.scope, scopes).run();
+  }
+
+  public transform(data: string, filename?: string): string | undefined {
     return transform(data, {
-      filename: "index.jsx",
+      filename: this.indexFile,
       presets: ["typescript", "react"],
       plugins: [
-        "plugin",
         "transform-computed-properties",
         "syntax-import-attributes",
         ["transform-destructuring", { loose: true }],
-        "transform-modules-commonjs",
+        ["transform-modules-commonjs", { loose: true, importInterop: "node" }],
         "transform-object-rest-spread",
         "syntax-class-properties",
         ["transform-classes", { loose: true }],
-        "transform-class-properties",
+        ["transform-class-properties", { loose: true }],
         "syntax-object-rest-spread",
       ],
     }).code as string | undefined;
-  }
-
-  private _exportReplacerPlugin({ types: t }): PluginObj {
-    return {
-      visitor: {
-        ExportDefaultDeclaration(path) {
-          path.replaceWith(t.returnStatement(path.node.declaration));
-        },
-      },
-    };
   }
 }
 

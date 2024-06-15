@@ -24,6 +24,7 @@ interface NativeSuFileV2 {
     delete(): boolean;
     deleteRecursive(): void;
     exists(): boolean;
+    _is_TypeMethod(type: number): boolean;
   };
 }
 
@@ -57,6 +58,15 @@ class SuFile extends Native<NativeSuFile> {
    * @returns `2` as number to create a new folder
    */
   public static readonly NEW_FOLDER: number = 2;
+
+  public static readonly TYPE_ISFILE = 0;
+  public static readonly TYPE_ISSYMLINK = 1;
+  public static readonly TYPE_ISDIRECTORY = 2;
+  public static readonly TYPE_ISBLOCK = 3;
+  public static readonly TYPE_ISCHARACTER = 4;
+  public static readonly TYPE_ISNAMEDPIPE = 5;
+  public static readonly TYPE_ISSOCKET = 6;
+  public static readonly TYPE_ISHIDDEN = 7;
 
   public constructor(path: string, opt?: SuFileoptions) {
     super(window.__sufile__);
@@ -152,6 +162,48 @@ class SuFile extends Native<NativeSuFile> {
     } else {
       return false;
     }
+  }
+
+  private _isTypeMethod(type: number, defR: boolean = false) {
+    if (typeof type !== "number") throw new TypeError("'SuFile' => 'isTypeMethod' only accepts numbers as type");
+
+    if (this.isAndroid) {
+      return this._file._is_TypeMethod(type);
+    } else {
+      return defR;
+    }
+  }
+
+  public isFile(): boolean {
+    return this._isTypeMethod(SuFile.TYPE_ISFILE, this._path in localStorage);
+  }
+
+  public isSymlink(): boolean {
+    return this._isTypeMethod(SuFile.TYPE_ISSYMLINK);
+  }
+
+  public isDirectory(): boolean {
+    return this._isTypeMethod(SuFile.TYPE_ISDIRECTORY);
+  }
+
+  public isBlock(): boolean {
+    return this._isTypeMethod(SuFile.TYPE_ISBLOCK);
+  }
+
+  public isCharacter(): boolean {
+    return this._isTypeMethod(SuFile.TYPE_ISCHARACTER);
+  }
+
+  public isNamedPipe(): boolean {
+    return this._isTypeMethod(SuFile.TYPE_ISNAMEDPIPE);
+  }
+
+  public isSocket(): boolean {
+    return this._isTypeMethod(SuFile.TYPE_ISSOCKET);
+  }
+
+  public isHidden(): boolean {
+    return this._isTypeMethod(SuFile.TYPE_ISHIDDEN);
   }
 
   public static read(path: string): string {

@@ -34,9 +34,9 @@ export default () => {
 
 See [`libs.ts`](https://github.com/DerGoogler/MMRL/blob/master/Website/src/components/ModConfView/libs.ts) to see all usable modules
 
-## Diff. between `require` and `import`
+## How it works
 
-With `require` you only can import predefined libaries. You can't include files with this method anymore.
+With `require` you can import predefined libaries or your files
 
 ```js
 const React = require("react");
@@ -44,19 +44,9 @@ const React = require("react");
 import React from "react";
 ```
 
-old way to import files
+----
 
-```js
-const { Component } = require("!conf/Component.jsx");
-// or
-import { Component } from "!conf/Component.jsx";
-```
-
-> Please do not use this, use `include` instead.
-
----
-
-Using `include` way more stable and supports more including types like
+Supported file types:
 
 - `*.js`
 - `*.jsx`
@@ -68,12 +58,9 @@ Using `include` way more stable and supports more including types like
 - `*.properties`
 
 ```js
-const { Component } = include("Component.jsx");
+import { Component } from "Component" // .jsx
 
-// to ignore cwd restrictions
-const properties = include(`/data/adb/modules/${modid}/module.prop`, {
-  isolate: false,
-});
+const properties = require(path.resolve(__moddirname, "module.prop"))
 
 const { id, name, author } = properties;
 ```
@@ -84,64 +71,37 @@ There are some default functions and variables that makes the development easier
 
 > These functions make also usage of the ModConf services.
 
-### `modid`
+### `__idname` (former `modid`)
 
 Types
 
 ```ts
-declare const modid: string;
+declare const __idname: string;
 ```
 
-Usage
-
-```js
-log.i(modid);
-```
-
-### `modpath`
+### `__moddirname` (new)
 
 Types
 
 ```ts
-// Depends how ModFS is configured
-declare function modpath(path: string): string;
+declare const __moddirname: string;
 ```
 
-Usage
 
-```js
-const properties = include(modpath("module.prop"), { isolate: false });
-
-const { id, name, author } = properties;
-```
-
-Will print
-
-```
-/data/adb/modules/<ID>/module.prop
-```
-
-### `confpath`
+### `__filename` (new)
 
 Types
 
 ```ts
-// Depends how ModFS is configured
-declare function confpath(path: string): string;
+declare const __filename: string;
 ```
 
-Usage
+### `__dirname` (former `modpath`)
 
-```js
-const properties = include(confpath("Component.jsx"), { isolate: false });
+Types
 
-const { id, name, author } = properties;
-```
-
-Will print
-
-```
-/data/adb/modules/<ID>/system/share/mmrl/config/<ID>/Component.jsx
+```ts
+declare const __dirname: string;
 ```
 
 # Blacklisted functions
