@@ -80,19 +80,18 @@ function _format(sep, pathObject) {
   return dir + sep + base;
 }
 
-const posix = {
-  _cwd: undefined,
+class Path {
+  cwd = undefined;
+  sep = "/";
+  delimiter = ":";
+  win32 = null;
+  posix = null;
 
-  set cwd(path) {
-    this._cwd = path;
-  },
+  constructor(cwd) {
+    this.cwd = cwd;
+  }
 
-  get cwd() {
-    return this._cwd;
-  },
-
-  // path.resolve([from ...], to)
-  resolve: function resolve() {
+  resolve() {
     var resolvedPath = "";
     var resolvedAbsolute = false;
 
@@ -100,8 +99,8 @@ const posix = {
       var path;
       if (i >= 0) path = arguments[i];
       else {
-        if (this._cwd === undefined) this._cwd = "/";
-        path = this._cwd;
+        if (this.cwd === undefined) this.cwd = "/";
+        path = this.cwd;
       }
 
       assertPath(path);
@@ -129,9 +128,9 @@ const posix = {
     } else {
       return ".";
     }
-  },
+  }
 
-  normalize: function normalize(path) {
+  normalize(path) {
     assertPath(path);
 
     if (path.length === 0) return ".";
@@ -147,14 +146,14 @@ const posix = {
 
     if (isAbsolute) return "/" + path;
     return path;
-  },
+  }
 
-  isAbsolute: function isAbsolute(path) {
+  isAbsolute(path) {
     assertPath(path);
     return path.length > 0 && path.charCodeAt(0) === 47 /*/*/;
-  },
+  }
 
-  join: function join() {
+  join() {
     if (arguments.length === 0) return ".";
     var joined;
     for (var i = 0; i < arguments.length; ++i) {
@@ -167,9 +166,9 @@ const posix = {
     }
     if (joined === undefined) return ".";
     return posix.normalize(joined);
-  },
+  }
 
-  relative: function relative(from, to) {
+  relative(from, to) {
     assertPath(from);
     assertPath(to);
 
@@ -249,13 +248,13 @@ const posix = {
       if (to.charCodeAt(toStart) === 47 /*/*/) ++toStart;
       return to.slice(toStart);
     }
-  },
+  }
 
-  _makeLong: function _makeLong(path) {
+  _makeLong(path) {
     return path;
-  },
+  }
 
-  dirname: function dirname(path) {
+  dirname(path) {
     assertPath(path);
     if (path.length === 0) return ".";
     var code = path.charCodeAt(0);
@@ -278,9 +277,9 @@ const posix = {
     if (end === -1) return hasRoot ? "/" : ".";
     if (hasRoot && end === 1) return "//";
     return path.slice(0, end);
-  },
+  }
 
-  basename: function basename(path, ext) {
+  basename(path, ext) {
     if (ext !== undefined && typeof ext !== "string") throw new TypeError('"ext" argument must be a string');
     assertPath(path);
 
@@ -350,9 +349,9 @@ const posix = {
       if (end === -1) return "";
       return path.slice(start, end);
     }
-  },
+  }
 
-  extname: function extname(path) {
+  extname(path) {
     assertPath(path);
     var startDot = -1;
     var startPart = 0;
@@ -400,16 +399,16 @@ const posix = {
       return "";
     }
     return path.slice(startDot, end);
-  },
+  }
 
-  format: function format(pathObject) {
+  format(pathObject) {
     if (pathObject === null || typeof pathObject !== "object") {
       throw new TypeError('The "pathObject" argument must be of type Object. Received type ' + typeof pathObject);
     }
     return _format("/", pathObject);
-  },
+  }
 
-  parse: function parse(path) {
+  parse(path) {
     assertPath(path);
 
     var ret = { root: "", dir: "", base: "", ext: "", name: "" };
@@ -489,14 +488,8 @@ const posix = {
     else if (isAbsolute) ret.dir = "/";
 
     return ret;
-  },
+  }
+}
 
-  sep: "/",
-  delimiter: ":",
-  win32: null,
-  posix: null,
-};
-
-posix.posix = posix;
-
-export default posix;
+const path = new Path(undefined);
+export { path, Path };

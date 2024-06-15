@@ -1,6 +1,6 @@
 import { Chooser } from "@Native/Chooser";
 import { Terminal } from "@Native/Terminal";
-import path from "@Util/path.js";
+import { Path } from "@Util/path.js";
 import { transform } from "@babel/standalone";
 import Sandbox from "@nyariv/sandboxjs";
 import { IScope } from "@nyariv/sandboxjs/dist/node/executor";
@@ -86,7 +86,7 @@ class IsolatedEval<T = any> {
   private readonly _prototypeWhitelist = Sandbox.SAFE_PROTOTYPES;
   public moduleCache: {};
   public module: IsoModule;
-  public path: typeof path;
+  public path: Path;
   public libraries: Record<string, any>;
   public indexFile: string;
   public scope: IScope;
@@ -129,9 +129,7 @@ class IsolatedEval<T = any> {
     };
     this.moduleCache = {};
 
-    this.path = path;
-    // @ts-ignore
-    this.path.cwd = cwd;
+    this.path = new Path(cwd);
 
     this.libraries = libraries;
     this.indexFile = indexFile;
