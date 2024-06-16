@@ -1,4 +1,4 @@
-import { Alert, Box, Button, Divider, List, ListItemText, ListSubheader, Stack, Typography } from "@mui/material";
+import { Alert, Box, Button, Divider, List, ListItemText, ListSubheader, Stack, TextField, Typography } from "@mui/material";
 import AvatarGroup from "@mui/material/AvatarGroup";
 import Avatar from "@mui/material/Avatar";
 import { Toolbar } from "@Components/onsenui/Toolbar";
@@ -10,6 +10,7 @@ import { DialogEditTextListItem } from "@Components/DialogEditTextListItem";
 import React from "react";
 import { Anchor } from "@Components/dapi/Anchor";
 import { useStrings } from "@Hooks/useStrings";
+import FlatList, { FlatListProps } from "flatlist-react";
 
 interface ModFSSections {
   sectionText: string;
@@ -158,6 +159,10 @@ function ModFSActivity() {
             confKey: "ADB",
           },
           {
+            text: "MMRL path",
+            confKey: "MMRLFOL",
+          },
+          {
             text: "Modules path",
             confKey: "MODULES",
           },
@@ -257,9 +262,30 @@ function ModFSActivity() {
           },
         ],
       },
+      {
+        sectionText: "ModConf Standalone",
+        items: [
+          {
+            text: "Standalone root directory",
+            confKey: "MCALONE",
+          },
+          {
+            text: "Standalone working directory",
+            confKey: "MCALONECWD",
+          },
+          {
+            text: "Stadnalone meta file",
+            confKey: "MCALONEMTA",
+          },
+        ],
+      },
     ],
     []
   );
+
+  const [search, setSearch] = React.useState("");
+
+  const handleSearch = () => {};
 
   return (
     <Page renderToolbar={renderToolbar}>
@@ -269,62 +295,76 @@ function ModFSActivity() {
           take the responsibility upon yourself and you are not to blame us or MMRL and its respected developers
         </Alert>
 
-        {items.map((section) => (
-          <>
-            <List
-              subheader={
-                <ListSubheader sx={(theme) => ({ bgcolor: theme.palette.background.default })}>{section.sectionText}</ListSubheader>
-              }
-            >
-              {section.items.map((item) => (
-                <DialogEditTextListItem
-                  inputLabel="Path"
-                  type="text"
-                  title={item.text}
-                  disabled={item.disabled}
-                  description={item.dialogDesc}
-                  initialValue={_modFS[item.confKey]}
-                  onSuccess={(value) => {
-                    if (value) {
-                      setModFS(item.confKey, value);
-                    }
+        <TextField label="Search" variant="outlined" sx={{ m: 1 }} onChange={(e) => setSearch(e.target.value)} />
+
+        <FlatList
+          list={items}
+          renderItem={(section) => (
+            <>
+              <List subheader={<ListSubheader>{section.sectionText}</ListSubheader>}>
+                <FlatList
+                  list={section.items}
+                  search={{
+                    by: ["text", "confKey", "dialogDesc"],
+                    onEveryWord: true,
+                    caseInsensitive: true,
+                    term: search,
                   }}
-                  multiline={item.multiline}
-                  maxRows={item.maxRows}
-                >
-                  <ListItemText
-                    primary={
-                      <Stack direction="column" justifyContent="center" alignItems="flex-start" spacing={0}>
-                        <Typography variant="caption">{`<${item.confKey}>`}</Typography>
-                        <Typography sx={{ fontSize: "unset" }}>
-                          {" "}
-                          <Box sx={{ display: "flex", alignItems: "center", justifyItems: "center", whiteSpace: "normal" }}>
-                            {item.logoText && Array.isArray(item.logoText) ? (
-                              <>
-                                <AvatarGroup sx={{ mr: 1 }}>
-                                  {item.logoText.map((logo) => (
-                                    <Avatar sx={{ borderRadius: "unset", width: "1rem", height: "1rem" }} src={logo} />
-                                  ))}
-                                </AvatarGroup>
-                              </>
-                            ) : (
-                              item.logoText && (
-                                <Avatar sx={{ borderRadius: "unset", mr: 1, width: "1rem", height: "1rem" }} src={item.logoText} />
-                              )
-                            )}
-                            {item.text}
-                          </Box>
-                        </Typography>
-                      </Stack>
-                    }
-                    secondary={_modFS[item.confKey]}
-                  />
-                </DialogEditTextListItem>
-              ))}
-            </List>
-            <Divider />
-          </>
-        ))}
+                  renderItem={(item) => (
+                    <DialogEditTextListItem
+                      inputLabel="Path"
+                      type="text"
+                      title={item.text}
+                      disabled={item.disabled}
+                      description={item.dialogDesc}
+                      initialValue={_modFS[item.confKey]}
+                      onSuccess={(value) => {
+                        if (value) {
+                          setModFS(item.confKey, value);
+                        }
+                      }}
+                      multiline={item.multiline}
+                      maxRows={item.maxRows}
+                    >
+                      <ListItemText
+                        primary={
+                          <Stack direction="column" justifyContent="center" alignItems="flex-start" spacing={0}>
+                            <Typography variant="caption">{`<${item.confKey}>`}</Typography>
+                            <Typography sx={{ fontSize: "unset" }}>
+                              {" "}
+                              <Box sx={{ display: "flex", alignItems: "center", justifyItems: "center", whiteSpace: "normal" }}>
+                                {item.logoText && Array.isArray(item.logoText) ? (
+                                  <>
+                                    <AvatarGroup sx={{ mr: 1 }}>
+                                      {item.logoText.map((logo) => (
+                                        <Avatar sx={{ borderRadius: "unset", width: "1rem", height: "1rem" }} src={logo} />
+                                      ))}
+                                    </AvatarGroup>
+                                  </>
+                                ) : (
+                                  item.logoText && (
+                                    <Avatar sx={{ borderRadius: "unset", mr: 1, width: "1rem", height: "1rem" }} src={item.logoText} />
+                                  )
+                                )}
+                                {item.text}
+                              </Box>
+                            </Typography>
+                          </Stack>
+                        }
+                        secondary={_modFS[item.confKey]}
+                      />
+                    </DialogEditTextListItem>
+                  )}
+                  renderOnScroll
+                  renderWhenEmpty={() => <></>}
+                />
+              </List>
+              <Divider />
+            </>
+          )}
+          renderOnScroll
+          renderWhenEmpty={() => <></>}
+        />
       </Page.RelativeContent>
     </Page>
   );

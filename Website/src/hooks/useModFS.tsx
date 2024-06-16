@@ -19,6 +19,7 @@ export interface ModFS {
 
   // default paths
   ADB: string;
+  MMRLFOL: string;
   MODULES: string;
   MODULECWD: string;
   PROPS: string;
@@ -44,6 +45,11 @@ export interface ModFS {
   MODCONF_PLAYGROUND: string;
   MODCONF_PLAYGROUND_MODID: string;
 
+  // modconf standalone
+  MCALONE: string;
+  MCALONECWD: string;
+  MCALONEMTA: string;
+
   // Installer
   EXPLORE_INSTALL: string;
   LOCAL_INSTALL: string;
@@ -63,6 +69,7 @@ export const INITIAL_MOD_CONF: ModFS = {
 
   // default paths
   ADB: "/data/adb",
+  MMRLFOL: "<ADB>/mmrl",
   MODULES: "<ADB>/modules",
   MODULECWD: "<MODULES>/<MODID>",
   PROPS: "<MODULECWD>/module.prop",
@@ -88,9 +95,14 @@ export const INITIAL_MOD_CONF: ModFS = {
   MODCONF_PLAYGROUND: "<ADB>/mmrl/modconf-playground.jsx",
   MODCONF_PLAYGROUND_MODID: "playground",
 
+  // modconf standalone
+  MCALONE: "<MMRLFOL>/modconf",
+  MCALONECWD: "<MCALONE>/<ID>",
+  MCALONEMTA: "<MCALONECWD>/modconf.json",
+
   // Installer
   EXPLORE_INSTALL: 'mmrl install -y "<URL>"',
-  LOCAL_INSTALL: 'mmrl install local -y <ZIPFILES>',
+  LOCAL_INSTALL: "mmrl install local -y <ZIPFILES>",
 };
 
 export interface ModConfContext {
