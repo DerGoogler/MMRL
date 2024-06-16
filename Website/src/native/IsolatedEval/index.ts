@@ -19,15 +19,13 @@ import { IsoDocument } from "./IsoDocument";
 import { IsolatedEvalError } from "./IsolatedEvalError";
 import { IsolatedFunctionBlockError } from "./IsolatedFunctionBlockError";
 
-type IsoModule =
-  | {
-      exports: {
-        default?: any;
-      };
-    }
-  | {
-      exports: Record<string, any>;
-    };
+type IsoModule = {
+  exports: {
+    default?: any;
+    __esModule?: boolean;
+    [x: string]: any;
+  };
+};
 
 class IsolatedEval<T = any> {
   private readonly _sandbox: Sandbox = new Sandbox();
@@ -205,13 +203,7 @@ class IsolatedEval<T = any> {
         break;
     }
 
-    // Handle default modules
-    if (module.exports.default) {
-      return module.exports.default;
-    } else {
-      // Return the exported module
-      return module.exports;
-    }
+    return module.exports.default || module.exports;
   }
 
   private _resolveModulePath(modulePath: string): string | null {

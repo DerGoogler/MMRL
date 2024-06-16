@@ -54,7 +54,7 @@ export const libraries = {
 
   "flatlist-react": require("flatlist-react"),
 
-  onsenui: require("onsenui"),
+  onsenui: require("onsenui").default,
 
   "@mmrl/activity": {
     SearchActivity: SearchActivity,
