@@ -7,7 +7,7 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import BugReportIcon from "@mui/icons-material/BugReport";
 import { Divider } from "@mui/material";
-import Anchor from "@Components/dapi/Anchor";
+import {Anchor} from "@Components/dapi/Anchor";
 
 const UnverifiedHostActivity = () => {
   const { strings } = useStrings();

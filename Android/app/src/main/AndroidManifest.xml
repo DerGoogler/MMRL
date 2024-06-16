@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.dergoogler.mmrl">
+    android:installLocation="internalOnly">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+
+    <permission
+        android:name="${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+        android:protectionLevel="signature"
+        tools:node="remove" />
+
+    <uses-permission
+        android:name="${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+        tools:node="remove" />
 
     <queries>
         <package android:name="com.topjohnwu.magisk" />
@@ -21,17 +32,43 @@
         android:requestLegacyExternalStorage="true"
         android:theme="@style/AppTheme.SplashScreen"
         tools:ignore="GoogleAppIndexingWarning"
+        android:appCategory="productivity"
         tools:targetApi="q">
         <activity
-            android:name="com.dergoogler.mmrl.MainActivity"
+            android:name=".MainActivity"
             android:configChanges="orientation|screenSize"
-            android:windowSoftInputMode="adjustResize"
             android:exported="true"
+            android:windowSoftInputMode="adjustResize"
             tools:ignore="Instantiatable">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="mmrl.dergoogler.com"
+                    android:path="/"
+                    android:scheme="https" />
+            </intent-filter>
         </activity>
+
+        <service
+            android:name="androidx.room.MultiInstanceInvalidationService"
+            tools:node="remove" />
+
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            tools:node="remove" />
+
+        <receiver
+            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+            tools:node="remove" />
     </application>
 </manifest>

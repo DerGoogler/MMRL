@@ -10,8 +10,14 @@ const generalStyle = {
   height: `100%`,
 };
 
+interface PicturePreviewActivityExtra {
+  picture?: string;
+  src: string;
+}
+
 const PicturePreviewActivity = () => {
-  const { context, extra } = useActivity<any>();
+  const { context, extra } = useActivity<PicturePreviewActivityExtra>();
+  const { picture, src } = extra;
   const [fullscreen, setFullscreen] = React.useState(false);
 
   const renderToolbar = () => {
@@ -20,6 +26,7 @@ const PicturePreviewActivity = () => {
         modifier="noshadow"
         sx={{
           backgroundColor: "transparent",
+          background: "linear-gradient(0deg, rgba(25,159,75,0) 0%, rgba(16,16,16,1) 150%)",
         }}
       >
         <Toolbar.Left>
@@ -29,6 +36,8 @@ const PicturePreviewActivity = () => {
       </Toolbar>
     );
   };
+
+  if (typeof (picture || src) !== "string") throw new TypeError("'src' is undefined in PicturePreviewActivity");
 
   return (
     <Page
@@ -51,7 +60,7 @@ const PicturePreviewActivity = () => {
             ...generalStyle,
           }}
         >
-          <Box component="img" sx={{ ...generalStyle, objectFit: "contain" }} src={extra.picture} />
+          <Box component="img" sx={{ ...generalStyle, objectFit: "contain" }} src={picture || src} />
         </TransformComponent>
       </TransformWrapper>
     </Page>

@@ -21,7 +21,7 @@ import {
 } from "@mui/icons-material";
 import { useStrings } from "@Hooks/useStrings";
 import { useActivity } from "@Hooks/useActivity";
-import ModuleViewActivity from "@Activitys/ModuleViewActivity/index";
+import { ModuleViewActivity } from "@Activitys/ModuleViewActivity";
 import { useSettings } from "@Hooks/useSettings";
 import { GestureDetector } from "@Components/onsenui/GestureDetector";
 import { Xda } from "@Components/icons/Xda";
@@ -80,7 +80,7 @@ function increase_brightness(hex, percent) {
   );
 }
 
-const Anchor = React.memo<AnchorProps>((props) => {
+const Anchor: React.FC<AnchorProps> = (props) => {
   const confirm = useConfirm();
   const { theme } = useTheme();
   const { context } = useActivity();
@@ -197,6 +197,6 @@ const Anchor = React.memo<AnchorProps>((props) => {
       </Box>
     </Tooltip>
   );
-});
+};
 
-export default Anchor;
+export { Anchor };

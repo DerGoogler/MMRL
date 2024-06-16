@@ -37,4 +37,4 @@ const Pre = React.forwardRef<HTMLElement, PreProps>((props, _ref) => {
   );
 });
 
-export default Pre;
+export { Pre };

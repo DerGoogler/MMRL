@@ -1,20 +1,19 @@
-import React from "react";
-import Stack from "@mui/material/Stack";
-import Box from "@mui/material/Box";
-import FlatList, { FlatListProps } from "flatlist-react";
-import { useTheme } from "@Hooks/useTheme";
-import { Page, RenderFunction } from "@Components/onsenui/Page";
+import { StyledMenu } from "@Components/DropdownButton";
 import { MissingInternet } from "@Components/MissingInternet";
-import { useNetwork } from "@Hooks/useNetwork";
+import { Page, RenderFunction } from "@Components/onsenui/Page";
 import { filters, useModuleFilter } from "@Hooks/useModulesFilter";
-import { renderFunc } from "flatlist-react/lib/___subComponents/uiFunctions";
-import { styled, alpha } from "@mui/material/styles";
-import Button from "@mui/material/Button";
-import Menu, { MenuProps } from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
+import { useNetwork } from "@Hooks/useNetwork";
+import { useTheme } from "@Hooks/useTheme";
+import { os } from "@Native/Os";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
-import { os } from "@Native/Os";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import MenuItem from "@mui/material/MenuItem";
+import Stack from "@mui/material/Stack";
+import FlatList, { FlatListProps } from "flatlist-react";
+import { renderFunc } from "flatlist-react/lib/___subComponents/uiFunctions";
+import React from "react";
 
 const RenderWhenEmpty = React.memo(() => {
   const { theme } = useTheme();
@@ -43,43 +42,6 @@ export interface ModuleFragmentProps {
   renderItem: renderFunc<Module>;
   renderFixed?: RenderFunction;
 }
-
-const StyledMenu = styled((props: MenuProps) => (
-  <Menu
-    elevation={0}
-    anchorOrigin={{
-      vertical: "bottom",
-      horizontal: "right",
-    }}
-    transformOrigin={{
-      vertical: "top",
-      horizontal: "right",
-    }}
-    {...props}
-  />
-))(({ theme }) => ({
-  "& .MuiPaper-root": {
-    borderRadius: 6,
-    marginTop: theme.spacing(1),
-    minWidth: 180,
-    color: theme.palette.mode === "light" ? "rgb(55, 65, 81)" : theme.palette.grey[300],
-    boxShadow:
-      "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
-    "& .MuiMenu-list": {
-      padding: "4px 0",
-    },
-    "& .MuiMenuItem-root": {
-      "& .MuiSvgIcon-root": {
-        fontSize: 18,
-        color: theme.palette.text.secondary,
-        marginRight: theme.spacing(1.5),
-      },
-      "&:active": {
-        backgroundColor: alpha(theme.palette.primary.main, theme.palette.action.selectedOpacity),
-      },
-    },
-  },
-}));
 
 const ModuleFragment = React.memo<ModuleFragmentProps>((props) => {
   const { isNetworkAvailable } = useNetwork();

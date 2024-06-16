@@ -42,6 +42,8 @@ declare global {
       "ons-gesture-detector": HTMLAttributes<HTMLElement>;
       "ons-bottom-toolbar": HTMLAttributes<HTMLElement>;
       "ons-fab": HTMLAttributes<HTMLElement>;
+      "ons-carousel": HTMLAttributes<HTMLElement>;
+      "ons-carousel-item": HTMLAttributes<HTMLElement>;
     }
   }
 
@@ -86,6 +88,9 @@ declare global {
      * - This interface is not configurable
      */
     readonly __nativeStorage__: NativeStorage;
+
+    readonly __terminal__: I;
+    readonly __chooser__: I;
   }
 
   export type MMRLTheme = Theme & {
@@ -99,36 +104,6 @@ declare global {
       };
     };
   };
-
-  namespace Terminal {
-    export type Exec = {
-      command: string;
-      /**
-       * Environment variables that should be used in your command execution
-       */
-      env?: Record<string, string>;
-      /**
-       * Working directory
-       */
-      cwd?: string;
-      /**
-       * Prints the error to the console or the `onLine` argument
-       * @default true
-       */
-      printError?: boolean;
-      onLine: (line: string) => void;
-      onExit: (code: number) => void;
-    };
-
-    export function exec(opt: Exec): void;
-  }
-
-  namespace Chooser {
-    export type SuccessCallback = (file: string[] | "RESULT_CANCELED") => void;
-    export type ErrorCallback = ((code: number) => void) | null;
-
-    export function getFile(type: string, successCallback: SuccessCallback, ErrorCallback: ErrorCallback): any;
-  }
 
   interface Window extends AndroidWindow<any> {
     localStorage: NativeStorage;

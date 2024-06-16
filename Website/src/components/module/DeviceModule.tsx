@@ -77,13 +77,11 @@ const DeviceModule = React.memo<Props>((props) => {
       <Stack sx={{ position: "relative", zIndex: 1 }} direction="column" justifyContent="center" spacing={1}>
         {cover && (
           <Image
-            sx={(theme) => ({
+            sx={{
               height: "100%",
               objectFit: "cover",
-              borderRadius: theme.shape.borderRadius / theme.shape.borderRadius,
-              border: `1px solid ${theme.palette.divider} !important`,
               width: "100%",
-            })}
+            }}
             src={cover}
             alt={name}
             modFSAdds={{
@@ -189,8 +187,7 @@ const DeviceModule = React.memo<Props>((props) => {
                     component: ModConfActivity,
                     key: `${id}_configure`,
                     extra: {
-                      modulename: name,
-                      moduleid: id,
+                      modId: id,
                     },
                   });
                 }}

@@ -1,6 +1,6 @@
-import Video from "@Components/dapi/Video";
+import { Video } from "@Components/dapi/Video";
 import { Image } from "@Components/dapi/Image";
-import Anchor from "@Components/dapi/Anchor";
+import { Anchor } from "@Components/dapi/Anchor";
 import { DiscordWidget } from "@Components/dapi/DiscordWidget";
 import { BottomToolbar } from "@Components/onsenui/BottomToolbar";
 import { Page } from "@Components/onsenui/Page";
@@ -26,110 +26,82 @@ import { withRequireNewVersion } from "../../hoc/withRequireNewVersion";
 import { CodeBlock } from "@Components/CodeBlock";
 import { VerifiedIcon } from "@Components/icons/VerifiedIcon";
 import { IsolatedFunctionBlockError } from "@Native/IsolatedEval/IsolatedFunctionBlockError";
+import { Terminal } from "@Native/Terminal";
 
-export const libraries = [
-  {
-    name: "react",
-    __esModule: {
-      ...require("react"),
-      createElement(type: any, props: any, ...children: any[]) {
-        switch (type) {
-          // prevents webview url change
-          case "a":
-            return React.createElement(Anchor, props, ...children);
-          case "iframe":
-            throw new IsolatedFunctionBlockError("iframe");
-          default:
-            return React.createElement(type, props, ...children);
-        }
-      },
+export const libraries = {
+  react: {
+    ...require("react"),
+    createElement(type: any, props: any, ...children: any[]) {
+      switch (type) {
+        // prevents webview url change
+        case "a":
+          return React.createElement(Anchor, props, ...children);
+        case "iframe":
+          throw new IsolatedFunctionBlockError("iframe");
+        default:
+          return React.createElement(type, props, ...children);
+      }
     },
   },
-  {
-    name: "@mui/material",
-    __esModule: require("@mui/material"),
+
+  "@mui/material": require("@mui/material"),
+
+  "@mui/lab": require("@mui/lab"),
+
+  "@mui/icons-material": require("@mui/icons-material"),
+
+  "@mmrl/terminal": os.isAndroid ? Terminal : {},
+
+  "flatlist-react": require("flatlist-react"),
+
+  onsenui: require("onsenui").default,
+
+  "@mmrl/activity": {
+    SearchActivity: SearchActivity,
+    PicturePreviewActivity: PicturePreviewActivity,
   },
-  {
-    name: "@mui/lab",
-    __esModule: require("@mui/lab"),
+
+  // high order components
+  "@mmrl/hoc": {
+    withRequireNewVersion: withRequireNewVersion,
   },
-  {
-    name: "@mui/icons-material",
-    __esModule: require("@mui/icons-material"),
+
+  "@mmrl/icons": {
+    VerifiedIcon: VerifiedIcon,
   },
-  {
-    name: "@mmrl/terminal",
-    __esModule: os.isAndroid ? Terminal : {},
+
+  "@mmrl/ui": {
+    Anchor: Anchor,
+    Page: Page,
+    BottomToolbar: BottomToolbar,
+    Tabbar: Tabbar,
+    Toolbar: Toolbar,
+    Video: Video,
+    DiscordWidget: DiscordWidget,
+    Markdown: Markup,
+    ListItemDialogEditText: DialogEditTextListItem,
+    Image: Image,
+    Ansi: Ansi,
+    CodeBlock: CodeBlock,
   },
-  {
-    name: "flatlist-react",
-    __esModule: require("flatlist-react"),
+
+  "@mmrl/hooks": {
+    useConfirm: useConfirm,
+    useConfig: useConfig,
+    useModFS: useModFS,
+    useActivity: useActivity,
+    useNativeProperties: useNativeProperties,
+    useNativeFileStorage: useNativeFileStorage,
+    useNativeStorage: useNativeStorage,
+    useTheme: useTheme,
+    useSettings: useSettings,
+    useStrings: useStrings,
   },
-  {
-    name: "onsenui",
-    __esModule: require("onsenui"),
+
+  "@mmrl/providers": {
+    ConfigProvider: ConfigProvider,
+    StringsProvider: StringsProvider,
   },
-  {
-    name: "@mmrl/activity",
-    __esModule: {
-      SearchActivity: SearchActivity,
-      PicturePreviewActivity: PicturePreviewActivity,
-    },
-  },
-  {
-    // high order components
-    name: "@mmrl/hoc",
-    __esModule: {
-      withRequireNewVersion: withRequireNewVersion,
-    },
-  },
-  {
-    name: "@mmrl/icons",
-    __esModule: {
-      VerifiedIcon: VerifiedIcon,
-    },
-  },
-  {
-    name: "@mmrl/ui",
-    __esModule: {
-      Anchor: Anchor,
-      Page: Page,
-      BottomToolbar: BottomToolbar,
-      Tabbar: Tabbar,
-      Toolbar: Toolbar,
-      Video: Video,
-      DiscordWidget: DiscordWidget,
-      Markdown: Markup,
-      ListItemDialogEditText: DialogEditTextListItem,
-      Image: Image,
-      Ansi: Ansi,
-      CodeBlock: CodeBlock,
-    },
-  },
-  {
-    name: "@mmrl/hooks",
-    __esModule: {
-      useConfirm: useConfirm,
-      useConfig: useConfig,
-      useModFS: useModFS,
-      useActivity: useActivity,
-      useNativeProperties: useNativeProperties,
-      useNativeFileStorage: useNativeFileStorage,
-      useNativeStorage: useNativeStorage,
-      useTheme: useTheme,
-      useSettings: useSettings,
-      useStrings: useStrings,
-    },
-  },
-  {
-    name: "@mmrl/providers",
-    __esModule: {
-      ConfigProvider: ConfigProvider,
-      StringsProvider: StringsProvider,
-    },
-  },
-  {
-    name: "default-composer",
-    __esModule: require("default-composer"),
-  },
-];
+
+  "default-composer": require("default-composer"),
+};

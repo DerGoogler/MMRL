@@ -20,6 +20,7 @@ import InstallTerminalActivity from "@Activitys/InstallTerminalActivity";
 import FetchTextActivity from "@Activitys/FetchTextActivity";
 
 import { link } from "googlers-tools";
+import InstallTerminalV2Activity from "@Activitys/InstallTerminalV2Activity";
 
 interface Props {
   module: Module;
@@ -107,8 +108,8 @@ const UpdateModule = React.memo<Props>((props) => {
             <Button
               onClick={() => {
                 context.pushPage({
-                  component: InstallTerminalActivity,
-                  key: "InstallTerminalActivity",
+                  component: InstallTerminalV2Activity,
+                  key: "InstallTerminalV2Activity",
                   extra: {
                     id: id,
                     exploreInstall: true,

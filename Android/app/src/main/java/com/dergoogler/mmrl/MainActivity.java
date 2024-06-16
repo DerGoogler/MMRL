@@ -63,7 +63,7 @@ public class MainActivity extends CordovaActivity {
         webViewSettings.setAllowFileAccessFromFileURLs(true);
         webViewSettings.setAllowUniversalAccessFromFileURLs(true);
         webViewSettings.setDatabaseEnabled(true);
-        webViewSettings.setDomStorageEnabled(false);
+        webViewSettings.setDomStorageEnabled(true);
         webViewSettings.setUserAgentString(this.mmrlUserAgent());
         webViewSettings.setAllowFileAccessFromFileURLs(false);
         webViewSettings.setAllowUniversalAccessFromFileURLs(false);

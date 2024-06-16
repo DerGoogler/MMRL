@@ -25,8 +25,11 @@ import AntiFeatureListItem from "@Components/AntiFeatureListItem";
 import { Image } from "@Components/dapi/Image";
 import { useCategories } from "@Hooks/useCategories";
 import { useFormatDate } from "@Hooks/useFormatDate";
-import ModuleViewActivity from "..";
+import { ModuleViewActivity } from "..";
 import { useRepos } from "@Hooks/useRepos";
+import { Carousel } from "@Components/onsenui/Carousel";
+import { CarouselItem } from "@Components/onsenui/CarouselItem";
+import { blacklistedModules } from "@Util/blacklisted-modules";
 
 const OverviewTab = () => {
   const { strings } = useStrings();
@@ -40,6 +43,10 @@ const OverviewTab = () => {
   const latestVersion = React.useMemo(() => versions[versions.length - 1], [versions]);
   const formatLastUpdate = useFormatDate(latestVersion.timestamp);
   const [readme, setReadme] = React.useState<string | undefined>(undefined);
+
+  const findHardCodedAntifeature = React.useMemo<Track["antifeatures"]>(() => {
+    return [...(track.antifeatures || []), ...(blacklistedModules.find((mod) => mod.id === id)?.antifeatures || [])];
+  }, [id, track.antifeatures]);
 
   React.useEffect(() => {
     if (track.readme) {
@@ -130,7 +137,7 @@ const OverviewTab = () => {
           </CardContent>
         </Card>
 
-        {track.antifeatures ? (
+        {findHardCodedAntifeature && findHardCodedAntifeature.length !== 0 && (
           <Card
             sx={{
               width: "100%",
@@ -152,15 +159,15 @@ const OverviewTab = () => {
               </Stack>
 
               <List disablePadding>
-                {typeof track.antifeatures === "string" ? (
-                  <AntiFeatureListItem type={track.antifeatures} />
+                {typeof findHardCodedAntifeature === "string" ? (
+                  <AntiFeatureListItem type={findHardCodedAntifeature} />
                 ) : (
-                  Array.isArray(track.antifeatures) && track.antifeatures.map((anti) => <AntiFeatureListItem type={anti} />)
+                  Array.isArray(findHardCodedAntifeature) && findHardCodedAntifeature.map((anti) => <AntiFeatureListItem type={anti} />)
                 )}
               </List>
             </CardContent>
           </Card>
-        ) : null}
+        )}
 
         {track.require && track.require.length !== 0 && (
           <Card
@@ -224,6 +231,7 @@ const OverviewTab = () => {
 
             <ImageList
               sx={{
+                mt: 0,
                 pt: 0,
                 p: 1,
                 overflow: "auto",
@@ -240,7 +248,7 @@ const OverviewTab = () => {
                     mr: 1,
                   })}
                 >
-                  <Box component={Image} src={image} />
+                  <Box sx={{ width: "100%" }} component={Image} src={image} />
                 </ImageListItem>
               ))}
             </ImageList>

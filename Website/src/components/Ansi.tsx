@@ -2,8 +2,8 @@ import Anser, { AnserJsonEntry } from "anser";
 import { escapeCarriageReturn } from "escape-carriage";
 import linkifyit from "linkify-it";
 import * as React from "react";
-import Code from "./dapi/Code";
-import Anchor from "./dapi/Anchor";
+import { Code } from "./dapi/Code";
+import { Anchor } from "./dapi/Anchor";
 
 function ansiToJSON(input: string, use_classes: boolean = false): AnserJsonEntry[] {
   input = escapeCarriageReturn(fixBackspace(input));

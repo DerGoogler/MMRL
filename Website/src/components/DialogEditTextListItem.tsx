@@ -8,8 +8,8 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { InputBaseProps } from "@mui/material/InputBase";
 import ListItemButton from "@mui/material/ListItemButton";
+import TextField from "@mui/material/TextField";
 import React from "react";
-import { CustomTextField } from "./TextField";
 
 export interface DialogEditTextListItemProps extends React.PropsWithChildren {
   inputLabel: React.ReactNode;
@@ -69,7 +69,7 @@ export const DialogEditTextListItem = (props: DialogEditTextListItemProps) => {
         <DialogContent>
           {props.description && <DialogContentText>{props.description}</DialogContentText>}
 
-          <CustomTextField
+          <TextField
             autoFocus
             fullWidth
             margin="dense"
@@ -79,7 +79,6 @@ export const DialogEditTextListItem = (props: DialogEditTextListItemProps) => {
             variant="outlined"
             onChange={handleRepoLinkChange}
             InputProps={props.InputProps}
-            counter={props.counter}
             helperText={props.helperText}
             inputProps={{ maxLength: props.maxLength }}
             multiline={props.multiline}

@@ -3,7 +3,7 @@ cordova.define("cordova/plugin_list", function (require, exports, module) {
     {
       file: "plugins/com.dergoogler.plugin/www/chooser.js",
       id: "com.dergoogler.plugin.chooser",
-      clobbers: ["Chooser"],
+      clobbers: ["__chooser__"],
     },
     {
       file: "plugins/com.dergoogler.plugin/www/fetch.js",
@@ -13,7 +13,7 @@ cordova.define("cordova/plugin_list", function (require, exports, module) {
     {
       file: "plugins/com.dergoogler.plugin/www/terminal.js",
       id: "com.dergoogler.plugin.terminal",
-      clobbers: ["Terminal"],
+      clobbers: ["__terminal__"],
     },
   ];
 });

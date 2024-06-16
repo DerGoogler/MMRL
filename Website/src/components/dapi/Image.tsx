@@ -1,4 +1,5 @@
 import PicturePreviewActivity from "@Activitys/PicturePreviewActivity";
+import { GestureDetector } from "@Components/onsenui/GestureDetector";
 import { useActivity } from "@Hooks/useActivity";
 import { ModFS, useModFS } from "@Hooks/useModFS";
 import { useTheme } from "@Hooks/useTheme";

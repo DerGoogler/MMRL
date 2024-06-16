@@ -1,6 +1,8 @@
+[English](README.md) || **Português (Brasil)**
+
 <p align="center">
   <img width="550" height="auto" src="https://mmrl.dergoogler.com/assets/MMRL-Cover.png">
-  <br/>Your highly customizable module manager</b>
+  <br/>Seu gerenciador de módulos altamente personalizável</b>
 </p>
 
 <p align="center">
@@ -18,49 +20,50 @@
 <p align="center">
   <a href="https://github.com/DerGoogler/MMRL/blob/master/docs/faq.md">FAQ</a> • 
   <a href="https://github.com/DerGoogler/MMRL/blob/master/docs/ModConf/README.md">ModConf</a> • 
-  <a href="https://github.com/DerGoogler/MMRL/blob/master/docs/ModFS.md">ModFS</a>
+  <a href="https://github.com/DerGoogler/MMRL/blob/master/docs/ModFS.md">ModFS</a> • 
+  <a href="https://github.com/DerGoogler/MMRL/blob/master/docs/Installer/README.md">Installer</a>
 </p>
 
-# Summary
+# Sobre
 
-Introducing Magisk Module Repo Loader (MMRL) - the ultimate module manager for Magisk, KernelSU and APatch on Android. This highly configurable app allows users to manage modules effortlessly, all while being completely free of ads.
+Apresentando Magisk Module Repo Loader (MMRL) - O gerenciador de módulos definitivo para Magisk, KernelSU e APatch no Android. Este aplicativo altamente configurável permite aos usuários gerenciar módulos sem esforço, ao mesmo tempo que é completamente livre de anúncios.
 
-# Requirements
+# Requisitos
 
-- Android 8.0 or later
+- Android 8.0 ou Superior
 - [MMRL-CLI](https://github.com/DerGoogler/MMRL-CLI)
-- 4-5 GB RAM (lower may possible)
+- 4-5 GB RAM (Menor pode ser possível)
 
 
-# Features
+# Características
 
-- Basics: Literally basics
-- [ModFS](https://github.com/DerGoogler/MMRL/tree/master/docs/ModFS.md): Customizable Module Filesystem
-- [ModConf](https://github.com/DerGoogler/MMRL/blob/master/docs/ModConf/README.md): Provide dynamic created pages for modules
-- Custom Repos: Load any repo that uses the MRepo or the GR Fork
+- Basico: Literalmente básico
+- [ModFS](https://github.com/DerGoogler/MMRL/tree/master/docs/ModFS.md): Sistema de arquivos de módulo personalizável
+- [ModConf](https://github.com/DerGoogler/MMRL/blob/master/docs/ModConf/README.md): Fornece páginas criadas dinâmicas para módulos
+- Repos personalizados: carregue qualquer repositório que use o MRepo ou o GR Fork
 
-> Read the [documentation](https://github.com/DerGoogler/MMRL/tree/master/docs) to explore more of our functions like `Shell`, `SuFile` and more
+> Leia a [documentação](https://github.com/DerGoogler/MMRL/tree/master/docs) para explorar mais de nossas funções como `Shell`, `SuFile` e muito mais
 
-### Supported root manager
+### Gerenciadores root compatíveis
 
 - [x] [Magisk](https://github.com/topjohnwu/Magisk)
 - [x] [Magisk Delta](https://github.com/HuskyDG/magisk-files)
 - [x] [KernelSU](https://github.com/tiann/KernelSU)
 - [x] [APatch](https://github.com/bmax121/APatch)
 
-# Screenshots
+# Capturas de Tela
 
 <p>
-  <img src="assets/store_ready/1.png" width="32%" />
-  <img src="assets/store_ready/2.png" width="32%" />
-  <img src="assets/store_ready/3.png" width="32%" />
-  <img src="assets/store_ready/4.png" width="32%" />
-  <img src="assets/store_ready/5.png" width="32%" />
-  <img src="assets/store_ready/6.png" width="32%" />
-  <img src="assets/store_ready/7.png" width="32%" />
+  <img src="../assets/store_ready/1.png" width="32%" />
+  <img src="../assets/store_ready/2.png" width="32%" />
+  <img src="../assets/store_ready/3.png" width="32%" />
+  <img src="../assets/store_ready/4.png" width="32%" />
+  <img src="../assets/store_ready/5.png" width="32%" />
+  <img src="../assets/store_ready/6.png" width="32%" />
+  <img src="../assets/store_ready/7.png" width="32%" />
 </p>
 
-# Credits & Thanks
+# Créditos e Agradecimentos
 
 - [tabler/tabler-icons](https://github.com/tabler/tabler-icons.git)
 - [Googlers-Repo/node-native](https://github.com/Googlers-Repo/node-native)

@@ -14,8 +14,8 @@ import { useNativeStorage } from "@Hooks/useNativeStorage";
 import { useStrings } from "@Hooks/useStrings";
 import { useNativeFileStorage } from "@Hooks/useNativeFileStorage";
 import { useModFS } from "@Hooks/useModFS";
-import Pre from "@Components/dapi/Pre";
-import Code from "@Components/dapi/Code";
+import { Pre } from "@Components/dapi/Pre";
+import { Code } from "@Components/dapi/Code";
 
 export interface PlaygroundExtra {
   title: string;

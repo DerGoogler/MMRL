@@ -37,4 +37,4 @@ const Code = React.forwardRef<HTMLElement, CodeProps>((props, _ref) => {
   );
 });
 
-export default Code;
+export { Code };

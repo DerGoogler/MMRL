@@ -10,6 +10,7 @@ def cur_time = System.currentTimeMillis()
 
 android {
     compileSdk pkg.config.target_sdk
+    namespace pkg.config.application_id
 
     defaultConfig {
         applicationId pkg.config.application_id
@@ -41,6 +42,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             multiDexEnabled true
             buildConfigField "long", "BUILD_DATE", "${cur_time}"
+            buildConfigField "String", "BUILD_TYPE", "\"production\""
         }
         debug {
             resValue "string", "app_name", "${app_name} Debug"
@@ -50,6 +52,7 @@ android {
             multiDexEnabled false
             applicationIdSuffix '.debug'
             buildConfigField "long", "BUILD_DATE", "${cur_time}"
+            buildConfigField "String", "BUILD_TYPE", "\"development\""
         }
     }
     compileOptions {
@@ -79,6 +82,8 @@ dependencies {
     implementation "androidx.appcompat:appcompat:1.6.1"
     implementation 'androidx.core:core:1.13.1'
     implementation 'androidx.webkit:webkit:1.11.0'
+    implementation 'androidx.profileinstaller:profileinstaller:1.3.1'
+    implementation 'androidx.room:room-runtime:2.6.1'
 
     implementation "com.github.topjohnwu.libsu:core:5.2.1"
     implementation "com.github.topjohnwu.libsu:io:5.2.1"

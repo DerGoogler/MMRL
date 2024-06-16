@@ -148,6 +148,14 @@ class OsClass extends Native {
     (window as any)[type] = new Event(type.toLowerCase());
     window.removeEventListener(type.toLowerCase(), callback, options);
   }
+
+  public getSchemeParam(param: string): string {
+    if (this.isAndroid) {
+      return this.interface.getSchemeParam(param);
+    } else {
+      return new URLSearchParams(window.location.search).get(param) || "";
+    }
+  }
 }
 
 const os: OsClass = new OsClass();
