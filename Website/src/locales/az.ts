@@ -74,9 +74,9 @@ export const az = {
     "Bu modul yoxlamadan keçmiş və nüfuzlu tərtibatçı tərəfindən hazırlanmış təhlükəsiz modul kimi təsdiq edilmişdir.",
   update_json: "Öz update.json istifadə edir",
   update_json_desc: "Bu modul yeniləmə və quraşdırma məqsədilə öz update.json faylını istifadə edir.",
-  shading: "Kölgə salma (shading)",
-  shading_title: "Xüsusi kölgə salma (shading) tətbiq edin",
-  shading_desc: "Diqqətli istifadə edin, əgər çox qaranlıq olarsa, İstifadəçi İnterfeysini (UI) görə bilməyəcəksiniz.",
+  shading: "Kölgə salma",
+  shading_title: "Xüsusi kölgə salma tətbiq edin",
+  shading_desc: "Diqqətli istifadə edin, əgər çox qaranlıq olarsa, İstifadəçi İnterfeysini görə bilməyəcəksiniz.",
   module: "Modul",
   swipeable_tabs: "Sürüşdürülə bilən tab vərəqlər",
   swipeable_tabs_subtitle: "Bütün tab vərəqləri sürüşdürülə bilən edin. Bu, istifadəçi təcrübəsini pozur.",
@@ -124,8 +124,8 @@ export const az = {
 
   unverified_host: "Doğrulanmamış host!",
   unverified_host_text:
-    "MMRL-ə doğrulanmış bir ana kompüter (host) olmayan {url} ünvanından daxil olursunuz. MMRL-ni üçüncü tərəf mənbələrindən deyil, yalnız orijinal mənbədən istifadə edin.",
-  unverified_host_text_help: "Hər hansı bir problem gördünüz və ya əldə edilmiş ana kompüterin (hostun) istifadə üçün təhlükəsiz olduğunu bilirsiniz? Sonra bunu {issues} altında bildirinssed host safe for use is? Then report it under our {issues}",
+    "MMRL-ə doğrulanmış bir host olmayan {url} ünvanından daxil olursunuz. MMRL-ni üçüncü tərəf mənbələrindən deyil, yalnız orijinal mənbədən istifadə edin.",
+  unverified_host_text_help: "Hər hansı bir problem gördünüz və ya əldə edilmiş hostun istifadə üçün təhlükəsiz olduğunu bilirsiniz? Sonra bunu {issues} altında bildirin",
 
   // terminal activity
   reboot_device: "Cihaz yenidən başladılsın?",
