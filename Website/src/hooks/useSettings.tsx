@@ -79,7 +79,7 @@ export const SettingsProvider = (props: React.PropsWithChildren) => {
       link_protection: true,
       swipeable_tabs: false,
       print_terminal_error: false,
-      terminal_word_wrap: false,
+      terminal_word_wrap: true,
       terminal_numberic_lines: true,
     }),
     []
