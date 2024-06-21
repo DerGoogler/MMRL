@@ -79,12 +79,12 @@ Types
 declare const __idname: string;
 ```
 
-### `__moddirname` (new)
+### `__modpath` (new)
 
 Types
 
 ```ts
-declare const __moddirname: string;
+declare const __modpath: string;
 ```
 
 

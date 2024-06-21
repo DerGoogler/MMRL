@@ -28,7 +28,7 @@ export const ModConfView = React.forwardRef<any, { children: string; modid: stri
         __idname: modid,
         __filename: format("CONFINDEX"),
         __dirname: format("CONFCWD"),
-        __moddirname: format("MODULECWD"),
+        __modpath: format("MODULECWD"),
         window: {
           fetch: internalFetch,
           open(href: string) {
