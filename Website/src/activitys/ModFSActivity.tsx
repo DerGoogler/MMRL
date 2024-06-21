@@ -262,23 +262,23 @@ function ModFSActivity() {
           },
         ],
       },
-      {
-        sectionText: "ModConf Standalone",
-        items: [
-          {
-            text: "Standalone root directory",
-            confKey: "MCALONE",
-          },
-          {
-            text: "Standalone working directory",
-            confKey: "MCALONECWD",
-          },
-          {
-            text: "Stadnalone meta file",
-            confKey: "MCALONEMTA",
-          },
-        ],
-      },
+      // {
+      //   sectionText: "ModConf Standalone",
+      //   items: [
+      //     {
+      //       text: "Standalone root directory",
+      //       confKey: "MCALONE",
+      //     },
+      //     {
+      //       text: "Standalone working directory",
+      //       confKey: "MCALONECWD",
+      //     },
+      //     {
+      //       text: "Stadnalone meta file",
+      //       confKey: "MCALONEMTA",
+      //     },
+      //   ],
+      // },
     ],
     []
   );
