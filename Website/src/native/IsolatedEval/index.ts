@@ -107,7 +107,9 @@ class IsolatedEval<T = any> {
     this._prototypeWhitelist.set(EventTarget, new Set());
     this._prototypeWhitelist.set(NamedNodeMap, new Set());
     this._prototypeWhitelist.set(IsoDOMParser, new Set());
+    this._prototypeWhitelist.set(DOMParser, new Set());
     this._prototypeWhitelist.set(IsoXMLSerializer, new Set());
+    this._prototypeWhitelist.set(XMLSerializer, new Set());
     this._prototypeWhitelist.set(SuFile, new Set());
     this._prototypeWhitelist.set(ShellClass, new Set());
     this._prototypeWhitelist.set(View, new Set());
