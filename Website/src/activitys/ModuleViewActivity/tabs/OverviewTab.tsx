@@ -221,7 +221,7 @@ const OverviewTab = () => {
           </Card>
         )}
 
-        {track.screenshots && (
+        {track.screenshots && track.screenshots.length !== 0 && (
           <Card sx={{ width: "100%" }}>
             <CardContent>
               <Typography variant="h5" component="div">
