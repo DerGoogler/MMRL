@@ -62,6 +62,7 @@ const ModuleViewActivity = () => {
   const { context, extra } = useActivity<Module>();
 
   const { id, name, version, versionCode, author, versions, track } = extra;
+  const { cover, icon, verified, donate, support } = extra;
   const latestVersion = React.useMemo(() => versions[versions.length - 1], [versions]);
 
   const search = React.useMemo(() => new URLSearchParams(window.location.search), [window.location.search]);
@@ -83,7 +84,7 @@ const ModuleViewActivity = () => {
       <Toolbar
         modifier="noshadow"
         sx={{
-          ...(track.cover
+          ...(cover
             ? {
                 // invert
                 backgroundColor: !isNameVisible ? "transparent" : theme.palette.background.default,
@@ -135,10 +136,10 @@ const ModuleViewActivity = () => {
       modifier="noshadow"
       renderToolbar={renderToolbar}
       backgroundStyle={{
-        ...(track.cover ? { top: `0px !important` } : {}),
+        ...(cover ? { top: `0px !important` } : {}),
       }}
       sx={{
-        ...(track.cover ? { top: `0px !important` } : {}),
+        ...(cover ? { top: `0px !important` } : {}),
       }}
     >
       <Box
@@ -151,7 +152,7 @@ const ModuleViewActivity = () => {
           color: "white",
         }}
       >
-        {track.cover && (
+        {cover && (
           <Box
             sx={(theme) => ({
               background: `linear-gradient(to top,${
@@ -172,7 +173,7 @@ const ModuleViewActivity = () => {
                 },
                 objectFit: "cover",
               }}
-              image={track.cover}
+              image={cover}
               alt={name}
             />
             <SvgIcon sx={{ display: "none" }}>
@@ -191,7 +192,7 @@ const ModuleViewActivity = () => {
 
         <Box
           sx={(theme) => ({
-            pt: track.cover ? 0 : 2,
+            pt: cover ? 0 : 2,
             pl: 2,
             pr: 2,
             pb: 2,
@@ -219,7 +220,7 @@ const ModuleViewActivity = () => {
                 mr: 1.5,
                 fontSize: 50,
               })}
-              src={track.icon}
+              src={icon}
             >
               {name.charAt(0).toUpperCase()}
             </Avatar>
@@ -229,7 +230,7 @@ const ModuleViewActivity = () => {
                 <Disappear as={Typography} variant="body1" fontWeight="bold" onDisappear={(visible) => setIsNameVisible(!visible)}>
                   {name}
                 </Disappear>
-                <VerifiedIcon isVerified={track.verified} />
+                <VerifiedIcon isVerified={verified} />
               </Stack>
               <Typography
                 variant="body2"
@@ -298,14 +299,14 @@ const ModuleViewActivity = () => {
                     code
                   </Typography>
                 </Stack>
-                {track.donate && (
+                {donate && (
                   <Stack
                     direction="column"
                     justifyContent="center"
                     alignItems="stretch"
                     spacing={0}
                     onClick={() => {
-                      os.open(track.donate, {
+                      os.open(donate, {
                         target: "_blank",
                         features: {
                           color: theme.palette.primary.main,
@@ -361,7 +362,7 @@ const ModuleViewActivity = () => {
                             component: InstallTerminalV2Activity,
                             key: "InstallTerminalV2Activity",
                             extra: {
-                              issues: track.support,
+                              issues: support,
                               source: track.source,
                               id: id,
                               exploreInstall: true,

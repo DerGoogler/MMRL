@@ -36,21 +36,22 @@ const OverviewTab = () => {
   const { context, extra } = useActivity<Module>();
   const { settings } = useSettings();
   const { modules } = useRepos();
-  const { id, name, version, versionCode, description, author, versions, track } = extra;
+  const { id, name, description, versions } = extra;
+  const { antifeatures, screenshots, require, readme: __readme, categories, icon } = extra;
 
-  const { filteredCategories } = useCategories(track.categories);
+  const { filteredCategories } = useCategories(categories);
   const isLowQuality = useLowQualityModule(extra, !settings._low_quality_module);
   const latestVersion = React.useMemo(() => versions[versions.length - 1], [versions]);
   const formatLastUpdate = useFormatDate(latestVersion.timestamp);
   const [readme, setReadme] = React.useState<string | undefined>(undefined);
 
-  const findHardCodedAntifeature = React.useMemo<Track["antifeatures"]>(() => {
-    return [...(track.antifeatures || []), ...(blacklistedModules.find((mod) => mod.id === id)?.antifeatures || [])];
-  }, [id, track.antifeatures]);
+  const findHardCodedAntifeature = React.useMemo<Module["antifeatures"]>(() => {
+    return [...(antifeatures || []), ...(blacklistedModules.find((mod) => mod.id === id)?.antifeatures || [])];
+  }, [id, antifeatures]);
 
   React.useEffect(() => {
-    if (track.readme) {
-      fetch(track.readme)
+    if (readme) {
+      fetch(readme)
         .then((res) => {
           if (res.status === 200) {
             return res.text();
@@ -60,7 +61,7 @@ const OverviewTab = () => {
         })
         .then((text) => setReadme(text));
     }
-  }, [track.readme]);
+  }, [__readme]);
 
   return (
     <>
@@ -100,7 +101,7 @@ const OverviewTab = () => {
                       extra: {
                         desc: readme,
                         name: name,
-                        logo: track.icon,
+                        logo: icon,
                       },
                     });
                   }}
@@ -169,7 +170,7 @@ const OverviewTab = () => {
           </Card>
         )}
 
-        {track.require && track.require.length !== 0 && (
+        {require && require.length !== 0 && (
           <Card
             sx={{
               width: "100%",
@@ -191,7 +192,7 @@ const OverviewTab = () => {
               }}
             >
               <List disablePadding sx={{ width: { xs: "100%" } }}>
-                {track.require.map((req) => {
+                {require.map((req) => {
                   const findRequire = React.useMemo(() => modules.find((module) => module.id === req), [modules]);
 
                   if (findRequire) {
@@ -221,7 +222,7 @@ const OverviewTab = () => {
           </Card>
         )}
 
-        {track.screenshots && track.screenshots.length !== 0 && (
+        {screenshots && screenshots.length !== 0 && (
           <Card sx={{ width: "100%" }}>
             <CardContent>
               <Typography variant="h5" component="div">
@@ -241,7 +242,7 @@ const OverviewTab = () => {
                 gridAutoColumns: "minmax(250px, 1fr)",
               }}
             >
-              {track.screenshots.map((image, i) => (
+              {screenshots.map((image, i) => (
                 <ImageListItem
                   sx={(theme) => ({
                     ml: 1,

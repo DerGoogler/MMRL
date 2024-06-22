@@ -50,7 +50,7 @@ export function useOpenModuleSearch<L extends Module[]>(list: L) {
                     borderRadius: "20%",
                     mr: 1.5,
                   })}
-                  src={item.track.icon}
+                  src={item.icon}
                 >
                   {item.name.charAt(0).toUpperCase()}
                 </Avatar>
@@ -60,7 +60,7 @@ export function useOpenModuleSearch<L extends Module[]>(list: L) {
                   <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={0.5}>
                     <Typography>{item.name}</Typography>
 
-                    <VerifiedIcon isVerified={item.track.verified} />
+                    <VerifiedIcon isVerified={item.verified} />
                   </Stack>
                 }
                 secondary={

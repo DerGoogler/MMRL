@@ -146,10 +146,6 @@ declare global {
   }
 
   export interface Module {
-    /**
-     * # This is local prop only
-     */
-    cover?: string;
     id: string;
     name: string;
     version: string;
@@ -162,21 +158,10 @@ declare global {
     track: Track;
     versions: Version[];
 
-    /**
-     * Local modules only
-     */
-    __mmrl__local__module__?: boolean;
-  }
-
-  export interface Track {
-    type: string;
-    added: number;
-    license: string;
-    homepage: string;
-    source: string;
-    support: string;
-    donate: string;
-    verified: boolean;
+    license?: string;
+    homepage?: string;
+    support?: string;
+    donate?: string;
     cover?: string;
     icon?: string;
     require?: string[];
@@ -186,6 +171,18 @@ declare global {
     stars?: number;
     readme?: string;
     antifeatures?: string | string[];
+    verified: boolean;
+
+    /**
+     * Local modules only
+     */
+    __mmrl__local__module__?: boolean;
+  }
+
+  export interface Track {
+    type: string;
+    added: number;
+    source: string;
   }
 
   export interface Version {

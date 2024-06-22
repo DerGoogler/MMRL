@@ -3,7 +3,7 @@ export interface BlacklistedModule {
   source: string;
   hidden: boolean;
   notes: string;
-  antifeatures: Track["antifeatures"];
+  antifeatures: Module["antifeatures"];
 }
 
 export const blacklistedModules: BlacklistedModule[] = [

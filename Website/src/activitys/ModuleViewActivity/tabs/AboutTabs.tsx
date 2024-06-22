@@ -19,11 +19,11 @@ const AboutTab = () => {
   const { context, extra } = useActivity<Module>();
   const { theme } = useTheme();
 
-  const { id, name, version, versionCode, description, author, versions, track } = extra;
+  const { license, verified, support, track } = extra;
 
   return (
     <List>
-      {track.verified && (
+      {verified && (
         <ListItem>
           <ListItemIcon>
             <VerifiedIcon />
@@ -32,10 +32,10 @@ const AboutTab = () => {
         </ListItem>
       )}
 
-      {track.license && (
+      {license && (
         <ListItemButton
           onClick={() => {
-            fetch(`https://raw.githubusercontent.com/spdx/license-list-data/main/website/${track.license}.json`)
+            fetch(`https://raw.githubusercontent.com/spdx/license-list-data/main/website/${license}.json`)
               .then((res) => {
                 if (res.status === 200) {
                   return res.json();
@@ -46,7 +46,7 @@ const AboutTab = () => {
               .then((json: LicenseSPX) => {
                 context.pushPage({
                   component: FetchTextActivity,
-                  key: "license_" + track.license,
+                  key: "license_" + license,
                   extra: {
                     raw_data: json.licenseText,
                     modulename: json.name,
@@ -59,14 +59,14 @@ const AboutTab = () => {
           <ListItemIcon>
             <FormatAlignLeftIcon />
           </ListItemIcon>
-          <ListItemText primary={strings("license")} secondary={track.license} />
+          <ListItemText primary={strings("license")} secondary={license} />
         </ListItemButton>
       )}
 
-      {track.support && (
+      {support && (
         <ListItemButton
           onClick={() => {
-            os.open(track.support, {
+            os.open(support, {
               target: "_blank",
               features: {
                 color: theme.palette.primary.main,
@@ -77,7 +77,7 @@ const AboutTab = () => {
           <ListItemIcon>
             <BugReportIcon />
           </ListItemIcon>
-          <ListItemText primary="Issues" secondary={track.support} />
+          <ListItemText primary="Issues" secondary={support} />
         </ListItemButton>
       )}
 
