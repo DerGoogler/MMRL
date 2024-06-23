@@ -50,8 +50,8 @@ const OverviewTab = () => {
   }, [id, antifeatures]);
 
   React.useEffect(() => {
-    if (readme) {
-      fetch(readme)
+    if (__readme) {
+      fetch(__readme)
         .then((res) => {
           if (res.status === 200) {
             return res.text();
