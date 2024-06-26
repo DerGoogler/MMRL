@@ -8,7 +8,7 @@ import { GestureDetector } from "./onsenui/GestureDetector";
 
 type Props = {
   sx?: SxProps;
-  antifeatures?: Module["antifeatures"];
+  antifeatures?: Track["antifeatures"];
 };
 
 export const AntifeatureButton = (props: Props) => {

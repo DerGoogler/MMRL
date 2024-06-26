@@ -24,7 +24,7 @@ interface Props {
 
 const ExploreModule = React.memo<Props>((props) => {
   const { id, name, author, description, track, timestamp, version, versions, versionCode } = props.module;
-  const { cover, antifeatures, verified } = props.module;
+  const { cover, verified } = props.module;
 
   const { context } = useActivity();
   const { strings } = useStrings();
@@ -33,9 +33,9 @@ const ExploreModule = React.memo<Props>((props) => {
 
   const formatLastUpdate = useFormatDate(timestamp ? timestamp : versions[versions.length - 1].timestamp);
 
-  const findHardCodedAntifeature = React.useMemo<Module["antifeatures"]>(() => {
-    return [...(antifeatures || []), ...(blacklistedModules.find((mod) => mod.id === id)?.antifeatures || [])];
-  }, [id, antifeatures]);
+  const findHardCodedAntifeature = React.useMemo<Track["antifeatures"]>(() => {
+    return [...(track.antifeatures || []), ...(blacklistedModules.find((mod) => mod.id === id)?.antifeatures || [])];
+  }, [id, track.antifeatures]);
 
   const handleOpenModule = () => {
     context.pushPage({

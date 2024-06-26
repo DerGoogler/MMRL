@@ -37,7 +37,10 @@ const OverviewTab = () => {
   const { settings } = useSettings();
   const { modules } = useRepos();
   const { id, name, description, versions } = extra;
-  const { antifeatures, screenshots, require, readme: __readme, categories, icon } = extra;
+  const { screenshots, require, readme: __readme, categories, icon, track } = extra;
+
+  // handle when the dev does not define a readme
+  const moduleReadme = __readme || track.readme;
 
   const { filteredCategories } = useCategories(categories);
   const isLowQuality = useLowQualityModule(extra, !settings._low_quality_module);
@@ -45,13 +48,13 @@ const OverviewTab = () => {
   const formatLastUpdate = useFormatDate(latestVersion.timestamp);
   const [readme, setReadme] = React.useState<string | undefined>(undefined);
 
-  const findHardCodedAntifeature = React.useMemo<Module["antifeatures"]>(() => {
-    return [...(antifeatures || []), ...(blacklistedModules.find((mod) => mod.id === id)?.antifeatures || [])];
-  }, [id, antifeatures]);
+  const findHardCodedAntifeature = React.useMemo<Track["antifeatures"]>(() => {
+    return [...(track.antifeatures || []), ...(blacklistedModules.find((mod) => mod.id === id)?.antifeatures || [])];
+  }, [id, track.antifeatures]);
 
   React.useEffect(() => {
-    if (__readme) {
-      fetch(__readme)
+    if (moduleReadme) {
+      fetch(moduleReadme)
         .then((res) => {
           if (res.status === 200) {
             return res.text();
@@ -61,7 +64,7 @@ const OverviewTab = () => {
         })
         .then((text) => setReadme(text));
     }
-  }, [__readme]);
+  }, [moduleReadme]);
 
   return (
     <>

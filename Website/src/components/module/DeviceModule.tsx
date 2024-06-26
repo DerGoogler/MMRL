@@ -62,7 +62,7 @@ const DeviceModule = React.memo<Props>((props) => {
   const boot_complete = SuFile.exist(format("BOOTCOMP"));
   const module_config_file = SuFile.exist(format("CONFINDEX"));
 
-  const findHardCodedAntifeature = React.useMemo<Module["antifeatures"]>(() => {
+  const findHardCodedAntifeature = React.useMemo<Track["antifeatures"]>(() => {
     return blacklistedModules.find((mod) => mod.id === id)?.antifeatures || [];
   }, [id]);
 

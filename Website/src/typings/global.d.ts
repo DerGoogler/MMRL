@@ -170,7 +170,6 @@ declare global {
     categories?: string[];
     stars?: number;
     readme?: string;
-    antifeatures?: string | string[];
     verified: boolean;
 
     /**
@@ -183,6 +182,8 @@ declare global {
     type: string;
     added: number;
     source: string;
+    readme?: string;
+    antifeatures?: string | string[];
   }
 
   export interface Version {
