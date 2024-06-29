@@ -105,6 +105,14 @@ declare global {
     };
   };
 
+  interface AndroidNavigator {}
+
+  interface Navigator extends AndroidNavigator {
+    app: {
+      exitApp: () => void;
+    };
+  }
+
   interface Window extends AndroidWindow<any> {
     localStorage: NativeStorage;
   }
