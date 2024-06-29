@@ -97,6 +97,7 @@ const MainApplication = () => {
                           sx={{
                             "& .fab__icon": {
                               verticalAlign: "middle",
+                              color: "black",
                             },
                           }}
                           onClick={() => {
