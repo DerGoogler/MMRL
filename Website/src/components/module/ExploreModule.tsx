@@ -17,6 +17,7 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { SuFile } from "@Native/SuFile";
 import { useModFS } from "@Hooks/useModFS";
+import { useModuleInfo } from "@Hooks/useModuleInfo";
 
 interface Props {
   module: Module;
@@ -24,7 +25,7 @@ interface Props {
 
 const ExploreModule = React.memo<Props>((props) => {
   const { id, name, author, description, track, timestamp, version, versions, versionCode } = props.module;
-  const { cover, verified } = props.module;
+  const { cover, verified } = useModuleInfo(props.module);
 
   const { context } = useActivity();
   const { strings } = useStrings();

@@ -53,7 +53,7 @@ const DeviceModule = React.memo<Props>((props) => {
   const [isSwitchDisabled, setIsSwitchDisabled] = React.useState(remove.exist());
 
   const isLowQuality = useLowQualityModule(props.module, !settings._low_quality_module);
-  const isNew = React.useMemo(() => new Date().getTime() - timestamp < 60 * 60 * 1000, [timestamp]);
+  const isNew = React.useMemo(() => new Date().getTime() - timestamp! < 60 * 60 * 1000, [timestamp]);
   const isDisabledStyle = React.useMemo(() => (isSwitchDisabled ? { textDecoration: "line-through" } : {}), [isSwitchDisabled]);
 
   const post_service = SuFile.exist(format("POSTSERVICE"));

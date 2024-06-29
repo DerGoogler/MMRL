@@ -154,7 +154,7 @@ declare global {
     description: string;
     updateJson?: string;
     added: number;
-    timestamp: number;
+    timestamp?: number;
     track: Track;
     versions: Version[];
 
@@ -170,6 +170,10 @@ declare global {
     categories?: string[];
     stars?: number;
     readme?: string;
+
+    /**
+     * Non-user definable
+     */
     verified: boolean;
 
     /**
@@ -182,8 +186,58 @@ declare global {
     type: string;
     added: number;
     source: string;
-    readme?: string;
+    verified: boolean;
     antifeatures?: string | string[];
+
+    /**
+     * @deprecated
+     */
+    license: string;
+    /**
+     * @deprecated
+     */
+    homepage: string;
+    /**
+     * @deprecated
+     */
+    support: string;
+    /**
+     * @deprecated
+     */
+    donate: string;
+    /**
+     * @deprecated
+     */
+    cover?: string;
+    /**
+     * @deprecated
+     */
+    icon?: string;
+    /**
+     * @deprecated
+     */
+    require?: string[];
+    /**
+     * @deprecated
+     */
+    screenshots?: string[];
+    /**
+     * @deprecated
+     */
+    category?: string;
+    /**
+     * @deprecated
+     */
+    categories?: string[];
+    /**
+     * @deprecated
+     */
+    readme?: string;
+
+    /**
+     * Not Supported
+     */
+    stars?: number;
   }
 
   export interface Version {

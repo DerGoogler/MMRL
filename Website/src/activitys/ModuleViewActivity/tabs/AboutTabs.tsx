@@ -13,13 +13,15 @@ import { useStrings } from "@Hooks/useStrings";
 import { useActivity } from "@Hooks/useActivity";
 import { useTheme } from "@Hooks/useTheme";
 import { os } from "@Native/Os";
+import { useModuleInfo } from "@Hooks/useModuleInfo";
 
 const AboutTab = () => {
   const { strings } = useStrings();
   const { context, extra } = useActivity<Module>();
   const { theme } = useTheme();
 
-  const { license, verified, support, track } = extra;
+  const { track } = extra;
+  const { license, verified, support } = useModuleInfo(extra);
 
   return (
     <List>

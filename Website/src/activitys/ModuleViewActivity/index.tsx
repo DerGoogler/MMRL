@@ -30,6 +30,7 @@ import { AboutTab } from "./tabs/AboutTabs";
 import { OverviewTab } from "./tabs/OverviewTab";
 import { VersionsTab } from "./tabs/VersionsTab";
 import { DropdownButton } from "@Components/DropdownButton";
+import { useModuleInfo } from "@Hooks/useModuleInfo";
 
 function a11yProps(index: number) {
   return {
@@ -62,7 +63,7 @@ const ModuleViewActivity = () => {
   const { context, extra } = useActivity<Module>();
 
   const { id, name, version, versionCode, author, versions, track } = extra;
-  const { cover, icon, verified, donate, support } = extra;
+  const { cover, icon, verified, donate, support } = useModuleInfo(extra);
   const latestVersion = React.useMemo(() => versions[versions.length - 1], [versions]);
 
   const search = React.useMemo(() => new URLSearchParams(window.location.search), [window.location.search]);

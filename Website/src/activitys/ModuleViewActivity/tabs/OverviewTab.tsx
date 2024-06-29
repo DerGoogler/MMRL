@@ -30,17 +30,16 @@ import { useRepos } from "@Hooks/useRepos";
 import { Carousel } from "@Components/onsenui/Carousel";
 import { CarouselItem } from "@Components/onsenui/CarouselItem";
 import { blacklistedModules } from "@Util/blacklisted-modules";
+import { useModuleInfo } from "@Hooks/useModuleInfo";
 
 const OverviewTab = () => {
   const { strings } = useStrings();
   const { context, extra } = useActivity<Module>();
   const { settings } = useSettings();
   const { modules } = useRepos();
-  const { id, name, description, versions } = extra;
-  const { screenshots, require, readme: __readme, categories, icon, track } = extra;
+  const { id, name, description, versions, track } = extra;
 
-  // handle when the dev does not define a readme
-  const moduleReadme = __readme || track.readme;
+  const { icon, screenshots, require, readme: moduleReadme, categories } = useModuleInfo(extra);
 
   const { filteredCategories } = useCategories(categories);
   const isLowQuality = useLowQualityModule(extra, !settings._low_quality_module);
