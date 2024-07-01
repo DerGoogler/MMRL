@@ -46,6 +46,7 @@ function SearchActivity(props: SearchActivityProps) {
   const __placeholder = placeholder ? placeholder : (strings("search") as string);
 
   const [search, setSearch] = React.useState<string>(initialSearch);
+  const __renderList = React.useCallback(renderList, []);
 
   const renderToolbar = () => {
     return (
@@ -93,7 +94,7 @@ function SearchActivity(props: SearchActivityProps) {
         <List sx={{ position: "unset" }}>
           <FlatList
             list={__list}
-            renderItem={renderList}
+            renderItem={__renderList}
             renderWhenEmpty={() => <RenderWhenEmpty />}
             renderOnScroll
             search={{ term: search, ...props.search }}

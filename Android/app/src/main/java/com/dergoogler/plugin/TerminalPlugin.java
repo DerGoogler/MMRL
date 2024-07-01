@@ -47,7 +47,7 @@ public class TerminalPlugin extends CordovaPlugin {
                         if (printError) {
                             updateTerminalLine(e.toString());
                         }
-                        updateTerminalExit(500);
+                        //updateTerminalExit(500);
                     }
                 });
                 return true;

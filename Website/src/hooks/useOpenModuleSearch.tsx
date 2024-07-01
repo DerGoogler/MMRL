@@ -24,8 +24,8 @@ export function useOpenModuleSearch<L extends Module[]>(list: L) {
         list: list,
         initialSearch: initialSearch,
         search: {
-          by: ["id", "name", "author", "description"],
-          onEveryWord: true,
+          by: ["id", "name", "author"],
+          //onEveryWord: true,
           caseInsensitive: true,
         },
 
