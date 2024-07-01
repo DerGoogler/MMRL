@@ -163,6 +163,7 @@ declare global {
     updateJson?: string;
     added: number;
     timestamp?: number;
+    size?: number;
     track: Track;
     versions: Version[];
 
@@ -253,6 +254,7 @@ declare global {
     version: string;
     versionCode: number;
     zipUrl: string;
+    size?: number;
     changelog: string;
   }
 

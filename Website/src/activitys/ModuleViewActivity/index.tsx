@@ -14,7 +14,6 @@ import { VolunteerActivism } from "@mui/icons-material";
 import TelegramIcon from "@mui/icons-material/Telegram";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import CardMedia from "@mui/material/CardMedia";
 import Divider from "@mui/material/Divider";
 import Fade from "@mui/material/Fade";
@@ -31,6 +30,7 @@ import { OverviewTab } from "./tabs/OverviewTab";
 import { VersionsTab } from "./tabs/VersionsTab";
 import { DropdownButton } from "@Components/DropdownButton";
 import { useModuleInfo } from "@Hooks/useModuleInfo";
+import { useFormatBytes } from "@Hooks/useFormatBytes";
 
 function a11yProps(index: number) {
   return {
@@ -63,8 +63,8 @@ const ModuleViewActivity = () => {
   const { context, extra } = useActivity<Module>();
 
   const { id, name, version, versionCode, author, versions, track } = extra;
-  const { cover, icon, verified, donate, support } = useModuleInfo(extra);
-  const latestVersion = React.useMemo(() => versions[versions.length - 1], [versions]);
+  const { cover, icon, verified, donate, support, latestVersion, timestamp, size } = useModuleInfo(extra);
+  const [moduleFileSize, moduleFileSizeByteText] = useFormatBytes(size);
 
   const search = React.useMemo(() => new URLSearchParams(window.location.search), [window.location.search]);
   const handleOpenModuleSearch = useOpenModuleSearch(modules);
@@ -300,6 +300,16 @@ const ModuleViewActivity = () => {
                     code
                   </Typography>
                 </Stack>
+                {size && (
+                  <Stack direction="column" justifyContent="center" alignItems="stretch" spacing={0}>
+                    <Typography variant="body2" align="center">
+                      {moduleFileSize}
+                    </Typography>
+                    <Typography variant="caption" display="block" align="center" color="text.secondary">
+                      {moduleFileSizeByteText}
+                    </Typography>
+                  </Stack>
+                )}
                 {donate && (
                   <Stack
                     direction="column"

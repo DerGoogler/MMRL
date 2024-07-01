@@ -1,4 +1,7 @@
+import React from "react";
+
 type PickedModule =
+  | "timestamp"
   | "verified"
   | "license"
   | "homepage"
@@ -9,16 +12,21 @@ type PickedModule =
   | "require"
   | "screenshots"
   | "categories"
-  | "readme";
+  | "readme"
+  | "size";
+
+type ModuleInfo = Pick<Module, PickedModule> & { latestVersion: Version };
 
 /**
  * Used to handle undefined properties
  */
-export const useModuleInfo = (extra: Module): Pick<Module, PickedModule> => {
+export const useModuleInfo = (extra: Module): ModuleInfo => {
   const { track } = extra;
 
+  const latestVersion = React.useMemo(() => extra.versions[extra.versions.length - 1], [extra.versions]);
+
   return {
-    // timestamp: extra.timestamp || extra.versions.pop()?.timestamp,
+    timestamp: extra.timestamp || latestVersion.timestamp,
     verified: extra.verified,
     license: extra.license || track.license,
     homepage: extra.homepage || track.homepage,
@@ -30,5 +38,7 @@ export const useModuleInfo = (extra: Module): Pick<Module, PickedModule> => {
     screenshots: extra.screenshots || track.screenshots,
     categories: extra.categories || track.categories,
     readme: extra.readme || track.readme,
+    latestVersion: latestVersion,
+    size: extra.size || latestVersion.size,
   };
 };
