@@ -1,4 +1,3 @@
-import { Page } from "@Components/onsenui/Page";
 import { useStrings } from "@Hooks/useStrings";
 import Box from "@mui/material/Box";
 import React from "react";
@@ -27,8 +26,6 @@ import { useCategories } from "@Hooks/useCategories";
 import { useFormatDate } from "@Hooks/useFormatDate";
 import { ModuleViewActivity } from "..";
 import { useRepos } from "@Hooks/useRepos";
-import { Carousel } from "@Components/onsenui/Carousel";
-import { CarouselItem } from "@Components/onsenui/CarouselItem";
 import { blacklistedModules } from "@Util/blacklisted-modules";
 import { useModuleInfo } from "@Hooks/useModuleInfo";
 
