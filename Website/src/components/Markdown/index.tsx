@@ -181,8 +181,6 @@ export const Markup = (props: Props) => {
             if (paragraph.children[0].type != RuleType.text) return next();
             let text = paragraph.children.flatMap((p: any) => p.text).join("");
 
-            console.log(text);
-
             let title: string;
             let admonitionType: AlertType | null = null;
             // A link break after the title is explicitly required by GitHub
@@ -197,8 +195,6 @@ export const Markup = (props: Props) => {
               // So no more check is required.
               title = text;
               admonitionType = admonitionTypes[title];
-
-              console.log(admonitionType);
 
               if (!admonitionType) {
                 return next();
@@ -227,8 +223,6 @@ export const Markup = (props: Props) => {
               if (m) {
                 title = title.substring(0, title.length - m[0].length);
               }
-
-              console.log(admonitionType);
 
               admonitionType = admonitionTypes[title];
               if (!admonitionType) return next();
