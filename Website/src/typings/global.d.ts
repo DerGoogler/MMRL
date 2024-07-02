@@ -172,7 +172,7 @@ declare global {
 
     minApi?: number;
     maxApi?: number;
-    
+
     license?: string;
     homepage?: string;
     support?: string;
@@ -197,10 +197,13 @@ declare global {
     __mmrl__local__module__?: boolean;
   }
 
-  export interface Track {
+  export interface BaseTrack {
     type: string;
     added: number;
     source: string;
+  }
+
+  export interface Track extends BaseTrack {
     verified: boolean;
     antifeatures?: string | string[];
 
