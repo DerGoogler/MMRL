@@ -68,6 +68,79 @@ class Build {
 
     public static TIRAMISU = 33;
   };
+
+  public static parseVersion(version: number) {
+    switch (version) {
+      case this.VERSION_CODES.BASE:
+        return "Android 1.0";
+      case this.VERSION_CODES.BASE_1_1:
+        return "Android 1.1 (Petit Four)";
+      case this.VERSION_CODES.CUPCAKE:
+        return "Android 1.5 (Cupcake)";
+      case this.VERSION_CODES.DONUT:
+        return "Android 1.6 (Donut)";
+      case this.VERSION_CODES.ECLAIR:
+        return "Android 2.0 (Eclair)";
+      case this.VERSION_CODES.ECLAIR_0_1:
+        return "Android 2.0.1 (Eclair)";
+      case this.VERSION_CODES.ECLAIR_MR1:
+        return "Android 2.1 (Eclair)";
+      case this.VERSION_CODES.FROYO:
+        return "Android 2.2 (Froyo)";
+      case this.VERSION_CODES.GINGERBREAD:
+        return "Android 2.3.0 - 2.3.2 (Gingerbread)";
+      case this.VERSION_CODES.GINGERBREAD_MR1:
+        return "Android 2.3.3 - 2.3.7 (Gingerbread)";
+      case this.VERSION_CODES.HONEYCOMB:
+        return "Android 3.0 (Honeycomb)";
+      case this.VERSION_CODES.HONEYCOMB_MR1:
+        return "Android 3.1 (Honeycomb)";
+      case this.VERSION_CODES.HONEYCOMB_MR2:
+        return "Android 3.2 (Honeycomb)";
+      case this.VERSION_CODES.ICE_CREAM_SANDWICH:
+        return "Android 4.0.1 - 4.0.2 (Ice Cream Sandwich)";
+      case this.VERSION_CODES.ICE_CREAM_SANDWICH_MR1:
+        return "Android 4.0.3 - 4.0.4 (Ice Cream Sandwich)";
+      case this.VERSION_CODES.JELLY_BEAN:
+        return "Android 4.1 (Jelly Bean)";
+      case this.VERSION_CODES.JELLY_BEAN_MR1:
+        return "Android 4.2 (Jelly Bean)";
+      case this.VERSION_CODES.JELLY_BEAN_MR2:
+        return "Android 4.3 (Jelly Bean)";
+      case this.VERSION_CODES.KITKAT:
+        return "Android 4.4 (KikKat)";
+      case this.VERSION_CODES.KITKAT_WATCH:
+        return "Android 4.4 (KitKat)";
+      case this.VERSION_CODES.LOLLIPOP:
+        return "Android 5.0 (Lollipop)";
+      case this.VERSION_CODES.LOLLIPOP_MR1:
+        return "Android 5.1 (Lollipop)";
+      case this.VERSION_CODES.M:
+        return "Android 6.0 (Marshmallow)";
+      case this.VERSION_CODES.N:
+        return "Android 7.0 (Nougat)";
+      case this.VERSION_CODES.N_MR1:
+        return "Android 7.1 (Nougat)";
+      case this.VERSION_CODES.O:
+        return "Android 8.0 (Oreo)";
+      case this.VERSION_CODES.O_MR1:
+        return "Android 8.1 (Oreo)";
+      case this.VERSION_CODES.P:
+        return "Android 9.0 (Pie)";
+      case this.VERSION_CODES.Q:
+        return "Android 10 (Quince Tart)";
+      case this.VERSION_CODES.R:
+        return "Android 11 (Red Velvet Cake)";
+      case this.VERSION_CODES.S:
+        return "Android 12 (Snow Cone)";
+      case this.VERSION_CODES.S_V2:
+        return "Android 12L (Snow Cone)";
+      case this.VERSION_CODES.TIRAMISU:
+        return "Android 12 (Tiramisu)";
+      default:
+        return "Sdk: " + version;
+    }
+  }
 }
 
 export { Build };

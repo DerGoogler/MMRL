@@ -28,13 +28,15 @@ import { ModuleViewActivity } from "..";
 import { useRepos } from "@Hooks/useRepos";
 import { blacklistedModules } from "@Util/blacklisted-modules";
 import { useModuleInfo } from "@Hooks/useModuleInfo";
+import { Build } from "@Native/Build";
+import { os } from "@Native/Os";
 
 const OverviewTab = () => {
   const { strings } = useStrings();
   const { context, extra } = useActivity<Module>();
   const { settings } = useSettings();
   const { modules } = useRepos();
-  const { id, name, description, versions, track } = extra;
+  const { id, name, description, versions, minApi, track } = extra;
 
   const { icon, screenshots, require, readme: moduleReadme, categories } = useModuleInfo(extra);
 
@@ -66,9 +68,15 @@ const OverviewTab = () => {
     <>
       <Stack direction="column" justifyContent="center" alignItems="flex-start" spacing={1}>
         {isLowQuality && (
-          <Alert severity="warning">
+          <Alert sx={{ width: "100%" }} severity="warning">
             <AlertTitle>{strings("low_quality_module")}</AlertTitle>
             {strings("low_quality_module_warn")}
+          </Alert>
+        )}
+
+        {minApi && minApi > os.sdk && (
+          <Alert sx={{ width: "100%" }} severity="warning">
+            {strings("module_require_android_ver", { andro_ver: Build.parseVersion(minApi) })}
           </Alert>
         )}
 
