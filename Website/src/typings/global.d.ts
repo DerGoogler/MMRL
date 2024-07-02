@@ -153,13 +153,16 @@ declare global {
     timestamp: number;
   }
 
-  export interface Module {
+  export interface BaseModule {
     id: string;
     name: string;
     version: string;
     versionCode: number;
     author: string;
     description: string;
+  }
+
+  export interface Module extends BaseModule {
     updateJson?: string;
     added: number;
     timestamp?: number;
@@ -167,6 +170,9 @@ declare global {
     track: Track;
     versions: Version[];
 
+    minApi?: number;
+    maxApi?: number;
+    
     license?: string;
     homepage?: string;
     support?: string;
