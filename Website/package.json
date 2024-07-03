@@ -8,14 +8,38 @@
     "version_name": "2.19.18",
     "version_code": 21918,
     "verified_hosts": [
-      ["mmrl", "i"],
-      ["localhost", "i"],
-      ["mmrl.dergoogler.com", "i"],
-      ["dergoogler.com", "i"],
-      ["dergoogler.github.io", "i"],
-      ["gr.dergoogler.com", "i"],
-      ["googlers-repo.github.io", "i"],
-      ["(localhost|\\b(?:(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.){3}(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)(?::\\d{0,4})?\\b)", "g"]
+      [
+        "mmrl",
+        "i"
+      ],
+      [
+        "localhost",
+        "i"
+      ],
+      [
+        "mmrl.dergoogler.com",
+        "i"
+      ],
+      [
+        "dergoogler.com",
+        "i"
+      ],
+      [
+        "dergoogler.github.io",
+        "i"
+      ],
+      [
+        "gr.dergoogler.com",
+        "i"
+      ],
+      [
+        "googlers-repo.github.io",
+        "i"
+      ],
+      [
+        "(localhost|\\b(?:(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.){3}(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)(?::\\d{0,4})?\\b)",
+        "g"
+      ]
     ]
   },
   "main": "index.tsx",
@@ -68,6 +92,7 @@
     "markdown-to-jsx": "^7.4.0",
     "material-icons": "^1.10.8",
     "material-ui-confirm": "^3.0.11",
+    "modfs": "^1.0.0",
     "monaco-editor": "^0.48.0",
     "monaco-editor-core": "^0.46.0",
     "monaco-languageclient": "^6.5.0",

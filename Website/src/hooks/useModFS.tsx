@@ -5,6 +5,8 @@ import { SetStateAction } from "./useStateCallback";
 import { formatObjectEntries, formatString } from "@Util/stringFormat";
 import { useNativeFileStorage } from "./useNativeFileStorage";
 
+import { default as PModFS } from "modfs";
+
 export interface ModFS {
   //cli
   MSUCLI: string;
@@ -128,12 +130,14 @@ export const useModFS = () => {
 export const ModFSProvider = (props: React.PropsWithChildren) => {
   const [modFS, setModFS] = useNativeFileStorage("/data/adb/mmrl/modfs.json", INITIAL_MOD_CONF, { loader: "json" });
 
+  const pmodFS = React.useMemo(() => new PModFS(defaultComposer(INITIAL_MOD_CONF, modFS)), [modFS]);
+
   const contextValue = React.useMemo(
     () => ({
       _modFS: defaultComposer(INITIAL_MOD_CONF, modFS),
-      __modFS: formatObjectEntries<ModFS>(defaultComposer(INITIAL_MOD_CONF, modFS)),
-      modFS: (key, adds) => {
-        return formatString(defaultComposer(INITIAL_MOD_CONF, modFS)[key], { ...modFS, ...adds });
+      __modFS: pmodFS.formatEntries(),
+      modFS<K extends keyof ModFS>(key: K, adds: ModFS | object): ModFS[K] {
+        return PModFS.format(pmodFS.getEntrie(key)!, { ...modFS, ...adds });
       },
       setModFS: (name, state) => {
         setModFS((prev) => {

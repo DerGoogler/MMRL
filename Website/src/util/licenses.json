@@ -213,6 +213,14 @@
     "source": "https://www.npmjs.com/package/material-ui-confirm"
   },
   {
+    "name": "modfs",
+    "author": null,
+    "license": "MIT",
+    "description": "ModFS is a json format processor and also used in MMRL as the ModFS system",
+    "version": "1.0.0",
+    "source": "https://www.npmjs.com/package/modfs"
+  },
+  {
     "name": "monaco-editor",
     "author": null,
     "license": "MIT",
