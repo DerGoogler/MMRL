@@ -94,7 +94,7 @@
     "material-ui-confirm": "^3.0.11",
     "modfs": "^1.0.0",
     "monaco-editor": "^0.48.0",
-    "monaco-editor-core": "^0.46.0",
+    "monaco-editor-core": "^0.50.0",
     "monaco-languageclient": "^6.5.0",
     "object-assign": "^4.1.1",
     "onsenui": "^2.12.8",
