@@ -7,6 +7,9 @@ body:
     attributes:
       value: |
         # General
+
+        > [!IMPORTANT]
+        > If you want to report a broken module ModConf, you're in the wrong place. Please report these error to the proper module page.
   - type: textarea
     id: reproduce_steps
     attributes:
