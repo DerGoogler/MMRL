@@ -10,6 +10,7 @@ export interface RepoContextActions {
   addRepo: (data: AddRepoData) => void;
   removeRepo: (data: RemoveRepoData) => void;
   setRepoEnabled: (data: SetRepoStateData) => void;
+  isRepoEnabled: (repo: string) => boolean;
 }
 
 interface RepoContextInterface {
@@ -27,6 +28,7 @@ export const RepoContext = React.createContext<RepoContextInterface>({
     addRepo: (data: AddRepoData) => {},
     removeRepo: (data: RemoveRepoData) => {},
     setRepoEnabled: (data: SetRepoStateData) => {},
+    isRepoEnabled: (repo: string) => false,
   },
 });
 
@@ -49,14 +51,28 @@ type SetRepoStateData = {
 export const RepoProvider = (props: React.PropsWithChildren) => {
   const TAG = "RepoProvider";
   const log = useLog(TAG);
+  const [disabledRepos, setDisabledRepos] = useNativeStorage<string[]>("disabled_Repos", []);
   const [repos, setRepos] = useNativeStorage<RepoConfig[]>("repos_v3", [
     {
       name: "Googlers Magisk Repo",
       website: "https://mmrl.dergoogler.com",
       support: "https://github.com/Googlers-Repo/gmr/issues",
       donate: "https://github.com/sponsors/DerGoogler",
-      submission: "https://github.com/Googlers-Repo/gmr/issues/new?assignees=&labels=module&projects=&template=submission.yml&title=%5BModule%5D%3A+",
+      submission:
+        "https://github.com/Googlers-Repo/gmr/issues/new?assignees=&labels=module&projects=&template=submission.yml&title=%5BModule%5D%3A+",
       base_url: "https://gr.dergoogler.com/gmr/",
+      max_num: 3,
+      enable_log: true,
+      log_dir: "log",
+    },
+    {
+      name: "Magisk Modules Alt Repo",
+      website: undefined,
+      support: undefined,
+      donate: undefined,
+      submission:
+        "https://github.com/Magisk-Modules-Alt-Repo/submission/issues/new?assignees=&labels=module&projects=&template=module-submission.yml&tit",
+      base_url: "https://magisk-modules-alt-repo.github.io/json-v2/",
       max_num: 3,
       enable_log: true,
       log_dir: "log",
@@ -101,25 +117,28 @@ export const RepoProvider = (props: React.PropsWithChildren) => {
   };
 
   const setRepoEnabled = (data: SetRepoStateData) => {
-    setSettings(
-      "disabled_repos",
-      (prev) => {
-        if (prev.some((elem) => elem === data.id)) {
-          return prev.filter((item) => item !== data.id);
-        } else {
-          return [...prev, data.id];
-        }
-      },
-      data.callback
-    );
+    setDisabledRepos((prev) => {
+      if (prev.some((elem) => elem === data.id)) {
+        return prev.filter((item) => item !== data.id);
+      } else {
+        return [...prev, data.id];
+      }
+    }, data.callback);
   };
+
+  const isRepoEnabled = React.useCallback(
+    (repo: string) => {
+      return !disabledRepos.includes(repo);
+    },
+    [disabledRepos]
+  );
 
   React.useEffect(() => {
     // Needs an another solution
     setModules([]);
     const fetchData = async () => {
       for (const repo of repos) {
-        if (settings.disabled_repos.includes(repo.base_url)) continue;
+        if (disabledRepos.includes(repo.base_url)) continue;
 
         fetch(`${repo.base_url}json/modules.json`)
           .then((res) => {
@@ -138,10 +157,10 @@ export const RepoProvider = (props: React.PropsWithChildren) => {
     };
 
     void fetchData();
-  }, [repos, settings]);
+  }, [disabledRepos, repos, settings]);
 
   const contextValue = React.useMemo(
-    () => ({ repos, setRepos, modules, actions: { addRepo, removeRepo, setRepoEnabled } }),
+    () => ({ repos, setRepos, modules, actions: { addRepo, removeRepo, setRepoEnabled, isRepoEnabled } }),
     [repos, modules, settings]
   );
 

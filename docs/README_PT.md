@@ -6,9 +6,15 @@
 </p>
 
 <p align="center">
-  <a href="https://play.google.com/store/apps/details?id=com.dergoogler.mmrl"><img height="75px" alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png"></a>
-  <a href="https://github.com/DerGoogler/MMRL/releases"><img height="75px" alt="Get it on GitHub" src="https://dergoogler.com/bl-content/uploads/pages/e5f2cff5950bf12b7ecdcc9a54d0a348/get-it-on-github.png"></a>
-  <a href="https://android.izzysoft.de/repo/apk/com.dergoogler.mmrl"><img height="75px" alt="Get it on GitHub" src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png"></a>
+  <span align="center">
+    <a href="https://play.google.com/store/apps/details?id=com.dergoogler.mmrl"><img height="75px" alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png"></a>
+    <a href="https://github.com/DerGoogler/MMRL/releases"><img height="75px" alt="Get it on GitHub" src="https://dergoogler.com/bl-content/uploads/pages/e5f2cff5950bf12b7ecdcc9a54d0a348/get-it-on-github.png"></a>
+  </span>
+  <br />
+  <span align="center">
+    <a href="https://f-droid.org/de/packages/com.dergoogler.mmrl"><img height="75px" alt="Get it on F-Droid" src="https://f-droid.org/badge/get-it-on.png"></a>
+    <a href="https://android.izzysoft.de/repo/apk/com.dergoogler.mmrl"><img height="75px" alt="Get it on GitHub" src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png"></a>
+  </span>
 </p>
 
 <p align="center">

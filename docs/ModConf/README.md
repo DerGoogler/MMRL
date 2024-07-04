@@ -79,12 +79,12 @@ Types
 declare const __idname: string;
 ```
 
-### `__moddirname` (new)
+### `__modpath` (new)
 
 Types
 
 ```ts
-declare const __moddirname: string;
+declare const __modpath: string;
 ```
 
 
@@ -117,3 +117,26 @@ declare const __dirname: string;
 - `bota()`
 
 These function will throw a `IsolatedEvalError` and your config will stop immediately after calling the function
+
+# Code Server
+
+Make conf development easier with code-server
+
+## Requirements
+
+- [Systemless Mkshrc](https://github.com/Magisk-Modules-Alt-Repo/mkshrc)
+- [Systemless Node.js](https://github.com/Magisk-Modules-Alt-Repo/node)
+- [Code Server](https://github.com/Googlers-Repo/code-server)
+
+> You can get everthing on MMRL except Code Server
+
+```shell
+# start code server
+code-server 
+```
+
+Or use the risky way
+
+```shell
+ln -s `which code-server` /data/adb/service.d/code-server
+```

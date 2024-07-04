@@ -105,6 +105,14 @@ declare global {
     };
   };
 
+  interface AndroidNavigator {}
+
+  interface Navigator extends AndroidNavigator {
+    app: {
+      exitApp: () => void;
+    };
+  }
+
   interface Window extends AndroidWindow<any> {
     localStorage: NativeStorage;
   }
@@ -145,38 +153,30 @@ declare global {
     timestamp: number;
   }
 
-  export interface Module {
-    /**
-     * # This is local prop only
-     */
-    cover?: string;
+  export interface BaseModule {
     id: string;
     name: string;
     version: string;
     versionCode: number;
     author: string;
     description: string;
+  }
+
+  export interface Module extends BaseModule {
     updateJson?: string;
     added: number;
-    timestamp: number;
+    timestamp?: number;
+    size?: number;
     track: Track;
     versions: Version[];
 
-    /**
-     * Local modules only
-     */
-    __mmrl__local__module__?: boolean;
-  }
+    minApi?: number;
+    maxApi?: number;
 
-  export interface Track {
-    type: string;
-    added: number;
-    license: string;
-    homepage: string;
-    source: string;
-    support: string;
-    donate: string;
-    verified: boolean;
+    license?: string;
+    homepage?: string;
+    support?: string;
+    donate?: string;
     cover?: string;
     icon?: string;
     require?: string[];
@@ -185,7 +185,77 @@ declare global {
     categories?: string[];
     stars?: number;
     readme?: string;
+
+    /**
+     * Non-user definable
+     */
+    verified: boolean;
+
+    /**
+     * Local modules only
+     */
+    __mmrl__local__module__?: boolean;
+  }
+
+  export interface BaseTrack {
+    type: string;
+    added: number;
+    source: string;
+  }
+
+  export interface Track extends BaseTrack {
+    verified: boolean;
     antifeatures?: string | string[];
+
+    /**
+     * @deprecated
+     */
+    license: string;
+    /**
+     * @deprecated
+     */
+    homepage: string;
+    /**
+     * @deprecated
+     */
+    support: string;
+    /**
+     * @deprecated
+     */
+    donate: string;
+    /**
+     * @deprecated
+     */
+    cover?: string;
+    /**
+     * @deprecated
+     */
+    icon?: string;
+    /**
+     * @deprecated
+     */
+    require?: string[];
+    /**
+     * @deprecated
+     */
+    screenshots?: string[];
+    /**
+     * @deprecated
+     */
+    category?: string;
+    /**
+     * @deprecated
+     */
+    categories?: string[];
+    /**
+     * @deprecated
+     */
+    readme?: string;
+
+    /**
+     * Not Supported
+     */
+    stars?: number;
   }
 
   export interface Version {
@@ -193,6 +263,7 @@ declare global {
     version: string;
     versionCode: number;
     zipUrl: string;
+    size?: number;
     changelog: string;
   }
 

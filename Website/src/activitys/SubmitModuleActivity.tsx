@@ -1,20 +1,5 @@
 import React from "react";
-import {
-  TextField,
-  Autocomplete,
-  Card,
-  Chip,
-  Stack,
-  Avatar,
-  Typography,
-  CardContent,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  Divider,
-  Box,
-} from "@mui/material";
+import { TextField, Autocomplete, Chip, Stack, Avatar, Typography, Divider } from "@mui/material";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import { Page } from "@Components/onsenui/Page";
 import { useCategories } from "@Hooks/useCategories";
@@ -24,18 +9,23 @@ import { useTheme } from "@Hooks/useTheme";
 import { MMRL } from "@Components/icons/MMRL";
 import { MRepo } from "@Components/icons/MRepo";
 import { useNativeFileStorage } from "@Hooks/useNativeFileStorage";
-import hljs from "highlight.js";
 import { licenseTypes } from "@Util/licenseTypes";
 import { CodeBlock } from "@Components/CodeBlock";
 import { useModFS } from "@Hooks/useModFS";
+import { path } from "@Util/path";
+import { en_antifeatures } from "./../locales/antifeatures/en";
 
-interface FormTypes {
+interface FormTypesTrack {
   id: string;
   enable: boolean;
   verified: boolean;
-  license: string;
   update_to: string;
   source: string;
+  antifeatures: string[];
+}
+
+interface FormTypesRepo {
+  license: string;
   support: string;
   donate: string;
   cover: string;
@@ -43,17 +33,20 @@ interface FormTypes {
   categories: string[];
   require: string[];
   screenshots: string[];
-  antifeatures: string[];
   readme: string;
 }
 
-const INITIAL_FORM: FormTypes = {
+const INITIAL_TRACK_FORM: FormTypesTrack = {
   id: "",
   enable: true,
   verified: false,
-  license: "",
   update_to: "",
   source: "",
+  antifeatures: [],
+};
+
+const INITIAL_COM_REPO_FORM: FormTypesRepo = {
+  license: "",
   support: "",
   donate: "",
   cover: "",
@@ -61,23 +54,10 @@ const INITIAL_FORM: FormTypes = {
   categories: [],
   require: [],
   screenshots: [],
-  antifeatures: [],
   readme: "",
 };
 
-const antifeatures = [
-  "Ads",
-  "Tracking",
-  "Non-Free Network Services",
-  "Non-Free Addons",
-  "Non-Free Dependencies",
-  "NSFW",
-  "Upstream Non-Free",
-  "NonßFree Assets",
-  "Known Vulnerability",
-  "Disabled Algorithm",
-  "No Source Since",
-];
+const antifeatures = en_antifeatures.map((af) => af.id);
 
 const SupportedApp = React.memo<{ mmrl?: boolean; mrepo?: boolean }>((props) => {
   return (
@@ -110,8 +90,6 @@ const SubmitModuleActivity = () => {
   const { theme } = useTheme();
   const { modFS } = useModFS();
 
-  const ref = React.useRef<HTMLDivElement | null>(null);
-
   const renderToolbar = () => {
     return (
       <Toolbar modifier="noshadow">
@@ -122,88 +100,103 @@ const SubmitModuleActivity = () => {
       </Toolbar>
     );
   };
-  const [formData, setFormData] = useNativeFileStorage(`${modFS("ADB")}/mmrl/submit-form.json`, INITIAL_FORM, { loader: "json" });
+  const [trackFormData, setTrackFormData] = useNativeFileStorage(
+    path.resolve(modFS("MMRLFOL"), "submit-form-track.json"),
+    INITIAL_TRACK_FORM,
+    {
+      loader: "json",
+    }
+  );
+  const [repoFormData, setRepoFormData] = useNativeFileStorage(
+    path.resolve(modFS("MMRLFOL"), "submit-form-repo.json"),
+    INITIAL_COM_REPO_FORM,
+    {
+      loader: "json",
+    }
+  );
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleTrackChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
 
-    setFormData((prevState) => ({ ...prevState, [name]: value }));
+    setTrackFormData((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const handleLicenseError = React.useMemo(() => !licenseTypes.includes(formData.license), [formData.license]);
+  const handleRepoChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
 
-  React.useEffect(() => {
-    if (ref.current) {
-      ref.current.querySelectorAll<HTMLElement>("pre code").forEach((block) => {
-        block.removeAttribute("data-highlighted");
-        hljs.highlightBlock(block);
-      });
-    }
-  }, [formData]);
+    setRepoFormData((prevState) => ({ ...prevState, [name]: value }));
+  };
+
+  const isInvalidLicense = React.useMemo(() => !licenseTypes.includes(repoFormData.license), [repoFormData.license]);
 
   return (
     <Page sx={{ p: 1 }} renderToolbar={renderToolbar}>
       <Page.RelativeContent>
         <CodeBlock
           sx={{
-            "& pre": {
-              borderRadius: `${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0px 0px `,
-            },
+            mb: 1,
           }}
           lang="json"
         >
-          {JSON.stringify(formData, null, 4)}
+          {JSON.stringify(
+            {
+              "track.json": trackFormData,
+              "common/repo.json": repoFormData,
+            },
+            null,
+            2
+          )}
         </CodeBlock>
-        <Card sx={{ mb: 2, borderRadius: `0px 0px ${theme.shape.borderRadius}px ${theme.shape.borderRadius}px` }}>
-          <CardContent sx={{ pt: 0 }} component={Stack} direction="column" alignItems="flex-start" spacing={1}>
-            <Stack direction="row" alignItems="center" spacing={1}>
-              <MMRL /> <Typography variant="body1">Available in MMRL</Typography>
-            </Stack>
-            <Stack direction="row" alignItems="center" spacing={1}>
-              <MRepo /> <Typography variant="body1">Available in MRepo</Typography>
-            </Stack>
-          </CardContent>
-        </Card>
         <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
-          <TextField
-            placeholder="mkshrc"
-            fullWidth
-            label="Module ID"
-            name="id"
-            value={formData.id}
-            onChange={handleChange}
-            helperText={<SupportedApp mmrl mrepo />}
-          />
+          <Typography sx={{ width: "100%" }} variant="h5">
+            track.json
+          </Typography>
+
+          <TextField placeholder="mkshrc" fullWidth label="Module ID" name="id" value={trackFormData.id} onChange={handleTrackChange} />
 
           <TextField
             placeholder="https://..."
             fullWidth
             label="Module Source URL"
             name="source"
-            value={formData.source}
-            onChange={handleChange}
-            helperText={<SupportedApp mmrl mrepo />}
+            value={trackFormData.source}
+            onChange={handleTrackChange}
           />
 
           <TextField
             fullWidth
             label="Update to"
             name="update_to"
-            value={formData.update_to}
-            onChange={handleChange}
+            value={trackFormData.update_to}
+            onChange={handleTrackChange}
             placeholder="Git repositores needs to end with '.git' or you pass a valid 'update.json'"
-            helperText={<SupportedApp mmrl mrepo />}
           />
 
+          <Autocomplete
+            multiple
+            sx={{ width: "100%" }}
+            value={trackFormData.antifeatures}
+            options={antifeatures}
+            onChange={(e, value) => {
+              setTrackFormData((prevState) => ({ ...prevState, antifeatures: value }));
+            }}
+            filterSelectedOptions
+            disableCloseOnSelect
+            renderInput={(params) => <TextField {...params} label="Anti-Features" />}
+          />
+
+          <Typography sx={{ width: "100%" }} variant="h5">
+            common/repo.json
+          </Typography>
+
           <TextField
-            error={handleLicenseError}
+            error={isInvalidLicense}
             placeholder="MIT"
             fullWidth
-            label={handleLicenseError ? "License" : "License (invalid)"}
+            label={isInvalidLicense ? "License (invalid)" : "License"}
             name="license"
-            value={formData.license}
-            onChange={handleChange}
-            helperText={<SupportedApp mmrl mrepo />}
+            value={repoFormData.license}
+            onChange={handleRepoChange}
           />
 
           <TextField
@@ -211,9 +204,8 @@ const SubmitModuleActivity = () => {
             fullWidth
             label="Support URL"
             name="support"
-            value={formData.support}
-            onChange={handleChange}
-            helperText={<SupportedApp mmrl mrepo />}
+            value={repoFormData.support}
+            onChange={handleRepoChange}
           />
 
           <TextField
@@ -221,35 +213,21 @@ const SubmitModuleActivity = () => {
             fullWidth
             label="Donate URL"
             name="donate"
-            value={formData.donate}
-            onChange={handleChange}
-            helperText={<SupportedApp mmrl mrepo />}
+            value={repoFormData.donate}
+            onChange={handleRepoChange}
           />
 
           <Autocomplete
             multiple
             sx={{ width: "100%" }}
-            value={formData.categories}
+            value={repoFormData.categories}
             options={allCategories}
             onChange={(e, value) => {
-              setFormData((prevState) => ({ ...prevState, categories: value }));
+              setRepoFormData((prevState) => ({ ...prevState, categories: value }));
             }}
             disableCloseOnSelect
             filterSelectedOptions
-            renderInput={(params) => <TextField {...params} label="Categories" helperText={<SupportedApp mmrl />} />}
-          />
-
-          <Autocomplete
-            multiple
-            sx={{ width: "100%" }}
-            value={formData.antifeatures}
-            options={antifeatures}
-            onChange={(e, value) => {
-              setFormData((prevState) => ({ ...prevState, antifeatures: value }));
-            }}
-            filterSelectedOptions
-            disableCloseOnSelect
-            renderInput={(params) => <TextField {...params} label="Anti-Features" helperText={<SupportedApp mmrl />} />}
+            renderInput={(params) => <TextField {...params} label="Categories" />}
           />
 
           <TextField
@@ -257,9 +235,8 @@ const SubmitModuleActivity = () => {
             fullWidth
             label="Module Cover"
             name="cover"
-            value={formData.cover}
-            onChange={handleChange}
-            helperText={<SupportedApp mmrl />}
+            value={repoFormData.cover}
+            onChange={handleRepoChange}
           />
 
           <TextField
@@ -267,9 +244,8 @@ const SubmitModuleActivity = () => {
             fullWidth
             label="Module Icon"
             name="icon"
-            value={formData.icon}
-            onChange={handleChange}
-            helperText={<SupportedApp mmrl />}
+            value={repoFormData.icon}
+            onChange={handleRepoChange}
           />
 
           <TextField
@@ -277,9 +253,8 @@ const SubmitModuleActivity = () => {
             fullWidth
             label="Raw README.md URL"
             name="readme"
-            value={formData.readme}
-            onChange={handleChange}
-            helperText={<SupportedApp mmrl />}
+            value={repoFormData.readme}
+            onChange={handleRepoChange}
           />
 
           <Autocomplete
@@ -296,9 +271,9 @@ const SubmitModuleActivity = () => {
               },
             }}
             multiple
-            value={formData.screenshots}
+            value={repoFormData.screenshots}
             onChange={(e, value) => {
-              setFormData((prevState) => ({ ...prevState, screenshots: value }));
+              setRepoFormData((prevState) => ({ ...prevState, screenshots: value }));
             }}
             options={[]}
             freeSolo
@@ -309,9 +284,7 @@ const SubmitModuleActivity = () => {
                 ))}
               </Stack>
             )}
-            renderInput={(params) => (
-              <TextField {...params} fullWidth label="Screenshots" placeholder="https://..." helperText={<SupportedApp mmrl />} />
-            )}
+            renderInput={(params) => <TextField {...params} fullWidth label="Screenshots" placeholder="https://..." />}
           />
 
           <Autocomplete
@@ -328,9 +301,9 @@ const SubmitModuleActivity = () => {
               },
             }}
             multiple
-            value={formData.require}
+            value={repoFormData.require}
             onChange={(e, value) => {
-              setFormData((prevState) => ({ ...prevState, require: value }));
+              setRepoFormData((prevState) => ({ ...prevState, require: value }));
             }}
             options={[]}
             freeSolo
@@ -341,9 +314,7 @@ const SubmitModuleActivity = () => {
                 ))}
               </Stack>
             )}
-            renderInput={(params) => (
-              <TextField {...params} fullWidth label="Require Modules" placeholder="mkshrc" helperText={<SupportedApp mmrl />} />
-            )}
+            renderInput={(params) => <TextField {...params} fullWidth label="Require Modules" placeholder="mkshrc" />}
           />
         </Stack>
       </Page.RelativeContent>

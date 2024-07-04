@@ -1,0 +1,95 @@
+name: Bug report
+description: Template for bug reports
+title: '[Bug] '
+labels: bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        # General
+
+        > [!IMPORTANT]
+        > If you want to report a broken module ModConf, you're in the wrong place. Please report these error to the proper module page.
+  - type: textarea
+    id: reproduce_steps
+    attributes:
+      label: To Reproduce Steps to reproduce the behavior
+      description: |
+        1. Go to '...'
+        2. Click on '....'
+        3. Scroll down to '....'
+        4. See error
+    validations:
+      required: true
+  - type: input
+    id: expected_behavior
+    attributes:
+      label: Expected behavior
+      description: A clear and concise description of what you expected to happen.
+    validations:
+      required: true
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: If applicable, add screenshots to help explain your problem
+      placeholder: |
+        ![](https://...)
+        ![](https://...)
+        ![](https://...)
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: |
+        To gather log use:
+        ```shell
+        logcat --pid=`pidof -s PACKAGENAME` -v color
+        ```
+      render: logs
+  - type: markdown
+    attributes:
+      value: |
+        # Device info
+  - type: input
+    id: device
+    attributes:
+      label: Device
+      placeholder: IPhone5
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: OS
+      placeholder: ROM and version, ie Havoc-OS 4.12
+    validations:
+      required: true
+  - type: input
+    id: app_version
+    attributes:
+      label: App Version
+      placeholder: 2.19.18
+    validations:
+      required: true
+  - type: input
+    id: user_agent
+    attributes:
+      label: User Agent
+      placeholder: Mozilla/5.0 (Linux; Android 11; Pixel 5) AppleWebKit/537.36
+  - type: dropdown
+    id: root_solution
+    attributes:
+      label: Root solution
+      description: Which root you use
+      options:
+        - Magisk
+        - KernelSU
+        - APatch
+    validations:
+      required: true
+  - type: input
+    id: additional_context
+    attributes:
+      label: Additional context
+      description: Add any other context about the problem here

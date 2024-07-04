@@ -46,7 +46,7 @@ const VersionItem = React.memo<VersionItemProps>(({ id, version, index }) => {
   const { strings } = useStrings();
   const { theme } = useTheme();
 
-  const { track } = extra;
+  const { track, support } = extra;
 
   const versionName = `${version.version} (${version.versionCode})`;
 
@@ -59,7 +59,7 @@ const VersionItem = React.memo<VersionItemProps>(({ id, version, index }) => {
         component: InstallTerminalV2Activity,
         key: "InstallTerminalV2Activity",
         extra: {
-          issues: track.support,
+          issues: support,
           source: track.source,
           id: id,
           exploreInstall: true,

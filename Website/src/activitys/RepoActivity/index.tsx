@@ -29,7 +29,7 @@ import { useNetwork } from "@Hooks/useNetwork";
 const recommended_repos = [
   {
     name: "Magisk Modules Alternative Repository",
-    link: "https://gr.dergoogler.com/mmar/",
+    link: "https://magisk-modules-alt-repo.github.io/json-v2/",
   },
   {
     name: "Googlers Magisk Repo",

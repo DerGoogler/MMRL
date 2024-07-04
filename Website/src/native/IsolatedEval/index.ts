@@ -18,6 +18,8 @@ import { IsoAudio } from "./IsoAudio";
 import { IsoDocument } from "./IsoDocument";
 import { IsolatedEvalError } from "./IsolatedEvalError";
 import { IsolatedFunctionBlockError } from "./IsolatedFunctionBlockError";
+import { IsoDOMParser } from "./IsoDOMParser";
+import { IsoXMLSerializer } from "./IsoXMLSerializer";
 
 type IsoModule = {
   exports: {
@@ -48,7 +50,8 @@ class IsolatedEval<T = any> {
     Event: Event,
     EventTarget: EventTarget,
     NamedNodeMap: NamedNodeMap,
-    DOMParser: DOMParser,
+    DOMParser: IsoDOMParser,
+    XMLSerializer: IsoXMLSerializer,
     SuFile: SuFile,
     Terminal: Terminal,
     Chooser: Chooser,
@@ -103,7 +106,10 @@ class IsolatedEval<T = any> {
     this._prototypeWhitelist.set(Event, new Set());
     this._prototypeWhitelist.set(EventTarget, new Set());
     this._prototypeWhitelist.set(NamedNodeMap, new Set());
+    this._prototypeWhitelist.set(IsoDOMParser, new Set());
     this._prototypeWhitelist.set(DOMParser, new Set());
+    this._prototypeWhitelist.set(IsoXMLSerializer, new Set());
+    this._prototypeWhitelist.set(XMLSerializer, new Set());
     this._prototypeWhitelist.set(SuFile, new Set());
     this._prototypeWhitelist.set(ShellClass, new Set());
     this._prototypeWhitelist.set(View, new Set());
@@ -113,6 +119,7 @@ class IsolatedEval<T = any> {
     this._prototypeWhitelist.set(Native, new Set());
     this._prototypeWhitelist.set(Terminal, new Set());
     this._prototypeWhitelist.set(Chooser, new Set());
+    this._prototypeWhitelist.set(Path, new Set());
     this._prototypeWhitelist.set(React, new Set());
 
     this.require = this.require.bind(this);

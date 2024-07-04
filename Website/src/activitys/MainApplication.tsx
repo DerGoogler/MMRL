@@ -3,7 +3,6 @@ import React from "react";
 import Typography from "@mui/material/Typography";
 import MenuIcon from "@mui/icons-material/Menu";
 import ModuleFragment from "./fragments/ModuleFragment";
-import InstallTerminalActivity from "./InstallTerminalActivity";
 import DeviceModule from "@Components/module/DeviceModule";
 import ExploreModule from "@Components/module/ExploreModule";
 import UpdateModule from "@Components/module/UpdateModule";
@@ -24,6 +23,7 @@ import { useSettings } from "@Hooks/useSettings";
 import { useOpenModuleSearch } from "@Hooks/useOpenModuleSearch";
 import InstallTerminalV2Activity from "./InstallTerminalV2Activity";
 import { Chooser } from "@Native/Chooser";
+import { useConfirm } from "material-ui-confirm";
 
 const MainApplication = () => {
   const { context } = useActivity();
@@ -32,8 +32,33 @@ const MainApplication = () => {
   const { modules } = useRepos();
   const [index, setIndex] = React.useState(0);
   const localModules = useLocalModules();
+  const confirm = useConfirm();
 
   const handleOpenModuleSearch = useOpenModuleSearch(modules);
+
+  const handleBackEvent = React.useCallback(
+    (e: any) => {
+      if (index === 0) {
+        confirm({
+          title: strings("exit_app"),
+          description: strings("exit_app_desc"),
+          confirmationText: strings("yes"),
+          cancellationText: strings("no"),
+        })
+          .then(() => {
+            if (typeof e.callParentHandler === "function") {
+              e.callParentHandler();
+            } else {
+              navigator.app.exitApp();
+            }
+          })
+          .catch(() => {});
+      } else {
+        setIndex(0);
+      }
+    },
+    [index]
+  );
 
   React.useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -72,6 +97,7 @@ const MainApplication = () => {
                           sx={{
                             "& .fab__icon": {
                               verticalAlign: "middle",
+                              color: "black",
                             },
                           }}
                           onClick={() => {
@@ -167,7 +193,7 @@ const MainApplication = () => {
   };
 
   return (
-    <Page modifier="noshadow" renderToolbar={renderToolbar}>
+    <Page modifier="noshadow" onDeviceBackButton={handleBackEvent} renderToolbar={renderToolbar}>
       <Tabbar
         modifier="noshadow"
         hideTabs={!os.isAndroid}

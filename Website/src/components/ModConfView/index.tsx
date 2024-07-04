@@ -28,7 +28,7 @@ export const ModConfView = React.forwardRef<any, { children: string; modid: stri
         __idname: modid,
         __filename: format("CONFINDEX"),
         __dirname: format("CONFCWD"),
-        __moddirname: format("MODULECWD"),
+        __modpath: format("MODULECWD"),
         window: {
           fetch: internalFetch,
           open(href: string) {
@@ -46,7 +46,7 @@ export const ModConfView = React.forwardRef<any, { children: string; modid: stri
         modid: modid,
         modpath: (path: string) => `${format("MODULECWD")}/${path}`,
         confpath: (path: string) => `${format("CONFCWD")}/${path}`,
-        include: (modulePath: string, opt: { isolate: boolean } = { isolate: true }) => {
+        include: (modulePath: string, opt: { isolate: boolean } = { isolate: false }) => {
           if (opt.isolate) {
             modulePath = `${format("CONFCWD")}/${modulePath}`;
           }

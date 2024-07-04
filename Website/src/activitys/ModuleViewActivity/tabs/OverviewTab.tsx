@@ -1,4 +1,3 @@
-import { Page } from "@Components/onsenui/Page";
 import { useStrings } from "@Hooks/useStrings";
 import Box from "@mui/material/Box";
 import React from "react";
@@ -27,18 +26,21 @@ import { useCategories } from "@Hooks/useCategories";
 import { useFormatDate } from "@Hooks/useFormatDate";
 import { ModuleViewActivity } from "..";
 import { useRepos } from "@Hooks/useRepos";
-import { Carousel } from "@Components/onsenui/Carousel";
-import { CarouselItem } from "@Components/onsenui/CarouselItem";
 import { blacklistedModules } from "@Util/blacklisted-modules";
+import { useModuleInfo } from "@Hooks/useModuleInfo";
+import { Build } from "@Native/Build";
+import { os } from "@Native/Os";
 
 const OverviewTab = () => {
   const { strings } = useStrings();
   const { context, extra } = useActivity<Module>();
   const { settings } = useSettings();
   const { modules } = useRepos();
-  const { id, name, version, versionCode, description, author, versions, track } = extra;
+  const { id, name, description, versions, minApi, track } = extra;
 
-  const { filteredCategories } = useCategories(track.categories);
+  const { icon, screenshots, require, readme: moduleReadme, categories } = useModuleInfo(extra);
+
+  const { filteredCategories } = useCategories(categories);
   const isLowQuality = useLowQualityModule(extra, !settings._low_quality_module);
   const latestVersion = React.useMemo(() => versions[versions.length - 1], [versions]);
   const formatLastUpdate = useFormatDate(latestVersion.timestamp);
@@ -49,8 +51,8 @@ const OverviewTab = () => {
   }, [id, track.antifeatures]);
 
   React.useEffect(() => {
-    if (track.readme) {
-      fetch(track.readme)
+    if (moduleReadme) {
+      fetch(moduleReadme)
         .then((res) => {
           if (res.status === 200) {
             return res.text();
@@ -60,15 +62,21 @@ const OverviewTab = () => {
         })
         .then((text) => setReadme(text));
     }
-  }, [track.readme]);
+  }, [moduleReadme]);
 
   return (
     <>
       <Stack direction="column" justifyContent="center" alignItems="flex-start" spacing={1}>
         {isLowQuality && (
-          <Alert severity="warning">
+          <Alert sx={{ width: "100%" }} severity="warning">
             <AlertTitle>{strings("low_quality_module")}</AlertTitle>
             {strings("low_quality_module_warn")}
+          </Alert>
+        )}
+
+        {minApi && minApi > os.sdk && (
+          <Alert sx={{ width: "100%" }} severity="warning">
+            {strings("module_require_android_ver", { andro_ver: Build.parseVersion(minApi) })}
           </Alert>
         )}
 
@@ -100,7 +108,7 @@ const OverviewTab = () => {
                       extra: {
                         desc: readme,
                         name: name,
-                        logo: track.icon,
+                        logo: icon,
                       },
                     });
                   }}
@@ -169,7 +177,7 @@ const OverviewTab = () => {
           </Card>
         )}
 
-        {track.require && track.require.length !== 0 && (
+        {require && require.length !== 0 && (
           <Card
             sx={{
               width: "100%",
@@ -191,7 +199,7 @@ const OverviewTab = () => {
               }}
             >
               <List disablePadding sx={{ width: { xs: "100%" } }}>
-                {track.require.map((req) => {
+                {require.map((req) => {
                   const findRequire = React.useMemo(() => modules.find((module) => module.id === req), [modules]);
 
                   if (findRequire) {
@@ -221,7 +229,7 @@ const OverviewTab = () => {
           </Card>
         )}
 
-        {track.screenshots && (
+        {screenshots && screenshots.length !== 0 && (
           <Card sx={{ width: "100%" }}>
             <CardContent>
               <Typography variant="h5" component="div">
@@ -241,7 +249,7 @@ const OverviewTab = () => {
                 gridAutoColumns: "minmax(250px, 1fr)",
               }}
             >
-              {track.screenshots.map((image, i) => (
+              {screenshots.map((image, i) => (
                 <ImageListItem
                   sx={(theme) => ({
                     ml: 1,

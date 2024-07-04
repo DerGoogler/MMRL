@@ -79,13 +79,13 @@ export const SettingsProvider = (props: React.PropsWithChildren) => {
       link_protection: true,
       swipeable_tabs: false,
       print_terminal_error: false,
-      terminal_word_wrap: false,
+      terminal_word_wrap: true,
       terminal_numberic_lines: true,
     }),
     []
   );
 
-  const [settings, setSettings] = useNativeFileStorage("/data/adb/mmrl/settings.v2.json", INITIAL_SETTINGS, { loader: "json" });
+  const [settings, setSettings] = useNativeFileStorage("/data/adb/mmrl/settings.json", INITIAL_SETTINGS, { loader: "json" });
 
   const _setSettings = (name, state, callback) => {
     setSettings(

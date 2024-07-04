@@ -143,5 +143,10 @@ export const en = {
   blacklisted_modules: "Blacklisted modules",
 
   install_module: "Install {name}?",
-  install_module_dialog_desc: "Are you sure that you what to install {name}?"
+  install_module_dialog_desc: "Are you sure that you what to install {name}?",
+
+  exit_app: "Exit app?",
+  exit_app_desc: "Are you sure that you want to leave the app?",
+
+  module_require_android_ver: "This module requires {andro_ver}. It may doesn't work for your device."
 };

@@ -43,7 +43,7 @@ export const LocalRepository = React.memo<LocalRepositoryProps>((props) => {
   const { settings } = useSettings();
   const confirm = useConfirm();
   const { actions } = useRepos();
-  const [enabled, setEnabled] = React.useState(!settings.disabled_repos.includes(repo.base_url));
+  const [enabled, setEnabled] = React.useState(actions.isRepoEnabled(repo.base_url));
   const [open, setOpen] = React.useState(false);
 
   const { data } = useFetch<Repo>(`${repo.base_url}json/modules.json`);
