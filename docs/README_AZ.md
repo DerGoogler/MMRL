@@ -36,7 +36,7 @@ Magisk Modul Anbar Yükləyici (MMRL) ilə tanış olun - Android-də Magisk, Ke
 
 # Tələblər
 
-- Android 8.0 və ya daha sonrakı versiyalar
+- Android 8.0 və ya sonrakı versiyalar
 - [MMRL-CLI](https://github.com/DerGoogler/MMRL-CLI)
 - 4-5 GB RAM (daha aşağı mümkün ola bilər)
 
