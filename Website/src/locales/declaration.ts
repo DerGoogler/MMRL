@@ -12,7 +12,6 @@ import React from "react";
 export type StringDeclaration = keyof typeof en;
 
 export type AvailableStrs = "en" | "de" | "zh" | "pt" | "az";
-export type AvailableStrs = "en" | "de" | "zh" | "pt";
 export type Strs = {
   [code in AvailableStrs]: Partial<Record<StringDeclaration, str>>;
 };
