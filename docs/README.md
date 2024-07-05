@@ -1,5 +1,4 @@
-**English** || [Português](README_PT.md)
-
+**English** || [Português](README_PT.md) || [Azərbaycan](README_AZ.md)
 <p align="center">
   <img width="550" height="auto" src="https://mmrl.dergoogler.com/assets/MMRL-Cover.png">
   <br/>Your highly customizable module manager</b>
