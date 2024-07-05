@@ -25,14 +25,14 @@
 
 <p align="center">
   <a href="https://github.com/DerGooggler/MMRL/blob/master/docs/faq_az.md">TSS</a> • 
-  <a href="https://github.com/DerGoogler/MMRL/blob/master/docs/ModConf/README.md">ModConf</a> • 
+  <a href="https://github.com/DerGoogler/MMRL/blob/master/docs/ModConf/README_az.md">ModConf</a> •
   <a href="https://github.com/DerGoogler/MMRL/blob/master/docs/ModFS.md">ModFS</a> • 
   <a href="https://github.com/DerGoogler/MMRL/blob/master/docs/Installer/README.md">Installer</a>
 </p>
 
 # Xülasə
 
-Magisk Modul Anbar Yükləyici (MMRL) ilə tanış olun - Android-də Magisk, KernelSU ve APatch üçün son modul meneceri. Bu son derəcə konfiqurasiya edilə bilən proqram istifadəçilərə modulları asanlıqla idarə etməyə imkan verir, eyni zamanda reklamlardan tamamilə azaddır.
+Magisk Module Repo Loader (MMRL) ilə tanış olun - Android-də Magisk, KernelSU ve APatch üçün son modul meneceri. Bu son derəcə konfiqurasiya edilə bilən proqram istifadəçilərə modulları asanlıqla idarə etməyə imkan verir, eyni zamanda reklamlardan tamamilə azaddır.
 
 # Tələblər
 
