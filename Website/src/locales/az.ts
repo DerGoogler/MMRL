@@ -75,7 +75,7 @@ export const az = {
   update_json: "Öz update.json istifadə edir",
   update_json_desc: "Bu modul yeniləmə və quraşdırma məqsədilə öz update.json faylını istifadə edir.",
   shading: "Kölgə salma",
-  shading_title: "Xüsusi kölgə salma (shading) tətbiq edin",
+  shading_title: "Xüsusi kölgə salma tətbiq edin",
   shading_desc: "Diqqətli istifadə edin, əgər çox qaranlıq olarsa, İstifadəçi İnterfeysini görə bilməyəcəksiniz.",
   module: "Modul",
   swipeable_tabs: "Sürüşdürülə bilən tab vərəqlər",
