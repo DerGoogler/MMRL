@@ -1,4 +1,4 @@
-[English](README.md) || [Português](README_PT.md) || **Azərbaycan**
+[English](README.md) || [Português](README_pt.md) || **Azərbaycan**
 
 <p align="center">
   <img width="550" height="auto" src="https://mmrl.dergoogler.com/assets/MMRL-Cover.png">
@@ -24,7 +24,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/DerGoogler/MMRL/blob/master/docs/faq.md">FAQ</a> • 
+  <a href="https://github.com/DerGoogler/MMRL/blob/master/docs/faq_az.md">TSS</a> • 
   <a href="https://github.com/DerGoogler/MMRL/blob/master/docs/ModConf/README.md">ModConf</a> • 
   <a href="https://github.com/DerGoogler/MMRL/blob/master/docs/ModFS.md">ModFS</a> • 
   <a href="https://github.com/DerGoogler/MMRL/blob/master/docs/Installer/README.md">Installer</a>

@@ -1,4 +1,4 @@
-[English](README.md) || **Português (Brasil)** || [Azərbaycan](README_AZ.md)
+[English](README.md) || **Português (Brasil)** || [Azərbaycan](README_az.md)
 
 <p align="center">
   <img width="550" height="auto" src="https://mmrl.dergoogler.com/assets/MMRL-Cover.png">
