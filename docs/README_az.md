@@ -25,7 +25,7 @@
 
 <p align="center">
   <a href="https://github.com/DerGooggler/MMRL/blob/master/docs/faq_az.md">TSS</a> • 
-  <a href="https://github.com/DerGoogler/MMRL/blob/master/docs/ModConf/README_az.md">ModConf</a> •
+  <a href="https://github.com/RashadGasimli/MMRL/blob/master/docs/ModConf/README_az.md">ModConf</a> •
   <a href="https://github.com/DerGoogler/MMRL/blob/master/docs/ModFS.md">ModFS</a> • 
   <a href="https://github.com/DerGoogler/MMRL/blob/master/docs/Installer/README.md">Installer</a>
 </p>
