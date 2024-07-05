@@ -11,7 +11,7 @@ export const en_antifeatures = [
   },
   {
     id: "NSFW",
-    name: "IÜTD (NSFW)",
+    name: "İÜTD",
     desc: "Bu modul ictimailəşdirilməməli və hər yerdə görünməməli olan məzmunu ehtiva edir",
   },
   {

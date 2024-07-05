@@ -40,7 +40,7 @@ export const az = {
   donate: "İanə verin",
   support: "Dəstəkləyin",
   website: "Vebsayt",
-  no_root: "Kök girişi (root) yoxdur",
+  no_root: "Kök girişi yoxdur",
   failed: "Uğursuz oldu",
   no_root_message: "Zəhmət olmasa ən azı bir kök (root) meneceri istifadə etdiyinzdən əmin olun, əks halda MMRL tətbiqindən istifadə edə bilməzsiniz.",
   open_magisk: "Magisk-i açın",
@@ -48,7 +48,7 @@ export const az = {
   enabled: "Aktivləşdirildi",
   comments: "Şərhlər",
   configureable: "konfiqurasiya edilə bilər",
-  change_boot: "Açılışı (boot) dəyişir",
+  change_boot: "Açılışı dəyişir",
   need_ramdisk: "Ramdisk lazımdır",
   add_repository: "Anbar əlavə edin",
   add_repository_description: "Sizin yaxud başqa bir yerdən anbar əlavə edin.",
@@ -75,7 +75,7 @@ export const az = {
   update_json: "Öz update.json istifadə edir",
   update_json_desc: "Bu modul yeniləmə və quraşdırma məqsədilə öz update.json faylını istifadə edir.",
   shading: "Kölgə salma",
-  shading_title: "Xüsusi kölgə salma tətbiq edin",
+  shading_title: "Xüsusi kölgə salma (shading) tətbiq edin",
   shading_desc: "Diqqətli istifadə edin, əgər çox qaranlıq olarsa, İstifadəçi İnterfeysini görə bilməyəcəksiniz.",
   module: "Modul",
   swipeable_tabs: "Sürüşdürülə bilən tab vərəqlər",
@@ -124,8 +124,8 @@ export const az = {
 
   unverified_host: "Doğrulanmamış host!",
   unverified_host_text:
-    "MMRL-ə doğrulanmış bir host olmayan {url} ünvanından daxil olursunuz. MMRL-ni üçüncü tərəf mənbələrindən deyil, yalnız orijinal mənbədən istifadə edin.",
-  unverified_host_text_help: "Hər hansı bir problem gördünüz və ya əldə edilmiş hostun istifadə üçün təhlükəsiz olduğunu bilirsiniz? Sonra bunu {issues} altında bildirin",
+    "MMRL-ə doğrulanmış bir ana kompüter olmayan {url} ünvanından daxil olursunuz. MMRL-ni üçüncü tərəf mənbələrindən deyil, yalnız orijinal mənbədən istifadə edin.",
+  unverified_host_text_help: "Hər hansı bir problem gördünüz və ya əldə edilmiş ana kompüterin istifadə üçün təhlükəsiz olduğunu bilirsiniz? Sonra bunu {issues} altında bildirin",
 
   // terminal activity
   reboot_device: "Cihaz yenidən başladılsın?",
