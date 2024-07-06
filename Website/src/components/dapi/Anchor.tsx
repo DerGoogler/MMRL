@@ -86,7 +86,7 @@ const Anchor: React.FC<AnchorProps> = (props) => {
   const { context } = useActivity();
   const { settings } = useSettings();
   const { strings } = useStrings();
-  const { href, children, noIcon, module, color = theme.palette.text.link, target = "_blank" } = props;
+  const { href, children, noIcon, module, color = theme.palette.text.link, target = os.WindowMMRLOwn } = props;
 
   const { modules } = useRepos();
   const findModule = React.useMemo(() => modules.find((m) => m.id === module), [module]);
@@ -116,12 +116,7 @@ const Anchor: React.FC<AnchorProps> = (props) => {
   const __href = React.useMemo(() => (!(module && findModule) ? href : module), [href]);
 
   const openLink = React.useCallback(() => {
-    os.open(__href, {
-      target: target,
-      features: {
-        color: theme.palette.background.default,
-      },
-    });
+    os.openURL(__href, target, `color=${theme.palette.background.default}`);
   }, [__href]);
 
   return (
