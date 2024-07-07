@@ -1,13 +1,11 @@
 import { useLog } from "@Hooks/native/useLog";
 import { ModFS, useModFS } from "@Hooks/useModFS";
-import { useTheme } from "@Hooks/useTheme";
 import { IsolatedEval } from "@Native/IsolatedEval";
 import { os } from "@Native/Os";
 import * as React from "react";
 import { libraries } from "./libs";
 
-export const ModConfView = React.forwardRef<any, { children: string; modid: string }>((props, ref) => {
-  const { theme } = useTheme();
+export const ModConfView = (props: { children: string; modid: string }) => {
   const { modFS } = useModFS();
 
   const { modid, children } = props;
@@ -31,14 +29,7 @@ export const ModConfView = React.forwardRef<any, { children: string; modid: stri
         __modpath: format("MODULECWD"),
         window: {
           fetch: internalFetch,
-          open(href: string) {
-            os.open(href, {
-              target: "_blank",
-              features: {
-                color: theme.palette.primary.main,
-              },
-            });
-          },
+          open: os.openURL,
         },
         fetch: internalFetch,
 
@@ -66,4 +57,4 @@ export const ModConfView = React.forwardRef<any, { children: string; modid: stri
   }
 
   return <></>;
-});
+};

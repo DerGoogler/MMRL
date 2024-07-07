@@ -145,7 +145,8 @@ export const Markup = (props: Props) => {
   React.useEffect(() => {
     if (ref.current) {
       ref.current.querySelectorAll<HTMLElement>("pre code").forEach((block) => {
-        hljs.highlightBlock(block);
+        block.removeAttribute("data-highlighted");
+        hljs.highlightElement(block);
       });
     }
 
