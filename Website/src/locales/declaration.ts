@@ -1,9 +1,9 @@
 import { AvailableLangs, useStrings } from "@Hooks/useStrings";
-import { az } from "./az";
 import { de } from "./de";
 import { en } from "./en";
 import { zh } from "./zh";
-import { pt } from "./pt"
+import { pt } from "./pt";
+import { az } from "./az"
 import React from "react";
 
 /**
