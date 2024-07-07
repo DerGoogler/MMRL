@@ -124,8 +124,8 @@ export const az = {
 
   unverified_host: "Doğrulanmamış host!",
   unverified_host_text:
-    "MMRL-ə doğrulanmış bir ana kompüter olmayan {url} ünvanından daxil olursunuz. MMRL-ni üçüncü tərəf mənbələrindən deyil, yalnız orijinal mənbədən istifadə edin.",
-  unverified_host_text_help: "Hər hansı bir problem gördünüz və ya əldə edilmiş ana kompüterin istifadə üçün təhlükəsiz olduğunu bilirsiniz? Sonra bunu {issues} altında bildirin",
+    "MMRL-ə doğrulanmış bir host olmayan {url} ünvanından daxil olursunuz. MMRL-ni üçüncü tərəf mənbələrindən deyil, yalnız orijinal mənbədən istifadə edin.",
+  unverified_host_text_help: "Hər hansı bir problem gördünüz və ya əldə edilmiş hostun istifadə üçün təhlükəsiz olduğunu bilirsiniz? Sonra bunu {issues} altında bildirin",
 
   // terminal activity
   reboot_device: "Cihaz yenidən başladılsın?",
