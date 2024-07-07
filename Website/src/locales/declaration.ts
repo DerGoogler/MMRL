@@ -1,4 +1,5 @@
 import { AvailableLangs, useStrings } from "@Hooks/useStrings";
+import { az } from "./az";
 import { de } from "./de";
 import { en } from "./en";
 import { zh } from "./zh";
@@ -10,7 +11,7 @@ import React from "react";
  */
 export type StringDeclaration = keyof typeof en;
 
-export type AvailableStrs = "en" | "de" | "zh" | "pt";
+export type AvailableStrs = "en" | "de" | "zh" | "pt" | "az";
 export type Strs = {
   [code in AvailableStrs]: Partial<Record<StringDeclaration, str>>;
 };
@@ -20,6 +21,7 @@ export const strs: Strs = {
   de: de,
   zh: zh,
   pt: pt,
+  az: az,
 };
 
 export const useLanguageMap = (): arr<AvailableLangs> => {
