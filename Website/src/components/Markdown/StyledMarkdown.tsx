@@ -74,7 +74,6 @@ export const StyledMarkdown = styled("article")(() => {
       borderStyle: "none",
       maxWidth: "100%",
       boxSizing: "content-box",
-      backgroundColor: "#ffffff",
       '&[align="right"]': { paddingLeft: "20px" },
       '&[align="left"]': { paddingRight: "20px" },
     },

@@ -22,11 +22,74 @@ class OsClass extends Native {
     super(window.__os__);
   }
 
+  readonly WindowMMRLOwn = "_mmrlOwn";
+  readonly WindowBlank = "_blank";
+  readonly WindowSelf = "_self";
+  readonly WindowParent = "_parent";
+  readonly WindowTop = "_top";
+  readonly WindowUnfancedTop = "_unfencedTop";
+
+  /**
+   * @deprecated Use `os.openURL()` instead
+   */
   public open(url?: string | URL | undefined, options?: OpenOptions): Window | null {
     if (this.isAndroid) {
-      return this.interface.open(url, options?.features?.color || "#fffddd");
+      return this.interface.open(url, options?.features?.color || "#101010");
     } else {
       return window.open(url, options?.target, options?.features?.window);
+    }
+  }
+
+  private _windowObjectReference: Window | null = null;
+  private _previousURL: string | URL | null | undefined = null;
+
+  /**
+   * Handle opening link on Android and browsers. Android supports additional `color=#101010` feature
+   * @param url
+   * @param target
+   * @param features
+   * @returns
+   */
+  public openURL(url?: string | URL, target?: string, features?: string): void {
+    const openRequestedSingleTab = (url?: string | URL, features?: string) => {
+      if (this._windowObjectReference === null || this._windowObjectReference.closed) {
+        this._windowObjectReference = open(url, this.WindowMMRLOwn, features);
+      } else if (this._previousURL !== url) {
+        this._windowObjectReference = open(url, this.WindowMMRLOwn, features);
+        /* if the resource to load is different,
+           then we load it in the already opened secondary window and then
+           we bring such window back on top/in front of its parent window. */
+        this._windowObjectReference && this._windowObjectReference.focus();
+      } else {
+        this._windowObjectReference.focus();
+      }
+      this._previousURL = url;
+      /* explanation: we store the current url in order to compare url
+         in the event of another call of this function. */
+    };
+
+    function parseWindowFeatures(features?: string) {
+      if (!features) return {};
+      const featurePairs = features.split(",");
+      const featureObject = {};
+
+      featurePairs.forEach((pair) => { 
+        const [key, value] = pair.split("=");
+        featureObject[key.trim()] = parseInt(value.trim()); // Parse value as integer
+      });
+
+      return featureObject;
+    }
+
+    if (this.isAndroid) {
+      const parseFetures: Record<string, number | string> = parseWindowFeatures(features);
+      this.interface.open(url, parseFetures.color || "#101010");
+    } else {
+      if (target === this.WindowMMRLOwn) {
+        openRequestedSingleTab(url, features);
+      } else {
+        window.open(url, target, features);
+      }
     }
   }
 

@@ -188,7 +188,7 @@ export const DrawerFragment = (props: Props) => {
             hide();
           }}
         >
-          <ListItemText primary={"Changelog"} />
+          <ListItemText primary={strings("changelog")} />
         </ListItemButton>
       </List>
 
