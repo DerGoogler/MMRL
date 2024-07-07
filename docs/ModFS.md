@@ -8,7 +8,7 @@ Here are some samples to avoid some configs
 
 ## Avoid MMRL Install Tools
 
-This workaroud is for people who don't wanna install a extra module for installing other modules
+This workaround is for people who don't wanna install a extra module for installing other modules
 
 Based on your selected root method
 
