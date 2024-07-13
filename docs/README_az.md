@@ -1,7 +1,8 @@
-**English** || [Português](README_PT.md) || [Azərbaycan](README_az.md)
+[English](README.md) || [Português](README_PT.md) || **Azərbaycan**
+
 <p align="center">
   <img width="550" height="auto" src="https://mmrl.dergoogler.com/assets/MMRL-Cover.png">
-  <br/>Your highly customizable module manager</b>
+  <br/>Son dərəcə fərdiləşdirilə bilən modul meneceriniz</b>
 </p>
 
 <p align="center">
@@ -23,40 +24,40 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/DerGoogler/MMRL/blob/master/docs/faq.md">FAQ</a> • 
-  <a href="https://github.com/DerGoogler/MMRL/blob/master/docs/ModConf/README.md">ModConf</a> • 
-  <a href="https://github.com/DerGoogler/MMRL/blob/master/docs/ModFS.md">ModFS</a> • 
-  <a href="https://github.com/DerGoogler/MMRL/blob/master/docs/Installer/README.md">Installer</a>
+  <a href="https://github.com/DerGoogler/MMRL/blob/master/docs/faq_az.md">TSS</a> • 
+  <a href="https://github.com/DerGoogler/MMRL/blob/master/docs/ModConf/README_az.md">ModConf</a> •
+  <a href="https://github.com/DerGoogler/MMRL/blob/master/docs/ModFS_az.md">ModFS</a> • 
+  <a href="https://github.com/DerGoogler/MMRL/blob/master/docs/Installer/README_az.md">Installer</a>
 </p>
 
-# Summary
+# Xülasə
 
-Introducing Magisk Module Repo Loader (MMRL) - the ultimate module manager for Magisk, KernelSU and APatch on Android. This highly configurable app allows users to manage modules effortlessly, all while being completely free of ads.
+Magisk Module Repo Loader (MMRL) ilə tanış olun - Android-də Magisk, KernelSU ve APatch üçün son modul meneceri. Bu son derəcə konfiqurasiya edilə bilən proqram istifadəçilərə modulları asanlıqla idarə etməyə imkan verir, eyni zamanda reklamlardan tamamilə azaddır.
 
-# Requirements
+# Tələblər
 
-- Android 8.0 or later
+- Android 8.0 və ya sonrakı versiyalar
 - [MMRL-CLI](https://github.com/DerGoogler/MMRL-CLI)
-- 4-5 GB RAM (lower may possible)
+- 4-5 GB RAM (daha aşağı mümkün ola bilər)
 
 
-# Features
+# Xüsusiyyətləri
 
-- Basics: Literally basics
-- [ModFS](https://github.com/DerGoogler/MMRL/tree/master/docs/ModFS.md): Customizable Module Filesystem
-- [ModConf](https://github.com/DerGoogler/MMRL/blob/master/docs/ModConf/README.md): Provide dynamic created pages for modules
-- Custom Repos: Load any repo that uses the MRepo or the GR Fork
+- Əsas biliklər: Sözün əsl mənasında əsas biliklər
+- [ModFS](https://github.com/DerGoogler/MMRL/tree/master/docs/ModFS.md): Fərdiləşdirilə Bilən Modul Fayl Sistemi
+- [ModConf](https://github.com/DerGoogler/MMRL/blob/master/docs/ModConf/README.md): Modullar üçün dinamik yaradılmış səhifələr təmin edin
+- Xüsusi Anbarlar: MRepo və ya GR Fork istifadə edən istənilən anbarı yükləyin
 
-> Read the [documentation](https://github.com/DerGoogler/MMRL/tree/master/docs) to explore more of our functions like `Shell`, `SuFile` and more
+> Shell, SuFile və daha çoxu kimi daxa çox funksiyalarımızı kəşf etmək üçün [sənədləri](https://github.com/DerGoogler/MMRL/tree/master/docs) oxuyun
 
-### Supported root manager
+### Dəstəklənən kök meneceri
 
 - [x] [Magisk](https://github.com/topjohnwu/Magisk)
 - [x] [Magisk Delta](https://github.com/HuskyDG/magisk-files)
 - [x] [KernelSU](https://github.com/tiann/KernelSU)
 - [x] [APatch](https://github.com/bmax121/APatch)
 
-# Screenshots
+# Ekran görüntüləri
 
 <p>
   <img src="../assets/store_ready/1.png" width="32%" />
@@ -68,7 +69,7 @@ Introducing Magisk Module Repo Loader (MMRL) - the ultimate module manager for M
   <img src="../assets/store_ready/7.png" width="32%" />
 </p>
 
-# Credits & Thanks
+# Kredit və Təşəkkürlər
 
 - [tabler/tabler-icons](https://github.com/tabler/tabler-icons.git)
 - [Googlers-Repo/node-native](https://github.com/Googlers-Repo/node-native)
