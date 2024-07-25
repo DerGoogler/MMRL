@@ -11,9 +11,9 @@
       "type": "UNIVERSAL",
       "filters": [],
       "attributes": [],
-      "versionCode": 22020,
-      "versionName": "2.20.20",
-      "outputFile": "app-default-universal-release-2.20.20-22020.apk"
+      "versionCode": 22021,
+      "versionName": "2.20.21",
+      "outputFile": "app-default-universal-release-2.20.21-22021.apk"
     },
     {
       "type": "ONE_OF_MANY",
@@ -24,22 +24,9 @@
         }
       ],
       "attributes": [],
-      "versionCode": 22020,
-      "versionName": "2.20.20",
-      "outputFile": "app-default-x86_64-release-2.20.20-22020.apk"
-    },
-    {
-      "type": "ONE_OF_MANY",
-      "filters": [
-        {
-          "filterType": "ABI",
-          "value": "arm64-v8a"
-        }
-      ],
-      "attributes": [],
-      "versionCode": 22020,
-      "versionName": "2.20.20",
-      "outputFile": "app-default-arm64-v8a-release-2.20.20-22020.apk"
+      "versionCode": 22021,
+      "versionName": "2.20.21",
+      "outputFile": "app-default-x86_64-release-2.20.21-22021.apk"
     },
     {
       "type": "ONE_OF_MANY",
@@ -50,9 +37,22 @@
         }
       ],
       "attributes": [],
-      "versionCode": 22020,
-      "versionName": "2.20.20",
-      "outputFile": "app-default-armeabi-v7a-release-2.20.20-22020.apk"
+      "versionCode": 22021,
+      "versionName": "2.20.21",
+      "outputFile": "app-default-armeabi-v7a-release-2.20.21-22021.apk"
+    },
+    {
+      "type": "ONE_OF_MANY",
+      "filters": [
+        {
+          "filterType": "ABI",
+          "value": "arm64-v8a"
+        }
+      ],
+      "attributes": [],
+      "versionCode": 22021,
+      "versionName": "2.20.21",
+      "outputFile": "app-default-arm64-v8a-release-2.20.21-22021.apk"
     },
     {
       "type": "ONE_OF_MANY",
@@ -63,9 +63,9 @@
         }
       ],
       "attributes": [],
-      "versionCode": 22020,
-      "versionName": "2.20.20",
-      "outputFile": "app-default-x86-release-2.20.20-22020.apk"
+      "versionCode": 22021,
+      "versionName": "2.20.21",
+      "outputFile": "app-default-x86-release-2.20.21-22021.apk"
     }
   ],
   "elementType": "File"
