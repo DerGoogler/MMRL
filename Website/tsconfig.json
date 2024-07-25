@@ -32,7 +32,8 @@
       "@Styles/*": ["styles/*"],
       "@Activitys/*": ["activitys/*"],
       "@Strings": ["language/core/index.ts"],
-      "@Annotation/*": ["annotation/*"]
+      "@Annotation/*": ["annotation/*"],
+      "@Loclaes/*": ["loclaes/*"]
     }
   },
   "ts-node": {

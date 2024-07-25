@@ -104,6 +104,7 @@ const config: Configuration = {
       "@Activitys": resolve(__dirname, "src/activitys"),
       "@Strings": resolve(__dirname, "src/language/core/index.ts"),
       "@Annotation": resolve(__dirname, "src/annotation"),
+      "@Locales": resolve(__dirname, "src/locales"),
     },
     modules: ["node_modules", join(process.env.NPM_CONFIG_PREFIX || __dirname, "lib/node_modules")],
     extensions: [".js", ".jsx", ".ts", ".tsx", ".scss", ".sass", ".css"],
