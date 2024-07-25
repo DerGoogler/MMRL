@@ -217,7 +217,7 @@
     "author": null,
     "license": "MIT",
     "description": "ModFS is a json format processor and also used in MMRL as the ModFS system",
-    "version": "1.0.0",
+    "version": "1.1.1",
     "source": "https://www.npmjs.com/package/modfs"
   },
   {
