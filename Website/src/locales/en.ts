@@ -148,5 +148,10 @@ export const en = {
   exit_app: "Exit app?",
   exit_app_desc: "Are you sure that you want to leave the app?",
 
-  module_require_android_ver: "This module requires {andro_ver}. It may doesn't work for your device."
+  module_require_android_ver: "This module requires {andro_ver}. It may doesn't work for your device.",
+
+  we_hit_a_brick: "We hit a brick!",
+  open_settings: "Open settings",
+  open_logcat: "Open Logcat",
+  try_again: "Try again"
 };

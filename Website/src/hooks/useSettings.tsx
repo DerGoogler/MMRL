@@ -86,7 +86,7 @@ export const SettingsProvider = (props: React.PropsWithChildren) => {
   );
 
   const [settings, setSettings] = useNativeFileStorage("/data/adb/mmrl/settings.v2.json", INITIAL_SETTINGS, { loader: "json" });
-
+ 
   const _setSettings = (name, state, callback) => {
     setSettings(
       (prev) => {

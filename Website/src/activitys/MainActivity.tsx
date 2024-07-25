@@ -28,6 +28,7 @@ import UnverifiedHostActivity from "./UnverifiedHostActivity";
 import { useModFS } from "@Hooks/useModFS";
 import { SuFile } from "@Native/SuFile";
 import { LogcatActivity } from "./LogcatActivity";
+import { useStrings } from "@Hooks/useStrings";
 
 const getLocation = () => {
   if (window.location !== window.parent.location) {
@@ -58,6 +59,7 @@ const CheckRoot = () => {
 
 const MainActivity = (): JSX.Element => {
   const { settings } = useSettings();
+  const { strings } = useStrings();
   const { theme } = useTheme();
   const { modFS } = useModFS();
 
@@ -241,7 +243,7 @@ const MainActivity = (): JSX.Element => {
         renderToolbar={() => {
           return (
             <Toolbar modifier="noshadow">
-              <Toolbar.Center>We hit a brick!</Toolbar.Center>
+              <Toolbar.Center>{strings("we_hit_a_brick")}</Toolbar.Center>
             </Toolbar>
           );
         }}
@@ -252,14 +254,14 @@ const MainActivity = (): JSX.Element => {
           </Pre>
 
           <Button fullWidth variant="contained" disableElevation onClick={resetErrorBoundary}>
-            Try again
+            {strings("try_again")}
           </Button>
           <Button sx={{ mt: 2 }} fullWidth variant="contained" disableElevation onClick={handleOpenSettings}>
-            Open settings
+            {strings("open_settings")}
           </Button>
           {os.isAndroid && (
             <Button sx={{ mt: 2 }} fullWidth variant="contained" disableElevation onClick={handleOpenLogcat}>
-              Open Logcat
+              {strings("open_logcat")}
             </Button>
           )}
 
