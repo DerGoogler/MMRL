@@ -1,4 +1,8 @@
-export const pt = {
+/**
+ * Credits due file rename: GitHub @Vaz15k
+ * First PR: https://github.com/DerGoogler/MMRL/pull/176
+ */
+export const pt_BR = {
   continue: "Continuar",
   caution: "Cuidado",
   latest: "Mais recente",

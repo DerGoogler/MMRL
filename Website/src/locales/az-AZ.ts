@@ -1,4 +1,8 @@
-export const az = {
+/**
+ * Credits due file rename: GitHub @RashadGasimli
+ * First PR: https://github.com/DerGoogler/MMRL/pull/199
+ */
+export const az_AZ = {
   continue: "Davam et",
   caution: "Diqqət",
   latest: "Ən sonuncu",
