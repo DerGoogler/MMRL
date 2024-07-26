@@ -18,9 +18,5 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[python]": {
     "editor.defaultFormatter": "ms-python.python"
-  },
-  "i18nJsonEditor.supportedFolders": [
-    "locales",
-    "i18n"
-  ]
+  }
 }

@@ -226,6 +226,19 @@ export const InstallTerminalV2Activity = () => {
     },
   });
 
+  // ensure that it is always the same function
+  const nativeVolumeEventPrevent = React.useCallback((e: Event) => {
+    e.preventDefault();
+  }, []);
+  React.useEffect(() => {
+    document.addEventListener("volumeupbutton", nativeVolumeEventPrevent, false);
+    document.addEventListener("volumedownbutton", nativeVolumeEventPrevent, false);
+    return () => {
+      document.removeEventListener("volumeupbutton", nativeVolumeEventPrevent, false);
+      document.removeEventListener("volumedownbutton", nativeVolumeEventPrevent, false);
+    };
+  }, []);
+
   if (settings.term_scroll_bottom) {
     const termBehavior = React.useMemo(() => settings.term_scroll_behavior, [settings]);
 
