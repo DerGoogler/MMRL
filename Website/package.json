@@ -71,7 +71,7 @@
     "@emotion/styled": "^11.8.1",
     "@giscus/react": "^2.4.0",
     "@monaco-editor/react": "^4.6.0",
-    "@mui/icons-material": "^5.8.0",
+    "@mui/icons-material": "^5.16.5",
     "@mui/lab": "^5.0.0-alpha.135",
     "@mui/material": "^5.15.2",
     "@nyariv/sandboxjs": "^0.8.23",
@@ -94,7 +94,7 @@
     "material-ui-confirm": "^3.0.11",
     "modfs": "^1.1.1",
     "monaco-editor": "^0.48.0",
-    "monaco-editor-core": "^0.46.0",
+    "monaco-editor-core": "^0.50.0",
     "monaco-languageclient": "^6.5.0",
     "object-assign": "^4.1.1",
     "onsenui": "^2.12.8",
@@ -151,7 +151,7 @@
     "url-loader": "^4.1.1",
     "vscode": "^1.1.37",
     "webpack": "^5.91.0",
-    "webpack-cli": "^4.9.1",
+    "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1",
     "yaml-loader": "^0.8.0"
   }
