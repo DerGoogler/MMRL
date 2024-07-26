@@ -13,6 +13,7 @@ import li from "@Util/licenses.json";
 import { os } from "@Native/Os";
 import { useTheme } from "@Hooks/useTheme";
 import FetchTextActivity from "./FetchTextActivity";
+import { useFetch } from "@Hooks/useFetch";
 
 const DepCard = (props: { dep: (typeof li)[0] }) => {
   const { theme } = useTheme();
@@ -29,26 +30,21 @@ const DepCard = (props: { dep: (typeof li)[0] }) => {
     });
   };
 
+  const [licenseData] = useFetch<any>(
+    `https://raw.githubusercontent.com/spdx/license-list-data/main/website/${dep.license}.json`
+  );
+
   const handleOpenLicense = () => {
-    fetch(`https://raw.githubusercontent.com/spdx/license-list-data/main/website/${dep.license}.json`)
-      .then((res) => {
-        if (res.status === 200) {
-          return res.json();
-        } else {
-          throw new Error("Fetching license failed");
-        }
-      })
-      .then((json: LicenseSPX) => {
-        context.pushPage({
-          component: FetchTextActivity,
-          key: "license_" + dep.license,
-          extra: {
-            raw_data: json.licenseText,
-            modulename: json.name,
-          },
-        });
-      })
-      .catch((err) => {});
+    if (licenseData) {
+      context.pushPage({
+        component: FetchTextActivity,
+        key: "license_" + dep.license,
+        extra: {
+          raw_data: licenseData.licenseText,
+          modulename: licenseData.name,
+        },
+      });
+    }
   };
 
   return (

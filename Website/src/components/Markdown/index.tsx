@@ -11,6 +11,7 @@ import { AlertIcon, BugIcon, CheckIcon, IssueClosedIcon, IssueOpenedIcon, IssueR
 import { Code } from "@Components/dapi/Code";
 import { Pre } from "@Components/dapi/Pre";
 import { Anchor } from "@Components/dapi/Anchor";
+import { useFetch } from "@Hooks/useFetch";
 
 export type AlertType = {
   title: string;
@@ -140,7 +141,9 @@ export const MarkdownOverrides: MarkdownToJSX.Overrides | undefined = {
 
 export const Markup = (props: Props) => {
   const ref = React.useRef<HTMLDivElement>(null);
-  const [text, setText] = React.useState<string>(props.children ? props.children : "");
+
+  const [fetchedText] = useFetch<string>(props.fetch, { type: "text" });
+  const text = fetchedText || props.children;
 
   React.useEffect(() => {
     if (ref.current) {
@@ -149,15 +152,7 @@ export const Markup = (props: Props) => {
         hljs.highlightElement(block);
       });
     }
-
-    if (props.fetch) {
-      fetch(props.fetch)
-        .then((res) => res.text())
-        .then((t) => {
-          setText(t);
-        });
-    }
-  }, [fetch]);
+  }, []);
 
   return (
     <StyledMarkdown ref={ref} sx={props.sx}>
@@ -234,7 +229,7 @@ export const Markup = (props: Props) => {
             return admonitionType.render(text);
           },
         }}
-        children={text}
+        children={text || ""}
       />
     </StyledMarkdown>
   );

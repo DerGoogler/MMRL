@@ -27,6 +27,7 @@ import { CodeBlock } from "@Components/CodeBlock";
 import { VerifiedIcon } from "@Components/icons/VerifiedIcon";
 import { IsolatedFunctionBlockError } from "@Native/IsolatedEval/IsolatedFunctionBlockError";
 import { Terminal } from "@Native/Terminal";
+import { useFetch } from "@Hooks/useFetch";
 
 export const libraries = {
   react: {
@@ -87,6 +88,7 @@ export const libraries = {
 
   "@mmrl/hooks": {
     useConfirm: useConfirm,
+    useFetch: useFetch,
     useConfig: useConfig,
     useModFS: useModFS,
     useActivity: useActivity,

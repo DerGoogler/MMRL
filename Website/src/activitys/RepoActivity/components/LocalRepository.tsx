@@ -12,8 +12,8 @@ import { DeleteRounded, LanguageRounded, SupportRounded, UploadFileRounded, Volu
 import { os } from "@Native/Os";
 import { useFormatDate } from "@Hooks/useFormatDate";
 import { useConfirm } from "material-ui-confirm";
-import { useFetch } from "usehooks-ts";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useFetch } from "@Hooks/useFetch";
 
 interface ListItemProps {
   part?: any;
@@ -46,7 +46,7 @@ export const LocalRepository = React.memo<LocalRepositoryProps>((props) => {
   const [enabled, setEnabled] = React.useState(actions.isRepoEnabled(repo.base_url));
   const [open, setOpen] = React.useState(false);
 
-  const { data } = useFetch<Repo>(`${repo.base_url}json/modules.json`);
+  const [data] = useFetch<Repo>(`${repo.base_url}json/modules.json`);
 
   const formatLastUpdate = useFormatDate(data ? data.metadata.timestamp : 0);
 

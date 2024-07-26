@@ -72,7 +72,7 @@
     "@giscus/react": "^2.4.0",
     "@monaco-editor/react": "^4.6.0",
     "@mui/icons-material": "^5.16.5",
-    "@mui/lab": "^5.0.0-alpha.135",
+    "@mui/lab": "^5.0.0-alpha.160",
     "@mui/material": "^5.15.2",
     "@nyariv/sandboxjs": "^0.8.23",
     "@primer/octicons-react": "^19.9.0",

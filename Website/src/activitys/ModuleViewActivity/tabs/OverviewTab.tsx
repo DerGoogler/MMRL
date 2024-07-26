@@ -30,6 +30,7 @@ import { blacklistedModules } from "@Util/blacklisted-modules";
 import { useModuleInfo } from "@Hooks/useModuleInfo";
 import { Build } from "@Native/Build";
 import { os } from "@Native/Os";
+import { useFetch } from "@Hooks/useFetch";
 
 const OverviewTab = () => {
   const { strings } = useStrings();
@@ -44,25 +45,12 @@ const OverviewTab = () => {
   const isLowQuality = useLowQualityModule(extra, !settings._low_quality_module);
   const latestVersion = React.useMemo(() => versions[versions.length - 1], [versions]);
   const formatLastUpdate = useFormatDate(latestVersion.timestamp);
-  const [readme, setReadme] = React.useState<string | undefined>(undefined);
 
   const findHardCodedAntifeature = React.useMemo<Track["antifeatures"]>(() => {
     return [...(track.antifeatures || []), ...(blacklistedModules.find((mod) => mod.id === id)?.antifeatures || [])];
   }, [id, track.antifeatures]);
 
-  React.useEffect(() => {
-    if (moduleReadme) {
-      fetch(moduleReadme)
-        .then((res) => {
-          if (res.status === 200) {
-            return res.text();
-          } else {
-            return undefined;
-          }
-        })
-        .then((text) => setReadme(text));
-    }
-  }, [moduleReadme]);
+  const [readme] = useFetch<string>(moduleReadme, { type: "text" });
 
   return (
     <>

@@ -1,5 +1,6 @@
 import { useEffect, useReducer, useRef } from "react";
 // https://usehooks-ts.com/react-hook/use-fetch
+
 interface State<T> {
   data?: T;
   error?: Error;
@@ -7,10 +8,14 @@ interface State<T> {
 
 type Cache<T> = { [url: string]: T };
 
+interface FetchOptions extends ResponseInit {
+  type?: "json" | "text";
+}
+
 // discriminated union type
 type Action<T> = { type: "loading" } | { type: "fetched"; payload: T } | { type: "error"; payload: Error };
 
-export function useFetch<T = unknown>(fetchType?: "json" | "text", url?: string, options?: RequestInit): State<T> {
+export function useFetch<T = unknown>(url?: string, options?: FetchOptions): [T | undefined, Error | undefined] {
   const cache = useRef<Cache<T>>({});
 
   // Used to prevent state update if the component is unmounted
@@ -58,7 +63,20 @@ export function useFetch<T = unknown>(fetchType?: "json" | "text", url?: string,
           throw new Error(response.statusText);
         }
 
-        const data = (fetchType === "text" ? await response.text() : await response.json()) as T;
+        let data: T;
+        switch (options?.type) {
+          case "json":
+            data = (await response.json()) as T;
+            break;
+          case "text":
+            data = (await response.text()) as T;
+            break;
+
+          default:
+            data = (await response.json()) as T;
+            break;
+        }
+
         cache.current[url] = data;
         if (cancelRequest.current) return;
 
@@ -80,5 +98,5 @@ export function useFetch<T = unknown>(fetchType?: "json" | "text", url?: string,
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url]);
 
-  return state;
+  return [state.data, state.error];
 }
