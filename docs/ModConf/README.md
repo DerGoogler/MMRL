@@ -87,7 +87,6 @@ Types
 declare const __modpath: string;
 ```
 
-
 ### `__filename` (new)
 
 Types
@@ -130,13 +129,14 @@ Make conf development easier with code-server
 
 > You can get everthing on MMRL except Code Server
 
+> ### Install it with [MMRL-CLI](https://github.com/DerGoogler/MMRL-CLI)
+>
+> ```shell
+> mmrl install -y "mkshrc" "node_on_android" "https://github.com/Googlers-Repo/code-server/releases/latest/download/module.zip"
+> ```
+
+Then you can start code-server after a reboot
+
 ```shell
-# start code server
 code-server 
-```
-
-Or use the risky way
-
-```shell
-ln -s `which code-server` /data/adb/service.d/code-server
 ```
