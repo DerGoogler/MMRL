@@ -115,7 +115,7 @@
   "devDependencies": {
     "@babel/core": "^7.24.0",
     "@babel/preset-env": "^7.23.6",
-    "@babel/preset-react": "^7.23.3",
+    "@babel/preset-react": "^7.24.7",
     "@types/babel__core": "^7.20.2",
     "@types/babel__standalone": "^7.1.7",
     "@types/fs-extra": "^11.0.4",
