@@ -86,7 +86,7 @@ export const RepoProvider = (props: React.PropsWithChildren) => {
     if (!repos.some((repo) => repo.base_url === data.url)) {
       if (repos.length <= 4) {
         if (link.validURL(data.url)) {
-          fetch(`${data.url}json/config.json`)
+          fetch(`${data.url.slice(-1) != "/" ? data.url + "/" : data.url}json/config.json`)
             .then((response) => {
               if (response.status == 200) {
                 return response.json();
