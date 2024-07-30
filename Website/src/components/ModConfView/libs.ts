@@ -104,6 +104,6 @@ export const libraries = {
     ConfigProvider: ConfigProvider,
     StringsProvider: StringsProvider,
   },
-
+  modfs: require("modfs"),
   "default-composer": require("default-composer"),
 };
