@@ -9,7 +9,12 @@ body:
         # General
 
         > [!IMPORTANT]
-        > If you want to report a broken module ModConf, you're in the wrong place. Please report these error to the proper module page.
+        > The following things are not MMRL related
+        > - **Install scripts** such as typos in there or other things.
+        > - Some parts of **ModConf**. Things like `Cannot find module 'dont-anoy'` are MMRL related, this libaray may has benn removed or renamed.
+        > - General module functionality after the install. MMRL is *module manager* **not** a *module executer*
+        > 
+        > If these rules are ignored then your issue will be closed.
   - type: textarea
     id: reproduce_steps
     attributes:
