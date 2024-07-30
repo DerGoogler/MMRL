@@ -9,7 +9,7 @@ interface State<T> {
 type Cache<T> = { [url: string]: T };
 
 interface FetchOptions extends ResponseInit {
-  type?: "json" | "text";
+  type?: "json" | "text" | "blob";
 }
 
 // discriminated union type
@@ -63,20 +63,7 @@ export function useFetch<T = unknown>(url?: string, options?: FetchOptions): [T 
           throw new Error(response.statusText);
         }
 
-        let data: T;
-        switch (options?.type) {
-          case "json":
-            data = (await response.json()) as T;
-            break;
-          case "text":
-            data = (await response.text()) as T;
-            break;
-
-          default:
-            data = (await response.json()) as T;
-            break;
-        }
-
+        let data: T = (await response[options?.type || "json"]()) as T;
         cache.current[url] = data;
         if (cancelRequest.current) return;
 

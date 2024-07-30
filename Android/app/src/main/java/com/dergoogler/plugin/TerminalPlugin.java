@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 public class TerminalPlugin extends CordovaPlugin {
-    private static final String LOG_TAG = "TerminalPlugin";
+    private static final String TAG = "TerminalPlugin";
     private CallbackContext terminalCallbackContext = null;
 
     private int ProcessCode = 1000;
@@ -43,7 +43,7 @@ public class TerminalPlugin extends CordovaPlugin {
                     try {
                         run(envp, cwd, commands);
                     } catch (IOException | JSONException e) {
-                        e.printStackTrace();
+                        Log.e(TAG, e.toString());
                         if (printError) {
                             updateTerminalLine(e.toString());
                         }
@@ -53,7 +53,7 @@ public class TerminalPlugin extends CordovaPlugin {
                 return true;
             case "test":
                 String msg = data.getString(0);
-                Log.i("d", msg);
+                Log.i(TAG, msg);
                 return true;
 
             default:
@@ -64,6 +64,7 @@ public class TerminalPlugin extends CordovaPlugin {
 
     public void run(JSONObject envp, String cwd, String... command) throws IOException, JSONException {
         ProcessBuilder pb = new ProcessBuilder(command).redirectErrorStream(true);
+
         if (envp != null) {
             Map<String, String> m = pb.environment();
             m.putAll(toMap(envp));
@@ -78,18 +79,21 @@ public class TerminalPlugin extends CordovaPlugin {
                     break;
                 updateTerminalLine(line);
             }
-            updateTerminalExit(process.exitValue());
         } catch (Exception e) {
-            updateTerminalExit(500);
+            Log.e(TAG, e.toString());
         }
+        updateTerminalExit(process);
     }
 
     private void updateTerminalLine(String line) {
         sendUpdate(PluginResult.Status.OK, line);
     }
 
-    private void updateTerminalExit(int code) {
-        sendUpdate(PluginResult.Status.ERROR, code);
+    private void updateTerminalExit(Process process) {
+        if (!process.isAlive()) {
+            sendUpdate(PluginResult.Status.ERROR, process.exitValue());
+            process.destroy();
+        }
     }
 
     private void sendUpdate(PluginResult.Status status, int line) {

@@ -46,7 +46,7 @@ function SearchActivity(props: SearchActivityProps) {
   const __placeholder = placeholder ? placeholder : (strings("search") as string);
 
   const [search, setSearch] = React.useState<string>(initialSearch);
-  const __renderList = React.useCallback(renderList, []);
+  const __renderList = React.useCallback(renderList, [search, list]);
 
   const renderToolbar = () => {
     return (
