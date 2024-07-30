@@ -32,12 +32,35 @@ import { Build } from "@Native/Build";
 import { os } from "@Native/Os";
 import { useFetch } from "@Hooks/useFetch";
 
+const colorHandler = (color?: ModuleNoteColors) => {
+  switch (color) {
+    case "green":
+    case "success":
+      return "success";
+
+    case "info":
+    case "blue":
+      return "info";
+
+    case "warning":
+    case "yellow":
+      return "warning";
+
+    case "error":
+    case "red":
+      return "error";
+
+    default:
+      return "info";
+  }
+};
+
 const OverviewTab = () => {
   const { strings } = useStrings();
   const { context, extra } = useActivity<Module>();
   const { settings } = useSettings();
   const { modules } = useRepos();
-  const { id, name, description, versions, minApi, track } = extra;
+  const { id, name, description, versions, minApi, note, track } = extra;
 
   const { icon, screenshots, require, readme: moduleReadme, categories } = useModuleInfo(extra);
 
@@ -55,6 +78,13 @@ const OverviewTab = () => {
   return (
     <>
       <Stack direction="column" justifyContent="center" alignItems="flex-start" spacing={1}>
+        {note && (
+          <Alert sx={{ width: "100%" }} severity={colorHandler(note.color)}>
+            {note.title && <AlertTitle>{note.title}</AlertTitle>}
+            {note.message}
+          </Alert>
+        )}
+
         {isLowQuality && (
           <Alert sx={{ width: "100%" }} severity="warning">
             <AlertTitle>{strings("low_quality_module")}</AlertTitle>

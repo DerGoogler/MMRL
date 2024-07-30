@@ -162,6 +162,13 @@ declare global {
     description: string;
   }
 
+  export type ModuleNoteColors = "success" | "green" | "info" | "blue" | "warning" | "yellow" | "error" | "red";
+  export interface ModuleNote {
+    title?: string;
+    message?: string;
+    color?: ModuleNoteColors;
+  }
+
   export interface Module extends BaseModule {
     updateJson?: string;
     added: number;
@@ -185,6 +192,7 @@ declare global {
     categories?: string[];
     stars?: number;
     readme?: string;
+    note?: ModuleNote;
 
     /**
      * Non-user definable
