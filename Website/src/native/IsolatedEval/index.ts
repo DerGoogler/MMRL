@@ -20,6 +20,7 @@ import { IsolatedEvalError } from "./IsolatedEvalError";
 import { IsolatedFunctionBlockError } from "./IsolatedFunctionBlockError";
 import { IsoDOMParser } from "./IsoDOMParser";
 import { IsoXMLSerializer } from "./IsoXMLSerializer";
+import { ZipFS } from "@Native/ZipFS";
 
 type IsoModule = {
   exports: {
@@ -91,8 +92,9 @@ class IsolatedEval<T = any> {
   public libraries: Record<string, any>;
   public indexFile: string;
   public scope: IScope;
+  public standalone: string | undefined;
 
-  public constructor(libraries: Record<string, any>, indexFile: string, cwd: string, scope: IScope) {
+  public constructor(libraries: Record<string, any>, indexFile: string, cwd: string, scope: IScope, standalone?: string) {
     this._prototypeWhitelist.set(Node, new Set());
     this._prototypeWhitelist.set(Object, new Set());
     this._prototypeWhitelist.set(Document, new Set());
@@ -123,7 +125,10 @@ class IsolatedEval<T = any> {
     this._prototypeWhitelist.set(React, new Set());
 
     this.require = this.require.bind(this);
-    this._resolveModulePath = this._resolveModulePath.bind(this);
+    this._requireFile = this._requireFile.bind(this);
+    this._requireFromZipFile = this._requireFromZipFile.bind(this);
+    this._resolveModulePathFromZip = this._resolveModulePathFromZip.bind(this);
+    this._resolveModulePathFile = this._resolveModulePathFile.bind(this);
 
     this._sandbox = new Sandbox({ globals: this._globals, prototypeWhitelist: this._prototypeWhitelist });
 
@@ -137,6 +142,7 @@ class IsolatedEval<T = any> {
     this.path = new Path(cwd);
 
     this.libraries = libraries;
+    this.standalone = standalone;
     this.indexFile = indexFile;
     this.scope = {
       ...scope,
@@ -147,14 +153,14 @@ class IsolatedEval<T = any> {
     };
   }
 
-  public require(modulePath: string) {
+  private _requireFile(modulePath: string) {
     // Check if the module is a core module
     if (this.libraries[modulePath]) {
       return this.libraries[modulePath];
     }
 
     // Resolve the module path
-    const resolvedPath = this._resolveModulePath(modulePath);
+    const resolvedPath = this._resolveModulePathFile(modulePath);
     if (!resolvedPath) {
       throw new IsolatedEvalError(`Cannot find module '${modulePath}'`);
     }
@@ -196,7 +202,7 @@ class IsolatedEval<T = any> {
           const moduleWrapper = new Function("exports", "require", "module", "__filename", "__dirname", transformed);
           this.compile<typeof moduleWrapper>(`return ${moduleWrapper}`)(
             module.exports,
-            this.require,
+            this._requireFile,
             module,
             resolvedPath,
             this.path.dirname(resolvedPath)
@@ -213,7 +219,84 @@ class IsolatedEval<T = any> {
     return module.exports.default || module.exports;
   }
 
-  private _resolveModulePath(modulePath: string): string | null {
+  private _requireFromZipFile(modulePath: string) {
+    // Check if the module is a core module
+    if (this.libraries[modulePath]) {
+      return this.libraries[modulePath];
+    }
+
+    // Resolve the module path
+    const resolvedPath = this._resolveModulePathFromZip(modulePath);
+    if (!resolvedPath) {
+      throw new IsolatedEvalError(`Cannot find module '${modulePath}'`);
+    }
+
+    // Check if module is already cached
+    if (this.moduleCache[resolvedPath]) {
+      return this.moduleCache[resolvedPath].exports;
+    }
+
+    // Create a new module and cache it
+    const module: IsoModule = { exports: {} };
+    this.moduleCache[resolvedPath] = module;
+
+    // Read and execute module content based on file extension
+    const extension = this.path.extname(resolvedPath);
+
+    const fs = new ZipFS(this.standalone as string);
+
+    switch (extension) {
+      case ".json":
+        const jsonContent = fs.read(resolvedPath);
+        module.exports = JSON.parse(jsonContent);
+        break;
+
+      case ".yml":
+      case ".yaml":
+        module.exports = yaml.parse(fs.read(resolvedPath));
+        break;
+      case ".properties":
+      case ".prop":
+      case ".ini":
+        module.exports = ini.parse(fs.read(resolvedPath));
+        break;
+      case ".js":
+      case ".jsx":
+        const moduleContent = fs.read(resolvedPath);
+        const transformed = this.transform(moduleContent);
+        if (transformed) {
+          const moduleWrapper = new Function("exports", "require", "module", "__filename", "__dirname", transformed);
+          this.compile<typeof moduleWrapper>(`return ${moduleWrapper}`)(
+            module.exports,
+            this._requireFromZipFile,
+            module,
+            resolvedPath,
+            this.path.dirname(resolvedPath)
+          );
+        } else {
+          throw new IsolatedEvalError("An error occurred, either there is a syntax mistake or something");
+        }
+        break;
+      default:
+        module.exports.default = fs.read(resolvedPath);
+        break;
+    }
+
+    return module.exports.default || module.exports;
+  }
+
+  /**
+   * require
+   */
+  public require(path: string) {
+    if (this.standalone) {
+      return this._requireFromZipFile(path);
+    } else {
+      return this._requireFile(path);
+    }
+  }
+
+  private _resolveModulePathFile(modulePath: string): string | null {
     const extensions = [".js", ".jsx", ".json", "yml", ".yaml", ".properties", ".prop", ".ini"];
     const resolvedPath = new SuFile(this.path.resolve(modulePath));
 
@@ -237,6 +320,27 @@ class IsolatedEval<T = any> {
         if (ifp.exist() && ifp.isFile()) {
           return ifp.getPath();
         }
+      }
+    }
+
+    return null;
+  }
+
+  private _resolveModulePathFromZip(modulePath: string): string | null {
+    const extensions = [".js", ".jsx", ".json", "yml", ".yaml", ".properties", ".prop", ".ini"];
+    const fs = new ZipFS(this.standalone as string);
+    const resolvedPath = this.path.resolve(modulePath);
+
+    // Check if the exact file exists
+    if (fs.exist(resolvedPath)) {
+      return resolvedPath;
+    }
+
+    // Check if file with extensions exists
+    for (let ext of extensions) {
+      const pth = resolvedPath + ext;
+      if (fs.exist(pth)) {
+        return pth;
       }
     }
 

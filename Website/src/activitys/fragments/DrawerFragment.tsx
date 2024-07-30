@@ -18,6 +18,7 @@ import { SubmitModuleActivity } from "@Activitys/SubmitModuleActivity";
 import { os } from "@Native/Os";
 import { useTheme } from "@Hooks/useTheme";
 import ViewBlacklistedModulesActivity from "@Activitys/ViewBlacklistedModulesActivity";
+import ModConfStandaloneActivity from "@Activitys/ModConfStandaloneActivity";
 
 type Props = {
   renderToolbar: () => JSX.Element;
@@ -132,6 +133,18 @@ export const DrawerFragment = (props: Props) => {
           }}
         >
           <ListItemText primary={strings("modconf_playground")} />
+        </ListItemButton>{" "}
+        <ListItemButton
+          onClick={() => {
+            pushPage<any, any>({
+              component: ModConfStandaloneActivity,
+              key: "ModConfStandaloneActivity",
+              extra: {},
+            });
+            hide();
+          }}
+        >
+          <ListItemText primary={"ModConf Standalone"} />
         </ListItemButton>
       </List>
 

@@ -5,7 +5,15 @@ import { os } from "@Native/Os";
 import * as React from "react";
 import { libraries } from "./libs";
 
-export const ModConfView = (props: { children: string; modid: string }) => {
+interface ModConfViewProps {
+  children: string;
+  modid: string;
+  index?: string;
+  cwd?: string;
+  standaloneFile?: string;
+}
+
+export const ModConfView = (props: ModConfViewProps) => {
   const { modFS } = useModFS();
 
   const { modid, children } = props;
@@ -21,30 +29,36 @@ export const ModConfView = (props: { children: string; modid: string }) => {
 
   const isoEval = React.useMemo(
     () =>
-      new IsolatedEval<React.FunctionComponent<any>>(libraries, format("CONFINDEX"), format("CONFCWD"), {
-        log: log,
-        __idname: modid,
-        __filename: format("CONFINDEX"),
-        __dirname: format("CONFCWD"),
-        __modpath: format("MODULECWD"),
-        window: {
+      new IsolatedEval<React.FunctionComponent<any>>(
+        libraries,
+        props.index || format("CONFINDEX"),
+        props.cwd || format("CONFCWD"),
+        {
+          log: log,
+          __idname: modid,
+          __filename: format("CONFINDEX"),
+          __dirname: format("CONFCWD"),
+          __modpath: format("MODULECWD"),
+          window: {
+            fetch: internalFetch,
+            open: os.openURL,
+          },
           fetch: internalFetch,
-          open: os.openURL,
-        },
-        fetch: internalFetch,
 
-        // @deprecated
-        modid: modid,
-        modpath: (path: string) => `${format("MODULECWD")}/${path}`,
-        confpath: (path: string) => `${format("CONFCWD")}/${path}`,
-        include: (modulePath: string, opt: { isolate: boolean } = { isolate: false }) => {
-          if (opt.isolate) {
-            modulePath = `${format("CONFCWD")}/${modulePath}`;
-          }
+          // @deprecated
+          modid: modid,
+          modpath: (path: string) => `${format("MODULECWD")}/${path}`,
+          confpath: (path: string) => `${format("CONFCWD")}/${path}`,
+          include: (modulePath: string, opt: { isolate: boolean } = { isolate: false }) => {
+            if (opt.isolate) {
+              modulePath = `${format("CONFCWD")}/${modulePath}`;
+            }
 
-          return isoEval.require(modulePath);
+            return isoEval.require(modulePath);
+          },
         },
-      }),
+        props.standaloneFile
+      ),
     [children, modid]
   );
 

@@ -20,6 +20,7 @@ import com.dergoogler.core.NativeStorage;
 import com.dergoogler.core.NativeShell;
 import com.dergoogler.core.NativeBuildConfig;
 import com.dergoogler.core.NativeView;
+import com.dergoogler.core.NativeZipFS;
 
 import org.apache.cordova.*;
 import org.apache.cordova.engine.SystemWebChromeClient;
@@ -79,6 +80,7 @@ public class MainActivity extends CordovaActivity {
         wv.addJavascriptInterface(new NativeView(this, wv), "__view__");
         wv.addJavascriptInterface(ns, "__nativeStorage__");
         wv.addJavascriptInterface(new NativeLog(), "__log__");
+        wv.addJavascriptInterface(new NativeZipFS(), "__zipfs__");
 
 
        wv.setWebChromeClient(new SystemWebChromeClient((SystemWebViewEngine) wve) {

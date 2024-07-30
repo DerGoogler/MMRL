@@ -55,10 +55,14 @@ declare global {
    * Native window properties for Android
    */
   interface AndroidWindow<I = any> {
-    /**object
+    /**
      * This is an Android only window object
      */
     readonly __sufile__: I;
+    /**
+     * This is an Android only window object
+     */
+    readonly __zipfs__: I;
     /**
      * This is an Android only window object
      */

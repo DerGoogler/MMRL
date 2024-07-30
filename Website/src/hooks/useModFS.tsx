@@ -49,8 +49,7 @@ export interface ModFS {
 
   // modconf standalone
   MCALONE: string;
-  MCALONECWD: string;
-  MCALONEMTA: string;
+  MCALONEFILE: string;
 
   // Installer
   EXPLORE_INSTALL: string;
@@ -99,8 +98,7 @@ export const INITIAL_MOD_CONF: ModFS = {
 
   // modconf standalone
   MCALONE: "<MMRLFOL>/modconf",
-  MCALONECWD: "<MCALONE>/<ID>",
-  MCALONEMTA: "<MCALONECWD>/modconf.json",
+  MCALONEFILE: "<MCALONE>/<MODID>.zip",
 
   // Installer
   EXPLORE_INSTALL: 'mmrl install -y "<URL>"',
