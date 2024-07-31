@@ -5,34 +5,35 @@ import android.webkit.JavascriptInterface;
 
 import com.topjohnwu.superuser.io.SuFile;
 import com.topjohnwu.superuser.io.SuFileInputStream;
+import com.topjohnwu.superuser.io.SuFileOutputStream;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.*;
-import java.nio.file.spi.FileSystemProvider;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-public class NativeZipFS {
-    private final String TAG = "NativeZipFS";
+import okio.Path;
 
-    public NativeZipFS() {}
+public class NativeSuZip {
+    private final String TAG = "NativeSuZip";
+
+    public NativeSuZip() {
+    }
 
     private String parseSlashes(String path) {
         if (!path.endsWith("/")) {
             path = path.replaceAll("/$", "");
         }
         if (!path.startsWith("/")) {
-            path =  "/" + path;
+            path = "/" + path;
         }
         return path;
     }
@@ -42,7 +43,8 @@ public class NativeZipFS {
         Map<String, byte[]> zipContent = new HashMap<>();
         Set<String> directories = new HashSet<>();
 
-        try (ZipInputStream zipInputStream = new ZipInputStream(SuFileInputStream.open(new SuFile(zipPath)))) {
+        try {
+            ZipInputStream zipInputStream = new ZipInputStream(SuFileInputStream.open(new SuFile(zipPath)));
             ZipEntry entry;
             while ((entry = zipInputStream.getNextEntry()) != null) {
                 if (entry.isDirectory()) {
@@ -53,14 +55,20 @@ public class NativeZipFS {
                     int len;
                     while ((len = zipInputStream.read(buffer)) > -1) {
                         baos.write(buffer, 0, len);
+
                     }
                     zipContent.put(parseSlashes(entry.getName()), baos.toByteArray());
                 }
             }
         } catch (IOException e) {
-            Log.e(TAG, e.toString());
-            return "";
+            e.printStackTrace();
+            Log.e(TAG, "newFS: " + e);
         }
+
+        List<String> files = new ArrayList<>(zipContent.keySet());
+        System.out.println("Files in ZIP:");
+        files.forEach(System.out::println);
+
 
         return new Object() {
             @JavascriptInterface

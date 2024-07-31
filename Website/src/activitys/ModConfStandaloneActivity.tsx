@@ -4,9 +4,9 @@ import { useActivity } from "@Hooks/useActivity";
 import { useModFS } from "@Hooks/useModFS";
 import { List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import { SuFile } from "@Native/SuFile";
-import { ZipFS } from "@Native/ZipFS";
+import { SuZip } from "@Native/SuZip";
 import { path } from "@Util/path";
-import { ModConfActivity } from "./ModConfActivity";
+import { ModConfActivity, ModConfActivityExtra } from "./ModConfActivity";
 
 const ModConfStandaloneActivity = () => {
   const { context } = useActivity();
@@ -39,21 +39,23 @@ const ModConfStandaloneActivity = () => {
             const zipFile = modFS("MCALONE") + "/" + item;
 
             try {
-              const fs = new ZipFS(zipFile, "modconf.json");
+              const fs = new SuZip(zipFile, "modconf.json");
               const metaData = JSON.parse(fs.read());
+
+              if (!(metaData.id && metaData.index)) return null;
 
               return (
                 <>
                   <ListItem key={metaData.id} disablePadding>
                     <ListItemButton
                       onClick={() => {
-                        context.pushPage({
+                        context.pushPage<ModConfActivityExtra, any>({
                           component: ModConfActivity,
                           key: `${metaData.id}_configure_standalone`,
                           extra: {
-                            standaloneFile: fs.getPath(),
-                            index: "/src/index.jsx",
-                            cwd: "/src",
+                            standaloneFile: fs.getZipPath(),
+                            index: metaData.index,
+                            cwd: "/",
                             modId: metaData.id,
                           },
                         });

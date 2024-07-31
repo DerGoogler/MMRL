@@ -4,11 +4,21 @@ import { SuFile } from "@Native/SuFile";
 import { ModConfView } from "@Components/ModConfView";
 import { useModFS } from "@Hooks/useModFS";
 import { PreviewErrorBoundary } from "./ModConfPlaygroundActivity";
-import { ZipFS } from "@Native/ZipFS";
+import { SuZip } from "@Native/SuZip";
+
+export interface ModConfActivityExtra {
+  /**
+   * ## This field only applies to ModConf Standalone
+   */
+  index?: string;
+  cwd?: string;
+  standaloneFile?: string;
+  modId: string;
+}
 
 const ModConfActivity = () => {
   const { modFS } = useModFS();
-  const { extra } = useActivity<{ standaloneFile?: string; children: string; modId: string }>();
+  const { extra } = useActivity<ModConfActivityExtra>();
 
   const config: string = React.useMemo(() => {
     const notFound = 'import {Page} from "@mmrl/ui";export default () => <Page>Config file not found</Page>';
@@ -21,7 +31,7 @@ const ModConfActivity = () => {
         return notFound;
       }
     } else {
-      const file = new ZipFS(modFS("MCALONEFILE", { MODID: extra.modId }), "/src/index.jsx");
+      const file = new SuZip(modFS("MCALONEFILE", { MODID: extra.modId }), extra.index || "/index.jsx");
       if (file.exist()) {
         return file.read();
       } else {
@@ -32,7 +42,7 @@ const ModConfActivity = () => {
 
   return (
     <PreviewErrorBoundary>
-      <ModConfView standaloneFile={extra.standaloneFile} modid={extra.modId} children={config} />
+      <ModConfView standaloneFile={extra.standaloneFile} cwd={extra.cwd} index={extra.index} modid={extra.modId} children={config} />
     </PreviewErrorBoundary>
   );
 };

@@ -35,6 +35,8 @@ export interface SuFileoptions {
   readDefaultValue: string;
 }
 
+export type SuFileConstuctor = new (path: string) => SuFile;
+
 /**
  * Class to read files on a native Android device
  * @implements {NativeSuFile}

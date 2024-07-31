@@ -62,7 +62,7 @@ declare global {
     /**
      * This is an Android only window object
      */
-    readonly __zipfs__: I;
+    readonly __suzip__: I;
     /**
      * This is an Android only window object
      */

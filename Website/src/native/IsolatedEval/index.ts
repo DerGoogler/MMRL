@@ -12,7 +12,7 @@ import { BuildConfig, BuildConfigClass } from "../BuildConfig";
 import { Native } from "../Native";
 import { OsClass, os } from "../Os";
 import { Shell, ShellClass } from "../Shell";
-import { SuFile } from "../SuFile";
+import { SuFile, SuFileConstuctor } from "../SuFile";
 import { View, view } from "../View";
 import { IsoAudio } from "./IsoAudio";
 import { IsoDocument } from "./IsoDocument";
@@ -20,7 +20,7 @@ import { IsolatedEvalError } from "./IsolatedEvalError";
 import { IsolatedFunctionBlockError } from "./IsolatedFunctionBlockError";
 import { IsoDOMParser } from "./IsoDOMParser";
 import { IsoXMLSerializer } from "./IsoXMLSerializer";
-import { ZipFS } from "@Native/ZipFS";
+import { NativeSuZip, SuZip, SuZipConstuctor } from "@Native/SuZip";
 
 type IsoModule = {
   exports: {
@@ -92,9 +92,9 @@ class IsolatedEval<T = any> {
   public libraries: Record<string, any>;
   public indexFile: string;
   public scope: IScope;
-  public standalone: string | undefined;
+  public standaloneFile: string | undefined;
 
-  public constructor(libraries: Record<string, any>, indexFile: string, cwd: string, scope: IScope, standalone?: string) {
+  public constructor(libraries: Record<string, any>, indexFile: string, cwd: string, scope: IScope, standaloneFile?: string) {
     this._prototypeWhitelist.set(Node, new Set());
     this._prototypeWhitelist.set(Object, new Set());
     this._prototypeWhitelist.set(Document, new Set());
@@ -140,7 +140,7 @@ class IsolatedEval<T = any> {
     this.path = new Path(cwd);
 
     this.libraries = libraries;
-    this.standalone = standalone;
+    this.standaloneFile = standaloneFile;
     this.indexFile = indexFile;
     this.scope = {
       ...scope,
@@ -151,7 +151,7 @@ class IsolatedEval<T = any> {
     };
   }
 
-  private _requireResolver(fileProvider: SuFile | ZipFS) {
+  private _requireResolver(fileProvider: SuZipConstuctor & SuFileConstuctor) {
     return (modulePath: string) => {
       // Check if the module is a core module
       if (this.libraries[modulePath]) {
@@ -159,7 +159,7 @@ class IsolatedEval<T = any> {
       }
 
       // Resolve the module path
-      const resolvedPath = this._resolveModuleResolver(fileProvider);
+      const resolvedPath = this._resolveModuleResolver(modulePath, fileProvider);
       if (!resolvedPath) {
         throw new IsolatedEvalError(`Cannot find module '${modulePath}'`);
       }
@@ -176,24 +176,27 @@ class IsolatedEval<T = any> {
       // Read and execute module content based on file extension
       const extension = this.path.extname(resolvedPath);
 
+      const readResolvedPath =
+        fileProvider instanceof SuZip ? new fileProvider(this.standaloneFile as string, resolvedPath) : new fileProvider(resolvedPath);
+
       switch (extension) {
         case ".json":
-          const jsonContent = fileProvider.read();
+          const jsonContent = readResolvedPath.read();
           module.exports = JSON.parse(jsonContent);
           break;
 
         case ".yml":
         case ".yaml":
-          module.exports = yaml.parse(fileProvider.read());
+          module.exports = yaml.parse(readResolvedPath.read());
           break;
         case ".properties":
         case ".prop":
         case ".ini":
-          module.exports = ini.parse(fileProvider.read());
+          module.exports = ini.parse(readResolvedPath.read());
           break;
         case ".js":
         case ".jsx":
-          const moduleContent = fileProvider.read();
+          const moduleContent = readResolvedPath.read();
           const transformed = this.transform(moduleContent);
           if (transformed) {
             const moduleWrapper = new Function("exports", "require", "module", "__filename", "__dirname", transformed);
@@ -209,7 +212,7 @@ class IsolatedEval<T = any> {
           }
           break;
         default:
-          module.exports.default = fileProvider.read();
+          module.exports.default = readResolvedPath.read();
           break;
       }
 
@@ -221,39 +224,47 @@ class IsolatedEval<T = any> {
    * require
    */
   public require(path: string) {
-    if (this.standalone) {
-      return this._requireResolver(new ZipFS(this.standalone as string, this.path.resolve(path)))(path);
+    if (this.standaloneFile) {
+      // @ts-ignore
+      return this._requireResolver(SuZip)(path);
     } else {
-      return this._requireResolver(new SuFile(this.path.resolve(path)))(path);
+      // @ts-ignore
+      return this._requireResolver(SuFile)(path);
     }
   }
 
-  private _resolveModuleResolver(fileProvider: SuFile | ZipFS): string | null {
+  private _resolveModuleResolver(modulePath: string, fileProvider: SuZipConstuctor & SuFileConstuctor): string | null {
     const extensions = [".js", ".jsx", ".json", "yml", ".yaml", ".properties", ".prop", ".ini"];
+    const resolvedPath =
+      fileProvider instanceof SuZip
+        ? new fileProvider(this.standaloneFile as string, this.path.resolve(modulePath))
+        : new fileProvider(this.path.resolve(modulePath));
 
     // Check if the exact file exists
-    if (fileProvider.exist() && fileProvider.isFile()) {
-      return fileProvider.getPath();
+    if (resolvedPath.exist() && resolvedPath.isFile()) {
+      return resolvedPath.getPath();
     }
 
     // Check if file with extensions exists
     for (let ext of extensions) {
-      let pth: SuFile | ZipFS = new SuFile(fileProvider.getPath() + ext);
-      if (this.standalone) {
-        pth = new ZipFS(this.standalone, fileProvider.getPath() + ext);
-      }
+      const pth =
+        fileProvider instanceof SuZip
+          ? new fileProvider(this.standaloneFile as string, resolvedPath.getPath() + ext)
+          : new fileProvider(resolvedPath.getPath() + ext);
+
       if (pth.exist() && pth.isFile()) {
         return pth.getPath();
       }
     }
 
     // Check if it's a directory and has an index file
-    if (fileProvider.exist() && fileProvider.isDirectory()) {
+    if (resolvedPath.exist() && resolvedPath.isDirectory()) {
       for (let ext of extensions) {
-        let ifp: SuFile | ZipFS = new SuFile(this.path.join(fileProvider.getPath(), "index" + ext));
-        if (this.standalone) {
-          ifp = new ZipFS(this.standalone, this.path.join(fileProvider.getPath(), "index" + ext));
-        }
+        const ifp =
+          fileProvider instanceof SuZip
+            ? new fileProvider(this.standaloneFile as string, this.path.join(resolvedPath.getPath(), "index" + ext))
+            : new fileProvider(this.path.join(resolvedPath.getPath(), "index" + ext));
+
         if (ifp.exist() && ifp.isFile()) {
           return ifp.getPath();
         }
