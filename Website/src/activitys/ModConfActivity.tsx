@@ -15,17 +15,15 @@ const ModConfActivity = () => {
 
     if (!extra.standaloneFile) {
       const file = new SuFile(modFS("CONFINDEX", { MODID: extra.modId }));
-
       if (file.exist()) {
         return file.read();
       } else {
         return notFound;
       }
     } else {
-      const file = new ZipFS(modFS("MCALONEFILE", { MODID: extra.modId }));
-
-      if (file.exist("src/index.jsx")) {
-        return file.read("src/index.jsx");
+      const file = new ZipFS(modFS("MCALONEFILE", { MODID: extra.modId }), "/src/index.jsx");
+      if (file.exist()) {
+        return file.read();
       } else {
         return notFound;
       }

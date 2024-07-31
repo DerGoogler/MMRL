@@ -125,10 +125,8 @@ class IsolatedEval<T = any> {
     this._prototypeWhitelist.set(React, new Set());
 
     this.require = this.require.bind(this);
-    this._requireFile = this._requireFile.bind(this);
-    this._requireFromZipFile = this._requireFromZipFile.bind(this);
-    this._resolveModulePathFromZip = this._resolveModulePathFromZip.bind(this);
-    this._resolveModulePathFile = this._resolveModulePathFile.bind(this);
+    this._requireResolver = this._requireResolver.bind(this);
+    this._resolveModuleResolver = this._resolveModuleResolver.bind(this);
 
     this._sandbox = new Sandbox({ globals: this._globals, prototypeWhitelist: this._prototypeWhitelist });
 
@@ -153,136 +151,70 @@ class IsolatedEval<T = any> {
     };
   }
 
-  private _requireFile(modulePath: string) {
-    // Check if the module is a core module
-    if (this.libraries[modulePath]) {
-      return this.libraries[modulePath];
-    }
+  private _requireResolver(fileProvider: SuFile | ZipFS) {
+    return (modulePath: string) => {
+      // Check if the module is a core module
+      if (this.libraries[modulePath]) {
+        return this.libraries[modulePath];
+      }
 
-    // Resolve the module path
-    const resolvedPath = this._resolveModulePathFile(modulePath);
-    if (!resolvedPath) {
-      throw new IsolatedEvalError(`Cannot find module '${modulePath}'`);
-    }
+      // Resolve the module path
+      const resolvedPath = this._resolveModuleResolver(fileProvider);
+      if (!resolvedPath) {
+        throw new IsolatedEvalError(`Cannot find module '${modulePath}'`);
+      }
 
-    // Check if module is already cached
-    if (this.moduleCache[resolvedPath]) {
-      return this.moduleCache[resolvedPath].exports;
-    }
+      // Check if module is already cached
+      if (this.moduleCache[resolvedPath]) {
+        return this.moduleCache[resolvedPath].exports;
+      }
 
-    // Create a new module and cache it
-    const module: IsoModule = { exports: {} };
-    this.moduleCache[resolvedPath] = module;
+      // Create a new module and cache it
+      const module: IsoModule = { exports: {} };
+      this.moduleCache[resolvedPath] = module;
 
-    // Read and execute module content based on file extension
-    const extension = this.path.extname(resolvedPath);
+      // Read and execute module content based on file extension
+      const extension = this.path.extname(resolvedPath);
 
-    const readResolvedPath = new SuFile(resolvedPath);
+      switch (extension) {
+        case ".json":
+          const jsonContent = fileProvider.read();
+          module.exports = JSON.parse(jsonContent);
+          break;
 
-    switch (extension) {
-      case ".json":
-        const jsonContent = readResolvedPath.read();
-        module.exports = JSON.parse(jsonContent);
-        break;
+        case ".yml":
+        case ".yaml":
+          module.exports = yaml.parse(fileProvider.read());
+          break;
+        case ".properties":
+        case ".prop":
+        case ".ini":
+          module.exports = ini.parse(fileProvider.read());
+          break;
+        case ".js":
+        case ".jsx":
+          const moduleContent = fileProvider.read();
+          const transformed = this.transform(moduleContent);
+          if (transformed) {
+            const moduleWrapper = new Function("exports", "require", "module", "__filename", "__dirname", transformed);
+            this.compile<typeof moduleWrapper>(`return ${moduleWrapper}`)(
+              module.exports,
+              this._requireResolver(fileProvider),
+              module,
+              resolvedPath,
+              this.path.dirname(resolvedPath)
+            );
+          } else {
+            throw new IsolatedEvalError("An error occurred, either there is a syntax mistake or something");
+          }
+          break;
+        default:
+          module.exports.default = fileProvider.read();
+          break;
+      }
 
-      case ".yml":
-      case ".yaml":
-        module.exports = yaml.parse(readResolvedPath.read());
-        break;
-      case ".properties":
-      case ".prop":
-      case ".ini":
-        module.exports = ini.parse(readResolvedPath.read());
-        break;
-      case ".js":
-      case ".jsx":
-        const moduleContent = readResolvedPath.read();
-        const transformed = this.transform(moduleContent);
-        if (transformed) {
-          const moduleWrapper = new Function("exports", "require", "module", "__filename", "__dirname", transformed);
-          this.compile<typeof moduleWrapper>(`return ${moduleWrapper}`)(
-            module.exports,
-            this._requireFile,
-            module,
-            resolvedPath,
-            this.path.dirname(resolvedPath)
-          );
-        } else {
-          throw new IsolatedEvalError("An error occurred, either there is a syntax mistake or something");
-        }
-        break;
-      default:
-        module.exports.default = readResolvedPath.read();
-        break;
-    }
-
-    return module.exports.default || module.exports;
-  }
-
-  private _requireFromZipFile(modulePath: string) {
-    // Check if the module is a core module
-    if (this.libraries[modulePath]) {
-      return this.libraries[modulePath];
-    }
-
-    // Resolve the module path
-    const resolvedPath = this._resolveModulePathFromZip(modulePath);
-    if (!resolvedPath) {
-      throw new IsolatedEvalError(`Cannot find module '${modulePath}'`);
-    }
-
-    // Check if module is already cached
-    if (this.moduleCache[resolvedPath]) {
-      return this.moduleCache[resolvedPath].exports;
-    }
-
-    // Create a new module and cache it
-    const module: IsoModule = { exports: {} };
-    this.moduleCache[resolvedPath] = module;
-
-    // Read and execute module content based on file extension
-    const extension = this.path.extname(resolvedPath);
-
-    const fs = new ZipFS(this.standalone as string);
-
-    switch (extension) {
-      case ".json":
-        const jsonContent = fs.read(resolvedPath);
-        module.exports = JSON.parse(jsonContent);
-        break;
-
-      case ".yml":
-      case ".yaml":
-        module.exports = yaml.parse(fs.read(resolvedPath));
-        break;
-      case ".properties":
-      case ".prop":
-      case ".ini":
-        module.exports = ini.parse(fs.read(resolvedPath));
-        break;
-      case ".js":
-      case ".jsx":
-        const moduleContent = fs.read(resolvedPath);
-        const transformed = this.transform(moduleContent);
-        if (transformed) {
-          const moduleWrapper = new Function("exports", "require", "module", "__filename", "__dirname", transformed);
-          this.compile<typeof moduleWrapper>(`return ${moduleWrapper}`)(
-            module.exports,
-            this._requireFromZipFile,
-            module,
-            resolvedPath,
-            this.path.dirname(resolvedPath)
-          );
-        } else {
-          throw new IsolatedEvalError("An error occurred, either there is a syntax mistake or something");
-        }
-        break;
-      default:
-        module.exports.default = fs.read(resolvedPath);
-        break;
-    }
-
-    return module.exports.default || module.exports;
+      return module.exports.default || module.exports;
+    };
   }
 
   /**
@@ -290,57 +222,41 @@ class IsolatedEval<T = any> {
    */
   public require(path: string) {
     if (this.standalone) {
-      return this._requireFromZipFile(path);
+      return this._requireResolver(new ZipFS(this.standalone as string, this.path.resolve(path)))(path);
     } else {
-      return this._requireFile(path);
+      return this._requireResolver(new SuFile(this.path.resolve(path)))(path);
     }
   }
 
-  private _resolveModulePathFile(modulePath: string): string | null {
+  private _resolveModuleResolver(fileProvider: SuFile | ZipFS): string | null {
     const extensions = [".js", ".jsx", ".json", "yml", ".yaml", ".properties", ".prop", ".ini"];
-    const resolvedPath = new SuFile(this.path.resolve(modulePath));
 
     // Check if the exact file exists
-    if (resolvedPath.exist() && resolvedPath.isFile()) {
-      return resolvedPath.getPath();
+    if (fileProvider.exist() && fileProvider.isFile()) {
+      return fileProvider.getPath();
     }
 
     // Check if file with extensions exists
     for (let ext of extensions) {
-      const pth = new SuFile(resolvedPath.getPath() + ext);
+      let pth: SuFile | ZipFS = new SuFile(fileProvider.getPath() + ext);
+      if (this.standalone) {
+        pth = new ZipFS(this.standalone, fileProvider.getPath() + ext);
+      }
       if (pth.exist() && pth.isFile()) {
         return pth.getPath();
       }
     }
 
     // Check if it's a directory and has an index file
-    if (resolvedPath.exist() && resolvedPath.isDirectory()) {
+    if (fileProvider.exist() && fileProvider.isDirectory()) {
       for (let ext of extensions) {
-        const ifp = new SuFile(this.path.join(resolvedPath.getPath(), "index" + ext));
+        let ifp: SuFile | ZipFS = new SuFile(this.path.join(fileProvider.getPath(), "index" + ext));
+        if (this.standalone) {
+          ifp = new ZipFS(this.standalone, this.path.join(fileProvider.getPath(), "index" + ext));
+        }
         if (ifp.exist() && ifp.isFile()) {
           return ifp.getPath();
         }
-      }
-    }
-
-    return null;
-  }
-
-  private _resolveModulePathFromZip(modulePath: string): string | null {
-    const extensions = [".js", ".jsx", ".json", "yml", ".yaml", ".properties", ".prop", ".ini"];
-    const fs = new ZipFS(this.standalone as string);
-    const resolvedPath = this.path.resolve(modulePath);
-
-    // Check if the exact file exists
-    if (fs.exist(resolvedPath)) {
-      return resolvedPath;
-    }
-
-    // Check if file with extensions exists
-    for (let ext of extensions) {
-      const pth = resolvedPath + ext;
-      if (fs.exist(pth)) {
-        return pth;
       }
     }
 

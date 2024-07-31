@@ -36,9 +36,11 @@ const ModConfStandaloneActivity = () => {
           {mcalone.list().map((item) => {
             if (path.extname(item) !== ".zip") return null;
 
+            const zipFile = modFS("MCALONE") + "/" + item;
+
             try {
-              const fs = new ZipFS(modFS("MCALONE") + "/" + item);
-              const metaData = JSON.parse(fs.read("modconf.json"));
+              const fs = new ZipFS(zipFile, "modconf.json");
+              const metaData = JSON.parse(fs.read());
 
               return (
                 <>
@@ -50,8 +52,8 @@ const ModConfStandaloneActivity = () => {
                           key: `${metaData.id}_configure_standalone`,
                           extra: {
                             standaloneFile: fs.getPath(),
-                            index: "src/index.jsx",
-                            cwd: "src",
+                            index: "/src/index.jsx",
+                            cwd: "/src",
                             modId: metaData.id,
                           },
                         });
