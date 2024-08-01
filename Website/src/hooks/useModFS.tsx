@@ -49,7 +49,9 @@ export interface ModFS {
 
   // modconf standalone
   MCALONE: string;
-  MCALONEFILE: string;
+  MCALONECWD: string;
+  MCALONEMETA: string;
+  MCALONEIDX: string;
 
   // Installer
   EXPLORE_INSTALL: string;
@@ -98,7 +100,9 @@ export const INITIAL_MOD_CONF: ModFS = {
 
   // modconf standalone
   MCALONE: "<MMRLFOL>/modconf",
-  MCALONEFILE: "<MCALONE>/<MODID>.zip",
+  MCALONECWD: "<MCALONE>/<MODID>",
+  MCALONEMETA: "<MCALONECWD>/modconf.json",
+  MCALONEIDX: "<MCALONECWD>/index.jsx",
 
   // Installer
   EXPLORE_INSTALL: 'mmrl install -y "<URL>"',
@@ -126,7 +130,7 @@ export const useModFS = () => {
 };
 
 export const ModFSProvider = (props: React.PropsWithChildren) => {
-  const [modFS, setModFS] = useNativeFileStorage("/data/adb/mmrl/modfs.json", INITIAL_MOD_CONF, { loader: "json" });
+  const [modFS, setModFS] = useNativeFileStorage("/data/adb/mmrl/modfs.v2.json", INITIAL_MOD_CONF, { loader: "json" });
 
   const pmodFS = React.useMemo(() => new PModFS(defaultComposer(INITIAL_MOD_CONF, modFS)), [modFS]);
 

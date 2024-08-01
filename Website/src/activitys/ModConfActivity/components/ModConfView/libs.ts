@@ -22,7 +22,7 @@ import { Markup } from "@Components/Markdown";
 import { DialogEditTextListItem } from "@Components/DialogEditTextListItem";
 import { SearchActivity } from "@Activitys/SearchActivity";
 import React from "react";
-import { withRequireNewVersion } from "../../hoc/withRequireNewVersion";
+import { withRequireNewVersion } from "../../../../hoc/withRequireNewVersion";
 import { CodeBlock } from "@Components/CodeBlock";
 import { VerifiedIcon } from "@Components/icons/VerifiedIcon";
 import { IsolatedFunctionBlockError } from "@Native/IsolatedEval/IsolatedFunctionBlockError";

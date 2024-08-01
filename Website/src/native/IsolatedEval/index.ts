@@ -30,6 +30,14 @@ type IsoModule = {
   };
 };
 
+interface IsolatedEvalOptions {
+  libraries: Record<string, any>;
+  indexFile: string;
+  cwd: string;
+  scope: IScope;
+  standaloneFile?: string;
+}
+
 class IsolatedEval<T = any> {
   private readonly _sandbox: Sandbox = new Sandbox();
   private readonly _globals = {
@@ -94,7 +102,7 @@ class IsolatedEval<T = any> {
   public scope: IScope;
   public standaloneFile: string | undefined;
 
-  public constructor(libraries: Record<string, any>, indexFile: string, cwd: string, scope: IScope, standaloneFile?: string) {
+  public constructor(options: IsolatedEvalOptions) {
     this._prototypeWhitelist.set(Node, new Set());
     this._prototypeWhitelist.set(Object, new Set());
     this._prototypeWhitelist.set(Document, new Set());
@@ -125,8 +133,7 @@ class IsolatedEval<T = any> {
     this._prototypeWhitelist.set(React, new Set());
 
     this.require = this.require.bind(this);
-    this._requireResolver = this._requireResolver.bind(this);
-    this._resolveModuleResolver = this._resolveModuleResolver.bind(this);
+    this._resolveModule = this._resolveModule.bind(this);
 
     this._sandbox = new Sandbox({ globals: this._globals, prototypeWhitelist: this._prototypeWhitelist });
 
@@ -137,13 +144,13 @@ class IsolatedEval<T = any> {
     };
     this.moduleCache = {};
 
-    this.path = new Path(cwd);
+    this.path = new Path(options.cwd);
 
-    this.libraries = libraries;
-    this.standaloneFile = standaloneFile;
-    this.indexFile = indexFile;
+    this.libraries = options.libraries;
+    this.standaloneFile = options.standaloneFile;
+    this.indexFile = options.indexFile;
     this.scope = {
-      ...scope,
+      ...options.scope,
       module: this.module,
       exports: this.module.exports,
       path: this.path,
@@ -151,94 +158,75 @@ class IsolatedEval<T = any> {
     };
   }
 
-  private _requireResolver(fileProvider: SuZipConstuctor & SuFileConstuctor) {
-    return (modulePath: string) => {
-      // Check if the module is a core module
-      if (this.libraries[modulePath]) {
-        return this.libraries[modulePath];
-      }
-
-      // Resolve the module path
-      const resolvedPath = this._resolveModuleResolver(modulePath, fileProvider);
-      if (!resolvedPath) {
-        throw new IsolatedEvalError(`Cannot find module '${modulePath}'`);
-      }
-
-      // Check if module is already cached
-      if (this.moduleCache[resolvedPath]) {
-        return this.moduleCache[resolvedPath].exports;
-      }
-
-      // Create a new module and cache it
-      const module: IsoModule = { exports: {} };
-      this.moduleCache[resolvedPath] = module;
-
-      // Read and execute module content based on file extension
-      const extension = this.path.extname(resolvedPath);
-
-      const readResolvedPath =
-        fileProvider instanceof SuZip ? new fileProvider(this.standaloneFile as string, resolvedPath) : new fileProvider(resolvedPath);
-
-      switch (extension) {
-        case ".json":
-          const jsonContent = readResolvedPath.read();
-          module.exports = JSON.parse(jsonContent);
-          break;
-
-        case ".yml":
-        case ".yaml":
-          module.exports = yaml.parse(readResolvedPath.read());
-          break;
-        case ".properties":
-        case ".prop":
-        case ".ini":
-          module.exports = ini.parse(readResolvedPath.read());
-          break;
-        case ".js":
-        case ".jsx":
-          const moduleContent = readResolvedPath.read();
-          const transformed = this.transform(moduleContent);
-          if (transformed) {
-            const moduleWrapper = new Function("exports", "require", "module", "__filename", "__dirname", transformed);
-            this.compile<typeof moduleWrapper>(`return ${moduleWrapper}`)(
-              module.exports,
-              this._requireResolver(fileProvider),
-              module,
-              resolvedPath,
-              this.path.dirname(resolvedPath)
-            );
-          } else {
-            throw new IsolatedEvalError("An error occurred, either there is a syntax mistake or something");
-          }
-          break;
-        default:
-          module.exports.default = readResolvedPath.read();
-          break;
-      }
-
-      return module.exports.default || module.exports;
-    };
-  }
-
-  /**
-   * require
-   */
-  public require(path: string) {
-    if (this.standaloneFile) {
-      // @ts-ignore
-      return this._requireResolver(SuZip)(path);
-    } else {
-      // @ts-ignore
-      return this._requireResolver(SuFile)(path);
+  public require(modulePath: string) {
+    // Check if the module is a core module
+    if (this.libraries[modulePath]) {
+      return this.libraries[modulePath];
     }
+
+    // Resolve the module path
+    const resolvedPath = this._resolveModule(modulePath);
+    if (!resolvedPath) {
+      throw new IsolatedEvalError(`Cannot find module '${modulePath}'`);
+    }
+
+    // Check if module is already cached
+    if (this.moduleCache[resolvedPath]) {
+      return this.moduleCache[resolvedPath].exports;
+    }
+
+    // Create a new module and cache it
+    const module: IsoModule = { exports: {} };
+    this.moduleCache[resolvedPath] = module;
+
+    // Read and execute module content based on file extension
+    const extension = this.path.extname(resolvedPath);
+
+    const readResolvedPath = new SuFile(resolvedPath);
+
+    switch (extension) {
+      case ".json":
+        const jsonContent = readResolvedPath.read();
+        module.exports = JSON.parse(jsonContent);
+        break;
+
+      case ".yml":
+      case ".yaml":
+        module.exports = yaml.parse(readResolvedPath.read());
+        break;
+      case ".properties":
+      case ".prop":
+      case ".ini":
+        module.exports = ini.parse(readResolvedPath.read());
+        break;
+      case ".js":
+      case ".jsx":
+        const moduleContent = readResolvedPath.read();
+        const transformed = this.transform(moduleContent);
+        if (transformed) {
+          const moduleWrapper = new Function("exports", "require", "module", "__filename", "__dirname", transformed);
+          this.compile<typeof moduleWrapper>(`return ${moduleWrapper}`)(
+            module.exports,
+            this.require,
+            module,
+            resolvedPath,
+            this.path.dirname(resolvedPath)
+          );
+        } else {
+          throw new IsolatedEvalError("An error occurred, either there is a syntax mistake or something");
+        }
+        break;
+      default:
+        module.exports.default = readResolvedPath.read();
+        break;
+    }
+
+    return module.exports.default || module.exports;
   }
 
-  private _resolveModuleResolver(modulePath: string, fileProvider: SuZipConstuctor & SuFileConstuctor): string | null {
+  private _resolveModule(modulePath: string): string | null {
     const extensions = [".js", ".jsx", ".json", "yml", ".yaml", ".properties", ".prop", ".ini"];
-    const resolvedPath =
-      fileProvider instanceof SuZip
-        ? new fileProvider(this.standaloneFile as string, this.path.resolve(modulePath))
-        : new fileProvider(this.path.resolve(modulePath));
+    const resolvedPath = new SuFile(this.path.resolve(modulePath));
 
     // Check if the exact file exists
     if (resolvedPath.exist() && resolvedPath.isFile()) {
@@ -247,10 +235,7 @@ class IsolatedEval<T = any> {
 
     // Check if file with extensions exists
     for (let ext of extensions) {
-      const pth =
-        fileProvider instanceof SuZip
-          ? new fileProvider(this.standaloneFile as string, resolvedPath.getPath() + ext)
-          : new fileProvider(resolvedPath.getPath() + ext);
+      const pth = new SuFile(resolvedPath.getPath() + ext);
 
       if (pth.exist() && pth.isFile()) {
         return pth.getPath();
@@ -260,10 +245,7 @@ class IsolatedEval<T = any> {
     // Check if it's a directory and has an index file
     if (resolvedPath.exist() && resolvedPath.isDirectory()) {
       for (let ext of extensions) {
-        const ifp =
-          fileProvider instanceof SuZip
-            ? new fileProvider(this.standaloneFile as string, this.path.join(resolvedPath.getPath(), "index" + ext))
-            : new fileProvider(this.path.join(resolvedPath.getPath(), "index" + ext));
+        const ifp = new SuFile(this.path.join(resolvedPath.getPath(), "index" + ext));
 
         if (ifp.exist() && ifp.isFile()) {
           return ifp.getPath();
@@ -307,4 +289,4 @@ class IsolatedEval<T = any> {
   }
 }
 
-export { IsolatedEval };
+export { IsolatedEval, IsolatedEvalOptions };

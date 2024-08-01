@@ -6,7 +6,7 @@ import Chip from "@mui/material/Chip";
 import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 
-import { ModConfActivity } from "@Activitys/ModConfActivity";
+import { ModConfActivity, ModConfActivityExtra } from "@Activitys/ModConfActivity";
 
 import { Delete, Settings, RefreshRounded, Loop } from "@mui/icons-material";
 
@@ -183,10 +183,12 @@ const DeviceModule = React.memo<Props>((props) => {
               )}
               <Button
                 onClick={() => {
-                  context.pushPage({
+                  context.pushPage<ModConfActivityExtra, any>({
                     component: ModConfActivity,
                     key: `${id}_configure`,
                     extra: {
+                      indexFile: format("CONFINDEX"),
+                      cwd: format("CONFCWD"),
                       modId: id,
                     },
                   });

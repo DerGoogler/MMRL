@@ -7,7 +7,7 @@ import { IntentPusher } from "@Hooks/useActivity";
 import FetchTextActivity, { FetchTextActivityExtra } from "@Activitys/FetchTextActivity";
 import AboutActivity from "@Activitys/AboutActivity";
 import PlaygroundsActivity, { PlaygroundExtra } from "@Activitys/PlaygroundsActivity";
-import { ModConfView } from "@Components/ModConfView";
+import { ModConfView } from "@Activitys/ModConfActivity/components/ModConfView";
 import { Markup } from "@Components/Markdown";
 import { configureSample } from "@Util/configure-sample";
 import { dapiSample } from "@Util/dapi-sample";

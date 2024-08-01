@@ -7,10 +7,11 @@ import { SuFile } from "@Native/SuFile";
 import { SuZip } from "@Native/SuZip";
 import { path } from "@Util/path";
 import { ModConfActivity, ModConfActivityExtra } from "./ModConfActivity";
+import ModFS from "modfs";
 
 const ModConfStandaloneActivity = () => {
   const { context } = useActivity();
-  const { modFS } = useModFS();
+  const { modFS, _modFS } = useModFS();
 
   const renderToolbar = () => {
     return (
@@ -34,15 +35,13 @@ const ModConfStandaloneActivity = () => {
       <Page.RelativeContent>
         <List>
           {mcalone.list().map((item) => {
-            if (path.extname(item) !== ".zip") return null;
-
-            const zipFile = modFS("MCALONE") + "/" + item;
+            const confFile = new SuFile(modFS("MCALONEMETA", { MODID: item }));
+            if (!confFile.exist()) return null;
 
             try {
-              const fs = new SuZip(zipFile, "modconf.json");
-              const metaData = JSON.parse(fs.read());
+              const metaData = JSON.parse(confFile.read());
 
-              if (!(metaData.id && metaData.index)) return null;
+              if (!metaData.id && metaData.id !== item) return null;
 
               return (
                 <>
@@ -53,9 +52,12 @@ const ModConfStandaloneActivity = () => {
                           component: ModConfActivity,
                           key: `${metaData.id}_configure_standalone`,
                           extra: {
-                            standaloneFile: fs.getZipPath(),
-                            index: metaData.index,
-                            cwd: "/",
+                            indexFile: metaData.main
+                              ? ModFS.format(metaData.main, { MODID: item, ..._modFS })
+                              : modFS("MCALONEIDX", { MODID: item }),
+                            cwd: metaData.cwd
+                              ? ModFS.format(metaData.cwd, { MODID: item, ..._modFS })
+                              : modFS("MCALONECWD", { MODID: item }),
                             modId: metaData.id,
                           },
                         });
