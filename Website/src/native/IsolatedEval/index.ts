@@ -62,6 +62,7 @@ class IsolatedEval<T = any> {
     DOMParser: IsoDOMParser,
     XMLSerializer: IsoXMLSerializer,
     SuFile: SuFile,
+    SuZip: SuZip,
     Terminal: Terminal,
     Chooser: Chooser,
     Shell: Shell,
@@ -121,6 +122,7 @@ class IsolatedEval<T = any> {
     this._prototypeWhitelist.set(IsoXMLSerializer, new Set());
     this._prototypeWhitelist.set(XMLSerializer, new Set());
     this._prototypeWhitelist.set(SuFile, new Set());
+    this._prototypeWhitelist.set(SuZip, new Set());
     this._prototypeWhitelist.set(ShellClass, new Set());
     this._prototypeWhitelist.set(View, new Set());
     this._prototypeWhitelist.set(OsClass, new Set());
