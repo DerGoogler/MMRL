@@ -16,6 +16,7 @@ import { BuildConfig } from "@Native/BuildConfig";
 import { useModFS } from "@Hooks/useModFS";
 import { formatString } from "@Util/stringFormat";
 import { Terminal } from "@Native/Terminal";
+import { Image } from "@Components/dapi/Image";
 
 type IntrCommand = (args: string[], options: Record<string, string>, add: any) => void;
 
@@ -74,6 +75,26 @@ const useLines = (cmds: Record<string, IntrCommand>) => {
               ml: 1,
             },
             linkify: true,
+            ...props,
+          },
+        },
+      ]);
+    }
+  };
+
+  const addImage = (data: string, props?: object) => {
+    if (typeof data === "string") {
+      setLines((lines) => [
+        ...lines,
+        {
+          component: Image,
+          props: {
+            src: data,
+            noOpen: true,
+            sx: {
+              mr: 1,
+              ml: 1,
+            },
             ...props,
           },
         },
@@ -158,7 +179,7 @@ const useLines = (cmds: Record<string, IntrCommand>) => {
 
       const handleCommand = cmds[command];
       if (handleCommand) {
-        handleCommand(args, options, { addButton: addButton, addText: addText, setLines: setLines, lines: lines });
+        handleCommand(args, options, { addButton: addButton, addText: addText, addImage: addImage, setLines: setLines, lines: lines });
       }
     } else {
       const info = /^\-(\s+)?(.+)/gm;
@@ -212,6 +233,15 @@ export const InstallTerminalV2Activity = () => {
     },
     removeLastLine: (_, __, add) => {
       add.setLines((p) => p.slice(0, -1));
+    },
+    addImage: (args, opt, add) => {
+      const { width, height } = opt;
+      add.addImage(args[0], {
+        sx: {
+          width: width || "80vmin",
+          height: height,
+        },
+      });
     },
     addButton: (args, opt, add) => {
       const { variant } = opt;
