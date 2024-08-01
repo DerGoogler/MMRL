@@ -31,88 +31,75 @@ interface NativeShell {
   pw_name(): string;
 }
 
-interface IShell {
-  exec(): void;
-  result(): string;
+interface NativeShellV2 extends NativeShell {
+  v2(command: string): {
+    exec(): void;
+    result(): string;
+    isSuccess(): boolean;
+    getCode(): number;
+  };
 }
 
 /**
  * Run Shell commands native on Android
  */
-
-class ShellClass extends Native<NativeShell> {
-  private _command: string;
-
-  /**
-   * @deprecated Use
-   * ```ts
-   * Shell.M_INS_SUCCESS
-   * ```
-   */
-  public readonly MODULE_INSTALL_SUCCESS = 0;
-  /**
-   * @deprecated Use
-   * ```ts
-   * Shell.M_INS_FAILURE
-   * ```
-   */
-  public readonly MODULE_INSTALL_FAILURE = 1;
-  /**
-   * @deprecated Use
-   * ```ts
-   * Shell.TERM_INTR_ERR
-   * ```
-   */
-  public readonly TERMINAL_INTERNAL_ERROR = 500;
-
+class Shell extends Native<NativeShellV2> {
   /**
    * Successful module install exit code
    */
-  public readonly M_INS_SUCCESS: number = 0;
+  public static readonly M_INS_SUCCESS: number = 0;
   /**
    * Failed module install exit code
    */
-  public readonly M_INS_FAILURE: number = 1;
+  public static readonly M_INS_FAILURE: number = 1;
   /**
    * Failed file download exit code
    */
-  public readonly M_DWL_FAILURE: number = 2;
+  public static readonly M_DWL_FAILURE: number = 2;
   /**
    * File creation exit code
    */
-  public readonly FILE_CRA_ERRO: number = 3;
+  public static readonly FILE_CRA_ERRO: number = 3;
   /**
    * Internal terminal error exit code
    */
-  public readonly TERM_INTR_ERR: number = 500;
+  public static readonly TERM_INTR_ERR: number = 500;
 
-  public constructor() {
+  private _command: Array<string>;
+  // @ts-ignore - Won't get even called
+  private _shell: ReturnType<NativeShellV2["v2"]>;
+
+  public constructor(command: string | Array<string>) {
     super(window.__shell__);
-    this._command = "";
-  }
 
-  public cmd(cmd: string): this {
-    this._command = cmd;
-    return this;
+    if (!Array.isArray(command)) {
+      this._command = [command];
+    } else {
+      this._command = command;
+    }
+
+    if (this.isAndroid) {
+      this._shell = this.interface.v2.bind(this.interface)(JSON.stringify(this._command));
+    }
   }
 
   public exec(): void {
     if (this.isAndroid) {
-      this.interface.exec(this._command);
+      this._shell.exec();
     }
   }
 
   public result(): string {
     if (this.isAndroid) {
-      return this.interface.result(this._command);
+      return this._shell.result();
     } else {
-      return this._command;
+      return "";
     }
   }
 
   public isSuccess(): boolean {
     if (this.isAndroid) {
-      return this.interface.isSuccess(this._command);
+      return this._shell.isSuccess();
     } else {
       return false;
     }
@@ -120,46 +107,52 @@ class ShellClass extends Native<NativeShell> {
 
   public getCode(): number {
     if (this.isAndroid) {
-      return this.interface.getCode(this._command);
+      return this._shell.getCode();
     } else {
       return 1;
     }
   }
+
   /**
-   * Checks if the app has been granted root privileges
-   * @deprecated Use `Shell.isSuAvailable()` instead
+   * Compatibility method to ensure support without beaking changes
+   * @param command
+   * @returns
    */
-  public isAppGrantedRoot(): boolean {
-    return this.interface.isAppGrantedRoot();
+  public static cmd(command: string | Array<string>): Shell {
+    return new Shell(command);
   }
 
   /**
    * Checks if the app has been granted root privileges
    */
-  public isSuAvailable(): boolean {
-    return this.interface.isSuAvailable();
+  public static isSuAvailable(): boolean {
+    if (this.isAndroid) {
+      return window.__shell__.isSuAvailable();
+    }
+
+    return false;
   }
 
   /**
    * Get current installed Superuser version code
    */
-  public VERSION_CODE(): number {
+  public static VERSION_CODE(): number {
     if (this.isAndroid) {
-      return parseInt(this.interface.result("su -V"));
+      return parseInt(this.cmd("su -V").result());
     } else {
       return 0;
     }
   }
 
-  public VERSION_NAME(): string {
+  public static VERSION_NAME(): string {
     if (this.isAndroid) {
-      return this.interface.result("su -v");
+      return this.cmd("su -v").result();
     } else {
       return "0:SU";
     }
   }
 
-  public getRootManager(): string {
+  public static getRootManager(): string {
     if (this.isMagiskSU()) {
       return "Magisk";
     } else if (this.isKernelSU()) {
@@ -176,7 +169,7 @@ class ShellClass extends Native<NativeShell> {
    * @param searcher
    * @returns
    */
-  private _mountDetect(searcher: { [Symbol.search](string: string): number }): boolean {
+  private static _mountDetect(searcher: { [Symbol.search](string: string): number }): boolean {
     const proc = new SuFile("/proc/self/mounts");
 
     if (proc.exist()) {
@@ -189,7 +182,7 @@ class ShellClass extends Native<NativeShell> {
   /**
    * Determine if MMRL runs with KernelSU
    */
-  public isKernelSU(): boolean {
+  public static isKernelSU(): boolean {
     // `proc.exist()` is always `false` on browsers
     return this._mountDetect(/(KSU|KernelSU)/);
   }
@@ -197,7 +190,7 @@ class ShellClass extends Native<NativeShell> {
   /**
    * Determine if MMRL runs with Magisk
    */
-  public isMagiskSU(): boolean {
+  public static isMagiskSU(): boolean {
     // `proc.exist()` is always `false` on browsers
     return this._mountDetect(/(magisk|core\/mirror|core\/img)/);
   }
@@ -205,7 +198,7 @@ class ShellClass extends Native<NativeShell> {
   /**
    * Determine if MMRL runs with APatch
    */
-  public isAPatchSU(): boolean {
+  public static isAPatchSU(): boolean {
     // `proc.exist()` is always `false` on browsers
     return this._mountDetect(/(APD|APatch)/);
   }
@@ -214,9 +207,9 @@ class ShellClass extends Native<NativeShell> {
    * Returns the current user id
    * @returns {strign} User ID
    */
-  public pw_uid(): string {
+  public static pw_uid(): string {
     if (this.isAndroid) {
-      return this.interface.result("id -u");
+      return this.cmd("id -u").result();
     } else {
       return "Unknown";
     }
@@ -226,9 +219,9 @@ class ShellClass extends Native<NativeShell> {
    * Returns the current group id
    * @returns {string} Group ID
    */
-  public pw_gid(): string {
+  public static pw_gid(): string {
     if (this.isAndroid) {
-      return this.interface.result("id -g");
+      return this.cmd("id -g").result();
     } else {
       return "Unknown";
     }
@@ -238,14 +231,13 @@ class ShellClass extends Native<NativeShell> {
    * Returns the current user name
    * @returns {string} User name
    */
-  public pw_name(): string {
+  public static pw_name(): string {
     if (this.isAndroid) {
-      return this.interface.result("id -un");
+      return this.cmd("id -un").result();
     } else {
       return "Unknown";
     }
   }
 }
 
-const Shell: ShellClass = new ShellClass();
-export { Shell, ShellClass };
+export { Shell };

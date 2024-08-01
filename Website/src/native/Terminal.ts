@@ -16,7 +16,7 @@ interface TerminalExec {
    */
   printError?: boolean;
   onLine: (line: string) => void;
-  onExit: (code: number) => void;
+  onExit?: ((code: number) => void) | null;
 }
 
 type TerminalOptions = Omit<TerminalExec, "onLine" | "onExit" | "env" | "command">;
@@ -32,7 +32,7 @@ class Terminal extends Native<TerminalNative> {
   public cwd: string | undefined;
   printErrors: boolean | undefined;
   private _onLine: ((line: string) => void) | undefined;
-  private _onExit: ((code: number) => void) | undefined;
+  private _onExit: ((code: number) => void) | undefined | null;
 
   public constructor(options?: TerminalOptions) {
     super(window.__terminal__);
@@ -60,7 +60,6 @@ class Terminal extends Native<TerminalNative> {
   public exec(command: string): void {
     if (this.isAndroid) {
       if (typeof this._onLine !== "function") throw new TypeError("Terminal 'onLine' is not a function");
-      if (typeof this._onExit !== "function") throw new TypeError("Terminal 'onExit' is not a function");
 
       this.interface.exec({
         command: command,

@@ -1,22 +1,71 @@
 package com.dergoogler.core;
 
+import android.util.Log;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 
+import com.dergoogler.plugin.TerminalPlugin;
+import com.dergoogler.util.Json;
 import com.topjohnwu.superuser.Shell;
 import com.topjohnwu.superuser.ShellUtils;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class NativeShell {
+    private static final String TAG = "NativeShell";
     private final WebView wv;
     ArrayList<String> output = new ArrayList<>();
 
     public NativeShell(WebView wv) {
         this.wv = wv;
     }
+
+    @JavascriptInterface
+    public Object v2(String jsonArr) {
+        String[] cmds;
+        try {
+            cmds = Json.getStringArray(new JSONArray(jsonArr));
+        } catch (JSONException e) {
+            Log.e(TAG, e.toString());
+            return null;
+        }
+        Shell.Job shell = Shell.cmd(cmds);
+
+        final Shell.Result[] result = new Shell.Result[1];
+
+        return new Object() {
+
+            @JavascriptInterface
+            public void exec() {
+                result[0] = shell.exec();
+            }
+
+            @JavascriptInterface
+            public String result() {
+                List<String> out = shell.to(new ArrayList<>(), null).exec().getOut();
+                return ShellUtils.isValidOutput(out) ? out.get(out.size() - 1) : "";
+            }
+
+            @JavascriptInterface
+            public boolean isSuccess() {
+                return result[0].isSuccess();
+            }
+
+            @JavascriptInterface
+            public int getCode(String command) {
+                return result[0].getCode();
+            }
+
+
+        };
+    }
+
 
     @JavascriptInterface
     public void exec(String command) {

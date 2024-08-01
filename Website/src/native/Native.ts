@@ -1,6 +1,5 @@
 export interface INative<T = any> {
   get interface(): T;
-  get userAgent(): string;
 }
 
 export type NativeArgumentTypes<F extends Function> = F extends (...args: infer A) => any ? A : never;
@@ -19,22 +18,33 @@ export class Native<I = any> implements INative<I> {
     this._internal_interface = i;
   }
 
-  private get userAgentRegex(): RegExp {
+  private static get userAgentRegex(): RegExp {
     return /MMRL\/(.+)\s\(Linux;\sAndroid\s(.+);\s(.+)\sBuild\/(.+)\)/gs;
   }
 
-  public get userAgent(): string {
+  public static get userAgent(): string {
     return window.navigator.userAgent;
   }
 
   /**
    * Determine if MMRL runs on a Android device
    */
-  public get isAndroid(): boolean {
+  public static get isAndroid(): boolean {
     return this.userAgentRegex.test(this.userAgent) || window.hasOwnProperty("cordova") ? true : false;
+  }
+
+  /**
+   * Determine if MMRL runs on a Android device
+   */
+  public get isAndroid(): boolean {
+    return Native.isAndroid;
   }
 
   public get interface(): I {
     return this._internal_interface;
+  }
+
+  public static get interface() {
+    return Native.prototype.interface;
   }
 }

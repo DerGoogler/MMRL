@@ -1,4 +1,5 @@
 import { Chooser } from "@Native/Chooser";
+import { SuZip } from "@Native/SuZip";
 import { Terminal } from "@Native/Terminal";
 import { Path } from "@Util/path.js";
 import { transform } from "@babel/standalone";
@@ -11,16 +12,15 @@ import { Build } from "../Build";
 import { BuildConfig, BuildConfigClass } from "../BuildConfig";
 import { Native } from "../Native";
 import { OsClass, os } from "../Os";
-import { Shell, ShellClass } from "../Shell";
-import { SuFile, SuFileConstuctor } from "../SuFile";
+import { Shell } from "../Shell";
+import { SuFile } from "../SuFile";
 import { View, view } from "../View";
 import { IsoAudio } from "./IsoAudio";
+import { IsoDOMParser } from "./IsoDOMParser";
 import { IsoDocument } from "./IsoDocument";
+import { IsoXMLSerializer } from "./IsoXMLSerializer";
 import { IsolatedEvalError } from "./IsolatedEvalError";
 import { IsolatedFunctionBlockError } from "./IsolatedFunctionBlockError";
-import { IsoDOMParser } from "./IsoDOMParser";
-import { IsoXMLSerializer } from "./IsoXMLSerializer";
-import { NativeSuZip, SuZip, SuZipConstuctor } from "@Native/SuZip";
 
 type IsoModule = {
   exports: {
@@ -123,12 +123,12 @@ class IsolatedEval<T = any> {
     this._prototypeWhitelist.set(XMLSerializer, new Set());
     this._prototypeWhitelist.set(SuFile, new Set());
     this._prototypeWhitelist.set(SuZip, new Set());
-    this._prototypeWhitelist.set(ShellClass, new Set());
     this._prototypeWhitelist.set(View, new Set());
     this._prototypeWhitelist.set(OsClass, new Set());
     this._prototypeWhitelist.set(BuildConfigClass, new Set());
     this._prototypeWhitelist.set(Build, new Set());
     this._prototypeWhitelist.set(Native, new Set());
+    this._prototypeWhitelist.set(Shell, new Set());
     this._prototypeWhitelist.set(Terminal, new Set());
     this._prototypeWhitelist.set(Chooser, new Set());
     this._prototypeWhitelist.set(Path, new Set());

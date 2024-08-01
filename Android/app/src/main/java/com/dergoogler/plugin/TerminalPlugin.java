@@ -2,6 +2,7 @@ package com.dergoogler.plugin;
 
 import android.util.Log;
 
+import com.dergoogler.util.Json;
 import com.topjohnwu.superuser.io.SuFile;
 
 import org.apache.cordova.CallbackContext;
@@ -67,7 +68,7 @@ public class TerminalPlugin extends CordovaPlugin {
 
         if (envp != null) {
             Map<String, String> m = pb.environment();
-            m.putAll(toMap(envp));
+            m.putAll(Json.toMap(envp));
         }
 
         pb.directory(new SuFile(cwd));
@@ -112,30 +113,4 @@ public class TerminalPlugin extends CordovaPlugin {
             this.terminalCallbackContext.sendPluginResult(result);
         }
     }
-
-    public static Map<String, String> toMap(JSONObject jsonobj) throws JSONException {
-        Map<String, String> map = new HashMap<String, String>();
-        Iterator<String> keys = jsonobj.keys();
-        while (keys.hasNext()) {
-            String key = keys.next();
-            String value = jsonobj.getString(key);
-            map.put(key, value);
-        }
-        return map;
-    }
-
-    public static List<Object> toList(JSONArray array) throws JSONException {
-        List<Object> list = new ArrayList<Object>();
-        for (int i = 0; i < array.length(); i++) {
-            Object value = array.get(i);
-            if (value instanceof JSONArray) {
-                value = toList((JSONArray) value);
-            } else if (value instanceof JSONObject) {
-                value = toMap((JSONObject) value);
-            }
-            list.add(value);
-        }
-        return list;
-    }
-
 }

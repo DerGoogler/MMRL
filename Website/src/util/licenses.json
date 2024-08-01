@@ -341,6 +341,14 @@
     "source": "https://www.npmjs.com/package/react-zoom-pan-pinch"
   },
   {
+    "name": "reflect-metadata",
+    "author": "Ron Buckton",
+    "license": "Apache-2.0",
+    "description": "Polyfill for Metadata Reflection API",
+    "version": "0.2.2",
+    "source": "https://www.npmjs.com/package/reflect-metadata"
+  },
+  {
     "name": "underscore",
     "author": null,
     "license": "MIT",
@@ -353,7 +361,7 @@
     "author": null,
     "license": "MIT",
     "description": "React hook library, ready to use, written in Typescript.",
-    "version": "2.14.0",
+    "version": "3.1.0",
     "source": "https://www.npmjs.com/package/usehooks-ts"
   },
   {
