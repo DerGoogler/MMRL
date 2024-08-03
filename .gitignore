@@ -1,11 +1,71 @@
-package.json
-package-lock.json
+#built application files
+*.apk
+*.abb
+*.aab
+*.ap_
+
+# files for the dex VM
+*.dex
+
+# Java class files
+*.class
+
+# generated files
+bin/
+gen/
+*.cxx
+app/.cxx/*
+app/src/main/assets/www/*
+!/app/src/main/assets/**/index.html
+app/release/**/*
+app/default/**/*
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# Windows thumbnail db
+Thumbs.db
+
+# OSX files
+.DS_Store
+
+# Android Studio
+*.iml
+.idea
+#.idea/workspace.xml - remove # and delete .idea if it better suit your needs.
+.gradle
+build/
+.navigation
+captures/
+output.json
+
+#NDK
+obj/
+.externalNativeBuild
+
+
+# Website
+.cache/
+coverage/
+dist/*
+!dist/index.html
+!dist/moduleOptions.json
+!vscode/settings.json
 node_modules/
-__pycache__/
+cdn_modules/
+*.log
 
-# Ignore www bundles
-www/bundle/*
-www/files/*
+# --
+node_modules/
+cdn_modules/
+package-lock.json
+node_modules.bun
 
-Browser/*
-!Browser/.gitkeep
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

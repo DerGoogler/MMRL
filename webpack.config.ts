@@ -8,7 +8,7 @@ import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import FileManagerPlugin from "filemanager-webpack-plugin";
 
-const outputPath = "./../Android/app/src/main/assets/www";
+const outputPath = resolve(__dirname, "app/src/main/assets/www");
 if (!existsSync(outputPath)) mkdirSync(outputPath);
 
 const APP_DIR = resolve(__dirname, "src");
@@ -27,16 +27,16 @@ const defConfig: Configuration = {
 const config: Configuration = {
   entry: {
     app: [resolve(__dirname, "src/index.tsx")],
-    cordova: [resolve(__dirname, "app/cordova/cordova.js")],
-    cordova_plugins: [resolve(__dirname, "app/cordova/cordova_plugins.js")],
+    cordova: [resolve(__dirname, "web/cordova/cordova.js")],
+    cordova_plugins: [resolve(__dirname, "web/cordova/cordova_plugins.js")],
     "cordova-js-src": [
-      resolve(__dirname, "app/cordova/cordova-js-src/android/nativeapiprovider.js"),
-      resolve(__dirname, "app/cordova/cordova-js-src/android/promptbasednativeapi.js"),
-      resolve(__dirname, "app/cordova/cordova-js-src/plugin/android/app.js"),
-      resolve(__dirname, "app/cordova/cordova-js-src/exec.js"),
-      resolve(__dirname, "app/cordova/cordova-js-src/platform.js"),
+      resolve(__dirname, "web/cordova/cordova-js-src/android/nativeapiprovider.js"),
+      resolve(__dirname, "web/cordova/cordova-js-src/android/promptbasednativeapi.js"),
+      resolve(__dirname, "web/cordova/cordova-js-src/plugin/android/app.js"),
+      resolve(__dirname, "web/cordova/cordova-js-src/exec.js"),
+      resolve(__dirname, "web/cordova/cordova-js-src/platform.js"),
     ],
-    "c-plugins": readdirSync(resolve(__dirname, `app/cordova/plugins`)).map((plugin) => resolve(__dirname, "app/cordova/plugins", plugin)),
+    "c-plugins": readdirSync(resolve(__dirname, `web/cordova/plugins`)).map((plugin) => resolve(__dirname, "web/cordova/plugins", plugin)),
   },
   ...defConfig,
   module: {
@@ -112,13 +112,12 @@ const config: Configuration = {
         description:
           "Introducing Magisk Module Repo Loader (MMRL) - the ultimate module manager for Magisk, KernelSU and APatch on Android. This highly configurable app allows users to manage modules effortlessly, all while being completely free of ads.",
         cover: "assets/MMRL-Cover.png",
-        cordovaPath: "cordova.js",
-        _: "",
       },
+      minify: true,
       inject: "body",
       hash: true,
       xhtml: true,
-      template: resolve(__dirname, "app/app.html"),
+      template: resolve(__dirname, "web/app.html"),
       filename: resolve(__dirname, outputPath, "index.html"),
     }),
     new FileManagerPlugin({
@@ -126,7 +125,7 @@ const config: Configuration = {
         onEnd: {
           copy: [
             {
-              source: resolve(__dirname, "app/assets", "**/*"),
+              source: resolve(__dirname, "web/assets", "**/*"),
               destination: resolve(__dirname, outputPath, "assets"),
             },
           ],

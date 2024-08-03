@@ -12,7 +12,7 @@
   </span>
   <br />
   <span align="center">
-    <a href="https://f-droid.org/de/packages/com.dergoogler.mmrl"><img height="75px" alt="Get it on F-Droid" src="https://f-droid.org/badge/get-it-on.png"></a>
+    <a href="https://f-droid.org/pt/packages/com.dergoogler.mmrl"><img height="75px" alt="Get it on F-Droid" src="https://f-droid.org/badge/get-it-on.png"></a>
     <a href="https://android.izzysoft.de/repo/apk/com.dergoogler.mmrl"><img height="75px" alt="Get it on GitHub" src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png"></a>
   </span>
 </p>

@@ -1,12 +1,13 @@
 import groovy.json.*
 
 apply plugin: 'com.android.application'
+apply plugin: 'com.github.node-gradle.node'
 
-
-def inputFile = new File("./../Website/package.json")
+def inputFile = new File("./package.json")
 def pkg = new JsonSlurper().parseText(inputFile.text)
 def app_name = "MMRL"
 def cur_time = System.currentTimeMillis()
+
 
 android {
     compileSdk pkg.config.target_sdk
@@ -95,24 +96,31 @@ dependencies {
 
 configurations.implementation.setCanBeResolved(true)
 
-def npmRunPATH = "${System.getenv("PATH")}:./../../Website/node_modules/.bin:./../Website/node_modules/.bin"
-
-tasks.register('npmInstall', Exec) {
-    workingDir "./../../Website"
-    environment PATH: npmRunPATH
-    commandLine "npm", "install", "-f"
+node {
+    download = true
+    version = "18.19.0"
+    npmVersion = "10.2.3"
 }
 
-tasks.register('webDev', Exec) {
-    workingDir "./../../Website"
-    environment PATH: npmRunPATH
-    commandLine "npm", "run", "web:dev-app"
+tasks.register("webInstall", NpmTask) {
+    args = ["install", "-f"]
 }
 
-tasks.register('webProd', Exec) {
-    workingDir "./../../Website"
-    environment PATH: npmRunPATH
-    commandLine "npm", "run", "web:prod-app"
+tasks.register("webDev", NpmTask) {
+    args = ["run", "web:dev"]
+}
+
+tasks.register("webProd", NpmTask) {
+    args = ["run", "web:prod"]
+}
+
+afterEvaluate {
+    tasks.named('assembleDefaultDebug').configure {
+        dependsOn webProd
+    }
+    tasks.named('assembleDefaultRelease').configure {
+        dependsOn webProd
+    }
 }
 
 tasks.register('printDepsTreeInJson') {
@@ -149,7 +157,7 @@ tasks.register('printSolvedDepsTreeInJson') {
         def jsonFile = new JsonSlurper().parseText(jsonOutput)
         def json = JsonOutput.toJson(jsonFile)
         def pretty = JsonOutput.prettyPrint(json)
-        def myFile = new File('./../Website/src/utils/native-licenses.json')
+        def myFile = new File('./src/utils/native-licenses.json')
         myFile.write(pretty)
     }
 }
