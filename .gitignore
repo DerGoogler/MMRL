@@ -16,7 +16,6 @@ gen/
 *.cxx
 app/.cxx/*
 app/src/main/assets/www/*
-!/app/src/main/assets/**/index.html
 app/release/**/*
 app/default/**/*
 
