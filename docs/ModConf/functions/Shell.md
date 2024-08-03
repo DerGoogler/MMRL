@@ -2,7 +2,9 @@
 
 Finally the `Shell` API is public!
 
-> [!NOTE] > `Shell` is a global part in ModConf. No need to import it.
+> [!NOTE]
+> `Shell` is a global part in ModConf. No need to import it.
+>
 > The `Shell` API v2 is currently in the beta
 
 ## Execute a normal command
