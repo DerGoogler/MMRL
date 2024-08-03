@@ -85,14 +85,6 @@
     "source": "https://www.npmjs.com/package/@primer/octicons-react"
   },
   {
-    "name": "@wasmer/wasmfs",
-    "author": null,
-    "license": "MIT",
-    "description": "Isomorphic library to provide a sandboxed node fs implementation for Node and Browsers. 📂",
-    "version": "0.12.0",
-    "source": "https://www.npmjs.com/package/@wasmer/wasmfs"
-  },
-  {
     "name": "ajv",
     "author": null,
     "license": "MIT",

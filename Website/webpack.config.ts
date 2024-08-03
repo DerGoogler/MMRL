@@ -1,5 +1,5 @@
 import { resolve, join } from "path";
-import { Configuration, DefinePlugin } from "webpack";
+import { Configuration, DefinePlugin, ProvidePlugin } from "webpack";
 // Keep that for typings
 import webpackDevServer from "webpack-dev-server";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
@@ -86,6 +86,9 @@ const config: Configuration = {
     new MiniCssExtractPlugin({
       filename: "bundle/[name].bundle.css",
     }),
+    new ProvidePlugin({
+      Buffer: ["buffer", "Buffer"],
+    }),
   ],
   resolveLoader: {
     modules: ["node_modules", join(process.env.NPM_CONFIG_PREFIX || __dirname, "lib/node_modules")],
@@ -105,6 +108,9 @@ const config: Configuration = {
       "@Strings": resolve(__dirname, "src/language/core/index.ts"),
       "@Annotation": resolve(__dirname, "src/annotation"),
       "@Locales": resolve(__dirname, "src/locales"),
+    },
+    fallback: {
+      buffer: require.resolve("buffer/"),
     },
     modules: ["node_modules", join(process.env.NPM_CONFIG_PREFIX || __dirname, "lib/node_modules")],
     extensions: [".js", ".jsx", ".ts", ".tsx", ".scss", ".sass", ".css"],

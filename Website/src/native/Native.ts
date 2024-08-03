@@ -1,3 +1,5 @@
+import ModFS from "modfs";
+
 export interface INative<T = any> {
   get interface(): T;
 }
@@ -46,5 +48,18 @@ export class Native<I = any> implements INative<I> {
 
   public static get interface() {
     return Native.prototype.interface;
+  }
+
+  public static Unsupported(mTarget: "Android" | "Browser", notes: string = "") {
+    return (target: any, key: string, descriptor: PropertyDescriptor) => {
+      const originalDef = descriptor.value;
+
+      descriptor.value = function (...args: any[]) {
+        const obj = { M: `${key}()`, T: mTarget };
+        console.log(ModFS.format("<M> is not supported on the <T> variant.", obj), ModFS.format(notes, obj));
+        return originalDef.apply(this, args);
+      };
+      return descriptor;
+    };
   }
 }

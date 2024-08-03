@@ -1,7 +1,4 @@
 import { Native } from "./Native";
-import { WasmFs } from "@wasmer/wasmfs";
-
-export const wasmFs = new WasmFs();
 
 export type SuZipConstuctor = new (zipFile: string, path: string) => SuZip;
 

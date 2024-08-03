@@ -1,8 +1,4 @@
-import { IFs } from "memfs";
 import { Native } from "./Native";
-import { WasmFs } from "@wasmer/wasmfs";
-
-export const wasmFs = new WasmFs();
 
 interface NativeSuFile extends NativeSuFileV2 {
   readFile(path: string): string;
