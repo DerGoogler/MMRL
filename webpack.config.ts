@@ -9,7 +9,7 @@ import HtmlWebpackPlugin from "html-webpack-plugin";
 import FileManagerPlugin from "filemanager-webpack-plugin";
 
 const outputPath = resolve(__dirname, "app/src/main/assets/www");
-if (!existsSync(outputPath)) mkdirSync(outputPath);
+if (!existsSync(outputPath)) mkdirSync(outputPath, { recursive: true });
 
 const APP_DIR = resolve(__dirname, "src");
 const MONACO_DIR = resolve(__dirname, "node_modules/monaco-editor");
