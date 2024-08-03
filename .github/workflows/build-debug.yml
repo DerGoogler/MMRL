@@ -13,10 +13,6 @@ on:
       - '**.md'
   workflow_dispatch:
 
-defaults:
-  run:
-    working-directory: Android
-
 jobs:
   build:
 
@@ -61,10 +57,7 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Installing dependencies
-        run: ./gradlew app:npmInstall
-
-      - name: Building web prod
-        run: ./gradlew app:webProd
+        run: ./gradlew app:webInstall
 
       - name: Build apk debug
         run: ./gradlew app:assembleDefaultDebug
@@ -76,28 +69,28 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: MMRL-default-arm64-v8a-debug
-          path: ${{ github.workspace }}/Android/app/build/outputs/apk/default/debug/*-default-arm64-v8a-debug-*-*.apk
+          path: ${{ github.workspace }}/app/build/outputs/apk/default/debug/*-default-arm64-v8a-debug-*-*.apk
 
       - name: Upload MMRL-default-armeabi-v7a-debug
         uses: actions/upload-artifact@v3
         with:
           name: MMRL-default-armeabi-v7a-debug
-          path: ${{ github.workspace }}/Android/app/build/outputs/apk/default/debug/*-default-armeabi-v7a-debug-*-*.apk
+          path: ${{ github.workspace }}/app/build/outputs/apk/default/debug/*-default-armeabi-v7a-debug-*-*.apk
 
       - name: Upload MMRL-default-universal-debug
         uses: actions/upload-artifact@v3
         with:
           name: MMRL-default-universal-debug
-          path: ${{ github.workspace }}/Android/app/build/outputs/apk/default/debug/*-default-universal-debug-*-*.apk
+          path: ${{ github.workspace }}/app/build/outputs/apk/default/debug/*-default-universal-debug-*-*.apk
 
       - name: Upload MMRL-default-x86-debug
         uses: actions/upload-artifact@v3
         with:
           name: MMRL-default-x86-debug
-          path: ${{ github.workspace }}/Android/app/build/outputs/apk/default/debug/*-default-x86-debug-*-*.apk
+          path: ${{ github.workspace }}/app/build/outputs/apk/default/debug/*-default-x86-debug-*-*.apk
 
       - name: Upload MMRL-default-x86_64-debug
         uses: actions/upload-artifact@v3
         with:
           name: MMRL-default-x86_64-debug
-          path: ${{ github.workspace }}/Android/app/build/outputs/apk/default/debug/*-default-x86_64-debug-*-*.apk
+          path: ${{ github.workspace }}/app/build/outputs/apk/default/debug/*-default-x86_64-debug-*-*.apk
