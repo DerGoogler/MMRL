@@ -150,6 +150,6 @@
     "webpack": "^5.91.0",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1",
-    "yaml-loader": "^0.8.0"
+    "yaml-loader": "^0.8.1"
   }
 }
