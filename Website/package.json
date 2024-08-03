@@ -47,10 +47,11 @@
   "author": "Der_Googler",
   "license": "GPL-3.0",
   "scripts": {
-    "start:dev": "npm run licensefix && webpack-dev-server --open --config webpack.dev.ts",
+    "start:dev": "webpack-dev-server --open --config webpack.dev.ts",
     "start:prod": "npm run licensefix && webpack-dev-server --open --config webpack.prod.ts",
     "web:dev": "webpack --config webpack.dev.ts",
-    "web:prod": "webpack --config webpack.prod.ts",
+    "web:prod": "npm run licensefix && webpack --config webpack.prod.ts",
+    "web:prod-app": "npm run web:prod",
     "licensefix": "node licensefix.js"
   },
   "resolutions": {
