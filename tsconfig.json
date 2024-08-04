@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "./../Android/app/src/main/assets",
+    "outDir": "./app/src/main/assets",
     "allowJs": true,
     "declaration": false,
     "experimentalDecorators": true,
@@ -15,7 +15,7 @@
     "lib": ["ES2023.Array", "ES2023", "ES2018", "dom"],
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
-    "target": "ES2023",
+    "target": "ES2022",
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "jsx": "react-jsx",
