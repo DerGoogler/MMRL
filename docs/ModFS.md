@@ -1,6 +1,6 @@
 # Module File System (ModFS)
 
-TODO
+**ModFS** is a core component that provides a flexible and customizable filesystem for managing modules on Android devices. It's designed to streamline module installation, updates, and removal while offering granular control over module structure.
 
 ## Workarounds
 
