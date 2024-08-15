@@ -11,7 +11,6 @@
     "gradle": true,
     "gradlew": true,
     "gradlew.bat": true,
-    "local.properties": true,
     "node_modules": true,
     "package-lock.json": true
   },
