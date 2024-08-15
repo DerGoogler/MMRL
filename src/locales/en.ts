@@ -134,7 +134,7 @@ export const en = {
   numberic_lines_title: "Numberic lines",
   numberic_lines_desc: "Adds a number to every line in the installer",
 
-  privacy_privacy: "Privacy Privacy",
+  privacy_privacy: "Privacy Policy",
   hoc_with_require_new_version: "This config requires MMRL above {versionCode} (versionCode){br}Check the latest {url}",
 
   print_errors: "Print errors",
