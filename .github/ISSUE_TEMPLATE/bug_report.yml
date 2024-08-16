@@ -11,7 +11,8 @@ body:
         > [!IMPORTANT]
         > The following things are not MMRL related
         > - **Install scripts** such as typos in there or other things.
-        > - Some parts of **ModConf**. Things like `Cannot find module 'dont-anoy'` are MMRL related, this libaray may has benn removed or renamed.
+        > - Configured **ModFS**. Try delete `/data/adb/mmrl/modfs.v*.json`
+        > - Some parts of **ModConf**. Things like `Cannot find module 'dont-anoy'` are sometimes MMRL related, this libaray may has benn removed, renamed or does not exist.
         > - General module functionality after the install. MMRL is *module manager* **not** a *module executer*
         > 
         > If these rules are ignored then your issue will be closed.

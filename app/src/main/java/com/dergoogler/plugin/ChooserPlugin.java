@@ -131,12 +131,12 @@ public class ChooserPlugin extends CordovaPlugin {
                         while (currentItem < count) {
                             Uri uri = data.getClipData().getItemAt(currentItem).getUri();
                             currentItem = currentItem + 1;
-                            result.put("\"" + getPath(appContext, uri) + "\"");
+                            result.put(getPath(appContext, uri));
                         }
 
                         this.callback.success(result);
                     } else if (uriData != null) {
-                        result.put("\"" + getPath(appContext, uriData) + "\"");
+                        result.put(getPath(appContext, uriData));
                         this.callback.success(result);
                     } else {
                         this.callback.error("File URI was null.");

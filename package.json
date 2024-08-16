@@ -88,7 +88,7 @@
     "markdown-to-jsx": "^7.4.0",
     "material-icons": "^1.10.8",
     "material-ui-confirm": "^3.0.11",
-    "modfs": "^1.1.1",
+    "modfs": "^1.3.2",
     "monaco-editor": "^0.48.0",
     "monaco-editor-core": "^0.50.0",
     "monaco-languageclient": "^6.5.0",

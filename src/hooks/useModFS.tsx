@@ -1,9 +1,7 @@
-import React, { createContext, useContext } from "react";
 import { defaultComposer } from "default-composer";
-import { useNativeStorage } from "./useNativeStorage";
-import { SetStateAction } from "./useStateCallback";
-import { formatObjectEntries, formatString } from "@Util/stringFormat";
+import React, { createContext, useContext } from "react";
 import { useNativeFileStorage } from "./useNativeFileStorage";
+import { SetStateAction } from "./useStateCallback";
 
 import { default as PModFS } from "modfs";
 
@@ -106,7 +104,7 @@ export const INITIAL_MOD_CONF: ModFS = {
 
   // Installer
   EXPLORE_INSTALL: 'mmrl install -y "<URL>"',
-  LOCAL_INSTALL: "mmrl install local -y <ZIPFILES>",
+  LOCAL_INSTALL: "mmrl install local -y <ZIPFILES( |\"\")>",
 };
 
 export interface ModConfContext {
@@ -130,7 +128,7 @@ export const useModFS = () => {
 };
 
 export const ModFSProvider = (props: React.PropsWithChildren) => {
-  const [modFS, setModFS] = useNativeFileStorage("/data/adb/mmrl/modfs.v2.json", INITIAL_MOD_CONF, { loader: "json" });
+  const [modFS, setModFS] = useNativeFileStorage("/data/adb/mmrl/modfs.v3.json", INITIAL_MOD_CONF, { loader: "json" });
 
   const pmodFS = React.useMemo(() => new PModFS(defaultComposer(INITIAL_MOD_CONF, modFS)), [modFS]);
 
@@ -139,7 +137,7 @@ export const ModFSProvider = (props: React.PropsWithChildren) => {
       _modFS: defaultComposer(INITIAL_MOD_CONF, modFS),
       __modFS: pmodFS.formatEntries(),
       modFS<K extends keyof ModFS>(key: K, adds: ModFS | object): ModFS[K] {
-        return PModFS.format(pmodFS.getEntrie(key)!, { ...modFS, ...adds });
+        return PModFS.format(pmodFS.get(key)!, { ...modFS, ...adds });
       },
       setModFS: (name, state) => {
         setModFS((prev) => {

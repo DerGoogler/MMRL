@@ -293,7 +293,7 @@ export const InstallTerminalV2Activity = () => {
 
     if (exploreInstall) {
       const url = modSource[0];
-      const urls = modSource.join(" ");
+      const urls = modSource;
 
       const explore_install = new Terminal({
         cwd: "/data/local/tmp",
@@ -369,7 +369,7 @@ export const InstallTerminalV2Activity = () => {
       );
     } else {
       const zipfile = modSource[0];
-      const zipfiles = modSource.join(" ");
+      const zipfiles = modSource;
 
       const local_install = new Terminal({
         cwd: "/data/local/tmp",
