@@ -20,8 +20,6 @@ import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import okio.Path;
-
 public class NativeSuZip {
     private final String TAG = "NativeSuZip";
 

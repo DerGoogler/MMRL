@@ -136,6 +136,12 @@ const config: Configuration = {
                 force: true,
               },
             },
+            {
+              source: resolve(__dirname, outputPath, "bundle", "*.LICENSE.txt"),
+              options: {
+                force: true,
+              },
+            },
           ],
         },
       },

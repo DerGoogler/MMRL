@@ -19,4 +19,10 @@
     "editor.defaultFormatter": "ms-python.python"
   },
   // "terminal.integrated.cwd": "Website"
+  "terminal.integrated.profiles.linux": {
+    "WSL": {
+      "path": "wsl.exe"
+    }
+  },
+  "terminal.integrated.defaultProfile.linux": "WSL"
 }

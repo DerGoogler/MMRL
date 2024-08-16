@@ -12,12 +12,14 @@
 
 # generated files
 bin/
+!.vscode/bin
 gen/
 *.cxx
 app/.cxx/*
 app/src/main/assets/www/*
 app/release/**/*
 app/default/**/*
+
 
 # Local configuration file (sdk path, etc)
 local.properties

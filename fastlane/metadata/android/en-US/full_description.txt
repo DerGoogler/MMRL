@@ -17,6 +17,7 @@ MMRL is a highly configurable app allows you to manage modules effortlessly, all
   🔍 Search functionality
   📄 Adding up to 5 repositories
 
-This app requires root access, it won't work without it!
-
-Note: You'll require MMRL-CLI to install other modules
+Requirements:
+- A rooted Android phone
+- A installed WebView engine
+- MMRL-CLI to use the full functionality

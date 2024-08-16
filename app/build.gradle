@@ -10,6 +10,10 @@ def cur_time = System.currentTimeMillis()
 
 
 android {
+    buildFeatures {
+        buildConfig = true
+    }
+
     compileSdk pkg.config.target_sdk
     namespace pkg.config.application_id
 
@@ -80,7 +84,7 @@ repositories {
 
 dependencies {
     implementation 'androidx.browser:browser:1.8.0'
-    implementation "androidx.appcompat:appcompat:1.6.1"
+    implementation "androidx.appcompat:appcompat:1.7.0"
     implementation 'androidx.core:core:1.13.1'
     implementation 'androidx.webkit:webkit:1.11.0'
     implementation 'androidx.profileinstaller:profileinstaller:1.3.1'
@@ -116,10 +120,11 @@ tasks.register("webProd", NpmTask) {
 
 afterEvaluate {
     tasks.named('assembleDefaultDebug').configure {
-        dependsOn webProd
+//        dependsOn webProd
     }
     tasks.named('assembleDefaultRelease').configure {
-        dependsOn webProd
+//        dependsOn webProd
+        dependsOn(["printSolvedDepsTreeInJson"])
     }
 }
 
@@ -157,7 +162,7 @@ tasks.register('printSolvedDepsTreeInJson') {
         def jsonFile = new JsonSlurper().parseText(jsonOutput)
         def json = JsonOutput.toJson(jsonFile)
         def pretty = JsonOutput.prettyPrint(json)
-        def myFile = new File('./src/utils/native-licenses.json')
+        def myFile = new File('./src/util/native-licenses.json')
         myFile.write(pretty)
     }
 }

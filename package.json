@@ -2,12 +2,12 @@
   "name": "com.dergoogler.mmrl.web",
   "description": "",
   "config": {
+    "cname": "mmrl.dergoogler.com",
     "application_id": "com.dergoogler.mmrl",
     "min_sdk": 26,
     "target_sdk": 34,
     "version_name": "2.21.22",
     "version_code": 22122,
-    "prerelease": false,
     "verified_hosts": [
       [
         "mmrl",
@@ -53,7 +53,8 @@
     "web:dev": "webpack --config webpack.dev.ts",
     "web:prod": "npm run licensefix && webpack --config webpack.prod.ts",
     "web:prod-app": "npm run web:prod",
-    "licensefix": "node licensefix.js"
+    "licensefix": "node licensefix.js",
+    "deploy": "node deploy.js"
   },
   "resolutions": {
     "react": "^18.2.0",
@@ -116,6 +117,7 @@
     "@types/babel__core": "^7.20.2",
     "@types/babel__standalone": "^7.1.7",
     "@types/fs-extra": "^11.0.4",
+    "@types/gh-pages": "^6.1.0",
     "@types/ini": "^4.1.0",
     "@types/node": "^18.0.6",
     "@types/object-assign": "^4.0.30",
@@ -135,6 +137,7 @@
     "file-loader": "^6.2.0",
     "filemanager-webpack-plugin": "^8.0.0",
     "fs-extra": "^11.2.0",
+    "gh-pages": "^6.1.1",
     "html-webpack-plugin": "^5.6.0",
     "js-yaml-loader": "^1.2.2",
     "license-checker": "^25.0.1",
