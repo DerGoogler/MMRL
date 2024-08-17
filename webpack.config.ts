@@ -1,5 +1,5 @@
 import { resolve, join } from "path";
-import { existsSync, mkdirSync, readdirSync } from "fs";
+import { existsSync, mkdirSync, readdirSync, lstatSync } from "fs";
 import { Configuration, DefinePlugin, ProvidePlugin } from "webpack";
 // Keep that for typings
 import webpackDevServer from "webpack-dev-server";
@@ -7,6 +7,12 @@ import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import FileManagerPlugin from "filemanager-webpack-plugin";
+
+const listFiles = (path: string, options = { recursive: true }) => {
+  return readdirSync(resolve(__dirname, path), { recursive: options.recursive })
+    .map((file) => resolve(__dirname, path, file))
+    .filter((file) => lstatSync(file).isFile());
+};
 
 const outputPath = resolve(__dirname, "app/src/main/assets/www");
 if (!existsSync(outputPath)) mkdirSync(outputPath, { recursive: true });
@@ -16,9 +22,9 @@ const MONACO_DIR = resolve(__dirname, "node_modules/monaco-editor");
 
 const defConfig: Configuration = {
   output: {
-    filename: "bundle/[name].[hash].js",
+    filename: "bundle/[name].[fullhash].js",
     path: resolve(__dirname, outputPath),
-    chunkFilename: "bundle/[name].[hash].js",
+    chunkFilename: "bundle/[name].[fullhash].[ext]",
     assetModuleFilename: "files/[name].[ext]",
     clean: true,
   },
@@ -29,14 +35,8 @@ const config: Configuration = {
     app: [resolve(__dirname, "src/index.tsx")],
     cordova: [resolve(__dirname, "web/cordova/cordova.js")],
     cordova_plugins: [resolve(__dirname, "web/cordova/cordova_plugins.js")],
-    "cordova-js-src": [
-      resolve(__dirname, "web/cordova/cordova-js-src/android/nativeapiprovider.js"),
-      resolve(__dirname, "web/cordova/cordova-js-src/android/promptbasednativeapi.js"),
-      resolve(__dirname, "web/cordova/cordova-js-src/plugin/android/app.js"),
-      resolve(__dirname, "web/cordova/cordova-js-src/exec.js"),
-      resolve(__dirname, "web/cordova/cordova-js-src/platform.js"),
-    ],
-    "c-plugins": readdirSync(resolve(__dirname, `web/cordova/plugins`)).map((plugin) => resolve(__dirname, "web/cordova/plugins", plugin)),
+    "cordova-js-src": listFiles("web/cordova/cordova-js-src"),
+    "c-plugins": listFiles("web/cordova/plugins"),
   },
   ...defConfig,
   module: {
@@ -176,7 +176,7 @@ const config: Configuration = {
 
   devServer: {
     static: {
-      directory: join(__dirname, outputPath),
+      directory: outputPath,
     },
     open: false,
     compress: true,
