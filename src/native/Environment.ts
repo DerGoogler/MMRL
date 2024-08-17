@@ -46,4 +46,4 @@ class EnvironmentClass extends Native<NativeEnvironment> {
   }
 }
 
-const Environment: EnvironmentClass = new EnvironmentClass();
+export const Environment: EnvironmentClass = new EnvironmentClass();

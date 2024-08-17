@@ -95,6 +95,7 @@ declare global {
 
     readonly __terminal__: I;
     readonly __chooser__: I;
+    readonly __download__: I;
   }
 
   export type MMRLTheme = Theme & {

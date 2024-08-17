@@ -153,5 +153,7 @@ export const en = {
   we_hit_a_brick: "We hit a brick!",
   open_settings: "Open settings",
   open_logcat: "Open Logcat",
-  try_again: "Try again"
+  try_again: "Try again",
+
+  file_downloaded: "File has been downloaded to {path}",
 };

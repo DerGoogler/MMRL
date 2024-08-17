@@ -12,6 +12,10 @@ cordova.define("cordova/plugin_list", function (require, exports, module) {
       id: "com.dergoogler.plugin.terminal",
       clobbers: ["__terminal__"],
     },
+    {
+      id: "com.dergoogler.plugin.download",
+      clobbers: ["__download__"],
+    },
   ];
 
   module.exports = plugins.map((plugin) => ({ file: "bundle/c-plugins.js", ...plugin }));

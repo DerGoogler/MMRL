@@ -31,6 +31,9 @@ import { VersionsTab } from "./tabs/VersionsTab";
 import { DropdownButton } from "@Components/DropdownButton";
 import { useModuleInfo } from "@Hooks/useModuleInfo";
 import { useFormatBytes } from "@Hooks/useFormatBytes";
+import LinearProgress from "@mui/material/LinearProgress";
+import { Download } from "@Native/Download";
+import { Environment } from "@Native/Environment";
 
 function a11yProps(index: number) {
   return {
@@ -131,6 +134,10 @@ const ModuleViewActivity = () => {
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+
+  const cconfirm = useConfirm();
+
+  const [downloadProgress, setDownloadProgress] = React.useState(0);
 
   return (
     <Page
@@ -336,7 +343,18 @@ const ModuleViewActivity = () => {
                 )}
               </Stack>
 
-              <Stack direction="row" justifyContent="center" alignItems="center" spacing={1}>
+              <Stack direction="column" justifyContent="center" alignItems="stretch" spacing={1}>
+                {downloadProgress !== 0 && (
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Box sx={{ width: "100%", mr: 1 }}>
+                      <LinearProgress variant="determinate" value={downloadProgress} />
+                    </Box>
+                    <Box sx={{ minWidth: 35 }}>
+                      <Typography variant="body2" color="text.secondary">{`${Math.round(downloadProgress)}%`}</Typography>
+                    </Box>
+                  </Box>
+                )}
+
                 <DropdownButton
                   sx={{
                     width: "100%",
@@ -352,12 +370,41 @@ const ModuleViewActivity = () => {
                       children: strings("download"),
                       disabled: !latestVersion.zipUrl,
                       onClick: () => {
-                        os.open(latestVersion.zipUrl, {
-                          target: "_blank",
-                          features: {
-                            color: theme.palette.primary.main,
-                          },
-                        });
+                        const lasSeg = new URL(latestVersion.zipUrl).pathname.split("/").pop();
+                        const dlPath = Environment.getPublicDir(Environment.DIRECTORY_DOWNLOADS) + "/" + lasSeg;
+                        const dl = new Download(latestVersion.zipUrl, dlPath);
+
+                        dl.onChange = (obj) => {
+                          switch (obj.type) {
+                            case "downloading":
+                              setDownloadProgress(obj.state);
+                              break;
+                            case "finished":
+                              setDownloadProgress(0);
+                              cconfirm({
+                                title: strings("download"),
+                                description: strings("file_downloaded", { path: dlPath }),
+                              })
+                                .then(() => {})
+                                .catch(() => {});
+
+                              break;
+                          }
+                        };
+
+                        dl.onError = (err) => {
+                          setDownloadProgress(0);
+                          os.toast("finsish: " + err, Toast.LENGTH_SHORT);
+                        };
+
+                        dl.start();
+
+                        // os.open(latestVersion.zipUrl, {
+                        //   target: "_blank",
+                        //   features: {
+                        //     color: theme.palette.primary.main,
+                        //   },
+                        // });
                       },
                     },
                     {

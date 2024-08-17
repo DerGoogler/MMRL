@@ -34,4 +34,8 @@
     <feature name="Terminal">
         <param name="android-package" value="com.dergoogler.plugin.TerminalPlugin" />
     </feature>
+
+    <feature name="Download">
+        <param name="android-package" value="com.dergoogler.plugin.DownloadPlugin" />
+    </feature>
 </widget>
