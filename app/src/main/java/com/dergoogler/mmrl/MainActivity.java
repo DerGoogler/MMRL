@@ -2,13 +2,18 @@ package com.dergoogler.mmrl;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewTreeObserver;
 import android.webkit.ConsoleMessage;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import androidx.core.view.WindowCompat;
 
@@ -27,6 +32,12 @@ import org.apache.cordova.engine.SystemWebChromeClient;
 import org.apache.cordova.engine.SystemWebViewEngine;
 
 public class MainActivity extends CordovaActivity {
+
+    private WebView wv;
+    private View rootView;
+    private int previousHeight = 0;
+    private boolean isKeyboardShowing = false;
+
     @Override
     @SuppressLint("SetJavaScriptEnabled")
     public void onCreate(Bundle savedInstanceState) {
@@ -40,9 +51,32 @@ public class MainActivity extends CordovaActivity {
             StrictMode.setThreadPolicy(policy);
         }
 
-        WebView wv = (WebView) appView.getEngine().getView();
+        wv = (WebView) appView.getEngine().getView();
+        rootView = findViewById(android.R.id.content);
         CordovaWebViewEngine wve = appView.getEngine();
 
+
+        rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                Rect r = new Rect();
+                rootView.getWindowVisibleDisplayFrame(r);
+                int screenHeight = rootView.getRootView().getHeight();
+                int keypadHeight = screenHeight - r.bottom;
+
+                if (keypadHeight > screenHeight * 0.15) { // 0.15 ratio is perhaps enough to determine keypad height.
+                    if (!isKeyboardShowing) {
+                        isKeyboardShowing = true;
+                        adjustWebViewHeight(keypadHeight);
+                    }
+                } else {
+                    if (isKeyboardShowing) {
+                        isKeyboardShowing = false;
+                        resetWebViewHeight();
+                    }
+                }
+            }
+        });
 
         NativeStorage ns = new NativeStorage(this);
         NativeOS os = new NativeOS(this);
@@ -96,6 +130,18 @@ public class MainActivity extends CordovaActivity {
                return true;
            }
        });
+    }
+
+    private void adjustWebViewHeight(int keypadHeight) {
+        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) wv.getLayoutParams();
+        params.height = rootView.getHeight() - keypadHeight;
+        wv.setLayoutParams(params);
+    }
+
+    private void resetWebViewHeight() {
+        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) wv.getLayoutParams();
+        params.height = LinearLayout.LayoutParams.MATCH_PARENT;
+        wv.setLayoutParams(params);
     }
 
     private String mmrlUserAgent() {
