@@ -1,6 +1,6 @@
 import React from "react";
 import { Add, Remove, CodeRounded, ArrowBackIosRounded, RestartAlt } from "@mui/icons-material";
-import { Stack, Box, Slider, Button, Typography, TextField, alpha } from "@mui/material";
+import { Stack, Box, Slider, Button, Typography, TextField, alpha, LinearProgress } from "@mui/material";
 import FlatList from "flatlist-react";
 import { Ansi } from "@Components/Ansi";
 import { useTheme } from "@Hooks/useTheme";
@@ -17,6 +17,8 @@ import { useModFS } from "@Hooks/useModFS";
 import { formatString } from "@Util/stringFormat";
 import { Terminal } from "@Native/Terminal";
 import { Image } from "@Components/dapi/Image";
+import { Download } from "@Native/Download";
+import { v1 as uuidv1 } from "uuid";
 
 type IntrCommand = (args: string[], options: Record<string, string>, add: any) => void;
 
@@ -80,6 +82,11 @@ const useLines = (cmds: Record<string, IntrCommand>) => {
         },
       ]);
     }
+  };
+
+  const setLastLine = (text: string, props?: object) => {
+    setLines((p) => p.slice(0, -1));
+    addText(text, props);
   };
 
   const addImage = (data: string, props?: object) => {
@@ -206,8 +213,11 @@ const useLines = (cmds: Record<string, IntrCommand>) => {
     setUseInt: setUseInt,
     addButton: addButton,
     addText: addText,
+    setLastLine: setLastLine,
   };
 };
+
+const TMPDIR = "/data/local/tmp";
 
 export const InstallTerminalV2Activity = () => {
   const { context, extra } = useActivity<TerminalActivityExtra>();
@@ -220,7 +230,7 @@ export const InstallTerminalV2Activity = () => {
   const termEndRef = React.useRef<HTMLDivElement>(null);
 
   const [active, setActive] = React.useState<bool>(true);
-  const { lines, addText, addButton } = useLines({
+  const { lines, addText, addButton, setLastLine } = useLines({
     color: (args, _, add) => {
       add.addText(formatString(args[0], colors));
     },
@@ -288,91 +298,128 @@ export const InstallTerminalV2Activity = () => {
     });
   }, []);
 
+  const getInstallCLI = React.useCallback((adds?: Record<string, any>) => {
+    switch (Shell.getRootManager()) {
+      case "Magisk":
+        return modFS("MSUINI", adds);
+      case "KernelSU":
+        return modFS("KSUINI", adds);
+      case "APatchSU":
+        return modFS("ASUINI", adds);
+      default:
+        return `exit ${Shell.M_DWL_FAILURE}`;
+    }
+  }, []);
+
+  const [downloadProgress, setDownloadProgress] = React.useState(0);
+
   const install = () => {
     const { exploreInstall, modSource, id, source, issues } = extra;
 
     if (exploreInstall) {
       const url = modSource[0];
-      const urls = modSource;
+      // const urls = modSource;
 
-      const explore_install = new Terminal({
-        cwd: "/data/local/tmp",
-        printError: settings.print_terminal_error,
-      });
+      const modPath = `${TMPDIR}/${uuidv1()}.zip`;
 
-      explore_install.env = {
-        ASH_STANDALONE: "1",
-        MMRL: "true",
-        MMRL_INTR: "true",
-        MMRL_VER: BuildConfig.VERSION_CODE.toString(),
-        NAME: id,
-        ROOTMANAGER: Shell.getRootManager(),
-        ...__modFS,
-      };
+      const dl = new Download(url, modPath);
 
-      explore_install.onLine = (line) => {
-        addText(line);
-      };
+      dl.onChange = (obj) => {
+        switch (obj.type) {
+          case "downloading":
+            setDownloadProgress(obj.state);
+            setLastLine(`- Downlaoding module progress: ${obj.state}%`);
+            break;
+          case "finished":
+            setDownloadProgress(0);
 
-      explore_install.onExit = (code) => {
-        switch (code) {
-          case Shell.M_INS_SUCCESS:
-            addText(" ");
-            addText(
-              "\x1b[93mYou can press the \x1b[33;4mbutton\x1b[93;0m\x1b[93m below to \x1b[33;4mreboot\x1b[93;0m\x1b[93m your device\x1b[0m"
-            );
-            addButton("Reboot", {
-              startIcon: <RestartAlt />,
-              onClick: rebootDevice,
+            const explore_install = new Terminal({
+              cwd: TMPDIR,
+              printError: settings.print_terminal_error,
             });
-            addText(
-              "\x1b[2mModules that causes issues after installing belog not to \x1b[35;4mMMRL\x1b[0;2m!\nPlease report these issues to thier support page\x1b[2m"
+
+            explore_install.env = {
+              ASH_STANDALONE: "1",
+              MMRL: "true",
+              MMRL_INTR: "true",
+              MMRL_VER: BuildConfig.VERSION_CODE.toString(),
+              ROOTMANAGER: Shell.getRootManager(),
+            };
+
+            explore_install.onLine = (line) => {
+              addText(line);
+            };
+
+            explore_install.onExit = (code) => {
+              switch (code) {
+                case Shell.M_INS_SUCCESS:
+                  addText(" ");
+                  addText(
+                    "\x1b[93mYou can press the \x1b[33;4mbutton\x1b[93;0m\x1b[93m below to \x1b[33;4mreboot\x1b[93;0m\x1b[93m your device\x1b[0m"
+                  );
+                  addButton("Reboot", {
+                    startIcon: <RestartAlt />,
+                    onClick: rebootDevice,
+                  });
+                  addText(
+                    "\x1b[2mModules that causes issues after installing belog not to \x1b[35;4mMMRL\x1b[0;2m!\nPlease report these issues to thier support page\x1b[2m"
+                  );
+                  if (issues) {
+                    addText(`> \x1b[32mIssues: \x1b[33m${issues}\x1b[0m`);
+                  }
+                  if (source) {
+                    addText(`> \x1b[32mSource: \x1b[33m${source}\x1b[0m`);
+                  }
+                  setActive(false);
+                  break;
+                case Shell.M_INS_FAILURE:
+                  addText(" ");
+                  addText(
+                    "\x1b[2mModules that causes issues after installing belog not to \x1b[35;4mMMRL\x1b[0;2m!\nPlease report these issues to thier support page\x1b[2m"
+                  );
+                  if (issues) {
+                    addText(`> \x1b[32mIssues: \x1b[33m${issues}\x1b[0m`);
+                  }
+                  if (source) {
+                    addText(`> \x1b[32mSource: \x1b[33m${source}\x1b[0m`);
+                  }
+                  setActive(false);
+                  break;
+                case Shell.TERM_INTR_ERR:
+                  addText("! \x1b[31mInternal error!\x1b[0m");
+                  setActive(false);
+                  break;
+                default:
+                  addText("? Unknown code returned");
+                  setActive(false);
+                  break;
+              }
+            };
+
+            explore_install.exec(
+              getInstallCLI({
+                ZIPFILE: modPath,
+              })
             );
-            if (issues) {
-              addText(`> \x1b[32mIssues: \x1b[33m${issues}\x1b[0m`);
-            }
-            if (source) {
-              addText(`> \x1b[32mSource: \x1b[33m${source}\x1b[0m`);
-            }
-            setActive(false);
-            break;
-          case Shell.M_INS_FAILURE:
-            addText(" ");
-            addText(
-              "\x1b[2mModules that causes issues after installing belog not to \x1b[35;4mMMRL\x1b[0;2m!\nPlease report these issues to thier support page\x1b[2m"
-            );
-            if (issues) {
-              addText(`> \x1b[32mIssues: \x1b[33m${issues}\x1b[0m`);
-            }
-            if (source) {
-              addText(`> \x1b[32mSource: \x1b[33m${source}\x1b[0m`);
-            }
-            setActive(false);
-            break;
-          case Shell.TERM_INTR_ERR:
-            addText("! \x1b[31mInternal error!\x1b[0m");
-            setActive(false);
-            break;
-          default:
-            addText("? Unknown code returned");
-            setActive(false);
+
             break;
         }
       };
 
-      explore_install.exec(
-        modFS("EXPLORE_INSTALL", {
-          URL: url,
-          URLS: urls,
-          MODID: id,
-        })
-      );
+      dl.onError = (err) => {
+        setDownloadProgress(0);
+        addText("! \x1b[31mUnable to download the module\x1b[0m");
+        addText("! \x1b[31mERR: " + err + "\x1b[0m");
+        setActive(false);
+      };
+
+      dl.start();
     } else {
       const zipfile = modSource[0];
-      const zipfiles = modSource;
+      // const zipfiles = modSource;
 
       const local_install = new Terminal({
-        cwd: "/data/local/tmp",
+        cwd: TMPDIR,
         printError: settings.print_terminal_error,
       });
 
@@ -381,9 +428,7 @@ export const InstallTerminalV2Activity = () => {
         MMRL: "true",
         MMRL_INTR: "true",
         MMRL_VER: BuildConfig.VERSION_CODE.toString(),
-        NAME: id,
         ROOTMANAGER: Shell.getRootManager(),
-        ...__modFS,
       };
 
       local_install.onLine = (line) => {
@@ -434,9 +479,8 @@ export const InstallTerminalV2Activity = () => {
       };
 
       local_install.exec(
-        modFS("LOCAL_INSTALL", {
+        getInstallCLI({
           ZIPFILE: zipfile,
-          ZIPFILES: zipfiles,
         })
       );
     }
@@ -444,9 +488,21 @@ export const InstallTerminalV2Activity = () => {
 
   const renderToolbar = () => {
     return (
-      <Toolbar modifier="noshadow">
+      <Toolbar
+        modifier="noshadow"
+        sx={{
+          position: "relative !important",
+        }}
+      >
         <Toolbar.Left>{!active && <Toolbar.BackButton onClick={context.popPage} />}</Toolbar.Left>
         <Toolbar.Center>Install</Toolbar.Center>
+        {downloadProgress !== 0 && (
+          <LinearProgress
+            sx={{ width: "100%", left: 0, right: 0, position: "absolute", bottom: 0 }}
+            variant="determinate"
+            value={downloadProgress}
+          />
+        )}
       </Toolbar>
     );
   };

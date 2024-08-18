@@ -75,14 +75,14 @@ public class ChooserPlugin extends CordovaPlugin {
     private CallbackContext callback;
     private Boolean includeData;
 
-    public void chooseFile(CallbackContext callbackContext, String accept, Boolean includeData) {
+    public void chooseFile(CallbackContext callbackContext, String accept, Boolean includeData, boolean allowMulti) {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("*/*");
         if (!accept.equals("*/*")) {
             intent.putExtra(Intent.EXTRA_MIME_TYPES, accept.split(","));
         }
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, allowMulti);
         intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
         this.includeData = includeData;
 
@@ -103,7 +103,7 @@ public class ChooserPlugin extends CordovaPlugin {
     ) {
         try {
             if (action.equals(ChooserPlugin.ACTION_OPEN)) {
-                this.chooseFile(callbackContext, args.getString(0), args.getBoolean(1));
+                this.chooseFile(callbackContext, args.getString(0), args.getBoolean(1),args.getBoolean(2));
                 return true;
             }
         } catch (JSONException err) {

@@ -357,6 +357,14 @@
     "source": "https://www.npmjs.com/package/usehooks-ts"
   },
   {
+    "name": "uuid",
+    "author": null,
+    "license": "MIT",
+    "description": "RFC9562 UUIDs",
+    "version": "10.0.0",
+    "source": "https://www.npmjs.com/package/uuid"
+  },
+  {
     "name": "yaml",
     "author": null,
     "license": "ISC",

@@ -7,15 +7,9 @@ import { default as PModFS } from "modfs";
 
 export interface ModFS {
   //cli
-  MSUCLI: string;
-  MSUBSU: string;
-  MSURSP: string;
-  KSUCLI: string;
-  KSUBSU: string;
-  KSURSP: string;
-  ASUCLI: string;
-  ASUBSU: string;
-  ASURSP: string;
+  MSUINI: string;
+  KSUINI: string;
+  ASUINI: string;
 
   // default paths
   ADB: string;
@@ -58,15 +52,9 @@ export interface ModFS {
 
 export const INITIAL_MOD_CONF: ModFS = {
   //cli
-  MSUCLI: "/system/bin/magisk",
-  MSUBSU: "<ADB>/magisk/busybox",
-  MSURSP: "/system/bin/resetprop",
-  KSUCLI: "<ADB>/ksu/bin/ksud",
-  KSUBSU: "<ADB>/ksu/bin/busybox",
-  KSURSP: "<ADB>/ksu/bin/resetprop",
-  ASUCLI: "<ADB>/ap/bin/apd",
-  ASUBSU: "<ADB>/ap/bin/busybox",
-  ASURSP: "<ADB>/ap/bin/resetprop",
+  MSUINI: '<ABD>/magisk/magisk32 --install-module "<ZIPFILE>"',
+  KSUINI: '<ADB>/ksu/bin/ksud module install "<ZIPFILE>"',
+  ASUINI: '<ADB>/ap/bin/apd module install "<ZIPFILE>"',
 
   // default paths
   ADB: "/data/adb",
@@ -104,7 +92,7 @@ export const INITIAL_MOD_CONF: ModFS = {
 
   // Installer
   EXPLORE_INSTALL: 'mmrl install -y "<URL>"',
-  LOCAL_INSTALL: "mmrl install local -y <ZIPFILES( |\"\")>",
+  LOCAL_INSTALL: 'mmrl install local -y <ZIPFILES( |"")>',
 };
 
 export interface ModConfContext {
@@ -128,7 +116,7 @@ export const useModFS = () => {
 };
 
 export const ModFSProvider = (props: React.PropsWithChildren) => {
-  const [modFS, setModFS] = useNativeFileStorage("/data/adb/mmrl/modfs.v3.json", INITIAL_MOD_CONF, { loader: "json" });
+  const [modFS, setModFS] = useNativeFileStorage("/data/adb/mmrl/modfs.v4.json", INITIAL_MOD_CONF, { loader: "json" });
 
   const pmodFS = React.useMemo(() => new PModFS(defaultComposer(INITIAL_MOD_CONF, modFS)), [modFS]);
 

@@ -107,6 +107,7 @@
     "reflect-metadata": "^0.2.2",
     "underscore": "^1.13.6",
     "usehooks-ts": "^3.1.0",
+    "uuid": "^10.0.0",
     "yaml": "^2.3.4"
   },
   "devDependencies": {

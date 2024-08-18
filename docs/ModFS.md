@@ -2,6 +2,10 @@
 
 **ModFS** is a core component that provides a flexible and customizable filesystem for managing modules on Android devices. It's designed to streamline module installation, updates, and removal while offering granular control over module structure.
 
+<!-- 
+
+TODO: REWORK
+
 ## Workarounds
 
 Here are some samples to avoid some configs
@@ -32,7 +36,9 @@ Based on your selected root method
 FILE="/data/local/tmp/<MODID>.zip"; <MSUBSU> wget "<URL>" -O $FILE; <MSUCLI> --install-module $FILE;
 ```
 
-# Add a local cover to your module
+-->
+
+## Add a local cover to your module
 
 > [!IMPORTANT]
 > Do not hardcode your cover path

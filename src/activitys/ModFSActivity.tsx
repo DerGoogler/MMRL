@@ -53,101 +53,35 @@ function ModFSActivity() {
         sectionText: "Installer",
         items: [
           {
-            text: "Explore install script",
-            multiline: true,
-            maxRows: 10,
-            dialogDesc: (
-              <>
-                <Typography>
-                  Check the{" "}
-                  <Anchor href="https://github.com/DerGoogler/MMRL/tree/master/docs" noIcon>
-                    ModFS documentations
-                  </Anchor>{" "}
-                  for more informations!
-                  <br />
-                  <code>{"<URL>"}</code>, <code>{"<URLS>"}</code> and <code>{"<MODID>"}</code> can also be used, shell supported.
-                </Typography>
-              </>
-            ),
-            confKey: "EXPLORE_INSTALL",
-          },
-          {
-            text: "Local install script",
-            multiline: true,
-            maxRows: 10,
-            dialogDesc: (
-              <>
-                <Typography>
-                  Check the{" "}
-                  <Anchor href="https://github.com/DerGoogler/MMRL/tree/master/docs" noIcon>
-                    ModFS documentations
-                  </Anchor>{" "}
-                  for more informations!
-                  <br />
-                  <code>{"<ZIPFILE>"}</code> and <code>{"<ZIPFILES>"}</code> can also be used, shell supported.
-                </Typography>
-              </>
-            ),
-            confKey: "LOCAL_INSTALL",
-          },
-        ],
-      },
-      {
-        sectionText: "Command line interfaces",
-        items: [
-          {
-            text: "Magisk install CLI",
+            text: "Magisk Install Script",
             disabled: !Shell.isMagiskSU(),
             logoText: "assets/MagiskSULogo.png",
-            confKey: "MSUCLI",
+            // dialogDesc: (
+            //   <>
+            //     <Typography>
+            //       Check the{" "}
+            //       <Anchor href="https://github.com/DerGoogler/MMRL/tree/master/docs" noIcon>
+            //         ModFS documentations
+            //       </Anchor>{" "}
+            //       for more informations!
+            //       <br />
+            //       <code>{"<URL>"}</code>, <code>{"<URLS>"}</code> and <code>{"<MODID>"}</code> can also be used, shell supported.
+            //     </Typography>
+            //   </>
+            // ),
+            confKey: "MSUINI",
           },
           {
-            text: "Magisk Busybox CLI",
-            disabled: !Shell.isMagiskSU(),
-            logoText: "assets/MagiskSULogo.png",
-            confKey: "MSUBSU",
-          },
-          {
-            text: "Magisk ResetProp CLI",
-            disabled: !Shell.isMagiskSU(),
-            logoText: "assets/MagiskSULogo.png",
-            confKey: "MSURSP",
-          },
-          {
-            text: "KernelSU install CLI",
+            text: "KernelSU Install Script",
             disabled: !Shell.isKernelSU(),
             logoText: "assets/KernelSULogo.png",
-            confKey: "KSUCLI",
+            confKey: "KSUINI",
           },
           {
-            text: "KernelSU Busybox CLI",
-            disabled: !Shell.isKernelSU(),
-            logoText: "assets/KernelSULogo.png",
-            confKey: "KSUBSU",
-          },
-          {
-            text: "KernelSU ResetProp CLI",
-            disabled: !Shell.isKernelSU(),
-            logoText: "assets/KernelSULogo.png",
-            confKey: "KSURSP",
-          },
-          {
-            text: "APatch install CLI",
+            text: "APatch Install Script",
             disabled: !Shell.isAPatchSU(),
             logoText: "assets/APatchSULogo.png",
-            confKey: "ASUCLI",
-          },
-          {
-            text: "APatch Busybox CLI",
-            disabled: !Shell.isAPatchSU(),
-            logoText: "assets/APatchSULogo.png",
-            confKey: "ASUBSU",
-          },
-          {
-            text: "APatch ResetProp CLI",
-            disabled: !Shell.isAPatchSU(),
-            logoText: "assets/APatchSULogo.png",
-            confKey: "ASURSP",
+            confKey: "ASUINI",
           },
         ],
       },
@@ -262,23 +196,23 @@ function ModFSActivity() {
           },
         ],
       },
-      // {
-      //   sectionText: "ModConf Standalone",
-      //   items: [
-      //     {
-      //       text: "Standalone root directory",
-      //       confKey: "MCALONE",
-      //     },
-      //     {
-      //       text: "Standalone working directory",
-      //       confKey: "MCALONECWD",
-      //     },
-      //     {
-      //       text: "Stadnalone meta file",
-      //       confKey: "MCALONEMTA",
-      //     },
-      //   ],
-      // },
+      {
+        sectionText: "ModConf Standalone",
+        items: [
+          {
+            text: "Standalone root directory",
+            confKey: "MCALONE",
+          },
+          {
+            text: "Standalone working directory",
+            confKey: "MCALONECWD",
+          },
+          {
+            text: "Stadnalone meta file",
+            confKey: "MCALONEMETA",
+          },
+        ],
+      },
     ],
     []
   );
