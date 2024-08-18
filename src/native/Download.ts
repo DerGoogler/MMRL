@@ -1,4 +1,5 @@
 import { Native } from "./Native";
+import { os } from "./Os";
 
 type DownloadState = { type: "downloading"; state: number } | { type: "finished"; state: null };
 
@@ -43,6 +44,8 @@ class Download extends Native<DownloadNative> {
         onChange: this._onChange,
         onError: this._onError,
       });
+    } else {
+      os.openURL(this._url, "_blank");
     }
   }
 }

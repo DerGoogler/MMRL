@@ -30,19 +30,31 @@ class EnvironmentClass extends Native<NativeEnvironment> {
   public readonly DIRECTORY_RECORDINGS: string = "Recordings";
 
   public getExternalStorageDir(): string {
-    return this.interface.getExternalStorageDir();
+    if (this.isAndroid) {
+      return this.interface.getExternalStorageDir();
+    }
+    return "";
   }
 
   public getPackageDataDir(): string {
-    return this.interface.getPackageDataDir();
+    if (this.isAndroid) {
+      return this.interface.getPackageDataDir();
+    }
+    return "";
   }
 
   public getPublicDir(type: string): string {
-    return this.interface.getPublicDir(type);
+    if (this.isAndroid) {
+      return this.interface.getPublicDir(type);
+    }
+    return "";
   }
 
   public getDataDir(): string {
-    return this.interface.getDataDir();
+    if (this.isAndroid) {
+      return this.interface.getDataDir();
+    }
+    return "";
   }
 }
 

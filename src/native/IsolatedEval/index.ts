@@ -72,6 +72,10 @@ class IsolatedEval<T = any> {
     Build: Build,
     Native: Native,
     React: React,
+    setInterval: setInterval,
+    clearInterval: clearInterval,
+    clearTimeout: clearTimeout,
+    setTimeout: setTimeout,
     eval() {
       throw new IsolatedFunctionBlockError("eval()");
     },

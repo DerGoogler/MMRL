@@ -34,6 +34,8 @@ import { useFormatBytes } from "@Hooks/useFormatBytes";
 import LinearProgress from "@mui/material/LinearProgress";
 import { Download } from "@Native/Download";
 import { Environment } from "@Native/Environment";
+import { useDownloadModule } from "@Hooks/useDownloadModule";
+import { AvatarWithProgress } from "@Components/AvatarWithProgress";
 
 function a11yProps(index: number) {
   return {
@@ -137,7 +139,7 @@ const ModuleViewActivity = () => {
 
   const cconfirm = useConfirm();
 
-  const [downloadProgress, setDownloadProgress] = React.useState(0);
+  const [startDL, progress] = useDownloadModule();
 
   return (
     <Page
@@ -217,7 +219,8 @@ const ModuleViewActivity = () => {
               width: "100%",
             }}
           >
-            <Avatar
+            <AvatarWithProgress
+              value={progress}
               alt={name}
               sx={(theme) => ({
                 bgcolor: theme.palette.primary.dark,
@@ -225,15 +228,15 @@ const ModuleViewActivity = () => {
                 height: 100,
                 boxShadow: "0 -1px 5px rgba(0,0,0,.09), 0 3px 5px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.3), 0 1px 3px rgba(0,0,0,.15)",
                 borderRadius: "20%",
-                mr: 1.5,
                 fontSize: 50,
               })}
               src={icon}
+              progressTextVariant="body2"
             >
               {name.charAt(0).toUpperCase()}
-            </Avatar>
+            </AvatarWithProgress>
 
-            <Box sx={{ alignSelf: "center", ml: 0.5, mr: 0.5, width: "100%" }}>
+            <Box sx={{ alignSelf: "center", ml: 2, mr: 0.5, width: "100%" }}>
               <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={0.5}>
                 <Disappear as={Typography} variant="body1" fontWeight="bold" onDisappear={(visible) => setIsNameVisible(!visible)}>
                   {name}
@@ -344,17 +347,6 @@ const ModuleViewActivity = () => {
               </Stack>
 
               <Stack direction="column" justifyContent="center" alignItems="stretch" spacing={1}>
-                {downloadProgress !== 0 && (
-                  <Box sx={{ display: "flex", alignItems: "center" }}>
-                    <Box sx={{ width: "100%", mr: 1 }}>
-                      <LinearProgress variant="determinate" value={downloadProgress} />
-                    </Box>
-                    <Box sx={{ minWidth: 35 }}>
-                      <Typography variant="body2" color="text.secondary">{`${Math.round(downloadProgress)}%`}</Typography>
-                    </Box>
-                  </Box>
-                )}
-
                 <DropdownButton
                   sx={{
                     width: "100%",
@@ -372,39 +364,7 @@ const ModuleViewActivity = () => {
                       onClick: () => {
                         const lasSeg = new URL(latestVersion.zipUrl).pathname.split("/").pop();
                         const dlPath = Environment.getPublicDir(Environment.DIRECTORY_DOWNLOADS) + "/" + lasSeg;
-                        const dl = new Download(latestVersion.zipUrl, dlPath);
-
-                        dl.onChange = (obj) => {
-                          switch (obj.type) {
-                            case "downloading":
-                              setDownloadProgress(obj.state);
-                              break;
-                            case "finished":
-                              setDownloadProgress(0);
-                              cconfirm({
-                                title: strings("download"),
-                                description: strings("file_downloaded", { path: dlPath }),
-                              })
-                                .then(() => {})
-                                .catch(() => {});
-
-                              break;
-                          }
-                        };
-
-                        dl.onError = (err) => {
-                          setDownloadProgress(0);
-                          os.toast("finsish: " + err, Toast.LENGTH_SHORT);
-                        };
-
-                        dl.start();
-
-                        // os.open(latestVersion.zipUrl, {
-                        //   target: "_blank",
-                        //   features: {
-                        //     color: theme.palette.primary.main,
-                        //   },
-                        // });
+                        startDL(latestVersion.zipUrl, dlPath);
                       },
                     },
                     {

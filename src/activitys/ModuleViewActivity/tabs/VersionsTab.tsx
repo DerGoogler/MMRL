@@ -2,9 +2,11 @@ import FetchTextActivity from "@Activitys/FetchTextActivity";
 import InstallTerminalActivity from "@Activitys/InstallTerminalActivity";
 import InstallTerminalV2Activity from "@Activitys/InstallTerminalV2Activity";
 import { useActivity } from "@Hooks/useActivity";
+import { useDownloadModule } from "@Hooks/useDownloadModule";
 import { useFormatDate } from "@Hooks/useFormatDate";
 import { useStrings } from "@Hooks/useStrings";
 import { useTheme } from "@Hooks/useTheme";
+import { Environment } from "@Native/Environment";
 import { os } from "@Native/Os";
 import { Shell } from "@Native/Shell";
 import DownloadIcon from "@mui/icons-material/Download";
@@ -12,6 +14,7 @@ import InstallMobileIcon from "@mui/icons-material/InstallMobile";
 import ManageHistoryIcon from "@mui/icons-material/ManageHistory";
 import Chip from "@mui/material/Chip";
 import IconButton from "@mui/material/IconButton";
+import LinearProgress from "@mui/material/LinearProgress";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
@@ -46,6 +49,8 @@ const VersionItem = React.memo<VersionItemProps>(({ id, version, index }) => {
   const { strings } = useStrings();
   const { theme } = useTheme();
 
+  const [startDL, progress] = useDownloadModule();
+
   const { track, support } = extra;
 
   const versionName = `${version.version} (${version.versionCode})`;
@@ -71,6 +76,11 @@ const VersionItem = React.memo<VersionItemProps>(({ id, version, index }) => {
 
   return (
     <ListItem
+      sx={{
+        "& .MuiListItem-root": {
+          position: "relative",
+        },
+      }}
       secondaryAction={
         <Stack direction="row" justifyContent="center" alignItems="center" spacing={0.5}>
           {version.changelog && (
@@ -102,12 +112,9 @@ const VersionItem = React.memo<VersionItemProps>(({ id, version, index }) => {
           <IconButton
             disabled={!version.zipUrl}
             onClick={() => {
-              os.open(version.zipUrl, {
-                target: "_blank",
-                features: {
-                  color: theme.palette.primary.main,
-                },
-              });
+              const lasSeg = new URL(version.zipUrl).pathname.split("/").pop();
+              const dlPath = Environment.getPublicDir(Environment.DIRECTORY_DOWNLOADS) + "/" + lasSeg;
+              startDL(version.zipUrl, dlPath);
             }}
             edge="end"
             aria-label="download"
@@ -126,6 +133,9 @@ const VersionItem = React.memo<VersionItemProps>(({ id, version, index }) => {
         }
         secondary={ts}
       />
+      {progress !== 0 && (
+        <LinearProgress sx={{ position: "absolute", bottom: 0, left: 0, right: 0, width: "100%" }} variant="determinate" value={progress} />
+      )}
     </ListItem>
   );
 });
