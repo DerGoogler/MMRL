@@ -66,16 +66,25 @@ class SuFile extends Native<NativeSuFile> {
   public static readonly TYPE_ISSOCKET = 6;
   public static readonly TYPE_ISHIDDEN = 7;
 
+  private readonly _restrictedPaths = [/(\/data\/data\/(.+)\/?|(\/storage\/emulated\/0|\/sdcard)\/Android\/(data|media|obb)(.+)?)\/?/i];
+
   public constructor(path: string, opt?: SuFileoptions) {
     super(window.__sufile__);
     this._readDefaultValue = opt?.readDefaultValue || "";
 
     if (typeof path !== "string") throw new TypeError("Path name isn't a string");
+    if (this._isRestrictedPath(path)) {
+      throw new Error(`SuFile tried to access "${path}" which has been blocked due security.`);
+    }
 
     this._path = path;
     if (this.isAndroid) {
       this._file = this.interface.v2.bind(this.interface)(path);
     }
+  }
+
+  private _isRestrictedPath(path: string): boolean {
+    return this._restrictedPaths.some((restrictedPath) => restrictedPath.test(path));
   }
 
   public getPath(): string {
