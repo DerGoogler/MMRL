@@ -36,9 +36,7 @@ Introducing Magisk Module Repo Loader (MMRL) - the ultimate module manager for M
 # Requirements
 
 - Android 8.0 or later
-- [MMRL-CLI](https://github.com/DerGoogler/MMRL-CLI)
 - 4-5 GB RAM (lower may possible)
-
 
 # Features
 
