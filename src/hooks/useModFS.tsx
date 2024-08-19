@@ -52,7 +52,7 @@ export interface ModFS {
 
 export const INITIAL_MOD_CONF: ModFS = {
   //cli
-  MSUINI: '<ABD>/magisk/magisk32 --install-module "<ZIPFILE>"',
+  MSUINI: '<ADB>/magisk/magisk32 --install-module "<ZIPFILE>"',
   KSUINI: '<ADB>/ksu/bin/ksud module install "<ZIPFILE>"',
   ASUINI: '<ADB>/ap/bin/apd module install "<ZIPFILE>"',
 
@@ -116,7 +116,7 @@ export const useModFS = () => {
 };
 
 export const ModFSProvider = (props: React.PropsWithChildren) => {
-  const [modFS, setModFS] = useNativeFileStorage("/data/adb/mmrl/modfs.v4.json", INITIAL_MOD_CONF, { loader: "json" });
+  const [modFS, setModFS] = useNativeFileStorage("/data/adb/mmrl/modfs.v5.json", INITIAL_MOD_CONF, { loader: "json" });
 
   const pmodFS = React.useMemo(() => new PModFS(defaultComposer(INITIAL_MOD_CONF, modFS)), [modFS]);
 
