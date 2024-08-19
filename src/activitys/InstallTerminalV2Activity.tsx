@@ -229,7 +229,6 @@ export const InstallTerminalV2Activity = () => {
 
   const termEndRef = React.useRef<HTMLDivElement>(null);
 
-  const [active, setActive] = React.useState<bool>(true);
   const { lines, addText, addButton, setLastLine } = useLines({
     color: (args, _, add) => {
       add.addText(formatString(args[0], colors));
@@ -370,7 +369,6 @@ export const InstallTerminalV2Activity = () => {
                   if (source) {
                     addText(`> \x1b[32mSource: \x1b[33m${source}\x1b[0m`);
                   }
-                  setActive(false);
                   break;
                 case Shell.M_INS_FAILURE:
                   addText(" ");
@@ -383,15 +381,12 @@ export const InstallTerminalV2Activity = () => {
                   if (source) {
                     addText(`> \x1b[32mSource: \x1b[33m${source}\x1b[0m`);
                   }
-                  setActive(false);
                   break;
                 case Shell.TERM_INTR_ERR:
                   addText("! \x1b[31mInternal error!\x1b[0m");
-                  setActive(false);
                   break;
                 default:
                   addText("? Unknown code returned");
-                  setActive(false);
                   break;
               }
             };
@@ -410,7 +405,6 @@ export const InstallTerminalV2Activity = () => {
         setDownloadProgress(0);
         addText("! \x1b[31mUnable to download the module\x1b[0m");
         addText("! \x1b[31mERR: " + err + "\x1b[0m");
-        setActive(false);
       };
 
       dl.start();
@@ -452,8 +446,6 @@ export const InstallTerminalV2Activity = () => {
             addText(
               "\x1b[2mModules that causes issues after installing belog not to \x1b[35;4mMMRL\x1b[0;2m!\nPlease report these issues to thier support page\x1b[2m"
             );
-
-            setActive(false);
             break;
 
           case Shell.M_INS_FAILURE:
@@ -462,18 +454,14 @@ export const InstallTerminalV2Activity = () => {
             addText(
               "\x1b[2mModules that causes issues after installing belog not to \x1b[35;4mMMRL\x1b[0;2m!\nPlease report these issues to thier support page\x1b[2m"
             );
-
-            setActive(false);
             break;
 
           case Shell.TERM_INTR_ERR:
             addText("! \x1b[31mInternal error!\x1b[0m");
-            setActive(false);
             break;
 
           default:
             addText("- Unknown code returned");
-            setActive(false);
             break;
         }
       };
@@ -494,7 +482,9 @@ export const InstallTerminalV2Activity = () => {
           position: "relative !important",
         }}
       >
-        <Toolbar.Left>{!active && <Toolbar.BackButton onClick={context.popPage} />}</Toolbar.Left>
+        <Toolbar.Left>
+          <Toolbar.BackButton onClick={context.popPage} />
+        </Toolbar.Left>
         <Toolbar.Center>Install</Toolbar.Center>
         {downloadProgress !== 0 && (
           <LinearProgress
@@ -509,11 +499,6 @@ export const InstallTerminalV2Activity = () => {
 
   return (
     <Page
-      onDeviceBackButton={(e) => {
-        if (!active) {
-          e.callParentHandler();
-        }
-      }}
       sx={{
         pl: 1,
         pr: 1,
