@@ -76,7 +76,7 @@ export const ja = {
   update_json_desc: "このモジュールは更新とインストールの目的でのみ、独自の update.json を使用します。",
   shading: "シェーディング",
   shading_title: "カスタムシェーディングを適用",
-  shading_desc: "注意して使用してください。暗すぎると UI 見えなくなる可能性があります。",
+  shading_desc: "注意して使用をしてください。暗すぎると UI 見えなくなる可能性があります。",
   module: "モジュール",
   swipeable_tabs: "スワイプ可能なタブ",
   swipeable_tabs_subtitle: "すべてのタブをスワイプ可能にします。これにより、ユーザーエクスペリエンスが損なわれます。",
@@ -131,7 +131,7 @@ export const ja = {
   reboot_device: "デバイスを再起動しますか？",
   reboot_device_desc: "デバイスを再起動してもよろしいですか？",
   word_wrap_title: "文章の折り返し",
-  numberic_lines_title: "数直線",
+  numberic_lines_title: "行の番号",
   numberic_lines_desc: "インストーラーの各行に番号を追加します",
 
   privacy_privacy: "プライバシーポリシー",
