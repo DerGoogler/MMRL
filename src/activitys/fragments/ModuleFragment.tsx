@@ -72,8 +72,8 @@ const ModuleFragment = React.memo<ModuleFragmentProps>((props) => {
         <SearchBar
           placeholder={strings("search_modules") as string}
           onSearch={(value) => {
-            setSearch(value)
-            console.log(value)
+            setSearch(value);
+            console.log(value);
           }}
           filterIcon={findCurrentFilter?.icon}
           onFilterIconClick={handleClick}

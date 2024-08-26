@@ -1,4 +1,4 @@
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, List, SxProps } from "@mui/material";
+import { Chip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, List, SxProps } from "@mui/material";
 import Button from "@mui/material/Button";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import React from "react";
@@ -8,6 +8,7 @@ import { GestureDetector } from "./onsenui/GestureDetector";
 
 type Props = {
   sx?: SxProps;
+  useChip?: boolean;
   antifeatures?: Track["antifeatures"];
 };
 
@@ -16,22 +17,35 @@ export const AntifeatureButton = (props: Props) => {
 
   const { strings } = useStrings();
 
-  const handleClickOpen = (e: any) => {
+  const handleClickOpen = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault();
+    e.stopPropagation();
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleClose = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    e.stopPropagation();
     setOpen(false);
   };
 
   return (
     <>
-      <GestureDetector onHold={handleClickOpen}>
-        <Button sx={props.sx} variant="contained" color="error" size="small">
+      {props.useChip ? (
+        <Chip
+          size="small"
+          onClick={handleClickOpen}
+          sx={props.sx}
+          color="error"
+          icon={<WarningAmberIcon sx={{ fontSize: "large" }} />}
+          label={strings("antifeatures")}
+        />
+      ) : (
+        // @ts-ignore
+        <Button onClick={handleClickOpen} sx={props.sx} variant="contained" color="error" size="small">
           <WarningAmberIcon />
         </Button>
-      </GestureDetector>
+      )}
       <Dialog open={open} onClose={handleClose} scroll="paper">
         <DialogTitle>{strings("antifeatures")}</DialogTitle>
         <DialogContent dividers>

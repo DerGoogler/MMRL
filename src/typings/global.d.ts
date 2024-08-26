@@ -174,6 +174,20 @@ declare global {
     color?: ModuleNoteColors;
   }
 
+  export type ModuleFeaturesList =
+    | "service"
+    | "post_fs_data"
+    | "resetprop"
+    | "sepolicy"
+    | "zygisk"
+    | "webroot"
+    | "post_mount"
+    | "boot_completed"
+    | "modconf"
+    | "apks";
+
+  export type ModuleFeatures = Partial<Record<ModuleFeaturesList, boolean>>;
+
   export interface Module extends BaseModule {
     updateJson?: string;
     added: number;
@@ -181,6 +195,8 @@ declare global {
     size?: number;
     track: Track;
     versions: Version[];
+
+    features: ModuleFeatures;
 
     minApi?: number;
     maxApi?: number;

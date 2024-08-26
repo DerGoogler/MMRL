@@ -156,4 +156,9 @@ export const en = {
   try_again: "Try again",
 
   file_downloaded: "File has been downloaded to {path}",
+
+  features: "Features",
+  feature: "Feature",
+  verified: "Verified",
+  last_updated: "Last updated: {date}"
 };
