@@ -23,9 +23,8 @@ import { SuFile } from "@Native/SuFile";
 import { useConfirm } from "material-ui-confirm";
 import Switch from "@mui/material/Switch";
 import { Image } from "@Components/dapi/Image";
-import { blacklistedModules } from "@Util/blacklisted-modules";
 import { AntifeatureButton } from "@Components/AntifeaturesButton";
-import Box from "@mui/material/Box";
+import { useBlacklist } from "@Hooks/useBlacklist";
 
 interface Props {
   module: Module;
@@ -62,6 +61,7 @@ const DeviceModule = React.memo<Props>((props) => {
   const boot_complete = SuFile.exist(format("BOOTCOMP"));
   const module_config_file = SuFile.exist(format("CONFINDEX"));
 
+  const blacklistedModules = useBlacklist();
   const findHardCodedAntifeature = React.useMemo<Track["antifeatures"]>(() => {
     return blacklistedModules.find((mod) => mod.id === id)?.antifeatures || [];
   }, [id]);

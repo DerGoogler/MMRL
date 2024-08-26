@@ -26,11 +26,11 @@ import { useCategories } from "@Hooks/useCategories";
 import { useFormatDate } from "@Hooks/useFormatDate";
 import { ModuleViewActivity } from "..";
 import { useRepos } from "@Hooks/useRepos";
-import { blacklistedModules } from "@Util/blacklisted-modules";
 import { useModuleInfo } from "@Hooks/useModuleInfo";
 import { Build } from "@Native/Build";
 import { os } from "@Native/Os";
 import { useFetch } from "@Hooks/useFetch";
+import { useBlacklist } from "@Hooks/useBlacklist";
 
 const colorHandler = (color?: ModuleNoteColors) => {
   switch (color) {
@@ -69,6 +69,8 @@ const OverviewTab = () => {
   const latestVersion = React.useMemo(() => versions[versions.length - 1], [versions]);
   const formatLastUpdate = useFormatDate(latestVersion.timestamp);
 
+  
+  const blacklistedModules = useBlacklist();
   const findHardCodedAntifeature = React.useMemo<Track["antifeatures"]>(() => {
     return [...(track.antifeatures || []), ...(blacklistedModules.find((mod) => mod.id === id)?.antifeatures || [])];
   }, [id, track.antifeatures]);

@@ -1,17 +1,18 @@
+import { ProgressCircular } from "react-onsenui";
 import AntiFeatureListItem from "@Components/AntiFeatureListItem";
 import { Anchor } from "@Components/dapi/Anchor";
 import { Page } from "@Components/onsenui/Page";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import { useActivity } from "@Hooks/useActivity";
+import { useBlacklist } from "@Hooks/useBlacklist";
 import { useStrings } from "@Hooks/useStrings";
-import { BlacklistedModule, blacklistedModules } from "@Util/blacklisted-modules";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { Card, CardContent, Collapse, List, ListItem, ListItemIcon, ListItemText, Typography } from "@mui/material";
 import FlatList from "flatlist-react";
 import React from "react";
 
 interface BlacklistItemProps {
-  module: BlacklistedModule;
+  module: any;
 }
 
 function BlacklistItem({ module }: BlacklistItemProps) {
@@ -59,6 +60,8 @@ function ViewBlacklistedModulesActivity() {
   const { context } = useActivity();
   const { strings } = useStrings();
 
+  const blacklistedModules = useBlacklist();
+
   const renderToolbar = () => {
     return (
       <Toolbar modifier="noshadow">
@@ -69,6 +72,23 @@ function ViewBlacklistedModulesActivity() {
       </Toolbar>
     );
   };
+
+  if (blacklistedModules.length === 0) {
+    return (
+      <Page renderToolbar={renderToolbar}>
+        <ProgressCircular
+          indeterminate
+          style={{
+            position: "absolute",
+            left: "50%",
+            top: "50%",
+            WebkitTransform: "translate(-50%, -50%)",
+            transform: "translate(-50%, -50%)",
+          }}
+        />
+      </Page>
+    );
+  }
 
   return (
     <Page renderToolbar={renderToolbar}>
