@@ -1,58 +1,73 @@
-import * as React from "react";
-import { FormControl, SxProps, styled } from "@mui/material";
-import Paper from "@mui/material/Paper";
-import InputBase from "@mui/material/InputBase";
-import IconButton from "@mui/material/IconButton";
-import FilterListIcon from "@mui/icons-material/FilterList";
+import { Divider, IconButton, Paper, InputBase, SxProps } from "@mui/material";
+import { Search, Clear, FilterList } from "@mui/icons-material";
+import React from "react";
+import { OverridableComponent } from "@mui/material/OverridableComponent";
+import { SvgIconTypeMap } from "@mui/material/SvgIcon";
 
-export interface SearchbarProps {
-  elevation?: number | undefined;
+interface SearchBarProps {
+  placeholder?: string;
+  filterIcon?: OverridableComponent<SvgIconTypeMap>;
+  onFilterIconClick?: (event: React.MouseEvent<HTMLElement>) => void;
+  onSearch: (value: string) => void;
   sx?: SxProps;
-  onFilterClick?: React.MouseEventHandler<HTMLButtonElement>;
-  value: string;
-  setValue: React.Dispatch<React.SetStateAction<string>>;
-  placeholder: string;
 }
 
-export const Searchbar = React.memo<SearchbarProps>((props) => {
-  const { elevation, onFilterClick, sx, placeholder, value, setValue } = props;
+const SearchBar = React.forwardRef<HTMLDivElement, SearchBarProps>((props, ref) => {
+  const [searchTerm, setSearchTerm] = React.useState("");
+  const isNotEmpty = React.useMemo(() => searchTerm.trim().length !== 0, [searchTerm]);
 
-  const handleChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setValue(e.target.value);
-  }, []);
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const handleClear = React.useCallback(() => {
+    setSearchTerm("");
+    if (props.onSearch) {
+      props.onSearch("");
+    }
+  }, [searchTerm]);
+
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleSearch();
+    }
+  };
+
+  const handleSearch = React.useCallback(() => {
+    if (props.onSearch && isNotEmpty) {
+      props.onSearch(searchTerm);
+    }
+  }, [searchTerm, isNotEmpty]);
 
   return (
-    <Paper
-      elevation={elevation || 0}
-      component="form"
-      sx={{
-        ...sx,
-        p: "2px 4px",
-        display: "flex",
-        alignItems: "center",
-        width: "100%",
-      }}
-    >
-      <IconButton onClick={onFilterClick} sx={{ p: "10px" }} aria-label="menu">
-        <FilterListIcon />
+    <Paper ref={ref} elevation={0} sx={{ p: "2px 4px", display: "flex", alignItems: "center", ...props.sx }}>
+      {props.onFilterIconClick && (
+        <IconButton onClick={props.onFilterIconClick} sx={{ p: "10px" }} aria-label="filter">
+          {React.createElement(props.filterIcon || FilterList)}
+        </IconButton>
+      )}
+
+      <InputBase
+        sx={{ ml: 1, flex: 1 }}
+        placeholder={props.placeholder}
+        inputProps={{ "aria-label": props.placeholder?.toLowerCase() }}
+        value={searchTerm}
+        onChange={handleInputChange}
+        onKeyDown={handleKeyPress}
+      />
+      <IconButton onClick={handleSearch} sx={{ p: "10px" }} aria-label="search">
+        <Search />
       </IconButton>
-      <FormControl fullWidth>
-        <InputBase
-          sx={{ ml: 1, flex: 1 }}
-          placeholder={placeholder}
-          inputProps={{
-            "aria-label": placeholder,
-            onKeyDown: (e) => {
-              if (e.key === "Enter") {
-                e.preventDefault();
-              }
-            },
-          }}
-          value={value}
-          onChange={handleChange}
-          fullWidth
-        />
-      </FormControl>
+      {isNotEmpty && (
+        <>
+          <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+          <IconButton onClick={handleClear} color="primary" sx={{ p: "10px" }} aria-label="directions">
+            <Clear />
+          </IconButton>
+        </>
+      )}
     </Paper>
   );
 });
+
+export { SearchBar, SearchBarProps };

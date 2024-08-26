@@ -243,18 +243,7 @@ const ModuleViewActivity = () => {
                 </Disappear>
                 <VerifiedIcon isVerified={verified} />
               </Stack>
-              <Typography
-                variant="body2"
-                onClick={() => handleOpenModuleSearch(author)}
-                sx={{
-                  ":hover": {
-                    cursor: "pointer",
-                  },
-                }}
-                color="text.link"
-              >
-                {author}
-              </Typography>
+              <Typography variant="body2">{author}</Typography>
             </Box>
           </Box>
 

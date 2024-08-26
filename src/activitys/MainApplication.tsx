@@ -24,6 +24,7 @@ import { useOpenModuleSearch } from "@Hooks/useOpenModuleSearch";
 import InstallTerminalV2Activity from "./InstallTerminalV2Activity";
 import { Chooser } from "@Native/Chooser";
 import { useConfirm } from "material-ui-confirm";
+import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
 
 const MainApplication = () => {
   const { context } = useActivity();
@@ -33,8 +34,6 @@ const MainApplication = () => {
   const [index, setIndex] = React.useState(0);
   const localModules = useLocalModules();
   const confirm = useConfirm();
-
-  const handleOpenModuleSearch = useOpenModuleSearch(modules);
 
   const handleBackEvent = React.useCallback(
     (e: any) => {
@@ -186,7 +185,12 @@ const MainApplication = () => {
           </Typography>
         </Toolbar.Center>
         <Toolbar.Right>
-          <Toolbar.Button icon={SearchIcon} onClick={() => handleOpenModuleSearch()} />
+          <Toolbar.Button
+            icon={VolunteerActivismIcon}
+            onClick={() => {
+              os.openURL("https://github.com/sponsors/DerGoogler", "_blank");
+            }}
+          />
         </Toolbar.Right>
       </Toolbar>
     );

@@ -1,5 +1,4 @@
 import { SetValue, useNativeStorage } from "./useNativeStorage";
-import UpdateDisabledIcon from "@mui/icons-material/UpdateDisabled";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import AbcIcon from "@mui/icons-material/Abc";
 import { useTheme } from "./useTheme";
@@ -13,12 +12,13 @@ import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import StarIcon from "@mui/icons-material/Star";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
+import FilterListOff from "@mui/icons-material/FilterListOff";
 import React from "react";
 
 export const filters = [
   {
     name: "No filter",
-    icon: UpdateDisabledIcon,
+    icon: FilterListOff,
     value: "none",
     allowedIds: ["explore", "local", "update"],
   },

@@ -1,16 +1,13 @@
 import { StyledMenu } from "@Components/DropdownButton";
 import { MissingInternet } from "@Components/MissingInternet";
+import { SearchBar } from "@Components/Searchbar";
 import { Page, RenderFunction } from "@Components/onsenui/Page";
 import { filters, useModuleFilter } from "@Hooks/useModulesFilter";
 import { useNetwork } from "@Hooks/useNetwork";
+import { useStrings } from "@Hooks/useStrings";
 import { useTheme } from "@Hooks/useTheme";
-import { os } from "@Native/Os";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
-import Stack from "@mui/material/Stack";
 import FlatList, { FlatListProps } from "flatlist-react";
 import { renderFunc } from "flatlist-react/lib/___subComponents/uiFunctions";
 import React from "react";
@@ -46,8 +43,10 @@ export interface ModuleFragmentProps {
 const ModuleFragment = React.memo<ModuleFragmentProps>((props) => {
   const { isNetworkAvailable } = useNetwork();
   const { theme } = useTheme();
+  const { strings } = useStrings();
   const renderItem = React.useCallback<renderFunc<Module>>((m, k) => props.renderItem(m, k), []);
   const [filter, _filter, setFilter] = useModuleFilter(`${props.id}_filter`);
+  const [search, setSearch] = React.useState("");
 
   if (!isNetworkAvailable && !props.disableNoInternet) {
     return (
@@ -70,63 +69,45 @@ const ModuleFragment = React.memo<ModuleFragmentProps>((props) => {
   return (
     <Page renderFixed={props.renderFixed}>
       <Page.RelativeContent>
-        <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={1}>
-          <Button
-            onClick={() => {
-              os.open("https://github.com/sponsors/DerGoogler", {
-                target: "_blank",
-                features: {
-                  color: theme.palette.background.default,
-                },
-              });
-            }}
-            variant="outlined"
-            endIcon={<VolunteerActivismIcon />}
-          >
-            Sponsor
-          </Button>
-          <Button
-            id="demo-customized-button"
-            aria-controls={open ? "demo-customized-menu" : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
-            variant="contained"
-            onClick={handleClick}
-            endIcon={<KeyboardArrowDownIcon />}
-          >
-            {findCurrentFilter ? findCurrentFilter.name : "None"}
-          </Button>
-          <StyledMenu
-            id="demo-customized-menu"
-            MenuListProps={{
-              "aria-labelledby": "demo-customized-button",
-            }}
-            anchorEl={anchorEl}
-            open={open}
-            onClose={() => {
-              setAnchorEl(null);
-            }}
-          >
-            {filters.map((fil) => {
-              if (fil.allowedIds.includes(props.id)) {
-                return (
-                  <MenuItem
-                    onClick={() => {
-                      setFilter(fil.value);
-                      setAnchorEl(null);
-                    }}
-                    disableRipple
-                  >
-                    <fil.icon />
-                    {fil.name}
-                  </MenuItem>
-                );
-              } else {
-                return null;
-              }
-            })}
-          </StyledMenu>
-        </Stack>
+        <SearchBar
+          placeholder={strings("search_modules") as string}
+          onSearch={(value) => {
+            setSearch(value)
+            console.log(value)
+          }}
+          filterIcon={findCurrentFilter?.icon}
+          onFilterIconClick={handleClick}
+        />
+        <StyledMenu
+          id="demo-customized-menu"
+          MenuListProps={{
+            "aria-labelledby": "demo-customized-button",
+          }}
+          anchorEl={anchorEl}
+          open={open}
+          onClose={() => {
+            setAnchorEl(null);
+          }}
+        >
+          {filters.map((fil) => {
+            if (fil.allowedIds.includes(props.id)) {
+              return (
+                <MenuItem
+                  onClick={() => {
+                    setFilter(fil.value);
+                    setAnchorEl(null);
+                  }}
+                  disableRipple
+                >
+                  <fil.icon />
+                  {fil.name}
+                </MenuItem>
+              );
+            } else {
+              return null;
+            }
+          })}
+        </StyledMenu>
 
         <Box sx={{ mt: 1 }}>
           <FlatList
@@ -135,6 +116,12 @@ const ModuleFragment = React.memo<ModuleFragmentProps>((props) => {
             renderOnScroll
             renderWhenEmpty={() => <RenderWhenEmpty />}
             sortBy={filter}
+            search={{
+              term: search,
+              by: ["id", "name", "author"],
+              //onEveryWord: true,
+              caseInsensitive: true,
+            }}
             display={{
               row: true,
               rowGap: "8px",
