@@ -13,7 +13,7 @@ import Typography from "@mui/material/Typography";
 import { SuFile } from "@Native/SuFile";
 import { useModFS } from "@Hooks/useModFS";
 import { useModuleInfo } from "@Hooks/useModuleInfo";
-import { Verified, Tag, PersonOutline, CalendarMonth } from "@mui/icons-material";
+import { Verified, Tag, PersonOutline, CalendarMonth, Source } from "@mui/icons-material";
 import { useBlacklist } from "@Hooks/useBlacklist";
 import Box from "@mui/material/Box";
 
@@ -22,7 +22,7 @@ interface Props {
 }
 
 const ExploreModule = React.memo<Props>((props) => {
-  const { id, name, author, description, track, timestamp, version, versions, versionCode, features } = props.module;
+  const { id, name, author, description, track, timestamp, version, versions, versionCode, features, __mmrl_repo_source } = props.module;
   const { cover, verified } = useModuleInfo(props.module);
 
   const { context } = useActivity();
@@ -106,11 +106,24 @@ const ExploreModule = React.memo<Props>((props) => {
           {description}
         </Typography>
 
-        <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={0.5}>
-          <Typography sx={{ display: "flex", alignItems: "center", gap: 0.5 }} variant="body2">
-            <CalendarMonth sx={{ fontSize: "unset" }} />
-            {strings("last_updated", { date: formatLastUpdate })}
-          </Typography>
+        <Stack direction="row" justifyContent="space-between" alignItems="end" spacing={0.5}>
+          <Stack
+            direction="column"
+            spacing={0.5}
+            sx={{
+              justifyContent: "center",
+              alignItems: "flex-start",
+            }}
+          >
+            <Typography sx={{ display: "flex", alignItems: "center", gap: 0.5 }} variant="body2">
+              <CalendarMonth sx={{ fontSize: "unset" }} />
+              {strings("last_updated", { date: formatLastUpdate })}
+            </Typography>
+            <Typography color="text.secondary" sx={{ display: "flex", alignItems: "center", gap: 0.5 }} variant="body2">
+              <Source sx={{ fontSize: "unset" }} />
+              {__mmrl_repo_source && __mmrl_repo_source.join(", ")}
+            </Typography>
+          </Stack>
           <Typography sx={{ display: "flex", alignItems: "center", gap: 0.5 }} variant="body2">
             <Tag sx={{ fontSize: "unset" }} /> {versionCode}
           </Typography>

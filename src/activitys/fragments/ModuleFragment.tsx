@@ -36,6 +36,7 @@ export interface ModuleFragmentProps {
   modules: Array<Module>;
   group?: FlatListProps<Module>["group"];
   disableNoInternet?: boolean;
+  searchBy?: string[];
   renderItem: renderFunc<Module>;
   renderFixed?: RenderFunction;
 }
@@ -118,7 +119,7 @@ const ModuleFragment = React.memo<ModuleFragmentProps>((props) => {
             sortBy={filter}
             search={{
               term: search,
-              by: ["id", "name", "author"],
+              by: props.searchBy || ["id", "name", "author"],
               //onEveryWord: true,
               caseInsensitive: true,
             }}

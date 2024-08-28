@@ -224,6 +224,7 @@ declare global {
      * Local modules only
      */
     __mmrl__local__module__?: boolean;
+    __mmrl_repo_source?: string[];
   }
 
   export interface BaseTrack {

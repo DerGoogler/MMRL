@@ -76,7 +76,12 @@ const MainApplication = () => {
     return [
       {
         content: (
-          <ModuleFragment id="explore" modules={modules} renderItem={(module, key) => <ExploreModule key={key} module={module} />} />
+          <ModuleFragment
+            id="explore"
+            modules={modules}
+            searchBy={["id", "name", "author", "__mmrl_repo_source"]}
+            renderItem={(module, key) => <ExploreModule key={key} module={module} />}
+          />
         ),
         tab: <Tabbar.Tab label={strings("explore")} />,
       },

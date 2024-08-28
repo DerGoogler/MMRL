@@ -105,7 +105,7 @@ export const RepoProvider = (props: React.PropsWithChildren) => {
         os.toast("You can't add more than 5 repos", Toast.LENGTH_SHORT);
       }
     } else {
-      os.toast("This repo alredy exist", Toast.LENGTH_SHORT);
+      os.toast("This repo already exists", Toast.LENGTH_SHORT);
     }
   };
 
@@ -134,26 +134,38 @@ export const RepoProvider = (props: React.PropsWithChildren) => {
   );
 
   React.useEffect(() => {
-    // Needs an another solution
     setModules([]);
     const fetchData = async () => {
+      const combinedModulesMap = new Map();
+
       for (const repo of repos) {
         if (disabledRepos.includes(repo.base_url)) continue;
 
-        fetch(`${repo.base_url}json/modules.json`)
-          .then((res) => {
-            if (!res.ok) throw new Error(res.statusText);
-            return res.json();
-          })
-          .then((json: Repo) => {
-            setModules((prev) => {
-              // Preventing duplicates
-              var ids = new Set(prev.map((d) => d.id));
-              var merged = [...prev, ...json.modules.filter((d) => !ids.has(d.id))];
-              return merged;
-            });
+        try {
+          const res = await fetch(`${repo.base_url.slice(-1) !== "/" ? repo.base_url + "/" : repo.base_url}json/modules.json`);
+          if (!res.ok) throw new Error(res.statusText);
+
+          const json: Repo = await res.json();
+
+          json.modules.forEach((mod) => {
+            if (!combinedModulesMap.has(mod.id)) {
+              // Add module with repo source if not already in map
+              combinedModulesMap.set(mod.id, { ...mod, __mmrl_repo_source: [repo.name] });
+            } else {
+              // If already in map, append source repo name
+              const existingModule = combinedModulesMap.get(mod.id);
+              if (!existingModule.__mmrl_repo_source.includes(repo.name)) {
+                existingModule.__mmrl_repo_source.push(repo.name);
+              }
+            }
           });
+        } catch (error) {
+          log.e((error as Error).message);
+        }
       }
+
+      // Convert map to array for final combined list
+      setModules(Array.from(combinedModulesMap.values()));
     };
 
     void fetchData();
