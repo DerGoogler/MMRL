@@ -108,7 +108,7 @@ const AboutTab = () => {
         </ListItemButton>
       </List>
 
-      {Object.keys(features).length !== 0 && (
+      {features && Object.keys(features).length !== 0 && (
         <>
           <Divider />
 
