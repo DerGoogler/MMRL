@@ -3,15 +3,11 @@ import React from "react";
 import { ModuleViewActivity } from "@Activitys/ModuleViewActivity";
 import { AntifeatureButton } from "@Components/AntifeaturesButton";
 import { Image } from "@Components/dapi/Image";
-import { VerifiedIcon } from "@Components/icons/VerifiedIcon";
-import { GestureDetector } from "@Components/onsenui/GestureDetector";
 import { useActivity } from "@Hooks/useActivity";
 import { useFormatDate } from "@Hooks/useFormatDate";
 import { useStrings } from "@Hooks/useStrings";
-import { useTheme } from "@Hooks/useTheme";
 import Card from "@mui/material/Card";
 import Chip from "@mui/material/Chip";
-import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { SuFile } from "@Native/SuFile";
@@ -19,6 +15,7 @@ import { useModFS } from "@Hooks/useModFS";
 import { useModuleInfo } from "@Hooks/useModuleInfo";
 import { Verified, Tag, PersonOutline, CalendarMonth } from "@mui/icons-material";
 import { useBlacklist } from "@Hooks/useBlacklist";
+import Box from "@mui/material/Box";
 
 interface Props {
   module: Module;
@@ -74,7 +71,9 @@ const ExploreModule = React.memo<Props>((props) => {
 
       <Stack sx={{ p: 2 }} direction="column" justifyContent="center" spacing={2}>
         <Stack direction="column" justifyContent="center" alignItems="flex-start" spacing={0}>
-          <Typography variant="h6">{name}</Typography>
+          <Typography sx={{ zIndex: 1, textShadow: "0px 0px 4px rgba(0, 0, 0, 1)" }} variant="h6">
+            {name}
+          </Typography>
           <Typography color="text.secondary" sx={{ display: "flex", alignItems: "center", gap: 0.5 }} variant="body2">
             <PersonOutline sx={{ fontSize: "unset" }} /> {author}
           </Typography>
