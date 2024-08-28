@@ -73,7 +73,7 @@ function FetchTextActivity() {
 
   return (
     <Page renderToolbar={renderToolbar}>
-      <Page.RelativeContent>{!extra.rendering ? <Markup children={state} /> : <extra.rendering children={state} />}</Page.RelativeContent>
+      <Page.RelativeContent>{!extra.rendering ? <Markup children={state} /> : <extra.rendering children={state} indexFile="index.txt" />}</Page.RelativeContent>
     </Page>
   );
 }
