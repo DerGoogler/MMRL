@@ -153,12 +153,7 @@ export const DrawerFragment = (props: Props) => {
       <List subheader={<ListSubheader>Other</ListSubheader>}>
         <ListItemButton
           onClick={() => {
-            os.open("https://dergoogler.com/legal/privacy-policy", {
-              target: "_blank",
-              features: {
-                color: theme.palette.background.default,
-              },
-            });
+            os.openURL("https://dergoogler.com/legal/privacy-policy", "_blank");
             hide();
           }}
         >
@@ -202,6 +197,14 @@ export const DrawerFragment = (props: Props) => {
           }}
         >
           <ListItemText primary={strings("changelog")} />
+        </ListItemButton>
+        <ListItemButton
+          onClick={() => {
+            os.openURL("https://t.me/GooglersRepo", "_blank");
+            hide();
+          }}
+        >
+          <ListItemText primary={strings("telegram_channel")} />
         </ListItemButton>
       </List>
 

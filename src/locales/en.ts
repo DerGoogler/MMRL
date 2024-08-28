@@ -160,5 +160,6 @@ export const en = {
   features: "Features",
   feature: "Feature",
   verified: "Verified",
-  last_updated: "Last updated: {date}"
+  last_updated: "Last updated: {date}",
+  telegram_channel: "Telegram channel"
 };
