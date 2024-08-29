@@ -29,21 +29,23 @@ import { IsolatedFunctionBlockError } from "@Native/IsolatedEval/IsolatedFunctio
 import { Terminal } from "@Native/Terminal";
 import { useFetch } from "@Hooks/useFetch";
 
-export const libraries = {
-  react: {
-    ...require("react"),
-    createElement(type: any, props: any, ...children: any[]) {
-      switch (type) {
-        // prevents webview url change
-        case "a":
-          return React.createElement(Anchor, props, ...children);
-        case "iframe":
-          throw new IsolatedFunctionBlockError("iframe");
-        default:
-          return React.createElement(type, props, ...children);
-      }
-    },
+export const InternalReact = {
+  ...require("react"),
+  createElement(type: any, props: any, ...children: any[]) {
+    switch (type) {
+      // prevents webview url change
+      case "a":
+        return React.createElement(Anchor, props, ...children);
+      case "iframe":
+        throw new IsolatedFunctionBlockError("iframe");
+      default:
+        return React.createElement(type, props, ...children);
+    }
   },
+};
+
+export const libraries = {
+  react: InternalReact,
 
   "@mui/material": require("@mui/material"),
 
@@ -106,4 +108,12 @@ export const libraries = {
   },
   modfs: require("modfs"),
   "default-composer": require("default-composer"),
+  "usehooks-ts": {
+    ...require("usehooks-ts"),
+    useLocalStorage: undefined,
+    useScript: undefined,
+    useSessionStorage: undefined,
+    useDocumentTitle: undefined,
+    useDarkMode: undefined,
+  },
 };

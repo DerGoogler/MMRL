@@ -21,6 +21,7 @@ import { IsoDocument } from "./IsoDocument";
 import { IsoXMLSerializer } from "./IsoXMLSerializer";
 import { IsolatedEvalError } from "./IsolatedEvalError";
 import { IsolatedFunctionBlockError } from "./IsolatedFunctionBlockError";
+import { InternalReact } from "@Activitys/ModConfActivity/components/ModConfView/libs";
 
 type IsoModule = {
   exports: {
@@ -71,7 +72,7 @@ class IsolatedEval<T = any> {
     BuildConfig: BuildConfig,
     Build: Build,
     Native: Native,
-    React: React,
+    React: InternalReact,
     setInterval: setInterval,
     clearInterval: clearInterval,
     clearTimeout: clearTimeout,
