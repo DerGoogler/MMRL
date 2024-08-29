@@ -1,18 +1,19 @@
 import { InstallTerminalV2Activity, TerminalActivityExtra } from "@Activitys/InstallTerminalV2Activity";
+import { AvatarWithProgress } from "@Components/AvatarWithProgress";
+import { DropdownButton } from "@Components/DropdownButton";
 import { VerifiedIcon } from "@Components/icons/VerifiedIcon";
 import { Page } from "@Components/onsenui/Page";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import { useActivity } from "@Hooks/useActivity";
+import { useDownloadModule } from "@Hooks/useDownloadModule";
+import { useFormatBytes } from "@Hooks/useFormatBytes";
+import { useModuleInfo } from "@Hooks/useModuleInfo";
 import { useOpenModuleSearch } from "@Hooks/useOpenModuleSearch";
 import { useRepos } from "@Hooks/useRepos";
 import { useStrings } from "@Hooks/useStrings";
 import { useTheme } from "@Hooks/useTheme";
-import { os } from "@Native/Os";
-import { Shell } from "@Native/Shell";
-import { view } from "@Native/View";
 import { VolunteerActivism } from "@mui/icons-material";
 import TelegramIcon from "@mui/icons-material/Telegram";
-import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import CardMedia from "@mui/material/CardMedia";
 import Divider from "@mui/material/Divider";
@@ -22,20 +23,17 @@ import SvgIcon from "@mui/material/SvgIcon";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import Typography from "@mui/material/Typography";
+import { Environment } from "@Native/Environment";
+import { os } from "@Native/Os";
+import { Shell } from "@Native/Shell";
+import { view } from "@Native/View";
 import { useConfirm } from "material-ui-confirm";
 import React from "react";
 import { Disappear } from "react-disappear";
 import { AboutTab } from "./tabs/AboutTabs";
 import { OverviewTab } from "./tabs/OverviewTab";
 import { VersionsTab } from "./tabs/VersionsTab";
-import { DropdownButton } from "@Components/DropdownButton";
-import { useModuleInfo } from "@Hooks/useModuleInfo";
-import { useFormatBytes } from "@Hooks/useFormatBytes";
-import LinearProgress from "@mui/material/LinearProgress";
-import { Download } from "@Native/Download";
-import { Environment } from "@Native/Environment";
-import { useDownloadModule } from "@Hooks/useDownloadModule";
-import { AvatarWithProgress } from "@Components/AvatarWithProgress";
+import { useDocumentTitle } from "usehooks-ts";
 
 function a11yProps(index: number) {
   return {
@@ -72,7 +70,8 @@ const ModuleViewActivity = () => {
   const [moduleFileSize, moduleFileSizeByteText] = useFormatBytes(size);
 
   const search = React.useMemo(() => new URLSearchParams(window.location.search), [window.location.search]);
-  const handleOpenModuleSearch = useOpenModuleSearch(modules);
+
+  useDocumentTitle(`${name} — MMRL`, { preserveTitleOnUnmount: false });
 
   React.useEffect(() => {
     search.set("module", id);

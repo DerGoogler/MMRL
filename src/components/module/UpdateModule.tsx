@@ -16,7 +16,6 @@ import { useStrings } from "@Hooks/useStrings";
 import { useActivity } from "@Hooks/useActivity";
 import { useRepos } from "@Hooks/useRepos";
 
-import InstallTerminalActivity from "@Activitys/InstallTerminalActivity";
 import FetchTextActivity from "@Activitys/FetchTextActivity";
 
 import { link } from "googlers-tools";

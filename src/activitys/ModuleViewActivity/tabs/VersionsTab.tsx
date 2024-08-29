@@ -1,5 +1,4 @@
 import FetchTextActivity from "@Activitys/FetchTextActivity";
-import InstallTerminalActivity from "@Activitys/InstallTerminalActivity";
 import InstallTerminalV2Activity from "@Activitys/InstallTerminalV2Activity";
 import { useActivity } from "@Hooks/useActivity";
 import { useDownloadModule } from "@Hooks/useDownloadModule";

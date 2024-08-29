@@ -16,6 +16,7 @@ import { useModuleInfo } from "@Hooks/useModuleInfo";
 import { Verified, Tag, PersonOutline, CalendarMonth, Source } from "@mui/icons-material";
 import { useBlacklist } from "@Hooks/useBlacklist";
 import Box from "@mui/material/Box";
+import { useHover } from "@Hooks/useHover";
 
 interface Props {
   module: Module;
@@ -43,14 +44,21 @@ const ExploreModule = React.memo<Props>((props) => {
       extra: props.module,
     });
   };
+
+  const cardRef = React.useRef(null);
+  const isHover = useHover(cardRef);
+
   return (
     <Card
+      ref={cardRef}
       onClick={handleOpenModule}
       sx={{
+        
         ":hover": {
           opacity: ".8",
           cursor: "pointer",
         },
+        transition: "0.1s",
         width: "100%",
       }}
     >

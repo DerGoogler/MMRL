@@ -1,34 +1,33 @@
-import { CloseRounded } from "@mui/icons-material";
-import { useState } from "react";
-import { RouterUtil } from "@Util/RouterUtil";
-import { IntentPusher } from "../hooks/useActivity";
+import { Code } from "@Components/dapi/Code";
+import { Pre } from "@Components/dapi/Pre";
+import { ErrorBoundary } from "@Components/ErrorBoundary";
+import Icon from "@Components/Icon";
+import { Page } from "@Components/onsenui/Page";
+import { RouterNavigator } from "@Components/onsenui/RouterNavigator";
+import { Splitter } from "@Components/onsenui/Splitter";
+import { Toolbar } from "@Components/onsenui/Toolbar";
 import { useSettings } from "@Hooks/useSettings";
-import React from "react";
+import { useTheme } from "@Hooks/useTheme";
+import { CloseRounded } from "@mui/icons-material";
+import CodeRoundedIcon from "@mui/icons-material/CodeRounded";
 import { Button, Typography } from "@mui/material";
 import { os } from "@Native/Os";
 import { Shell } from "@Native/Shell";
+import { RouterUtil } from "@Util/RouterUtil";
+import eruda from "eruda";
+import React, { useState } from "react";
+import { IntentPusher } from "../hooks/useActivity";
+import { DrawerFragment } from "./fragments/DrawerFragment";
 import MainApplication from "./MainApplication";
 import NoRootActivity from "./NoRootActivity";
-import { ErrorBoundary } from "@Components/ErrorBoundary";
-import Icon from "@Components/Icon";
 import SettingsActivity from "./SettingsActivity";
-import { Splitter } from "@Components/onsenui/Splitter";
-import { RouterNavigator } from "@Components/onsenui/RouterNavigator";
-import { DrawerFragment } from "./fragments/DrawerFragment";
-import { Toolbar } from "@Components/onsenui/Toolbar";
-import CodeRoundedIcon from "@mui/icons-material/CodeRounded";
-import { Page } from "@Components/onsenui/Page";
-import eruda from "eruda";
-import { useTheme } from "@Hooks/useTheme";
-import { Pre } from "@Components/dapi/Pre";
-import { Code } from "@Components/dapi/Code";
-
-import pkg from "@Package";
-import UnverifiedHostActivity from "./UnverifiedHostActivity";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import { useModFS } from "@Hooks/useModFS";
-import { SuFile } from "@Native/SuFile";
-import { LogcatActivity } from "./LogcatActivity";
 import { useStrings } from "@Hooks/useStrings";
+import { SuFile } from "@Native/SuFile";
+import pkg from "@Package";
+import { LogcatActivity } from "./LogcatActivity";
+import UnverifiedHostActivity from "./UnverifiedHostActivity";
 
 const getLocation = () => {
   if (window.location !== window.parent.location) {
@@ -274,6 +273,8 @@ const MainActivity = (): JSX.Element => {
     );
   };
 
+  const matches = useMediaQuery("(max-width: 767px)");
+
   return (
     <Page
       onInit={() => {
@@ -287,7 +288,7 @@ const MainActivity = (): JSX.Element => {
       <Splitter>
         <Splitter.Side
           side="left"
-          width={250}
+          width={matches ? "calc(100% - 21%)" : "25%"}
           collapse={true}
           swipeable={false}
           isOpen={isSplitterOpen}
