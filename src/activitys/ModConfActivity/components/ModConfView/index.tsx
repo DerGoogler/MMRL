@@ -53,6 +53,8 @@ export const ModConfView = (props: ModConfViewProps) => {
             modulePath = `${format("CONFCWD")}/${modulePath}`;
           }
 
+          console.warn("include(...) is deprecated, please use require(...)");
+
           return isoEval.require(modulePath);
         },
       },
