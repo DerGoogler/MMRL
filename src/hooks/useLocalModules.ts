@@ -7,7 +7,6 @@ import { useSettings } from "./useSettings";
 
 export function useLocalModules() {
   const { modFS } = useModFS();
-  const { settings } = useSettings();
   const [localModules, setLocalModules] = React.useState<Module[]>([]);
 
   if (os.isAndroid) {
@@ -33,7 +32,7 @@ export function useLocalModules() {
           });
         }
       });
-    }, [settings]);
+    }, []);
   }
 
   return localModules;

@@ -31,8 +31,8 @@ interface PickerItemProps {
  */
 export function ListPickerItem(props: PickerItemProps) {
   const [open, setOpen] = React.useState(false);
-  const { settings, setSettings } = useSettings();
-  const [value, setValue] = React.useState<ContentMap>(settings[props.targetSetting]);
+
+  const [setting, setSetting] = useSettings(props.targetSetting);
 
   const handleOpen = () => {
     setOpen(true);
@@ -42,15 +42,14 @@ export function ListPickerItem(props: PickerItemProps) {
     setOpen(false);
 
     if (val.name && val.value) {
-      setValue(val);
-      setSettings(props.targetSetting, val);
+      setSetting(val);
     }
   };
 
   return (
     <>
       <ListItemButton disabled={props.disabled} onClick={handleOpen}>
-        <ListItemText primary={props.title} secondary={settings[props.targetSetting].name} />
+        <ListItemText primary={props.title} secondary={setting.name} />
       </ListItemButton>
       <ConfirmationDialogRaw
         id={props.id}
@@ -59,7 +58,7 @@ export function ListPickerItem(props: PickerItemProps) {
         open={open}
         contentMap={props.contentMap}
         onClose={handleClose}
-        value={value}
+        value={setting}
       />
     </>
   );

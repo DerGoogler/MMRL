@@ -22,12 +22,18 @@ function SettingsActivity() {
   const { strings } = useStrings();
   const availableLangs = useLanguageMap();
   const { setRepos } = useRepos();
-  const { patchSettings } = useSettings();
 
   const { theme } = useTheme();
 
   // Prefs
-  const { settings, setSettings } = useSettings();
+  const [swipeableTabs, setSwipeableTabs] = useSettings("swipeable_tabs");
+  const [linkProtection, setLinkProtection] = useSettings("link_protection");
+  const [lowQualityModule, setLowQualityModule] = useSettings("_low_quality_module");
+  const [termScrollBottom, setTermScrollBottom] = useSettings("term_scroll_bottom");
+  const [printTerminalError, setPrintTerminalError] = useSettings("print_terminal_error");
+  const [terminalWordWrap, setTerminalWordWrap] = useSettings("terminal_word_wrap");
+  const [terminalNumbericLines, setTerminalNumbericLines] = useSettings("terminal_numberic_lines");
+  const [erudaConsoleEnabled, setErudaConsoleEnabled] = useSettings("eruda_console_enabled");
 
   const renderToolbar = () => {
     return (
@@ -46,45 +52,14 @@ function SettingsActivity() {
     <Page renderToolbar={renderToolbar}>
       <Page.RelativeContent zeroMargin>
         <List subheader={<ListSubheader>{strings("appearance")}</ListSubheader>}>
-          {/* <ListItem>
-            <StyledListItemText id="switch-list-label-wifi" primary={strings("dark_theme")} />
-            <Android12Switch
-              edge="end"
-              onChange={(e: any) => {
-                setSettings("darkmode", e.target.checked);
-              }}
-              checked={settings.darkmode}
-            />
-          </ListItem>
-          {settings.darkmode && (
-            <DialogEditTextListItem
-              InputProps={{
-                startAdornment: <InputAdornment position="start">-</InputAdornment>,
-              }}
-              inputLabel={strings("shading")}
-              type="number"
-              title={strings("shading_title")}
-              initialValue={settings.shade_value.toString().replace("-", "")}
-              description={strings("shading_desc")}
-              onSuccess={(value) => {
-                if (value) {
-                  setSettings("shade_value", Number("-" + value));
-                }
-              }}
-            >
-              <StyledListItemText primary={strings("shading_title")} />
-            </DialogEditTextListItem>
-          )}
-
-          <ListPickerItem id="accent-color" targetSetting="accent_scheme" title={strings("accent_color")} contentMap={accent_colors} /> */}
           <ListItem>
             <ListItemText primary={strings("swipeable_tabs")} secondary={strings("swipeable_tabs_subtitle")} />
             <Switch
               edge="end"
               onChange={(e) => {
-                setSettings("swipeable_tabs", e.target.checked);
+                setSwipeableTabs(e.target.checked);
               }}
-              checked={settings.swipeable_tabs}
+              checked={swipeableTabs}
             />
           </ListItem>
           <ListPickerItem id="language" targetSetting="language" title={strings("language")} contentMap={availableLangs} />
@@ -98,9 +73,9 @@ function SettingsActivity() {
             <Switch
               edge="end"
               onChange={(e) => {
-                setSettings("link_protection", e.target.checked);
+                setLinkProtection(e.target.checked);
               }}
-              checked={settings.link_protection}
+              checked={linkProtection}
             />
           </ListItem>
         </List>
@@ -113,19 +88,9 @@ function SettingsActivity() {
             <Switch
               edge="end"
               onChange={(e) => {
-                setSettings("_low_quality_module", e.target.checked);
+                setLowQualityModule(e.target.checked);
               }}
-              checked={settings._low_quality_module}
-            />
-          </ListItem>
-          <ListItem>
-            <ListItemText primary={strings("invaild_modules")} secondary={strings("invaild_modules_subtitle")} />
-            <Switch
-              edge="end"
-              onChange={(e) => {
-                setSettings("_invald_module", e.target.checked);
-              }}
-              checked={settings._invald_module}
+              checked={lowQualityModule}
             />
           </ListItem>
         </List>
@@ -139,9 +104,9 @@ function SettingsActivity() {
                 <Switch
                   edge="end"
                   onChange={(e) => {
-                    setSettings("term_scroll_bottom", e.target.checked);
+                    setTermScrollBottom(e.target.checked);
                   }}
-                  checked={settings.term_scroll_bottom}
+                  checked={termScrollBottom}
                 />
               </ListItem>
               <ListItem>
@@ -149,9 +114,9 @@ function SettingsActivity() {
                 <Switch
                   edge="end"
                   onChange={(e) => {
-                    setSettings("print_terminal_error", e.target.checked);
+                    setPrintTerminalError(e.target.checked);
                   }}
-                  checked={settings.print_terminal_error}
+                  checked={printTerminalError}
                 />
               </ListItem>
               <ListItem>
@@ -159,9 +124,9 @@ function SettingsActivity() {
                 <Switch
                   edge="end"
                   onChange={(e) => {
-                    setSettings("terminal_word_wrap", e.target.checked);
+                    setTerminalWordWrap(e.target.checked);
                   }}
-                  checked={settings.terminal_word_wrap}
+                  checked={terminalWordWrap}
                 />
               </ListItem>
               <ListItem>
@@ -169,9 +134,9 @@ function SettingsActivity() {
                 <Switch
                   edge="end"
                   onChange={(e) => {
-                    setSettings("terminal_numberic_lines", e.target.checked);
+                    setTerminalNumbericLines(e.target.checked);
                   }}
-                  checked={settings.terminal_numberic_lines}
+                  checked={terminalNumbericLines}
                 />
               </ListItem>
               <ListPickerItem
@@ -192,9 +157,9 @@ function SettingsActivity() {
             <Switch
               edge="end"
               onChange={(e) => {
-                setSettings("eruda_console_enabled", e.target.checked);
+                setErudaConsoleEnabled(e.target.checked);
               }}
-              checked={settings.eruda_console_enabled}
+              checked={erudaConsoleEnabled}
               inputProps={{
                 "aria-labelledby": "switch-list-label-eruda",
               }}
@@ -257,13 +222,13 @@ function SettingsActivity() {
           >
             <ListItemText primary={strings("clear_repos")} />
           </ListItemButton>{" "}
-          <ListItemButton
+          {/* <ListItemButton
             onClick={() => {
               patchSettings();
             }}
           >
             <ListItemText primary={strings("patch_settings")} secondary={strings("patch_settings_subtitle")} />
-          </ListItemButton>
+          </ListItemButton> */}
         </List>
 
         <Divider />

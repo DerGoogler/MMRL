@@ -1,6 +1,5 @@
 import { Theme, styled } from "@mui/material";
 import React from "react";
-import { useSettings } from "../../hooks/useSettings";
 import { useTheme } from "@Hooks/useTheme";
 
 interface Props {
@@ -10,7 +9,6 @@ interface Props {
 
 export const StyledMarkdown = styled("article")(() => {
   const { theme } = useTheme();
-  const { settings } = useSettings();
 
   return {
     msTextSizeAdjust: "100%",

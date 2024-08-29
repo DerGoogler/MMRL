@@ -34,7 +34,6 @@ const DeviceModule = React.memo<Props>((props) => {
   const { theme } = useTheme();
   const { modFS } = useModFS();
   const { strings } = useStrings();
-  const { settings } = useSettings();
   const { context } = useActivity();
 
   const log = useLog("DeviceModule");
@@ -51,7 +50,8 @@ const DeviceModule = React.memo<Props>((props) => {
   const [isEnabled, setIsEnabled] = React.useState(!disable.exist());
   const [isSwitchDisabled, setIsSwitchDisabled] = React.useState(remove.exist());
 
-  const isLowQuality = useLowQualityModule(props.module, !settings._low_quality_module);
+  const [lowQualityModule] = useSettings("_low_quality_module");
+  const isLowQuality = useLowQualityModule(props.module, !lowQualityModule);
   const isNew = React.useMemo(() => new Date().getTime() - timestamp! < 60 * 60 * 1000, [timestamp]);
   const isDisabledStyle = React.useMemo(() => (isSwitchDisabled ? { textDecoration: "line-through" } : {}), [isSwitchDisabled]);
 

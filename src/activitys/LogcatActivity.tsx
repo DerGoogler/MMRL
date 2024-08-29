@@ -18,12 +18,13 @@ const LogcatActivity = () => {
   const { context } = useActivity();
   const { theme } = useTheme();
   const [lines, setLines] = React.useState<string[]>([]);
-  const { settings } = useSettings();
+  const [termScrollBottom] = useSettings("term_scroll_bottom");
+  const [termScrollBehavior] = useSettings("term_scroll_behavior");
 
   const termEndRef = React.useRef<HTMLDivElement>(null);
 
-  if (settings.term_scroll_bottom) {
-    const termBehavior = React.useMemo(() => settings.term_scroll_behavior, [settings]);
+  if (termScrollBottom) {
+    const termBehavior = React.useMemo(() => termScrollBehavior, [termScrollBehavior]);
 
     React.useEffect(() => {
       termEndRef.current?.scrollIntoView({ behavior: termBehavior.value, block: "end", inline: "nearest" });

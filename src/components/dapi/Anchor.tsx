@@ -84,13 +84,14 @@ const Anchor: React.FC<AnchorProps> = (props) => {
   const confirm = useConfirm();
   const { theme } = useTheme();
   const { context } = useActivity();
-  const { settings } = useSettings();
   const { strings } = useStrings();
   const { href, children, noIcon, module, color = theme.palette.text.link, target = os.WindowMMRLOwn } = props;
 
   const { modules } = useRepos();
   const findModule = React.useMemo(() => modules.find((m) => m.id === module), [module]);
   const icon = !props.icon ? useIcon(href) : props.icon;
+
+  const [linkProtection] = useSettings("link_protection");
 
   const s = React.useMemo(
     () => ({
@@ -149,7 +150,7 @@ const Anchor: React.FC<AnchorProps> = (props) => {
                 extra: findModule,
               });
             } else {
-              if (settings.link_protection) {
+              if (linkProtection) {
                 confirm({
                   title: strings("anchor_confirm_title"),
                   description: strings("anchor_confirm_desc", {

@@ -2,18 +2,17 @@ import { Page } from "@Components/onsenui/Page";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import { useActivity } from "@Hooks/useActivity";
 import { useStrings } from "@Hooks/useStrings";
-import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import Stack from "@mui/material/Stack";
-import { useSettings } from "@Hooks/useSettings";
+import Typography from "@mui/material/Typography";
 import FlatList from "flatlist-react";
 
-import li from "@Util/licenses.json";
-import { os } from "@Native/Os";
-import { useTheme } from "@Hooks/useTheme";
-import FetchTextActivity from "./FetchTextActivity";
 import { useFetch } from "@Hooks/useFetch";
+import { useTheme } from "@Hooks/useTheme";
+import { os } from "@Native/Os";
+import li from "@Util/licenses.json";
+import FetchTextActivity from "./FetchTextActivity";
 
 const DepCard = (props: { dep: (typeof li)[0] }) => {
   const { theme } = useTheme();
@@ -30,9 +29,7 @@ const DepCard = (props: { dep: (typeof li)[0] }) => {
     });
   };
 
-  const [licenseData] = useFetch<any>(
-    `https://raw.githubusercontent.com/spdx/license-list-data/main/website/${dep.license}.json`
-  );
+  const [licenseData] = useFetch<any>(`https://raw.githubusercontent.com/spdx/license-list-data/main/website/${dep.license}.json`);
 
   const handleOpenLicense = () => {
     if (licenseData) {
@@ -84,9 +81,7 @@ const DepCard = (props: { dep: (typeof li)[0] }) => {
 
 const LicensesActivity = () => {
   const { strings } = useStrings();
-  const { settings } = useSettings();
   const { context } = useActivity();
-  const { theme } = useTheme();
 
   const renderToolbar = () => {
     return (

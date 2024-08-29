@@ -58,18 +58,18 @@ const colorHandler = (color?: ModuleNoteColors) => {
 const OverviewTab = () => {
   const { strings } = useStrings();
   const { context, extra } = useActivity<Module>();
-  const { settings } = useSettings();
   const { modules } = useRepos();
   const { id, name, description, versions, minApi, note, track } = extra;
 
   const { icon, screenshots, require, readme: moduleReadme, categories } = useModuleInfo(extra);
 
   const { filteredCategories } = useCategories(categories);
-  const isLowQuality = useLowQualityModule(extra, !settings._low_quality_module);
+
+  const [lowQualityModule] = useSettings("_low_quality_module");
+  const isLowQuality = useLowQualityModule(extra, !lowQualityModule);
   const latestVersion = React.useMemo(() => versions[versions.length - 1], [versions]);
   const formatLastUpdate = useFormatDate(latestVersion.timestamp);
 
-  
   const blacklistedModules = useBlacklist();
   const findHardCodedAntifeature = React.useMemo<Track["antifeatures"]>(() => {
     return [...(track.antifeatures || []), ...(blacklistedModules.find((mod) => mod.id === id)?.antifeatures || [])];

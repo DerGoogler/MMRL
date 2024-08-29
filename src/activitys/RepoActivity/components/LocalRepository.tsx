@@ -3,7 +3,6 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import Collapse from "@mui/material/Collapse";
 import { useRepos } from "@Hooks/useRepos";
-import { useSettings } from "@Hooks/useSettings";
 import { useStrings } from "@Hooks/useStrings";
 import { IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Switch, Typography } from "@mui/material";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
@@ -40,7 +39,6 @@ const MListItem = React.memo<ListItemProps>((props) => {
 export const LocalRepository = React.memo<LocalRepositoryProps>((props) => {
   const { repo } = props;
   const { strings } = useStrings();
-  const { settings } = useSettings();
   const confirm = useConfirm();
   const { actions } = useRepos();
   const [enabled, setEnabled] = React.useState(actions.isRepoEnabled(repo.base_url));

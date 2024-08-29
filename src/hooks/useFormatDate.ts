@@ -2,11 +2,11 @@ import { useMemo } from "react";
 import { useSettings } from "./useSettings";
 
 export const useFormatDate = (date: int, multiply: boolean = true) => {
-  const { settings } = useSettings();
+  const [language] = useSettings("language");
 
   return useMemo(
     () =>
-      Intl.DateTimeFormat(settings.language.value, {
+      Intl.DateTimeFormat(language.value, {
         year: "numeric",
         day: "2-digit",
         month: "short",

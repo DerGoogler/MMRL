@@ -223,7 +223,6 @@ export const InstallTerminalV2Activity = () => {
   const { context, extra } = useActivity<TerminalActivityExtra>();
   const { theme } = useTheme();
   const { strings } = useStrings();
-  const { settings } = useSettings();
   const { modFS, __modFS } = useModFS();
   const confirm = useConfirm();
 
@@ -278,8 +277,15 @@ export const InstallTerminalV2Activity = () => {
     };
   }, []);
 
-  if (settings.term_scroll_bottom) {
-    const termBehavior = React.useMemo(() => settings.term_scroll_behavior, [settings]);
+  const [termScrollBottom] = useSettings("term_scroll_bottom");
+  const [termScrollBehavior] = useSettings("term_scroll_behavior");
+
+  const [printTerminalError] = useSettings("print_terminal_error");
+  const [terminalWordWrap] = useSettings("terminal_word_wrap");
+  const [terminalNumbericLines] = useSettings("terminal_numberic_lines");
+
+  if (termScrollBottom) {
+    const termBehavior = React.useMemo(() => termScrollBehavior, [termScrollBehavior]);
 
     React.useEffect(() => {
       termEndRef.current?.scrollIntoView({ behavior: termBehavior.value, block: "end", inline: "nearest" });
@@ -334,7 +340,7 @@ export const InstallTerminalV2Activity = () => {
 
             const explore_install = new Terminal({
               cwd: TMPDIR,
-              printError: settings.print_terminal_error,
+              printError: printTerminalError,
             });
 
             explore_install.env = {
@@ -414,7 +420,7 @@ export const InstallTerminalV2Activity = () => {
 
       const local_install = new Terminal({
         cwd: TMPDIR,
-        printError: settings.print_terminal_error,
+        printError: printTerminalError,
       });
 
       local_install.env = {
@@ -517,7 +523,7 @@ export const InstallTerminalV2Activity = () => {
       >
         <Stack
           style={{
-            whiteSpace: !settings.terminal_word_wrap ? "pre" : "unset",
+            whiteSpace: !terminalWordWrap ? "pre" : "unset",
             flex: "0 0 100%",
             color: "white",
             height: "100%",
@@ -538,11 +544,11 @@ export const InstallTerminalV2Activity = () => {
                     backgroundColor: alpha("#fff", 0.03),
                   },
                   code: {
-                    wordBreak: settings.terminal_word_wrap ? "break-all" : "unset",
+                    wordBreak: terminalWordWrap ? "break-all" : "unset",
                   },
                 }}
               >
-                {settings.terminal_numberic_lines && (
+                {terminalNumbericLines && (
                   <Typography
                     sx={(theme) => ({
                       minWidth: "40px",

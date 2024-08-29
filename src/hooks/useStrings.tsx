@@ -38,10 +38,10 @@ interface StringsProviderProps extends React.PropsWithChildren {
  * @param strings The first element is the default language
  */
 export const StringsProvider = (props: StringsProviderProps) => {
-  const { settings } = useSettings();
+  const [language] = useSettings("language");
 
   const defaultLanguage = Object.keys(props.data)[0];
-  const currentLanguage = React.useMemo(() => settings.language.value, [settings]);
+  const currentLanguage = React.useMemo(() => language.value, [language]);
 
   // const format = React.useCallback((template: string, object?: object) => {
   //   return template.replace(/\{(\w+(\.\w+)*)\}/gi, (match, key) => {
@@ -98,7 +98,7 @@ export const StringsProvider = (props: StringsProviderProps) => {
       format,
       currentLanguage,
     }),
-    [strings, format, currentLanguage, settings]
+    [strings, format, currentLanguage, language]
   );
 
   return <StringsContext.Provider children={props.children} value={contextValue} />;

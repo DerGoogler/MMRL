@@ -51,35 +51,10 @@ type SetRepoStateData = {
 export const RepoProvider = (props: React.PropsWithChildren) => {
   const TAG = "RepoProvider";
   const log = useLog(TAG);
-  const [disabledRepos, setDisabledRepos] = useNativeStorage<string[]>("disabled_Repos", []);
-  const [repos, setRepos] = useNativeStorage<RepoConfig[]>("repos_v3", [
-    {
-      name: "Googlers Magisk Repo",
-      website: "https://mmrl.dergoogler.com",
-      support: "https://github.com/Googlers-Repo/gmr/issues",
-      donate: "https://github.com/sponsors/DerGoogler",
-      submission:
-        "https://github.com/Googlers-Repo/gmr/issues/new?assignees=&labels=module&projects=&template=submission.yml&title=%5BModule%5D%3A+",
-      base_url: "https://gr.dergoogler.com/gmr/",
-      max_num: 3,
-      enable_log: true,
-      log_dir: "log",
-    },
-    {
-      name: "Magisk Modules Alt Repo",
-      website: undefined,
-      support: undefined,
-      donate: undefined,
-      submission:
-        "https://github.com/Magisk-Modules-Alt-Repo/submission/issues/new?assignees=&labels=module&projects=&template=module-submission.yml&tit",
-      base_url: "https://magisk-modules-alt-repo.github.io/json-v2/",
-      max_num: 3,
-      enable_log: true,
-      log_dir: "log",
-    },
-  ]);
 
-  const { settings, setSettings } = useSettings();
+  const [disabledRepos, setDisabledRepos] = useSettings("disabled_repos");
+  const [repos, setRepos] = useSettings("repos");
+
   const [modules, setModules] = React.useState<Module[]>([]);
 
   const addRepo = (data: AddRepoData) => {
@@ -169,11 +144,11 @@ export const RepoProvider = (props: React.PropsWithChildren) => {
     };
 
     void fetchData();
-  }, [disabledRepos, repos, settings]);
+  }, [disabledRepos, repos]);
 
   const contextValue = React.useMemo(
     () => ({ repos, setRepos, modules, actions: { addRepo, removeRepo, setRepoEnabled, isRepoEnabled } }),
-    [repos, modules, settings]
+    [repos, modules]
   );
 
   return <RepoContext.Provider value={contextValue} children={props.children} />;

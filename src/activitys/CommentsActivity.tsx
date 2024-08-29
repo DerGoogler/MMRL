@@ -5,7 +5,6 @@ import { useStrings } from "@Hooks/useStrings";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useSettings } from "@Hooks/useSettings";
 import Giscus from "@giscus/react";
-import { useTheme } from "@Hooks/useTheme";
 
 type Extra = {
   id: string;
@@ -13,8 +12,7 @@ type Extra = {
 
 const CommentsActivity = () => {
   const { strings } = useStrings();
-  const { settings } = useSettings();
-  const { theme } = useTheme();
+  const [language] = useSettings("language");
   const { context, extra } = useActivity<Extra>();
 
   const renderToolbar = () => {
@@ -43,7 +41,7 @@ const CommentsActivity = () => {
           emitMetadata="0"
           inputPosition="bottom"
           // theme="preferred_color_scheme"
-          lang={settings.language.value}
+          lang={language.value}
           loading="lazy"
         />
       </Page.RelativeContent>

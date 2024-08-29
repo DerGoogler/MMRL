@@ -12,7 +12,6 @@ import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import CodeRoundedIcon from "@mui/icons-material/CodeRounded";
-import { useSettings } from "@Hooks/useSettings";
 import { Shell } from "@Native/Shell";
 import { ListSubheader } from "@mui/material";
 import React from "react";
@@ -33,7 +32,6 @@ const checkRoot = (): string | undefined => {
 
 const AboutActivity = () => {
   const { strings } = useStrings();
-  const { settings } = useSettings();
   const { context } = useActivity();
 
   const renderToolbar = () => {
@@ -102,9 +100,7 @@ const AboutActivity = () => {
                   bgcolor: "transparent",
                 })}
                 src={checkRoot()}
-              >
-                
-              </Avatar>
+              ></Avatar>
             }
           >
             <Avatar sx={{ height: 100, width: 100, bgcolor: "#4a148c" }}>
@@ -115,7 +111,6 @@ const AboutActivity = () => {
           <Typography
             variant="h3"
             noWrap
-            color={settings.darkmode ? "text.primary" : undefined}
             sx={{
               display: "flex",
               fontFamily: "monospace",
@@ -137,7 +132,7 @@ const AboutActivity = () => {
                     primary={
                       <>
                         <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={1}>
-                          <Typography sx={{ display: "inline" }} color={settings.darkmode ? "text.primary" : undefined} component="span">
+                          <Typography sx={{ display: "inline" }} component="span">
                             {c.primary}
                           </Typography>
                           <Typography sx={{ display: "inline" }} component="span" variant="body2" color="text.primary">

@@ -9,7 +9,6 @@ import { Preventer, render } from "react-render-tools";
 import { MainActivity } from "@Activitys/MainActivity";
 import { RepoProvider } from "@Hooks/useRepos";
 
-import { SettingsProvider } from "@Hooks/useSettings";
 import { ModFSProvider } from "@Hooks/useModFS";
 
 import { MMRLApp } from "./custom-elements/app";
@@ -100,17 +99,15 @@ ons.ready(() => {
           }}
         >
           <ModFSProvider>
-            <SettingsProvider>
-              <StringsProvider data={strs}>
-                <Preventer prevent="contextmenu">
-                  <RepoProvider>
-                    <ConfirmProvider>
-                      <MainActivity />
-                    </ConfirmProvider>
-                  </RepoProvider>
-                </Preventer>
-              </StringsProvider>
-            </SettingsProvider>
+            <StringsProvider data={strs}>
+              <Preventer prevent="contextmenu">
+                <RepoProvider>
+                  <ConfirmProvider>
+                    <MainActivity />
+                  </ConfirmProvider>
+                </RepoProvider>
+              </Preventer>
+            </StringsProvider>
           </ModFSProvider>
         </ErrorBoundary>
       </ThemeProvider>

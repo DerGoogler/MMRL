@@ -1,8 +1,6 @@
-import React, { createContext, useContext } from "react";
-import { defaultComposer } from "default-composer";
-import { SetStateAction } from "./useStateCallback";
+import { SetValue, useNativeStorage } from "@Hooks/useNativeStorage";
 import { useLanguageMap } from "./../locales/declaration";
-import { useNativeFileStorage } from "./useNativeFileStorage";
+import React from "react";
 
 export interface Picker<N, V> {
   name: N;
@@ -10,13 +8,11 @@ export interface Picker<N, V> {
 }
 
 export interface StorageDeclaration {
-  darkmode: boolean;
   language: Picker<string, string>;
   eruda_console_enabled: boolean;
   disabled_repos: string[];
   _low_quality_module: boolean;
   _invald_module: boolean;
-  shade_value: number;
   term_scroll_bottom: boolean;
   term_scroll_behavior: { name: string; value: ScrollBehavior };
   link_protection: boolean;
@@ -24,6 +20,7 @@ export interface StorageDeclaration {
   print_terminal_error: boolean;
   terminal_word_wrap: boolean;
   terminal_numberic_lines: boolean;
+  repos: RepoConfig[];
 }
 
 export const termScrollBehaviors: StorageDeclaration["term_scroll_behavior"][] = [
@@ -37,43 +34,16 @@ export const termScrollBehaviors: StorageDeclaration["term_scroll_behavior"][] =
   },
 ];
 
-export interface Context {
-  patchSettings: () => void;
-  settings: StorageDeclaration;
-  setSettings<K extends keyof StorageDeclaration>(
-    key: K,
-    state: SetStateAction<StorageDeclaration[K]>,
-    callback?: (state: StorageDeclaration[K]) => void
-  ): void;
-}
-
-export const SettingsContext = createContext<Context>({
-  patchSettings: () => {},
-  // @ts-ignore
-  settings: {},
-  setSettings<K extends keyof StorageDeclaration>(
-    key: K,
-    state: SetStateAction<StorageDeclaration[K]>,
-    callback?: (state: StorageDeclaration[K]) => void
-  ) {},
-});
-
-export const useSettings = () => {
-  return useContext(SettingsContext);
-};
-
-export const SettingsProvider = (props: React.PropsWithChildren) => {
+export const useSettings = <K extends keyof StorageDeclaration>(key: K): [StorageDeclaration[K], SetValue<StorageDeclaration[K]>] => {
   const availableLangs = useLanguageMap();
 
   const INITIAL_SETTINGS = React.useMemo<StorageDeclaration>(
     () => ({
-      darkmode: false,
       language: availableLangs[0],
       eruda_console_enabled: false,
       disabled_repos: [],
       _low_quality_module: true,
       _invald_module: false,
-      shade_value: -80,
       term_scroll_bottom: true,
       term_scroll_behavior: termScrollBehaviors[0],
       link_protection: true,
@@ -81,35 +51,35 @@ export const SettingsProvider = (props: React.PropsWithChildren) => {
       print_terminal_error: false,
       terminal_word_wrap: true,
       terminal_numberic_lines: true,
+      repos: [
+        {
+          name: "Googlers Magisk Repo",
+          website: "https://mmrl.dergoogler.com",
+          support: "https://github.com/Googlers-Repo/gmr/issues",
+          donate: "https://github.com/sponsors/DerGoogler",
+          submission:
+            "https://github.com/Googlers-Repo/gmr/issues/new?assignees=&labels=module&projects=&template=submission.yml&title=%5BModule%5D%3A+",
+          base_url: "https://gr.dergoogler.com/gmr/",
+          max_num: 3,
+          enable_log: true,
+          log_dir: "log",
+        },
+        {
+          name: "Magisk Modules Alt Repo",
+          website: undefined,
+          support: undefined,
+          donate: undefined,
+          submission:
+            "https://github.com/Magisk-Modules-Alt-Repo/submission/issues/new?assignees=&labels=module&projects=&template=module-submission.yml&tit",
+          base_url: "https://magisk-modules-alt-repo.github.io/json-v2/",
+          max_num: 3,
+          enable_log: true,
+          log_dir: "log",
+        },
+      ],
     }),
     []
   );
 
-  const [settings, setSettings] = useNativeFileStorage("/data/adb/mmrl/settings.v2.json", INITIAL_SETTINGS, { loader: "json" });
- 
-  const _setSettings = (name, state, callback) => {
-    setSettings(
-      (prev) => {
-        const newValue = state instanceof Function ? state(prev[name]) : state;
-        return {
-          ...prev,
-          [name]: newValue,
-        };
-      },
-      (state) => callback && callback(state[name])
-    );
-  };
-
-  const contextValue = React.useMemo(
-    () => ({
-      patchSettings: () => {
-        setSettings(defaultComposer(INITIAL_SETTINGS, settings));
-      },
-      settings: defaultComposer(INITIAL_SETTINGS, settings),
-      setSettings: _setSettings,
-    }),
-    [settings]
-  );
-
-  return <SettingsContext.Provider value={contextValue} children={props.children} />;
+  return useNativeStorage(key, INITIAL_SETTINGS[key]);
 };

@@ -58,7 +58,6 @@ const CheckRoot = () => {
 };
 
 const MainActivity = (): JSX.Element => {
-  const { settings } = useSettings();
   const { strings } = useStrings();
   const { theme } = useTheme();
   const { modFS } = useModFS();
@@ -73,12 +72,14 @@ const MainActivity = (): JSX.Element => {
     setIsSplitterOpen(true);
   };
 
+  const [erudaConsoleEnabled] = useSettings("eruda_console_enabled");
+
   const erudaRef = React.useRef<HTMLElement | null>(null);
 
-  const _eruda = React.useMemo(() => eruda, [settings.eruda_console_enabled]);
+  const _eruda = React.useMemo(() => eruda, [erudaConsoleEnabled]);
 
   React.useEffect(() => {
-    if (settings.eruda_console_enabled) {
+    if (erudaConsoleEnabled) {
       _eruda.init({
         container: erudaRef.current as HTMLElement,
         tool: ["console", "elements", "resources", "info"],
@@ -88,7 +89,7 @@ const MainActivity = (): JSX.Element => {
         _eruda.destroy();
       }
     }
-  }, [settings.eruda_console_enabled]);
+  }, [erudaConsoleEnabled]);
 
   const pushContext = {
     pushPage: (props: IntentPusher) => pushPage(props),

@@ -29,11 +29,12 @@ import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
 const MainApplication = () => {
   const { context } = useActivity();
   const { strings } = useStrings();
-  const { settings } = useSettings();
   const { modules } = useRepos();
   const [index, setIndex] = React.useState(0);
   const localModules = useLocalModules();
   const confirm = useConfirm();
+
+  const [swipeableTabs] = useSettings("swipeable_tabs");
 
   const handleBackEvent = React.useCallback(
     (e: any) => {
@@ -206,7 +207,7 @@ const MainApplication = () => {
       <Tabbar
         modifier="noshadow"
         hideTabs={!os.isAndroid}
-        swipeable={settings.swipeable_tabs}
+        swipeable={swipeableTabs}
         position={"top"}
         index={index}
         onPreChange={(event) => {
