@@ -12,6 +12,7 @@ declare module "*.d.ts" {
 
 declare global {
   type arr<T> = Array<T>;
+  type list<T> = Array<T>;
   type str = string;
   type Str = String;
   type int = number;

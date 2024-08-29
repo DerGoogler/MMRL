@@ -7,7 +7,7 @@ import { useTheme } from "@Hooks/useTheme";
 import { useSettings } from "@Hooks/useSettings";
 import { useActivity } from "@Hooks/useActivity";
 import { Toolbar } from "@Components/onsenui/Toolbar";
-import { view } from "@Native/View";
+import { view, WindowManager } from "@Native/View";
 import { Page } from "@Components/onsenui/Page";
 import { useStrings } from "@Hooks/useStrings";
 import { useConfirm } from "material-ui-confirm";
@@ -271,9 +271,11 @@ export const InstallTerminalV2Activity = () => {
   React.useEffect(() => {
     document.addEventListener("volumeupbutton", nativeVolumeEventPrevent, false);
     document.addEventListener("volumedownbutton", nativeVolumeEventPrevent, false);
+    view.addFlags([WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON]);
     return () => {
       document.removeEventListener("volumeupbutton", nativeVolumeEventPrevent, false);
       document.removeEventListener("volumedownbutton", nativeVolumeEventPrevent, false);
+      view.clearFlags([WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON]);
     };
   }, []);
 

@@ -32,7 +32,7 @@ public class NativeShell {
         try {
             cmds = Json.getStringArray(new JSONArray(jsonArr));
         } catch (JSONException e) {
-            Log.e(TAG, e.toString());
+            Log.e(TAG + ":v2", e.toString());
             return null;
         }
         Shell.Job shell = Shell.cmd(cmds);

@@ -3,6 +3,7 @@ package com.dergoogler.core;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
 import android.util.Base64OutputStream;
+import android.util.Log;
 import android.webkit.JavascriptInterface;
 
 import androidx.annotation.NonNull;
@@ -26,6 +27,7 @@ import java.util.Date;
 
 public class NativeSuFile {
     private final MainActivity ctx;
+    private static final String TAG = "NativeSuFile";
 
     public NativeSuFile(MainActivity ctx) {
         this.ctx = ctx;
@@ -42,7 +44,7 @@ public class NativeSuFile {
                     outputStream.write(data.getBytes(StandardCharsets.UTF_8));
                     outputStream.flush();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Log.e(TAG + ":write", e.toString());
                 }
             }
 
@@ -59,7 +61,7 @@ public class NativeSuFile {
                         return sb.toString();
                     }
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Log.e( TAG + ":read", e.toString());
                     return def;
                 }
             }
@@ -78,14 +80,14 @@ public class NativeSuFile {
                         }
                         return baos.toString();
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        Log.e(TAG + ":readAsBase64", e.toString());
                         return "";
                     } finally {
                         closeQuietly(is);
                         closeQuietly(b64os); // This also closes baos
                     }
                 } catch (FileNotFoundException e) {
-                    e.printStackTrace();
+                    Log.e(TAG + ":readAsBase64", e.toString());
                     return "";
                 }
             }
@@ -114,15 +116,12 @@ public class NativeSuFile {
 
             @JavascriptInterface
             public boolean create(int type) {
-                switch (type) {
-                    case 0:
-                        return file.createNewFile();
-                    case 1:
-                        return file.mkdirs();
-                    case 2:
-                        return file.mkdir();
-                }
-                return false;
+                return switch (type) {
+                    case 0 -> file.createNewFile();
+                    case 1 -> file.mkdirs();
+                    case 2 -> file.mkdir();
+                    default -> false;
+                };
             }
 
             @JavascriptInterface
@@ -143,49 +142,36 @@ public class NativeSuFile {
 
             @JavascriptInterface
             public boolean canTypeMethod(int type) {
-                switch (type) {
-                    case 0:
-                        return file.canRead();
-                    case 1:
-                        return file.canWrite();
-                    case 2:
-                        return file.canExecute();
-                }
-                return false;
+                return switch (type) {
+                    case 0 -> file.canRead();
+                    case 1 -> file.canWrite();
+                    case 2 -> file.canExecute();
+                    default -> false;
+                };
             }
 
             @JavascriptInterface
             public boolean _is_TypeMethod(int type) {
-                switch (type) {
-                    case 0:
-                        return file.isFile();
-                    case 1:
-                        return file.isSymlink();
-                    case 2:
-                        return file.isDirectory();
-                    case 3:
-                        return file.isBlock();
-                    case 4:
-                        return file.isCharacter();
-                    case 5:
-                        return file.isNamedPipe();
-                    case 6:
-                        return file.isSocket();
-                    case 7:
-                        return file.isHidden();
-                }
-                return false;
+                return switch (type) {
+                    case 0 -> file.isFile();
+                    case 1 -> file.isSymlink();
+                    case 2 -> file.isDirectory();
+                    case 3 -> file.isBlock();
+                    case 4 -> file.isCharacter();
+                    case 5 -> file.isNamedPipe();
+                    case 6 -> file.isSocket();
+                    case 7 -> file.isHidden();
+                    default -> false;
+                };
             }
 
             @JavascriptInterface
             public boolean createNewSym_link(int type, String existing) {
-                switch (type) {
-                    case 0:
-                        return file.createNewLink(existing);
-                    case 1:
-                        return file.createNewSymlink(existing);
-                }
-                return false;
+                return switch (type) {
+                    case 0 -> file.createNewLink(existing);
+                    case 1 -> file.createNewSymlink(existing);
+                    default -> false;
+                };
             }
 
             @JavascriptInterface

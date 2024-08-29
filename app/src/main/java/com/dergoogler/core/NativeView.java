@@ -6,11 +6,13 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Build;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.DisplayCutout;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowInsets;
+import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 
@@ -21,11 +23,16 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 
 import com.dergoogler.mmrl.MainActivity;
+import com.dergoogler.util.Json;
+import com.topjohnwu.superuser.Shell;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 
 public class NativeView {
-
+    private static final String TAG = "NativeView";
     private final Activity ctx;
     private Insets insets;
     private final WindowInsetsControllerCompat windowInsetsController;
@@ -96,6 +103,32 @@ public class NativeView {
     }
 
     @JavascriptInterface
+    public void addFlag(int flag) {
+
+
+        try {
+            ctx.getWindow().addFlags(flag);
+        } catch (Exception e) {
+            Log.e(TAG + ":addFlag", e.toString());
+        }
+
+
+
+                .addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    }
+
+    @JavascriptInterface
+    public void clearFlag(int flag) {
+        try {
+            ctx.getWindow().clearFlags(flag);
+        } catch (Exception e) {
+            Log.e(TAG + ":clearFlag", e.toString());
+        }
+    }
+
+
+    @Deprecated
+    @JavascriptInterface
     public void setStatusBarColor(String color, boolean white) {
         if (white) {
             try {
@@ -111,6 +144,7 @@ public class NativeView {
         }
     }
 
+    @Deprecated
     @JavascriptInterface
     public void setNavigationBarColor(String color) {
         try {

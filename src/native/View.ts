@@ -13,6 +13,8 @@ interface NativeView {
   setAppearanceLightStatusBars(isLight: boolean): void;
   showSystemBars(type: number): void;
   hideSystemBars(type: number): void;
+  addFlag(flag: int): void;
+  clearFlag(flag: int): void;
 }
 
 class ViewInsetsCompat {
@@ -25,6 +27,12 @@ class ViewInsetsCompat {
     public static readonly STATUS_BARS = this.FIRST;
     public static readonly NAVIGATION_BARS = 1 << 1;
     public static readonly CAPTION_BAR = 1 << 2;
+  };
+}
+
+class WindowManager {
+  public static LayoutParams = class {
+    public static readonly FLAG_KEEP_SCREEN_ON = 128;
   };
 }
 
@@ -153,7 +161,23 @@ class View extends Native<NativeView> {
       this.interface.setNavigationBarColor(color);
     }
   }
+
+  public addFlags(flags: list<int>) {
+    if (this.isAndroid) {
+      for (const flag of flags) {
+        this.interface.addFlag(flag);
+      }
+    }
+  }
+
+  public clearFlags(flags: list<int>) {
+    if (this.isAndroid) {
+      for (const flag of flags) {
+        this.interface.clearFlag(flag);
+      }
+    }
+  }
 }
 
 const view: View = new View();
-export { view, View, ViewInsetsCompat };
+export { view, View, ViewInsetsCompat, WindowManager };
