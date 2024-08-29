@@ -104,17 +104,11 @@ public class NativeView {
 
     @JavascriptInterface
     public void addFlag(int flag) {
-
-
         try {
             ctx.getWindow().addFlags(flag);
         } catch (Exception e) {
             Log.e(TAG + ":addFlag", e.toString());
         }
-
-
-
-                .addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
     @JavascriptInterface
