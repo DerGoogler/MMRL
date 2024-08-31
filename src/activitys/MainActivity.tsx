@@ -278,9 +278,9 @@ const MainActivity = (): JSX.Element => {
   return (
     <Page
       onInit={() => {
-        const mmrlFolder = new SuFile(`${modFS("ADB")}/mmrl`);
+        const mmrlFolder = new SuFile(modFS("MMRLFOL"));
 
-        if (!mmrlFolder.exist()) {
+        if (Shell.isSuAvailable() && !mmrlFolder.exist()) {
           mmrlFolder.create(SuFile.NEW_FOLDERS);
         }
       }}

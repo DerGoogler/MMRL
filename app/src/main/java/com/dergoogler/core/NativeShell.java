@@ -66,22 +66,25 @@ public class NativeShell {
         };
     }
 
-
+    @Deprecated
     @JavascriptInterface
     public void exec(String command) {
         Shell.cmd(command).exec();
     }
 
+    @Deprecated
     @JavascriptInterface
     public String result(String command) {
         return ShellUtils.fastCmd(command);
     }
 
+    @Deprecated
     @JavascriptInterface
     public boolean isSuccess(String command) {
         return Shell.cmd(command).exec().isSuccess();
     }
 
+    @Deprecated
     @JavascriptInterface
     public int getCode(String command) {
         return Shell.cmd(command).exec().getCode();
@@ -94,10 +97,12 @@ public class NativeShell {
             return true;
         } catch (IOException e) {
             // java.io.IOException: Cannot run program "su": error=2, No such file or directory
+            Log.e(TAG + ":isSuAvailable", e.toString());
             return false;
         }
     }
 
+    @Deprecated
     @JavascriptInterface
     public boolean isAppGrantedRoot() {
         return Shell.cmd("if grep ' / ' /proc/mounts | grep -q '/dev/root' &> /dev/null; " +
@@ -105,12 +110,15 @@ public class NativeShell {
                 .to(output).exec().isSuccess();
     }
 
+    @Deprecated
     @JavascriptInterface
     public static native int pw_uid();
 
+    @Deprecated
     @JavascriptInterface
     public static native int pw_gid();
 
+    @Deprecated
     @JavascriptInterface
     public static native String pw_name();
 }
