@@ -78,15 +78,13 @@ public class MainActivity extends CordovaActivity {
             }
         });
 
-        NativeStorage ns = new NativeStorage(this);
-        NativeOS os = new NativeOS(this);
-        this.applyTheme(wv, ns, os);
-
         // enable Cordova apps to be started in the background
         Bundle extras = getIntent().getExtras();
         if (extras != null && extras.getBoolean("cdvStartInBackground", false)) {
             moveTaskToBack(true);
         }
+
+        wv.setBackgroundColor(0x101010);
 
         loadUrl(launchUrl);
 
@@ -110,26 +108,26 @@ public class MainActivity extends CordovaActivity {
         wv.addJavascriptInterface(new NativeEnvironment(this), "__environment__");
         wv.addJavascriptInterface(new NativeShell(wv), "__shell__");
         wv.addJavascriptInterface(new NativeBuildConfig(), "__buildconfig__");
-        wv.addJavascriptInterface(os, "__os__");
+        wv.addJavascriptInterface(new NativeOS(this), "__os__");
         wv.addJavascriptInterface(new NativeView(this, wv), "__view__");
-        wv.addJavascriptInterface(ns, "__nativeStorage__");
+        wv.addJavascriptInterface(new NativeStorage(this), "__nativeStorage__");
         wv.addJavascriptInterface(new NativeLog(), "__log__");
         wv.addJavascriptInterface(new NativeSuZip(), "__suzip__");
 
 
-       wv.setWebChromeClient(new SystemWebChromeClient((SystemWebViewEngine) wve) {
-           @Override
-           public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
-               switch (consoleMessage.messageLevel()) {
-                   case TIP -> Log.i("MMRLWebViewClient", consoleMessage.message());
-                   case LOG -> Log.d("MMRLWebViewClient", consoleMessage.message());
-                   case WARNING -> Log.w("MMRLWebViewClient", consoleMessage.message());
-                   case ERROR -> Log.e("MMRLWebViewClient", consoleMessage.message());
-                   default -> Log.v("MMRLWebViewClient", consoleMessage.message());
-               }
-               return true;
-           }
-       });
+        wv.setWebChromeClient(new SystemWebChromeClient((SystemWebViewEngine) wve) {
+            @Override
+            public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
+                switch (consoleMessage.messageLevel()) {
+                    case TIP -> Log.i("MMRLWebViewClient", consoleMessage.message());
+                    case LOG -> Log.d("MMRLWebViewClient", consoleMessage.message());
+                    case WARNING -> Log.w("MMRLWebViewClient", consoleMessage.message());
+                    case ERROR -> Log.e("MMRLWebViewClient", consoleMessage.message());
+                    default -> Log.v("MMRLWebViewClient", consoleMessage.message());
+                }
+                return true;
+            }
+        });
     }
 
     private void adjustWebViewHeight(int keypadHeight) {
@@ -146,12 +144,6 @@ public class MainActivity extends CordovaActivity {
 
     private String mmrlUserAgent() {
         return "MMRL/" + BuildConfig.VERSION_NAME + " (Linux; Android " + Build.VERSION.RELEASE + "; " + Build.MODEL + " Build/" + Build.DISPLAY + ")";
-    }
-
-    private void applyTheme(WebView wv, NativeStorage ns, NativeOS os)  {
-        String defColor = "#ce93d8";
-        String bg = ns.getItem("background_color", defColor);
-        wv.setBackgroundColor(Color.parseColor(bg.replace("\"", "")));
     }
 
     private boolean isEmulator = (Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic"))
