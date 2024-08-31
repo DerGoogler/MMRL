@@ -335,7 +335,7 @@ export const InstallTerminalV2Activity = () => {
         switch (obj.type) {
           case "downloading":
             setDownloadProgress(obj.state);
-            setLastLine(`- Downlaoding module progress: ${obj.state}%`);
+            setLastLine(`- Downloading module progress: ${obj.state}%`);
             break;
           case "finished":
             setDownloadProgress(0);
