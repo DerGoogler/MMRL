@@ -66,7 +66,7 @@ class SuFile extends Native<NativeSuFile> {
   public static readonly TYPE_ISSOCKET = 6;
   public static readonly TYPE_ISHIDDEN = 7;
 
-  private readonly _restrictedPaths = [/(\/data\/data\/(.+)\/?|(\/storage\/emulated\/0|\/sdcard)\/Android\/(data|media|obb)(.+)?)\/?/i];
+  private _restrictedPaths = [/(\/data\/data\/(.+)\/?|(\/storage\/emulated\/0|\/sdcard)\/Android\/(data|media|obb)(.+)?)\/?/i];
 
   public constructor(path: string, opt?: SuFileoptions) {
     super(window.__sufile__);
@@ -85,6 +85,17 @@ class SuFile extends Native<NativeSuFile> {
 
   private _isRestrictedPath(path: string): boolean {
     return this._restrictedPaths.some((restrictedPath) => restrictedPath.test(path));
+  }
+
+  public retrictedPaths(newPaths: RegExp[]) {
+    // run typo checks
+    for (const path of newPaths) {
+      if (!(path instanceof RegExp)) {
+        throw new TypeError(String(path) + " is not a regular expression");
+      }
+    }
+
+    this._restrictedPaths = [...this._restrictedPaths, ...newPaths];
   }
 
   public getPath(): string {
