@@ -18,6 +18,7 @@ export interface IntentPusher<E = {}, P = {}> {
 export interface ActivityContext {
   readonly popPage: (options?: any) => void;
   readonly pushPage: <E, P>(props: IntentPusher<E, P>) => void;
+  readonly replacePage: <E, P>(props: IntentPusher<E, P>) => void;
   readonly splitter: {
     readonly show: () => void;
     readonly hide: () => void;

@@ -112,7 +112,7 @@ class RouterNavigatorClass extends React.Component<HTMLNavigatorClass, State> {
     return this.ref.current._isRunning;
   }
 
-  private replacePage(route: object, options = {}) {
+  private replacePage(route: object, options = {}, props = {}, context = {}, extra = {}) {
     if (this.isRunning()) {
       return;
     }
@@ -120,14 +120,14 @@ class RouterNavigatorClass extends React.Component<HTMLNavigatorClass, State> {
     const update = () => {
       return new Promise((resolve) => {
         this.setState((prevState) => {
-          return { internalStack: [...prevState.internalStack, { route: route }] };
+          return { internalStack: [...prevState.internalStack, { route: route, props: props, context: context, extra: extra }] };
         }, resolve as Noop);
       });
     };
 
     return this.ref.current._pushPage(options, update).then(() => {
       this.setState((prevState) => {
-        return { internalStack: [...prevState.internalStack.slice(0, -2), { route: route }] };
+        return { internalStack: [...prevState.internalStack.slice(0, -2), { route: route, props: props, context: context, extra: extra }] };
       });
     });
   }
@@ -222,7 +222,7 @@ class RouterNavigatorClass extends React.Component<HTMLNavigatorClass, State> {
           }
           break;
         case "replace":
-          this.replacePage(route, options);
+          this.replacePage(route, options, props, context, extra);
           break;
         default:
           throw new Error(`Unknown type ${type} in processStack`);
@@ -247,6 +247,7 @@ class RouterNavigatorClass extends React.Component<HTMLNavigatorClass, State> {
     } = this.props;
 
     const pagesToRender = this.state.internalStack.map((item) => {
+      console.log(item);
       return (
         <Extra.Provider key={item.props.key + "_extra"} value={item.extra}>
           <Context.Provider key={item.props.key + "_context"} value={item.context}>

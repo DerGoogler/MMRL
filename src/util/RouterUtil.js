@@ -15,7 +15,7 @@ export const RouterUtil = {
     };
   },
 
-  replace: ({ routeConfig, route, options, key }) => {
+  replace: ({ routeConfig, route, options, key, props, context, extra }) => {
     const config = { ...routeConfig };
     const routeStack = [...config.routeStack];
     let processStack = [...config.processStack];
@@ -26,6 +26,9 @@ export const RouterUtil = {
         route,
         options,
         key,
+        props,
+        context,
+        extra,
       };
       processStack = [...processStack, process];
     }
@@ -36,7 +39,7 @@ export const RouterUtil = {
     };
   },
 
-  reset: ({ routeConfig, route, options, key }) => {
+  reset: ({ routeConfig, route, options, key, props, context, extra }) => {
     const config = { ...routeConfig };
     const routeStack = [...config.routeStack];
     let processStack = [...config.processStack];
@@ -47,6 +50,9 @@ export const RouterUtil = {
         route,
         options,
         key,
+        props,
+        context,
+        extra,
       };
 
       processStack = [...processStack, process];

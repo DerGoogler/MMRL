@@ -8,6 +8,7 @@ export interface Picker<N, V> {
 }
 
 export interface StorageDeclaration {
+  landingEnabled: boolean;
   language: Picker<string, string>;
   eruda_console_enabled: boolean;
   disabled_repos: string[];
@@ -39,6 +40,7 @@ export const useSettings = <K extends keyof StorageDeclaration>(key: K): [Storag
 
   const INITIAL_SETTINGS = React.useMemo<StorageDeclaration>(
     () => ({
+      landingEnabled: true,
       language: availableLangs[0],
       eruda_console_enabled: false,
       disabled_repos: [],

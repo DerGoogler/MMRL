@@ -28,6 +28,7 @@ import { SuFile } from "@Native/SuFile";
 import pkg from "@Package";
 import { LogcatActivity } from "./LogcatActivity";
 import UnverifiedHostActivity from "./UnverifiedHostActivity";
+import { LandingActivity } from "./LandingActivity";
 
 const getLocation = () => {
   if (window.location !== window.parent.location) {
@@ -39,27 +40,36 @@ const getLocation = () => {
   }
 };
 
-const CheckRoot = () => {
-  if (pkg.config.verified_hosts.some((e) => new RegExp(e[0], e[1]).test(getLocation().hostname))) {
-    if (os.isAndroid) {
-      // Shell.isAppGrantedRoot() doesn't work on KSU
-      if (Shell.isSuAvailable()) {
-        return React.memo(MainApplication);
+const useCheckRoot = () => {
+  const [landing] = useSettings("landingEnabled");
+
+  return React.useMemo(() => {
+    if (pkg.config.verified_hosts.some((e) => new RegExp(e[0], e[1]).test(getLocation().hostname))) {
+      if (os.isAndroid) {
+        // Shell.isAppGrantedRoot() doesn't work on KSU
+        if (Shell.isSuAvailable()) {
+          return React.memo(MainApplication);
+        } else {
+          return React.memo(NoRootActivity);
+        }
       } else {
-        return React.memo(NoRootActivity);
+        if (landing) {
+          return React.memo(LandingActivity);
+        } else {
+          return React.memo(MainApplication);
+        }
       }
     } else {
-      return React.memo(MainApplication);
+      return React.memo(UnverifiedHostActivity);
     }
-  } else {
-    return React.memo(UnverifiedHostActivity);
-  }
+  }, []);
 };
 
 const MainActivity = (): JSX.Element => {
   const { strings } = useStrings();
   const { theme } = useTheme();
   const { modFS } = useModFS();
+  const InitialActivity = useCheckRoot();
 
   const [isSplitterOpen, setIsSplitterOpen] = useState(false);
 
@@ -93,6 +103,7 @@ const MainActivity = (): JSX.Element => {
   const pushContext = {
     pushPage: (props: IntentPusher) => pushPage(props),
     popPage: (options?: any) => popPage(options),
+    replacePage: (props: IntentPusher) => replacePage(props),
     splitter: {
       show: () => showSplitter(),
       hide: () => hideSplitter(),
@@ -103,7 +114,7 @@ const MainActivity = (): JSX.Element => {
   const ignoreThat = RouterUtil.init([
     {
       route: {
-        component: CheckRoot(),
+        component: InitialActivity,
         props: {
           key: "main",
         },
@@ -151,6 +162,29 @@ const MainActivity = (): JSX.Element => {
         route: route,
         options: options,
         key: props.component.name || props.key,
+        props: props.props,
+        context: pushContext,
+        extra: props.extra ? props.extra : {},
+      })
+    );
+  };
+
+  const replacePage = <E, P>(props: IntentPusher<E, P>): void => {
+    const route = {
+      component: !props.noMemo ? React.memo(props.component) : props.component,
+      props: {
+        key: props.key,
+      },
+    };
+
+    const options = {};
+
+    setRouteConfig((prev: any) =>
+      RouterUtil.replace({
+        routeConfig: prev,
+        route: route,
+        options: options,
+        key: props.key,
         props: props.props,
         context: pushContext,
         extra: props.extra ? props.extra : {},

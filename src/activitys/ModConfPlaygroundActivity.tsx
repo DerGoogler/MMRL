@@ -171,7 +171,9 @@ const ModConfPlaygroundActivity = () => {
           <Toolbar.BackButton onClick={context.popPage} />
         </Toolbar.Left>
         <Toolbar.Center>{strings("modconf_playground")}</Toolbar.Center>
-        <Toolbar.Right>{!isLargeScreen && <Toolbar.Button icon={PreviewIcon} onClick={handlePreview} />}</Toolbar.Right>
+        <Toolbar.Right>
+          <Toolbar.Button icon={PreviewIcon} onClick={handlePreview} />
+        </Toolbar.Right>
       </Toolbar>
     );
   };
