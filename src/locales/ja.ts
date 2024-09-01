@@ -89,7 +89,7 @@ export const ja = {
   invaild_modules_subtitle: "無効なモジュールを表示",
   // no translate
   modconf: "ModConf",
-  modconf_playground: "ModConf プレイグラウンド",
+  modconf_playground: "ModConf Playground",
   // no translate
   modfs: "ModFS",
   enable_install: "インストールを有効化",
