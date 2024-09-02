@@ -230,7 +230,7 @@ export const LandingActivity = () => {
             {Array.from(Array(7), (_, i) => i + 1).map((num) => (
               <GridImage
                 alt={`Screenshot ${num} of MMRL`}
-                src={`https://raw.githubusercontent.com/DerGoogler/MMRL/master/assets/store_ready/${num}.png`}
+                src={`https://raw.githubusercontent.com/DerGoogler/MMRL/master/assets/store_ready/${num}.webp`}
               />
             ))}
           </Grid>

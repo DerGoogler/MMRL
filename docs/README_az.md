@@ -60,13 +60,13 @@ Magisk Module Repo Loader (MMRL) ilə tanış olun - Android-də Magisk, KernelS
 # Ekran görüntüləri
 
 <p>
-  <img src="../assets/store_ready/1.png" width="32%" />
-  <img src="../assets/store_ready/2.png" width="32%" />
-  <img src="../assets/store_ready/3.png" width="32%" />
-  <img src="../assets/store_ready/4.png" width="32%" />
-  <img src="../assets/store_ready/5.png" width="32%" />
-  <img src="../assets/store_ready/6.png" width="32%" />
-  <img src="../assets/store_ready/7.png" width="32%" />
+  <img src="../assets/store_ready/1.webp" alt="Screenshot 1 of MMRL" width="32%" />
+  <img src="../assets/store_ready/2.webp" alt="Screenshot 2 of MMRL" width="32%" />
+  <img src="../assets/store_ready/3.webp" alt="Screenshot 3 of MMRL" width="32%" />
+  <img src="../assets/store_ready/4.webp" alt="Screenshot 4 of MMRL" width="32%" />
+  <img src="../assets/store_ready/5.webp" alt="Screenshot 5 of MMRL" width="32%" />
+  <img src="../assets/store_ready/6.webp" alt="Screenshot 6 of MMRL" width="32%" />
+  <img src="../assets/store_ready/7.webp" alt="Screenshot 7 of MMRL" width="32%" />
 </p>
 
 # Kredit və Təşəkkürlər
