@@ -154,7 +154,11 @@ export const LandingActivity = () => {
             OPEN IN BROWSER
           </Button>
 
-          <Divider>or</Divider>
+          <Divider>
+            <Typography color="divider" sx={{ fontSize: "unset" }}>
+              or
+            </Typography>
+          </Divider>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             <Button
               fullWidth
