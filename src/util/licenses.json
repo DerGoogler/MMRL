@@ -201,7 +201,7 @@
     "author": null,
     "license": "MIT",
     "description": "Simple confirmation dialogs built on top of @mui/material",
-    "version": "3.0.11",
+    "version": "3.0.16",
     "source": "https://www.npmjs.com/package/material-ui-confirm"
   },
   {
