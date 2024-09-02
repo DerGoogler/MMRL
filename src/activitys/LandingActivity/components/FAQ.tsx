@@ -56,9 +56,9 @@ interface FAQProps {
 }
 
 const FAQ = (props: FAQProps) => {
-  const [expanded, setExpanded] = React.useState<number | false>(0);
+  const [expanded, setExpanded] = React.useState<number | false>(false);
 
-  const handleChange = (panel: number) => (event: React.SyntheticEvent, newExpanded: boolean) => {
+  const handleChange = (panel: number) => (_: React.SyntheticEvent, newExpanded: boolean) => {
     setExpanded(newExpanded ? panel : false);
   };
 
