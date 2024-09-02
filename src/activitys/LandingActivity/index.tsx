@@ -9,98 +9,22 @@ import { Page } from "@Components/onsenui/Page";
 import { os } from "@Native/Os";
 import { useSettings } from "@Hooks/useSettings";
 import { useActivity } from "@Hooks/useActivity";
-import MainApplication from "./MainApplication";
-
-interface GridCardProps {
-  title?: string;
-  description?: string;
-}
-
-const GridCard = (props: GridCardProps) => {
-  const { theme } = useTheme();
-
-  return (
-    <Grid
-      item
-      xs={12}
-      sm={6}
-      md={4}
-      lg={5}
-      sx={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <Card
-        sx={{
-          p: 2,
-          height: "100%",
-          backgroundImage: "none",
-          backgroundColor: alpha(theme.palette.background.paper, 0.6),
-          backdropFilter: "saturate(180%) blur(20px)",
-          outlineOffset: -1,
-          outline: `1px solid ${theme.palette.divider} !important`,
-        }}
-      >
-        <Typography sx={{ color: "text.secondary", mb: 1.5 }}>{props.title}</Typography>
-        <Typography variant="body2">{props.description}</Typography>
-      </Card>
-    </Grid>
-  );
-};
-
-interface GridImageProps {
-  src?: string;
-}
-
-const GridImage = (props: GridImageProps) => {
-  const { theme } = useTheme();
-
-  return (
-    <Grid
-      item
-      xs={6}
-      sm={6}
-      md={4}
-      lg={4}
-      sx={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <Card
-        sx={{
-          p: 2,
-          height: "100%",
-          backgroundImage: "none",
-          backgroundColor: alpha(theme.palette.background.paper, 0.6),
-          backdropFilter: "saturate(180%) blur(20px)",
-          borderRadius: theme.shape.borderRadius / theme.shape.borderRadius,
-          outlineOffset: -1,
-          outline: `1px solid ${theme.palette.divider} !important`,
-        }}
-      >
-        <Image
-          noOutline
-          src={props.src}
-          sx={{
-            width: "100%",
-            height: "100%",
-            borderRadius: theme.shape.borderRadius / theme.shape.borderRadius,
-          }}
-        />
-      </Card>
-    </Grid>
-  );
-};
+import MainApplication from "../MainApplication";
+import { GridCard } from "./components/GridCard";
+import { GridImage } from "./components/GridImage";
+import { LandingToolbar } from "./components/LandingToolbar";
+import { SectionHeader } from "./components/SectionHeader";
+// @ts-ignore
+import { FAQ } from "./components/FAQ";
+import { useLanguageMap } from "./../../locales/declaration";
+import { view } from "@Native/View";
 
 export const LandingActivity = () => {
   const { theme } = useTheme();
   const confirm = useConfirm();
-  const [landing, setLanding] = useSettings("landingEnabled");
+  const [, setLanding] = useSettings("landingEnabled");
   const { context } = useActivity();
+  const availableLangs = useLanguageMap();
 
   const acceptCallback = React.useCallback((callback) => {
     confirm({
@@ -124,6 +48,8 @@ export const LandingActivity = () => {
       .catch(() => {});
   }, []);
 
+  const randomGradientAngle = React.useMemo(() => Math.floor(Math.random() * (20 - 15 + 1) + 15), []);
+
   return (
     <Page
       backgroundStyle={{
@@ -132,12 +58,35 @@ export const LandingActivity = () => {
           position: "absolute",
           inset: -5,
           zIndex: -1,
-          background: "linear-gradient(-17deg, rgba(0,0,0,0) 41%, rgba(188,2,194,0.5) 100%)",
+          background: `linear-gradient(-${randomGradientAngle}deg, rgba(0,0,0,0) 50%, rgba(188,2,194,0.5) 100%)`,
         },
 
-        background: " linear-gradient(17deg, rgba(0,0,0,0) 41%, rgba(92,15,186,0.5) 100%)",
+        background: `linear-gradient(${randomGradientAngle}deg, rgba(0,0,0,0) 50%, rgba(92,15,186,0.5) 100%)`,
       }}
     >
+      <LandingToolbar
+        menuItems={[
+          {
+            title: "GMR Guidelines",
+            onClick() {
+              os.openURL("https://dergoogler.com/gmr/guidelines", "_blank");
+            },
+          },
+          {
+            title: "MMAR Guidelines",
+            onClick() {
+              os.openURL("https://github.com/Magisk-Modules-Alt-Repo/submission", "_blank");
+            },
+          },
+          {
+            title: "Blog",
+            onClick() {
+              os.openURL("https://dergoogler.com", "_blank");
+            },
+          },
+        ]}
+      />
+
       <Page.RelativeContent>
         <Box
           sx={{
@@ -213,7 +162,7 @@ export const LandingActivity = () => {
               startIcon={<Google />}
               onClick={() => {
                 acceptCallback(() => {
-                  os.openURL("https://play.google.com/store/apps/details?id=com.dergoogler.mmrl", "_mmrlOwn");
+                  os.openURL("https://play.google.com/store/apps/details?id=com.dergoogler.mmrl", "_blank");
                 });
               }}
             >
@@ -225,7 +174,7 @@ export const LandingActivity = () => {
               startIcon={<GitHub />}
               onClick={() => {
                 acceptCallback(() => {
-                  os.openURL("https://github.com/DerGoogler/MMRL/releases", "_mmrlOwn");
+                  os.openURL("https://github.com/DerGoogler/MMRL/releases", "_blank");
                 });
               }}
             >
@@ -234,52 +183,7 @@ export const LandingActivity = () => {
           </Box>
         </Stack>
 
-        <Typography
-          sx={{
-            mt: 8,
-            [theme.breakpoints.up("md")]: {
-              fontSize: "25px",
-            },
-
-            fontSize: "1.5rem",
-            textAlign: "center",
-          }}
-        >
-          Screenshots
-        </Typography>
-
-        <Box
-          sx={{
-            m: 3,
-          }}
-        >
-          <Grid
-            container
-            spacing={3}
-            sx={{
-              justifyContent: "center",
-              alignItems: "stretch",
-            }}
-          >
-            {Array.from(Array(7), (_, i) => i + 1).map((num) => (
-              <GridImage src={`https://raw.githubusercontent.com/DerGoogler/MMRL/master/assets/store_ready/${num}.png`} />
-            ))}
-          </Grid>
-        </Box>
-
-        <Typography
-          sx={{
-            mt: 8,
-            [theme.breakpoints.up("md")]: {
-              fontSize: "25px",
-            },
-
-            fontSize: "1.5rem",
-            textAlign: "center",
-          }}
-        >
-          Key Features
-        </Typography>
+        <SectionHeader>Key Features</SectionHeader>
 
         <Box
           sx={{
@@ -304,7 +208,99 @@ export const LandingActivity = () => {
               title="Wide Root Support"
               description="MMRL supports a wide range of root solutions. This includes Magisk, KernelSU and APatch."
             />
+            <GridCard title="Anti-Features" description="MMRL shows you if a module is not FOSS which set repo owners by their own." />
           </Grid>
+        </Box>
+
+        <SectionHeader>Screenshots</SectionHeader>
+
+        <Box
+          sx={{
+            m: 3,
+          }}
+        >
+          <Grid
+            container
+            spacing={3}
+            sx={{
+              justifyContent: "center",
+              alignItems: "stretch",
+            }}
+          >
+            {Array.from(Array(7), (_, i) => i + 1).map((num) => (
+              <GridImage
+                alt={`Screenshot ${num} of MMRL`}
+                src={`https://raw.githubusercontent.com/DerGoogler/MMRL/master/assets/store_ready/${num}.png`}
+              />
+            ))}
+          </Grid>
+        </Box>
+
+        <SectionHeader>Frequently Asked Questions</SectionHeader>
+
+        <Box
+          sx={{
+            m: 3,
+          }}
+        >
+          <FAQ
+            items={[
+              {
+                q: "What are the requirements to use MMRL?",
+                a: 'The app require Android 8 and above, at least **4-6 GB of RAM**. if you using MMRL below you also require <a module="mmrl" href="https://github.com/DerGoogler/MMRL-CLI">MMRL-CLI</a> to use it',
+              },
+              {
+                q: "What are currently known repos that will work in MMRL?",
+                a: `Currently there are three repos that can be used in MMRL.
+- Magisk Modules Alt Repo
+- IzzyOnDroid Magisk Repo
+- Googlers Magisk Repo`,
+              },
+              {
+                q: "I want to use the Androidacy Magisk Repo here, does it work?",
+                a: "No. The Androidacy Magisk Repo does not work in MMRL, and there are currently no plant to support it.",
+              },
+              {
+                q: "How to use ModConf's from Magisk Modules?",
+                a: `1. Open MMRL
+2. switch to the Installed tab
+3. scroll to your choosen module
+4. click on "CONFIG"
+
+> [!WARNING]
+> The module developer develop the ModConf and errors that show up there has mainly nothing to do with MMRL`,
+              },
+
+              {
+                q: "In what programming language is MMRL written?",
+                a: "MMRL is written in Java, JavaScript and TypeScript. It uses React as framework and uses Onsen UI and MUI for front-end design.",
+              },
+              {
+                q: "How can I build my own repo?",
+                a: "Check out [magisk-modules-repo-util](https://github.com/Googlers-Repo/magisk-modules-repo-util.git) for more.",
+              },
+
+              {
+                q: "ModFS seems to be broken, cannot install modules",
+                a: "If you receive error like `/system/bin/sh: /data/adb/magisk/magisk32: inaccessible or not found` while installing your modules, this can be sometimes ModFS related.\n\nCommon root solutions:\n- `MSUINI` Magisk\n- `KSUINI` KernelSU\n- `ASUINI` APatch",
+              },
+
+              {
+                q: "In what languages is MMRL available?",
+                a: `MMRL is in ${Object.keys(availableLangs).length} languages available.
+
+<grid container spacing={3} sx={{ justifyContent: "center", alignItems: "stretch"}}>
+${Object.entries(availableLangs)
+  .map(
+    ([_, lang]) =>
+      `<grid item xs={12} sm={6} md={4} lg={5} sx={{display: "flex",alignItems: "center",justifyContent: "center"}}>\`${lang.name}\`</grid>`
+  )
+  .join("")}
+</grid>
+                `,
+              },
+            ]}
+          />
         </Box>
       </Page.RelativeContent>
 
@@ -313,6 +309,7 @@ export const LandingActivity = () => {
         spacing={2}
         sx={{
           p: 3,
+          mb: `${view.getWindowBottomInsets()}px`,
           justifyContent: "space-between",
           alignItems: "center",
 
@@ -328,7 +325,6 @@ export const LandingActivity = () => {
           spacing={2}
           sx={{
             justifyContent: "flex-end",
-
             alignItems: "center",
           }}
         >

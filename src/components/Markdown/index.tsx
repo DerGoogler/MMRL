@@ -1,7 +1,7 @@
 import Markdown, { MarkdownToJSX, RuleType, compiler } from "markdown-to-jsx";
 import { Video } from "@Components/dapi/Video";
 import React from "react";
-import { Alert, AlertTitle, Divider, Paper, Stack, SxProps, Theme } from "@mui/material";
+import { Alert, AlertTitle, Divider, Grid, Paper, Stack, SxProps, Theme } from "@mui/material";
 import styled from "@emotion/styled";
 import hljs from "highlight.js";
 import { Image } from "@Components/dapi/Image";
@@ -136,6 +136,9 @@ export const MarkdownOverrides: MarkdownToJSX.Overrides | undefined = {
   },
   discordwidget: {
     component: DiscordWidget,
+  },
+  grid: {
+    component: Grid,
   },
 };
 

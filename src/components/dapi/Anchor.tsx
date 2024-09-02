@@ -96,9 +96,10 @@ const Anchor: React.FC<AnchorProps> = (props) => {
   const s = React.useMemo(
     () => ({
       display: "inline-block",
-      "& ons-gesture-detector[href]": {
+      "& a[href]": {
         cursor: "pointer",
         color: color,
+        textDecoration: "none",
         display: "flex",
         alignItems: "center",
         fontWeight: "unset",
@@ -120,78 +121,62 @@ const Anchor: React.FC<AnchorProps> = (props) => {
     os.openURL(__href, target, `color=${theme.palette.background.default}`);
   }, [__href]);
 
+  const handleLinkClick = React.useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+      e.stopPropagation();
+      e.preventDefault();
+      if (__href && module && findModule) {
+        context.pushPage({
+          component: ModuleViewActivity,
+          key: "ModuleViewActivity",
+          extra: findModule,
+        });
+      } else {
+        if (linkProtection) {
+          confirm({
+            title: strings("anchor_confirm_title"),
+            description: strings("anchor_confirm_desc", {
+              codeblock: (
+                <CodeBlock sx={{ mt: 1 }} lang="url">
+                  {__href}
+                </CodeBlock>
+              ),
+            }),
+            confirmationText: strings("yes"),
+          }).then(() => openLink());
+        } else {
+          openLink();
+        }
+      }
+    },
+    [__href]
+  );
+
   return (
-    <Tooltip title={__href} placement="bottom" arrow disableInteractive>
-      <Box sx={s}>
-        <Stack
-          component={GestureDetector as any}
-          direction="row"
-          spacing={0.5}
-          href={__href}
-          // onHold={() => {
-          //   ons
-          //     .openActionSheet({
-          //       cancelable: true,
-          //       buttons: ["Copy link"],
-          //     })
-          //     .then((index) => {
-          //       switch (index) {
-          //         case 0:
-          //           console.log("link copied");
-          //           break;
-          //       }
-          //     });
-          // }}
-          onTap={() => {
-            if (__href && module && findModule) {
-              context.pushPage({
-                component: ModuleViewActivity,
-                key: "ModuleViewActivity",
-                extra: findModule,
-              });
-            } else {
-              if (linkProtection) {
-                confirm({
-                  title: strings("anchor_confirm_title"),
-                  description: strings("anchor_confirm_desc", {
-                    codeblock: (
-                      <CodeBlock sx={{ mt: 1 }} lang="url">
-                        {__href}
-                      </CodeBlock>
-                    ),
-                  }),
-                  confirmationText: strings("yes"),
-                }).then(() => openLink());
-              } else {
-                openLink();
-              }
-            }
+    <Box sx={s}>
+      <Stack component="a" direction="row" spacing={0.5} href={__href} onClick={handleLinkClick} color={color}>
+        <Typography
+          component="span"
+          sx={{
+            fontSize: "unset",
+            fontFamily: "unset",
           }}
           color={color}
         >
-          <Typography
-            component="span"
+          {children}
+        </Typography>
+        {!noIcon && (
+          <Box
+            component={!(module && findModule) ? icon : Extension}
             sx={{
+              color: color,
+              fill: color,
               fontSize: "unset",
-              fontFamily: "unset",
             }}
-            color={color}
-          >
-            {children}
-          </Typography>
-          {!noIcon && (
-            <Box
-              component={!(module && findModule) ? icon : Extension}
-              sx={{
-                color: color,
-                fill: color,
-                fontSize: "unset",
-              }}
-            />
-          )}
-        </Stack>
-      </Box>
-    </Tooltip>
+          />
+        )}
+      </Stack>
+    </Box>
   );
 };
 
