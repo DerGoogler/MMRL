@@ -55,7 +55,7 @@ export const ja = {
   explore_repositories: "リポジトリを探す",
   overview: "概要",
   about_this_module: "このモジュールについて",
-  about: "アプリについて",
+  about: "情報",
   updated_on: "更新日",
   requirements: "要件",
   access: "アクセス",
@@ -95,13 +95,13 @@ export const ja = {
   enable_install: "インストールを有効化",
   enable_install_subtitle: "バージョン 1.8.5 以降では MMRL Install Tools が必要です",
   scroll_to_bottom: "下までスクロール",
-  scroll_to_bottom_subtitle: "ターミナル内で自動的に下までスクロールする",
+  scroll_to_bottom_subtitle: "ターミナル内で自動的に下までスクロールします。",
   scroll_behavior: "スクロールの動作",
   terminal: "ターミナル",
   eruda_console: "Eruda コンソール",
-  eruda_console_subtitle: "開発やバグハンティングに役立ちます",
+  eruda_console_subtitle: "開発やバグハンティングに役立ちます。",
   share_device_infos: "デバイス情報を共有する",
-  share_device_infos_subtilte: "デバイスの仕様、構成された ModConf、アプリ情報、インストールされたモジュール",
+  share_device_infos_subtilte: "デバイスの仕様、構成された ModConf、アプリ情報、インストールされたモジュールを共有します。",
   storage: "ストレージ",
   clear_repos: "リポジトリを消去",
   patch_settings: "パッチの設定",
@@ -132,13 +132,13 @@ export const ja = {
   reboot_device_desc: "デバイスを再起動してもよろしいですか？",
   word_wrap_title: "文章の折り返し",
   numberic_lines_title: "行の番号",
-  numberic_lines_desc: "インストーラーの各行に番号を追加します",
+  numberic_lines_desc: "インストーラーの各行に番号を追加します。",
 
   privacy_privacy: "プライバシーポリシー",
   hoc_with_require_new_version: "この構成には、{versionCode} 以上の MMRL が必要です。 (versionCode){br}最新の {url} を確認してください",
 
   print_errors: "プリントエラー",
-  print_errors_desc: "ターミナルと MMRL Install Tools のエラーをコンソールに出力します",
+  print_errors_desc: "ターミナルと MMRL Install Tools のエラーをコンソールに出力します。",
 
   blacklisted_modules: "ブラックリストされたモジュール",
 
@@ -155,5 +155,5 @@ export const ja = {
   open_logcat: "Logcat を開く",
   try_again: "再試行",
 
-  file_downloaded: "ファイルは {path} にダウンロードされました",
+  file_downloaded: "ファイルは {path} にダウンロードされました。",
 };
