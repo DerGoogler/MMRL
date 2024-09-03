@@ -184,7 +184,7 @@ class Shell extends Native<NativeShellV2> {
    */
   public static isKernelSU(): boolean {
     // `proc.exist()` is always `false` on browsers
-    return this._mountDetect(/(KSU|KernelSU)/);
+    return this._mountDetect(/\b(KSU|KernelSU)\b/i);
   }
 
   /**
@@ -192,7 +192,7 @@ class Shell extends Native<NativeShellV2> {
    */
   public static isMagiskSU(): boolean {
     // `proc.exist()` is always `false` on browsers
-    return this._mountDetect(/(magisk|core\/mirror|core\/img)/);
+    return this._mountDetect(/\b(magisk|core\/mirror|core\/img)\b/i);
   }
 
   /**
@@ -200,7 +200,7 @@ class Shell extends Native<NativeShellV2> {
    */
   public static isAPatchSU(): boolean {
     // `proc.exist()` is always `false` on browsers
-    return this._mountDetect(/(APD|APatch)/);
+    return this._mountDetect(/\b(APD|APatch)\b/i);
   }
 
   /**
