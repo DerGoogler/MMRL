@@ -23,6 +23,12 @@ myTerminal.onLine = (line) => {
   console.log(line);
 };
 
+// get results
+myTerminal.onError = (line) => {
+  console.error(line);
+};
+
+
 // get exit code
 myTerminal.onExit = (code) => {
   console.log("Exit code:", code);
