@@ -357,6 +357,12 @@ export const InstallTerminalV2Activity = () => {
               addText(line);
             };
 
+            if (printTerminalError) {
+              explore_install.onError = (err) => {
+                addText(`\x1b[38;5;130mⓘ${err}`);
+              };
+            }
+
             explore_install.onExit = (code) => {
               switch (code) {
                 case Shell.M_INS_SUCCESS:
@@ -436,6 +442,12 @@ export const InstallTerminalV2Activity = () => {
       local_install.onLine = (line) => {
         addText(line);
       };
+
+      if (printTerminalError) {
+        local_install.onError = (err) => {
+          addText(`\x1b[38;5;130mⓘ${err}`);
+        };
+      }
 
       local_install.onExit = (code) => {
         switch (code) {
