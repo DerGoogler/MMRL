@@ -154,11 +154,7 @@ export const LandingActivity = () => {
             OPEN IN BROWSER
           </Button>
 
-          <Divider>
-            <Typography color="divider" sx={{ fontSize: "unset" }}>
-              or
-            </Typography>
-          </Divider>
+          <Divider>or</Divider>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             <Button
               fullWidth
@@ -204,9 +200,9 @@ export const LandingActivity = () => {
           >
             <GridCard
               title="Repositories"
-              description="MMRL supports many repositories like Magisk Modules Alt Repo, IzzyonDroid Magisk Repo and Googlers Magisk Repo"
+              description="MMRL supports many repositories, like Magisk Modules Alt Repo, IzzyonDroid Magisk Repo and Googlers Magisk Repo"
             />
-            <GridCard title="ModConf" description="Build advanced configuration pages with React and JavaScript. " />
+            <GridCard title="ModConf" description="Build advanced configuration pages with React and JavaScript." />
             <GridCard title="ModFS" description="With ModFS you can customize MMRL to fit any root solution." />
             <GridCard
               title="Wide Root Support"
@@ -251,7 +247,7 @@ export const LandingActivity = () => {
             items={[
               {
                 q: "What are the requirements to use MMRL?",
-                a: 'The app require Android 8 and above, at least **4-6 GB of RAM**. if you using MMRL below you also require <a module="mmrl" href="https://github.com/DerGoogler/MMRL-CLI">MMRL-CLI</a> to use it',
+                a: 'The app require Android 8 and above and at least **4-6 GB of RAM**. If you\'re using MMRL below V3 you also require <a module="mmrl" href="https://github.com/DerGoogler/MMRL-CLI">MMRL-CLI</a> to use it',
               },
               {
                 q: "What are currently known repos that will work in MMRL?",
@@ -267,9 +263,9 @@ export const LandingActivity = () => {
               {
                 q: "How to use ModConf's from Magisk Modules?",
                 a: `1. Open MMRL
-2. switch to the Installed tab
-3. scroll to your choosen module
-4. click on "CONFIG"
+2. Switch to the Installed tab
+3. Scroll to your choosen module
+4. Click on "CONFIG"
 
 > [!WARNING]
 > The module developer develop the ModConf and errors that show up there has mainly nothing to do with MMRL`,
