@@ -11,6 +11,7 @@ export type NativeArgumentTypes<F extends Function> = F extends (...args: infer 
  */
 export class Native<I = any> implements INative<I> {
   private _internal_interface: I;
+  public static static: Native;
 
   /**
    * This field is required, otherwise the comunacation between Android will not work
@@ -18,6 +19,7 @@ export class Native<I = any> implements INative<I> {
    */
   public constructor(i: I) {
     this._internal_interface = i;
+    Native.static = this;
   }
 
   private static get userAgentRegex(): RegExp {

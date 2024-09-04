@@ -1,4 +1,10 @@
+import { Log } from "./Log";
 import { Native } from "./Native";
+
+type TerminalStream = {
+  stdout: string | null;
+  stderr: string | null;
+};
 
 interface TerminalExec {
   command: string;
@@ -15,7 +21,7 @@ interface TerminalExec {
    * @default true
    */
   printError?: boolean;
-  onLine: (line: string) => void;
+  onLine: (stream: TerminalStream) => void;
   onExit?: ((code: number) => void) | null;
 }
 
@@ -31,8 +37,9 @@ class Terminal extends Native<TerminalNative> {
   private _env: TerminalEnv = {};
   public cwd: string | undefined;
   printErrors: boolean | undefined;
-  private _onLine: ((line: string) => void) | undefined;
+  private _onLine: ((stdout: string) => void) | undefined;
   private _onExit: ((code: number) => void) | undefined | null;
+  private _onError: ((stderr: string) => void) | undefined | null;
 
   public constructor(options?: TerminalOptions) {
     super(window.__terminal__);
@@ -41,8 +48,12 @@ class Terminal extends Native<TerminalNative> {
     this.printErrors = options?.printError;
   }
 
-  public set onLine(func: TerminalExec["onLine"]) {
+  public set onLine(func: (stdout: string) => void) {
     this._onLine = func;
+  }
+
+  public set onError(func: (stderr: string) => void) {
+    this._onError = func;
   }
 
   public set onExit(func: TerminalExec["onExit"]) {
@@ -65,9 +76,16 @@ class Terminal extends Native<TerminalNative> {
         command: command,
         cwd: this.cwd,
         env: this.env,
-        onLine: this._onLine,
+        onLine: (stream: TerminalStream) => {
+          if (stream.stdout && this._onLine) {
+            this._onLine(stream.stdout);
+          } else if (stream.stdout && this._onError) {
+            this._onError(stream.stdout);
+          } else {
+            Log.e("Terminal:exec", "Unable to find proper terminal stream");
+          }
+        },
         onExit: this._onExit,
-        printError: this.printErrors,
       });
     }
   }

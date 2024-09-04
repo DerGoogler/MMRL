@@ -9,7 +9,6 @@ cordova.define(
           opt.command,
           opt.env || { HOME: "/" },
           opt.cwd || "/",
-          opt.printError || true,
         ]);
       },
       test: function (msg, successCallback, errorCallback) {
