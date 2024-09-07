@@ -1,10 +1,10 @@
 import React from "react";
 import ons from "onsenui";
-import { Button, Card, CardContent, CssBaseline, Divider } from "@mui/material";
+import { Button, CssBaseline, Divider } from "@mui/material";
 import { LightTheme } from "@Styles/light_theme";
 import { ConfirmProvider } from "material-ui-confirm";
 import { ThemeProvider, useTheme } from "@Hooks/useTheme";
-import { StringsProvider, useStrings } from "@Hooks/useStrings";
+import { StringsProvider } from "@Hooks/useStrings";
 import { Preventer, render } from "react-render-tools";
 import { MainActivity } from "@Activitys/MainActivity";
 import { RepoProvider } from "@Hooks/useRepos";
@@ -23,7 +23,6 @@ import { Toolbar } from "@Components/onsenui/Toolbar";
 import { Pre } from "@Components/dapi/Pre";
 import { Code } from "@Components/dapi/Code";
 import { Anchor } from "@Components/dapi/Anchor";
-import { ModulesQueue } from "@Components/ModulesQueue";
 
 ons.platform.select("android");
 
@@ -104,9 +103,7 @@ ons.ready(() => {
               <Preventer prevent="contextmenu">
                 <RepoProvider>
                   <ConfirmProvider>
-                    <ModulesQueue>
-                      <MainActivity />
-                    </ModulesQueue>
+                    <MainActivity />
                   </ConfirmProvider>
                 </RepoProvider>
               </Preventer>

@@ -14,7 +14,6 @@ import { useLocalInstall } from "./hooks/useLocalInstall";
 export interface TerminalActivityExtra {
   exploreInstall: boolean;
   modSource: string[];
-  id: string;
   source?: string;
   issues?: string;
 }
@@ -53,7 +52,7 @@ const InstallerComponent = () => {
 
   const termEndRef = React.useRef<HTMLDivElement>(null);
 
-  const { lines } = useLines();
+  const { clearTerminal, lines } = useLines();
 
   // ensure that it is always the same function
   const nativeVolumeEventPrevent = React.useCallback((e: Event) => {
@@ -87,13 +86,45 @@ const InstallerComponent = () => {
   const [exploreInstaller, downloadProgress] = useExploreInstall();
   const [localInstaller] = useLocalInstall();
 
+  const handleExploreInstall = React.useCallback(async () => {
+    const { modSource } = extra;
+
+    for (let idx = 0; idx < modSource.length; idx++) {
+      const mod = modSource[idx];
+      const isLastItem = idx === modSource.length - 1;
+      const shouldPrintExit = modSource.length === 1 || isLastItem;
+
+      try {
+        await exploreInstaller({ url: mod, printExit: shouldPrintExit });
+      } catch (error) {
+        console.error("An error occurred during installation:", error);
+      }
+    }
+  }, []);
+
+  const handleLocalInstall = React.useCallback(async () => {
+    const { modSource } = extra;
+
+    for (let idx = 0; idx < modSource.length; idx++) {
+      const mod = modSource[idx];
+      const isLastItem = idx === modSource.length - 1;
+      const shouldPrintExit = modSource.length === 1 || isLastItem;
+
+      try {
+        await localInstaller({ file: mod, printExit: shouldPrintExit });
+      } catch (error) {
+        console.error("An error occurred during installation:", error);
+      }
+    }
+  }, []);
+
   const install = () => {
     const { exploreInstall } = extra;
 
     if (exploreInstall) {
-      exploreInstaller();
+      handleExploreInstall();
     } else {
-      localInstaller();
+      handleLocalInstall();
     }
   };
 

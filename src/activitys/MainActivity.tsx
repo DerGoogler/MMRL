@@ -29,6 +29,7 @@ import pkg from "@Package";
 import { LogcatActivity } from "./LogcatActivity";
 import UnverifiedHostActivity from "./UnverifiedHostActivity";
 import { LandingActivity } from "./LandingActivity";
+import { ModulesQueue } from "@Components/ModulesQueue";
 
 const getLocation = () => {
   if (window.location !== window.parent.location) {
@@ -310,39 +311,41 @@ const MainActivity = (): JSX.Element => {
   const matches = useMediaQuery("(max-width: 767px)");
 
   return (
-    <Page
-      onInit={() => {
-        const mmrlFolder = new SuFile(modFS("MMRLFOL"));
+    <ModulesQueue context={pushContext as any}>
+      <Page
+        onInit={() => {
+          const mmrlFolder = new SuFile(modFS("MMRLFOL"));
 
-        if (Shell.isSuAvailable() && !mmrlFolder.exist()) {
-          mmrlFolder.create(SuFile.NEW_FOLDERS);
-        }
-      }}
-    >
-      <Splitter>
-        <Splitter.Side
-          side="left"
-          width={matches ? "calc(100% - 21%)" : "25%"}
-          collapse={true}
-          swipeable={false}
-          isOpen={isSplitterOpen}
-          onClose={hideSplitter}
-          onOpen={showSplitter}
-        >
-          <DrawerFragment renderToolbar={renderSpliterToolbar} hideSplitter={hideSplitter} pushPage={pushPage} />
-        </Splitter.Side>
-        <Splitter.Content>
-          <RouterNavigator
-            swipeable={true}
-            swipePop={(options: any) => popPage(options)}
-            routeConfig={routeConfig}
-            renderPage={renderPage}
-            onPostPush={() => onPostPush()}
-            onPostPop={() => onPostPop()}
-          />
-        </Splitter.Content>
-      </Splitter>
-    </Page>
+          if (Shell.isSuAvailable() && !mmrlFolder.exist()) {
+            mmrlFolder.create(SuFile.NEW_FOLDERS);
+          }
+        }}
+      >
+        <Splitter>
+          <Splitter.Side
+            side="left"
+            width={matches ? "calc(100% - 21%)" : "25%"}
+            collapse={true}
+            swipeable={false}
+            isOpen={isSplitterOpen}
+            onClose={hideSplitter}
+            onOpen={showSplitter}
+          >
+            <DrawerFragment renderToolbar={renderSpliterToolbar} hideSplitter={hideSplitter} pushPage={pushPage} />
+          </Splitter.Side>
+          <Splitter.Content>
+            <RouterNavigator
+              swipeable={true}
+              swipePop={(options: any) => popPage(options)}
+              routeConfig={routeConfig}
+              renderPage={renderPage}
+              onPostPush={() => onPostPush()}
+              onPostPop={() => onPostPop()}
+            />
+          </Splitter.Content>
+        </Splitter>
+      </Page>
+    </ModulesQueue>
   );
 };
 

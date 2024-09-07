@@ -127,8 +127,8 @@ public class MainActivity extends CordovaActivity {
             @Override
             public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
                 switch (consoleMessage.messageLevel()) {
-                    case TIP -> Log.i("MMRLWebViewClient", consoleMessage.message());
-                    case LOG -> Log.d("MMRLWebViewClient", consoleMessage.message());
+                    case LOG -> Log.i("MMRLWebViewClient", consoleMessage.message());
+                    case DEBUG -> Log.d("MMRLWebViewClient", consoleMessage.message());
                     case WARNING -> Log.w("MMRLWebViewClient", consoleMessage.message());
                     case ERROR -> Log.e("MMRLWebViewClient", consoleMessage.message());
                     default -> Log.v("MMRLWebViewClient", consoleMessage.message());

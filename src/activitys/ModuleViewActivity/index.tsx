@@ -381,7 +381,7 @@ const ModuleViewActivity = () => {
                         confirm({
                           title: strings("install_module", { name: name }),
                           description: strings("install_module_dialog_desc", { name: <strong>{name}</strong> }),
-                          confirmationText: "Yes",
+                          confirmationText: strings("yes"),
                         }).then(() => {
                           context.pushPage<TerminalActivityExtra, {}>({
                             component: InstallTerminalV2Activity,
@@ -389,7 +389,6 @@ const ModuleViewActivity = () => {
                             extra: {
                               issues: support,
                               source: track.source,
-                              id: id,
                               exploreInstall: true,
                               modSource: [latestVersion.zipUrl],
                             },

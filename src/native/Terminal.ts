@@ -81,8 +81,6 @@ class Terminal extends Native<TerminalNative> {
             this._onLine(stream.stdout);
           } else if (stream.stdout && this._onError) {
             this._onError(stream.stdout);
-          } else {
-            Log.e("Terminal:exec", "Unable to find proper terminal stream");
           }
         },
         onExit: this._onExit,

@@ -15,6 +15,7 @@ interface LinesContext {
   setLastLine: (text: string, props?: object) => void;
   rebootDevice: (reason?: string) => void;
   getInstallCLI: (adds?: Record<string, any>) => string;
+  clearTerminal: () => void;
 }
 
 const LinesContext = React.createContext<LinesContext>({
@@ -30,6 +31,7 @@ const LinesContext = React.createContext<LinesContext>({
   getInstallCLI(adds) {
     return "exit " + Shell.TERM_INTR_ERR;
   },
+  clearTerminal() {},
 });
 
 type IntrCommand = (args: string[], options: Record<string, string>, add: any) => void;
@@ -212,6 +214,10 @@ const LinesProvider = (props: LinesProviderProps) => {
     }
   }, []);
 
+  const clearTerminal = () => {
+    setLines([]);
+  };
+
   const value = React.useMemo(
     () => ({
       processCommand: processCommand,
@@ -222,8 +228,9 @@ const LinesProvider = (props: LinesProviderProps) => {
       setLastLine: setLastLine,
       rebootDevice,
       getInstallCLI,
+      clearTerminal,
     }),
-    [processCommand, lines, setLines, useInt, setUseInt, addButton, addText, setLastLine, rebootDevice, getInstallCLI]
+    [processCommand, lines, setLines, useInt, setUseInt, addButton, addText, setLastLine, rebootDevice, getInstallCLI, clearTerminal]
   );
 
   return <LinesContext.Provider value={value} children={children} />;

@@ -5,6 +5,10 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useStrings } from "@Hooks/useStrings";
 import { os } from "@Native/Os";
 import { useFormatBytes } from "@Hooks/useFormatBytes";
+import { Shell } from "@Native/Shell";
+import { useConfirm } from "material-ui-confirm";
+import { ActivityContext } from "@Hooks/useActivity";
+import InstallTerminalV2Activity, { TerminalActivityExtra } from "@Activitys/InstallTerminalV2Activity";
 
 interface ModulesQueueContext {
   addModule: (queue: Queue) => void;
@@ -25,7 +29,9 @@ interface Queue {
   size?: number;
 }
 
-interface ModulesQueueProps extends React.PropsWithChildren {}
+interface ModulesQueueProps extends React.PropsWithChildren {
+  context: ActivityContext;
+}
 
 const QueueItem = ({ module, onClick }: any) => {
   const [moduleFileSize, moduleFileSizeByteText] = useFormatBytes(module.size);
@@ -45,6 +51,8 @@ export const ModulesQueue = (props: ModulesQueueProps) => {
   const [queue, setQueue] = React.useState<Queue[]>([]);
   const [open, setOpen] = React.useState(false);
   const { strings } = useStrings();
+  const confirm = useConfirm();
+  const { context } = props;
 
   const addModule = (queue: Queue) => {
     setQueue((qu) => {
@@ -76,6 +84,8 @@ export const ModulesQueue = (props: ModulesQueueProps) => {
     [addModule, removeModule, toggleDrawer, open]
   );
 
+  const isQueueNotEmpty = React.useMemo(() => queue.length !== 0, [queue]);
+
   return (
     <ModulesQueueContext.Provider value={value}>
       {props.children}
@@ -83,7 +93,7 @@ export const ModulesQueue = (props: ModulesQueueProps) => {
       <Drawer anchor="bottom" open={open} onClose={toggleDrawer}>
         <Box
           role="presentation"
-          sx={{ p: 2, pb: `calc(16px + ${view.getWindowBottomInsets()}px)` }}
+          sx={{ pt: `calc(16px + ${view.getWindowTopInsets()}px)`, p: 2, pb: `calc(16px + ${view.getWindowBottomInsets()}px)` }}
           height="100%"
           display="flex"
           flexDirection="column"
@@ -119,6 +129,32 @@ export const ModulesQueue = (props: ModulesQueueProps) => {
               )}
             </List>
           </Box>
+
+          <Button
+            sx={{ mt: 2 }}
+            disabled={!(isQueueNotEmpty && os.isAndroid && (Shell.isMagiskSU() || Shell.isKernelSU() || Shell.isAPatchSU()))}
+            fullWidth
+            variant="contained"
+            onClick={() => {
+              confirm({
+                title: strings("start_mod_ini_queue"),
+                description: strings("start_mod_ini_queue_desc"),
+                confirmationText: strings("yes"),
+              }).then(() => {
+                setOpen(false)
+                context.pushPage<TerminalActivityExtra, {}>({
+                  component: InstallTerminalV2Activity,
+                  key: "InstallTerminalV2Activity",
+                  extra: {
+                    exploreInstall: true,
+                    modSource: queue.flatMap((q) => q.url),
+                  },
+                });
+              });
+            }}
+          >
+            {strings("install")}
+          </Button>
         </Box>
       </Drawer>
     </ModulesQueueContext.Provider>

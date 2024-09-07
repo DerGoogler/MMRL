@@ -167,4 +167,6 @@ export const en = {
   install_queue_empty: "Your queue is empty. Add some modules!",
   alr_add_queue: "This module has been already added to your queue",
   add_t_queue: "Module has been added to your queue",
+  start_mod_ini_queue: "Start install queue?",
+  start_mod_ini_queue_desc: "Are you sure that you want to start this queue?",
 };

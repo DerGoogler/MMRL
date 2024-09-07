@@ -166,7 +166,7 @@ const MainApplication = () => {
                           }}
                           onClick={() => {
                             const chooseModule = new Chooser("application/zip");
-
+                            chooseModule.allowMultiChoose = true;
                             chooseModule.onChose = (files) => {
                               if (Chooser.isSuccess(files)) {
                                 context.pushPage({
