@@ -1,34 +1,34 @@
-import CodeRoundedIcon from "@mui/icons-material/CodeRounded";
-import React from "react";
-import Typography from "@mui/material/Typography";
-import MenuIcon from "@mui/icons-material/Menu";
-import ModuleFragment from "./fragments/ModuleFragment";
 import DeviceModule from "@Components/module/DeviceModule";
 import ExploreModule from "@Components/module/ExploreModule";
 import UpdateModule from "@Components/module/UpdateModule";
-import { ModuleViewActivity } from "./ModuleViewActivity";
-import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
-import { useActivity } from "@Hooks/useActivity";
-import { Toolbar } from "@Components/onsenui/Toolbar";
-import { os } from "@Native/Os";
-import { Page } from "@Components/onsenui/Page";
-import { useStrings } from "@Hooks/useStrings";
-import { Tabbar, TabbarRenderTab } from "@Components/onsenui/Tabbar";
-import { useRepos } from "@Hooks/useRepos";
-import SearchIcon from "@mui/icons-material/Search";
+import { useModuleQueue } from "@Components/ModulesQueue";
 import Fab from "@Components/onsenui/Fab";
+import { Page } from "@Components/onsenui/Page";
+import { Tabbar, TabbarRenderTab } from "@Components/onsenui/Tabbar";
+import { Toolbar } from "@Components/onsenui/Toolbar";
+import { useActivity } from "@Hooks/useActivity";
 import { useLocalModules } from "@Hooks/useLocalModules";
-import { Shell } from "@Native/Shell";
+import { useRepos } from "@Hooks/useRepos";
 import { useSettings } from "@Hooks/useSettings";
-import { useOpenModuleSearch } from "@Hooks/useOpenModuleSearch";
-import InstallTerminalV2Activity from "./InstallTerminalV2Activity";
-import { Chooser } from "@Native/Chooser";
-import { useConfirm } from "material-ui-confirm";
+import { useStrings } from "@Hooks/useStrings";
+import CodeRoundedIcon from "@mui/icons-material/CodeRounded";
+import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
+import MenuIcon from "@mui/icons-material/Menu";
 import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
-import { SuFile } from "@Native/SuFile";
+import Typography from "@mui/material/Typography";
+import { Chooser } from "@Native/Chooser";
 import { Log } from "@Native/Log";
+import { os } from "@Native/Os";
+import { Shell } from "@Native/Shell";
+import { SuFile } from "@Native/SuFile";
 import { SuZip } from "@Native/SuZip";
+import { useConfirm } from "material-ui-confirm";
 import { Properties } from "properties-file";
+import React from "react";
+import ModuleFragment from "./fragments/ModuleFragment";
+import InstallTerminalV2Activity from "./InstallTerminalV2Activity";
+import { ModuleViewActivity } from "./ModuleViewActivity";
+import LayersIcon from "@mui/icons-material/Layers";
 
 const TAG = "MainApplication";
 
@@ -114,6 +114,8 @@ const MainApplication = () => {
     }
   }, [modules]);
 
+  const { toggleQueueView } = useModuleQueue();
+
   const renderTabs = (): TabbarRenderTab[] => {
     return [
       {
@@ -123,6 +125,22 @@ const MainApplication = () => {
             modules={modules}
             searchBy={["id", "name", "author", "__mmrl_repo_source"]}
             renderItem={(module, key) => <ExploreModule key={key} module={module} />}
+            renderFixed={() => {
+              return (
+                <Fab
+                  sx={{
+                    "& .fab__icon": {
+                      verticalAlign: "middle",
+                      color: "black",
+                    },
+                  }}
+                  onClick={toggleQueueView}
+                  position="bottom right"
+                >
+                  <LayersIcon />
+                </Fab>
+              );
+            }}
           />
         ),
         tab: <Tabbar.Tab label={strings("explore")} />,

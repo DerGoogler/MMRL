@@ -34,6 +34,9 @@ import { AboutTab } from "./tabs/AboutTabs";
 import { OverviewTab } from "./tabs/OverviewTab";
 import { VersionsTab } from "./tabs/VersionsTab";
 import { useDocumentTitle } from "usehooks-ts";
+import LayersIcon from "@mui/icons-material/Layers";
+import { useModuleQueue } from "@Components/ModulesQueue";
+import Button from "@mui/material/Button";
 
 function a11yProps(index: number) {
   return {
@@ -70,6 +73,8 @@ const ModuleViewActivity = () => {
   const [moduleFileSize, moduleFileSizeByteText] = useFormatBytes(size);
 
   const search = React.useMemo(() => new URLSearchParams(window.location.search), [window.location.search]);
+
+  const { addModule: addModuleToQueue } = useModuleQueue();
 
   useDocumentTitle(`${name} — MMRL`, { preserveTitleOnUnmount: false });
 
@@ -334,12 +339,26 @@ const ModuleViewActivity = () => {
                 )}
               </Stack>
 
-              <Stack direction="column" justifyContent="center" alignItems="stretch" spacing={1}>
+              <Stack direction="row" justifyContent="center" alignItems="stretch" spacing={1}>
+                <Button
+                  size="small"
+                  onClick={() => {
+                    addModuleToQueue({
+                      name: name,
+                      url: latestVersion.zipUrl,
+                      size: size,
+                    });
+                  }}
+                  variant="contained"
+                >
+                  <LayersIcon />
+                </Button>
                 <DropdownButton
                   sx={{
                     width: "100%",
                     "& .MuiButtonGroup-root": {
                       width: "100%",
+                      height: "100%",
                     },
                     "& .MuiButton-root:first-child": {
                       width: "100%",

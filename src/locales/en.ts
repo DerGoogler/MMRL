@@ -161,5 +161,10 @@ export const en = {
   feature: "Feature",
   verified: "Verified",
   last_updated: "Last updated: {date}",
-  telegram_channel: "Telegram channel"
+  telegram_channel: "Telegram channel",
+  install_queue: "Install queue",
+  install_queue_notice: "The queue will be deleted when you close the app",
+  install_queue_empty: "Your queue is empty. Add some modules!",
+  alr_add_queue: "This module has been already added to your queue",
+  add_t_queue: "Module has been added to your queue",
 };

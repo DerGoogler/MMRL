@@ -23,6 +23,7 @@ import { Toolbar } from "@Components/onsenui/Toolbar";
 import { Pre } from "@Components/dapi/Pre";
 import { Code } from "@Components/dapi/Code";
 import { Anchor } from "@Components/dapi/Anchor";
+import { ModulesQueue } from "@Components/ModulesQueue";
 
 ons.platform.select("android");
 
@@ -103,7 +104,9 @@ ons.ready(() => {
               <Preventer prevent="contextmenu">
                 <RepoProvider>
                   <ConfirmProvider>
-                    <MainActivity />
+                    <ModulesQueue>
+                      <MainActivity />
+                    </ModulesQueue>
                   </ConfirmProvider>
                 </RepoProvider>
               </Preventer>

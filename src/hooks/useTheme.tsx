@@ -81,6 +81,21 @@ const THIS_IS_THE_THEME_OBJECT_OF_THIS_F_APP = createTheme({
         },
       },
     },
+    MuiDrawer: {
+      styleOverrides: {
+        root: {
+          "& .MuiDrawer-paper": {
+            backgroundImage: "none",
+            borderTop: `1px solid #333638`,
+          },
+          "& .MuiModal-backdrop": {
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            WebkitTapHighlightColor: "transparent",
+            backdropFilter: "blur(4px)",
+          },
+        },
+      },
+    },
     MuiDialog: {
       styleOverrides: {
         root: {
