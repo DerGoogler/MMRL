@@ -17,6 +17,8 @@ import { Verified, Tag, PersonOutline, CalendarMonth, Source } from "@mui/icons-
 import { useBlacklist } from "@Hooks/useBlacklist";
 import Box from "@mui/material/Box";
 import { useHover } from "@Hooks/useHover";
+import { VerifiedIcon } from "@Components/icons/VerifiedIcon";
+import { useTheme } from "@Hooks/useTheme";
 
 interface Props {
   module: Module;
@@ -28,6 +30,7 @@ const ExploreModule = React.memo<Props>((props) => {
 
   const { context } = useActivity();
   const { strings } = useStrings();
+  const { theme } = useTheme();
   const { modFS } = useModFS();
 
   const formatLastUpdate = useFormatDate(timestamp ? timestamp : versions[versions.length - 1].timestamp);
@@ -45,15 +48,10 @@ const ExploreModule = React.memo<Props>((props) => {
     });
   };
 
-  const cardRef = React.useRef(null);
-  const isHover = useHover(cardRef);
-
   return (
     <Card
-      ref={cardRef}
       onClick={handleOpenModule}
       sx={{
-        
         ":hover": {
           opacity: ".8",
           cursor: "pointer",
@@ -79,9 +77,12 @@ const ExploreModule = React.memo<Props>((props) => {
 
       <Stack sx={{ p: 2 }} direction="column" justifyContent="center" spacing={2}>
         <Stack direction="column" justifyContent="center" alignItems="flex-start" spacing={0}>
-          <Typography sx={{ zIndex: 1, textShadow: "0px 0px 4px rgba(0, 0, 0, 1)" }} variant="h6">
-            {name}
-          </Typography>
+          <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={0.5}>
+            <Typography sx={{ zIndex: 1, textShadow: "0px 0px 4px rgba(0, 0, 0, 1)" }} variant="h6">
+              {name}
+            </Typography>
+            <VerifiedIcon isVerified={verified} />
+          </Stack>
           <Typography color="text.secondary" sx={{ display: "flex", alignItems: "center", gap: 0.5 }} variant="body2">
             <PersonOutline sx={{ fontSize: "unset" }} /> {author}
           </Typography>
@@ -91,19 +92,20 @@ const ExploreModule = React.memo<Props>((props) => {
           <Chip size="small" sx={{ backgroundColor: "white", color: "black" }} label={version} />
 
           {SuFile.exist(modFS("PROPS", { MODID: id })) && (
-            <Chip size="small" sx={{ backgroundColor: "white", color: "black" }} label={strings("installed")} />
-          )}
-
-          {verified && (
             <Chip
               size="small"
-              sx={{ backgroundColor: "white", color: "black" }}
-              icon={<Verified sx={{ fill: "black", fontSize: "large" }} />}
-              label={strings("verified")}
+              sx={{
+                background: `linear-gradient(333deg, ${theme.palette.secondary.dark} 0%, ${theme.palette.secondary.dark} 83%) padding-box,linear-gradient(22deg, rgba(188,2,194,1) 0%, rgba(74,20,140,1) 100%) border-box`,
+                color: theme.palette.text.secondary,
+                border: "1px solid transparent",
+              }}
+              label={strings("installed")}
             />
           )}
 
-          {/* <Chip sx={{ backgroundColor: "white", color: "black" }} label={Object.keys(features).length + " features"} /> */}
+          {features && Object.keys(features).length !== 0 && (
+            <Chip size="small" sx={{ backgroundColor: "white", color: "black" }} label={Object.keys(features).length + " features"} />
+          )}
 
           {findHardCodedAntifeature && findHardCodedAntifeature.length !== 0 && (
             <AntifeatureButton useChip antifeatures={findHardCodedAntifeature} />
