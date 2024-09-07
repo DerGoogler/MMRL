@@ -7,6 +7,7 @@ interface NativeSuFile extends NativeSuFileV2 {
   deleteFile(path: string): boolean;
   deleteRecursive(path: string): boolean;
   existFile(path: string): boolean;
+  getSharedFile(): string | null;
 }
 
 interface NativeSuFileV2 {
@@ -68,18 +69,17 @@ class SuFile extends Native<NativeSuFile> {
 
   private _restrictedPaths = [/(\/data\/data\/(.+)\/?|(\/storage\/emulated\/0|\/sdcard)\/Android\/(data|media|obb)(.+)?)\/?/i];
 
-  public constructor(path: string, opt?: SuFileoptions) {
+  public constructor(path?: string, opt?: SuFileoptions) {
     super(window.__sufile__);
     this._readDefaultValue = opt?.readDefaultValue || "";
+    this._path = path ? String(path) : "";
 
-    if (typeof path !== "string") throw new TypeError("Path name isn't a string");
-    if (this._isRestrictedPath(path)) {
+    if (this._isRestrictedPath(this._path)) {
       throw new Error(`SuFile tried to access "${path}" which has been blocked due security.`);
     }
 
-    this._path = path;
     if (this.isAndroid) {
-      this._file = this.interface.v2.bind(this.interface)(path);
+      this._file = this.interface.v2.bind(this.interface)(this._path);
     }
   }
 
@@ -250,6 +250,13 @@ class SuFile extends Native<NativeSuFile> {
 
   public static create(path: string, type: number = SuFile.NEW_FILE): boolean {
     return new SuFile(path).create(type);
+  }
+
+  public static getSharedFile(): string | undefined {
+    if (this.isAndroid) {
+      return this.static.interface.getSharedFile();
+    }
+    return undefined;
   }
 }
 

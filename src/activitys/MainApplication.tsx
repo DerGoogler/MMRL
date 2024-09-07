@@ -25,6 +25,12 @@ import InstallTerminalV2Activity from "./InstallTerminalV2Activity";
 import { Chooser } from "@Native/Chooser";
 import { useConfirm } from "material-ui-confirm";
 import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
+import { SuFile } from "@Native/SuFile";
+import { Log } from "@Native/Log";
+import { SuZip } from "@Native/SuZip";
+import { Properties } from "properties-file";
+
+const TAG = "MainApplication";
 
 const MainApplication = () => {
   const { context } = useActivity();
@@ -59,6 +65,41 @@ const MainApplication = () => {
     },
     [index]
   );
+
+  React.useEffect(() => {
+    const sharedFile = SuFile.getSharedFile();
+    if (sharedFile) {
+      const file = new SuFile(sharedFile);
+
+      if (file.exist()) {
+        const zipFile = new SuZip(file.getPath(), "module.prop");
+        const props = new Properties(zipFile.read()).toObject();
+
+        if (!props.id) {
+          return;
+        }
+
+        confirm({
+          title: strings("install_module", { name: props.name }),
+          description: strings("install_module_dialog_desc", { name: <strong>{props.name}</strong> }),
+          confirmationText: strings("yes"),
+        })
+          .then(() => {
+            context.pushPage({
+              component: InstallTerminalV2Activity,
+              key: "InstallTerminalV2Activity",
+              extra: {
+                exploreInstall: false,
+                modSource: [file.getPath()],
+              },
+            });
+          })
+          .catch(() => {});
+      } else {
+        Log.i(TAG, "Unable to find shared file");
+      }
+    }
+  }, []);
 
   React.useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);

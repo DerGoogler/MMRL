@@ -45,16 +45,35 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-            <intent-filter android:autoVerify="true">
+            <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.OPENABLE" />
 
-                <data
-                    android:host="mmrl.dergoogler.com"
-                    android:path="/"
-                    android:scheme="https" />
+                <data android:host="*" />
+                <data android:mimeType="*/*" />
+                <data android:pathPattern=".*\\.zip" />
+                <data android:pathPattern=".*\\..*\\.zip" />
+                <data android:pathPattern=".*\\..*\\..*\\.zip" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\.zip" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.zip" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\..*\\.zip" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\..*\\..*\\.zip" />
+                <data android:scheme="content" />
+                <data android:scheme="file" />
+            </intent-filter>
+
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="mmrl" />
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+                <data android:host="mmrl.dergoogler.com" />
+                <data android:pathPrefix="/" />
             </intent-filter>
         </activity>
 
@@ -70,5 +89,15 @@
         <receiver
             android:name="androidx.profileinstaller.ProfileInstallReceiver"
             tools:node="remove" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
     </application>
 </manifest>

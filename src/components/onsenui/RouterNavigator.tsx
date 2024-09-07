@@ -247,7 +247,6 @@ class RouterNavigatorClass extends React.Component<HTMLNavigatorClass, State> {
     } = this.props;
 
     const pagesToRender = this.state.internalStack.map((item) => {
-      console.log(item);
       return (
         <Extra.Provider key={item.props.key + "_extra"} value={item.extra}>
           <Context.Provider key={item.props.key + "_context"} value={item.context}>

@@ -1,11 +1,17 @@
 package com.dergoogler.mmrl;
 
 import android.annotation.SuppressLint;
-import android.graphics.Color;
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Rect;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.provider.DocumentsContract;
+import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -26,10 +32,13 @@ import com.dergoogler.core.NativeShell;
 import com.dergoogler.core.NativeBuildConfig;
 import com.dergoogler.core.NativeView;
 import com.dergoogler.core.NativeSuZip;
+import com.topjohnwu.superuser.io.SuFile;
 
 import org.apache.cordova.*;
 import org.apache.cordova.engine.SystemWebChromeClient;
 import org.apache.cordova.engine.SystemWebViewEngine;
+
+import java.io.File;
 
 public class MainActivity extends CordovaActivity {
 
@@ -113,7 +122,6 @@ public class MainActivity extends CordovaActivity {
         wv.addJavascriptInterface(new NativeStorage(this), "__nativeStorage__");
         wv.addJavascriptInterface(new NativeLog(), "__log__");
         wv.addJavascriptInterface(new NativeSuZip(), "__suzip__");
-
 
         wv.setWebChromeClient(new SystemWebChromeClient((SystemWebViewEngine) wve) {
             @Override
