@@ -8,6 +8,14 @@
         "repository": "https://mvnrepository.com/artifact/androidx.browser/browser/1.8.0"
     },
     {
+        "name": "androidx.annotation:annotation",
+        "description": "androidx.annotation:annotation:1.8.2",
+        "version": "1.8.2",
+        "license": "null",
+        "author": "null",
+        "repository": "https://mvnrepository.com/artifact/androidx.annotation/annotation/1.8.2"
+    },
+    {
         "name": "androidx.appcompat:appcompat",
         "description": "androidx.appcompat:appcompat:1.7.0",
         "version": "1.7.0",
