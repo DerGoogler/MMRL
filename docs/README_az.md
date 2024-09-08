@@ -67,6 +67,7 @@ Magisk Module Repo Loader (MMRL) ilə tanış olun - Android-də Magisk, KernelS
   <img src="../assets/store_ready/5.webp" alt="Screenshot 5 of MMRL" width="32%" />
   <img src="../assets/store_ready/6.webp" alt="Screenshot 6 of MMRL" width="32%" />
   <img src="../assets/store_ready/7.webp" alt="Screenshot 7 of MMRL" width="32%" />
+  <img src="../assets/store_ready/8.webp" alt="Screenshot 8 of MMRL" width="32%" />
 </p>
 
 # Kredit və Təşəkkürlər
