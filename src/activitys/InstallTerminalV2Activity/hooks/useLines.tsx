@@ -1,9 +1,11 @@
 import { Ansi } from "@Components/Ansi";
+import { Image } from "@Components/dapi/Image";
 import { useModFS } from "@Hooks/useModFS";
 import { useStrings } from "@Hooks/useStrings";
 import Button from "@mui/material/Button";
 import { Shell } from "@Native/Shell";
 import { useConfirm } from "material-ui-confirm";
+import ModFS from "modfs";
 import React from "react";
 
 interface LinesContext {
@@ -34,11 +36,36 @@ const LinesContext = React.createContext<LinesContext>({
   clearTerminal() {},
 });
 
-type IntrCommand = (args: string[], options: Record<string, string>, add: any) => void;
+const colors = {
+  R: "\x1b[0m",
+  BRIGHT: "\x1b[1m",
+  DIM: "\x1b[2m",
+  UNDERSCORE: "\x1b[4m",
+  FG: {
+    BLACK: "\x1b[30m",
+    RED: "\x1b[31m",
+    GREEN: "\x1b[32m",
+    YELLOW: "\x1b[33m",
+    BLUE: "\x1b[34m",
+    MAGENTA: "\x1b[35m",
+    CYAN: "\x1b[36m",
+    WHITE: "\x1b[37m",
+    GRAY: "\x1b[90m",
+  },
+  BG: {
+    BLACK: "\x1b[40m",
+    RED: "\x1b[41m",
+    GREEN: "\x1b[42m",
+    YELLOW: "\x1b[43m",
+    BLUE: "\x1b[44m",
+    MAGENTA: "\x1b[45m",
+    CYAN: "\x1b[46m",
+    WHITE: "\x1b[47m",
+    GRAY: "\x1b[100m",
+  },
+};
 
-interface LinesProviderProps extends React.PropsWithChildren {
-  commands: Record<string, IntrCommand>;
-}
+interface LinesProviderProps extends React.PropsWithChildren {}
 
 const LinesProvider = (props: LinesProviderProps) => {
   const { strings } = useStrings();
@@ -46,11 +73,12 @@ const LinesProvider = (props: LinesProviderProps) => {
   const [useInt, setUseInt] = React.useState(false);
   const [lines, setLines] = React.useState<any[]>([]);
   const confirm = useConfirm();
-  const { commands, children } = props;
+  const { children } = props;
 
   const addText = (text: string, props?: object) => {
     const txt = processCommand(text);
-    if (typeof txt === "string") {
+
+    if (typeof txt === "string" && txt !== "undefined") {
       setLines((lines) => [
         ...lines,
         {
@@ -113,66 +141,37 @@ const LinesProvider = (props: LinesProviderProps) => {
     ]);
   };
 
-  const processCommand = (rawCommand: string) => {
+  const format = React.useMemo(
+    () => ({
+      addImage(data: string) {
+        addImage(data);
+        return "undefined";
+      },
+      setLastLine(text: string) {
+        if (typeof text === "undefined") return "undefined";
+        setLastLine(text);
+        return "undefined";
+      },
+      color: (text: string) => {
+        if (typeof text === "undefined") return "undefined";
+        return ModFS.format(text, colors);
+      },
+      clearTerminal: () => {
+        setLines([]);
+        return "undefined";
+      },
+      removeLastLine: () => {
+        setLines((p) => p.slice(0, -1));
+        return "undefined";
+      },
+    }),
+    []
+  );
+
+  const processCommand = (rawCommand: string): string | "undefined" => {
     if (rawCommand.startsWith("#!mmrl:")) {
-      let args: string[] = [];
-      let options = {};
-      let command: string;
       rawCommand = rawCommand.substring(7);
-      const i = rawCommand.indexOf(" ");
-
-      if (i !== -1 && rawCommand.length !== i + 1) {
-        // Extract command arguments and options
-        const argsString = rawCommand.substring(i + 1).trim();
-        const matches = argsString.match(/"([^"]+)"|--?[\w-]+|\S+/g);
-
-        if (matches) {
-          for (let j = 0; j < matches.length; j++) {
-            let match = matches[j];
-            if (match.startsWith("--")) {
-              // Long option
-              const key = match.substring(2);
-              let value: string | boolean = true;
-              if (j + 1 < matches.length && !matches[j + 1].startsWith("-")) {
-                value = matches[++j];
-                // Remove surrounding quotes if present
-                if (value.startsWith('"') && value.endsWith('"')) {
-                  value = value.slice(1, -1);
-                }
-              }
-              options[key] = value;
-            } else if (match.startsWith("-")) {
-              // Short option
-              const key = match.substring(1);
-              let value: string | boolean = true;
-              if (j + 1 < matches.length && !matches[j + 1].startsWith("-")) {
-                value = matches[++j];
-                // Remove surrounding quotes if present
-                if (value.startsWith('"') && value.endsWith('"')) {
-                  value = value.slice(1, -1);
-                }
-              }
-              options[key] = value;
-            } else {
-              // Positional argument
-              // Remove surrounding quotes if present
-              if (match.startsWith('"') && match.endsWith('"')) {
-                match = match.slice(1, -1);
-              }
-              args.push(match);
-            }
-          }
-        }
-
-        command = rawCommand.substring(0, i);
-      } else {
-        command = rawCommand;
-      }
-
-      const handleCommand = commands[command];
-      if (handleCommand) {
-        handleCommand(args, options, { addButton: addButton, addText: addText, addImage: addImage, setLines: setLines, lines: lines });
-      }
+      return ModFS.format(rawCommand, format) as string | "undefined";
     } else {
       const info = /^\-(\s+)?(.+)/gm;
       const warn = /^\?(\s+)?(.+)/gm;

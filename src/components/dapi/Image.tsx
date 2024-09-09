@@ -25,13 +25,13 @@ function Image(props: Props) {
   const { context } = useActivity();
   const { type = "image/png", src, shadow, noOpen, sx, blur, modFSAdds, noOutline, ...rest } = props;
 
-  const [newSrc, setNewSrc] = React.useState(src);
-
-  React.useEffect(() => {
+  const newSrc = React.useMemo(() => {
     if (src) {
       const file = new SuFile(formatString(src, Object.assign(_modFS, modFSAdds)));
       if (file.exist()) {
-        setNewSrc(`data:${type};base64,${file.readAsBase64()}`);
+        return `data:${type};base64,${file.readAsBase64()}`;
+      } else {
+        return src;
       }
     }
   }, [src]);

@@ -4,7 +4,6 @@ import { useActivity } from "@Hooks/useActivity";
 import { useSettings } from "@Hooks/useSettings";
 import { alpha, Box, LinearProgress, Stack, Typography } from "@mui/material";
 import { view, WindowManager } from "@Native/View";
-import { formatString } from "@Util/stringFormat";
 import FlatList from "flatlist-react";
 import React from "react";
 import { useExploreInstall } from "./hooks/useExploreInstall";
@@ -17,35 +16,6 @@ export interface TerminalActivityExtra {
   source?: string;
   issues?: string;
 }
-
-const colors = {
-  R: "\x1b[0m",
-  BRIGHT: "\x1b[1m",
-  DIM: "\x1b[2m",
-  UNDERSCORE: "\x1b[4m",
-  FG: {
-    BLACK: "\x1b[30m",
-    RED: "\x1b[31m",
-    GREEN: "\x1b[32m",
-    YELLOW: "\x1b[33m",
-    BLUE: "\x1b[34m",
-    MAGENTA: "\x1b[35m",
-    CYAN: "\x1b[36m",
-    WHITE: "\x1b[37m",
-    GRAY: "\x1b[90m",
-  },
-  BG: {
-    BLACK: "\x1b[40m",
-    RED: "\x1b[41m",
-    GREEN: "\x1b[42m",
-    YELLOW: "\x1b[43m",
-    BLUE: "\x1b[44m",
-    MAGENTA: "\x1b[45m",
-    CYAN: "\x1b[46m",
-    WHITE: "\x1b[47m",
-    GRAY: "\x1b[100m",
-  },
-};
 
 const InstallerComponent = () => {
   const { context, extra } = useActivity<TerminalActivityExtra>();
@@ -227,43 +197,7 @@ const InstallerComponent = () => {
 
 export const InstallTerminalV2Activity = () => {
   return (
-    <LinesProvider
-      commands={{
-        color: (args, _, add) => {
-          add.addText(formatString(args[0], colors));
-        },
-        clearTerminal: (_, __, add) => {
-          add.setLines([]);
-        },
-        setLastLine: (args, __, add) => {
-          add.setLines((p) => p.slice(0, -1));
-          add.addText(args[0]);
-        },
-        removeLastLine: (_, __, add) => {
-          add.setLines((p) => p.slice(0, -1));
-        },
-        addImage: (args, opt, add) => {
-          const { width, height } = opt;
-          add.addImage(args[0], {
-            sx: {
-              width: width || "80vmin",
-              height: height,
-            },
-          });
-        },
-        addButton: (args, opt, add) => {
-          const { variant } = opt;
-          add.addButton(args[0], {
-            sx: {
-              width: "50vmin",
-              mt: 1,
-              mb: 1,
-            },
-            variant: variant,
-          });
-        },
-      }}
-    >
+    <LinesProvider>
       <InstallerComponent />
     </LinesProvider>
   );

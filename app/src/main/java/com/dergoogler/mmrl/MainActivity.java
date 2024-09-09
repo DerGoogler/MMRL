@@ -154,7 +154,7 @@ public class MainActivity extends CordovaActivity {
         return "MMRL/" + BuildConfig.VERSION_NAME + " (Linux; Android " + Build.VERSION.RELEASE + "; " + Build.MODEL + " Build/" + Build.DISPLAY + ")";
     }
 
-    private boolean isEmulator = (Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic"))
+    private final boolean isEmulator = (Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic"))
             || Build.FINGERPRINT.startsWith("generic")
             || Build.FINGERPRINT.startsWith("unknown")
             || Build.HARDWARE.contains("goldfish")
