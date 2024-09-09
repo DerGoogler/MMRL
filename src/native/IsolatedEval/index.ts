@@ -22,6 +22,7 @@ import { IsoXMLSerializer } from "./IsoXMLSerializer";
 import { IsolatedEvalError } from "./IsolatedEvalError";
 import { IsolatedFunctionBlockError } from "./IsolatedFunctionBlockError";
 import { InternalReact } from "@Activitys/ModConfActivity/components/ModConfView/libs";
+import ModFS from "modfs";
 
 type IsoModule = {
   exports: {
@@ -71,6 +72,7 @@ class IsolatedEval<T = any> {
     os: os,
     BuildConfig: BuildConfig,
     Build: Build,
+    ModFS: ModFS,
     Native: Native,
     React: InternalReact,
     setInterval: setInterval,
@@ -138,6 +140,7 @@ class IsolatedEval<T = any> {
     this._prototypeWhitelist.set(Chooser, new Set());
     this._prototypeWhitelist.set(Path, new Set());
     this._prototypeWhitelist.set(React, new Set());
+    this._prototypeWhitelist.set(ModFS, new Set());
 
     this.require = this.require.bind(this);
     this._resolveModule = this._resolveModule.bind(this);

@@ -40,6 +40,8 @@ interface NativeShellV2 extends NativeShell {
   };
 }
 
+type RootManager = "Magisk" | "KernelSU" | "APatchSU" | "Unknown";
+
 /**
  * Run Shell commands native on Android
  */
@@ -152,7 +154,7 @@ class Shell extends Native<NativeShellV2> {
     }
   }
 
-  public static getRootManager(): string {
+  public static getRootManager(): RootManager {
     if (this.isMagiskSU()) {
       return "Magisk";
     } else if (this.isKernelSU()) {
