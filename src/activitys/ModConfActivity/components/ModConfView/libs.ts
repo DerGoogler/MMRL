@@ -21,7 +21,6 @@ import { useConfirm } from "material-ui-confirm";
 import { Markup } from "@Components/Markdown";
 import { DialogEditTextListItem } from "@Components/DialogEditTextListItem";
 import { SearchActivity } from "@Activitys/SearchActivity";
-import React from "react";
 import { withRequireNewVersion } from "../../../../hoc/withRequireNewVersion";
 import { CodeBlock } from "@Components/CodeBlock";
 import { VerifiedIcon } from "@Components/icons/VerifiedIcon";
@@ -29,8 +28,19 @@ import { IsolatedFunctionBlockError } from "@Native/IsolatedEval/IsolatedFunctio
 import { Terminal } from "@Native/Terminal";
 import { useFetch } from "@Hooks/useFetch";
 
+// Libaries
+import * as React from "react";
+import * as MUI from "@mui/material";
+import * as ICONS_MUI from "@mui/icons-material";
+import * as LAB_MUI from "@mui/lab";
+import * as FlatListReact from "flatlist-react";
+import OnsenUI from "onsenui";
+import * as DefaultComposer from "default-composer";
+import * as UseHooksTS from "usehooks-ts";
+import * as ModFS from "modfs";
+
 export const InternalReact = {
-  ...require("react"),
+  ...React,
   createElement(type: any, props: any, ...children: any[]) {
     switch (type) {
       // prevents webview url change
@@ -47,17 +57,17 @@ export const InternalReact = {
 export const libraries = {
   react: InternalReact,
 
-  "@mui/material": require("@mui/material"),
+  "@mui/material": MUI,
 
-  "@mui/lab": require("@mui/lab"),
+  "@mui/lab": LAB_MUI,
 
-  "@mui/icons-material": require("@mui/icons-material"),
+  "@mui/icons-material": ICONS_MUI,
 
   "@mmrl/terminal": os.isAndroid ? Terminal : {},
 
-  "flatlist-react": require("flatlist-react").default,
+  "flatlist-react": FlatListReact,
 
-  onsenui: require("onsenui").default,
+  onsenui: OnsenUI,
 
   "@mmrl/activity": {
     SearchActivity: SearchActivity,
@@ -106,10 +116,10 @@ export const libraries = {
     ConfigProvider: ConfigProvider,
     StringsProvider: StringsProvider,
   },
-  modfs: require("modfs"),
-  "default-composer": require("default-composer"),
+  modfs: ModFS,
+  "default-composer": DefaultComposer,
   "usehooks-ts": {
-    ...require("usehooks-ts"),
+    ...UseHooksTS,
     useLocalStorage: undefined,
     useScript: undefined,
     useSessionStorage: undefined,

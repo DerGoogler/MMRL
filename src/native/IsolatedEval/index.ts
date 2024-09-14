@@ -24,6 +24,9 @@ import { IsolatedFunctionBlockError } from "./IsolatedFunctionBlockError";
 import { InternalReact } from "@Activitys/ModConfActivity/components/ModConfView/libs";
 import ModFS from "modfs";
 
+import YAML from "yaml";
+import INI from "ini";
+
 type IsoModule = {
   exports: {
     default?: any;
@@ -45,8 +48,8 @@ class IsolatedEval<T = any> {
   private readonly _globals = {
     ...Sandbox.SAFE_GLOBALS,
     JSON: JSON,
-    YAML: require("yaml"),
-    INI: require("ini"),
+    YAML: YAML,
+    INI: INI,
     console: console,
     document: new IsoDocument(),
     Toast: Toast,
@@ -170,6 +173,7 @@ class IsolatedEval<T = any> {
 
   public require(modulePath: string) {
     // Check if the module is a core module
+    console.log(this.libraries[modulePath])
     if (this.libraries[modulePath]) {
       return this.libraries[modulePath];
     }

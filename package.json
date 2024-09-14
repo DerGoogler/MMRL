@@ -6,8 +6,8 @@
     "application_id": "com.dergoogler.mmrl",
     "min_sdk": 26,
     "target_sdk": 34,
-    "version_name": "3.24.27",
-    "version_code": 32427,
+    "version_name": "3.24.28",
+    "version_code": 32428,
     "verified_hosts": [
       [
         "mmrl",
