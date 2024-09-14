@@ -16,7 +16,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: ${{ startsWith(github.event.head_commit.message, '[android]') == 'true' }}
+    if: ${{ startsWith(github.event.head_commit.message, '[android]') }}
     permissions:
       contents: read
       packages: write
