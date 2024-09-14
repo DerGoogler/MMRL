@@ -12,7 +12,7 @@ on:
     paths-ignore:
       - '**.md'
   workflow_dispatch:
-
+ 
 env:
   IS_AND: ${{ startsWith(github.event.head_commit.message, '[android]') }}
 
