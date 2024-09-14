@@ -1,20 +1,12 @@
 package com.dergoogler.mmrl;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Rect;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.provider.DocumentsContract;
-import android.provider.MediaStore;
-import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.webkit.ConsoleMessage;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -32,13 +24,11 @@ import com.dergoogler.core.NativeShell;
 import com.dergoogler.core.NativeBuildConfig;
 import com.dergoogler.core.NativeView;
 import com.dergoogler.core.NativeSuZip;
-import com.topjohnwu.superuser.io.SuFile;
 
 import org.apache.cordova.*;
 import org.apache.cordova.engine.SystemWebChromeClient;
 import org.apache.cordova.engine.SystemWebViewEngine;
 
-import java.io.File;
 
 public class MainActivity extends CordovaActivity {
 
@@ -65,24 +55,21 @@ public class MainActivity extends CordovaActivity {
         CordovaWebViewEngine wve = appView.getEngine();
 
 
-        rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                Rect r = new Rect();
-                rootView.getWindowVisibleDisplayFrame(r);
-                int screenHeight = rootView.getRootView().getHeight();
-                int keypadHeight = screenHeight - r.bottom;
+        rootView.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+            Rect r = new Rect();
+            rootView.getWindowVisibleDisplayFrame(r);
+            int screenHeight = rootView.getRootView().getHeight();
+            int keypadHeight = screenHeight - r.bottom;
 
-                if (keypadHeight > screenHeight * 0.15) { // 0.15 ratio is perhaps enough to determine keypad height.
-                    if (!isKeyboardShowing) {
-                        isKeyboardShowing = true;
-                        adjustWebViewHeight(keypadHeight);
-                    }
-                } else {
-                    if (isKeyboardShowing) {
-                        isKeyboardShowing = false;
-                        resetWebViewHeight();
-                    }
+            if (keypadHeight > screenHeight * 0.15) { // 0.15 ratio is perhaps enough to determine keypad height.
+                if (!isKeyboardShowing) {
+                    isKeyboardShowing = true;
+                    adjustWebViewHeight(keypadHeight);
+                }
+            } else {
+                if (isKeyboardShowing) {
+                    isKeyboardShowing = false;
+                    resetWebViewHeight();
                 }
             }
         });

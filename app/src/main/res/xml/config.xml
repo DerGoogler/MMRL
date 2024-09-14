@@ -1,7 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.dergoogler.mmrl"
-    version="1.6.0"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<widget id="com.dergoogler.mmrl" version="1.6.0">
     <name>MMRL</name>
     <description>No description</description>
     <author email="bohmjimmy1@gmail.com" href="https://dergoogler.com">
