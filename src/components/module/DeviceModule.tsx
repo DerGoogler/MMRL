@@ -208,12 +208,12 @@ const DeviceModule = React.memo<Props>((props) => {
                     if (remove.exist()) {
                       if (remove.delete()) {
                         setIsSwitchDisabled(false);
-                        log.d(`${module} has been recovered`);
+                        log.d(`${id} has been recovered`);
                       } else {
-                        log.e(`Failed to restore ${module}`);
+                        log.e(`Failed to restore ${id}`);
                       }
                     } else {
-                      log.e(`This remove file don't exists for ${module}`);
+                      log.e(`This remove file don't exists for ${id}`);
                     }
                   }}
                   disableElevation

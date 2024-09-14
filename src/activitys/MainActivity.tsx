@@ -30,6 +30,7 @@ import { LogcatActivity } from "./LogcatActivity";
 import UnverifiedHostActivity from "./UnverifiedHostActivity";
 import { LandingActivity } from "./LandingActivity";
 import { ModulesQueue } from "@Components/ModulesQueue";
+import { useConfirm } from "material-ui-confirm";
 
 const getLocation = () => {
   if (window.location !== window.parent.location) {
@@ -71,6 +72,7 @@ const MainActivity = (): JSX.Element => {
   const { theme } = useTheme();
   const { modFS } = useModFS();
   const InitialActivity = useCheckRoot();
+  const confirm = useConfirm();
 
   const [isSplitterOpen, setIsSplitterOpen] = useState(false);
 
@@ -108,7 +110,6 @@ const MainActivity = (): JSX.Element => {
     splitter: {
       show: () => showSplitter(),
       hide: () => hideSplitter(),
-      state: isSplitterOpen,
     },
   };
 
@@ -313,6 +314,26 @@ const MainActivity = (): JSX.Element => {
   return (
     <ModulesQueue context={pushContext as any}>
       <Page
+        onDeviceBackButton={(e) => {
+          if (isSplitterOpen) {
+            hideSplitter();
+          } else {
+            confirm({
+              title: strings("exit_app"),
+              description: strings("exit_app_desc"),
+              confirmationText: strings("yes"),
+              cancellationText: strings("no"),
+            })
+              .then(() => {
+                if (typeof e.callParentHandler === "function") {
+                  e.callParentHandler();
+                } else {
+                  navigator.app.exitApp();
+                }
+              })
+              .catch(() => {});
+          }
+        }}
         onInit={() => {
           const mmrlFolder = new SuFile(modFS("MMRLFOL"));
 

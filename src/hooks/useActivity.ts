@@ -22,7 +22,6 @@ export interface ActivityContext {
   readonly splitter: {
     readonly show: () => void;
     readonly hide: () => void;
-    readonly state: boolean;
   };
 }
 

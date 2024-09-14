@@ -45,20 +45,9 @@ const MainApplication = () => {
   const handleBackEvent = React.useCallback(
     (e: any) => {
       if (index === 0) {
-        confirm({
-          title: strings("exit_app"),
-          description: strings("exit_app_desc"),
-          confirmationText: strings("yes"),
-          cancellationText: strings("no"),
-        })
-          .then(() => {
-            if (typeof e.callParentHandler === "function") {
-              e.callParentHandler();
-            } else {
-              navigator.app.exitApp();
-            }
-          })
-          .catch(() => {});
+        if (typeof e.callParentHandler === "function") {
+          e.callParentHandler();
+        }
       } else {
         setIndex(0);
       }
