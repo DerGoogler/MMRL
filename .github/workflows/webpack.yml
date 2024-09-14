@@ -6,9 +6,13 @@ on:
   pull_request:
     branches: [master]
 
+env:
+  IS_WP: ${{ startsWith(github.event.head_commit.message, '[webpack]') }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: ${{ env.IS_WP == 'true' }}
 
     steps:
       - uses: actions/checkout@v2
