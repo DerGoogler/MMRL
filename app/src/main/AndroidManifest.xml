@@ -54,13 +54,13 @@
 
                 <data android:host="*" />
                 <data android:mimeType="*/*" />
-                <data android:pathPattern=".*\\.zip" />
-                <data android:pathPattern=".*\\..*\\.zip" />
-                <data android:pathPattern=".*\\..*\\..*\\.zip" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\.zip" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.zip" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\..*\\.zip" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\..*\\..*\\.zip" />
+                <data android:pathPattern="/.*\\.zip" />
+                <data android:pathPattern="/.*\\..*\\.zip" />
+                <data android:pathPattern="/.*\\..*\\..*\\.zip" />
+                <data android:pathPattern="/.*\\..*\\..*\\..*\\.zip" />
+                <data android:pathPattern="/.*\\..*\\..*\\..*\\..*\\.zip" />
+                <data android:pathPattern="/.*\\..*\\..*\\..*\\..*\\..*\\.zip" />
+                <data android:pathPattern="/.*\\..*\\..*\\..*\\..*\\..*\\..*\\.zip" />
                 <data android:scheme="content" />
                 <data android:scheme="file" />
             </intent-filter>

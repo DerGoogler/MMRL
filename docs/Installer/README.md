@@ -9,7 +9,7 @@ mmrl_exec() {
         shift
         local args=$(printf "|%s" "$@")
         args=${args:1}
-        echo "#!mmrl:<$command=($args)>"
+        ui_print "#!mmrl:<$command=($args)>"
     fi
 }
 ```
