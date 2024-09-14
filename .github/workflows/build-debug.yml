@@ -12,14 +12,11 @@ on:
     paths-ignore:
       - '**.md'
   workflow_dispatch:
- 
-env:
-  IS_AND: ${{ startsWith(github.event.head_commit.message, '[android]') }}
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: ${{ env.IS_AND == 'true' }}
+    if: ${{ startsWith(github.event.head_commit.message, '[android]') == 'true' }}
     permissions:
       contents: read
       packages: write
