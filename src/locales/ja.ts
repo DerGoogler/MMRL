@@ -156,4 +156,17 @@ export const ja = {
   try_again: "再試行",
 
   file_downloaded: "ファイルは {path} にダウンロードされました。",
+
+  features: "機能",
+  feature: "機能",
+  verified: "検証済み",
+  last_updated: "最終更新: {date}",
+  telegram_channel: "Telegram チャンネル",
+  install_queue: "インストールのキュー",
+  install_queue_notice: "アプリを閉じるとキューは削除されます",
+  install_queue_empty: "キューは空です。モジュールを追加してください！",
+  alr_add_queue: "このモジュールはキューに追加されています",
+  add_t_queue: "モジュールがキューに追加されました",
+  start_mod_ini_queue: "インストールを開始しますか？",
+  start_mod_ini_queue_desc: "キューに追加したモジュールをインストールしますか？",
 };
