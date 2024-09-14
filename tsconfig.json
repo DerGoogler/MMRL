@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "types": ["node"],
     "outDir": "./app/src/main/assets",
     "allowJs": true,
     "declaration": false,
