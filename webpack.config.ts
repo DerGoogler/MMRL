@@ -34,9 +34,19 @@ const config: Configuration = {
   entry: {
     app: [resolve(__dirname, "src/index.tsx")],
     cordova: [resolve(__dirname, "web/cordova/cordova.js")],
-    cordova_plugins: [resolve(__dirname, "web/cordova/cordova_plugins.js")],
-    "cordova-js-src": listFiles("web/cordova/cordova-js-src"),
-    "c-plugins": listFiles("web/cordova/plugins"),
+    cordova_plugins: {
+      import: [resolve(__dirname, "web/cordova/cordova_plugins.js")],
+      dependOn: "cordova",
+    },
+    "cordova-js-src": {
+      import: listFiles("web/cordova/cordova-js-src"),
+      dependOn: "cordova",
+    },
+
+    "c-plugins": {
+      import: listFiles("web/cordova/plugins"),
+      dependOn: "cordova",
+    },
   },
   ...defConfig,
   module: {
@@ -66,22 +76,24 @@ const config: Configuration = {
   },
   optimization: {
     splitChunks: {
-      chunks: "all",
-      minSize: 20000,
-      minRemainingSize: 0,
-      minChunks: 1,
+      chunks: 'all',
+      minSize: 10000, // Minimum size for a chunk to be generated
+      maxSize: 30000, // No limit on chunk size
+      minChunks: 1, // Minimum times a module should be shared to split
       maxAsyncRequests: 30,
       maxInitialRequests: 30,
       enforceSizeThreshold: 50000,
+      automaticNameDelimiter: '-',
       cacheGroups: {
         vendor: {
-          test: /node_modules/,
-          chunks: "initial",
-          name: "vendor",
-          enforce: true,
-        },
-      },
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'all'
+        }
+      }
     },
+
+
     minimizer: [new CssMinimizerPlugin()],
     minimize: true,
   },
