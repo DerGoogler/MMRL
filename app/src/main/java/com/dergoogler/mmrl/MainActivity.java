@@ -24,6 +24,7 @@ import com.dergoogler.core.NativeShell;
 import com.dergoogler.core.NativeBuildConfig;
 import com.dergoogler.core.NativeView;
 import com.dergoogler.core.NativeSuZip;
+import com.topjohnwu.superuser.io.SuFile;
 
 import org.apache.cordova.*;
 import org.apache.cordova.engine.SystemWebChromeClient;
@@ -91,13 +92,22 @@ public class MainActivity extends CordovaActivity {
         webViewSettings.setAllowContentAccess(true);
         webViewSettings.setAllowFileAccessFromFileURLs(true);
         webViewSettings.setAllowUniversalAccessFromFileURLs(true);
-        webViewSettings.setDatabaseEnabled(true);
-        webViewSettings.setDomStorageEnabled(true);
+        webViewSettings.setDatabaseEnabled(false);
         webViewSettings.setUserAgentString(this.mmrlUserAgent());
         webViewSettings.setAllowFileAccessFromFileURLs(false);
-        webViewSettings.setAllowUniversalAccessFromFileURLs(false);
         webViewSettings.setAllowFileAccess(false);
         webViewSettings.setAllowContentAccess(false);
+        webViewSettings.setSupportZoom(false);
+        webViewSettings.setGeolocationEnabled(false);
+        webViewSettings.setDomStorageEnabled(true);
+        webViewSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+
+        SuFile disableHardwareAccelerated = new SuFile("/data/adb/mmrl/settings/disableHardwareAccelerated");
+        if (disableHardwareAccelerated.exists()) {
+            wv.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        } else {
+            wv.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+        }
 
         // Core
         wv.addJavascriptInterface(new NativeSuFile(this), "__sufile__");

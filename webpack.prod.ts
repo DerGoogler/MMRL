@@ -12,6 +12,7 @@ export default merge(config, {
   optimization: {
     minimize: true,
     minimizer: [new TerserPlugin()],
+    usedExports: true,
   },
 
   plugins: [

@@ -17,9 +17,6 @@ const listFiles = (path: string, options = { recursive: true }) => {
 const outputPath = resolve(__dirname, "app/src/main/assets/www");
 if (!existsSync(outputPath)) mkdirSync(outputPath, { recursive: true });
 
-const APP_DIR = resolve(__dirname, "src");
-const MONACO_DIR = resolve(__dirname, "node_modules/monaco-editor");
-
 const defConfig: Configuration = {
   output: {
     filename: "bundle/[name].[fullhash].js",
@@ -53,7 +50,17 @@ const config: Configuration = {
     rules: [
       {
         test: /(d)?\.ts(x)?$/,
-        loader: "ts-loader",
+        use: [
+          {
+            loader: "cache-loader",
+            options: {
+              cacheDirectory: resolve(__dirname, ".cache/ts-loader"),
+            },
+          },
+          // "thread-loader",
+          "ts-loader",
+          ,
+        ],
         exclude: /node_modules/,
       },
       {
@@ -69,33 +76,49 @@ const config: Configuration = {
         use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
       },
       {
-        test: /\.(eot|woff|woff2|ttf|svg|png|jpe?g|gif)(\?\S*)?$/,
+        test: /\.(eot|woff|woff2|ttf)(\?\S*)?$/,
         type: "asset/resource",
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)$/,
+        use: [
+          {
+            loader: "image-webpack-loader",
+            options: {
+              mozjpeg: { progressive: true, quality: 65 },
+              optipng: { enabled: false },
+              pngquant: { quality: [0.65, 0.9], speed: 4 },
+              gifsicle: { interlaced: false },
+            },
+          },
+        ],
       },
     ],
   },
   optimization: {
     splitChunks: {
-      chunks: 'all',
-      minSize: 10000, // Minimum size for a chunk to be generated
-      maxSize: 30000, // No limit on chunk size
-      minChunks: 1, // Minimum times a module should be shared to split
-      maxAsyncRequests: 30,
-      maxInitialRequests: 30,
-      enforceSizeThreshold: 50000,
-      automaticNameDelimiter: '-',
+      minSize: 20000,
+      maxSize: 40000,
       cacheGroups: {
-        vendor: {
+        defaultVendors: {
           test: /[\\/]node_modules[\\/]/,
-          name: 'vendors',
-          chunks: 'all'
-        }
-      }
+          priority: -10,
+          reuseExistingChunk: true,
+        },
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true,
+        },
+      },
     },
-
 
     minimizer: [new CssMinimizerPlugin()],
     minimize: true,
+  },
+  cache: {
+    type: "filesystem",
+    cacheDirectory: resolve(__dirname, ".cache/webpack"),
   },
   performance: {
     hints: false,
