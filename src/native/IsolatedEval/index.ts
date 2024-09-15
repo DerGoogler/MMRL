@@ -173,7 +173,6 @@ class IsolatedEval<T = any> {
 
   public require(modulePath: string) {
     // Check if the module is a core module
-    console.log(this.libraries[modulePath])
     if (this.libraries[modulePath]) {
       return this.libraries[modulePath];
     }
