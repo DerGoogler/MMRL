@@ -66,7 +66,7 @@ export const ModulesQueue = (props: ModulesQueueProps) => {
     });
   };
 
-  const removeModule = (index) => {
+  const removeModule = (index: number) => {
     setQueue(queue.filter((_, i) => i !== index));
   };
 
@@ -141,7 +141,7 @@ export const ModulesQueue = (props: ModulesQueueProps) => {
                 description: strings("start_mod_ini_queue_desc"),
                 confirmationText: strings("yes"),
               }).then(() => {
-                setOpen(false)
+                setOpen(false);
                 context.pushPage<TerminalActivityExtra, {}>({
                   component: InstallTerminalV2Activity,
                   key: "InstallTerminalV2Activity",
