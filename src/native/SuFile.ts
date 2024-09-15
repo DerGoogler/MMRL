@@ -22,6 +22,7 @@ interface NativeSuFileV2 {
     deleteRecursive(): void;
     exists(): boolean;
     _is_TypeMethod(type: number): boolean;
+    _can_TypeMethod(type: number): boolean;
   };
 }
 
@@ -58,14 +59,20 @@ class SuFile extends Native<NativeSuFile> {
    */
   public static readonly NEW_FOLDER: number = 2;
 
-  public static readonly TYPE_ISFILE = 0;
-  public static readonly TYPE_ISSYMLINK = 1;
-  public static readonly TYPE_ISDIRECTORY = 2;
-  public static readonly TYPE_ISBLOCK = 3;
-  public static readonly TYPE_ISCHARACTER = 4;
-  public static readonly TYPE_ISNAMEDPIPE = 5;
-  public static readonly TYPE_ISSOCKET = 6;
-  public static readonly TYPE_ISHIDDEN = 7;
+  public static TYPE = class {
+    public static readonly ISFILE = 0;
+    public static readonly ISSYMLINK = 1;
+    public static readonly ISDIRECTORY = 2;
+    public static readonly ISBLOCK = 3;
+    public static readonly ISCHARACTER = 4;
+    public static readonly ISNAMEDPIPE = 5;
+    public static readonly ISSOCKET = 6;
+    public static readonly ISHIDDEN = 7;
+
+    public static readonly CANREAD = 0;
+    public static readonly CANWRITE = 1;
+    public static readonly CANEXECUTE = 2;
+  };
 
   private _restrictedPaths = [/(\/data\/data\/(.+)\/?|(\/storage\/emulated\/0|\/sdcard)\/Android\/(data|media|obb)(.+)?)\/?/i];
 
@@ -183,45 +190,67 @@ class SuFile extends Native<NativeSuFile> {
   }
 
   private _isTypeMethod(type: number, defR: boolean = false) {
-    if (typeof type !== "number") throw new TypeError("'SuFile' => 'isTypeMethod' only accepts numbers as type");
+    if (typeof type !== "number") throw new TypeError("'SuFile' => '_isTypeMethod' only accepts numbers as type");
 
     if (this.isAndroid) {
       return this._file._is_TypeMethod(type);
-    } else {
-      return defR;
     }
+
+    return defR;
+  }
+
+  private _canTypeMethod(type: number, defR: boolean = false): boolean {
+    if (typeof type !== "number") throw new TypeError("'SuFile' => '_canTypeMethod' only accepts numbers as type");
+
+    if (this.isAndroid) {
+      return this._file._can_TypeMethod(type);
+    }
+
+    return defR;
+  }
+
+  public canRead(): boolean {
+    return this._canTypeMethod(SuFile.TYPE.CANREAD);
+  }
+
+  public canWrite(): boolean {
+    return this._canTypeMethod(SuFile.TYPE.CANWRITE);
+  }
+
+  public canExecute(): boolean {
+    return this._canTypeMethod(SuFile.TYPE.CANEXECUTE);
   }
 
   public isFile(): boolean {
-    return this._isTypeMethod(SuFile.TYPE_ISFILE, this._path in localStorage);
+    return this._isTypeMethod(SuFile.TYPE.ISFILE, this._path in localStorage);
   }
 
   public isSymlink(): boolean {
-    return this._isTypeMethod(SuFile.TYPE_ISSYMLINK);
+    return this._isTypeMethod(SuFile.TYPE.ISSYMLINK);
   }
 
   public isDirectory(): boolean {
-    return this._isTypeMethod(SuFile.TYPE_ISDIRECTORY);
+    return this._isTypeMethod(SuFile.TYPE.ISDIRECTORY);
   }
 
   public isBlock(): boolean {
-    return this._isTypeMethod(SuFile.TYPE_ISBLOCK);
+    return this._isTypeMethod(SuFile.TYPE.ISBLOCK);
   }
 
   public isCharacter(): boolean {
-    return this._isTypeMethod(SuFile.TYPE_ISCHARACTER);
+    return this._isTypeMethod(SuFile.TYPE.ISCHARACTER);
   }
 
   public isNamedPipe(): boolean {
-    return this._isTypeMethod(SuFile.TYPE_ISNAMEDPIPE);
+    return this._isTypeMethod(SuFile.TYPE.ISNAMEDPIPE);
   }
 
   public isSocket(): boolean {
-    return this._isTypeMethod(SuFile.TYPE_ISSOCKET);
+    return this._isTypeMethod(SuFile.TYPE.ISSOCKET);
   }
 
   public isHidden(): boolean {
-    return this._isTypeMethod(SuFile.TYPE_ISHIDDEN);
+    return this._isTypeMethod(SuFile.TYPE.ISHIDDEN);
   }
 
   public static read(path: string): string {

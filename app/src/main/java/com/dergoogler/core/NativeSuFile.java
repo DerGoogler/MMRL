@@ -148,7 +148,7 @@ public class NativeSuFile {
             }
 
             @JavascriptInterface
-            public boolean canTypeMethod(int type) {
+            public boolean _can_TypeMethod(int type) {
                 return switch (type) {
                     case 0 -> file.canRead();
                     case 1 -> file.canWrite();

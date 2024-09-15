@@ -65,7 +65,7 @@ export const libraries = {
 
   "@mmrl/terminal": os.isAndroid ? Terminal : {},
 
-  "flatlist-react": FlatListReact,
+  "flatlist-react": FlatListReact.default,
 
   onsenui: OnsenUI,
 
