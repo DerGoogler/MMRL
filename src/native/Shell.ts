@@ -155,15 +155,19 @@ class Shell extends Native<NativeShellV2> {
   }
 
   public static getRootManager(): RootManager {
-    if (this.isMagiskSU()) {
-      return "Magisk";
-    } else if (this.isKernelSU()) {
-      return "KernelSU";
-    } else if (this.isAPatchSU()) {
-      return "APatchSU";
-    } else {
-      return "Unknown";
+    const rootManagers: [() => boolean, RootManager][] = [
+      [this.isMagiskSU, "Magisk"],
+      [this.isKernelSU, "KernelSU"],
+      [this.isAPatchSU, "APatchSU"],
+    ];
+
+    for (const [check, name] of rootManagers) {
+      if (check()) {
+        return name;
+      }
     }
+
+    return "Unknown";
   }
 
   /**
