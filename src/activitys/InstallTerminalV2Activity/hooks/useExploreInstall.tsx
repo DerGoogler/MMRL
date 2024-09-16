@@ -108,7 +108,7 @@ const useExploreInstall = (): [(options: ExploreInstall) => Promise<void>, numbe
                     addText("! \x1b[31mInternal error!\x1b[0m");
                     break;
                   default:
-                    addText("? Unknown code returned");
+                    addText(`? Unknown code returned (${code}})`);
                     break;
                 }
               }

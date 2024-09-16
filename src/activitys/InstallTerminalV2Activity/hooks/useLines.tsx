@@ -210,7 +210,7 @@ const LinesProvider = (props: LinesProviderProps) => {
         const _binaryNames = binaryNames.split(",");
         for (const binaryName of _binaryNames) {
           for (const folder of folders) {
-            const binaryPath = path.join(folder, binaryName);
+            const binaryPath = modFSParse(path.join(folder, binaryName));
             if (SuFile.exist(binaryPath)) {
               return `${binaryPath} ${args}`;
             }

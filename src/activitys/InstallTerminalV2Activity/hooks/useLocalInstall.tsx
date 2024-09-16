@@ -168,7 +168,7 @@ const useLocalInstall = (): [(options: LocalInstall) => Promise<void>] => {
               break;
 
             default:
-              addText("- Unknown code returned");
+              addText(`? Unknown code returned (${code}})`);
               break;
           }
         }
