@@ -165,7 +165,7 @@ class Path {
       }
     }
     if (joined === undefined) return ".";
-    return posix.normalize(joined);
+    return this.normalize(joined);
   }
 
   relative(from, to) {
@@ -174,8 +174,8 @@ class Path {
 
     if (from === to) return "";
 
-    from = posix.resolve(from);
-    to = posix.resolve(to);
+    from = this.resolve(from);
+    to = this.resolve(to);
 
     if (from === to) return "";
 
