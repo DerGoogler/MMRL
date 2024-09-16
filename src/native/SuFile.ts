@@ -239,7 +239,7 @@ class SuFile extends Native<NativeSuFile> {
   public setWriteable(writeable: boolean, ownerOnly: boolean = true) {
     return this._setExecuteWriteReadable(SuFile.TYPE.CANWRITE, writeable, ownerOnly);
   }
-  
+
   public setReadable(readable: boolean, ownerOnly: boolean = true) {
     return this._setExecuteWriteReadable(SuFile.TYPE.CANREAD, readable, ownerOnly);
   }
