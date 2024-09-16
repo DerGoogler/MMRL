@@ -158,6 +158,16 @@ public class NativeSuFile {
             }
 
             @JavascriptInterface
+            public boolean setExecuteWriteReadable(int type, boolean state, boolean ownerOnly) {
+                return switch (type) {
+                    case 0 -> file.setReadable(state, ownerOnly);
+                    case 1 -> file.setWritable(state, ownerOnly);
+                    case 2 -> file.setExecutable(state, ownerOnly);
+                    default -> false;
+                };
+            }
+
+            @JavascriptInterface
             public boolean _is_TypeMethod(int type) {
                 return switch (type) {
                     case 0 -> file.isFile();

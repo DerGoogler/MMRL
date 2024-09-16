@@ -23,6 +23,7 @@ interface NativeSuFileV2 {
     exists(): boolean;
     _is_TypeMethod(type: number): boolean;
     _can_TypeMethod(type: number): boolean;
+    setExecuteWriteReadable(type: number, state: boolean, ownerOnly: boolean): boolean;
   };
 }
 
@@ -209,6 +210,16 @@ class SuFile extends Native<NativeSuFile> {
     return defR;
   }
 
+  private _setExecuteWriteReadable(type: number, state: boolean, ownerOnly: boolean, defR: boolean = false): boolean {
+    if (typeof type !== "number") throw new TypeError("'SuFile' => '_canTypeMethod' only accepts numbers as type");
+
+    if (this.isAndroid) {
+      return this._file.setExecuteWriteReadable(type, state, ownerOnly);
+    }
+
+    return defR;
+  }
+
   public canRead(): boolean {
     return this._canTypeMethod(SuFile.TYPE.CANREAD);
   }
@@ -219,6 +230,18 @@ class SuFile extends Native<NativeSuFile> {
 
   public canExecute(): boolean {
     return this._canTypeMethod(SuFile.TYPE.CANEXECUTE);
+  }
+
+  public setExecuteable(executable: boolean, ownerOnly: boolean = true) {
+    return this._setExecuteWriteReadable(SuFile.TYPE.CANEXECUTE, executable, ownerOnly);
+  }
+
+  public setWriteable(writeable: boolean, ownerOnly: boolean = true) {
+    return this._setExecuteWriteReadable(SuFile.TYPE.CANWRITE, writeable, ownerOnly);
+  }
+  
+  public setReadable(readable: boolean, ownerOnly: boolean = true) {
+    return this._setExecuteWriteReadable(SuFile.TYPE.CANREAD, readable, ownerOnly);
   }
 
   public isFile(): boolean {

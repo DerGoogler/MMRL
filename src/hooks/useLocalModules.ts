@@ -3,7 +3,6 @@ import { SuFile } from "@Native/SuFile";
 import { Properties } from "properties-file";
 import React from "react";
 import { useModFS } from "./useModFS";
-import { useSettings } from "./useSettings";
 
 export function useLocalModules() {
   const { modFS } = useModFS();
@@ -11,27 +10,29 @@ export function useLocalModules() {
 
   if (os.isAndroid) {
     React.useEffect(() => {
-      const folders = SuFile.list(modFS("MODULES"));
-      folders.forEach((module) => {
-        const properties = new SuFile(modFS("PROPS", { MODID: module }));
-        if (properties.exist()) {
-          setLocalModules((prev) => {
-            // Preventing duplicates
-            const ids = new Set(prev.map((d) => d.id));
-            const merged = [
-              ...prev,
-              ...[
-                {
-                  ...(new Properties(properties.read()).toObject() as unknown as Module),
-                  timestamp: properties.lastModified(),
-                  __mmrl__local__module__: true,
-                },
-              ].filter((d) => !ids.has(d.id)),
-            ];
-            return merged;
-          });
-        }
-      });
+      const folders = new SuFile(modFS("MODULES"));
+      if (folders.exist()) {
+        folders.list().forEach((module) => {
+          const properties = new SuFile(modFS("PROPS", { MODID: module }));
+          if (properties.exist()) {
+            setLocalModules((prev) => {
+              // Preventing duplicates
+              const ids = new Set(prev.map((d) => d.id));
+              const merged = [
+                ...prev,
+                ...[
+                  {
+                    ...(new Properties(properties.read()).toObject() as unknown as Module),
+                    timestamp: properties.lastModified(),
+                    __mmrl__local__module__: true,
+                  },
+                ].filter((d) => !ids.has(d.id)),
+              ];
+              return merged;
+            });
+          }
+        });
+      }
     }, []);
   }
 
