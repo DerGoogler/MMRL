@@ -4,6 +4,8 @@ import { useModFS } from "@Hooks/useModFS";
 import { useStrings } from "@Hooks/useStrings";
 import Button from "@mui/material/Button";
 import { Shell } from "@Native/Shell";
+import { SuFile } from "@Native/SuFile";
+import { path } from "@Util/path";
 import { useConfirm } from "material-ui-confirm";
 import ModFS from "modfs";
 import React from "react";
@@ -69,7 +71,7 @@ interface LinesProviderProps extends React.PropsWithChildren {}
 
 const LinesProvider = (props: LinesProviderProps) => {
   const { strings } = useStrings();
-  const { modFS } = useModFS();
+  const { modFS, modFSParse } = useModFS();
   const [useInt, setUseInt] = React.useState(false);
   const [lines, setLines] = React.useState<any[]>([]);
   const confirm = useConfirm();
@@ -201,13 +203,30 @@ const LinesProvider = (props: LinesProviderProps) => {
   }, []);
 
   const getInstallCLI = React.useCallback((adds?: Record<string, any>) => {
+    const __adds = {
+      ...adds,
+      findBinary(binaryNames: string, args: string) {
+        const folders = ["/system/bin", "<ADB>/ksu/bin", "<ADB>/ap/bin", "<ADB>/magisk"];
+        const _binaryNames = binaryNames.split(",");
+        for (const binaryName of _binaryNames) {
+          for (const folder of folders) {
+            const binaryPath = path.join(folder, binaryName);
+            if (SuFile.exist(binaryPath)) {
+              return `${binaryPath} ${args}`;
+            }
+          }
+        }
+        return null;
+      },
+    };
+
     switch (Shell.getRootManager()) {
       case "Magisk":
-        return modFS("MSUINI", adds);
+        return modFS("MSUINI", __adds);
       case "KernelSU":
-        return modFS("KSUINI", adds);
+        return modFS("KSUINI", __adds);
       case "APatchSU":
-        return modFS("ASUINI", adds);
+        return modFS("ASUINI", __adds);
       default:
         return `exit ${Shell.M_DWL_FAILURE}`;
     }

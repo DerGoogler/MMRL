@@ -52,9 +52,9 @@ export interface ModFS {
 
 export const INITIAL_MOD_CONF: ModFS = {
   //cli
-  MSUINI: 'command -v <ADB>/magisk/magisk64 && <ADB>/magisk/magisk64 --install-module "<ZIPFILE>" || <ADB>/magisk/magisk32 --install-module "<ZIPFILE>"',
-  KSUINI: '<ADB>/ksu/bin/ksud module install "<ZIPFILE>"',
-  ASUINI: '<ADB>/ap/bin/apd module install "<ZIPFILE>"',
+  MSUINI: '<findBinary=(magisk,magisk64,magisk32|--install-module "<ZIPFILE>")>',
+  KSUINI: '<findBinary=(ksud|module install "<ZIPFILE>")>',
+  ASUINI: '<findBinary=(apd|module install "<ZIPFILE>")>',
 
   // default paths
   ADB: "/data/adb",
@@ -99,12 +99,14 @@ export interface ModConfContext {
   _modFS: ModFS;
   __modFS: ModFS;
   modFS<K extends keyof ModFS>(key: K, adds?: Record<string, any>): ModFS[K];
+  modFSParse: (text: string, adds?: ModFS | object) => string;
   setModFS<K extends keyof ModFS>(key: K, state: SetStateAction<ModFS[K]>): void;
 }
 
 export const ModConfContext = createContext<ModConfContext>({
   _modFS: INITIAL_MOD_CONF,
   __modFS: INITIAL_MOD_CONF,
+  modFSParse: (text: string, adds?: ModFS | object) => "",
   modFS<K extends keyof ModFS>(key: K, adds?: Record<string, any>) {
     return key;
   },
@@ -116,7 +118,7 @@ export const useModFS = () => {
 };
 
 export const ModFSProvider = (props: React.PropsWithChildren) => {
-  const [modFS, setModFS] = useNativeFileStorage("/data/adb/mmrl/modfs.v6.json", INITIAL_MOD_CONF, { loader: "json" });
+  const [modFS, setModFS] = useNativeFileStorage("/data/adb/mmrl/modfs.v8.json", INITIAL_MOD_CONF, { loader: "json" });
 
   const pmodFS = React.useMemo(() => new PModFS(defaultComposer(INITIAL_MOD_CONF, modFS)), [modFS]);
 
@@ -124,6 +126,7 @@ export const ModFSProvider = (props: React.PropsWithChildren) => {
     () => ({
       _modFS: defaultComposer(INITIAL_MOD_CONF, modFS),
       __modFS: pmodFS.formatEntries(),
+      modFSParse: (text: string, adds?: ModFS | object) => PModFS.format(text, { ...modFS, ...adds }),
       modFS<K extends keyof ModFS>(key: K, adds: ModFS | object): ModFS[K] {
         return PModFS.format(pmodFS.get(key)!, { ...modFS, ...adds });
       },
