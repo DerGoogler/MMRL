@@ -218,12 +218,16 @@ class IsolatedEval<T = any> {
         const transformed = this.transform(moduleContent);
         if (transformed) {
           const moduleWrapper = new Function("exports", "require", "module", "__filename", "__dirname", transformed);
+          const newPath = new Path(resolvedPath);
           this.compile<typeof moduleWrapper>(`return ${moduleWrapper}`)(
             module.exports,
             this.require,
             module,
             resolvedPath,
-            this.path.dirname(resolvedPath)
+            newPath.dirname(resolvedPath),
+            {
+              path: newPath,
+            }
           );
         } else {
           throw new IsolatedEvalError("An error occurred, either there is a syntax mistake or something");
