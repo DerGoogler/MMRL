@@ -2,7 +2,7 @@
 
 **ModFS** is a core component that provides a flexible and customizable filesystem for managing modules on Android devices. It's designed to streamline module installation, updates, and removal while offering granular control over module structure.
 
-<!-- 
+<!--
 
 TODO: REWORK
 
@@ -38,16 +38,15 @@ FILE="/data/local/tmp/<MODID>.zip"; <MSUBSU> wget "<URL>" -O $FILE; <MSUCLI> --i
 
 -->
 
-## Add a local cover to your module
+## Types and functions
 
-> [!IMPORTANT]
-> Do not hardcode your cover path
+### findBinary
 
-```properties
-id=mkshrc
-# ...
+> [!NOTE]
+> This is not a global ModFS part and only avaiable above v3.24.31.
 
-cover=<MODULECWD>/system/usr/share/mmrl/covers/cover.png
-# If stored in ModConf cwd
-# cover=<CONFCWD>/assets/cover.png
 ```
+<findBinary=(bin1,bin1|arg1 arg1)>
+```
+
+Returns the full paths of the first found binary
