@@ -7,6 +7,7 @@ import { os } from "@Native/Os";
 import { SetValue } from "./useNativeStorage";
 import React from "react";
 import { INITIAL_MOD_CONF } from "./useModFS";
+import { path } from "@Util/path";
 
 type Loader = "json" | "yaml" | "yml" | "prop" | "properties" | "ini" | null;
 
@@ -17,11 +18,12 @@ export function useNativeFileStorage<T = string>(
 ): [T, SetValue<T>] {
   const { loader } = opt;
 
+  const dir = React.useMemo(() => new SuFile(path.dirname(key), { readDefaultValue: JSON.stringify(INITIAL_MOD_CONF) }), [key]);
   const file = React.useMemo(() => new SuFile(key, { readDefaultValue: JSON.stringify(INITIAL_MOD_CONF) }), [key]);
 
   React.useEffect(() => {
-    if (!file.exist()) {
-      file.create(SuFile.NEW_FILE);
+    if (!dir.exist()) {
+      dir.create(SuFile.NEW_FOLDERS);
     }
   }, [key]);
 

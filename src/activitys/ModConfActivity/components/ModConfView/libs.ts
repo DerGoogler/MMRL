@@ -38,6 +38,7 @@ import OnsenUI from "onsenui";
 import * as DefaultComposer from "default-composer";
 import * as UseHooksTS from "usehooks-ts";
 import * as ModFS from "modfs";
+import * as DND from "react-beautiful-dnd";
 
 export const InternalReact = {
   ...React,
@@ -68,6 +69,7 @@ export const libraries = {
   "flatlist-react": FlatListReact.default,
 
   onsenui: OnsenUI,
+  "react-beautiful-dnd": DND,
 
   "@mmrl/activity": {
     SearchActivity: SearchActivity,

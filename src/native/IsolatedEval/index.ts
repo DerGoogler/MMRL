@@ -59,9 +59,22 @@ class IsolatedEval<T = any> {
     Element: Element,
     Audio: IsoAudio,
     HTMLMediaElement: HTMLMediaElement,
+    HTMLButtonElement: HTMLButtonElement,
+    HTMLTextAreaElement: HTMLTextAreaElement,
+    HTMLInputElement: HTMLInputElement,
+    DragEvent: DragEvent,
+    InputEvent: InputEvent,
+    KeyboardEvent: KeyboardEvent,
+    MouseEvent: MouseEvent,
+    PointerEvent: PointerEvent,
+    TouchEvent: TouchEvent,
+    TransitionEvent: TransitionEvent,
+    UIEvent: UIEvent,
+    WheelEvent: WheelEvent,
     FileReader: FileReader,
     Blob: Blob,
     Event: Event,
+    ToggleEvent: ToggleEvent,
     EventTarget: EventTarget,
     NamedNodeMap: NamedNodeMap,
     DOMParser: IsoDOMParser,
@@ -82,6 +95,15 @@ class IsolatedEval<T = any> {
     clearInterval: clearInterval,
     clearTimeout: clearTimeout,
     setTimeout: setTimeout,
+    import: async (whatever: string) => {
+      if (!os.isAndroid) {
+        return await import(/* webpackIgnore: true */ whatever);
+      }
+      return undefined;
+    },
+    DataTransfer: DataTransfer,
+    DataTransferItem: DataTransferItem,
+    DataTransferItemList: DataTransferItemList,
     eval() {
       throw new IsolatedFunctionBlockError("eval()");
     },
@@ -120,11 +142,23 @@ class IsolatedEval<T = any> {
     this._prototypeWhitelist.set(IsoDocument, new Set());
     this._prototypeWhitelist.set(Response, new Set());
     this._prototypeWhitelist.set(Element, new Set());
+    this._prototypeWhitelist.set(HTMLInputElement, new Set());
+    this._prototypeWhitelist.set(HTMLTextAreaElement, new Set());
+    this._prototypeWhitelist.set(HTMLButtonElement, new Set());
     this._prototypeWhitelist.set(HTMLMediaElement, new Set());
     this._prototypeWhitelist.set(IsoAudio, new Set());
     this._prototypeWhitelist.set(FileReader, new Set());
     this._prototypeWhitelist.set(Blob, new Set());
     this._prototypeWhitelist.set(Event, new Set());
+    this._prototypeWhitelist.set(DragEvent, new Set());
+    this._prototypeWhitelist.set(InputEvent, new Set());
+    this._prototypeWhitelist.set(KeyboardEvent, new Set());
+    this._prototypeWhitelist.set(MouseEvent, new Set());
+    this._prototypeWhitelist.set(PointerEvent, new Set());
+    this._prototypeWhitelist.set(TouchEvent, new Set());
+    this._prototypeWhitelist.set(TransitionEvent, new Set());
+    this._prototypeWhitelist.set(UIEvent, new Set());
+    this._prototypeWhitelist.set(WheelEvent, new Set());
     this._prototypeWhitelist.set(EventTarget, new Set());
     this._prototypeWhitelist.set(NamedNodeMap, new Set());
     this._prototypeWhitelist.set(IsoDOMParser, new Set());
@@ -144,6 +178,9 @@ class IsolatedEval<T = any> {
     this._prototypeWhitelist.set(Path, new Set());
     this._prototypeWhitelist.set(React, new Set());
     this._prototypeWhitelist.set(ModFS, new Set());
+    this._prototypeWhitelist.set(DataTransfer, new Set());
+    this._prototypeWhitelist.set(DataTransferItem, new Set());
+    this._prototypeWhitelist.set(DataTransferItemList, new Set());
 
     this.require = this.require.bind(this);
     this._resolveModule = this._resolveModule.bind(this);

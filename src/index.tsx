@@ -84,6 +84,10 @@ const Fallback = React.memo((props: any) => {
   );
 });
 
+import { configureSingle } from "@zenfs/core";
+import { IndexedDB } from "@zenfs/dom";
+await configureSingle({ backend: IndexedDB });
+
 ons.ready(() => {
   customElements.define("mmrl-app", MMRLApp);
   customElements.define("mmrl-anchor", MMRLAnchor);

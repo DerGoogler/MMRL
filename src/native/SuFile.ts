@@ -1,4 +1,6 @@
+import { path } from "@Util/path";
 import { Native } from "./Native";
+import { fs } from "@zenfs/core";
 
 interface NativeSuFile extends NativeSuFileV2 {
   readFile(path: string): string;
@@ -43,6 +45,8 @@ export type SuFileConstuctor = new (path: string) => SuFile;
 class SuFile extends Native<NativeSuFile> {
   // @ts-ignore - Won't get even called
   private _file: ReturnType<NativeSuFile["v2"]>;
+  // @ts-ignore - Won't get even called
+  private _bfile: typeof fs;
   private _path: string;
   private _imgblob: string | ArrayBuffer | null = null;
   private _readDefaultValue: string;
@@ -88,6 +92,8 @@ class SuFile extends Native<NativeSuFile> {
 
     if (this.isAndroid) {
       this._file = this.interface.v2.bind(this.interface)(this._path);
+    } else {
+      this._bfile = fs;
     }
   }
 
@@ -114,7 +120,7 @@ class SuFile extends Native<NativeSuFile> {
     if (this.isAndroid) {
       return this._file.read(this._readDefaultValue);
     } else {
-      return localStorage.getItem(this._path) || this._readDefaultValue;
+      return this._bfile.readFileSync(this._path, "utf-8") || this._readDefaultValue;
     }
   }
 
@@ -130,7 +136,7 @@ class SuFile extends Native<NativeSuFile> {
     if (this.isAndroid) {
       this._file.write(content);
     } else {
-      localStorage.setItem(this._path, content);
+      this._bfile.writeFileSync(this._path, content);
     }
   }
 
@@ -138,7 +144,7 @@ class SuFile extends Native<NativeSuFile> {
     if (this.isAndroid) {
       return this._file.list(delimiter).split(delimiter);
     } else {
-      return [""];
+      return this._bfile.readdirSync(this._path);
     }
   }
 
@@ -154,7 +160,7 @@ class SuFile extends Native<NativeSuFile> {
     if (this.isAndroid) {
       return this._file.exists();
     } else {
-      return this._path in localStorage;
+      return this._bfile.existsSync(this._path);
     }
   }
 
@@ -169,6 +175,8 @@ class SuFile extends Native<NativeSuFile> {
   public deleteRecursive(): void {
     if (this.isAndroid) {
       this._file.deleteRecursive();
+    } else {
+      this._bfile.rmSync(this._path, { recursive: true });
     }
   }
   /**
@@ -186,7 +194,21 @@ class SuFile extends Native<NativeSuFile> {
     if (this.isAndroid) {
       return this._file.create(type);
     } else {
-      return false;
+      switch (type) {
+        case SuFile.NEW_FILE:
+          this._bfile.writeFileSync(this._path, "");
+          break;
+        case SuFile.NEW_FOLDER:
+          this._bfile.mkdirSync(this._path);
+          break;
+        case SuFile.NEW_FOLDERS:
+          this._bfile.mkdirSync(this._path, { recursive: true });
+          break;
+        default:
+          return true;
+      }
+
+      return true;
     }
   }
 
@@ -309,6 +331,25 @@ class SuFile extends Native<NativeSuFile> {
       return this.static.interface.getSharedFile();
     }
     return undefined;
+  }
+
+  public static createFileTree(fileTree: object, basePath: string) {
+    Object.keys(fileTree).forEach((key) => {
+      const value = fileTree[key];
+      const fullPath = path.join(basePath, key.replace(/^\//, "")); // Remove leading '/' if present
+
+      if (typeof value === "object") {
+        // If value is an object, create a directory
+        if (!SuFile.exist(fullPath)) {
+          SuFile.create(fullPath, SuFile.NEW_FOLDERS);
+        }
+        // Recursively create subdirectories and files
+        this.createFileTree(value, fullPath);
+      } else if (typeof value === "string") {
+        // If value is a string, treat it as file content
+        SuFile.write(fullPath, value);
+      }
+    });
   }
 }
 
