@@ -151,6 +151,7 @@ const ModConfPlaygroundActivity = () => {
   const handlePreview = () => {
     context.pushPage({
       component: ModConfView,
+      noMemo: true,
       key: extra.title,
       extra: {
         modulename: "Preview",

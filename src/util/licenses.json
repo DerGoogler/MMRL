@@ -85,6 +85,22 @@
     "source": "https://www.npmjs.com/package/@primer/octicons-react"
   },
   {
+    "name": "@zenfs/core",
+    "author": null,
+    "license": "MIT",
+    "description": "A filesystem, anywhere",
+    "version": "0.17.1",
+    "source": "https://www.npmjs.com/package/@zenfs/core"
+  },
+  {
+    "name": "@zenfs/dom",
+    "author": null,
+    "license": "MIT",
+    "description": "DOM backends for ZenFS",
+    "version": "0.2.15",
+    "source": "https://www.npmjs.com/package/@zenfs/dom"
+  },
+  {
     "name": "ajv",
     "author": null,
     "license": "MIT",

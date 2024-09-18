@@ -95,6 +95,7 @@ class IsolatedEval<T = any> {
     clearInterval: clearInterval,
     clearTimeout: clearTimeout,
     setTimeout: setTimeout,
+    FormData: FormData,
     import: async (whatever: string) => {
       if (!os.isAndroid) {
         return await import(/* webpackIgnore: true */ whatever);
@@ -177,6 +178,7 @@ class IsolatedEval<T = any> {
     this._prototypeWhitelist.set(Chooser, new Set());
     this._prototypeWhitelist.set(Path, new Set());
     this._prototypeWhitelist.set(React, new Set());
+    this._prototypeWhitelist.set(FormData, new Set());
     this._prototypeWhitelist.set(ModFS, new Set());
     this._prototypeWhitelist.set(DataTransfer, new Set());
     this._prototypeWhitelist.set(DataTransferItem, new Set());
