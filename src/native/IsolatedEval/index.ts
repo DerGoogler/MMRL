@@ -102,6 +102,8 @@ class IsolatedEval<T = any> {
       }
       return undefined;
     },
+    Promise: Promise,
+    PromiseRejectionEvent: PromiseRejectionEvent,
     DataTransfer: DataTransfer,
     DataTransferItem: DataTransferItem,
     DataTransferItemList: DataTransferItemList,
@@ -160,6 +162,8 @@ class IsolatedEval<T = any> {
     this._prototypeWhitelist.set(TransitionEvent, new Set());
     this._prototypeWhitelist.set(UIEvent, new Set());
     this._prototypeWhitelist.set(WheelEvent, new Set());
+    this._prototypeWhitelist.set(Promise, new Set());
+    this._prototypeWhitelist.set(PromiseRejectionEvent, new Set());
     this._prototypeWhitelist.set(EventTarget, new Set());
     this._prototypeWhitelist.set(NamedNodeMap, new Set());
     this._prototypeWhitelist.set(IsoDOMParser, new Set());
