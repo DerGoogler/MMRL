@@ -1,24 +1,21 @@
-import React from "react";
-
-import { ModuleViewActivity } from "@Activitys/ModuleViewActivity";
+import { Activities } from "@Activitys/index";
 import { AntifeatureButton } from "@Components/AntifeaturesButton";
 import { Image } from "@Components/dapi/Image";
+import { VerifiedIcon } from "@Components/icons/VerifiedIcon";
 import { useActivity } from "@Hooks/useActivity";
+import { useBlacklist } from "@Hooks/useBlacklist";
 import { useFormatDate } from "@Hooks/useFormatDate";
+import { useModFS } from "@Hooks/useModFS";
+import { useModuleInfo } from "@Hooks/useModuleInfo";
 import { useStrings } from "@Hooks/useStrings";
+import { useTheme } from "@Hooks/useTheme";
+import { CalendarMonth, PersonOutline, Source, Tag } from "@mui/icons-material";
 import Card from "@mui/material/Card";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { SuFile } from "@Native/SuFile";
-import { useModFS } from "@Hooks/useModFS";
-import { useModuleInfo } from "@Hooks/useModuleInfo";
-import { Verified, Tag, PersonOutline, CalendarMonth, Source } from "@mui/icons-material";
-import { useBlacklist } from "@Hooks/useBlacklist";
-import Box from "@mui/material/Box";
-import { useHover } from "@Hooks/useHover";
-import { VerifiedIcon } from "@Components/icons/VerifiedIcon";
-import { useTheme } from "@Hooks/useTheme";
+import React from "react";
 
 interface Props {
   module: Module;
@@ -42,7 +39,7 @@ const ExploreModule = React.memo<Props>((props) => {
 
   const handleOpenModule = () => {
     context.pushPage({
-      component: ModuleViewActivity,
+      component: Activities.ModuleView,
       key: "ModuleViewActivity",
       extra: props.module,
     });

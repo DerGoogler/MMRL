@@ -2,24 +2,23 @@ import React from "react";
 
 import { ArrowRightAlt } from "@mui/icons-material";
 
-import ButtonGroup from "@mui/material/ButtonGroup";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+import ButtonGroup from "@mui/material/ButtonGroup";
 import Card from "@mui/material/Card";
-import Stack from "@mui/material/Stack";
 import Chip from "@mui/material/Chip";
 import Divider from "@mui/material/Divider";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 
-import { useTheme } from "@Hooks/useTheme";
 import { useLog } from "@Hooks/native/useLog";
-import { useStrings } from "@Hooks/useStrings";
 import { useActivity } from "@Hooks/useActivity";
 import { useRepos } from "@Hooks/useRepos";
+import { useStrings } from "@Hooks/useStrings";
+import { useTheme } from "@Hooks/useTheme";
 
-import FetchTextActivity from "@Activitys/FetchTextActivity";
 
+import { Activities } from "@Activitys/index";
 import { link } from "googlers-tools";
-import InstallTerminalV2Activity from "@Activitys/InstallTerminalV2Activity";
 
 interface Props {
   module: Module;
@@ -107,7 +106,7 @@ const UpdateModule = React.memo<Props>((props) => {
             <Button
               onClick={() => {
                 context.pushPage({
-                  component: InstallTerminalV2Activity,
+                  component: Activities.InstallTerminal,
                   key: "InstallTerminalV2Activity",
                   extra: {
                     id: id,
@@ -123,7 +122,7 @@ const UpdateModule = React.memo<Props>((props) => {
               disabled={updatedModule?.changelog === ""}
               onClick={() => {
                 context.pushPage({
-                  component: FetchTextActivity,
+                  component: Activities.FetchText,
                   key: `changelog_${id}`,
                   extra: {
                     title: updatedModule?.version,

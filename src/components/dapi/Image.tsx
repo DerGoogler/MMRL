@@ -1,11 +1,10 @@
-import PicturePreviewActivity from "@Activitys/PicturePreviewActivity";
-import { GestureDetector } from "@Components/onsenui/GestureDetector";
+import { Activities } from "@Activitys/index";
 import { useActivity } from "@Hooks/useActivity";
 import { ModFS, useModFS } from "@Hooks/useModFS";
 import { useTheme } from "@Hooks/useTheme";
 import { SuFile } from "@Native/SuFile";
-import { formatObjectEntries, formatString } from "@Util/stringFormat";
-import { Box, BoxProps, SxProps } from "@mui/material";
+import { formatString } from "@Util/stringFormat";
+import { Box, BoxProps } from "@mui/material";
 import React from "react";
 
 type Props = BoxProps<"img", JSX.IntrinsicElements["img"]> & {
@@ -52,7 +51,7 @@ function Image(props: Props) {
       onClick={() => {
         if (!noOpen) {
           context.pushPage({
-            component: PicturePreviewActivity,
+            component: Activities.PicturePreview,
             key: "PicturePreviewActivity",
             extra: {
               picture: newSrc,
@@ -66,3 +65,4 @@ function Image(props: Props) {
 }
 
 export { Image };
+

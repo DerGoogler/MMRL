@@ -21,7 +21,7 @@ const defConfig: Configuration = {
   output: {
     filename: "bundle/[name].[fullhash].js",
     path: resolve(__dirname, outputPath),
-    chunkFilename: "bundle/[name].[fullhash].[ext]",
+    chunkFilename: "bundle/[name].[fullhash].js",
     assetModuleFilename: "files/[name].[ext]",
     clean: true,
   },

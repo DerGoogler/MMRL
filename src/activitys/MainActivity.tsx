@@ -15,7 +15,7 @@ import { os } from "@Native/Os";
 import { Shell } from "@Native/Shell";
 import { RouterUtil } from "@Util/RouterUtil";
 import eruda from "eruda";
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import { IntentPusher } from "../hooks/useActivity";
 import { DrawerFragment } from "./fragments/DrawerFragment";
 import MainApplication from "./MainApplication";
@@ -26,11 +26,12 @@ import { useModFS } from "@Hooks/useModFS";
 import { useStrings } from "@Hooks/useStrings";
 import { SuFile } from "@Native/SuFile";
 import pkg from "@Package";
-import { LogcatActivity } from "./LogcatActivity";
 import UnverifiedHostActivity from "./UnverifiedHostActivity";
 import { LandingActivity } from "./LandingActivity";
 import { ModulesQueue } from "@Components/ModulesQueue";
 import { useConfirm } from "material-ui-confirm";
+import { ProgressCircular } from "react-onsenui";
+import { Activities } from ".";
 
 const getLocation = () => {
   if (window.location !== window.parent.location) {
@@ -139,9 +140,12 @@ const MainActivity = (): JSX.Element => {
         options: {
           ...options,
           animationOptions: {
-            duration: 0.2,
-            timing: "ease-in",
-            animation: "fade-md",
+            // duration: 0.2,
+            duration: 0,
+            // timing: "ease-in",
+            timing: "none",
+            // animation: "fade-md",
+            animation: "none",
           },
         },
       } as any)
@@ -156,7 +160,16 @@ const MainActivity = (): JSX.Element => {
       },
     };
 
-    const options = {};
+    const options = {
+      animationOptions: {
+        // duration: 0.2,
+        duration: 0,
+        // timing: "ease-in",
+        timing: "none",
+        // animation: "fade-md",
+        animation: "none",
+      },
+    };
 
     setRouteConfig((prev: any) =>
       RouterUtil.push({
@@ -202,10 +215,42 @@ const MainActivity = (): JSX.Element => {
     setRouteConfig((prev: any) => RouterUtil.postPop(prev));
   };
 
+  const fallbackSuspense = React.useMemo(
+    () => (
+      <Page
+        modifier="fade"
+        renderToolbar={() => {
+          return (
+            <Toolbar modifier="noshadow">
+              <Toolbar.Left>
+                <Toolbar.BackButton onClick={popPage} />
+              </Toolbar.Left>
+              <Toolbar.Center>Loading...</Toolbar.Center>
+            </Toolbar>
+          );
+        }}
+      >
+        <ProgressCircular
+          indeterminate
+          style={{
+            position: "absolute",
+            left: "50%",
+            top: "50%",
+            WebkitTransform: "translate(-50%, -50%)",
+            transform: "translate(-50%, -50%)",
+          }}
+        />
+      </Page>
+    ),
+    []
+  );
+
   const renderPage = (route: any, props: any) => {
     return (
       <ErrorBoundary fallback={fallback}>
-        <route.component {...props} />
+        <Suspense fallback={fallbackSuspense}>
+          <route.component {...props} />
+        </Suspense>
       </ErrorBoundary>
     );
   };
@@ -261,14 +306,14 @@ const MainActivity = (): JSX.Element => {
 
     const handleOpenSettings = () => {
       pushPage({
-        component: SettingsActivity,
+        component: Activities.Settings,
         key: "SettingsActivity",
       });
     };
 
     const handleOpenLogcat = () => {
       pushPage({
-        component: LogcatActivity,
+        component: Activities.Logcat,
         key: "LogcatActivity",
       });
     };

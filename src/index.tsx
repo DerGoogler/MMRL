@@ -6,6 +6,7 @@ import { ConfirmProvider } from "material-ui-confirm";
 import { ThemeProvider, useTheme } from "@Hooks/useTheme";
 import { StringsProvider } from "@Hooks/useStrings";
 import { Preventer, render } from "react-render-tools";
+import { TransitionGroup } from "react-transition-group";
 import { MainActivity } from "@Activitys/MainActivity";
 import { RepoProvider } from "@Hooks/useRepos";
 
@@ -94,27 +95,29 @@ ons.ready(() => {
 
   render(
     <React.StrictMode>
-      <ThemeProvider>
-        <CssBaseline />
-        <LightTheme />
-        <ErrorBoundary
-          fallback={(error, errorInfo, resetErrorBoundary) => {
-            return <Fallback error={error} errorInfo={errorInfo} resetErrorBoundary={resetErrorBoundary} />;
-          }}
-        >
-          <ModFSProvider>
-            <StringsProvider data={strs}>
-              <Preventer prevent="contextmenu">
-                <RepoProvider>
-                  <ConfirmProvider>
-                    <MainActivity />
-                  </ConfirmProvider>
-                </RepoProvider>
-              </Preventer>
-            </StringsProvider>
-          </ModFSProvider>
-        </ErrorBoundary>
-      </ThemeProvider>
+      <TransitionGroup>
+        <ThemeProvider>
+          <CssBaseline />
+          <LightTheme />
+          <ErrorBoundary
+            fallback={(error, errorInfo, resetErrorBoundary) => {
+              return <Fallback error={error} errorInfo={errorInfo} resetErrorBoundary={resetErrorBoundary} />;
+            }}
+          >
+            <ModFSProvider>
+              <StringsProvider data={strs}>
+                <Preventer prevent="contextmenu">
+                  <RepoProvider>
+                    <ConfirmProvider>
+                      <MainActivity />
+                    </ConfirmProvider>
+                  </RepoProvider>
+                </Preventer>
+              </StringsProvider>
+            </ModFSProvider>
+          </ErrorBoundary>
+        </ThemeProvider>
+      </TransitionGroup>
     </React.StrictMode>,
     "mmrl-app"
   );

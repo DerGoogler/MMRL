@@ -1,14 +1,15 @@
-import { Box, Button, Drawer, IconButton, List, ListItem, ListItemText, Stack, Typography } from "@mui/material";
-import { view } from "@Native/View";
-import React from "react";
-import CloseIcon from "@mui/icons-material/Close";
-import { useStrings } from "@Hooks/useStrings";
-import { os } from "@Native/Os";
-import { useFormatBytes } from "@Hooks/useFormatBytes";
-import { Shell } from "@Native/Shell";
-import { useConfirm } from "material-ui-confirm";
+import { Activities } from "@Activitys/index";
+import { TerminalActivityExtra } from "@Activitys/InstallTerminalV2Activity";
 import { ActivityContext } from "@Hooks/useActivity";
-import InstallTerminalV2Activity, { TerminalActivityExtra } from "@Activitys/InstallTerminalV2Activity";
+import { useFormatBytes } from "@Hooks/useFormatBytes";
+import { useStrings } from "@Hooks/useStrings";
+import CloseIcon from "@mui/icons-material/Close";
+import { Box, Button, Drawer, IconButton, List, ListItem, ListItemText, Stack, Typography } from "@mui/material";
+import { os } from "@Native/Os";
+import { Shell } from "@Native/Shell";
+import { view } from "@Native/View";
+import { useConfirm } from "material-ui-confirm";
+import React from "react";
 
 interface ModulesQueueContext {
   addModule: (queue: Queue) => void;
@@ -143,7 +144,7 @@ export const ModulesQueue = (props: ModulesQueueProps) => {
               }).then(() => {
                 setOpen(false);
                 context.pushPage<TerminalActivityExtra, {}>({
-                  component: InstallTerminalV2Activity,
+                  component: Activities.InstallTerminal,
                   key: "InstallTerminalV2Activity",
                   extra: {
                     exploreInstall: true,

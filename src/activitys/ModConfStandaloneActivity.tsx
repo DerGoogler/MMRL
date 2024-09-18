@@ -4,10 +4,9 @@ import { useActivity } from "@Hooks/useActivity";
 import { useModFS } from "@Hooks/useModFS";
 import { List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import { SuFile } from "@Native/SuFile";
-import { SuZip } from "@Native/SuZip";
-import { path } from "@Util/path";
-import { ModConfActivity, ModConfActivityExtra } from "./ModConfActivity";
 import ModFS from "modfs";
+import { Activities } from ".";
+import { ModConfActivityExtra } from "./ModConfActivity";
 
 const ModConfStandaloneActivity = () => {
   const { context } = useActivity();
@@ -49,7 +48,7 @@ const ModConfStandaloneActivity = () => {
                     <ListItemButton
                       onClick={() => {
                         context.pushPage<ModConfActivityExtra, any>({
-                          component: ModConfActivity,
+                          component: Activities.ModConf,
                           key: `${metaData.id}_configure_standalone`,
                           extra: {
                             indexFile: metaData.main

@@ -341,6 +341,14 @@
     "source": "https://www.npmjs.com/package/react-syntax-highlighter"
   },
   {
+    "name": "react-transition-group",
+    "author": null,
+    "license": "BSD-3-Clause",
+    "description": "A react component toolset for managing animations",
+    "version": "4.4.5",
+    "source": "https://www.npmjs.com/package/react-transition-group"
+  },
+  {
     "name": "react-zoom-pan-pinch",
     "author": null,
     "license": "MIT",

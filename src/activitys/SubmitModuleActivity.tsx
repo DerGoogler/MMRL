@@ -322,4 +322,4 @@ const SubmitModuleActivity = () => {
   );
 };
 
-export { SubmitModuleActivity };
+export default SubmitModuleActivity;

@@ -12,7 +12,7 @@ import { useFetch } from "@Hooks/useFetch";
 import { useTheme } from "@Hooks/useTheme";
 import { os } from "@Native/Os";
 import li from "@Util/licenses.json";
-import FetchTextActivity from "./FetchTextActivity";
+import { Activities } from ".";
 
 const DepCard = (props: { dep: (typeof li)[0] }) => {
   const { theme } = useTheme();
@@ -34,7 +34,7 @@ const DepCard = (props: { dep: (typeof li)[0] }) => {
   const handleOpenLicense = () => {
     if (licenseData) {
       context.pushPage({
-        component: FetchTextActivity,
+        component: Activities.FetchText,
         key: "license_" + dep.license,
         extra: {
           raw_data: licenseData.licenseText,

@@ -1,5 +1,4 @@
-import FetchTextActivity from "@Activitys/FetchTextActivity";
-import InstallTerminalV2Activity from "@Activitys/InstallTerminalV2Activity";
+import { Activities } from "@Activitys/index";
 import { useActivity } from "@Hooks/useActivity";
 import { useDownloadModule } from "@Hooks/useDownloadModule";
 import { useFormatDate } from "@Hooks/useFormatDate";
@@ -60,7 +59,7 @@ const VersionItem = React.memo<VersionItemProps>(({ id, version, index }) => {
       confirmationText: "Yes",
     }).then(() => {
       context.pushPage({
-        component: InstallTerminalV2Activity,
+        component: Activities.InstallTerminal,
         key: "InstallTerminalV2Activity",
         extra: {
           issues: support,
@@ -87,7 +86,7 @@ const VersionItem = React.memo<VersionItemProps>(({ id, version, index }) => {
               disabled={!version.changelog}
               onClick={() => {
                 context.pushPage({
-                  component: FetchTextActivity,
+                  component: Activities.FetchText,
                   key: `changelog_${id}`,
                   extra: {
                     title: version.version,
@@ -140,3 +139,4 @@ const VersionItem = React.memo<VersionItemProps>(({ id, version, index }) => {
 });
 
 export { VersionsTab };
+

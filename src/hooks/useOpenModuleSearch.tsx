@@ -1,16 +1,16 @@
+import { Activities } from "@Activitys/index";
 import { SearchActivity } from "@Activitys/SearchActivity";
-import { useActivity } from "./useActivity";
-import ListItemButton from "@mui/material/ListItemButton";
-import { ModuleViewActivity } from "@Activitys/ModuleViewActivity";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
+import { VerifiedIcon } from "@Components/icons/VerifiedIcon";
 import Avatar from "@mui/material/Avatar";
 import Chip from "@mui/material/Chip";
-import Typography from "@mui/material/Typography";
-import Stack from "@mui/material/Stack";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 import { SuFile } from "@Native/SuFile";
+import { useActivity } from "./useActivity";
 import { useModFS } from "./useModFS";
-import { VerifiedIcon } from "@Components/icons/VerifiedIcon";
 
 export function useOpenModuleSearch<L extends Module[]>(list: L) {
   const { context } = useActivity();
@@ -35,7 +35,7 @@ export function useOpenModuleSearch<L extends Module[]>(list: L) {
               key={item.id}
               onClick={() => {
                 context.pushPage({
-                  component: ModuleViewActivity,
+                  component: Activities.ModuleView,
                   key: "ModuleViewActivity",
                   extra: item,
                 });

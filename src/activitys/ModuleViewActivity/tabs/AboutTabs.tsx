@@ -1,24 +1,21 @@
-import { Page } from "@Components/onsenui/Page";
+import { Activities } from "@Activitys/index";
+import { Pre } from "@Components/dapi/Pre";
+import { useActivity } from "@Hooks/useActivity";
+import { useModuleInfo } from "@Hooks/useModuleInfo";
+import { useStrings } from "@Hooks/useStrings";
+import { useTheme } from "@Hooks/useTheme";
+import BugReportIcon from "@mui/icons-material/BugReport";
+import FormatAlignLeftIcon from "@mui/icons-material/FormatAlignLeft";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import VerifiedIcon from "@mui/icons-material/Verified";
+import { Avatar, AvatarGroup, Box, Divider, ListSubheader, Stack, Typography } from "@mui/material";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
 import ListItemButton from "@mui/material/ListItemButton";
-import BugReportIcon from "@mui/icons-material/BugReport";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import VerifiedIcon from "@mui/icons-material/Verified";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import FormatAlignLeftIcon from "@mui/icons-material/FormatAlignLeft";
-import FetchTextActivity from "../../FetchTextActivity";
-import { useStrings } from "@Hooks/useStrings";
-import { useActivity } from "@Hooks/useActivity";
-import { useTheme } from "@Hooks/useTheme";
+import ListItemText from "@mui/material/ListItemText";
 import { os } from "@Native/Os";
-import { useModuleInfo } from "@Hooks/useModuleInfo";
-import Collapse from "@mui/material/Collapse";
 import React from "react";
-import { ExpandLess, ExpandMore } from "@mui/icons-material";
-import { Avatar, AvatarGroup, Badge, Box, Divider, ListSubheader, Stack, Typography } from "@mui/material";
-import { Pre } from "@Components/dapi/Pre";
 
 const preSx = { display: "inline" };
 
@@ -55,7 +52,7 @@ const AboutTab = () => {
                 })
                 .then((json: LicenseSPX) => {
                   context.pushPage({
-                    component: FetchTextActivity,
+                    component: Activities.FetchText,
                     key: "license_" + license,
                     extra: {
                       raw_data: json.licenseText,
@@ -224,3 +221,4 @@ const FeatureItem = React.memo<FeatureItemProps>(({ feat, title, desc, icons }) 
 });
 
 export { AboutTab };
+

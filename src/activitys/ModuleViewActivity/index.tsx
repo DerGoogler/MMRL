@@ -1,20 +1,22 @@
-import { InstallTerminalV2Activity, TerminalActivityExtra } from "@Activitys/InstallTerminalV2Activity";
+import { TerminalActivityExtra } from "@Activitys/InstallTerminalV2Activity";
 import { AvatarWithProgress } from "@Components/AvatarWithProgress";
 import { DropdownButton } from "@Components/DropdownButton";
 import { VerifiedIcon } from "@Components/icons/VerifiedIcon";
+import { useModuleQueue } from "@Components/ModulesQueue";
 import { Page } from "@Components/onsenui/Page";
 import { Toolbar } from "@Components/onsenui/Toolbar";
 import { useActivity } from "@Hooks/useActivity";
 import { useDownloadModule } from "@Hooks/useDownloadModule";
 import { useFormatBytes } from "@Hooks/useFormatBytes";
 import { useModuleInfo } from "@Hooks/useModuleInfo";
-import { useOpenModuleSearch } from "@Hooks/useOpenModuleSearch";
 import { useRepos } from "@Hooks/useRepos";
 import { useStrings } from "@Hooks/useStrings";
 import { useTheme } from "@Hooks/useTheme";
 import { VolunteerActivism } from "@mui/icons-material";
+import LayersIcon from "@mui/icons-material/Layers";
 import TelegramIcon from "@mui/icons-material/Telegram";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import CardMedia from "@mui/material/CardMedia";
 import Divider from "@mui/material/Divider";
 import Fade from "@mui/material/Fade";
@@ -30,13 +32,11 @@ import { view } from "@Native/View";
 import { useConfirm } from "material-ui-confirm";
 import React from "react";
 import { Disappear } from "react-disappear";
+import { useDocumentTitle } from "usehooks-ts";
+import { Activities } from "..";
 import { AboutTab } from "./tabs/AboutTabs";
 import { OverviewTab } from "./tabs/OverviewTab";
 import { VersionsTab } from "./tabs/VersionsTab";
-import { useDocumentTitle } from "usehooks-ts";
-import LayersIcon from "@mui/icons-material/Layers";
-import { useModuleQueue } from "@Components/ModulesQueue";
-import Button from "@mui/material/Button";
 
 function a11yProps(index: number) {
   return {
@@ -384,7 +384,7 @@ const ModuleViewActivity = () => {
                           confirmationText: strings("yes"),
                         }).then(() => {
                           context.pushPage<TerminalActivityExtra, {}>({
-                            component: InstallTerminalV2Activity,
+                            component: Activities.InstallTerminal,
                             key: "InstallTerminalV2Activity",
                             extra: {
                               issues: support,
@@ -430,4 +430,4 @@ const ModuleViewActivity = () => {
   );
 };
 
-export { ModuleViewActivity };
+export default ModuleViewActivity;

@@ -6,7 +6,7 @@ import Chip from "@mui/material/Chip";
 import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 
-import { ModConfActivity, ModConfActivityExtra } from "@Activitys/ModConfActivity";
+import { ModConfActivityExtra } from "@Activitys/ModConfActivity";
 
 import { Delete, Settings, RefreshRounded, Loop } from "@mui/icons-material";
 
@@ -25,6 +25,7 @@ import Switch from "@mui/material/Switch";
 import { Image } from "@Components/dapi/Image";
 import { AntifeatureButton } from "@Components/AntifeaturesButton";
 import { useBlacklist } from "@Hooks/useBlacklist";
+import { Activities } from "@Activitys/index";
 
 interface Props {
   module: Module;
@@ -184,7 +185,7 @@ const DeviceModule = React.memo<Props>((props) => {
               <Button
                 onClick={() => {
                   context.pushPage<ModConfActivityExtra, any>({
-                    component: ModConfActivity,
+                    component: Activities.ModConf,
                     key: `${id}_configure`,
                     extra: {
                       indexFile: format("CONFINDEX"),

@@ -1,36 +1,35 @@
-import { useStrings } from "@Hooks/useStrings";
-import Box from "@mui/material/Box";
-import React from "react";
-import IconButton from "@mui/material/IconButton";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import Typography from "@mui/material/Typography";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import ImageList from "@mui/material/ImageList";
-import ImageListItem from "@mui/material/ImageListItem";
-import Stack from "@mui/material/Stack";
-import { useActivity } from "@Hooks/useActivity";
-import ListItemText from "@mui/material/ListItemText";
-import Alert from "@mui/material/Alert";
-import AlertTitle from "@mui/material/AlertTitle";
-import Chip from "@mui/material/Chip";
-import DescriptonActivity from "../../DescriptonActivity";
-import { useSettings } from "@Hooks/useSettings";
-import ListItemButton from "@mui/material/ListItemButton";
-import { useLowQualityModule } from "@Hooks/useLowQualityModule";
+import { Activities } from "@Activitys/index";
 import AntiFeatureListItem from "@Components/AntiFeatureListItem";
 import { Image } from "@Components/dapi/Image";
+import { useActivity } from "@Hooks/useActivity";
+import { useBlacklist } from "@Hooks/useBlacklist";
 import { useCategories } from "@Hooks/useCategories";
+import { useFetch } from "@Hooks/useFetch";
 import { useFormatDate } from "@Hooks/useFormatDate";
-import { ModuleViewActivity } from "..";
-import { useRepos } from "@Hooks/useRepos";
+import { useLowQualityModule } from "@Hooks/useLowQualityModule";
 import { useModuleInfo } from "@Hooks/useModuleInfo";
+import { useRepos } from "@Hooks/useRepos";
+import { useSettings } from "@Hooks/useSettings";
+import { useStrings } from "@Hooks/useStrings";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Chip from "@mui/material/Chip";
+import IconButton from "@mui/material/IconButton";
+import ImageList from "@mui/material/ImageList";
+import ImageListItem from "@mui/material/ImageListItem";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 import { Build } from "@Native/Build";
 import { os } from "@Native/Os";
-import { useFetch } from "@Hooks/useFetch";
-import { useBlacklist } from "@Hooks/useBlacklist";
+import React from "react";
 
 const colorHandler = (color?: ModuleNoteColors) => {
   switch (color) {
@@ -123,7 +122,7 @@ const OverviewTab = () => {
                 <IconButton
                   onClick={() => {
                     context.pushPage({
-                      component: DescriptonActivity,
+                      component: Activities.Description,
                       key: "DescriptonActivity",
                       extra: {
                         desc: readme,
@@ -227,7 +226,7 @@ const OverviewTab = () => {
                       <ListItemButton
                         onClick={() => {
                           context.pushPage({
-                            component: ModuleViewActivity,
+                            component: Activities.ModuleView,
                             key: "ModuleViewActivity",
                             extra: findRequire,
                           });

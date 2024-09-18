@@ -13,6 +13,7 @@ import { useSettings } from "@Hooks/useSettings";
 import { useStrings } from "@Hooks/useStrings";
 import CodeRoundedIcon from "@mui/icons-material/CodeRounded";
 import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
+import LayersIcon from "@mui/icons-material/Layers";
 import MenuIcon from "@mui/icons-material/Menu";
 import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
 import Typography from "@mui/material/Typography";
@@ -25,10 +26,8 @@ import { SuZip } from "@Native/SuZip";
 import { useConfirm } from "material-ui-confirm";
 import { Properties } from "properties-file";
 import React from "react";
+import { Activities } from ".";
 import ModuleFragment from "./fragments/ModuleFragment";
-import InstallTerminalV2Activity from "./InstallTerminalV2Activity";
-import { ModuleViewActivity } from "./ModuleViewActivity";
-import LayersIcon from "@mui/icons-material/Layers";
 
 const TAG = "MainApplication";
 
@@ -75,7 +74,7 @@ const MainApplication = () => {
         })
           .then(() => {
             context.pushPage({
-              component: InstallTerminalV2Activity,
+              component: Activities.InstallTerminal,
               key: "InstallTerminalV2Activity",
               extra: {
                 exploreInstall: false,
@@ -96,7 +95,7 @@ const MainApplication = () => {
     const m_ = modules.find((m) => m.id === id);
     if (m_) {
       context.pushPage({
-        component: ModuleViewActivity,
+        component: Activities.ModuleView,
         key: "ModuleViewActivity",
         extra: m_,
       });
@@ -159,7 +158,7 @@ const MainApplication = () => {
                             chooseModule.onChose = (files) => {
                               if (Chooser.isSuccess(files)) {
                                 context.pushPage({
-                                  component: InstallTerminalV2Activity,
+                                  component: Activities.InstallTerminal,
                                   key: "InstallTerminalV2Activity",
                                   extra: {
                                     exploreInstall: false,

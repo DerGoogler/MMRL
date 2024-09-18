@@ -37,4 +37,6 @@ const ModConfActivity = () => {
   );
 };
 
-export { ModConfActivity, ModConfActivityExtra };
+export default ModConfActivity;
+
+export { ModConfActivityExtra };

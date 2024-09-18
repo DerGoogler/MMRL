@@ -123,4 +123,4 @@ const LogcatActivity = () => {
   );
 };
 
-export { LogcatActivity };
+export default LogcatActivity;

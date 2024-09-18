@@ -21,7 +21,7 @@ import {
 } from "@mui/icons-material";
 import { useStrings } from "@Hooks/useStrings";
 import { useActivity } from "@Hooks/useActivity";
-import { ModuleViewActivity } from "@Activitys/ModuleViewActivity";
+import { Activities } from "@Activitys/index";
 import { useSettings } from "@Hooks/useSettings";
 import { GestureDetector } from "@Components/onsenui/GestureDetector";
 import { Xda } from "@Components/icons/Xda";
@@ -127,7 +127,7 @@ const Anchor: React.FC<AnchorProps> = (props) => {
       e.preventDefault();
       if (__href && module && findModule) {
         context.pushPage({
-          component: ModuleViewActivity,
+          component: Activities.ModuleView,
           key: "ModuleViewActivity",
           extra: findModule,
         });

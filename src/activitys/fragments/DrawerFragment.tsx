@@ -1,24 +1,16 @@
-import RepoActivity from "@Activitys/RepoActivity";
-import SettingsActivity from "@Activitys/SettingsActivity";
-import { useStrings } from "@Hooks/useStrings";
-import { Divider, List, ListItemButton, ListItemText, ListSubheader } from "@mui/material";
-import { Page } from "react-onsenui";
-import { IntentPusher } from "@Hooks/useActivity";
-import FetchTextActivity, { FetchTextActivityExtra } from "@Activitys/FetchTextActivity";
-import AboutActivity from "@Activitys/AboutActivity";
-import PlaygroundsActivity, { PlaygroundExtra } from "@Activitys/PlaygroundsActivity";
+import { FetchTextActivityExtra } from "@Activitys/FetchTextActivity";
 import { ModConfView } from "@Activitys/ModConfActivity/components/ModConfView";
+import PlaygroundsActivity, { PlaygroundExtra } from "@Activitys/PlaygroundsActivity";
 import { Markup } from "@Components/Markdown";
+import { IntentPusher } from "@Hooks/useActivity";
+import { useStrings } from "@Hooks/useStrings";
+import { useTheme } from "@Hooks/useTheme";
+import { Divider, List, ListItemButton, ListItemText, ListSubheader } from "@mui/material";
+import { os } from "@Native/Os";
 import { configureSample } from "@Util/configure-sample";
 import { dapiSample } from "@Util/dapi-sample";
-import ModFSActivity from "@Activitys/ModFSActivity";
-import ModConfPlaygroundActivity from "@Activitys/ModConfPlaygroundActivity";
-import LicensesActivity from "@Activitys/LicensesActivity";
-import { SubmitModuleActivity } from "@Activitys/SubmitModuleActivity";
-import { os } from "@Native/Os";
-import { useTheme } from "@Hooks/useTheme";
-import ViewBlacklistedModulesActivity from "@Activitys/ViewBlacklistedModulesActivity";
-import ModConfStandaloneActivity from "@Activitys/ModConfStandaloneActivity";
+import { Page } from "react-onsenui";
+import { Activities } from "..";
 
 type Props = {
   renderToolbar: () => JSX.Element;
@@ -38,7 +30,7 @@ export const DrawerFragment = (props: Props) => {
         <ListItemButton
           onClick={() => {
             pushPage({
-              component: SettingsActivity,
+              component: Activities.Settings,
               key: "settings",
             });
             hide();
@@ -49,7 +41,7 @@ export const DrawerFragment = (props: Props) => {
         <ListItemButton
           onClick={() => {
             pushPage({
-              component: RepoActivity,
+              component: Activities.Repo,
               key: "repos",
             });
             hide();
@@ -61,7 +53,7 @@ export const DrawerFragment = (props: Props) => {
         <ListItemButton
           onClick={() => {
             pushPage({
-              component: ModFSActivity,
+              component: Activities.ModFS,
               key: "ModFSActivity",
               extra: {},
             });
@@ -74,7 +66,7 @@ export const DrawerFragment = (props: Props) => {
         <ListItemButton
           onClick={() => {
             pushPage({
-              component: ViewBlacklistedModulesActivity,
+              component: Activities.ViewBlacklistedModules,
               key: "ViewBlacklistedModulesActivity",
               extra: {},
             });
@@ -92,7 +84,7 @@ export const DrawerFragment = (props: Props) => {
           onClick={() => {
             pushPage({
               noMemo: true,
-              component: SubmitModuleActivity,
+              component: Activities.SubmitModule,
               key: "SubmitModuleActivity",
               extra: {},
             });
@@ -110,7 +102,7 @@ export const DrawerFragment = (props: Props) => {
                 title: "DAPI Tester",
                 defaultText: dapiSample,
                 editorMode: "markdown",
-                previewPage: FetchTextActivity,
+                previewPage: Activities.FetchText,
                 preview: Markup,
               },
             });
@@ -122,7 +114,7 @@ export const DrawerFragment = (props: Props) => {
         <ListItemButton
           onClick={() => {
             pushPage<any, any>({
-              component: ModConfPlaygroundActivity,
+              component: Activities.ModConfPlayground,
               key: "ModConfPlaygroundActivity",
               extra: {
                 editorMode: "javascript",
@@ -137,7 +129,7 @@ export const DrawerFragment = (props: Props) => {
         <ListItemButton
           onClick={() => {
             pushPage<any, any>({
-              component: ModConfStandaloneActivity,
+              component: Activities.ModConfStandalone,
               key: "ModConfStandaloneActivity",
               extra: {},
             });
@@ -162,7 +154,7 @@ export const DrawerFragment = (props: Props) => {
         <ListItemButton
           onClick={() => {
             pushPage({
-              component: AboutActivity,
+              component: Activities.About,
               key: "abt",
               extra: {},
             });
@@ -174,7 +166,7 @@ export const DrawerFragment = (props: Props) => {
         <ListItemButton
           onClick={() => {
             pushPage({
-              component: LicensesActivity,
+              component: Activities.Licenses,
               key: "license",
             });
             hide();
@@ -185,7 +177,7 @@ export const DrawerFragment = (props: Props) => {
         <ListItemButton
           onClick={() => {
             pushPage<FetchTextActivityExtra, any>({
-              component: FetchTextActivity,
+              component: Activities.FetchText,
               key: "changelog",
               extra: {
                 rendering: ModConfView,
