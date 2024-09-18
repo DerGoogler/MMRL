@@ -24,21 +24,6 @@ const InstallerComponent = () => {
 
   const { clearTerminal, lines } = useLines();
 
-  // ensure that it is always the same function
-  const nativeVolumeEventPrevent = React.useCallback((e: Event) => {
-    e.preventDefault();
-  }, []);
-  React.useEffect(() => {
-    document.addEventListener("volumeupbutton", nativeVolumeEventPrevent, false);
-    document.addEventListener("volumedownbutton", nativeVolumeEventPrevent, false);
-    view.addFlags([WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON]);
-    return () => {
-      document.removeEventListener("volumeupbutton", nativeVolumeEventPrevent, false);
-      document.removeEventListener("volumedownbutton", nativeVolumeEventPrevent, false);
-      view.clearFlags([WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON]);
-    };
-  }, []);
-
   const [termScrollBottom] = useSettings("term_scroll_bottom");
   const [termScrollBehavior] = useSettings("term_scroll_behavior");
 
@@ -88,15 +73,27 @@ const InstallerComponent = () => {
     }
   }, []);
 
-  const install = () => {
+  // ensure that it is always the same function
+  const nativeVolumeEventPrevent = React.useCallback((e: Event) => {
+    e.preventDefault();
+  }, []);
+  React.useEffect(() => {
     const { exploreInstall } = extra;
-
     if (exploreInstall) {
       handleExploreInstall();
     } else {
       handleLocalInstall();
     }
-  };
+
+    document.addEventListener("volumeupbutton", nativeVolumeEventPrevent, false);
+    document.addEventListener("volumedownbutton", nativeVolumeEventPrevent, false);
+    view.addFlags([WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON]);
+    return () => {
+      document.removeEventListener("volumeupbutton", nativeVolumeEventPrevent, false);
+      document.removeEventListener("volumedownbutton", nativeVolumeEventPrevent, false);
+      view.clearFlags([WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON]);
+    };
+  }, []);
 
   const renderToolbar = () => {
     return (
@@ -129,7 +126,6 @@ const InstallerComponent = () => {
         // removing bottom window insets
         pb: "0px !important",
       }}
-      onShow={install}
       modifier="noshadow"
       renderToolbar={renderToolbar}
     >
