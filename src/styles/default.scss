@@ -5,6 +5,7 @@
   ::-webkit-scrollbar {
     display: none;
   }
+  touch-action: manipulation;
 }
 
 @media (prefers-reduced-motion: no-preference) {

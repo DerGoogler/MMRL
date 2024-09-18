@@ -4,7 +4,7 @@
     "author": null,
     "license": "MIT",
     "description": "babel's modular runtime helpers",
-    "version": "7.24.8",
+    "version": "7.25.6",
     "source": "https://www.npmjs.com/package/@babel/runtime"
   },
   {
@@ -65,7 +65,7 @@
     "author": null,
     "license": "MIT",
     "description": "Material UI is an open-source React component library that implements Google's Material Design. It's comprehensive and can be used in production out of the box.",
-    "version": "5.15.4",
+    "version": "5.16.7",
     "source": "https://www.npmjs.com/package/@mui/material"
   },
   {
