@@ -29,6 +29,7 @@ const defConfig: Configuration = {
 
 const config: Configuration = {
   entry: {
+    tgpusher: [resolve(__dirname, "src/external/telegram-pusher/index.tsx")],
     app: [resolve(__dirname, "src/index.tsx")],
     cordova: [resolve(__dirname, "web/cordova/cordova.js")],
     cordova_plugins: {
@@ -152,8 +153,24 @@ const config: Configuration = {
       inject: "body",
       hash: true,
       xhtml: true,
+      excludeChunks: ["tgpusher"],
       template: resolve(__dirname, "web/app.html"),
       filename: resolve(__dirname, outputPath, "index.html"),
+    }),
+    new HtmlWebpackPlugin({
+      opt: {
+        title: "Telegram Pusher",
+        url: "https://dergoogler.com/tgpusher",
+        description: "N/A",
+        cover: "N/A.png",
+      },
+      minify: true,
+      inject: "body",
+      hash: true,
+      xhtml: true,
+      excludeChunks: ["app", "cordova", "cordova_plugins", "cordova-js-src", "c-plugins"],
+      template: resolve(__dirname, "web/app.html"),
+      filename: resolve(__dirname, outputPath, "external/tgpusher/index.html"),
     }),
     new FileManagerPlugin({
       events: {

@@ -14,6 +14,7 @@ program
   .option("-b, --branch [BRANCH]", "Use another branch", "master")
   .option("-o, --owner [OWNER]", "Use repo owner", "DerGoogler")
   .option("-n, --name [NAME]", "Use repo name", "mmrl-web")
+  .option("-a, --add", "Only add, and never remove existing files.")
   .option("-l, --blog <BLOG>", "Add a blog link to the release (Placeholder)")
   .action((opt) => {
     const __dir = ["app/src/main/assets/www"];
@@ -29,7 +30,7 @@ program
         name: "github-actions[bot]",
         email: "github-actions[bot]@users.noreply.github.com",
       },
-      add: true,
+      add: false,
     });
   });
 
