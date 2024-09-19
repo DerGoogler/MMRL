@@ -29,7 +29,11 @@ const defConfig: Configuration = {
 
 const config: Configuration = {
   entry: {
-    tgpusher: [resolve(__dirname, "src/external/telegram-pusher/index.tsx")],
+    tgpusher: {
+      import: [resolve(__dirname, "src/external/telegram-pusher/index.tsx")],
+      dependOn: "onsenui",
+    },
+    onsenui: "onsenui",
     app: [resolve(__dirname, "src/index.tsx")],
     cordova: [resolve(__dirname, "web/cordova/cordova.js")],
     cordova_plugins: {

@@ -42,7 +42,7 @@ class BuildConfigClass extends Native {
   }
   public get DEBUG(): boolean {
     if (this.isAndroid) {
-      return this.interface.DEBUG;
+      return this.interface.DEBUG();
     } else {
       return __webpack__mode__ === "development";
     }
@@ -50,7 +50,7 @@ class BuildConfigClass extends Native {
 
   public get BUILD_TYPE(): string {
     if (this.isAndroid) {
-      return this.interface.BUILD_TYPE;
+      return this.interface.BUILD_TYPE();
     } else {
       return __webpack__mode__;
     }

@@ -68,10 +68,10 @@ class Chooser extends Native<ChooserNative> {
       this._inputElement.onchange = async (event) => {
         const files = this._inputElement.files;
         if (files && files.length > 0) {
-          const fileArray: string[] = [];
+          const fileArray: (File | string)[] = [];
 
           for (let i = 0; i < files.length; i++) {
-            fileArray.push(await this._blobToBase64(files[i]));
+            fileArray.push(files[i]);
           }
 
           if (typeof this._onChose === "function") {
