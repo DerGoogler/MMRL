@@ -169,4 +169,6 @@ export const en = {
   add_t_queue: "Module has been added to your queue",
   start_mod_ini_queue: "Start install queue?",
   start_mod_ini_queue_desc: "Are you sure that you want to start this queue?",
+  unsupported_root:
+    "This module doesn't supports your current root version! Detected {manager} with version {version}. Install at your own risk!",
 };

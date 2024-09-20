@@ -8,6 +8,7 @@ import { useFormatDate } from "@Hooks/useFormatDate";
 import { useModFS } from "@Hooks/useModFS";
 import { useModuleInfo } from "@Hooks/useModuleInfo";
 import { useStrings } from "@Hooks/useStrings";
+import { useSupportedRoot } from "@Hooks/useSupportedRoot";
 import { useTheme } from "@Hooks/useTheme";
 import { CalendarMonth, PersonOutline, Source, Tag } from "@mui/icons-material";
 import Card from "@mui/material/Card";
@@ -23,7 +24,8 @@ interface Props {
 
 const ExploreModule = React.memo<Props>((props) => {
   const { id, name, author, description, track, timestamp, version, versions, versionCode, features, __mmrl_repo_source } = props.module;
-  const { cover, verified } = useModuleInfo(props.module);
+  const { cover, verified, root } = useModuleInfo(props.module);
+  const [isModuleSupported] = useSupportedRoot(root, []);
 
   const { context } = useActivity();
   const { strings } = useStrings();
@@ -103,6 +105,8 @@ const ExploreModule = React.memo<Props>((props) => {
           {features && Object.keys(features).length !== 0 && (
             <Chip size="small" sx={{ backgroundColor: "white", color: "black" }} label={Object.keys(features).length + " features"} />
           )}
+          
+          {!isModuleSupported && <Chip size="small" color="warning" label={strings("unsupported")} />}
 
           {findHardCodedAntifeature && findHardCodedAntifeature.length !== 0 && (
             <AntifeatureButton useChip antifeatures={findHardCodedAntifeature} />

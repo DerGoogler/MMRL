@@ -40,7 +40,8 @@ interface NativeShellV2 extends NativeShell {
   };
 }
 
-type RootManager = "Magisk" | "KernelSU" | "APatchSU" | "Unknown";
+export type RootManager = "Magisk" | "KernelSU" | "APatchSU" | "Unknown";
+export type RootManagerV2 = "Magisk" | "KernelSU" | "APatch" | "Unknown";
 
 /**
  * Run Shell commands native on Android
@@ -154,11 +155,31 @@ class Shell extends Native<NativeShellV2> {
     }
   }
 
+  /**
+   * @deprecated
+   * @returns
+   */
   public static getRootManager(): RootManager {
     const rootManagers: [boolean, RootManager][] = [
       [this.isMagiskSU(), "Magisk"],
       [this.isKernelSU(), "KernelSU"],
       [this.isAPatchSU(), "APatchSU"],
+    ];
+
+    for (const [check, name] of rootManagers) {
+      if (check) {
+        return name;
+      }
+    }
+
+    return "Unknown";
+  }
+
+  public static getRootManagerV2(): RootManagerV2 {
+    const rootManagers: [boolean, RootManagerV2][] = [
+      [this.isMagiskSU(), "Magisk"],
+      [this.isKernelSU(), "KernelSU"],
+      [this.isAPatchSU(), "APatch"],
     ];
 
     for (const [check, name] of rootManagers) {

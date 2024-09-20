@@ -13,7 +13,8 @@ type PickedModule =
   | "screenshots"
   | "categories"
   | "readme"
-  | "size";
+  | "size"
+  | "root";
 
 type ModuleInfo = Pick<Module, PickedModule> & { latestVersion: Version };
 
@@ -40,5 +41,6 @@ export const useModuleInfo = (extra: Module): ModuleInfo => {
     readme: extra.readme || track.readme,
     latestVersion: latestVersion,
     size: extra.size || latestVersion.size,
+    root: extra.root,
   };
 };

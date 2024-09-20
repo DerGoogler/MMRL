@@ -2,6 +2,7 @@ import { AlertColor } from "@mui/material/Alert";
 import { AvailableStrs, strs } from "./../locales/declaration";
 import { Theme } from "@mui/material";
 import { en_antifeatures } from "locales/antifeatures/en";
+import { RootManagerV2 } from "@Native/Shell";
 
 export {};
 
@@ -189,6 +190,8 @@ declare global {
 
   export type ModuleFeatures = Partial<Record<ModuleFeaturesList, boolean>>;
 
+  export type RootSoluctions = Partial<Record<Exclude<Lowercase<RootManagerV2>, "unknown">, string>>;
+
   export interface Module extends BaseModule {
     updateJson?: string;
     added: number;
@@ -215,6 +218,7 @@ declare global {
     stars?: number;
     readme?: string;
     note?: ModuleNote;
+    root?: RootSoluctions;
 
     /**
      * Non-user definable

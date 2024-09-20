@@ -11,6 +11,7 @@ import { useModuleInfo } from "@Hooks/useModuleInfo";
 import { useRepos } from "@Hooks/useRepos";
 import { useSettings } from "@Hooks/useSettings";
 import { useStrings } from "@Hooks/useStrings";
+import { useSupportedRoot } from "@Hooks/useSupportedRoot";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
@@ -29,6 +30,7 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { Build } from "@Native/Build";
 import { os } from "@Native/Os";
+import { Shell } from "@Native/Shell";
 import React from "react";
 
 const colorHandler = (color?: ModuleNoteColors) => {
@@ -60,7 +62,8 @@ const OverviewTab = () => {
   const { modules } = useRepos();
   const { id, name, description, versions, minApi, note, track } = extra;
 
-  const { icon, screenshots, require, readme: moduleReadme, categories } = useModuleInfo(extra);
+  const { icon, screenshots, require, readme: moduleReadme, categories, root } = useModuleInfo(extra);
+  const [isModuleSupported, currentRootVersion] = useSupportedRoot(root, []);
 
   const { filteredCategories } = useCategories(categories);
 
@@ -96,6 +99,12 @@ const OverviewTab = () => {
         {minApi && minApi > os.sdk && (
           <Alert sx={{ width: "100%" }} severity="warning">
             {strings("module_require_android_ver", { andro_ver: Build.parseVersion(minApi) })}
+          </Alert>
+        )}
+
+        {!isModuleSupported && (
+          <Alert sx={{ width: "100%" }} severity="error">
+            {strings("unsupported_root", { manager: Shell.getRootManagerV2(), version: currentRootVersion })}
           </Alert>
         )}
 
