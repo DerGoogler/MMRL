@@ -21,6 +21,11 @@
     <preference name="scheme" value="https"/>
     <preference name="hostname" value="mmrl.dergoogler.com"/>
 
+    <preference name="webviewbounce" value="false" />
+    <preference name="UIWebViewBounce" value="false" />
+    <preference name="DisallowOverscroll" value="true" />
+    <preference name="BackupWebStorage" value="none" />
+
     <feature name="Chooser">
         <param name="android-package" value="com.dergoogler.plugin.ChooserPlugin" />
     </feature>
