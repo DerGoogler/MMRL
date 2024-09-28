@@ -18,7 +18,7 @@ android {
     defaultConfig {
         applicationId = namespace
         versionName = baseVersionName
-        versionCode = commitCount + 32432
+        versionCode = commitCount + 31320
 
         resourceConfigurations += arrayOf(
             "en",
