@@ -1,17 +1,32 @@
-This repository stores a fork of [MRepoApp/MRepo](https://github.com/MRepoApp/MRepo) and will force pushed into [DerGoogler/MMRL](https://github.com/DerGoogler/MMRL ) when it is finshed.
+# MMRL
 
-Please not that this build doesn't have the right versioning nor the version changes. It's a WIP
+[![release](https://img.shields.io/github/v/release/DerGoogler/MMRL?label=release&color=red)](https://github.com/DerGoogler/MMRL/releases) [![download](https://shields.io/github/downloads/DerGoogler/MMRL/total?label=download)](https://github.com/DerGoogler/MMRL/releases/latest)
 
-> Translate PR's will be ignored and closed
+MMRL is an Android app that helps manage your own modules repository.
 
-Supported repos:
+## Preview
 
-- ```
-  apt.izzysoft.de/magisk
-  ```
-- ```
-  gr.dergoogler.com/gmr
-  ```
-- ```
-  magisk-modules-alt-repo.github.io/json-v2
-  ```
+<p>
+  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" width="32%" />
+  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" width="32%" />
+  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" width="32%" />
+  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/4.png" width="32%" />
+  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/5.png" width="32%" />
+  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/6.png" width="32%" />
+</p>
+
+## Supported Versions
+
+- Android 8.0 ~ 14
+- Magisk 24.0 ~ latest
+- KernelSU 0.5.1 ~ latest
+- APatch 10253 ~ latest
+
+## Modules Repository
+
+- [Googlers-Repo/magisk-modules-repo-util](https://github.com/Googlers-Repo/magisk-modules-repo-util): A command line interface for building modules repository
+
+## Credits
+
+- [tabler/tabler-icons](https://github.com/tabler/tabler-icons.git)
+- [MRepoApp/MRepo](https://github.com/MRepoApp/MRepo)
