@@ -1,3 +1,9 @@
+
+> [!IMPORTANT]      
+> V4 is in progress will change everything! Check early dev build out at [DerGoogler/MMRL-V4](https://github.com/DerGoogler/MMRL-V4)
+
+
+
 **English** || [Português](README_PT.md) || [Azərbaycan](README_az.md)
 <p align="center">
   <img width="550" height="auto" src="https://mmrl.dergoogler.com/assets/MMRL-Cover.png">
