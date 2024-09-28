@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="settings_app_theme_desc">Смена цветовой схемы и ночного режима</string>
+    <string name="settings_app_theme_desc">Персонализация</string>
     <string name="settings_delete_zip_desc">Удаление zip файла модуля после успешной установки. Будет выполнено суперпользователем</string>
     <string name="setup_mode">Режим работы</string>
-    <string name="setup_root_title">Рут</string>
-    <string name="setup_non_root_title">Без рут</string>
+    <string name="setup_root_title">Root</string>
+    <string name="setup_non_root_title">No Root</string>
     <string name="install_flashing">Прошивка</string>
     <string name="install_done">Выполнено</string>
     <string name="install_failure">Ошибка</string>
@@ -17,9 +17,9 @@
     <string name="view_module_page_versions">Версии</string>
     <string name="view_module_page_about">О модуле</string>
     <string name="license_fsf_libre">FSF Libre</string>
-    <string name="view_module_local">Локальные</string>
+    <string name="view_module_local">Локальные модули</string>
     <string name="modules_empty">Модули не найдены</string>
-    <string name="module_version_author">%1$s от %2$s</string>
+    <string name="module_version_author">%1$s, Автор: %2$s</string>
     <string name="module_remove">Удалить</string>
     <string name="module_restore">Восстановить</string>
     <string name="module_install">Установить</string>
@@ -28,11 +28,11 @@
     <string name="settings_app">Приложение</string>
     <string name="settings_app_desc">Настройки приложения MMRL</string>
     <string name="settings_about">О приложении</string>
-    <string name="settings_root_access">Рут доступ: %s</string>
-    <string name="settings_root_provider">Предоставитель: %s</string>
+    <string name="settings_root_access">Root доступ: %s</string>
+    <string name="settings_root_provider">Root метод: %s</string>
     <string name="settings_root_granted">предоставлен</string>
-    <string name="settings_root_not_available">Недоступно</string>
-    <string name="settings_root_none">Нету</string>
+    <string name="settings_root_not_available">Недоступен</string>
+    <string name="settings_root_none">Нет</string>
     <string name="settings_app_theme">Тема приложения</string>
     <string name="settings_download_path">Путь для загрузки</string>
     <string name="settings_delete_zip">Удалить zip файл</string>
@@ -45,15 +45,15 @@
     <string name="dialog_ok">ОК</string>
     <string name="message_download_success">Успешно загружено</string>
     <string name="message_loading">Загрузка…</string>
-    <string name="notification_name_download">Служба скачивания</string>
-    <string name="search_empty">Список пустой</string>
+    <string name="notification_name_download">Служба загрузки</string>
+    <string name="search_empty">Список пуст</string>
     <string name="unknown_error">Неизвестная ошибка</string>
     <string name="page_settings">Настройки</string>
     <string name="view_module_description">Описание</string>
     <string name="view_module_version">Версия</string>
     <string name="view_module_provided">Предоставлено %s</string>
-    <string name="view_module_version_dialog_desc">Вы хотите установить или загрузить эту версию модуля\?</string>
-    <string name="settings_repo_desc">Управление репозиториями модулей Magisk</string>
+    <string name="view_module_version_dialog_desc">Вы хотите загрузить и установить эту версию модуля\?</string>
+    <string name="settings_repo_desc">Управление репозиториями модулей</string>
     <string name="license_osi_approved">Одобрено OSI</string>
     <string name="settings_non_root_desc">Функциональность ограничена</string>
     <string name="repo_options_update">Обновить</string>
@@ -73,11 +73,11 @@
     <string name="view_module_source">Исходный код</string>
     <string name="view_module_support">Поддержка</string>
     <string name="module_new">Новый</string>
-    <string name="menu_pin_installed">Пин-код установлен</string>
-    <string name="menu_pin_updatable">Пин-код обновлён</string>
+    <string name="menu_pin_installed">Pin установлен</string>
+    <string name="menu_pin_updatable">Pin обновлён</string>
     <string name="menu_show_icon">Показать иконку</string>
     <string name="menu_show_license">Показать лицензию</string>
-    <string name="view_module_view_track">Просмотр трека</string>
+    <string name="view_module_view_track">Просмотр ссылки</string>
     <string name="view_module_type">Тип: %s</string>
     <string name="view_module_added">Добавлено: %s</string>
     <string name="repo_update_at">Обновлено: %s</string>
@@ -95,9 +95,9 @@
     <string name="view_module_update_notify">Оповестить</string>
     <string name="view_module_update_ignore">Игнорировать</string>
     <string name="setup_shizuku_desc">Требуется разрешение предоставленное через Sui или Shizuku (root)</string>
-    <string name="setup_root_desc">Требуются права root предоставленные через Magisk или KernelSU</string>
+    <string name="setup_root_desc">Требуется предоставление root прав</string>
     <string name="settings_doh">DNS поверх HTTPS</string>
     <string name="setup_non_root_desc">Не требуются права суперпользователя, доступна только функция загрузки модуля</string>
     <string name="module_update">Обновить</string>
-    <string name="settings_doh_desc">Решение проблемы отравления DNS в некоторых странах</string>
+    <string name="settings_doh_desc">Решение проблемы недоступности DNS в некоторых странах</string>
 </resources>
