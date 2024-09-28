@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+import "WorkingMode.proto";
+import "DarkMode.proto";
+import "repository/RepositoryMenu.proto";
+import "modules/ModulesMenu.proto";
+
+option java_package = "com.dergoogler.mmrl.datastore";
+option java_multiple_files = true;
+
+message UserPreferences {
+  WorkingMode workingMode = 1;
+  DarkMode darkMode = 2;
+  int32 themeColor = 3;
+  bool deleteZipFile = 4;
+  RepositoryMenu repositoryMenu = 5;
+  ModulesMenu modulesMenu = 6;
+  bool useDoh = 7;
+  string downloadPath = 8;
+}

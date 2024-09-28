@@ -1,3 +1,182 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Setup -->
+    <string name="setup_mode">Working Mode</string>
+    <string name="setup_root_title">Root</string>
+    <string name="setup_root_desc">Requires Root permissions provided by Magisk or KernelSU</string>
+    <string name="setup_shizuku_desc">Requires permission provided by Sui or Shizuku (root)</string>
+    <string name="setup_non_root_title">Non-Root</string>
+    <string name="setup_non_root_desc">Not require Root permissions, only the download module function is available</string>
+
+    <!-- Install -->
+    <string name="install_screen_title">Installation</string>
+    <string name="install_flashing">Flashing</string>
+    <string name="install_done">Done</string>
+    <string name="install_failure">Failed</string>
+    <string name="install_logs_saved">Logs saved</string>
+    <string name="install_logs_save_failed">Failed to save: %s</string>
+
+    <!-- License -->
+    <string name="license_title">View License</string>
+    <string name="license_osi_approved">OSI Approved</string>
+    <string name="license_fsf_libre">FSF Libre</string>
+
+    <!-- Page -->
+    <string name="page_repository">Repository</string>
+    <string name="page_modules">Modules</string>
+    <string name="page_settings">Settings</string>
+
+    <!-- Repository -->
+    <string name="repository_empty">Repository is empty</string>
+    <string name="module_installed">Installed</string>
+    <string name="module_new">New</string>
+
+    <!-- Advanced Menu -->
+    <string name="menu_pin_installed">Pin Installed</string>
+    <string name="menu_pin_updatable">Pin Updatable</string>
+    <string name="menu_show_icon">Show Icon</string>
+    <string name="menu_show_license">Show License</string>
+    <string name="menu_show_cover">Show Cover</string>
+    <string name="menu_show_verified">Show Verified</string>
+
+    <!-- View Module -->
+    <string name="view_module_page_overview">Overview</string>
+    <string name="view_module_page_versions">Versions</string>
+    <string name="view_module_page_about">About</string>
+    <string name="view_module_page_readme">Readme</string>
+    <string name="view_module_description">Description</string>
+    <string name="view_module_cloud">Cloud</string>
+    <string name="view_module_version">Version</string>
+    <string name="view_module_last_updated">Last Updated</string>
+    <string name="view_module_local">Local</string>
+    <string name="view_module_update_notify">Notify</string>
+    <string name="view_module_update_ignore">Ignore</string>
+    <string name="view_module_provided">Provided by %s</string>
+    <string name="view_module_version_dialog_desc">Do you want to install or download this version of the module?</string>
+    <string name="view_module_homepage">Homepage</string>
+    <string name="view_module_source">Source Code</string>
+    <string name="view_module_support">Support</string>
+    <string name="view_module_view_track">View Track</string>
+    <string name="view_module_type">Type: %s</string>
+    <string name="view_module_added">Added at: %s</string>
+    <string name="view_module_file_size">File Size</string>
+    <string name="view_module_screenshots">Screenshots</string>
+    <string name="view_module_help">Help</string>
+    <string name="view_module_antifeatures">Anti-Features</string>
+    <string name="view_module_unsupported">Unsupported</string>
+    <string name="view_module_unsupported_desc">Seems like that you device doesn\'t support this module version. Install at your own risk!</string>
+
+    <!-- View Module / Features -->
+    <string name="view_module_features">Features</string>
+    <string name="view_module_features_service">Service</string>
+    <string name="view_module_features_post_fs_data">Post FS Data</string>
+    <string name="view_module_features_system_properties">System Properties</string>
+    <string name="view_module_features_selinux_policy">SELinux Policy</string>
+    <string name="view_module_features_zygisk">Zygisk</string>
+    <string name="view_module_features_apks">APKs</string>
+    <string name="view_module_features_webui">WebUI</string>
+    <string name="view_module_features_post_mount">Post Mount</string>
+    <string name="view_module_features_boot_completed">Boot completed</string>
+    <string name="view_module_features_service_sub">Runs code later during boot (more system initialized).</string>
+    <string name="view_module_features_post_fs_data_sub">Runs code early after boot (partially booted system).</string>
+    <string name="view_module_features_resetprop_sub">Sets system properties loaded by Magisk\'s resetprop.</string>
+    <string name="view_module_features_sepolicy_sub">Adds custom security policies (SEPolicy rules).</string>
+    <string name="view_module_features_zygisk_sub">Allows modules to interact with the Zygisk framework, enabling system-level modifications and interactions.</string>
+    <string name="view_module_features_apks_sub">Including additional APKs inside the module.</string>
+    <string name="view_module_features_webui_sub">Web interface for managing modules (KernelSU &amp; APatch, not Magisk).></string>
+    <string name="view_module_features_postmount_sub">Script execution after OverlayFS mounts (KernelSU &amp; APatch).></string>
+    <string name="view_module_features_bootcompleted_sub">Script execution after boot completes (KernelSU &amp; APatch).></string>
+
+
+    <!-- Modules -->
+    <string name="modules_empty">No modules found</string>
+    <!-- Module Item -->
+    <string name="module_version_author">%1$s by %2$s</string>
+    <string name="module_remove">Remove</string>
+    <string name="module_restore">Restore</string>
+    <string name="module_install">Install</string>
+    <string name="module_download">Download</string>
+    <string name="module_update">Update</string>
+
+    <!-- Settings -->
+    <string name="settings_app">App</string>
+    <string name="settings_app_desc">Settings about MMRL app itself</string>
+    <string name="settings_repo">Repositories</string>
+    <string name="settings_repo_desc">Manage Magisk modules repositories</string>
+    <string name="settings_about">About</string>
+    <string name="settings_resources">Resources</string>
+    <string name="settings_resources_desc">Documentations, Supported Repos and anything else</string>
+    <!-- Root Item -->
+    <string name="settings_root_access">Root Access: %s</string>
+    <string name="settings_root_provider">Provider: %s</string>
+    <string name="settings_root_granted">Granted</string>
+    <string name="settings_root_not_available">Not available</string>
+    <string name="settings_root_none">None</string>
+    <!-- Non Root Item -->
+    <string name="settings_non_root_desc">Functionality is limited</string>
+    <!-- App -->
+    <string name="settings_app_theme">App Theme</string>
+    <string name="settings_app_theme_desc">Change color scheme and night mode</string>
+    <string name="settings_download_path">Download Path</string>
+    <string name="settings_delete_zip">Delete Zip File</string>
+    <string name="settings_delete_zip_desc">Delete zip of module after the installation is successful, this will be executed by Superuser</string>
+    <string name="settings_doh">DNS over HTTPS</string>
+    <string name="settings_doh_desc">Workaround DNS poisoning in some nations</string>
+    <!-- App Theme -->
+    <string name="app_theme_palette">Theme Palette</string>
+    <string name="app_theme_dark_theme">Dark Theme</string>
+    <string name="app_theme_dark_theme_auto">Auto</string>
+    <string name="app_theme_dark_theme_light">Light</string>
+    <string name="app_theme_dark_theme_dark">Dark</string>
+    <!-- Repo -->
+    <string name="repo_modules">%d modules</string>
+    <string name="repo_update_at">Updated at: %s</string>
+    <string name="repo_incompatible">Incompatible</string>
+    <string name="repo_options_update">Update</string>
+    <string name="repo_options_delete">Delete</string>
+    <string name="repo_options_support">Support</string>
+    <string name="repo_options_submission">Submission</string>
+    <string name="repo_options_website">Website</string>
+    <string name="repo_options_donate">Donate</string>
+    <string name="repo_delete_dialog_desc">Are you sure to delete %s?</string>
+    <string name="repo_add_dialog_title">Add repository</string>
+    <string name="repo_add_dialog_add">Add</string>
+    <!-- About -->
+    <string name="about_app_version">Version %1$s (%2$s)</string>
+    <string name="about_desc1">Provide modules repositories and Manage modules for Magisk and KernelSU.</string>
+    <string name="about_desc2">Made with ❤️ by %s</string>
+
+    <!-- Dialog -->
+    <string name="dialog_attention">Attention</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_ok">OK</string>
+
+    <!-- Menu -->
+    <string name="menu_advanced_menu">Advanced Menu</string>
+    <string name="menu_sort_mode">Sort Mode</string>
+    <string name="menu_sort_option_name">Name</string>
+    <string name="menu_sort_option_updated">Updated Time</string>
+    <string name="menu_descending">Descending</string>
+    <string name="menu_pin_enabled">Pin Enabled</string>
+    <string name="menu_show_updated">Show Updated Time</string>
+    <string name="menu_show_antifeatures">Show Anti-Features</string>
+
+    <!-- Message -->
+    <string name="message_download_success">Download successful</string>
+    <string name="message_loading">Loading…</string>
+
+    <!-- Notification -->
+    <string name="notification_name_download">Download Service</string>
+
+    <!-- Search -->
+    <string name="search_empty">Empty list</string>
+    <string name="search_placeholder">Search…</string>
+
+    <!-- Other -->
+    <string name="unknown_error">Unknown error</string>
+    <string name="verified">Verified</string>
+    <string name="open">Open</string>
+    <string name="help">Help</string>
+    <string name="module_config">Config</string>
+
 </resources>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ads_name">Advertising</string>
+    <string name="ads_desc">The module contains advertisements.</string>
+
+    <string name="knownvuln_name">Known Vulnerability</string>
+    <string name="knownvuln_desc">This module contains a known security vulnerability</string>
+
+    <string name="nsfw_name">NSFW</string>
+    <string name="nsfw_desc">This module contains content that should not be publicized or visible everywhere</string>
+
+    <string name="nosourcesince_name">No Source Since</string>
+    <string name="nosourcesince_desc">The source code is no longer available, no updates possible.</string>
+
+    <string name="nonfreeadd_name">Non-Free Addons</string>
+    <string name="nonfreeadd_desc">This module promotes non-free add-ons</string>
+
+    <string name="nonfreeassets_name">Non-Free Assets</string>
+    <string name="nonfreeassets_desc">This module contains non-free assets</string>
+
+    <string name="nonfreedep_name">Non-Free Dependencies</string>
+    <string name="nonfreedep_desc">This module depends on other non-free modules</string>
+
+    <string name="nonfreenet_name">Non-Free Network Services</string>
+    <string name="nonfreenet_desc">This module promotes or depends entirely on a non-changeable or non-free network service</string>
+
+    <string name="tracking_name">Tracking</string>
+    <string name="tracking_desc">This module tracks and reports your activity</string>
+
+    <string name="upstreamnonfree_name">Upstream Non-Free</string>
+    <string name="upstreamnonfree_desc">The upstream source code is not entirely Free</string>
+
+    <string name="obfuscation_name">Obfuscation</string>
+    <string name="obfuscation_desc">The module source code may be obfuscated, making it difficult to understand, audit, or modify.</string>
+
+    <string name="unaskedremoval_name">Unasked Removal</string>
+    <string name="unaskedremoval_desc">The module removes apps, files, or other modules without user consent.</string>
+</resources>

@@ -1,1 +1,1 @@
-Introducing MMRL - the ultimate manager for Magisk, KernelSU, and APatch.
+A modules manager for Magisk & KernelSU

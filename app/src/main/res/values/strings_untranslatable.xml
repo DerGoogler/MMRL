@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">MMRL</string>
+    <string name="install_activity" translatable="false">@string/module_install</string>
+
+    <!-- Setup -->
+    <string name="setup_shizuku_title" translatable="false">Shizuku</string>
+
+    <!-- Modules -->
+    <!-- Module Item -->
+    <string name="module_update_at" translatable="false">@string/repo_update_at</string>
+
+    <!-- Settings -->
+    <!-- Non Root Item -->
+    <string name="settings_non_root" translatable="false">@string/setup_non_root_title</string>
+    <!-- Repo -->
+    <string name="repo_empty" translatable="false">@string/repository_empty</string>
+    <!-- About -->
+    <string name="about_github" translatable="false">GitHub</string>
+    <string name="about_weblate" translatable="false">Weblate</string>
+    <string name="about_telegram" translatable="false">Telegram</string>
+
+</resources>

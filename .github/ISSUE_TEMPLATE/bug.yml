@@ -1,0 +1,73 @@
+name: Bug Report
+description: Report a bug
+labels: [ "bug" ]
+title: "[BUG] "
+body:
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      description: Ensure that our bug report form is appropriate for you
+      options:
+        - label: No one has submitted a similar or identical bug report before
+          required: true
+        - label: I'm using the latest version of MMRL
+          required: true
+  - type: textarea
+    id: bug
+    attributes:
+      label: Bug description
+      description: Please describe the bug
+      placeholder: |
+        e.g. Crashed when installing module
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What did you expect to happen
+      placeholder: |
+        e.g. Install a module
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: What happened instead
+      placeholder: |
+        e.g. Crashed
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: How to reproduce the bug
+      placeholder: |
+        1. Open the app
+        2. Crashed
+
+        What an app
+  - type: input
+    id: ui
+    attributes:
+      label: UI / OS
+      description: Your system UI or OS
+      placeholder: MIUI / OneUI / etc.
+    validations:
+      required: true
+  - type: input
+    id: android
+    attributes:
+      label: Android Version
+      description: Your Android Version
+      placeholder: "14"
+    validations:
+      required: true
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional info
+      description: Everything else you consider worthy that we didn't ask for

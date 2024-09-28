@@ -1,0 +1,36 @@
+name: Feature Request
+description: Suggest an idea for this project
+labels: [ "enhancement" ]
+title: "[FR] "
+body:
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      description: Ensure that our bug report form is appropriate for you
+      options:
+        - label: No one has submitted a similar or identical feature request before
+          required: true
+        - label: This suggestion does not depart from the original intention of MMRL
+          required: true
+  - type: textarea
+    id: propose
+    attributes:
+      label: Enhancement propose
+      description: Propose of the enhancement
+      placeholder: |
+        Show your idea here
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Solution
+      description: What's your solution for this enhancement
+      placeholder: |
+        How to do it on your opinion
+  - type: textarea
+    id: addition
+    attributes:
+      label: Additional info
+      description: Everything else you consider worthy that we didn't ask for

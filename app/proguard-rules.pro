@@ -1,24 +1,14 @@
-# Add project specific ProGuard rules here.
-# By default, the flags in this file are appended to flags specified
-# in /Applications/Utilities/sdk/tools/proguard/proguard-android.txt
-# You can edit the include path and order by changing the proguardFiles
-# directive in build.gradle.
-#
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
+-verbose
+-dontpreverify
+-optimizationpasses 5
+-dontskipnonpubliclibraryclasses
 
-# Add any project specific keep options here:
+-dontwarn org.conscrypt.**
+-dontwarn kotlinx.serialization.**
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+# Keep DataStore fields
+-keepclassmembers class * extends com.google.protobuf.GeneratedMessageLite* {
+   <fields>;
+}
 
-# These clases contain references to cordova webView
--keep class org.apache.cordova.** {*; }
--keep class org.apache.cordova.*
-
--keep class org.apache.cordova.** { *; }
--keep public class * extends org.apache.cordova.CordovaPlugin
+-repackageclasses com.dergoogler.mmrl

@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+import "repository/RepositoryMenu.proto";
+
+option java_package = "com.dergoogler.mmrl.datastore.modules";
+option java_multiple_files = true;
+
+message ModulesMenu {
+  Option option = 1;
+  bool descending = 2;
+  bool pinEnabled = 3;
+  bool showUpdatedTime = 4;
+}

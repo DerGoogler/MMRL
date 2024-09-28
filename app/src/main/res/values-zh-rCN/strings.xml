@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Setup -->
+    <string name="setup_mode">工作模式</string>
+    <string name="setup_root_title">Root</string>
+    <string name="setup_root_desc">需要由 Magisk 或 KernelSU 提供 Root 权限</string>
+    <string name="setup_shizuku_desc">需要由 Sui 或 Shizuku (root) 提供权限</string>
+    <string name="setup_non_root_title">免 Root</string>
+    <string name="setup_non_root_desc">不需要 Root 权限，只有模块下载功能可用</string>
+
+    <!-- Install -->
+    <string name="install_screen_title">安装</string>
+    <string name="install_flashing">正在刷入</string>
+    <string name="install_done">完成</string>
+    <string name="install_failure">失败</string>
+    <string name="install_logs_saved">日志已保存</string>
+    <string name="install_logs_save_failed">保存失败：%s</string>
+
+    <!-- License -->
+    <string name="license_title">查看许可证</string>
+    <string name="license_osi_approved">OSI 获批</string>
+    <string name="license_fsf_libre">自由软件</string>
+
+    <!-- Page -->
+    <string name="page_repository">存储库</string>
+    <string name="page_modules">模块</string>
+    <string name="page_settings">设置</string>
+
+    <!-- Repository -->
+    <string name="repository_empty">存储库为空</string>
+    <string name="module_installed">已安装</string>
+    <string name="module_new">新</string>
+    <!-- Advanced Menu -->
+    <string name="menu_pin_installed">置顶已安装</string>
+    <string name="menu_pin_updatable">置顶可更新</string>
+    <string name="menu_show_icon">显示图标</string>
+    <string name="menu_show_license">显示许可证</string>
+    <!-- View Module -->
+    <string name="view_module_page_overview">概览</string>
+    <string name="view_module_page_versions">版本</string>
+    <string name="view_module_page_about">关于</string>
+    <string name="view_module_description">描述</string>
+    <string name="view_module_cloud">云端</string>
+    <string name="view_module_version">版本</string>
+    <string name="view_module_last_updated">上次更新</string>
+    <string name="view_module_local">本地</string>
+    <string name="view_module_update_notify">通知</string>
+    <string name="view_module_update_ignore">忽略</string>
+    <string name="view_module_provided">由 %s 提供</string>
+    <string name="view_module_version_dialog_desc">是否安装或下载该版本的模块？</string>
+    <string name="view_module_homepage">主页</string>
+    <string name="view_module_source">源码</string>
+    <string name="view_module_support">支持</string>
+    <string name="view_module_view_track">追踪信息</string>
+    <string name="view_module_type">类型：%s</string>
+    <string name="view_module_added">添加于：%s</string>
+
+    <!-- Modules -->
+    <string name="modules_empty">没找到任何模块</string>
+    <string name="module_version_author">%1$s，作者 %2$s</string>
+    <string name="module_remove">移除</string>
+    <string name="module_restore">还原</string>
+    <string name="module_install">安装</string>
+    <string name="module_download">下载</string>
+    <string name="module_update">更新</string>
+
+    <!-- Settings-->
+    <string name="settings_app">应用</string>
+    <string name="settings_app_desc">关于 MMRL 应用本身的设置</string>
+    <string name="settings_repo">存储库</string>
+    <string name="settings_repo_desc">管理 Magisk 模块存储库</string>
+    <string name="settings_about">关于</string>
+    <!-- Root Item -->
+    <string name="settings_root_access">Root 权限：%s</string>
+    <string name="settings_root_provider">授权应用：%s</string>
+    <string name="settings_root_granted">已授权</string>
+    <string name="settings_root_not_available">不可用</string>
+    <string name="settings_root_none">无</string>
+    <!-- Non Root Item -->
+    <string name="settings_non_root_desc">功能受到限制</string>
+    <!-- App -->
+    <string name="settings_app_theme">主题</string>
+    <string name="settings_app_theme_desc">更改主题配色和深色模式</string>
+    <string name="settings_download_path">下载路径</string>
+    <string name="settings_delete_zip">删除压缩包</string>
+    <string name="settings_delete_zip_desc">安装成功后删除模块压缩包，这将由超级用户执行</string>
+    <string name="settings_doh">安全 DNS（DoH）</string>
+    <string name="settings_doh_desc">解决某些地区的 DNS 污染问题</string>
+    <!-- App Theme -->
+    <string name="app_theme_palette">主题调色板</string>
+    <string name="app_theme_dark_theme">深色主题</string>
+    <string name="app_theme_dark_theme_auto">自动</string>
+    <string name="app_theme_dark_theme_light">浅色</string>
+    <string name="app_theme_dark_theme_dark">深色</string>
+    <!-- Repo -->
+    <string name="repo_modules">%d 个模块</string>
+    <string name="repo_update_at">更新于：%s</string>
+    <string name="repo_incompatible">不兼容</string>
+    <string name="repo_options_update">更新</string>
+    <string name="repo_options_delete">删除</string>
+    <string name="repo_delete_dialog_desc">你确定要删除 %s？</string>
+    <string name="repo_add_dialog_title">添加存储库</string>
+    <string name="repo_add_dialog_add">添加</string>
+    <!-- About -->
+    <string name="about_app_version">版本 %1$s (%2$s)</string>
+    <string name="about_desc1">为 Magisk 和 KernelSU 提供模块存储库以及模块管理。</string>
+    <string name="about_desc2">由 %s 用 ❤️ 制作</string>
+
+    <!-- Dialog-->
+    <string name="dialog_attention">注意</string>
+    <string name="dialog_cancel">取消</string>
+    <string name="dialog_ok">确定</string>
+
+    <!-- Menu -->
+    <string name="menu_advanced_menu">高级菜单</string>
+    <string name="menu_sort_mode">排序模式</string>
+    <string name="menu_sort_option_name">名字</string>
+    <string name="menu_sort_option_updated">更新时间</string>
+    <string name="menu_descending">降序</string>
+    <string name="menu_pin_enabled">置顶已启用</string>
+    <string name="menu_show_updated">显示更新时间</string>
+
+    <!-- Message -->
+    <string name="message_download_success">下载成功</string>
+    <string name="message_loading">加载中…</string>
+
+    <!-- Notification -->
+    <string name="notification_name_download">下载服务</string>
+
+    <!-- Search -->
+    <string name="search_empty">空列表</string>
+    <string name="search_placeholder">搜索…</string>
+
+    <!-- Other -->
+    <string name="unknown_error">未知错误</string>
+
+</resources>

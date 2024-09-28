@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+option java_package = "com.dergoogler.mmrl.datastore.repository";
+option java_multiple_files = true;
+
+enum Option {
+  NAME = 0;
+  UPDATED_TIME = 1;
+}
+
+message RepositoryMenu {
+  Option option = 1;
+  bool descending = 2;
+  bool pinInstalled = 3;
+  bool pinUpdatable = 4;
+  bool showIcon = 5;
+  bool showLicense = 6;
+  bool showUpdatedTime = 7;
+  bool showCover = 8;
+  bool showVerified = 9;
+  bool showAntiFeatures = 10;
+}
