@@ -7,6 +7,10 @@ import dev.dergoogler.mmrl.compat.stub.IModuleOpsCallback
 internal class APatchModuleManagerImpl(
     private val shell: Shell,
 ) : BaseModuleManagerImpl(shell) {
+    override fun getManagerName(): String {
+        return "APatch"
+    }
+
     override fun enable(id: String, callback: IModuleOpsCallback) {
         val dir = modulesDir.resolve(id)
         if (!dir.exists()) callback.onFailure(id, null)
