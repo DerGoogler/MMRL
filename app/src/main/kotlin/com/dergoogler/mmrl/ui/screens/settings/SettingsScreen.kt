@@ -71,6 +71,7 @@ fun SettingsScreen(
             SettingNormalItem(
                 icon = R.drawable.color_swatch,
                 title = stringResource(id = R.string.settings_appearance),
+                desc = stringResource(id = R.string.settings_appearance_desc),
                 onClick = {
                     navController.navigateSingleTopTo(SettingsScreen.Appearance.route)
                 }
@@ -79,6 +80,7 @@ fun SettingsScreen(
             SettingNormalItem(
                 icon = R.drawable.shield,
                 title = stringResource(id = R.string.settings_security),
+                desc = stringResource(id = R.string.settings_security_desc),
                 onClick = {
                     navController.navigateSingleTopTo(SettingsScreen.Security.route)
                 }
@@ -87,6 +89,7 @@ fun SettingsScreen(
             SettingNormalItem(
                 icon = R.drawable.tool,
                 title = stringResource(id = R.string.settings_other),
+                desc = stringResource(id = R.string.settings_other_desc),
                 onClick = {
                     navController.navigateSingleTopTo(SettingsScreen.Other.route)
                 }
@@ -132,6 +135,15 @@ fun SettingsScreen(
                 desc = "${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})",
                 onClick = {
                     navController.navigateSingleTopTo(SettingsScreen.About.route)
+                }
+            )
+
+            SettingNormalItem(
+                icon = R.drawable.files,
+                title = stringResource(id = R.string.settings_changelog),
+                desc = stringResource(id = R.string.settings_changelo_desc),
+                onClick = {
+                    navController.navigateSingleTopTo(SettingsScreen.Changelog.route)
                 }
             )
         }
