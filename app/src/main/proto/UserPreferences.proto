@@ -17,4 +17,5 @@ message UserPreferences {
   ModulesMenu modulesMenu = 6;
   bool useDoh = 7;
   string downloadPath = 8;
+  bool confirmReboot = 9;
 }

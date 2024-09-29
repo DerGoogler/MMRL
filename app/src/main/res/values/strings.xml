@@ -178,5 +178,11 @@
     <string name="open">Open</string>
     <string name="help">Help</string>
     <string name="module_config">Config</string>
+    <string name="install_screen_reboot_title">Reboot?</string>
+    <string name="install_screen_reboot_text">Are you sure that you want reboot your device?</string>
+    <string name="install_screen_reboot_confirm">Confirm</string>
+    <string name="install_screen_reboot_dismiss">Dismiss</string>
+    <string name="settings_reboot_protection">Reboot Protection</string>
+    <string name="settings_reboot_protection_desc">If enabled you have to confirm every reboot</string>
 
 </resources>

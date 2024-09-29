@@ -16,6 +16,7 @@ data class UserPreferencesCompat(
     val deleteZipFile: Boolean,
     val useDoh: Boolean,
     val downloadPath: File,
+    val confirmReboot: Boolean,
     val repositoryMenu: RepositoryMenuCompat,
     val modulesMenu: ModulesMenuCompat
 ) {
@@ -26,6 +27,7 @@ data class UserPreferencesCompat(
         deleteZipFile = original.deleteZipFile,
         useDoh = original.useDoh,
         downloadPath = original.downloadPath.ifEmpty{ Const.PUBLIC_DOWNLOADS.absolutePath }.let(::File),
+        confirmReboot = original.confirmReboot,
         repositoryMenu = when {
             original.hasRepositoryMenu() -> RepositoryMenuCompat(original.repositoryMenu)
             else -> RepositoryMenuCompat.default()
@@ -50,6 +52,7 @@ data class UserPreferencesCompat(
         .setDeleteZipFile(deleteZipFile)
         .setUseDoh(useDoh)
         .setDownloadPath(downloadPath.path)
+        .setConfirmReboot(confirmReboot)
         .setRepositoryMenu(repositoryMenu.toProto())
         .setModulesMenu(modulesMenu.toProto())
         .build()
@@ -62,6 +65,7 @@ data class UserPreferencesCompat(
             deleteZipFile = false,
             useDoh = false,
             downloadPath = Const.PUBLIC_DOWNLOADS,
+            confirmReboot = true,
             repositoryMenu = RepositoryMenuCompat.default(),
             modulesMenu = ModulesMenuCompat.default()
         )

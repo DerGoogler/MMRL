@@ -10,16 +10,9 @@ import android.os.Parcelable
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.ServiceCompat
-import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
-import com.dergoogler.mmrl.R
-import com.dergoogler.mmrl.app.utils.NotificationUtils
-import com.dergoogler.mmrl.compat.BuildCompat
 import com.dergoogler.mmrl.compat.PermissionCompat
-import com.dergoogler.mmrl.network.NetworkUtils
-import com.dergoogler.mmrl.repository.UserPreferencesRepository
-import com.dergoogler.mmrl.utils.extensions.parcelable
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -37,8 +30,16 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.parcelize.Parcelize
 import timber.log.Timber
-import java.io.FileNotFoundException
+import java.io.File
 import javax.inject.Inject
+import com.dergoogler.mmrl.R
+import com.dergoogler.mmrl.app.Const
+import com.dergoogler.mmrl.app.utils.NotificationUtils
+import com.dergoogler.mmrl.compat.MediaStoreCompat.createDownloadUri
+import com.dergoogler.mmrl.compat.NetworkCompat
+import com.dergoogler.mmrl.repository.UserPreferencesRepository
+import com.dergoogler.mmrl.utils.extensions.parcelable
+import dev.dergoogler.mmrl.compat.BuildCompat
 
 @AndroidEntryPoint
 class DownloadService : LifecycleService() {
@@ -66,7 +67,7 @@ class DownloadService : LifecycleService() {
     }
 
     override fun onCreate() {
-        Timber.d("DownloadService onCreate")
+        Timber.d("onCreate")
         super.onCreate()
 
         setForeground()
@@ -75,65 +76,57 @@ class DownloadService : LifecycleService() {
     override fun onDestroy() {
         ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
 
-        Timber.d("DownloadService onDestroy")
+        Timber.d("onDestroy")
         super.onDestroy()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         lifecycleScope.launch {
             val item = intent?.taskItemOrNull ?: return@launch
-            val downloadPath = userPreferencesRepository.data
-                .first().downloadPath
-                .let {
-                    if (!it.exists()) it.mkdirs()
-                    DocumentFile.fromFile(it)
-                }
-
-            val df = downloadPath.createFile("*/*", item.filename)
-            if (df == null) {
-                onDownloadFailed(item, "Failed to create file")
-                return@launch
-            }
-
-            val output = try {
-                checkNotNull(
-                    contentResolver.openOutputStream(df.uri)
-                )
-            } catch (e: FileNotFoundException) {
-                onDownloadFailed(item, e.message)
-                return@launch
-            }
+            val userPreferences = userPreferencesRepository.data.first()
+            val downloadPath = userPreferences.downloadPath
+            val file = File(downloadPath, item.filename)
 
             val listener = object : IDownloadListener {
                 override fun getProgress(value: Float) {
-                    progressFlow.value = item to value
                     listeners[item]?.getProgress(value)
+                    progressFlow.value = item to value
                 }
 
                 override fun onSuccess() {
-                    onDownloadSucceeded(item)
-
-                    progressFlow.value = item to 0f
                     listeners[item]?.onSuccess()
+                    progressFlow.value = item to 0f
+
+                    onDownloadSucceeded(item)
                     tasks.remove(item)
                 }
 
                 override fun onFailure(e: Throwable) {
-                    onDownloadFailed(item, e.message)
-
-                    progressFlow.value = item to 0f
                     listeners[item]?.onFailure(e)
+                    progressFlow.value = item to 0f
+
+                    Timber.e(e)
+                    onDownloadFailed(item, e.message)
                     tasks.remove(item)
                 }
             }
 
+            val output = try {
+                val uri = createDownloadUri(
+                    path = file.toRelativeString(Const.PUBLIC_DOWNLOADS),
+                    mimeType = "android/zip"
+                )
+                checkNotNull(contentResolver.openOutputStream(uri))
+            } catch (e: Throwable) {
+                listener.onFailure(e)
+                return@launch
+            }
+
             tasks.add(item)
-            NetworkUtils.downloader(
+            NetworkCompat.download(
                 url = item.url,
                 output = output,
-                onProgress = {
-                    listener.getProgress(it)
-                }
+                onProgress = listener::getProgress
             ).onSuccess {
                 listener.onSuccess()
             }.onFailure {
@@ -153,7 +146,7 @@ class DownloadService : LifecycleService() {
             .setProgress(100, (progress * 100).toInt(), false)
             .build()
 
-        notify(item.taskId, notification)
+        notify(item.key, notification)
     }
 
     private fun onDownloadSucceeded(item: TaskItem) {
@@ -164,7 +157,7 @@ class DownloadService : LifecycleService() {
             .setSilent(true)
             .build()
 
-        notify(item.taskId, notification)
+        notify(item.key, notification)
     }
 
     private fun onDownloadFailed(item: TaskItem, message: String?) {
@@ -174,7 +167,7 @@ class DownloadService : LifecycleService() {
             .setContentText(message ?: getString(R.string.unknown_error))
             .build()
 
-        notify(item.taskId, notification)
+        notify(item.key, notification)
     }
 
     private fun setForeground() {
@@ -211,41 +204,38 @@ class DownloadService : LifecycleService() {
 
     @Parcelize
     data class TaskItem(
-        val key: String,
+        val key: Int,
         val url: String,
         val filename: String,
         val title: String?,
         val desc: String?,
-        val taskId: Int = System.currentTimeMillis().toInt(),
     ) : Parcelable {
         companion object {
             fun empty() = TaskItem(
-                key = "",
+                key = -1,
                 url = "",
                 filename = "",
                 title = null,
                 desc = null,
-                taskId = -1
             )
         }
     }
 
     interface IDownloadListener {
-        fun getProgress(value: Float)
-        fun onSuccess()
-        fun onFailure(e: Throwable)
+        fun getProgress(value: Float) {}
+        fun onSuccess() {}
+        fun onFailure(e: Throwable) {}
     }
 
     companion object {
         private const val GROUP_KEY = "DOWNLOAD_SERVICE_GROUP_KEY"
         private const val EXTRA_TASK = "com.dergoogler.mmrl.extra.TASK"
-        private val Intent.taskItemOrNull: TaskItem? get() =
-            parcelable(EXTRA_TASK)
+        private val Intent.taskItemOrNull: TaskItem? get() = parcelable(EXTRA_TASK)
 
         private val listeners = hashMapOf<TaskItem, IDownloadListener>()
         private val progressFlow = MutableStateFlow(TaskItem.empty() to 0f)
 
-        fun getProgressByKey(key: String): Flow<Float>  {
+        fun getProgressByKey(key: Int): Flow<Float> {
             return progressFlow.filter { (item, _) ->
                 item.key == key
             }.map { (_, progress) ->
@@ -273,8 +263,6 @@ class DownloadService : LifecycleService() {
 
                     listeners[task] = listener
                     context.startService(intent)
-                } else {
-                    Timber.w("permissions: $state")
                 }
             }
         }

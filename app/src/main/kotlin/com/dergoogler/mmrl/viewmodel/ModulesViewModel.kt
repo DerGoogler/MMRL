@@ -268,7 +268,7 @@ class ModulesViewModel @Inject constructor(
             )
 
             val task = DownloadService.TaskItem(
-                key = item.toString(),
+                key = item.hashCode(),
                 url = item.zipUrl,
                 filename = filename,
                 title = module.name,
@@ -296,7 +296,7 @@ class ModulesViewModel @Inject constructor(
 
     @Composable
     fun getProgress(item: VersionItem?): Float {
-        val progress by DownloadService.getProgressByKey(item.toString())
+        val progress by DownloadService.getProgressByKey(item.hashCode())
             .collectAsStateWithLifecycle(initialValue = 0f)
 
         return progress

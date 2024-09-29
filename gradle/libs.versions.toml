@@ -20,6 +20,7 @@ kotlin = "2.0.0"
 kotlinReflect = "1.9.24"
 kotlinxCoroutines = "1.8.1"
 kotlinxDatetime = "0.6.0"
+kotlinxSerialization = "1.7.1"
 ksp = "2.0.0-1.0.21"
 libsu = "5.2.2"
 protobuf = "4.27.0"
@@ -56,6 +57,8 @@ coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose"
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlinReflect" }
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
+kotlinx-serialization-protobuf = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-protobuf", version.ref = "kotlinxSerialization" }
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
 kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinxDatetime" }
 libsu-core = { group = "com.github.topjohnwu.libsu", name = "core", version.ref = "libsu" }
@@ -70,6 +73,7 @@ rikka-shizuku-provider = { module = "dev.rikka.shizuku:provider", version.ref = 
 semver = { module = "io.github.z4kn4fein:semver", version.ref = "semver" }
 square-retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "squareRetrofit" }
 square-retrofit-moshi = { group = "com.squareup.retrofit2", name = "converter-moshi", version.ref = "squareRetrofit" }
+square-retrofit-kotlinxSerialization = { group = "com.squareup.retrofit2", name = "converter-kotlinx-serialization", version.ref = "squareRetrofit" }
 square-okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "squareOkhttp" }
 square-okhttp-dnsoverhttps = { group = "com.squareup.okhttp3", name = "okhttp-dnsoverhttps", version.ref = "squareOkhttp" }
 square-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "squareOkhttp" }
@@ -96,6 +100,7 @@ kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref =
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 rikka-refine = { id = "dev.rikka.tools.refine", version.ref = "hiddenApiRefine" }
 protobuf = { id = "com.google.protobuf", version.ref = "protobufPlugin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 
 # Plugins defined by this project
 self-application = { id = "self.application", version = "unspecified" }

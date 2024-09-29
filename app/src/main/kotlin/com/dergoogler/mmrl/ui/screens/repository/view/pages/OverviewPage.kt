@@ -275,7 +275,7 @@ private fun LocalItem(
     if (local.lastUpdated != 0L) {
         ValueItem(
             key = stringResource(id = R.string.view_module_last_updated),
-            value = local.lastUpdated.toDateTime()
+            value = local.lastUpdated.toFormattedDate()
         )
     }
 }

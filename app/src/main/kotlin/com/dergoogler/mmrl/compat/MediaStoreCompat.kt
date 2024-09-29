@@ -1,13 +1,20 @@
 package com.dergoogler.mmrl.compat
 
+import android.content.ContentValues
 import android.content.Context
 import android.net.Uri
+import android.os.Build
+import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.OpenableColumns
 import android.system.Os
+import android.provider.MediaStore
+import androidx.annotation.RequiresApi
 import androidx.core.net.toFile
+import androidx.core.net.toUri
 import androidx.documentfile.provider.DocumentFile
 import java.io.File
+import java.io.IOException
 
 object MediaStoreCompat {
     private fun Context.getDisplayNameForUri(uri: Uri): String {
@@ -26,6 +33,32 @@ object MediaStoreCompat {
         }
 
         return uri.toString()
+    }
+
+    private fun createDownloadUri(
+        path: String
+    ) = Environment.getExternalStoragePublicDirectory(
+        Environment.DIRECTORY_DOWNLOADS
+    ).let {
+        val file = File(it, path)
+        file.parentFile?.apply { if (!exists()) mkdirs() }
+        file.toUri()
+    }
+
+    fun Context.createDownloadUri(
+        path: String,
+        mimeType: String
+    ) = when {
+        BuildCompat.atLeastR -> runCatching {
+            createMediaStoreUri(
+                file = File(Environment.DIRECTORY_DOWNLOADS, path),
+                mimeType = mimeType
+            )
+        }.getOrElse {
+            createDownloadUri(path)
+        }
+
+        else -> createDownloadUri(path)
     }
 
     fun Context.getPathForUri(uri: Uri): String {
@@ -58,4 +91,20 @@ object MediaStoreCompat {
 
         return tmp
     }
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    fun Context.createMediaStoreUri(
+        file: File,
+        collection: Uri = MediaStore.Downloads.getContentUri(MediaStore.VOLUME_EXTERNAL),
+        mimeType: String
+    ): Uri {
+        val entry = ContentValues().apply {
+            put(MediaStore.MediaColumns.DISPLAY_NAME, file.name)
+            put(MediaStore.MediaColumns.RELATIVE_PATH, file.parent)
+            put(MediaStore.MediaColumns.MIME_TYPE, mimeType)
+        }
+
+        return contentResolver.insert(collection, entry) ?: throw IOException("Cannot insert $file")
+    }
+
 }

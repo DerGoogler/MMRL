@@ -27,6 +27,10 @@ internal abstract class BaseModuleManagerImpl(
         }.getOrDefault(-1)
     }
 
+    override fun getManagerName(): String {
+        return "Unknown"
+    }
+
     override fun getVersion(): String {
         return mVersion
     }

@@ -29,7 +29,6 @@ import com.dergoogler.mmrl.database.entity.Repo
 import com.dergoogler.mmrl.model.online.VersionItem
 import com.dergoogler.mmrl.ui.component.LabelItem
 import com.dergoogler.mmrl.ui.component.VersionItemBottomSheet
-import com.dergoogler.mmrl.utils.extensions.toDate
 import com.dergoogler.mmrl.utils.extensions.toFormattedDate
 
 @Composable

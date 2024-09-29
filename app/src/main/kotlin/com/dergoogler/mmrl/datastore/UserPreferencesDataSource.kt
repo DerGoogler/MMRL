@@ -61,6 +61,14 @@ class UserPreferencesDataSource @Inject constructor(
         }
     }
 
+    suspend fun setConfirmReboot(value: Boolean) = withContext(Dispatchers.IO) {
+        userPreferences.updateData {
+            it.copy(
+                confirmReboot = value
+            )
+        }
+    }
+
     suspend fun setRepositoryMenu(value: RepositoryMenuCompat) = withContext(Dispatchers.IO) {
         userPreferences.updateData {
             it.copy(

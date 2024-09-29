@@ -18,9 +18,10 @@ class SettingsViewModel @Inject constructor(
 ) : ViewModel() {
     val isProviderAlive get() = Compat.isAlive
 
-    val version get() = Compat.get("") {
-        with(moduleManager) { "$version (${versionCode})" }
-    }
+    val version
+        get() = Compat.get("") {
+            with(moduleManager) { "$version (${versionCode})" }
+        }
 
     init {
         Timber.d("SettingsViewModel init")
@@ -59,6 +60,12 @@ class SettingsViewModel @Inject constructor(
     fun setDownloadPath(value: File) {
         viewModelScope.launch {
             userPreferencesRepository.setDownloadPath(value)
+        }
+    }
+
+    fun setConfirmReboot(value: Boolean) {
+        viewModelScope.launch {
+            userPreferencesRepository.setConfirmReboot(value)
         }
     }
 }

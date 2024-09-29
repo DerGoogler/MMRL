@@ -1,5 +1,6 @@
 package com.dergoogler.mmrl.ui.activity
 
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -16,6 +17,7 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -25,14 +27,17 @@ import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -52,6 +57,7 @@ import com.dergoogler.mmrl.app.Event.Companion.isFinished
 import com.dergoogler.mmrl.app.Event.Companion.isLoading
 import com.dergoogler.mmrl.app.Event.Companion.isSucceeded
 import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
+import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.utils.isScrollingUp
 import com.dergoogler.mmrl.viewmodel.InstallViewModel
 import kotlinx.coroutines.launch
@@ -63,6 +69,8 @@ fun InstallScreen(
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+
+    val userPreferences = LocalUserPreferences.current
 
     val focusRequester = remember { FocusRequester() }
     val listState = rememberLazyListState()
@@ -109,6 +117,16 @@ fun InstallScreen(
         }
     }
 
+    var confirmReboot by remember { mutableStateOf(false) }
+    if (confirmReboot) ConfirmRebootDialog(
+        onClose = { confirmReboot = false },
+        onConfirm = {
+            confirmReboot = false
+            Log.i("REBOOT", "REBOOT CONFIRMED")
+//            viewModel.reboot()
+        }
+    )
+
     Scaffold(
         modifier = Modifier
             .onKeyEvent {
@@ -142,7 +160,14 @@ fun InstallScreen(
                 )
             ) {
                 FloatingButton(
-                    reboot = viewModel::reboot
+                    reboot = {
+                        if (userPreferences.confirmReboot) {
+                            confirmReboot = true
+                        } else {
+                            Log.i("REBOOT", "REBOOT CONFIRMED")
+//                            viewModel.reboot()
+                        }
+                    }
                 )
             }
         },
@@ -193,11 +218,13 @@ private fun TopBar(
     scrollBehavior: TopAppBarScrollBehavior
 ) = NavigateUpTopBar(
     title = stringResource(id = R.string.install_screen_title),
-    subtitle = stringResource(id = when (event) {
-        Event.LOADING -> R.string.install_flashing
-        Event.FAILED -> R.string.install_failure
-        else -> R.string.install_done
-    }),
+    subtitle = stringResource(
+        id = when (event) {
+            Event.LOADING -> R.string.install_flashing
+            Event.FAILED -> R.string.install_failure
+            else -> R.string.install_done
+        }
+    ),
     scrollBehavior = scrollBehavior,
     enable = event.isFinished,
     actions = {
@@ -213,6 +240,43 @@ private fun TopBar(
         }
     }
 )
+
+
+@Composable
+private fun ConfirmRebootDialog(
+    onClose: () -> Unit,
+    onConfirm: () -> Unit
+) {
+    AlertDialog(
+        title = {
+            Text(text = stringResource(id = R.string.install_screen_reboot_title))
+        },
+        text = {
+            Text(text = stringResource(id = R.string.install_screen_reboot_text))
+        },
+        onDismissRequest = {
+            onClose()
+        },
+        confirmButton = {
+            TextButton(
+                onClick = {
+                    onConfirm()
+                }
+            ) {
+                Text(text = stringResource(id = R.string.install_screen_reboot_confirm))
+            }
+        },
+        dismissButton = {
+            TextButton(
+                onClick = {
+                    onClose()
+                }
+            ) {
+                Text(text = stringResource(id = R.string.install_screen_reboot_dismiss))
+            }
+        }
+    )
+}
 
 @Composable
 private fun FloatingButton(

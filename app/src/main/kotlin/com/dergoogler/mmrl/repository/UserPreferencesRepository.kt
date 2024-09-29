@@ -27,6 +27,8 @@ class UserPreferencesRepository @Inject constructor(
 
     suspend fun setDownloadPath(value: File) = userPreferencesDataSource.setDownloadPath(value)
 
+    suspend fun setConfirmReboot(value: Boolean) = userPreferencesDataSource.setConfirmReboot(value)
+
     suspend fun setRepositoryMenu(value: RepositoryMenuCompat) = userPreferencesDataSource.setRepositoryMenu(value)
 
     suspend fun setModulesMenu(value: ModulesMenuCompat) = userPreferencesDataSource.setModulesMenu(value)

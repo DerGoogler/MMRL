@@ -149,6 +149,8 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewModel.compose)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.kotlinx.serialization.protobuf)
     implementation(libs.kotlinx.datetime)
     implementation(libs.kotlin.reflect)
     implementation(libs.protobuf.kotlin.lite)
@@ -161,6 +163,7 @@ dependencies {
 
     implementation(libs.square.retrofit)
     implementation(libs.square.retrofit.moshi)
+    implementation(libs.square.retrofit.kotlinxSerialization)
     implementation(libs.square.okhttp)
     implementation(libs.square.okhttp.dnsoverhttps)
     implementation(libs.square.logging.interceptor)

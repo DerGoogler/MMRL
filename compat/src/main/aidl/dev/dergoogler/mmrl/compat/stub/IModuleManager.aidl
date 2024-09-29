@@ -5,6 +5,7 @@ import dev.dergoogler.mmrl.compat.stub.IInstallCallback;
 import dev.dergoogler.mmrl.compat.stub.IModuleOpsCallback;
 
 interface IModuleManager {
+    String getManagerName();
     String getVersion();
     int getVersionCode();
     List<LocalModule> getModules();

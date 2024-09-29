@@ -78,6 +78,14 @@ fun AppScreen(
                 checked = userPreferences.useDoh,
                 onChange = viewModel::setUseDoh
             )
+
+            SettingSwitchItem(
+                icon = R.drawable.power,
+                title = stringResource(id = R.string.settings_reboot_protection),
+                desc = stringResource(id = R.string.settings_reboot_protection_desc),
+                checked = userPreferences.confirmReboot,
+                onChange = viewModel::setConfirmReboot
+            )
         }
     }
 }
