@@ -15,6 +15,10 @@
     <string name="install_failure">Failed</string>
     <string name="install_logs_saved">Logs saved</string>
     <string name="install_logs_save_failed">Failed to save: %s</string>
+    <string name="install_screen_reboot_title">Reboot?</string>
+    <string name="install_screen_reboot_text">Are you sure that you want reboot your device?</string>
+    <string name="install_screen_reboot_confirm">Confirm</string>
+    <string name="install_screen_reboot_dismiss">Dismiss</string>
 
     <!-- License -->
     <string name="license_title">View License</string>
@@ -122,6 +126,9 @@
     <string name="settings_delete_zip_desc">Delete zip of module after the installation is successful, this will be executed by Superuser</string>
     <string name="settings_doh">DNS over HTTPS</string>
     <string name="settings_doh_desc">Workaround DNS poisoning in some nations</string>
+    <string name="settings_reboot_protection">Reboot Protection</string>
+    <string name="settings_reboot_protection_desc">If enabled you have to confirm every reboot</string>
+    
     <!-- App Theme -->
     <string name="app_theme_palette">Theme Palette</string>
     <string name="app_theme_dark_theme">Dark Theme</string>
@@ -178,11 +185,5 @@
     <string name="open">Open</string>
     <string name="help">Help</string>
     <string name="module_config">Config</string>
-    <string name="install_screen_reboot_title">Reboot?</string>
-    <string name="install_screen_reboot_text">Are you sure that you want reboot your device?</string>
-    <string name="install_screen_reboot_confirm">Confirm</string>
-    <string name="install_screen_reboot_dismiss">Dismiss</string>
-    <string name="settings_reboot_protection">Reboot Protection</string>
-    <string name="settings_reboot_protection_desc">If enabled you have to confirm every reboot</string>
 
 </resources>
