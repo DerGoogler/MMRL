@@ -1,4 +1,4 @@
-package com.dergoogler.mmrl.ui.screens.settings.app.items
+package com.dergoogler.mmrl.ui.screens.settings.appearance.items
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

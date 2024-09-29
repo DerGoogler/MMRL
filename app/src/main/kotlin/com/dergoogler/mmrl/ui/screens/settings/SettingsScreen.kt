@@ -69,11 +69,26 @@ fun SettingsScreen(
             }
 
             SettingNormalItem(
-                icon = R.drawable.launcher_outline,
-                title = stringResource(id = R.string.settings_app),
-                desc = stringResource(id = R.string.settings_app_desc),
+                icon = R.drawable.color_swatch,
+                title = stringResource(id = R.string.settings_appearance),
                 onClick = {
-                    navController.navigateSingleTopTo(SettingsScreen.App.route)
+                    navController.navigateSingleTopTo(SettingsScreen.Appearance.route)
+                }
+            )
+
+            SettingNormalItem(
+                icon = R.drawable.shield,
+                title = stringResource(id = R.string.settings_security),
+                onClick = {
+                    navController.navigateSingleTopTo(SettingsScreen.Security.route)
+                }
+            )
+
+            SettingNormalItem(
+                icon = R.drawable.tool,
+                title = stringResource(id = R.string.settings_other),
+                onClick = {
+                    navController.navigateSingleTopTo(SettingsScreen.Other.route)
                 }
             )
 

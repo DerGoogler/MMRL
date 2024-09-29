@@ -38,10 +38,10 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun SettingNormalItem(
     title: String,
-    desc: String,
+    desc: String? = null,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    contentPaddingValues: PaddingValues = PaddingValues(vertical = 16.dp,  horizontal = 25.dp),
+    contentPaddingValues: PaddingValues = PaddingValues(vertical = 16.dp, horizontal = 25.dp),
     itemTextStyle: SettingItemTextStyle = SettingItemDefaults.itemStyle(),
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     @DrawableRes icon: Int? = null,
@@ -85,12 +85,13 @@ fun SettingNormalItem(
                 style = itemTextStyle.titleTextStyle,
                 color = itemTextStyle.titleTextColor
             )
-
-            Text(
-                text = desc,
-                style = itemTextStyle.descTextStyle,
-                color = itemTextStyle.descTextColor
-            )
+            desc?.let {
+                Text(
+                    text = desc,
+                    style = itemTextStyle.descTextStyle,
+                    color = itemTextStyle.descTextColor
+                )
+            }
         }
     }
 }
@@ -102,7 +103,7 @@ fun SettingSwitchItem(
     checked: Boolean,
     onChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
-    contentPaddingValues: PaddingValues = PaddingValues(vertical = 16.dp,  horizontal = 25.dp),
+    contentPaddingValues: PaddingValues = PaddingValues(vertical = 16.dp, horizontal = 25.dp),
     itemTextStyle: SettingItemTextStyle = SettingItemDefaults.itemStyle(),
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     @DrawableRes icon: Int? = null,

@@ -17,6 +17,7 @@ data class UserPreferencesCompat(
     val useDoh: Boolean,
     val downloadPath: File,
     val confirmReboot: Boolean,
+    val terminalTextWrap: Boolean,
     val repositoryMenu: RepositoryMenuCompat,
     val modulesMenu: ModulesMenuCompat
 ) {
@@ -26,8 +27,10 @@ data class UserPreferencesCompat(
         themeColor = original.themeColor,
         deleteZipFile = original.deleteZipFile,
         useDoh = original.useDoh,
-        downloadPath = original.downloadPath.ifEmpty{ Const.PUBLIC_DOWNLOADS.absolutePath }.let(::File),
+        downloadPath = original.downloadPath.ifEmpty { Const.PUBLIC_DOWNLOADS.absolutePath }
+            .let(::File),
         confirmReboot = original.confirmReboot,
+        terminalTextWrap = original.terminalTextWrap,
         repositoryMenu = when {
             original.hasRepositoryMenu() -> RepositoryMenuCompat(original.repositoryMenu)
             else -> RepositoryMenuCompat.default()
@@ -52,7 +55,7 @@ data class UserPreferencesCompat(
         .setDeleteZipFile(deleteZipFile)
         .setUseDoh(useDoh)
         .setDownloadPath(downloadPath.path)
-        .setConfirmReboot(confirmReboot)
+        .setConfirmReboot(confirmReboot).setTerminalTextWrap(terminalTextWrap)
         .setRepositoryMenu(repositoryMenu.toProto())
         .setModulesMenu(modulesMenu.toProto())
         .build()
@@ -65,21 +68,24 @@ data class UserPreferencesCompat(
             deleteZipFile = false,
             useDoh = false,
             downloadPath = Const.PUBLIC_DOWNLOADS,
-            confirmReboot = true,
+            confirmReboot = true, terminalTextWrap = false,
             repositoryMenu = RepositoryMenuCompat.default(),
             modulesMenu = ModulesMenuCompat.default()
         )
 
-        val WorkingMode.isRoot: Boolean get() {
-            return this == WorkingMode.MODE_ROOT ||this == WorkingMode.MODE_SHIZUKU
-        }
+        val WorkingMode.isRoot: Boolean
+            get() {
+                return this == WorkingMode.MODE_ROOT || this == WorkingMode.MODE_SHIZUKU
+            }
 
-        val WorkingMode.isNonRoot: Boolean get() {
-            return this == WorkingMode.MODE_NON_ROOT
-        }
+        val WorkingMode.isNonRoot: Boolean
+            get() {
+                return this == WorkingMode.MODE_NON_ROOT
+            }
 
-        val WorkingMode.isSetup: Boolean get() {
-            return this == WorkingMode.FIRST_SETUP
-        }
+        val WorkingMode.isSetup: Boolean
+            get() {
+                return this == WorkingMode.FIRST_SETUP
+            }
     }
 }

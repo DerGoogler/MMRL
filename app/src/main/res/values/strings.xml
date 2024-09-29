@@ -128,7 +128,7 @@
     <string name="settings_doh_desc">Workaround DNS poisoning in some nations</string>
     <string name="settings_reboot_protection">Reboot Protection</string>
     <string name="settings_reboot_protection_desc">If enabled you have to confirm every reboot</string>
-    
+
     <!-- App Theme -->
     <string name="app_theme_palette">Theme Palette</string>
     <string name="app_theme_dark_theme">Dark Theme</string>
@@ -185,5 +185,10 @@
     <string name="open">Open</string>
     <string name="help">Help</string>
     <string name="module_config">Config</string>
+    <string name="settings_security">Security</string>
+    <string name="settings_appearance">Appearance</string>
+    <string name="settings_other">Other</string>
+    <string name="settings_text_wrap">Text Wrap</string>
+    <string name="settings_text_wrap_desc">Enables text wrap inside the install terminal</string>
 
 </resources>

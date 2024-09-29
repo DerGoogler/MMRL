@@ -29,6 +29,9 @@ class UserPreferencesRepository @Inject constructor(
 
     suspend fun setConfirmReboot(value: Boolean) = userPreferencesDataSource.setConfirmReboot(value)
 
+    suspend fun setTerminalTextWrap(value: Boolean) =
+        userPreferencesDataSource.setTerminalTextWrap(value)
+
     suspend fun setRepositoryMenu(value: RepositoryMenuCompat) = userPreferencesDataSource.setRepositoryMenu(value)
 
     suspend fun setModulesMenu(value: ModulesMenuCompat) = userPreferencesDataSource.setModulesMenu(value)

@@ -1,4 +1,4 @@
-package com.dergoogler.mmrl.ui.screens.settings.app
+package com.dergoogler.mmrl.ui.screens.settings.appearance
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
@@ -20,13 +20,13 @@ import com.dergoogler.mmrl.datastore.UserPreferencesCompat.Companion.isRoot
 import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
 import com.dergoogler.mmrl.ui.component.SettingSwitchItem
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
-import com.dergoogler.mmrl.ui.screens.settings.app.items.AppThemeItem
-import com.dergoogler.mmrl.ui.screens.settings.app.items.DownloadPathItem
+import com.dergoogler.mmrl.ui.screens.settings.appearance.items.AppThemeItem
+import com.dergoogler.mmrl.ui.screens.settings.appearance.items.DownloadPathItem
 import com.dergoogler.mmrl.ui.utils.none
 import com.dergoogler.mmrl.viewmodel.SettingsViewModel
 
 @Composable
-fun AppScreen(
+fun AppearanceScreen(
     navController: NavController,
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
@@ -57,34 +57,12 @@ fun AppScreen(
                 onDarkModeChange = viewModel::setDarkTheme
             )
 
-            DownloadPathItem(
-                downloadPath = userPreferences.downloadPath,
-                onChange = viewModel::setDownloadPath
-            )
-
             SettingSwitchItem(
-                icon = R.drawable.file_type_zip,
-                title = stringResource(id = R.string.settings_delete_zip),
-                desc = stringResource(id = R.string.settings_delete_zip_desc),
-                checked = userPreferences.deleteZipFile,
-                onChange = viewModel::setDeleteZipFile,
-                enabled = userPreferences.workingMode.isRoot
-            )
-
-            SettingSwitchItem(
-                icon = R.drawable.brand_cloudflare,
-                title = stringResource(id = R.string.settings_doh),
-                desc = stringResource(id = R.string.settings_doh_desc),
-                checked = userPreferences.useDoh,
-                onChange = viewModel::setUseDoh
-            )
-
-            SettingSwitchItem(
-                icon = R.drawable.power,
-                title = stringResource(id = R.string.settings_reboot_protection),
-                desc = stringResource(id = R.string.settings_reboot_protection_desc),
-                checked = userPreferences.confirmReboot,
-                onChange = viewModel::setConfirmReboot
+                icon = R.drawable.text_wrap_column,
+                title = stringResource(id = R.string.settings_text_wrap),
+                desc = stringResource(id = R.string.settings_text_wrap_desc),
+                checked = userPreferences.terminalTextWrap,
+                onChange = viewModel::setTerminalTextWrap
             )
         }
     }
@@ -95,7 +73,7 @@ private fun TopBar(
     scrollBehavior: TopAppBarScrollBehavior,
     navController: NavController
 ) = NavigateUpTopBar(
-    title = stringResource(id = R.string.settings_app),
+    title = stringResource(id = R.string.settings_appearance),
     scrollBehavior = scrollBehavior,
     navController = navController
 )

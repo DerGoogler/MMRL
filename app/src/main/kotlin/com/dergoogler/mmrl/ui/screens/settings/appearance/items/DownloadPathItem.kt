@@ -1,4 +1,4 @@
-package com.dergoogler.mmrl.ui.screens.settings.app.items
+package com.dergoogler.mmrl.ui.screens.settings.appearance.items
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme

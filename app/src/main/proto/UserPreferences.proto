@@ -18,4 +18,5 @@ message UserPreferences {
   bool useDoh = 7;
   string downloadPath = 8;
   bool confirmReboot = 9;
+  bool terminalTextWrap = 10;
 }

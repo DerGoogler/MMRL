@@ -68,4 +68,10 @@ class SettingsViewModel @Inject constructor(
             userPreferencesRepository.setConfirmReboot(value)
         }
     }
+
+    fun setTerminalTextWrap(value: Boolean) {
+        viewModelScope.launch {
+            userPreferencesRepository.setTerminalTextWrap(value)
+        }
+    }
 }

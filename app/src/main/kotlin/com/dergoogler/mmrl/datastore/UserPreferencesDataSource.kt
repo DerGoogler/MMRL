@@ -69,6 +69,14 @@ class UserPreferencesDataSource @Inject constructor(
         }
     }
 
+    suspend fun setTerminalTextWrap(value: Boolean) = withContext(Dispatchers.IO) {
+        userPreferences.updateData {
+            it.copy(
+                terminalTextWrap = value
+            )
+        }
+    }
+
     suspend fun setRepositoryMenu(value: RepositoryMenuCompat) = withContext(Dispatchers.IO) {
         userPreferences.updateData {
             it.copy(

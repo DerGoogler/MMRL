@@ -1,6 +1,5 @@
 package com.dergoogler.mmrl.ui.activity
 
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -10,8 +9,10 @@ import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
@@ -61,6 +62,7 @@ import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.utils.isScrollingUp
 import com.dergoogler.mmrl.viewmodel.InstallViewModel
 import kotlinx.coroutines.launch
+
 
 @Composable
 fun InstallScreen(
@@ -130,8 +132,7 @@ fun InstallScreen(
         modifier = Modifier
             .onKeyEvent {
                 when (it.key) {
-                    Key.VolumeUp,
-                    Key.VolumeDown -> viewModel.event.isLoading
+                    Key.VolumeUp, Key.VolumeDown -> viewModel.event.isLoading
 
                     else -> false
                 }
@@ -177,7 +178,11 @@ fun InstallScreen(
             modifier = Modifier
                 .padding(it)
                 .fillMaxWidth()
-                .horizontalScroll(rememberScrollState())
+                .then(
+                    if (userPreferences.terminalTextWrap) Modifier else Modifier.horizontalScroll(
+                        rememberScrollState()
+                    )
+                )
         )
     }
 }
