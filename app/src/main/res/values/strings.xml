@@ -110,6 +110,12 @@
     <string name="settings_about">About</string>
     <string name="settings_resources">Resources</string>
     <string name="settings_resources_desc">Documentations, Supported Repos and anything else</string>
+    <string name="settings_security">Security</string>
+    <string name="settings_appearance">Appearance</string>
+    <string name="settings_other">Other</string>
+    <string name="settings_text_wrap">Text Wrap</string>
+    <string name="settings_text_wrap_desc">Enables text wrap inside the install terminal</string>
+    
     <!-- Root Item -->
     <string name="settings_root_access">Root Access: %s</string>
     <string name="settings_root_provider">Provider: %s</string>
@@ -185,10 +191,5 @@
     <string name="open">Open</string>
     <string name="help">Help</string>
     <string name="module_config">Config</string>
-    <string name="settings_security">Security</string>
-    <string name="settings_appearance">Appearance</string>
-    <string name="settings_other">Other</string>
-    <string name="settings_text_wrap">Text Wrap</string>
-    <string name="settings_text_wrap_desc">Enables text wrap inside the install terminal</string>
 
 </resources>
