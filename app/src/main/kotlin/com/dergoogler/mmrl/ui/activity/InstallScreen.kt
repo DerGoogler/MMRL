@@ -122,8 +122,7 @@ fun InstallScreen(
         onClose = { confirmReboot = false },
         onConfirm = {
             confirmReboot = false
-            Log.i("REBOOT", "REBOOT CONFIRMED")
-//            viewModel.reboot()
+            viewModel.reboot()
         }
     )
 
@@ -164,8 +163,7 @@ fun InstallScreen(
                         if (userPreferences.confirmReboot) {
                             confirmReboot = true
                         } else {
-                            Log.i("REBOOT", "REBOOT CONFIRMED")
-//                            viewModel.reboot()
+                            viewModel.reboot()
                         }
                     }
                 )
