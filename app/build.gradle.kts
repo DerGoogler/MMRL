@@ -78,7 +78,7 @@ android {
             buildConfigField("Boolean", "IS_DEV_VERSION", "true")
             applicationIdSuffix = ".debug"
             isJniDebuggable = true
-            isDebuggable = true
+            isDebuggable = true 
             isRenderscriptDebuggable = true
             renderscriptOptimLevel = 0
             isMinifyEnabled = false
