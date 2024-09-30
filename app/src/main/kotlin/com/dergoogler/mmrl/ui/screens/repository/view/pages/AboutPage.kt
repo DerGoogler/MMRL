@@ -2,7 +2,10 @@ package com.dergoogler.mmrl.ui.screens.repository.view.pages
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,6 +23,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -30,6 +34,7 @@ import com.dergoogler.mmrl.model.online.OnlineModule
 import com.dergoogler.mmrl.ui.component.LabelItem
 import com.dergoogler.mmrl.utils.extensions.isObjectEmpty
 import com.dergoogler.mmrl.utils.extensions.openUrl
+import com.dergoogler.mmrl.utils.extensions.shareText
 
 @Composable
 fun AboutPage(
@@ -175,6 +180,9 @@ private fun ValueItem(
     ) {
         Column(
             modifier = Modifier
+                .pointerInput(Unit) {
+                    detectTapGestures(onLongPress = { context.shareText(value) })
+                }
                 .fillMaxWidth()
                 .weight(1f),
             verticalArrangement = Arrangement.spacedBy(4.dp)
@@ -192,17 +200,17 @@ private fun ValueItem(
             )
         }
 
-        ElevatedAssistChip(
-            onClick = { context.openUrl(value) },
-            label = { Text(text = stringResource(id = R.string.open)) },
-            leadingIcon = {
+        ElevatedAssistChip(onClick = {
+            context.openUrl(value)
+        },
+
+            label = { Text(text = stringResource(id = R.string.open)) }, leadingIcon = {
                 Icon(
                     painter = painterResource(id = icon),
                     contentDescription = null,
                     modifier = Modifier.size(AssistChipDefaults.IconSize)
                 )
-            }
-        )
+            })
     }
 }
 
