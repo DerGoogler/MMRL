@@ -94,12 +94,12 @@
     <string name="module_update">更新</string>
     <!-- Settings -->
     <string name="settings_app">アプリ</string>
-    <string name="settings_app_desc">MMRL アプリの設定をします。</string>
+    <string name="settings_app_desc">MMRL アプリの設定をします</string>
     <string name="settings_repo">リポジトリ</string>
-    <string name="settings_repo_desc">Magisk モジュールリポジトリを管理します。</string>
+    <string name="settings_repo_desc">Magisk モジュールリポジトリを管理します</string>
     <string name="settings_about">アプリについて</string>
     <string name="settings_resources">リソース</string>
-    <string name="settings_resources_desc">ドキュメント、対応しているリポジトリとその他諸々</string>
+    <string name="settings_resources_desc">ドキュメント、対応しているリポジトリなど</string>
     <string name="settings_security">セキュリティ</string>
     <string name="settings_security_desc">アプリのセキュリティ関連</string>
     <string name="settings_appearance">外観</string>
@@ -122,7 +122,7 @@
     <string name="settings_app_theme">アプリテーマ</string>
     <string name="settings_app_theme_desc">カラースキームとナイトモードを変更します。</string>
     <string name="settings_download_path">ダウンロードのパス</string>
-    <string name="settings_delete_zip">Zip ファイルを削除</string>
+    <string name="settings_delete_zip">Zip ファイルの削除</string>
     <string name="settings_delete_zip_desc">インストールの成功後にモジュールの Zip ファイルを削除します。これはスーパーユーザーで実行されます。</string>
     <string name="settings_doh">DNS over HTTPS</string>
     <string name="settings_doh_desc">一部の国での DNS ポイズニングを回避します。</string>
@@ -149,7 +149,7 @@
     <string name="repo_add_dialog_add">追加</string>
     <!-- About -->
     <string name="about_app_version">バージョン %1$s (%2$s)</string>
-    <string name="about_desc1">Magisk、KernelSU のモジュール管理、モジュールリポジトリの提供。</string>
+    <string name="about_desc1">モジュールリポジトリの提供と Magisk、KernelSU のモジュールを管理します。</string>
     <string name="about_desc2">Made with ❤️ by %s</string>
     <!-- Dialog -->
     <string name="dialog_attention">注意</string>
