@@ -103,7 +103,7 @@
     <string name="settings_security">セキュリティ</string>
     <string name="settings_security_desc">アプリのセキュリティ関連</string>
     <string name="settings_appearance">外観</string>
-    <string name="settings_appearance_desc">ニーズに合わせたアプリに変更します。</string>
+    <string name="settings_appearance_desc">ニーズに合わせたアプリに変更します</string>
     <string name="settings_other">その他</string>
     <string name="settings_other_desc">DoH、ダウンロードパスなど</string>
     <string name="settings_text_wrap">テキストの折り返し</string>
