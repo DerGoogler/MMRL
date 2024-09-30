@@ -1,96 +1,181 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="unknown_error">不明なエラー</string>
-    <string name="repo_add_dialog_title">リポジトリの追加</string>
-    <string name="repo_options_delete">削除</string>
-    <string name="repository_empty">リポジトリは空です</string>
-    <string name="view_module_page_versions">バージョン</string>
-    <string name="search_placeholder">検索…</string>
-    <string name="page_settings">設定</string>
-    <string name="install_done">完了</string>
-    <string name="install_failure">失敗</string>
-    <string name="license_title">ライセンスを表示</string>
-    <string name="page_modules">モジュール</string>
+    <!-- Setup -->
     <string name="setup_mode">動作モード</string>
     <string name="setup_root_title">Root</string>
-    <string name="setup_non_root_title">非 Root</string>
-    <string name="license_osi_approved">OSI Approved</string>
-    <string name="license_fsf_libre">FSF Libre</string>
-    <string name="module_install">インストール</string>
-    <string name="module_download">ダウンロード</string>
-    <string name="modules_empty">モジュールが見つかりません</string>
-    <string name="module_remove">削除</string>
-    <string name="module_restore">復元</string>
-    <string name="settings_repo">リポジトリ</string>
-    <string name="app_theme_dark_theme_auto">自動</string>
-    <string name="dialog_attention">注意</string>
-    <string name="repo_add_dialog_add">追加</string>
-    <string name="settings_non_root_desc">機能が制限されています</string>
-    <string name="settings_download_path">ダウンロード場所</string>
-    <string name="app_theme_dark_theme">ダークテーマ</string>
-    <string name="app_theme_dark_theme_dark">ダーク</string>
-    <string name="repo_options_update">更新</string>
-    <string name="app_theme_dark_theme_light">ライト</string>
-    <string name="message_download_success">ダウンロード成功</string>
-    <string name="message_loading">読み込み中…</string>
-    <string name="settings_app_theme_desc">カラースキームとナイトモードの変更</string>
-    <string name="settings_repo_desc">Magisk モジュールリポジトリを管理</string>
-    <string name="app_theme_palette">テーマパレット</string>
-    <string name="settings_app_theme">アプリテーマ</string>
-    <string name="dialog_ok">OK</string>
-    <string name="dialog_cancel">キャンセル</string>
-    <string name="notification_name_download">ダウンロード</string>
-    <string name="settings_delete_zip">Zip ファイルを削除</string>
-    <string name="settings_delete_zip_desc">インストールが成功したらモジュールの Zip ファイルを削除します。これはスーパーユーザーで実行されます。</string>
-    <string name="about_desc1">Magisk、KernelSU のモジュール管理、モジュールリポジトリの提供。</string>
-    <string name="settings_app">アプリ</string>
-    <string name="settings_app_desc">MMRL アプリの設定</string>
-    <string name="page_repository">リポジトリ</string>
-    <string name="settings_root_access">Root アクセス: %s</string>
-    <string name="settings_root_provider">プロバイダー: %s</string>
-    <string name="module_installed">インストール済</string>
-    <string name="view_module_page_overview">概要</string>
-    <string name="view_module_description">説明</string>
-    <string name="view_module_local">ローカル</string>
-    <string name="view_module_version">バージョン</string>
-    <string name="repo_delete_dialog_desc">本当に %s を削除しますか？</string>
-    <string name="view_module_update_notify">通知</string>
-    <string name="view_module_update_ignore">無視</string>
-    <string name="settings_doh">DNS over HTTPS</string>
-    <string name="settings_doh_desc">一部の国での DNS ポイズニングを回避します</string>
+    <string name="setup_root_desc">Magisk または KernelSU による root 権限の許可が必要です。</string>
+    <string name="setup_shizuku_desc">Sui または Shizuku (root) による許可が必要です。</string>
+    <string name="setup_non_root_title">Non-Root</string>
+    <string name="setup_non_root_desc">root 権限は不要で、モジュールのダウンロード機能のみが使用可能です。</string>
+    <!-- Install -->
+    <string name="install_screen_title">インストール</string>
+    <string name="install_flashing">フラッシュ中</string>
+    <string name="install_done">完了</string>
+    <string name="install_failure">失敗</string>
     <string name="install_logs_saved">ログを保存しました</string>
     <string name="install_logs_save_failed">保存に失敗しました: %s</string>
-    <string name="install_screen_title">インストール</string>
-    <string name="view_module_last_updated">最終更新</string>
+    <string name="install_screen_reboot_title">再起動をしますか？</string>
+    <string name="install_screen_reboot_text">デバイスを再起動してもよろしいですか？</string>
+    <string name="install_screen_reboot_confirm">確認</string>
+    <string name="install_screen_reboot_dismiss">無視</string>
+    <!-- License -->
+    <string name="license_title">ライセンスを表示</string>
+    <string name="license_osi_approved">OSI Approved</string>
+    <string name="license_fsf_libre">FSF Libre</string>
+    <!-- Page -->
+    <string name="page_repository">リポジトリ</string>
+    <string name="page_modules">モジュール</string>
+    <string name="page_settings">設定</string>
+    <!-- Repository -->
+    <string name="repository_empty">リポジトリは空です</string>
+    <string name="module_installed">インストール済み</string>
     <string name="module_new">新着</string>
-    <string name="view_module_provided">提供: %s</string>
+    <!-- Advanced Menu -->
+    <string name="menu_pin_installed">インストール済みのピン留め</string>
+    <string name="menu_pin_updatable">更新可能のピン留め</string>
     <string name="menu_show_icon">アイコンの表示</string>
     <string name="menu_show_license">ライセンスの表示</string>
+    <string name="menu_show_cover">カバーを表示</string>
+    <string name="menu_show_verified">認証済みを表示</string>
+    <!-- View Module -->
+    <string name="view_module_page_overview">概要</string>
+    <string name="view_module_page_versions">バージョン</string>
+    <string name="view_module_page_about">モジュールについて</string>
+    <string name="view_module_page_readme">Readme</string>
+    <string name="view_module_description">説明</string>
     <string name="view_module_cloud">クラウド</string>
+    <string name="view_module_version">バージョン</string>
+    <string name="view_module_last_updated">最終更新</string>
+    <string name="view_module_local">ローカル</string>
+    <string name="view_module_update_notify">通知</string>
+    <string name="view_module_update_ignore">無視</string>
+    <string name="view_module_provided">提供: %s</string>
     <string name="view_module_version_dialog_desc">このバージョンのモジュールをインストールまたはダウンロードしますか？</string>
-    <string name="settings_root_granted">付与済み</string>
-    <string name="settings_root_not_available">利用不可</string>
     <string name="view_module_homepage">ホームページ</string>
     <string name="view_module_source">ソースコード</string>
     <string name="view_module_support">サポート</string>
+    <string name="view_module_view_track">トラックを表示</string>
     <string name="view_module_type">タイプ: %s</string>
     <string name="view_module_added">追加日: %s</string>
-    <string name="module_version_author">%1$s — %2$s</string>
+    <string name="view_module_file_size">ファイルサイズ</string>
+    <string name="view_module_screenshots">スクリーンショット</string>
+    <string name="view_module_help">ヘルプ</string>
+    <string name="view_module_antifeatures">アンチ機能</string>
+    <string name="view_module_unsupported">非対応</string>
+    <string name="view_module_unsupported_desc">使用中のデバイスは、このモジュールのバージョンに対応していないようです。自己責任でインストールしてください！</string>
+    <!-- View Module / Features -->
+    <string name="view_module_features">機能</string>
+    <string name="view_module_features_service">サービス</string>
+    <string name="view_module_features_post_fs_data">Post FS Data</string>
+    <string name="view_module_features_system_properties">システムプロパティ</string>
+    <string name="view_module_features_selinux_policy">SELinux ポリシー</string>
+    <string name="view_module_features_zygisk">Zygisk</string>
+    <string name="view_module_features_apks">APK</string>
+    <string name="view_module_features_webui">WebUI</string>
+    <string name="view_module_features_post_mount">Post Mount</string>
+    <string name="view_module_features_boot_completed">起動完了</string>
+    <string name="view_module_features_service_sub">起動中に後でコードを実行します (より多くのシステムが初期化されます)。</string>
+    <string name="view_module_features_post_fs_data_sub">起動後すぐにコードを実行します (一部のシステムを起動します)。</string>
+    <string name="view_module_features_resetprop_sub">Magisk の resetprop によって読み込まれたシステムプロパティを設定します。</string>
+    <string name="view_module_features_sepolicy_sub">カスタムセキュリティポリシーを追加します (SE ポリシールール)。</string>
+    <string name="view_module_features_zygisk_sub">モジュールが Zygisk フレームワークと対話可能にして、システムレベルの変更と対話ができる状態にします。</string>
+    <string name="view_module_features_apks_sub">モジュール内に追加の APK を含めます。</string>
+    <string name="view_module_features_webui_sub">モジュールを Web インターフェースで管理します (KernelSU と APatch、Magiskではなく)。&gt;</string>
+    <string name="view_module_features_postmount_sub">OverlayFS マウント後のスクリプト実行 (KernelSU と APatch)。&gt;</string>
+    <string name="view_module_features_bootcompleted_sub">起動完了時のスクリプト実行 (KernelSU と APatch)。&gt;</string>
+    <!-- Modules -->
+    <string name="modules_empty">モジュールが見つかりません</string>
+    <!-- Module Item -->
+    <string name="module_version_author">%1$s - %2$s</string>
+    <string name="module_remove">削除</string>
+    <string name="module_restore">復元</string>
+    <string name="module_install">インストール</string>
+    <string name="module_download">ダウンロード</string>
+    <string name="module_update">更新</string>
+    <!-- Settings -->
+    <string name="settings_app">アプリ</string>
+    <string name="settings_app_desc">MMRL アプリの設定をします。</string>
+    <string name="settings_repo">リポジトリ</string>
+    <string name="settings_repo_desc">Magisk モジュールリポジトリを管理します。</string>
+    <string name="settings_about">アプリについて</string>
+    <string name="settings_resources">リソース</string>
+    <string name="settings_resources_desc">ドキュメント、対応しているリポジトリとその他諸々</string>
+    <string name="settings_security">セキュリティ</string>
+    <string name="settings_security_desc">アプリのセキュリティ関連</string>
+    <string name="settings_appearance">外観</string>
+    <string name="settings_appearance_desc">ニーズに合わせたアプリに変更します。</string>
+    <string name="settings_other">その他</string>
+    <string name="settings_other_desc">DoH、ダウンロードパスなど</string>
+    <string name="settings_text_wrap">テキストの折り返し</string>
+    <string name="settings_text_wrap_desc">インストールターミナル内でのテキストの折り返しを有効化します。</string>
+    <string name="settings_changelog">更新履歴</string>
+    <string name="settings_changelo_desc">現在の MMRL の設定をすべて変更します。</string>
+    <!-- Root Item -->
+    <string name="settings_root_access">Root アクセス: %s</string>
+    <string name="settings_root_provider">プロバイダー: %s</string>
+    <string name="settings_root_granted">付与済み</string>
+    <string name="settings_root_not_available">利用不可</string>
     <string name="settings_root_none">なし</string>
-    <string name="settings_about">このアプリについて</string>
-    <string name="repo_modules">%d モジュール</string>
+    <!-- Non Root Item -->
+    <string name="settings_non_root_desc">機能が制限されています</string>
+    <!-- App -->
+    <string name="settings_app_theme">アプリテーマ</string>
+    <string name="settings_app_theme_desc">カラースキームとナイトモードを変更します。</string>
+    <string name="settings_download_path">ダウンロードのパス</string>
+    <string name="settings_delete_zip">Zip ファイルを削除</string>
+    <string name="settings_delete_zip_desc">インストールの成功後にモジュールの Zip ファイルを削除します。これはスーパーユーザーで実行されます。</string>
+    <string name="settings_doh">DNS over HTTPS</string>
+    <string name="settings_doh_desc">一部の国での DNS ポイズニングを回避します。</string>
+    <string name="settings_reboot_protection">再起動の保護</string>
+    <string name="settings_reboot_protection_desc">有効化すると再起動のたびに許可が必要になります。</string>
+    <!-- App Theme -->
+    <string name="app_theme_palette">テーマパレット</string>
+    <string name="app_theme_dark_theme">ダークテーマ</string>
+    <string name="app_theme_dark_theme_auto">自動</string>
+    <string name="app_theme_dark_theme_light">ライト</string>
+    <string name="app_theme_dark_theme_dark">ダーク</string>
+    <!-- Repo -->
+    <string name="repo_modules">%d 個のモジュール</string>
     <string name="repo_update_at">最終更新: %s</string>
     <string name="repo_incompatible">互換性なし</string>
+    <string name="repo_options_update">更新</string>
+    <string name="repo_options_delete">削除</string>
+    <string name="repo_options_support">サポート</string>
+    <string name="repo_options_submission">提出</string>
+    <string name="repo_options_website">Web サイト</string>
+    <string name="repo_options_donate">寄付</string>
+    <string name="repo_delete_dialog_desc">本当に %s を削除しますか？</string>
+    <string name="repo_add_dialog_title">リポジトリの追加</string>
+    <string name="repo_add_dialog_add">追加</string>
+    <!-- About -->
     <string name="about_app_version">バージョン %1$s (%2$s)</string>
-    <string name="module_update">更新</string>
-    <string name="menu_sort_mode">並べ替え</string>
+    <string name="about_desc1">Magisk、KernelSU のモジュール管理、モジュールリポジトリの提供。</string>
+    <string name="about_desc2">Made with ❤️ by %s</string>
+    <!-- Dialog -->
+    <string name="dialog_attention">注意</string>
+    <string name="dialog_cancel">キャンセル</string>
+    <string name="dialog_ok">OK</string>
+    <!-- Menu -->
     <string name="menu_advanced_menu">高度なメニュー</string>
+    <string name="menu_sort_mode">ソートモード</string>
     <string name="menu_sort_option_name">名前</string>
     <string name="menu_sort_option_updated">更新日時</string>
     <string name="menu_descending">降順</string>
+    <string name="menu_pin_enabled">ピン留めを有効化</string>
     <string name="menu_show_updated">更新日時の表示</string>
-    <string name="view_module_page_about">モジュールについて</string>
-    <string name="install_flashing">書込中</string>
-    <string name="menu_pin_installed">インストール済みのピン留め</string>
-    <string name="menu_pin_updatable">更新可能のピン留め</string>
+    <string name="menu_show_antifeatures">アンチ機能を表示</string>
+    <!-- Message -->
+    <string name="message_download_success">ダウンロード成功</string>
+    <string name="message_loading">読み込み中…</string>
+    <!-- Notification -->
+    <string name="notification_name_download">ダウンロード</string>
+    <!-- Search -->
+    <string name="search_empty">空のリスト</string>
+    <string name="search_placeholder">検索…</string>
+    <!-- Other -->
+    <string name="unknown_error">不明なエラー</string>
+    <string name="verified">認証済み</string>
+    <string name="open">開く</string>
+    <string name="help">ヘルプ</string>
+    <string name="module_config">設定</string>
 </resources>
