@@ -8,6 +8,11 @@ enum Option {
   UPDATED_TIME = 1;
 }
 
+enum RepoListMode {
+  COMPACT = 0;
+  DETAILED = 1;
+}
+
 message RepositoryMenu {
   Option option = 1;
   bool descending = 2;
@@ -19,4 +24,5 @@ message RepositoryMenu {
   bool showCover = 8;
   bool showVerified = 9;
   bool showAntiFeatures = 10;
+  RepoListMode repoListMode = 11;
 }

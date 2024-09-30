@@ -12,9 +12,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.dergoogler.mmrl.datastore.repository.RepoListMode
 import com.dergoogler.mmrl.model.online.OnlineModule
 import com.dergoogler.mmrl.model.state.OnlineState
 import com.dergoogler.mmrl.ui.component.scrollbar.VerticalFastScrollbar
+import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.utils.navigateSingleTopTo
 import com.dergoogler.mmrl.viewmodel.ModuleViewModel
 
@@ -23,33 +25,87 @@ fun ModulesList(
     list: List<Pair<OnlineState, OnlineModule>>,
     state: LazyListState,
     navController: NavController
-) = Box(
-    modifier = Modifier.fillMaxSize()
 ) {
-    LazyColumn(
-        state = state,
-        modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        items(
-            items = list,
-            key = { it.second.id }
-        ) { (state, module) ->
-            ModuleItem(
-                module = module,
-                state = state,
-                onClick = {
-                    navController.navigateSingleTopTo(
-                        ModuleViewModel.putModuleId(module)
-                    )
-                }
-            )
-        }
+    val userPreferences = LocalUserPreferences.current
+    val menu = userPreferences.repositoryMenu
+    when (menu.repoListMode) {
+        RepoListMode.COMPACT -> Compact(list, state, navController)
+        RepoListMode.DETAILED -> Detailed(list, state, navController)
+        RepoListMode.UNRECOGNIZED -> Detailed(list, state, navController)
     }
+}
 
-    VerticalFastScrollbar(
-        state = state,
-        modifier = Modifier.align(Alignment.CenterEnd)
-    )
+@Composable
+fun Detailed(
+    list: List<Pair<OnlineState, OnlineModule>>,
+    state: LazyListState,
+    navController: NavController
+) {
+    Box(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        LazyColumn(
+            state = state,
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            items(
+                items = list,
+                key = { it.second.id }
+            ) { (state, module) ->
+                ModuleItemDetailed(
+                    module = module,
+                    state = state,
+                    onClick = {
+                        navController.navigateSingleTopTo(
+                            ModuleViewModel.putModuleId(module)
+                        )
+                    }
+                )
+            }
+        }
+
+        VerticalFastScrollbar(
+            state = state,
+            modifier = Modifier.align(Alignment.CenterEnd)
+        )
+    }
+}
+
+@Composable
+fun Compact(
+    list: List<Pair<OnlineState, OnlineModule>>,
+    state: LazyListState,
+    navController: NavController
+) {
+    Box(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        LazyColumn(
+            state = state,
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(5.dp)
+        ) {
+            items(
+                items = list,
+                key = { it.second.id }
+            ) { (state, module) ->
+                ModuleItemCompact(
+                    module = module,
+                    state = state,
+                    onClick = {
+                        navController.navigateSingleTopTo(
+                            ModuleViewModel.putModuleId(module)
+                        )
+                    }
+                )
+            }
+        }
+
+        VerticalFastScrollbar(
+            state = state,
+            modifier = Modifier.align(Alignment.CenterEnd)
+        )
+    }
 }

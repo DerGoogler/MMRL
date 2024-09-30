@@ -42,6 +42,8 @@
     <string name="menu_show_license">Show License</string>
     <string name="menu_show_cover">Show Cover</string>
     <string name="menu_show_verified">Show Verified</string>
+    <string name="menu_sort_repolistmode_detailed">Detailed</string>
+    <string name="menu_sort_repolistmode_compact">Compact</string>
 
     <!-- View Module -->
     <string name="view_module_page_overview">Overview</string>

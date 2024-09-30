@@ -10,7 +10,7 @@ data class RepositoryMenuCompat(
     val showUpdatedTime: Boolean,
     val showCover: Boolean,
     val showVerified: Boolean,
-    val showAntiFeatures: Boolean,
+    val showAntiFeatures: Boolean, val repoListMode: RepoListMode
 ) {
     constructor(original: RepositoryMenu) : this(
         option = original.option,
@@ -22,7 +22,8 @@ data class RepositoryMenuCompat(
         showUpdatedTime = original.showUpdatedTime,
         showCover = original.showCover,
         showVerified = original.showVerified,
-        showAntiFeatures = original.showAntiFeatures
+        showAntiFeatures = original.showAntiFeatures,
+        repoListMode = original.repoListMode
     )
 
     fun toProto(): RepositoryMenu = RepositoryMenu.newBuilder()
@@ -33,8 +34,8 @@ data class RepositoryMenuCompat(
         .setShowIcon(showIcon)
         .setShowLicense(showLicense)
         .setShowUpdatedTime(showUpdatedTime)
-        .setShowCover(showCover)
-        .setShowVerified(showVerified).setShowAntiFeatures(showAntiFeatures)
+        .setShowCover(showCover).setShowVerified(showVerified).setShowAntiFeatures(showAntiFeatures)
+        .setRepoListMode(repoListMode)
         .build()
 
     companion object {
@@ -46,7 +47,10 @@ data class RepositoryMenuCompat(
             showIcon = true,
             showLicense = true,
             showUpdatedTime = true,
-            showCover = true, showVerified = true, showAntiFeatures = true
+            showCover = true,
+            showVerified = true,
+            showAntiFeatures = true,
+            repoListMode = RepoListMode.DETAILED
         )
     }
 }
