@@ -130,20 +130,20 @@ fun SettingsScreen(
             )
 
             SettingNormalItem(
-                icon = R.drawable.award,
-                title = stringResource(id = R.string.settings_about),
-                desc = "${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})",
-                onClick = {
-                    navController.navigateSingleTopTo(SettingsScreen.About.route)
-                }
-            )
-
-            SettingNormalItem(
                 icon = R.drawable.files,
                 title = stringResource(id = R.string.settings_changelog),
                 desc = stringResource(id = R.string.settings_changelo_desc),
                 onClick = {
                     navController.navigateSingleTopTo(SettingsScreen.Changelog.route)
+                }
+            )
+
+            SettingNormalItem(
+                icon = R.drawable.award,
+                title = stringResource(id = R.string.settings_about),
+                desc = "${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})",
+                onClick = {
+                    navController.navigateSingleTopTo(SettingsScreen.About.route)
                 }
             )
         }

@@ -117,7 +117,7 @@
     <string name="settings_appearance">Appearance</string>
     <string name="settings_appearance_desc">Change the app to your needs</string>
     <string name="settings_other">Other</string>
-    <string name="settings_other_desc">DoH, Download path and more</string>
+    <string name="settings_other_desc">DoH, download path and more</string>
     <string name="settings_text_wrap">Text Wrap</string>
     <string name="settings_text_wrap_desc">Enables text wrap inside the install terminal</string>
     <string name="settings_changelog">Changelog</string>
