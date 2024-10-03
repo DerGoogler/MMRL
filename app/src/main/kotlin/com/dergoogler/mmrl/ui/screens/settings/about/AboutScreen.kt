@@ -105,11 +105,11 @@ fun AboutScreen(
                 )
             }
 
-            SettingNormalItem(
-                onClick = { context.launchCustomTab(Const.TRANSLATE_URL) },
-                icon = R.drawable.weblate,
-                title = stringResource(id = R.string.about_weblate)
-            )
+//            SettingNormalItem(
+//                onClick = { context.launchCustomTab(Const.TRANSLATE_URL) },
+//                icon = R.drawable.weblate,
+//                title = stringResource(id = R.string.about_weblate)
+//            )
 
             SettingNormalItem(
                 onClick = { context.launchCustomTab(Const.TELEGRAM_URL) },
