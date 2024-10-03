@@ -15,29 +15,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.dergoogler.mmrl.BuildConfig
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.app.Const
-import com.dergoogler.mmrl.datastore.UserPreferencesCompat.Companion.isNonRoot
-import com.dergoogler.mmrl.datastore.UserPreferencesCompat.Companion.isRoot
 import com.dergoogler.mmrl.datastore.WorkingMode
 import com.dergoogler.mmrl.ui.component.SettingNormalItem
 import com.dergoogler.mmrl.ui.component.TopAppBarTitle
 import com.dergoogler.mmrl.ui.navigation.graphs.SettingsScreen
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
-import com.dergoogler.mmrl.ui.screens.settings.items.NonRootItem
-import com.dergoogler.mmrl.ui.screens.settings.items.RootItem
 import com.dergoogler.mmrl.ui.utils.navigateSingleTopTo
 import com.dergoogler.mmrl.ui.utils.none
 import com.dergoogler.mmrl.utils.extensions.launchCustomTab
-import com.dergoogler.mmrl.viewmodel.SettingsViewModel
 
 @Composable
 fun SettingsScreen(
     navController: NavController,
-    viewModel: SettingsViewModel = hiltViewModel()
 ) {
     val userPreferences = LocalUserPreferences.current
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
@@ -59,15 +52,6 @@ fun SettingsScreen(
                 .fillMaxWidth()
                 .verticalScroll(rememberScrollState())
         ) {
-            when {
-                userPreferences.workingMode.isRoot -> RootItem(
-                    isAlive = viewModel.isProviderAlive,
-                    version = viewModel.version
-                )
-
-                userPreferences.workingMode.isNonRoot -> NonRootItem()
-            }
-
             SettingNormalItem(
                 icon = R.drawable.color_swatch,
                 title = stringResource(id = R.string.settings_appearance),

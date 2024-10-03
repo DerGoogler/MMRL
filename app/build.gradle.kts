@@ -10,7 +10,7 @@ plugins {
     alias(libs.plugins.protobuf)
 }
 
-val baseVersionName = "4.25.32"
+val baseVersionName = "4.25.33"
 
 android {
     namespace = "com.dergoogler.mmrl"

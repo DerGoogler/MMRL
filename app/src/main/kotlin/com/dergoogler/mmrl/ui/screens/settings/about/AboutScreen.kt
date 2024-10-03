@@ -5,20 +5,18 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
@@ -30,21 +28,28 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.dergoogler.mmrl.BuildConfig
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.app.Const
-import com.dergoogler.mmrl.ui.component.HtmlText
-import com.dergoogler.mmrl.ui.component.Logo
+import com.dergoogler.mmrl.datastore.UserPreferencesCompat.Companion.isNonRoot
+import com.dergoogler.mmrl.datastore.UserPreferencesCompat.Companion.isRoot
 import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
+import com.dergoogler.mmrl.ui.component.SettingNormalItem
+import com.dergoogler.mmrl.ui.component.SettingStaticItem
+import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.utils.none
 import com.dergoogler.mmrl.utils.extensions.launchCustomTab
+import com.dergoogler.mmrl.viewmodel.SettingsViewModel
 
 @Composable
 fun AboutScreen(
-    navController: NavController
+    navController: NavController, viewModel: SettingsViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
+
+    val userPreferences = LocalUserPreferences.current
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
     Scaffold(
@@ -60,96 +65,73 @@ fun AboutScreen(
         Column(
             modifier = Modifier
                 .padding(innerPadding)
-                .fillMaxWidth()
-                .verticalScroll(rememberScrollState()),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
         ) {
-            Spacer(modifier = Modifier.height(20.dp))
-            Logo(
-                icon = R.drawable.launcher_outline,
-                modifier = Modifier.size(65.dp),
-                contentColor = MaterialTheme.colorScheme.onPrimary,
-                containerColor = MaterialTheme.colorScheme.primary,
-                fraction = 0.7f
-            )
 
-            Spacer(modifier = Modifier.height(20.dp))
-            Text(
-                text = stringResource(id = R.string.app_name),
-                style = MaterialTheme.typography.titleLarge
-            )
-            Text(
-                text = stringResource(id = R.string.about_app_version,
-                    BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(top = 5.dp)
-            )
 
-            Spacer(modifier = Modifier.height(20.dp))
-            FilledTonalButton(
-                onClick = { context.launchCustomTab(Const.GITHUB_URL) }
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.github),
-                    contentDescription = null
+            when {
+                userPreferences.workingMode.isRoot -> SettingStaticItem(
+                    icon = if (viewModel.isProviderAlive) {
+                        R.drawable.circle_check_filled
+                    } else {
+                        R.drawable.alert_circle_filled
+                    },
+                    title = if (viewModel.isProviderAlive) {
+                        stringResource(
+                            id = R.string.settings_root_access,
+                            stringResource(id = R.string.settings_root_granted)
+                        )
+                    } else {
+                        stringResource(
+                            id = R.string.settings_root_access,
+                            stringResource(id = R.string.settings_root_none)
+                        )
+                    },
+                    desc = if (viewModel.isProviderAlive) {
+                        stringResource(id = R.string.settings_root_provider, viewModel.version)
+                    } else {
+                        stringResource(
+                            id = R.string.settings_root_provider,
+                            stringResource(id = R.string.settings_root_not_available)
+                        )
+                    },
                 )
-                Spacer(modifier = Modifier.width(ButtonDefaults.IconSpacing))
-                Text(text = stringResource(id = R.string.about_github))
+
+                userPreferences.workingMode.isNonRoot -> SettingStaticItem(
+                    icon = R.drawable.info_circle_filled,
+                    title = stringResource(id = R.string.settings_non_root),
+                    desc = stringResource(id = R.string.settings_non_root_desc),
+                )
             }
 
-            Row(
-                modifier = Modifier.padding(top = 8.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-//                FilledTonalButton(
-//                    onClick = { context.openUrl(Const.TRANSLATE_URL) }
-//                ) {
-//                    Icon(
-//                        painter = painterResource(id = R.drawable.weblate),
-//                        contentDescription = null,
-//                        modifier = Modifier.size(ButtonDefaults.IconSize)
-//                    )
-//                    Spacer(modifier = Modifier.width(ButtonDefaults.IconSpacing))
-//                    Text(text = stringResource(id = R.string.about_weblate))
-//                }
+            SettingNormalItem(
+                onClick = { context.launchCustomTab(Const.TRANSLATE_URL) },
+                icon = R.drawable.weblate,
+                title = stringResource(id = R.string.about_weblate)
+            )
 
-                FilledTonalButton(
-                    onClick = { context.launchCustomTab(Const.TELEGRAM_URL) }
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.telegram),
-                        contentDescription = null
-                    )
-                    Spacer(modifier = Modifier.width(ButtonDefaults.IconSpacing))
-                    Text(text = stringResource(id = R.string.about_telegram))
-                }
-            }
+            SettingNormalItem(
+                onClick = { context.launchCustomTab(Const.TELEGRAM_URL) },
+                icon = R.drawable.telegram,
+                title = stringResource(id = R.string.about_telegram)
+            )
 
-            OutlinedCard(
-                modifier = Modifier.padding(vertical = 30.dp, horizontal = 20.dp),
-                shape = RoundedCornerShape(15.dp)
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(all = 15.dp)
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.about_desc1),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                    Spacer(modifier = Modifier.height(15.dp))
-                    HtmlText(
-                        text = stringResource(id = R.string.about_desc2,
-                            "<a href=\"${Const.SANMER_GITHUB_URL}\">Sanmer</a> & <a href=\"${Const.GOOGLER_GITHUB_URL}\">DerGoogler</a>"),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-            }
+            SettingNormalItem(
+                onClick = { context.launchCustomTab(Const.GITHUB_URL) },
+                icon = R.drawable.github,
+                title = stringResource(id = R.string.about_github)
+            )
+
+            SettingStaticItem(
+                title = stringResource(
+                    id = R.string.about_app_version,
+                    BuildConfig.VERSION_NAME,
+                    BuildConfig.VERSION_CODE
+                ), desc = stringResource(
+                    id = R.string.about_desc2, "Sanmer & DerGoogler"
+                )
+            )
         }
     }
 }
