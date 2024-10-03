@@ -103,6 +103,7 @@ android {
         "META-INF/**",
         "okhttp3/**",
         //"kotlin/**",
+        "lib/**",
         "org/**",
         "**.properties",
         "**.bin",
@@ -154,7 +155,7 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.serialization.json)
-    implementation(libs.kotlinx.serialization.protobuf)
+//    implementation(libs.kotlinx.serialization.protobuf)
     implementation(libs.kotlinx.datetime)
     implementation(libs.kotlin.reflect)
     implementation(libs.protobuf.kotlin.lite)
