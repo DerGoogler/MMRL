@@ -49,7 +49,7 @@ fun ModuleItemDetailed(
     onClick: () -> Unit = {}, decoration: TextDecoration = TextDecoration.None,
     enabled: Boolean = true
 ) = Surface(
-    onClick = onClick,
+    onClick = onClick, enabled = enabled,
     color = MaterialTheme.colorScheme.surface,
     tonalElevation = 1.dp,
     shape = RoundedCornerShape(20.dp)

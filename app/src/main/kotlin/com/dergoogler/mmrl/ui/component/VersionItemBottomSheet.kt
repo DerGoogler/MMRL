@@ -207,7 +207,6 @@ private fun ChangelogItem(url: String) {
         ) {
             MarkdownText(
                 text = changelog,
-                color = AlertDialogDefaults.textContentColor,
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier
                     .verticalScroll(rememberScrollState())

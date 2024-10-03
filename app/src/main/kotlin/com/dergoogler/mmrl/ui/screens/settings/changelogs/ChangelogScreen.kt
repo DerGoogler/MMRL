@@ -61,6 +61,7 @@ fun ChangelogScreen(
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
+                .verticalScroll(rememberScrollState())
         ) {
             AnimatedVisibility(
                 visible = event.isLoading,
@@ -77,10 +78,8 @@ fun ChangelogScreen(
             ) {
                 MarkdownText(
                     text = changelog,
-                    color = AlertDialogDefaults.textContentColor,
                     style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier
-                        .verticalScroll(rememberScrollState())
                         .padding(horizontal = 18.dp)
                         .padding(top = 8.dp)
                         .padding(bottom = 18.dp)

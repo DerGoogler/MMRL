@@ -40,7 +40,8 @@ fun ReadmePage(
 
     Column(
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .verticalScroll(rememberScrollState()),
     ) {
         AnimatedVisibility(
             visible = event.isLoading,
@@ -57,10 +58,8 @@ fun ReadmePage(
         ) {
             MarkdownText(
                 text = readme,
-                color = AlertDialogDefaults.textContentColor,
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier
-                    .verticalScroll(rememberScrollState())
                     .padding(horizontal = 18.dp)
                     .padding(top = 8.dp)
                     .padding(bottom = 18.dp)
