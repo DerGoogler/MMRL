@@ -31,7 +31,7 @@ import com.dergoogler.mmrl.ui.screens.settings.items.NonRootItem
 import com.dergoogler.mmrl.ui.screens.settings.items.RootItem
 import com.dergoogler.mmrl.ui.utils.navigateSingleTopTo
 import com.dergoogler.mmrl.ui.utils.none
-import com.dergoogler.mmrl.utils.extensions.openUrl
+import com.dergoogler.mmrl.utils.extensions.launchCustomTab
 import com.dergoogler.mmrl.viewmodel.SettingsViewModel
 
 @Composable
@@ -109,7 +109,7 @@ fun SettingsScreen(
                 title = stringResource(id = R.string.settings_resources),
                 desc = stringResource(id = R.string.settings_resources_desc),
                 onClick = {
-                    context.openUrl(Const.RESOURCES_URL)
+                    context.launchCustomTab(Const.RESOURCES_URL)
                 }
             )
 

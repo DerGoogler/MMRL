@@ -39,7 +39,7 @@ import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.screens.repository.view.items.LicenseItem
 import com.dergoogler.mmrl.ui.screens.repository.view.items.TagItem
 import com.dergoogler.mmrl.ui.screens.repository.view.items.TrackItem
-import com.dergoogler.mmrl.utils.extensions.openUrl
+import com.dergoogler.mmrl.utils.extensions.launchCustomTab
 
 @Composable
 fun ViewTopBar(
@@ -187,7 +187,7 @@ private fun topBarContent(
         module.donate?.let {
             TagItem(
                 icon = R.drawable.currency_dollar,
-                onClick = { context.openUrl(it) }
+                onClick = { context.launchCustomTab(it) }
             )
         }
     }

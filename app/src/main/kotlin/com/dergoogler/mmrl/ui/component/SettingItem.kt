@@ -36,11 +36,64 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 
 @Composable
+fun SettingStaticItem(
+    modifier: Modifier = Modifier,
+    title: String,
+    desc: String? = null,
+    contentPaddingValues: PaddingValues = PaddingValues(vertical = 16.dp, horizontal = 25.dp),
+    itemTextStyle: SettingItemTextStyle = SettingItemDefaults.itemStyle(),
+    @DrawableRes icon: Int? = null,
+    enabled: Boolean = true,
+) {
+    val layoutDirection = LocalLayoutDirection.current
+    val start by remember {
+        derivedStateOf { contentPaddingValues.calculateStartPadding(layoutDirection) }
+    }
+
+    Row(
+        modifier = modifier
+            .alpha(alpha = if (enabled) 1f else 0.5f)
+            .padding(contentPaddingValues)
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        icon?.let {
+            Icon(
+                modifier = Modifier.size(SettingItemDefaults.IconSize),
+                painter = painterResource(id = icon),
+                contentDescription = null,
+                tint = LocalContentColor.current
+            )
+
+            Spacer(modifier = Modifier.width(start))
+        }
+
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = title,
+                style = itemTextStyle.titleTextStyle,
+                color = itemTextStyle.titleTextColor
+            )
+            desc?.let {
+                Text(
+                    text = desc,
+                    style = itemTextStyle.descTextStyle,
+                    color = itemTextStyle.descTextColor
+                )
+            }
+        }
+    }
+}
+
+@Composable
 fun SettingNormalItem(
+    modifier: Modifier = Modifier,
     title: String,
     desc: String? = null,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier,
     contentPaddingValues: PaddingValues = PaddingValues(vertical = 16.dp, horizontal = 25.dp),
     itemTextStyle: SettingItemTextStyle = SettingItemDefaults.itemStyle(),
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
@@ -98,11 +151,11 @@ fun SettingNormalItem(
 
 @Composable
 fun SettingSwitchItem(
+    modifier: Modifier = Modifier,
     title: String,
     desc: String,
     checked: Boolean,
     onChange: (Boolean) -> Unit,
-    modifier: Modifier = Modifier,
     contentPaddingValues: PaddingValues = PaddingValues(vertical = 16.dp, horizontal = 25.dp),
     itemTextStyle: SettingItemTextStyle = SettingItemDefaults.itemStyle(),
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },

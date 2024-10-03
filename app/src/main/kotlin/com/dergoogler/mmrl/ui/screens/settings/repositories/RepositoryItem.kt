@@ -49,7 +49,7 @@ import com.dergoogler.mmrl.model.state.RepoState
 import com.dergoogler.mmrl.ui.component.LabelItem
 import com.dergoogler.mmrl.ui.component.NavigationBarsSpacer
 import com.dergoogler.mmrl.ui.utils.expandedShape
-import com.dergoogler.mmrl.utils.extensions.openUrl
+import com.dergoogler.mmrl.utils.extensions.launchCustomTab
 import com.dergoogler.mmrl.utils.extensions.shareText
 import com.dergoogler.mmrl.utils.extensions.toDateTime
 import com.dergoogler.mmrl.utils.extensions.toFormattedDate
@@ -243,14 +243,14 @@ private fun BottomSheet(
             ValueItem(
                 icon = R.drawable.brand_git,
                 label = R.string.repo_options_support,
-                onClick = { context.openUrl(it) })
+                onClick = { context.launchCustomTab(it) })
         }
 
         repo.donate?.let {
             ValueItem(
                 icon = R.drawable.heart_handshake,
                 label = R.string.repo_options_donate,
-                onClick = { context.openUrl(it) }
+                onClick = { context.launchCustomTab(it) }
             )
         }
 
@@ -258,7 +258,7 @@ private fun BottomSheet(
             ValueItem(
                 icon = R.drawable.world_www,
                 label = R.string.repo_options_website,
-                onClick = { context.openUrl(it) }
+                onClick = { context.launchCustomTab(it) }
             )
         }
 
@@ -266,7 +266,7 @@ private fun BottomSheet(
             ValueItem(
                 icon = R.drawable.cloud_upload,
                 label = R.string.repo_options_submission,
-                onClick = { context.openUrl(it) }
+                onClick = { context.launchCustomTab(it) }
             )
         }
 

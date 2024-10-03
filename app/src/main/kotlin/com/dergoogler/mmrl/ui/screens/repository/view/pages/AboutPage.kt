@@ -33,7 +33,7 @@ import com.dergoogler.mmrl.model.online.ModuleFeatures
 import com.dergoogler.mmrl.model.online.OnlineModule
 import com.dergoogler.mmrl.ui.component.LabelItem
 import com.dergoogler.mmrl.utils.extensions.isObjectEmpty
-import com.dergoogler.mmrl.utils.extensions.openUrl
+import com.dergoogler.mmrl.utils.extensions.launchCustomTab
 import com.dergoogler.mmrl.utils.extensions.shareText
 
 @Composable
@@ -201,7 +201,7 @@ private fun ValueItem(
         }
 
         ElevatedAssistChip(onClick = {
-            context.openUrl(value)
+            context.launchCustomTab(value)
         },
 
             label = { Text(text = stringResource(id = R.string.open)) }, leadingIcon = {

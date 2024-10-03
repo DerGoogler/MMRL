@@ -38,7 +38,7 @@ import com.dergoogler.mmrl.ui.component.HtmlText
 import com.dergoogler.mmrl.ui.component.Logo
 import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
 import com.dergoogler.mmrl.ui.utils.none
-import com.dergoogler.mmrl.utils.extensions.openUrl
+import com.dergoogler.mmrl.utils.extensions.launchCustomTab
 
 @Composable
 fun AboutScreen(
@@ -88,7 +88,7 @@ fun AboutScreen(
 
             Spacer(modifier = Modifier.height(20.dp))
             FilledTonalButton(
-                onClick = { context.openUrl(Const.GITHUB_URL) }
+                onClick = { context.launchCustomTab(Const.GITHUB_URL) }
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.github),
@@ -116,7 +116,7 @@ fun AboutScreen(
 //                }
 
                 FilledTonalButton(
-                    onClick = { context.openUrl(Const.TELEGRAM_URL) }
+                    onClick = { context.launchCustomTab(Const.TELEGRAM_URL) }
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.telegram),
