@@ -37,6 +37,8 @@
     <string name="menu_show_license">ライセンスの表示</string>
     <string name="menu_show_cover">カバーを表示</string>
     <string name="menu_show_verified">認証済みを表示</string>
+    <string name="menu_sort_repolistmode_detailed">詳細</string>
+    <string name="menu_sort_repolistmode_compact">コンパクト</string>
     <!-- View Module -->
     <string name="view_module_page_overview">概要</string>
     <string name="view_module_page_versions">バージョン</string>
@@ -109,7 +111,7 @@
     <string name="settings_text_wrap">テキストの折り返し</string>
     <string name="settings_text_wrap_desc">インストールターミナル内でのテキストの折り返しを有効化します。</string>
     <string name="settings_changelog">更新履歴</string>
-    <string name="settings_changelo_desc">現在の MMRL の設定をすべて変更します。</string>
+    <string name="settings_changelo_desc">MMRL の変更点を表示します</string>
     <!-- Root Item -->
     <string name="settings_root_access">Root アクセス: %s</string>
     <string name="settings_root_provider">プロバイダー: %s</string>
