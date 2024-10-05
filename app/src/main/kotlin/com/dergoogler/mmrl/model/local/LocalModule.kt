@@ -17,5 +17,6 @@ fun LocalModule.Companion.example() =
         description = "This is an example!",
         updateJson = "",
         state = State.ENABLE,
+        hasModConf = false,
         lastUpdated = 0L
     )

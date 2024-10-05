@@ -1,5 +1,6 @@
 package dev.dergoogler.mmrl.compat.impl
 
+import android.os.Build
 import com.topjohnwu.superuser.CallbackList
 import com.topjohnwu.superuser.Shell
 import com.topjohnwu.superuser.ShellUtils
@@ -44,6 +45,16 @@ internal abstract class BaseModuleManagerImpl(
         .mapNotNull { dir ->
             readProps(dir)?.toModule(dir)
         }
+
+    private fun hasModConf(moduleDir: File, id: String): Boolean {
+        val mId = id.replace(Regex("[^a-zA-Z0-9._]"), "_")
+
+        if (Build.SUPPORTED_64_BIT_ABIS.isNotEmpty()) {
+            return moduleDir.resolve("/system/lib64/$mId.dex").exists()
+        }
+
+        return moduleDir.resolve("/system/lib/$mId.dex").exists()
+    }
 
     override fun getModuleById(id: String): LocalModule? {
         val dir = modulesDir.resolve(id)
@@ -112,13 +123,15 @@ internal abstract class BaseModuleManagerImpl(
     ) = toModule(
         path = dir.name,
         state = readState(dir),
+        hasModConf = hasModConf(dir, getOrDefault("id", dir.name)),
         lastUpdated = readLastUpdated(dir)
     )
 
     private fun Map<String, String>.toModule(
         path: String = "unknown",
         state: State = State.ENABLE,
-        lastUpdated: Long = 0L
+        lastUpdated: Long = 0L,
+        hasModConf: Boolean = false
     ) = LocalModule(
         id = getOrDefault("id", path),
         name = getOrDefault("name", path),
@@ -128,6 +141,7 @@ internal abstract class BaseModuleManagerImpl(
         description = getOrDefault("description", ""),
         updateJson = getOrDefault("updateJson", ""),
         state = state,
+        hasModConf = hasModConf,
         lastUpdated = lastUpdated
     )
 

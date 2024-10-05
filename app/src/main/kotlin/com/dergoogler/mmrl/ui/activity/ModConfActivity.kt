@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composer
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.currentComposer
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dergoogler.mmrl.Compat
 import com.dergoogler.mmrl.datastore.UserPreferencesCompat.Companion.isRoot
@@ -31,7 +32,6 @@ import javax.inject.Inject
 class ModConfActivity : ComponentActivity() {
     @Inject
     lateinit var userPreferencesRepository: UserPreferencesRepository
-    private lateinit var pluginClass: Class<*>
     private val viewModel: ModConfViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +43,7 @@ class ModConfActivity : ComponentActivity() {
 
         setContent {
             val current = currentComposer
+            val context = LocalContext.current
             val userPreferences by userPreferencesRepository.data.collectAsStateWithLifecycle(
                 initialValue = null
             )
@@ -59,60 +60,14 @@ class ModConfActivity : ComponentActivity() {
                 AppTheme(
                     darkMode = preferences.isDarkMode(), themeColor = preferences.themeColor
                 ) {
-                    loadComposablePlugin(
+                    viewModel.loadComposablePlugin(
+                        context = context,
                         id = modId,
                         fixedModId = fixedModId,
                         composer = current,
-                        dexPath = "$fixedModId.dex"
                     )
                 }
             }
-        }
-    }
-
-    private fun loadComposablePlugin(
-        id: String, fixedModId: String, composer: Composer, dexPath: String
-    ): Composable? {
-        return try {
-            val optimizedDir = File(this.cacheDir, "dex_optimized").apply { mkdirs() }
-
-            val dexFilePath = File(this.filesDir, dexPath)
-            dexFilePath.setReadOnly()
-
-            val classLoader = DexClassLoader(
-                dexFilePath.path, optimizedDir.absolutePath, null, this.classLoader
-            )
-
-            val pluginClassName = "com.dergoogler.modconf.$fixedModId.ModConfScreenKt"
-            pluginClass = classLoader.loadClass(pluginClassName)
-
-            setField("isProviderAlive", viewModel.isProviderAlive)
-            setField("managerName", viewModel.managerName)
-            setField("versionName", viewModel.versionName)
-            setField("versionCode", viewModel.versionCode)
-            setField("modId", id)
-            setField("fixedModId", fixedModId)
-
-            val pluginInstance = pluginClass.getDeclaredMethod(
-                "ModConfScreen", Composer::class.java, Int::class.java
-            )
-
-            pluginInstance.isAccessible = true
-
-            pluginInstance.invoke(null, composer, 0) as? Composable
-        } catch (e: Exception) {
-            e.printStackTrace()
-            null
-        }
-    }
-
-    private fun setField(fieldName: String, value: Any) {
-        try {
-            val field = pluginClass.getDeclaredField(fieldName)
-            field.isAccessible = true
-            field.set(null, value)
-        } catch (e: Exception) {
-            Timber.e(e, "Failed to set field $fieldName")
         }
     }
 

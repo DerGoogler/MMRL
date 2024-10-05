@@ -14,6 +14,7 @@ data class LocalModuleEntity(
     val author: String,
     val description: String,
     val state: String,
+    val hasModConf: Boolean,
     val updateJson: String,
     val lastUpdated: Long
 ) {
@@ -25,6 +26,7 @@ data class LocalModuleEntity(
         author = original.author,
         description = original.description,
         state = original.state.name,
+        hasModConf = original.hasModConf,
         updateJson = original.updateJson,
         lastUpdated = original.lastUpdated
     )
@@ -38,6 +40,7 @@ data class LocalModuleEntity(
         description = description,
         updateJson = updateJson,
         state = State.valueOf(state),
+        hasModConf = hasModConf,
         lastUpdated = lastUpdated
     )
 }

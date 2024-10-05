@@ -13,6 +13,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.runtime.android)
     compileOnly(projects.hiddenApi)
     implementation(libs.hiddenApiBypass)
     implementation(libs.rikka.refine.runtime)

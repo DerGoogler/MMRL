@@ -133,14 +133,16 @@ fun ModuleItem(
         trailingButton = {
 
 
-            ModConf(
-                enabled = isProviderAlive,
-                onClick = {
-                    ModConfActivity.start(context = context, modId = module.id)
-                }
-            )
-            
-            Spacer(modifier = Modifier.width(12.dp))
+            if (module.hasModConf) {
+                ModConf(
+                    enabled = isProviderAlive,
+                    onClick = {
+                        ModConfActivity.start(context = context, modId = module.id)
+                    }
+                )
+
+                Spacer(modifier = Modifier.width(12.dp))
+            }
 
             if (item != null) {
                 UpdateButton(

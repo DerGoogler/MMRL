@@ -13,6 +13,7 @@ data class LocalModule(
     val description: String,
     val updateJson: String,
     val state: State,
+    val hasModConf: Boolean,
     val lastUpdated: Long
 ) : Parcelable {
     companion object
