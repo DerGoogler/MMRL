@@ -167,10 +167,10 @@
     <string name="menu_show_updated">更新日時を表示</string>
     <string name="menu_show_antifeatures">アンチ機能を表示</string>
     <!-- Message -->
-    <string name="message_download_success">ダウンロード成功</string>
+    <string name="message_download_success">ダウンロードが成功しました</string>
     <string name="message_loading">読み込み中…</string>
     <!-- Notification -->
-    <string name="notification_name_download">ダウンロード</string>
+    <string name="notification_name_download">ダウンロードサービス</string>
     <!-- Search -->
     <string name="search_empty">空のリスト</string>
     <string name="search_placeholder">検索…</string>
