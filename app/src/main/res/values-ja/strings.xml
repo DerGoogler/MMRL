@@ -31,10 +31,10 @@
     <string name="module_installed">インストール済み</string>
     <string name="module_new">新着</string>
     <!-- Advanced Menu -->
-    <string name="menu_pin_installed">インストール済みのピン留め</string>
+    <string name="menu_pin_installed">インストール済みをピン留め</string>
     <string name="menu_pin_updatable">更新可能のピン留め</string>
-    <string name="menu_show_icon">アイコンの表示</string>
-    <string name="menu_show_license">ライセンスの表示</string>
+    <string name="menu_show_icon">アイコンを表示</string>
+    <string name="menu_show_license">ライセンスを表示</string>
     <string name="menu_show_cover">カバーを表示</string>
     <string name="menu_show_verified">認証済みを表示</string>
     <string name="menu_sort_repolistmode_detailed">詳細</string>
