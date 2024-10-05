@@ -32,7 +32,7 @@
     <string name="module_new">新着</string>
     <!-- Advanced Menu -->
     <string name="menu_pin_installed">インストール済みをピン留め</string>
-    <string name="menu_pin_updatable">更新可能のピン留め</string>
+    <string name="menu_pin_updatable">更新可能をピン留め</string>
     <string name="menu_show_icon">アイコンを表示</string>
     <string name="menu_show_license">ライセンスを表示</string>
     <string name="menu_show_cover">カバーを表示</string>
