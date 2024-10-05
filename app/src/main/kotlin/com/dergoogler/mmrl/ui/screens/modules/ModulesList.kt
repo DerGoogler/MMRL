@@ -131,6 +131,17 @@ fun ModuleItem(
             }
         },
         trailingButton = {
+
+
+            ModConf(
+                enabled = isProviderAlive,
+                onClick = {
+                    ModConfActivity.start(context = context, modId = module.id)
+                }
+            )
+            
+            Spacer(modifier = Modifier.width(12.dp))
+
             if (item != null) {
                 UpdateButton(
                     enabled = item.versionCode > module.versionCode,
@@ -146,14 +157,6 @@ fun ModuleItem(
                 onClick = ops.change
             )
 
-//            Spacer(modifier = Modifier.width(12.dp))
-//
-//            ModConf(
-//                enabled = isProviderAlive,
-//                onClick = {
-//                    ModConfActivity.start(context = context, modId = module.id)
-//                }
-//            )
         }
     )
 }
@@ -226,9 +229,5 @@ private fun ModConf(
         modifier = Modifier.size(20.dp),
         painter = painterResource(id = R.drawable.settings),
         contentDescription = null
-    )
-    Spacer(modifier = Modifier.width(6.dp))
-    Text(
-        text = stringResource(id = R.string.module_config)
     )
 }
