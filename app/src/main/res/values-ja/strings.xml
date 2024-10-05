@@ -164,7 +164,7 @@
     <string name="menu_sort_option_updated">更新日時</string>
     <string name="menu_descending">降順</string>
     <string name="menu_pin_enabled">ピン留めを有効化</string>
-    <string name="menu_show_updated">更新日時の表示</string>
+    <string name="menu_show_updated">更新日時を表示</string>
     <string name="menu_show_antifeatures">アンチ機能を表示</string>
     <!-- Message -->
     <string name="message_download_success">ダウンロード成功</string>
