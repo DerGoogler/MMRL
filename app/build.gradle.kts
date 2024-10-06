@@ -56,8 +56,8 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = true
-            isShrinkResources = true
+            isMinifyEnabled = false
+            isShrinkResources = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -65,7 +65,6 @@ android {
             buildConfigField("Boolean", "IS_DEV_VERSION", "false")
             isDebuggable = false
             isJniDebuggable = false
-            isRenderscriptDebuggable = false
             renderscriptOptimLevel = 3
             multiDexEnabled = false
         }
@@ -75,7 +74,6 @@ android {
             applicationIdSuffix = ".debug"
             isJniDebuggable = true
             isDebuggable = true
-            isRenderscriptDebuggable = true
             renderscriptOptimLevel = 0
             isMinifyEnabled = false
             multiDexEnabled = false
@@ -148,6 +146,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.service)
     implementation(libs.androidx.lifecycle.viewModel.compose)
+    implementation(libs.androidx.compose.runtime)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.serialization.json)

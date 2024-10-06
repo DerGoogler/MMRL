@@ -7,9 +7,9 @@ import android.content.Context
 import android.content.Intent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.compose.material3.Text
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.currentComposer
+import androidx.compose.runtime.currentCompositeKeyHash
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -18,6 +18,7 @@ import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.theme.AppTheme
 import com.dergoogler.mmrl.viewmodel.ModConfViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -27,8 +28,11 @@ class ModConfActivity : ComponentActivity() {
     private val viewModel: ModConfViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Timber.d("ModConfActivity onCreate")
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        val isDebug = intent.getBooleanExtra("DEBUG", false)
 
         val modId = intent.getStringExtra("MOD_ID") ?: return
         val fixedModId = modId.replace(Regex("[^a-zA-Z0-9._]"), "_")
@@ -53,13 +57,20 @@ class ModConfActivity : ComponentActivity() {
                 ) {
                     viewModel.loadComposablePlugin(
                         context = context,
+                        isDebug = isDebug,
                         id = modId,
                         fixedModId = fixedModId,
                         composer = currentComposer,
+                        hash = currentCompositeKeyHash
                     )
                 }
             }
         }
+    }
+
+    override fun onDestroy() {
+        Timber.d("ModConfActivity onDestroy")
+        super.onDestroy()
     }
 
     companion object {

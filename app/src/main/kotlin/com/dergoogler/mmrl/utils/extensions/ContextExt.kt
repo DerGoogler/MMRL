@@ -37,7 +37,7 @@ fun Context.launchCustomTab(url: String) {
 val Context.currentComposer
     get(): Composer? {
         return try {
-            val composerField = Class.forName("androidx.compose.runtime.ComposablesKt")
+            val composerField = Class.forName("androidx.compose.runtime.ComposerKt")
                 .getDeclaredField("currentComposer")
             composerField.isAccessible = true
             composerField.get(null) as? Composer

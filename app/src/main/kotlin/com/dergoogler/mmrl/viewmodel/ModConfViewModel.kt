@@ -2,9 +2,9 @@ package com.dergoogler.mmrl.viewmodel
 
 import android.content.Context
 import android.os.Build
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Composer
+import androidx.compose.runtime.Recomposer
 import androidx.lifecycle.ViewModel
 import com.dergoogler.mmrl.Compat
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -36,17 +36,26 @@ class ModConfViewModel @Inject constructor(
 
     fun loadComposablePlugin(
         context: Context,
+        isDebug: Boolean,
         id: String,
         fixedModId: String,
         composer: Composer,
+        hash: Int
     ): Composable? {
         return try {
             val optimizedDir = File(context.cacheDir, "dex_optimized").apply { mkdirs() }
-            
-            val dexFilePath = if (Build.SUPPORTED_64_BIT_ABIS.isNotEmpty())
-                File("/system/lib64", "$fixedModId.dex")
-            else
-                File("/system/lib", "$fixedModId.dex")
+
+            val dexFilePath = if (isDebug) {
+                File(context.filesDir, "$fixedModId.dex")
+            } else {
+                if (Build.SUPPORTED_64_BIT_ABIS.isNotEmpty()) {
+                    File("/system/lib64", "$fixedModId.dex")
+                } else {
+                    File("/system/lib", "$fixedModId.dex")
+                }
+            }
+
+            Timber.d("Dex file path: ${dexFilePath.path}")
 
             try {
                 dexFilePath.setReadOnly()
@@ -74,20 +83,20 @@ class ModConfViewModel @Inject constructor(
 
             pluginInstance.isAccessible = true
 
-            pluginInstance.invoke(null, composer, 0) as? Composable
+            pluginInstance.invoke(null, composer, hash) as? Composable
         } catch (e: Exception) {
             e.printStackTrace()
             null
         }
     }
 
-    fun setField(fieldName: String, value: Any) {
+    private fun setField(fieldName: String, value: Any) {
         try {
             val field = pluginClass.getDeclaredField(fieldName)
             field.isAccessible = true
             field.set(null, value)
         } catch (e: Exception) {
-            Log.e("BaseModuleManagerImpl", "Failed to set field $fieldName")
+            Timber.e("Failed to set field $fieldName")
         }
     }
 
