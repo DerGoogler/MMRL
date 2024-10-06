@@ -2,6 +2,7 @@
 -dontpreverify
 -optimizationpasses 5
 -dontskipnonpubliclibraryclasses
+-dontobfuscate
 
 -dontwarn org.conscrypt.**
 -dontwarn kotlinx.serialization.**
@@ -11,4 +12,8 @@
    <fields>;
 }
 
--repackageclasses com.dergoogler.mmrl
+-keep class androidx.compose.runtime.** { *; }
+-keep class androidx.compose.ui.** { *; }
+-keep class androidx.compose.foundation.** { *; }
+
+#-repackageclasses com.dergoogler.mmrl

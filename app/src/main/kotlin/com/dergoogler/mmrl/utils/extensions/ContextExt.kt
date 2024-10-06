@@ -5,6 +5,8 @@ import android.content.Intent
 import android.net.Uri
 import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Composer
 import androidx.core.app.ShareCompat
 
 val Context.tmpDir
@@ -30,6 +32,20 @@ fun Context.launchCustomTab(url: String) {
 
     customTabsIntent.launchUrl(this, Uri.parse(url))
 }
+
+@get:Composable
+val Context.currentComposer
+    get(): Composer? {
+        return try {
+            val composerField = Class.forName("androidx.compose.runtime.ComposablesKt")
+                .getDeclaredField("currentComposer")
+            composerField.isAccessible = true
+            composerField.get(null) as? Composer
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
 
 fun Context.shareText(text: String) {
     ShareCompat.IntentBuilder(this)

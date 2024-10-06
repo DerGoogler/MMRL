@@ -3,29 +3,21 @@ package com.dergoogler.mmrl.ui.activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.runtime.Composable
 import android.content.Context
 import android.content.Intent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.Composer
+import androidx.compose.material3.Text
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.currentComposer
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.dergoogler.mmrl.Compat
-import com.dergoogler.mmrl.datastore.UserPreferencesCompat.Companion.isRoot
 import com.dergoogler.mmrl.repository.UserPreferencesRepository
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.theme.AppTheme
-import com.dergoogler.mmrl.viewmodel.InstallViewModel
 import com.dergoogler.mmrl.viewmodel.ModConfViewModel
-import dalvik.system.DexClassLoader
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
-import java.io.File
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -42,7 +34,6 @@ class ModConfActivity : ComponentActivity() {
         val fixedModId = modId.replace(Regex("[^a-zA-Z0-9._]"), "_")
 
         setContent {
-            val current = currentComposer
             val context = LocalContext.current
             val userPreferences by userPreferencesRepository.data.collectAsStateWithLifecycle(
                 initialValue = null
@@ -64,7 +55,7 @@ class ModConfActivity : ComponentActivity() {
                         context = context,
                         id = modId,
                         fixedModId = fixedModId,
-                        composer = current,
+                        composer = currentComposer,
                     )
                 }
             }
