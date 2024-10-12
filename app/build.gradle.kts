@@ -153,13 +153,11 @@ dependencies {
     implementation(libs.kotlinx.datetime)
     implementation(libs.kotlin.reflect)
     implementation(libs.protobuf.kotlin.lite)
-//    implementation(libs.markwon.core)
     implementation(libs.compose.markdown)
     implementation(libs.timber)
 
     implementation(libs.semver)
     implementation(libs.coil.compose)
-
 
     implementation(libs.square.retrofit)
     implementation(libs.square.retrofit.moshi)

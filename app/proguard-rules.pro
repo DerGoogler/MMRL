@@ -16,6 +16,9 @@
 -keep class androidx.compose.ui.** { *; }
 -keep class androidx.compose.foundation.** { *; }
 
+-keep class androidx.navigation.** { *; }
+-keep class androidx.compose.navigation.** { *; }
+
 -keep class com.topjohnwu.superuser.** { *; }
 -dontwarn com.topjohnwu.superuser.**
 
