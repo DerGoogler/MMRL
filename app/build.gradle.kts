@@ -66,7 +66,7 @@ android {
             isDebuggable = false
             isJniDebuggable = false
             renderscriptOptimLevel = 3
-            multiDexEnabled = false
+            multiDexEnabled = true
         }
 
         debug {
@@ -76,7 +76,7 @@ android {
             isDebuggable = true
             renderscriptOptimLevel = 0
             isMinifyEnabled = false
-            multiDexEnabled = false
+            multiDexEnabled = true
         }
 
         all {
@@ -147,13 +147,17 @@ dependencies {
     implementation(libs.androidx.lifecycle.service)
     implementation(libs.androidx.lifecycle.viewModel.compose)
     implementation(libs.androidx.compose.runtime)
+    implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.foundation)
+    implementation(libs.androidx.navigation.runtime.ktx)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.kotlinx.datetime)
     implementation(libs.kotlin.reflect)
     implementation(libs.protobuf.kotlin.lite)
     implementation(libs.compose.markdown)
+    implementation(libs.androidx.multidex)
     implementation(libs.timber)
 
     implementation(libs.semver)

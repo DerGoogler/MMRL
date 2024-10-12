@@ -9,6 +9,10 @@ import dev.dergoogler.mmrl.compat.content.State
 import dev.dergoogler.mmrl.compat.stub.IInstallCallback
 import dev.dergoogler.mmrl.compat.stub.IModuleManager
 import java.io.File
+import java.nio.file.FileSystems
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.Paths
 import java.util.zip.ZipFile
 
 internal abstract class BaseModuleManagerImpl(
@@ -51,13 +55,36 @@ internal abstract class BaseModuleManagerImpl(
         }
 
     private fun hasModConf(moduleDir: File, id: String): Boolean {
-        val mId = id.replace(Regex("[^a-zA-Z0-9._]"), "_")
+        val fixedModId = id.replace(Regex("[^a-zA-Z0-9._]"), "_")
 
-        if (Build.SUPPORTED_64_BIT_ABIS.isNotEmpty()) {
-            return moduleDir.resolve("/system/lib64/$mId.dex").exists()
+        val dexFilePath = if (Build.SUPPORTED_64_BIT_ABIS.isNotEmpty()) {
+            findFirstMatch("/system/lib64", fixedModId)
+        } else {
+            findFirstMatch("/system/lib", fixedModId)
+        } ?: return false
+
+        return dexFilePath.toFile().exists()
+    }
+
+    private fun findFirstMatch(directory: String, prefix: String): Path? {
+        val dirPath: Path = Paths.get(directory)
+
+        val patterns = listOf("*.apk", "*.jar", "*.dex")
+
+        Files.newDirectoryStream(dirPath).use { directoryStream ->
+            for (path in directoryStream) {
+                for (pattern in patterns) {
+                    val pathMatcher = FileSystems.getDefault().getPathMatcher("glob:$pattern")
+                    if (pathMatcher.matches(path.fileName) && path.fileName.toString()
+                            .startsWith(prefix)
+                    ) {
+                        return path
+                    }
+                }
+            }
         }
 
-        return moduleDir.resolve("/system/lib/$mId.dex").exists()
+        return null
     }
 
     override fun getModuleById(id: String): LocalModule? {
