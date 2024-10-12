@@ -7,7 +7,6 @@ import com.dergoogler.mmrl.datastore.WorkingMode
 import dev.dergoogler.mmrl.compat.ServiceManagerCompat
 import dev.dergoogler.mmrl.compat.stub.IFileManager
 import dev.dergoogler.mmrl.compat.stub.IModuleManager
-import dev.dergoogler.mmrl.compat.stub.IPowerManager
 import dev.dergoogler.mmrl.compat.stub.IServiceManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -27,7 +26,6 @@ object Compat {
 
     val moduleManager: IModuleManager get() = mService.moduleManager
     val fileManager: IFileManager get() = mService.fileManager
-    val powerManager: IPowerManager get() = mService.powerManager
 
     private fun state(): Boolean {
         isAlive = mServiceOrNull != null

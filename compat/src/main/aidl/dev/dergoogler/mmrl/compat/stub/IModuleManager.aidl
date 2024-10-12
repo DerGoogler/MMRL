@@ -11,6 +11,7 @@ interface IModuleManager {
     List<LocalModule> getModules();
     LocalModule getModuleById(String id);
     LocalModule getModuleInfo(String zipPath);
+    oneway void reboot();
     oneway void enable(String id, IModuleOpsCallback callback);
     oneway void disable(String id, IModuleOpsCallback callback);
     oneway void remove(String id, IModuleOpsCallback callback);

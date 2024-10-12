@@ -9,7 +9,6 @@ import com.topjohnwu.superuser.Shell
 import com.topjohnwu.superuser.ShellUtils
 import dev.dergoogler.mmrl.compat.stub.IFileManager
 import dev.dergoogler.mmrl.compat.stub.IModuleManager
-import dev.dergoogler.mmrl.compat.stub.IPowerManager
 import dev.dergoogler.mmrl.compat.stub.IServiceManager
 import kotlin.system.exitProcess
 
@@ -40,14 +39,6 @@ internal class ServiceManagerImpl : IServiceManager.Stub() {
         FileManagerImpl()
     }
 
-    private val powerManager by lazy {
-        PowerManagerImpl(
-            IPowerManager.Stub.asInterface(
-                ServiceManager.getService(Context.POWER_SERVICE)
-            )
-        )
-    }
-
     override fun getUid(): Int {
         return Os.getuid()
     }
@@ -70,10 +61,6 @@ internal class ServiceManagerImpl : IServiceManager.Stub() {
 
     override fun getFileManager(): IFileManager {
         return fileManager
-    }
-
-    override fun getPowerManager(): IPowerManager {
-        return powerManager
     }
 
     override fun destroy() {

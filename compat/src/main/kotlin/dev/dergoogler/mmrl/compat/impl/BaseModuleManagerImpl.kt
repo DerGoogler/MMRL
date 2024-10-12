@@ -40,6 +40,10 @@ internal abstract class BaseModuleManagerImpl(
         return mVersionCode
     }
 
+    override fun reboot() {
+        "svc power reboot || reboot".exec()
+    }
+
     override fun getModules() = modulesDir.listFiles()
         .orEmpty()
         .mapNotNull { dir ->

@@ -9,6 +9,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dergoogler.mmrl.Compat
+import com.dergoogler.mmrl.Compat.moduleManager
 import com.dergoogler.mmrl.app.Event
 import com.dergoogler.mmrl.compat.MediaStoreCompat.copyToDir
 import com.dergoogler.mmrl.compat.MediaStoreCompat.getPathForUri
@@ -18,7 +19,6 @@ import com.dergoogler.mmrl.repository.UserPreferencesRepository
 import com.dergoogler.mmrl.utils.extensions.tmpDir
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.dergoogler.mmrl.compat.content.State
-import dev.dergoogler.mmrl.compat.delegate.PowerManagerDelegate
 import dev.dergoogler.mmrl.compat.stub.IInstallCallback
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -46,10 +46,11 @@ class InstallViewModel @Inject constructor(
     }
 
     fun reboot() {
-        PowerManagerDelegate(Compat.powerManager).apply {
+        with(moduleManager) {
             reboot()
         }
     }
+
 
     suspend fun writeLogsTo(context: Context, uri: Uri) = withContext(Dispatchers.IO) {
         runCatching {
@@ -126,6 +127,7 @@ class InstallViewModel @Inject constructor(
                     deleteBySu(zipPath)
                 }
             }
+
             override fun onFailure() {
                 event = Event.FAILED
             }
