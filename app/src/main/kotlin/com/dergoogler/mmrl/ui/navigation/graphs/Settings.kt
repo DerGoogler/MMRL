@@ -11,6 +11,7 @@ import com.dergoogler.mmrl.ui.navigation.MainScreen
 import com.dergoogler.mmrl.ui.screens.settings.SettingsScreen
 import com.dergoogler.mmrl.ui.screens.settings.about.AboutScreen
 import com.dergoogler.mmrl.ui.screens.settings.appearance.AppearanceScreen
+import com.dergoogler.mmrl.ui.screens.settings.blacklist.BlacklistScreen
 import com.dergoogler.mmrl.ui.screens.settings.changelogs.ChangelogScreen
 import com.dergoogler.mmrl.ui.screens.settings.other.OtherScreen
 import com.dergoogler.mmrl.ui.screens.settings.repositories.RepositoriesScreen
@@ -23,7 +24,8 @@ enum class SettingsScreen(val route: String) {
     Appearance("Appearance"),
     Security("Security"),
     Other("Other"),
-    WorkingMode("WorkingMode"), About("About"), Changelog("Changelog")
+    Blacklist("Blacklist"),
+    WorkingMode("WorkingMode"), About("About"), Changelog("Changelog"),
 }
 
 fun NavGraphBuilder.settingsScreen(
@@ -78,6 +80,16 @@ fun NavGraphBuilder.settingsScreen(
         exitTransition = { fadeOut() }
     ) {
         OtherScreen(
+            navController = navController
+        )
+    }
+
+    composable(
+        route = SettingsScreen.Blacklist.route,
+        enterTransition = { scaleIn() + fadeIn() },
+        exitTransition = { fadeOut() }
+    ) {
+        BlacklistScreen(
             navController = navController
         )
     }

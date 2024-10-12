@@ -198,5 +198,7 @@
     <string name="open">Open</string>
     <string name="help">Help</string>
     <string name="module_config">Config</string>
+    <string name="settings_blacklist">Blacklist</string>
+    <string name="settings_blacklist_desc">Listed modules that may closed source or dangerous</string>
 
 </resources>

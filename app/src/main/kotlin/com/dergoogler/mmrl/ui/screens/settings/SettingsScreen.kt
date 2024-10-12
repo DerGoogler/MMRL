@@ -80,6 +80,15 @@ fun SettingsScreen(
             )
 
             SettingNormalItem(
+                icon = R.drawable.file_shredder,
+                title = stringResource(id = R.string.settings_blacklist),
+                desc = stringResource(id = R.string.settings_blacklist_desc),
+                onClick = {
+                    navController.navigateSingleTopTo(SettingsScreen.Blacklist.route)
+                }
+            )
+
+            SettingNormalItem(
                 icon = R.drawable.git_pull_request,
                 title = stringResource(id = R.string.settings_repo),
                 desc = stringResource(id = R.string.settings_repo_desc),
