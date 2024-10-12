@@ -1,103 +1,201 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="settings_root_access">تصريح الروت: %s</string>
-    <string name="setup_root_title">روت</string>
+    <!-- Setup -->
+    <string name="setup_mode">وضع العمل</string>
+    <string name="setup_root_title">الروت</string>
+    <string name="setup_root_desc">يتطلب أذونات الروت المقدمة من Magisk أو KernelSU</string>
+    <string name="setup_shizuku_desc">يتطلب الإذن المقدم من Sui أو Shizuku (روت)</string>
     <string name="setup_non_root_title">بدون روت</string>
-    <string name="install_flashing">تفليش</string>
+    <string name="setup_non_root_desc">لا يتطلب أذونات الروت، فقط وظيفة تنزيل الإضافة متاحة</string>
+
+    <!-- Install -->
+    <string name="install_screen_title">التثبيت</string>
+    <string name="install_flashing">تثبيت</string>
     <string name="install_done">تم</string>
     <string name="install_failure">فشل</string>
+    <string name="install_logs_saved">تم حفظ السجلات</string>
+    <string name="install_logs_save_failed">فشل في الحفظ: %s</string>
+    <string name="install_screen_reboot_title">إعادة التشغيل؟</string>
+    <string name="install_screen_reboot_text">هل أنت متأكد أنك تريد إعادة تشغيل جهازك؟</string>
+    <string name="install_screen_reboot_confirm">تأكيد</string>
+    <string name="install_screen_reboot_dismiss">إلغاء</string>
+
+    <!-- License -->
     <string name="license_title">عرض الترخيص</string>
-    <string name="license_osi_approved">تراخيص معتمدة</string>
-    <string name="page_modules">الإضافات</string>
-    <string name="settings_root_provider">المزود%s</string>
-    <string name="settings_root_none">غير متوفر</string>
-    <string name="settings_non_root_desc">الوظائف محدودة</string>
-    <string name="setup_mode">وضع العمل</string>
-    <string name="page_settings">الإعدادات</string>
-    <string name="settings_root_granted">تم التصريح</string>
-    <string name="settings_root_not_available">غير متاح</string>
-    <string name="module_version_author">%1$sبواسطة%2$s</string>
-    <string name="license_fsf_libre">FSF الحر</string>
-    <string name="module_remove">إزالة</string>
-    <string name="module_restore">استرجاع</string>
-    <string name="module_install">تثبيت</string>
-    <string name="module_download">تنزيل</string>
-    <string name="modules_empty">لم يتم العثور على إضافات</string>
-    <string name="repository_empty">المستودعات فارغة</string>
-    <string name="search_placeholder">بحث…</string>
-    <string name="view_module_page_versions">الإصدارات</string>
-    <string name="view_module_provided">مقدم بواسطة%s</string>
-    <string name="settings_app_theme">سمة التطبيق</string>
-    <string name="settings_app">تطبيق</string>
-    <string name="search_empty">قائمة فارغة</string>
-    <string name="settings_download_path">مسار التنزيل</string>
-    <string name="settings_repo">المستودعات</string>
-    <string name="app_theme_palette">لوحة الموضوع</string>
-    <string name="app_theme_dark_theme">السمة الداكنة</string>
-    <string name="app_theme_dark_theme_auto">تلقائي</string>
-    <string name="app_theme_dark_theme_light">مضيء</string>
-    <string name="app_theme_dark_theme_dark">داكن</string>
-    <string name="repo_options_update">تحديث</string>
-    <string name="repo_options_delete">حذف</string>
-    <string name="repo_modules">"%d  إضافات"</string>
-    <string name="repo_add_dialog_title">اضافة مستودع</string>
-    <string name="repo_add_dialog_add">اضافة</string>
-    <string name="dialog_attention">ملاحظة</string>
-    <string name="dialog_cancel">إلغاء</string>
-    <string name="dialog_ok">حسناً</string>
-    <string name="message_download_success">تم التنزيل بنجاح</string>
-    <string name="message_loading">انتظار…</string>
-    <string name="notification_name_download">خدمة التنزيل</string>
-    <string name="unknown_error">خطاء غير معروف</string>
-    <string name="settings_app_theme_desc">تغيير الوضع الليلي ولوحة الألوان</string>
-    <string name="settings_repo_desc">إدارة مستودعات وإضافات Magisk</string>
-    <string name="repo_delete_dialog_desc">هل انت متأكد من حذف %s؟</string>
-    <string name="module_installed">مثبته</string>
-    <string name="about_desc2">صنع ❤️ بواسطة %s</string>
-    <string name="view_module_page_overview">وصف مختصر</string>
-    <string name="view_module_page_about">حول</string>
-    <string name="view_module_description">الوصف</string>
-    <string name="view_module_local">محلي</string>
-    <string name="view_module_version">الإصدار</string>
-    <string name="about_desc1">إدارة الإضافات وتوفير مستودعات الإضافات النمطية لـMagisk وKernelSU.</string>
-    <string name="settings_delete_zip_desc">احذف الملف المضغوط للوحدة بعد تثبيته بنجاح ، لاحظ أن هذا هو أفضل جهد ولن يعمل إذا لم يكن لدى التطبيق إذن بحذف هذا سيتم تنفيذه بواسطة صلاحية الروت</string>
-    <string name="settings_delete_zip">حذف الملف المضغوط</string>
+    <string name="license_osi_approved">موافق عليه من OSI</string>
+    <string name="license_fsf_libre">حر من FSF</string>
+
+    <!-- Page -->
     <string name="page_repository">المستودع</string>
-    <string name="view_module_version_dialog_desc">هل تريد تثبيت او تنزيل هذا الإصدار من الوحدة؟</string>
-    <string name="settings_app_desc">اعدادات حول تطبيق MMRL نفسه</string>
-    <string name="settings_about">حول</string>
-    <string name="about_app_version">الإصدار %1$s (%2$s)</string>
-    <string name="menu_show_updated">عرض وقت الحديث</string>
+    <string name="page_modules">الإضافات</string>
+    <string name="page_settings">الإعدادات</string>
+
+    <!-- Repository -->
+    <string name="repository_empty">المستودع فارغ</string>
+    <string name="module_installed">مثبت</string>
     <string name="module_new">جديد</string>
-    <string name="menu_pin_updatable">تدبيس القابلة لتحديث</string>
-    <string name="view_module_cloud">سحابي</string>
-    <string name="menu_pin_installed">تدبيس المثبتة</string>
-    <string name="menu_show_icon">عرض الايقونة</string>
-    <string name="menu_show_license">عرض الرخصة</string>
+
+    <!-- Advanced Menu -->
+    <string name="menu_pin_installed">تثبيت الدبوس</string>
+    <string name="menu_pin_updatable">تحديث الدبوس</string>
+    <string name="menu_show_icon">عرض الأيقونة</string>
+    <string name="menu_show_license">عرض الترخيص</string>
+    <string name="menu_show_cover">عرض الغلاف</string>
+    <string name="menu_show_verified">عرض التحقق</string>
+    <string name="menu_sort_repolistmode_detailed">مفصل</string>
+    <string name="menu_sort_repolistmode_compact">مضغوط</string>
+
+    <!-- View Module -->
+    <string name="view_module_page_overview">نظرة عامة</string>
+    <string name="view_module_page_versions">الإصدارات</string>
+    <string name="view_module_page_about">حول</string>
+    <string name="view_module_page_readme">اقرأني</string>
+    <string name="view_module_description">الوصف</string>
+    <string name="view_module_cloud">السحابة</string>
+    <string name="view_module_version">الإصدار</string>
+    <string name="view_module_last_updated">آخر تحديث</string>
+    <string name="view_module_local">محلي</string>
+    <string name="view_module_update_notify">إعلام</string>
+    <string name="view_module_update_ignore">تجاهل</string>
+    <string name="view_module_provided">مقدم من %s</string>
+    <string name="view_module_version_dialog_desc">هل تريد تثبيت أو تنزيل هذا الإصدار من الإضافة؟</string>
     <string name="view_module_homepage">الصفحة الرئيسية</string>
-    <string name="view_module_source">الرمز المصدري</string>
+    <string name="view_module_source">شفرة المصدر</string>
     <string name="view_module_support">الدعم</string>
     <string name="view_module_view_track">عرض المسار</string>
     <string name="view_module_type">النوع: %s</string>
-    <string name="view_module_added">مضاف في : %s</string>
-    <string name="view_module_last_updated">المحدثه مؤخرا</string>
-    <string name="repo_update_at">محدث في: %s</string>
+    <string name="view_module_added">تم الإضافة في: %s</string>
+    <string name="view_module_file_size">حجم الملف</string>
+    <string name="view_module_screenshots">لقطات الشاشة</string>
+    <string name="view_module_help">المساعدة</string>
+    <string name="view_module_antifeatures">ميزات مضادة</string>
+    <string name="view_module_unsupported">غير مدعوم</string>
+    <string name="view_module_unsupported_desc">يبدو أن جهازك لا يدعم هذا الإصدار من الإضافة. قم بالتثبيت على مسؤوليتك الخاصة!</string>
+
+    <!-- View Module / Features -->
+    <string name="view_module_features">الميزات</string>
+    <string name="view_module_features_service">الخدمة</string>
+    <string name="view_module_features_post_fs_data">بيانات ما بعد نظام الملفات</string>
+    <string name="view_module_features_system_properties">خصائص النظام</string>
+    <string name="view_module_features_selinux_policy">سياسة SELinux</string>
+    <string name="view_module_features_zygisk">Zygisk</string>
+    <string name="view_module_features_apks">APKs</string>
+    <string name="view_module_features_webui">واجهة الويب</string>
+    <string name="view_module_features_post_mount">بعد التركيب</string>
+    <string name="view_module_features_boot_completed">اكتمل التمهيد</string>
+    <string name="view_module_features_service_sub">تشغيل الكود لاحقًا أثناء التمهيد (نظام أكثر تهيئة).</string>
+    <string name="view_module_features_post_fs_data_sub">تشغيل الكود مبكرًا بعد التمهيد (نظام تم تشغيله جزئيًا).</string>
+    <string name="view_module_features_resetprop_sub">تعيين خصائص النظام المحملة بواسطة resetprop من Magisk.</string>
+    <string name="view_module_features_sepolicy_sub">إضافة سياسات أمان مخصصة (قواعد SEPolicy).</string>
+    <string name="view_module_features_zygisk_sub">يسمح للإضافات بالتفاعل مع إطار عمل Zygisk، مما يمكّن التعديلات والتفاعلات على مستوى النظام.</string>
+    <string name="view_module_features_apks_sub">تضمين APKs إضافية داخل الإضافة.</string>
+    <string name="view_module_features_webui_sub">واجهة ويب لإدارة الإضافات (KernelSU و APatch، وليس Magisk).</string>
+    <string name="view_module_features_postmount_sub">تنفيذ السكربت بعد تثبيت OverlayFS (KernelSU و APatch).</string>
+    <string name="view_module_features_bootcompleted_sub">تنفيذ السكربت بعد اكتمال التمهيد (KernelSU و APatch).</string>
+
+    <!-- Modules -->
+    <string name="modules_empty">لم يتم العثور على إضافات</string>
+    <!-- Module Item -->
+    <string name="module_version_author">%1$s بواسطة %2$s</string>
+    <string name="module_remove">إزالة</string>
+    <string name="module_restore">استعادة</string>
+    <string name="module_install">تثبيت</string>
+    <string name="module_download">تنزيل</string>
+    <string name="module_update">تحديث</string>
+
+    <!-- Settings -->
+    <string name="settings_app">التطبيق</string>
+    <string name="settings_app_desc">إعدادات حول تطبيق MMRL نفسه</string>
+    <string name="settings_repo">المستودعات</string>
+    <string name="settings_repo_desc">إدارة مستودعات إضافات Magisk</string>
+    <string name="settings_about">حول</string>
+    <string name="settings_resources">الموارد</string>
+    <string name="settings_resources_desc">المستندات، المستودعات المدعومة وأي شيء آخر</string>
+    <string name="settings_security">الأمان</string>
+    <string name="settings_security_desc">أشياء تتعلق بأمان التطبيق</string>
+    <string name="settings_appearance">المظهر</string>
+    <string name="settings_appearance_desc">تغيير التطبيق وفقًا لاحتياجاتك</string>
+    <string name="settings_other">أخرى</string>
+    <string name="settings_other_desc">DoH، مسار التنزيل والمزيد</string>
+    <string name="settings_text_wrap">التفاف النص</string>
+    <string name="settings_text_wrap_desc">يمكن تفعيل التفاف النص داخل محطة التثبيت</string>
+    <string name="settings_changelog">سجل التغييرات</string>
+    <string name="settings_changelo_desc">جميع التغييرات الحالية داخل MMRL</string>
+    
+    <!-- Root Item -->
+    <string name="settings_root_access">تصريح الروت: %s</string>
+    <string name="settings_root_provider">المزود: %s</string>
+    <string name="settings_root_granted">ممنوح</string>
+    <string name="settings_root_not_available">غير متوفر</string>
+    <string name="settings_root_none">لا شيء</string>
+    <!-- Non Root Item -->
+    <string name="settings_non_root_desc">الوظائف محدودة</string>
+    <!-- App -->
+    <string name="settings_app_theme">ثيم التطبيق</string>
+    <string name="settings_app_theme_desc">تغيير نظام الألوان ووضع الليل</string>
+    <string name="settings_download_path">مسار التنزيل</string>
+    <string name="settings_delete_zip">حذف ملف Zip</string>
+    <string name="settings_delete_zip_desc">حذف ملف zip للإضافة بعد نجاح التثبيت، سيتم تنفيذ ذلك بواسطة المستخدم الخارق</string>
+    <string name="settings_doh">DNS عبر HTTPS</string>
+    <string name="settings_doh_desc">حل لمشكلة تلوث DNS في بعض الدول</string>
+    <string name="settings_reboot_protection">حماية إعادة التشغيل</string>
+    <string name="settings_reboot_protection_desc">إذا تم تفعيله، يجب عليك تأكيد كل إعادة تشغيل</string>
+
+    <!-- App Theme -->
+    <string name="app_theme_palette">لوحة الثيمات</string>
+    <string name="app_theme_dark_theme">ثيم داكن</string>
+    <string name="app_theme_dark_theme_auto">تلقائي</string>
+    <string name="app_theme_dark_theme_light">فاتح</string>
+    <!-- Repo -->
+    <string name="repo_modules">%d إضافات</string>
+    <string name="repo_update_at">تم التحديث في: %s</string>
     <string name="repo_incompatible">غير متوافق</string>
+    <string name="repo_options_update">تحديث</string>
+    <string name="repo_options_delete">حذف</string>
+    <string name="repo_options_support">الدعم</string>
+    <string name="repo_options_submission">إرسال</string>
+    <string name="repo_options_website">الموقع الإلكتروني</string>
+    <string name="repo_options_donate">تبرع</string>
+    <string name="repo_delete_dialog_desc">هل أنت متأكد أنك تريد حذف %s؟</string>
+    <string name="repo_add_dialog_title">إضافة مستودع</string>
+    <string name="repo_add_dialog_add">إضافة</string>
+
+    <!-- About -->
+    <string name="about_app_version">الإصدار %1$s (%2$s)</string>
+    <string name="about_desc1">توفير مستودعات الإضافات وإدارة الإضافات لـ Magisk و KernelSU.</string>
+    <string name="about_desc2">صنع مع ❤️ بواسطة %s</string>
+
+    <!-- Dialog -->
+    <string name="dialog_attention">تنبيه</string>
+    <string name="dialog_cancel">إلغاء</string>
+    <string name="dialog_ok">موافق</string>
+
+    <!-- Menu -->
     <string name="menu_advanced_menu">القائمة المتقدمة</string>
     <string name="menu_sort_mode">وضع الفرز</string>
     <string name="menu_sort_option_name">الاسم</string>
     <string name="menu_sort_option_updated">وقت التحديث</string>
     <string name="menu_descending">تنازلي</string>
-    <string name="menu_pin_enabled">تدبيس المفعلة</string>
-    <string name="view_module_update_notify">الإخطار</string>
-    <string name="setup_root_desc">يتطلب أذونات الروت التي يوفرها Magisk أو KernelSU</string>
-    <string name="setup_non_root_desc">لا يتطلب أذونات الروت، تتوفر وظيفة تنزيل الإضافة فقط</string>
-    <string name="install_screen_title">تثبيت</string>
-    <string name="install_logs_save_failed">فشل حفظ: %s</string>
-    <string name="setup_shizuku_desc">يتطلب إذنًا مقدمًا من Sui أو Shizuku (روت)</string>
-    <string name="install_logs_saved">تم حفظ السجلات</string>
-    <string name="view_module_update_ignore">تجاهل</string>
-    <string name="module_update">تحديث</string>
-    <string name="settings_doh">DNS عبر HTTPS</string>
-    <string name="settings_doh_desc">الحل البديل لتسمم DNS في بعض الدول</string>
+    <string name="menu_pin_enabled">تثبيت مفعل</string>
+    <string name="menu_show_updated">عرض وقت التحديث</string>
+    <string name="menu_show_antifeatures">عرض الميزات المضادة</string>
+
+    <!-- Message -->
+    <string name="message_download_success">تم التنزيل بنجاح</string>
+    <string name="message_loading">جارٍ التحميل…</string>
+
+    <!-- Notification -->
+    <string name="notification_name_download">خدمة التنزيل</string>
+
+    <!-- Search -->
+    <string name="search_empty">القائمة فارغة</string>
+    <string name="search_placeholder">بحث…</string>
+
+    <!-- Other -->
+    <string name="unknown_error">خطأ غير معروف</string>
+    <string name="verified">تم التحقق</string>
+    <string name="open">فتح</string>
+    <string name="help">مساعدة</string>
+    <string name="module_config">الإعدادات</string>
+
 </resources>
