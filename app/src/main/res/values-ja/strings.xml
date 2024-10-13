@@ -141,13 +141,13 @@
     <string name="repo_update_at">最終更新: %s</string>
     <string name="repo_incompatible">互換性なし</string>
     <string name="repo_options_update">更新</string>
-    <string name="repo_options_delete">削除</string>
+    <string name="repo_options_delete">リポジトリを削除</string>
     <string name="repo_options_support">サポート</string>
-    <string name="repo_options_submission">提出</string>
+    <string name="repo_options_submission">モジュールを提出</string>
     <string name="repo_options_website">Web サイト</string>
     <string name="repo_options_donate">寄付</string>
-    <string name="repo_delete_dialog_desc">本当に %s を削除しますか？</string>
-    <string name="repo_add_dialog_title">リポジトリの追加</string>
+    <string name="repo_delete_dialog_desc">%s のリポジトリを削除しますか？</string>
+    <string name="repo_add_dialog_title">リポジトリを追加</string>
     <string name="repo_add_dialog_add">追加</string>
     <!-- About -->
     <string name="about_app_version">バージョン %1$s (%2$s)</string>
@@ -180,4 +180,6 @@
     <string name="open">開く</string>
     <string name="help">ヘルプ</string>
     <string name="module_config">設定</string>
+    <string name="settings_blacklist">ブラックリスト</string>
+    <string name="settings_blacklist_desc">クローズドソースまたは危険な可能性のあるモジュールの一覧です</string>
 </resources>
