@@ -130,6 +130,12 @@
     <string name="settings_doh_desc">一部の国での DNS ポイズニングを回避します。</string>
     <string name="settings_reboot_protection">再起動の保護</string>
     <string name="settings_reboot_protection_desc">有効化すると再起動のたびに許可が必要になります。</string>
+    <string name="settings_blacklist">ブラックリスト</string>
+    <string name="settings_blacklist_desc">クローズドソースまたは危険な可能性のあるモジュールの一覧です</string>
+    <string name="settings_date_pattern">日付のパターン</string>
+    <string name="settings_date_pattern_desc">日付形式を変更します</string>
+    <string name="settings_recommended_repos">おすすめのリポジトリ</string>
+    <string name="settings_recommended_repos_desc">新しいリポジトリを探して直接追加します</string>
     <!-- App Theme -->
     <string name="app_theme_palette">テーマパレット</string>
     <string name="app_theme_dark_theme">ダークテーマ</string>
@@ -180,6 +186,13 @@
     <string name="open">開く</string>
     <string name="help">ヘルプ</string>
     <string name="module_config">設定</string>
-    <string name="settings_blacklist">ブラックリスト</string>
-    <string name="settings_blacklist_desc">クローズドソースまたは危険な可能性のあるモジュールの一覧です</string>
+    <string name="we_hit_a_brick_crash">レンガが当たった！</string>
+    <string name="report_to_issues">問題を報告</string>
+    <string name="stack_trace_truncated">%s\n… %d 件以上</string>
+    <string name="additional_notes">補足事項</string>
+    <string name="repo_added">リポジトリを追加しました</string>
+    <string name="repo_update_service">リポジトリが正常に更新されました</string>
+    <string name="repo_update_service_desc">ご心配なく、MMRL はインストールしたリポジトリを更新しました。😋</string>
+    <string name="repo_update_service_failed">リポジトリの更新が見つかりません</string>
+    <string name="repo_update_service_failed_desc">リポジトリの更新はありません</string>
 </resources>
