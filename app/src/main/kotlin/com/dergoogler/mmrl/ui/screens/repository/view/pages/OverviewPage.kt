@@ -74,11 +74,21 @@ fun OverviewPage(
 
     online.note?.let {
         it.message?.let { it1 ->
-            Alert(
-                title = it.title,
-                message = it1,
-                modifier = Modifier.padding(top = 8.dp, end = 8.dp, start = 8.dp, bottom = 4.dp)
-            )
+            if (it.title != null && it.title.lowercase() == "deprecated") {
+                Alert(
+                    backgroundColor = MaterialTheme.colorScheme.errorContainer,
+                    textColor = MaterialTheme.colorScheme.onErrorContainer,
+                    title = it.title,
+                    message = it1,
+                    modifier = Modifier.padding(top = 8.dp, end = 8.dp, start = 8.dp, bottom = 4.dp)
+                )
+            } else {
+                Alert(
+                    title = it.title,
+                    message = it1,
+                    modifier = Modifier.padding(top = 8.dp, end = 8.dp, start = 8.dp, bottom = 4.dp)
+                )
+            }
         }
     }
 

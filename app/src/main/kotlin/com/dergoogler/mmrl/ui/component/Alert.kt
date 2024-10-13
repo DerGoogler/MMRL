@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -19,18 +20,18 @@ fun Alert(
     title: String?,
     message: String,
 ) {
-    Box(
+    Surface(
         modifier = Modifier
             .fillMaxWidth()
             .then(modifier),
-    ) {
+        color = backgroundColor,
+        tonalElevation = 1.dp,
+        shape = RoundedCornerShape(20.dp),
+
+        ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(
-                    color = backgroundColor,
-                    shape = RoundedCornerShape(8.dp)
-                )
                 .padding(12.dp),
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
