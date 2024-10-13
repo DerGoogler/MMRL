@@ -209,5 +209,9 @@
     <string name="stack_trace_truncated">%s\n… %d more</string>
     <string name="additional_notes">Additional Notes</string>
     <string name="repo_added">Repo added</string>
+    <string name="repo_update_service">Repositories updated successfully</string>
+    <string name="repo_update_service_desc">Don\'t worry, MMRL updated your installed repos for you. 😋</string>
+    <string name="repo_update_service_failed">No updates found for repositories</string>
+    <string name="repo_update_service_failed_desc">There are no updates for repositories</string>
 
 </resources>

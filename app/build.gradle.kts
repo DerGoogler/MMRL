@@ -147,6 +147,7 @@ dependencies {
     implementation(libs.rikka.shizuku.api)
     implementation(libs.rikka.shizuku.provider)
 
+    implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.androidx.runtime.android)
     implementation(libs.androidx.annotation)
     implementation(libs.androidx.activity.compose)

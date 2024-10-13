@@ -1,9 +1,12 @@
 package ext.dergoogler.mmrl.activity
 
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.SystemClock
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -11,8 +14,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionContext
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.work.Constraints
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.NetworkType
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.repository.LocalRepository
 import com.dergoogler.mmrl.repository.UserPreferencesRepository
@@ -21,7 +28,9 @@ import com.dergoogler.mmrl.ui.activity.InstallActivity
 import com.dergoogler.mmrl.ui.activity.ModConfActivity
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.theme.AppTheme
+import com.dergoogler.mmrl.worker.RepoUpdateWorker
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import kotlin.system.exitProcess
 
@@ -68,6 +77,23 @@ open class MMRLComponentActivity : ComponentActivity() {
         } else {
             stackTraceElements
         }
+    }
+
+    fun startRepoUpdateService() {
+        val updateRequest = PeriodicWorkRequestBuilder<RepoUpdateWorker>(6, TimeUnit.HOURS)
+            .setConstraints(
+                Constraints.Builder()
+                    .setRequiredNetworkType(NetworkType.CONNECTED)
+                    .build()
+            )
+            .build()
+
+        WorkManager.getInstance(this)
+            .enqueueUniquePeriodicWork(
+                "RepoUpdateWork",
+                ExistingPeriodicWorkPolicy.UPDATE,
+                updateRequest
+            )
     }
 
     companion object {

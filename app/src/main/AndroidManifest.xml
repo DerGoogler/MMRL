@@ -83,6 +83,7 @@
         <activity
             android:name=".ui.activity.ModConfActivity"
             android:exported="true"
+            android:label="@string/modconf_activity"
             android:excludeFromRecents="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

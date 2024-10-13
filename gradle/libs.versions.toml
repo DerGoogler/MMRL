@@ -36,6 +36,7 @@ squareRetrofit = "2.11.0"
 squareOkhttp = "4.12.0"
 squareMoshi = "1.15.1"
 runtimeAndroid = "1.7.3"
+workRuntimeKtx = "2.8.0"
 
 [libraries]
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidxActivity" }
@@ -66,6 +67,7 @@ androidx-room-compiler = { group = "androidx.room", name = "room-compiler", vers
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "androidxRoom" }
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "androidxRoom" }
 androidx-ui = { module = "androidx.compose.ui:ui" }
+androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "workRuntimeKtx" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 compose-markdown = { module = "com.github.jeziellago:compose-markdown", version.ref = "composeMarkdown" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }

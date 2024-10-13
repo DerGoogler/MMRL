@@ -31,6 +31,8 @@ class MainActivity : MMRLComponentActivity() {
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
 
+        startRepoUpdateService()
+
         splashScreen.setKeepOnScreenCondition { isLoading }
 
         setBaseContent {
