@@ -21,15 +21,15 @@ class ModConfActivity : MMRLComponentActivity() {
 
         val isDebug = intent.getBooleanExtra("DEBUG", false)
 
-        val modId = intent.getStringExtra("MOD_ID") ?: return
+        val modId = intent.getStringExtra("MOD_ID") ?: "null"
         val fixedModId = modId.replace(Regex("[^a-zA-Z0-9._]"), "_")
-
 
         setBaseContent {
             val context = LocalContext.current
 
             viewModel.loadComposablePlugin(
                 context = context,
+                standaloneData = intent.data,
                 isDebug = isDebug,
                 id = modId,
                 fixedModId = fixedModId,
