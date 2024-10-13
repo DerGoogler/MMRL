@@ -76,15 +76,15 @@
     <string name="view_module_features_webui">WebUI</string>
     <string name="view_module_features_post_mount">Post Mount</string>
     <string name="view_module_features_boot_completed">起動完了</string>
-    <string name="view_module_features_service_sub">起動中に後でコードを実行します (より多くのシステムが初期化されます)。</string>
-    <string name="view_module_features_post_fs_data_sub">起動後すぐにコードを実行します (一部のシステムを起動します)。</string>
+    <string name="view_module_features_service_sub">起動中に後でコードを実行します (より多くのシステムを初期化)。</string>
+    <string name="view_module_features_post_fs_data_sub">起動後すぐにコードを実行します (一部のシステムを起動)。</string>
     <string name="view_module_features_resetprop_sub">Magisk の resetprop によって読み込まれたシステムプロパティを設定します。</string>
     <string name="view_module_features_sepolicy_sub">カスタムセキュリティポリシーを追加します (SE ポリシールール)。</string>
     <string name="view_module_features_zygisk_sub">モジュールが Zygisk フレームワークと対話可能にして、システムレベルの変更と対話ができる状態にします。</string>
-    <string name="view_module_features_apks_sub">モジュール内に追加の APK を含めます。</string>
+    <string name="view_module_features_apks_sub">モジュール内に追加の APK が含まれています。</string>
     <string name="view_module_features_webui_sub">モジュールを Web インターフェースで管理します (KernelSU と APatch、Magiskではなく)。&gt;</string>
-    <string name="view_module_features_postmount_sub">OverlayFS マウント後のスクリプト実行 (KernelSU と APatch)。&gt;</string>
-    <string name="view_module_features_bootcompleted_sub">起動完了時のスクリプト実行 (KernelSU と APatch)。&gt;</string>
+    <string name="view_module_features_postmount_sub">OverlayFS マウント後にスクリプトを実行 (KernelSU と APatch)。&gt;</string>
+    <string name="view_module_features_bootcompleted_sub">起動完了時にスクリプトを実行 (KernelSU と APatch)。&gt;</string>
     <!-- Modules -->
     <string name="modules_empty">モジュールが見つかりません</string>
     <!-- Module Item -->
