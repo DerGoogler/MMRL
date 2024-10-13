@@ -63,7 +63,6 @@ private fun ValueItem(
 }
 
 private fun getAntifeatureDetails(id: String?): Pair<Int, Int>? {
-    // A map to store the resource IDs for names and descriptions
     val antifeatureMap = mapOf(
         "ads" to (R.string.ads_name to R.string.ads_desc),
         "knownvuln" to (R.string.knownvuln_name to R.string.knownvuln_desc),
@@ -79,6 +78,5 @@ private fun getAntifeatureDetails(id: String?): Pair<Int, Int>? {
         "unaskedremoval" to (R.string.unaskedremoval_name to R.string.unaskedremoval_desc)
     )
 
-    // Check if ID is not null and if it exists in the map
     return id?.lowercase()?.let { antifeatureMap[it] }
 }
