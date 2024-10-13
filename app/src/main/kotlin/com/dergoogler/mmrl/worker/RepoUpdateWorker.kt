@@ -3,6 +3,8 @@ package com.dergoogler.mmrl.worker
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
+import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.room.Room
 import androidx.work.CoroutineWorker
@@ -108,6 +110,10 @@ class RepoUpdateWorker(
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .build()
 
-        return ForegroundInfo(1, notification)
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            ForegroundInfo(1, notification, FOREGROUND_SERVICE_TYPE_DATA_SYNC)
+        } else {
+            ForegroundInfo(1, notification)
+        }
     }
 }
