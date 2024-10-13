@@ -38,7 +38,9 @@ import com.dergoogler.mmrl.model.online.OnlineModule
 import com.dergoogler.mmrl.model.online.VersionItem
 import com.dergoogler.mmrl.ui.component.Alert
 import com.dergoogler.mmrl.ui.component.LabelItem
+import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import ext.dergoogler.mmrl.ext.toFormattedDate
+import ext.dergoogler.mmrl.ext.toFormattedDateSafely
 import java.util.Locale
 
 @Composable
@@ -169,6 +171,8 @@ private fun CloudItem(
         .fillMaxWidth(),
     verticalArrangement = Arrangement.spacedBy(16.dp)
 ) {
+    val userPreferences = LocalUserPreferences.current
+
     Text(
         text = stringResource(id = R.string.view_module_cloud),
         style = MaterialTheme.typography.titleSmall,
@@ -202,7 +206,7 @@ private fun CloudItem(
 
     ValueItem(
         key = stringResource(id = R.string.view_module_last_updated),
-        value = item.timestamp.toFormattedDate()
+        value = item.timestamp.toFormattedDateSafely(userPreferences.datePattern)
     )
 
     size?.let {
@@ -224,6 +228,8 @@ private fun LocalItem(
         .fillMaxWidth(),
     verticalArrangement = Arrangement.spacedBy(16.dp)
 ) {
+    val userPreferences = LocalUserPreferences.current
+
     Text(
         text = stringResource(id = R.string.view_module_local),
         style = MaterialTheme.typography.titleSmall,
@@ -274,7 +280,7 @@ private fun LocalItem(
     if (local.lastUpdated != 0L) {
         ValueItem(
             key = stringResource(id = R.string.view_module_last_updated),
-            value = local.lastUpdated.toFormattedDate()
+            value = local.lastUpdated.toFormattedDateSafely(userPreferences.datePattern)
         )
     }
 }

@@ -47,10 +47,12 @@ import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.model.state.RepoState
 import com.dergoogler.mmrl.ui.component.LabelItem
 import com.dergoogler.mmrl.ui.component.NavigationBarsSpacer
+import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.utils.expandedShape
 import ext.dergoogler.mmrl.ext.launchCustomTab
 import ext.dergoogler.mmrl.ext.shareText
 import ext.dergoogler.mmrl.ext.toFormattedDate
+import ext.dergoogler.mmrl.ext.toFormattedDateSafely
 
 @Composable
 fun RepositoryItem(
@@ -64,6 +66,7 @@ fun RepositoryItem(
     tonalElevation = 1.dp,
     onClick = { toggle(!repo.enable) },
 ) {
+    val userPreferences = LocalUserPreferences.current
     val context = LocalContext.current
     val (alpha, textDecoration) = when {
         !repo.compatible -> 0.5f to TextDecoration.LineThrough
@@ -118,7 +121,8 @@ fun RepositoryItem(
 
                 Text(
                     text = stringResource(
-                        id = R.string.module_update_at, repo.timestamp.toFormattedDate()
+                        id = R.string.module_update_at,
+                        repo.timestamp.toFormattedDateSafely(userPreferences.datePattern)
                     ),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.outline,

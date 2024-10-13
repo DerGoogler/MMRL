@@ -32,7 +32,7 @@ import com.dergoogler.mmrl.model.state.OnlineState
 import com.dergoogler.mmrl.ui.component.LabelItem
 import com.dergoogler.mmrl.ui.component.Logo
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
-import ext.dergoogler.mmrl.ext.toFormattedDate
+import ext.dergoogler.mmrl.ext.toFormattedDateSafely
 
 @Composable
 fun ModuleItemCompact(
@@ -126,7 +126,7 @@ fun ModuleItemCompact(
                 Text(
                     text = stringResource(
                         id = R.string.module_update_at,
-                        state.lastUpdated.toFormattedDate()
+                        state.lastUpdated.toFormattedDateSafely(userPreferences.datePattern)
                     ),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.outline

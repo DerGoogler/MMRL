@@ -29,7 +29,9 @@ import com.dergoogler.mmrl.database.entity.Repo
 import com.dergoogler.mmrl.model.online.VersionItem
 import com.dergoogler.mmrl.ui.component.LabelItem
 import com.dergoogler.mmrl.ui.component.VersionItemBottomSheet
+import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import ext.dergoogler.mmrl.ext.toFormattedDate
+import ext.dergoogler.mmrl.ext.toFormattedDateSafely
 
 @Composable
 fun VersionsPage(
@@ -76,6 +78,8 @@ private fun VersionItem(
     isProviderAlive: Boolean,
     onDownload: (Boolean) -> Unit
 ) {
+    val userPreferences = LocalUserPreferences.current
+
     var open by remember { mutableStateOf(false) }
     if (open) VersionItemBottomSheet(
         isUpdate = false,
@@ -122,7 +126,7 @@ private fun VersionItem(
         }
 
         Text(
-            text = item.timestamp.toFormattedDate(),
+            text = item.timestamp.toFormattedDateSafely(userPreferences.datePattern),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.outline
         )

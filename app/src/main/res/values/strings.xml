@@ -143,6 +143,8 @@
     <string name="settings_reboot_protection_desc">If enabled you have to confirm every reboot</string>
     <string name="settings_blacklist">Blacklist</string>
     <string name="settings_blacklist_desc">Listed modules that may closed source or dangerous</string>
+    <string name="settings_date_pattern">Date pattern</string>
+    <string name="settings_date_pattern_desc">Use your own date format</string>
 
     <!-- App Theme -->
     <string name="app_theme_palette">Theme Palette</string>

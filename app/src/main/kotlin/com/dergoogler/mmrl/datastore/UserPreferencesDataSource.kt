@@ -77,6 +77,14 @@ class UserPreferencesDataSource @Inject constructor(
         }
     }
 
+    suspend fun setDatePattern(value: String) = withContext(Dispatchers.IO) {
+        userPreferences.updateData {
+            it.copy(
+                datePattern = value
+            )
+        }
+    }
+
     suspend fun setRepositoryMenu(value: RepositoryMenuCompat) = withContext(Dispatchers.IO) {
         userPreferences.updateData {
             it.copy(

@@ -18,6 +18,7 @@ import androidx.navigation.NavController
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.datastore.UserPreferencesCompat.Companion.isRoot
 import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
+import com.dergoogler.mmrl.ui.component.SettingEditTextItem
 import com.dergoogler.mmrl.ui.component.SettingSwitchItem
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.screens.settings.appearance.items.AppThemeItem
@@ -64,6 +65,14 @@ fun AppearanceScreen(
                 checked = userPreferences.terminalTextWrap,
                 onChange = viewModel::setTerminalTextWrap
             )
+
+            SettingEditTextItem(icon = R.drawable.calendar_month,
+                title = stringResource(id = R.string.settings_date_pattern),
+                desc = stringResource(id = R.string.settings_date_pattern_desc),
+                value = userPreferences.datePattern,
+                onConfirm = {
+                    viewModel.setDatePattern(it)
+                })
         }
     }
 }

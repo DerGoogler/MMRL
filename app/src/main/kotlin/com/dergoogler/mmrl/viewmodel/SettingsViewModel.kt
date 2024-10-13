@@ -74,4 +74,10 @@ class SettingsViewModel @Inject constructor(
             userPreferencesRepository.setTerminalTextWrap(value)
         }
     }
+
+    fun setDatePattern(value: String) {
+        viewModelScope.launch {
+            userPreferencesRepository.setDatePattern(value)
+        }
+    }
 }

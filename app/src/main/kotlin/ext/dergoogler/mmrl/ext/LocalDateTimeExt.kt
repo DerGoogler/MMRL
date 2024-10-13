@@ -4,7 +4,9 @@ import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toJavaLocalDateTime
 import kotlinx.datetime.toLocalDateTime
+import java.time.format.DateTimeFormatter
 
 fun Float.toDateTime(): String {
     val instant = Instant.fromEpochMilliseconds(times(1000).toLong())
@@ -26,16 +28,46 @@ fun Long.toDate(): String {
     return instant.toLocalDateTime(TimeZone.currentSystemDefault()).date.toString()
 }
 
-fun Float.toFormattedDate(): String {
+fun Float.toFormattedDate(formatter: DateTimeFormatter? = null): String {
     val instant = Instant.fromEpochMilliseconds((this * 1000).toLong())
     val localDateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
-    return formatDate(localDateTime)
+    return formatDate(localDateTime, formatter)
 }
 
-fun Long.toFormattedDate(): String {
+fun Long.toFormattedDate(formatter: DateTimeFormatter? = null): String {
     val instant = Instant.fromEpochMilliseconds(this)
     val localDateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
-    return formatDate(localDateTime)
+    return formatDate(localDateTime, formatter)
+}
+
+private fun formatDate(localDateTime: LocalDateTime, formatter: DateTimeFormatter?): String {
+    return if (formatter != null) {
+        localDateTime.toJavaLocalDateTime().format(formatter)
+    } else {
+        val month = localDateTime.month.name.lowercase().replaceFirstChar { it.uppercase() }
+        val day = localDateTime.dayOfMonth
+        val year = localDateTime.year
+        "$month $day, $year"
+    }
+}
+
+fun Float.toFormattedDateSafely(pattern: String? = null): String {
+    return try {
+        val formatter = pattern?.let { DateTimeFormatter.ofPattern(it) }
+        this.toFormattedDate(formatter)
+    } catch (e: IllegalArgumentException) {
+        this.toFormattedDate()
+    }
+}
+
+
+fun Long.toFormattedDateSafely(pattern: String? = null): String {
+    return try {
+        val formatter = pattern?.let { DateTimeFormatter.ofPattern(it) }
+        this.toFormattedDate(formatter)
+    } catch (e: IllegalArgumentException) {
+        "Invalid date format pattern"
+    }
 }
 
 private fun formatDate(localDateTime: LocalDateTime): String {

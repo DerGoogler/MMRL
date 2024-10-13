@@ -14,26 +14,38 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.toggleable
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import com.dergoogler.mmrl.R
 
 @Composable
 fun SettingStaticItem(
@@ -217,6 +229,94 @@ fun SettingSwitchItem(
         )
     }
 }
+
+
+@Composable
+fun SettingEditTextItem(
+    modifier: Modifier = Modifier,
+    title: String,
+    desc: String? = null,
+    value: String,
+    onConfirm: (String) -> Unit,
+    contentPaddingValues: PaddingValues = PaddingValues(vertical = 16.dp, horizontal = 25.dp),
+    itemTextStyle: SettingItemTextStyle = SettingItemDefaults.itemStyle(),
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    @DrawableRes icon: Int? = null,
+    enabled: Boolean = true,
+) {
+    var open by remember { mutableStateOf(false) }
+    if (open) EditTextDialog(
+        value = value,
+        title = title,
+        onClose = { open = false },
+        onConfirm = onConfirm
+    )
+
+    SettingNormalItem(
+        modifier = modifier,
+        icon = icon,
+        title = title,
+        desc = desc,
+        onClick = { open = true },
+        contentPaddingValues = contentPaddingValues,
+        interactionSource = interactionSource,
+        enabled = enabled,
+        itemTextStyle = itemTextStyle
+    )
+}
+
+@Composable
+private fun EditTextDialog(
+    title: String,
+    value: String,
+    onClose: () -> Unit,
+    onConfirm: (String) -> Unit
+) {
+    var text by remember { mutableStateOf(value) }
+
+    val onDone: () -> Unit = {
+        onConfirm(text)
+        onClose()
+    }
+
+    TextFieldDialog(
+        shape = RoundedCornerShape(20.dp),
+        onDismissRequest = onClose,
+        title = { Text(text = title) },
+        confirmButton = {
+            TextButton(
+                onClick = onDone,
+                enabled = text.isNotBlank()
+            ) {
+                Text(text = stringResource(id = R.string.install_screen_reboot_confirm))
+            }
+        },
+        dismissButton = {
+            TextButton(
+                onClick = onClose
+            ) {
+                Text(text = stringResource(id = R.string.dialog_cancel))
+            }
+        }
+    ) { focusRequester ->
+        OutlinedTextField(
+            modifier = Modifier.focusRequester(focusRequester),
+            textStyle = MaterialTheme.typography.bodyLarge,
+            value = text,
+            onValueChange = { text = it },
+            singleLine = false,
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Done
+            ),
+            keyboardActions = KeyboardActions {
+                if (text.isNotBlank()) onDone()
+            },
+            shape = RoundedCornerShape(15.dp)
+        )
+    }
+}
+
 
 @Immutable
 class SettingItemTextStyle internal constructor(

@@ -19,4 +19,5 @@ message UserPreferences {
   string downloadPath = 8;
   bool confirmReboot = 9;
   bool terminalTextWrap = 10;
+  string datePattern = 11;
 }
