@@ -131,7 +131,7 @@
     <string name="settings_reboot_protection">再起動の保護</string>
     <string name="settings_reboot_protection_desc">有効化すると再起動のたびに許可が必要になります。</string>
     <string name="settings_blacklist">ブラックリスト</string>
-    <string name="settings_blacklist_desc">クローズドソースまたは危険な可能性のあるモジュールの一覧です</string>
+    <string name="settings_blacklist_desc">クローズドソースまたは危険な可能性のあるモジュールの一覧</string>
     <string name="settings_date_pattern">日付のパターン</string>
     <string name="settings_date_pattern_desc">日付形式を変更します。</string>
     <string name="settings_recommended_repos">おすすめのリポジトリ</string>
