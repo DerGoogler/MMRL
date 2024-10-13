@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ads_name">広告</string>
+    <string name="ads_desc">このモジュールには広告が含まれています。</string>
+    <string name="knownvuln_name">既知の脆弱性</string>
+    <string name="knownvuln_desc">このモジュールには既知のセキュリティ脆弱性が含まれています。</string>
+    <string name="nsfw_name">NSFW</string>
+    <string name="nsfw_desc">このモジュールには、あらゆる場所で公開または表示するべきではないコンテンツが含まれています。</string>
+    <string name="nosourcesince_name">ソースなし</string>
+    <string name="nosourcesince_desc">ソースコードは入手不可能であり、更新はできません。</string>
+    <string name="nonfreeadd_name">Non-Free のアドオン</string>
+    <string name="nonfreeadd_desc">このモジュールは Non-Free のアドオンをプロモートします。</string>
+    <string name="nonfreeassets_name">Non-Free のアセット</string>
+    <string name="nonfreeassets_desc">このモジュールは Non-Free のアセットが含まれています。</string>
+    <string name="nonfreedep_name">Non-Free の依存関係</string>
+    <string name="nonfreedep_desc">このモジュールは他の Non-Free なモジュールに依存しています。</string>
+    <string name="nonfreenet_name">Non-Free のネットワークサービス</string>
+    <string name="nonfreenet_desc">このモジュールは Non-Free のネットワークサービスをプロモートまたは変更不可能、完全に依存しています。</string>
+    <string name="tracking_name">追跡</string>
+    <string name="tracking_desc">このモジュールはアクティビティを追跡して報告します。</string>
+    <string name="upstreamnonfree_name">Non-Free の上流</string>
+    <string name="upstreamnonfree_desc">上流のソースコードは Non-Free です。</string>
+    <string name="obfuscation_name">難読化</string>
+    <string name="obfuscation_desc">モジュールのソースコードが難読化されており、解析や変更が困難になっています。</string>
+    <string name="unaskedremoval_name">要求されていない削除</string>
+    <string name="unaskedremoval_desc">このモジュールは、ユーザーの同意なしにアプリやファイルまたはその他のモジュールを削除します。</string>
+</resources>
