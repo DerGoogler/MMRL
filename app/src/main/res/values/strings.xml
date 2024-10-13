@@ -205,5 +205,6 @@
     <string name="we_hit_a_brick_crash">We hit a brick!</string>
     <string name="report_to_issues">Report to issues</string>
     <string name="stack_trace_truncated">%s\n… %d more</string>
+    <string name="additional_notes">Additional Notes</string>
 
 </resources>
