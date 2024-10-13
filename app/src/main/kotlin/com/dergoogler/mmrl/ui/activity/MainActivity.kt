@@ -3,9 +3,7 @@ package com.dergoogler.mmrl.ui.activity
 import android.content.ComponentName
 import android.content.pm.PackageManager
 import android.os.Bundle
-import androidx.activity.compose.setContent
 import androidx.compose.animation.Crossfade
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -20,13 +18,10 @@ import com.dergoogler.mmrl.datastore.UserPreferencesCompat.Companion.isRoot
 import com.dergoogler.mmrl.datastore.UserPreferencesCompat.Companion.isSetup
 import com.dergoogler.mmrl.datastore.WorkingMode
 import com.dergoogler.mmrl.network.NetworkUtils
-import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
-import com.dergoogler.mmrl.ui.theme.AppTheme
 import ext.dergoogler.mmrl.activity.MMRLComponentActivity
 import ext.dergoogler.mmrl.activity.setBaseContent
 import kotlinx.coroutines.launch
 import timber.log.Timber
-
 
 class MainActivity : MMRLComponentActivity() {
 
