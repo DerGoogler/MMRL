@@ -16,7 +16,7 @@ import com.dergoogler.mmrl.compat.MediaStoreCompat.getPathForUri
 import com.dergoogler.mmrl.model.local.LocalModule
 import com.dergoogler.mmrl.repository.LocalRepository
 import com.dergoogler.mmrl.repository.UserPreferencesRepository
-import com.dergoogler.mmrl.utils.extensions.tmpDir
+import ext.dergoogler.mmrl.tmpDir
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.dergoogler.mmrl.compat.content.State
 import dev.dergoogler.mmrl.compat.stub.IInstallCallback

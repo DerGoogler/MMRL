@@ -8,6 +8,7 @@ import dev.dergoogler.mmrl.compat.content.LocalModule
 import dev.dergoogler.mmrl.compat.content.State
 import dev.dergoogler.mmrl.compat.stub.IInstallCallback
 import dev.dergoogler.mmrl.compat.stub.IModuleManager
+import ext.dergoogler.mmrl.findFileGlob
 import java.io.File
 import java.nio.file.FileSystems
 import java.nio.file.Files
@@ -54,37 +55,16 @@ internal abstract class BaseModuleManagerImpl(
             readProps(dir)?.toModule(dir)
         }
 
-    private fun hasModConf(moduleDir: File, id: String): Boolean {
+    private fun hasModConf(id: String): Boolean {
         val fixedModId = id.replace(Regex("[^a-zA-Z0-9._]"), "_")
 
         val dexFilePath = if (Build.SUPPORTED_64_BIT_ABIS.isNotEmpty()) {
-            findFirstMatch("/system/lib64", fixedModId)
+            "/system/lib64".findFileGlob(fixedModId)
         } else {
-            findFirstMatch("/system/lib", fixedModId)
+            "/system/lib".findFileGlob(fixedModId)
         } ?: return false
 
         return dexFilePath.toFile().exists()
-    }
-
-    private fun findFirstMatch(directory: String, prefix: String): Path? {
-        val dirPath: Path = Paths.get(directory)
-
-        val patterns = listOf("*.apk", "*.jar", "*.dex")
-
-        Files.newDirectoryStream(dirPath).use { directoryStream ->
-            for (path in directoryStream) {
-                for (pattern in patterns) {
-                    val pathMatcher = FileSystems.getDefault().getPathMatcher("glob:$pattern")
-                    if (pathMatcher.matches(path.fileName) && path.fileName.toString()
-                            .startsWith(prefix)
-                    ) {
-                        return path
-                    }
-                }
-            }
-        }
-
-        return null
     }
 
     override fun getModuleById(id: String): LocalModule? {
@@ -154,7 +134,7 @@ internal abstract class BaseModuleManagerImpl(
     ) = toModule(
         path = dir.name,
         state = readState(dir),
-        hasModConf = hasModConf(dir, getOrDefault("id", dir.name)),
+        hasModConf = hasModConf(getOrDefault("id", dir.name)),
         lastUpdated = readLastUpdated(dir)
     )
 

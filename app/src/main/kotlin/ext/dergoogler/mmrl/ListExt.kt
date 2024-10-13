@@ -1,4 +1,4 @@
-package com.dergoogler.mmrl.utils.extensions
+package ext.dergoogler.mmrl
 
 inline fun <reified T> List<List<T>>.merge(): List<T> {
     val values = mutableListOf<T>()

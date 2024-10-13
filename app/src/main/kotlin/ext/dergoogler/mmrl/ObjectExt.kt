@@ -1,4 +1,4 @@
-package com.dergoogler.mmrl.utils.extensions
+package ext.dergoogler.mmrl
 import kotlin.reflect.full.memberProperties
 
 inline fun <reified T : Any> T.isObjectEmpty(): Boolean {

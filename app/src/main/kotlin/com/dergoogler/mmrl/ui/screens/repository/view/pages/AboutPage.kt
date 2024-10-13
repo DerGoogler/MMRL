@@ -2,10 +2,8 @@ package com.dergoogler.mmrl.ui.screens.repository.view.pages
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -32,9 +30,9 @@ import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.model.online.ModuleFeatures
 import com.dergoogler.mmrl.model.online.OnlineModule
 import com.dergoogler.mmrl.ui.component.LabelItem
-import com.dergoogler.mmrl.utils.extensions.isObjectEmpty
-import com.dergoogler.mmrl.utils.extensions.launchCustomTab
-import com.dergoogler.mmrl.utils.extensions.shareText
+import ext.dergoogler.mmrl.isObjectEmpty
+import ext.dergoogler.mmrl.launchCustomTab
+import ext.dergoogler.mmrl.shareText
 
 @Composable
 fun AboutPage(

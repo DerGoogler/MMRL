@@ -12,7 +12,7 @@ import com.dergoogler.mmrl.database.entity.Repo
 import com.dergoogler.mmrl.database.entity.VersionItemEntity
 import com.dergoogler.mmrl.model.local.LocalModule
 import com.dergoogler.mmrl.model.online.OnlineModule
-import com.dergoogler.mmrl.utils.extensions.merge
+import ext.dergoogler.mmrl.merge
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext

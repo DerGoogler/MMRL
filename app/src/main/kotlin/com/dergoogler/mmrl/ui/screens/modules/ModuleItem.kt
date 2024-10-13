@@ -36,7 +36,7 @@ import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.model.local.LocalModule
 import com.dergoogler.mmrl.model.local.versionDisplay
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
-import com.dergoogler.mmrl.utils.extensions.toDate
+import ext.dergoogler.mmrl.toDate
 
 @Composable
 fun ModuleItem(

@@ -12,6 +12,7 @@ import com.dergoogler.mmrl.BuildConfig
 import com.dergoogler.mmrl.Compat
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dalvik.system.DexClassLoader
+import ext.dergoogler.mmrl.findFileGlob
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
@@ -56,12 +57,12 @@ class ModConfViewModel @Inject constructor(
             val optimizedDir = File(context.cacheDir, "dex_optimized").apply { mkdirs() }
 
             val dexFilePath: Path = if (isDebug) {
-                findFirstMatch(context.filesDir.path, fixedModId)
+                context.filesDir.path.findFileGlob(fixedModId)
             } else {
                 if (Build.SUPPORTED_64_BIT_ABIS.isNotEmpty()) {
-                    findFirstMatch("/system/lib64", fixedModId)
+                    "/system/lib64".findFileGlob(fixedModId)
                 } else {
-                    findFirstMatch("/system/lib", fixedModId)
+                    "/system/lib".findFileGlob(fixedModId)
                 }
             } ?: return null
 
@@ -115,29 +116,6 @@ class ModConfViewModel @Inject constructor(
         } catch (e: Exception) {
             Timber.w("Failed to set field $fieldName: %s", e)
         }
-    }
-
-    private fun findFirstMatch(directory: String, prefix: String): Path? {
-        val dirPath: Path = Paths.get(directory)
-
-        val patterns = listOf("*.apk", "*.jar", "*.dex")
-
-        Files.newDirectoryStream(dirPath).use { directoryStream ->
-            for (path in directoryStream) {
-                for (pattern in patterns) {
-                    val pathMatcher = FileSystems.getDefault().getPathMatcher("glob:$pattern")
-                    if (pathMatcher.matches(path.fileName) && path.fileName.toString()
-                            .startsWith(prefix)
-                    ) {
-                        return path
-                    }
-                }
-            }
-        }
-
-        Timber.e("Unable to find ModConf file")
-
-        return null
     }
 
     private fun getFileExtension(file: File): String? {

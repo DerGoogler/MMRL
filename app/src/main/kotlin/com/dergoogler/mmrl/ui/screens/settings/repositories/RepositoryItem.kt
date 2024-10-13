@@ -20,7 +20,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.FilledTonalButton
-import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
@@ -49,10 +48,9 @@ import com.dergoogler.mmrl.model.state.RepoState
 import com.dergoogler.mmrl.ui.component.LabelItem
 import com.dergoogler.mmrl.ui.component.NavigationBarsSpacer
 import com.dergoogler.mmrl.ui.utils.expandedShape
-import com.dergoogler.mmrl.utils.extensions.launchCustomTab
-import com.dergoogler.mmrl.utils.extensions.shareText
-import com.dergoogler.mmrl.utils.extensions.toDateTime
-import com.dergoogler.mmrl.utils.extensions.toFormattedDate
+import ext.dergoogler.mmrl.launchCustomTab
+import ext.dergoogler.mmrl.shareText
+import ext.dergoogler.mmrl.toFormattedDate
 
 @Composable
 fun RepositoryItem(

@@ -22,4 +22,3 @@ pluginManagement {
 rootProject.name = "MMRL"
 include(":app")
 include(":hidden-api")
-include(":compat")

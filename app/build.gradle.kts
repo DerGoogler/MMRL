@@ -85,6 +85,7 @@ android {
     }
 
     buildFeatures {
+        aidl = true
         buildConfig = true
     }
 
@@ -131,8 +132,23 @@ protobuf {
 
 dependencies {
     compileOnly(projects.hiddenApi)
-    implementation(projects.compat)
 
+    implementation(libs.hiddenApiBypass)
+    implementation(libs.timber)
+
+    implementation(libs.semver)
+    implementation(libs.coil.compose)
+
+    implementation(libs.libsu.core)
+    implementation(libs.libsu.service)
+    implementation(libs.libsu.io)
+
+    implementation(libs.rikka.refine.runtime)
+    implementation(libs.rikka.shizuku.api)
+    implementation(libs.rikka.shizuku.provider)
+
+    implementation(libs.androidx.runtime.android)
+    implementation(libs.androidx.annotation)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.browser)
     implementation(libs.androidx.appcompat)
@@ -158,10 +174,6 @@ dependencies {
     implementation(libs.protobuf.kotlin.lite)
     implementation(libs.compose.markdown)
     implementation(libs.androidx.multidex)
-    implementation(libs.timber)
-
-    implementation(libs.semver)
-    implementation(libs.coil.compose)
 
     implementation(libs.square.retrofit)
     implementation(libs.square.retrofit.moshi)

@@ -22,7 +22,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -39,7 +38,7 @@ import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.screens.repository.view.items.LicenseItem
 import com.dergoogler.mmrl.ui.screens.repository.view.items.TagItem
 import com.dergoogler.mmrl.ui.screens.repository.view.items.TrackItem
-import com.dergoogler.mmrl.utils.extensions.launchCustomTab
+import ext.dergoogler.mmrl.launchCustomTab
 
 @Composable
 fun ViewTopBar(

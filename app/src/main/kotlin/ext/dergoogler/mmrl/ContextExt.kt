@@ -1,4 +1,4 @@
-package com.dergoogler.mmrl.utils.extensions
+package ext.dergoogler.mmrl
 
 import android.content.Context
 import android.content.Intent

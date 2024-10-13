@@ -26,7 +26,7 @@ import com.dergoogler.mmrl.ui.navigation.graphs.SettingsScreen
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.utils.navigateSingleTopTo
 import com.dergoogler.mmrl.ui.utils.none
-import com.dergoogler.mmrl.utils.extensions.launchCustomTab
+import ext.dergoogler.mmrl.launchCustomTab
 
 @Composable
 fun SettingsScreen(

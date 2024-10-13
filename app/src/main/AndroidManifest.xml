@@ -77,6 +77,11 @@
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="content" />
+                <data android:mimeType="application/vnd.android.dex" />
+                <data android:mimeType="application/java-archive" />
+                <data android:mimeType="application/vnd.android.package-archive" />
             </intent-filter>
         </activity>
 
@@ -84,6 +89,14 @@
             android:name=".service.DownloadService"
             android:foregroundServiceType="dataSync"
             android:exported="false" />
-        
+
+        <provider
+            android:name="rikka.shizuku.ShizukuProvider"
+            android:authorities="${applicationId}.shizuku"
+            android:enabled="true"
+            android:exported="true"
+            android:multiprocess="false"
+            android:permission="android.permission.INTERACT_ACROSS_USERS_FULL" />
+
     </application>
 </manifest>

@@ -38,7 +38,7 @@ import com.dergoogler.mmrl.app.utils.NotificationUtils
 import com.dergoogler.mmrl.compat.MediaStoreCompat.createDownloadUri
 import com.dergoogler.mmrl.compat.NetworkCompat
 import com.dergoogler.mmrl.repository.UserPreferencesRepository
-import com.dergoogler.mmrl.utils.extensions.parcelable
+import ext.dergoogler.mmrl.parcelable
 import dev.dergoogler.mmrl.compat.BuildCompat
 
 @AndroidEntryPoint

@@ -29,7 +29,7 @@ import com.dergoogler.mmrl.database.entity.Repo
 import com.dergoogler.mmrl.model.online.VersionItem
 import com.dergoogler.mmrl.ui.component.LabelItem
 import com.dergoogler.mmrl.ui.component.VersionItemBottomSheet
-import com.dergoogler.mmrl.utils.extensions.toFormattedDate
+import ext.dergoogler.mmrl.toFormattedDate
 
 @Composable
 fun VersionsPage(

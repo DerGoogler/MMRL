@@ -1,12 +1,10 @@
-package com.dergoogler.mmrl.utils.extensions
+package ext.dergoogler.mmrl
 
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
-import kotlinx.datetime.format
 import kotlinx.datetime.toLocalDateTime
-import java.time.format.DateTimeFormatter
 
 fun Float.toDateTime(): String {
     val instant = Instant.fromEpochMilliseconds(times(1000).toLong())

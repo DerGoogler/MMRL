@@ -15,7 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import com.dergoogler.mmrl.repository.UserPreferencesRepository
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.theme.AppTheme
-import com.dergoogler.mmrl.utils.extensions.tmpDir
+import ext.dergoogler.mmrl.tmpDir
 import com.dergoogler.mmrl.viewmodel.InstallViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch

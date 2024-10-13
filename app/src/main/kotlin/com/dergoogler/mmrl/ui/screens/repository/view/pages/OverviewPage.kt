@@ -38,8 +38,7 @@ import com.dergoogler.mmrl.model.online.OnlineModule
 import com.dergoogler.mmrl.model.online.VersionItem
 import com.dergoogler.mmrl.ui.component.Alert
 import com.dergoogler.mmrl.ui.component.LabelItem
-import com.dergoogler.mmrl.utils.extensions.toDateTime
-import com.dergoogler.mmrl.utils.extensions.toFormattedDate
+import ext.dergoogler.mmrl.toFormattedDate
 import java.util.Locale
 
 @Composable
