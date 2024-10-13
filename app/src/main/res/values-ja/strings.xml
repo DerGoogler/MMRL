@@ -180,4 +180,6 @@
     <string name="open">開く</string>
     <string name="help">ヘルプ</string>
     <string name="module_config">設定</string>
+    <string name="settings_blacklist">ブラックリスト</string>
+    <string name="settings_blacklist_desc">クローズドソースまたは危険な可能性のあるモジュールの一覧です</string>
 </resources>
