@@ -49,6 +49,7 @@ import com.dergoogler.mmrl.ui.component.TopAppBarTitle
 import com.dergoogler.mmrl.ui.utils.isScrollingUp
 import com.dergoogler.mmrl.ui.utils.none
 import com.dergoogler.mmrl.viewmodel.ModulesViewModel
+import ext.dergoogler.mmrl.activity.MMRLComponentActivity
 
 @Composable
 fun ModulesScreen(
@@ -73,7 +74,7 @@ fun ModulesScreen(
     val download: (LocalModule, VersionItem, Boolean) -> Unit = { module, item, install ->
         viewModel.downloader(context, module, item) {
             if (install) {
-                InstallActivity.start(
+                MMRLComponentActivity.startInstallActivity(
                     context = context,
                     uri = it.toUri()
                 )
@@ -199,7 +200,7 @@ private fun FloatingButton() {
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri ->
         if (uri == null) return@rememberLauncherForActivityResult
 
-        InstallActivity.start(
+        MMRLComponentActivity.startInstallActivity(
             context = context,
             uri = uri
         )

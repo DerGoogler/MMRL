@@ -8,12 +8,8 @@ import dev.dergoogler.mmrl.compat.content.LocalModule
 import dev.dergoogler.mmrl.compat.content.State
 import dev.dergoogler.mmrl.compat.stub.IInstallCallback
 import dev.dergoogler.mmrl.compat.stub.IModuleManager
-import ext.dergoogler.mmrl.findFileGlob
+import ext.dergoogler.mmrl.ext.findFileGlob
 import java.io.File
-import java.nio.file.FileSystems
-import java.nio.file.Files
-import java.nio.file.Path
-import java.nio.file.Paths
 import java.util.zip.ZipFile
 
 internal abstract class BaseModuleManagerImpl(

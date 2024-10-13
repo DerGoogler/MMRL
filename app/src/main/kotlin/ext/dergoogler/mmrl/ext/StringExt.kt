@@ -1,4 +1,4 @@
-package ext.dergoogler.mmrl
+package ext.dergoogler.mmrl.ext
 
 import java.nio.file.FileSystems
 import java.nio.file.Files

@@ -48,9 +48,9 @@ import com.dergoogler.mmrl.model.state.RepoState
 import com.dergoogler.mmrl.ui.component.LabelItem
 import com.dergoogler.mmrl.ui.component.NavigationBarsSpacer
 import com.dergoogler.mmrl.ui.utils.expandedShape
-import ext.dergoogler.mmrl.launchCustomTab
-import ext.dergoogler.mmrl.shareText
-import ext.dergoogler.mmrl.toFormattedDate
+import ext.dergoogler.mmrl.ext.launchCustomTab
+import ext.dergoogler.mmrl.ext.shareText
+import ext.dergoogler.mmrl.ext.toFormattedDate
 
 @Composable
 fun RepositoryItem(

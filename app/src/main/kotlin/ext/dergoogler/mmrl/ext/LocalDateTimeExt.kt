@@ -1,4 +1,4 @@
-package ext.dergoogler.mmrl
+package ext.dergoogler.mmrl.ext
 
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant

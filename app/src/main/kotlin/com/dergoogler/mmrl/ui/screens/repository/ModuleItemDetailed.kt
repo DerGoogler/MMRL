@@ -39,7 +39,7 @@ import com.dergoogler.mmrl.model.state.OnlineState
 import com.dergoogler.mmrl.ui.component.LabelItem
 import com.dergoogler.mmrl.ui.component.Logo
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
-import ext.dergoogler.mmrl.toFormattedDate
+import ext.dergoogler.mmrl.ext.toFormattedDate
 
 @Composable
 fun ModuleItemDetailed(

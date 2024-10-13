@@ -38,7 +38,7 @@ import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.screens.repository.view.items.LicenseItem
 import com.dergoogler.mmrl.ui.screens.repository.view.items.TagItem
 import com.dergoogler.mmrl.ui.screens.repository.view.items.TrackItem
-import ext.dergoogler.mmrl.launchCustomTab
+import ext.dergoogler.mmrl.ext.launchCustomTab
 
 @Composable
 fun ViewTopBar(

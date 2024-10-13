@@ -35,7 +35,7 @@ import com.dergoogler.mmrl.database.entity.Repo
 import com.dergoogler.mmrl.model.online.TrackJson
 import com.dergoogler.mmrl.ui.component.NavigationBarsSpacer
 import com.dergoogler.mmrl.ui.utils.expandedShape
-import ext.dergoogler.mmrl.toDateTime
+import ext.dergoogler.mmrl.ext.toDateTime
 
 @Composable
 fun TrackItem(

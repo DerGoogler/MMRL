@@ -141,6 +141,8 @@
     <string name="settings_doh_desc">Workaround DNS poisoning in some nations</string>
     <string name="settings_reboot_protection">Reboot Protection</string>
     <string name="settings_reboot_protection_desc">If enabled you have to confirm every reboot</string>
+    <string name="settings_blacklist">Blacklist</string>
+    <string name="settings_blacklist_desc">Listed modules that may closed source or dangerous</string>
 
     <!-- App Theme -->
     <string name="app_theme_palette">Theme Palette</string>
@@ -198,7 +200,8 @@
     <string name="open">Open</string>
     <string name="help">Help</string>
     <string name="module_config">Config</string>
-    <string name="settings_blacklist">Blacklist</string>
-    <string name="settings_blacklist_desc">Listed modules that may closed source or dangerous</string>
+    <string name="we_hit_a_brick_crash">We hit a brick!</string>
+    <string name="report_to_issues">Report to issues</string>
+    <string name="stack_trace_truncated">%s\n… %d more</string>
 
 </resources>

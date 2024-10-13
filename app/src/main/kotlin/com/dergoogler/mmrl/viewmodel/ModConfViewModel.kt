@@ -2,8 +2,6 @@ package com.dergoogler.mmrl.viewmodel
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.res.AssetManager
-import android.graphics.drawable.Drawable
 import android.os.Build
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Composer
@@ -12,14 +10,10 @@ import com.dergoogler.mmrl.BuildConfig
 import com.dergoogler.mmrl.Compat
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dalvik.system.DexClassLoader
-import ext.dergoogler.mmrl.findFileGlob
+import ext.dergoogler.mmrl.ext.findFileGlob
 import timber.log.Timber
 import java.io.File
-import java.io.IOException
-import java.nio.file.FileSystems
-import java.nio.file.Files
 import java.nio.file.Path
-import java.nio.file.Paths
 import javax.inject.Inject
 
 

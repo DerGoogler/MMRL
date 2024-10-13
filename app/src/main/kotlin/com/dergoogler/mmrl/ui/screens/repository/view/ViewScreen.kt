@@ -25,6 +25,7 @@ import com.dergoogler.mmrl.ui.screens.repository.view.pages.ReadmePage
 import com.dergoogler.mmrl.ui.screens.repository.view.pages.VersionsPage
 import com.dergoogler.mmrl.ui.utils.none
 import com.dergoogler.mmrl.viewmodel.ModuleViewModel
+import ext.dergoogler.mmrl.activity.MMRLComponentActivity
 
 @Composable
 fun ViewScreen(
@@ -57,7 +58,7 @@ fun ViewScreen(
     val download: (VersionItem, Boolean) -> Unit = { item, install ->
         viewModel.downloader(context, item) {
             if (install) {
-                InstallActivity.start(
+                MMRLComponentActivity.startInstallActivity(
                     context = context,
                     uri = it.toUri()
                 )

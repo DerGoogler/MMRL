@@ -26,7 +26,7 @@ import com.dergoogler.mmrl.ui.component.SettingNormalItem
 import com.dergoogler.mmrl.ui.component.SettingStaticItem
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.utils.none
-import ext.dergoogler.mmrl.launchCustomTab
+import ext.dergoogler.mmrl.ext.launchCustomTab
 import com.dergoogler.mmrl.viewmodel.SettingsViewModel
 
 @Composable

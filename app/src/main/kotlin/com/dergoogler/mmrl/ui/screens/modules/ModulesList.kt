@@ -35,6 +35,7 @@ import com.dergoogler.mmrl.ui.activity.ModConfActivity
 import com.dergoogler.mmrl.ui.component.VersionItemBottomSheet
 import com.dergoogler.mmrl.ui.component.scrollbar.VerticalFastScrollbar
 import com.dergoogler.mmrl.viewmodel.ModulesViewModel
+import ext.dergoogler.mmrl.activity.MMRLComponentActivity
 
 @Composable
 fun ModulesList(
@@ -137,7 +138,10 @@ fun ModuleItem(
                 ModConf(
                     enabled = isProviderAlive,
                     onClick = {
-                        ModConfActivity.start(context = context, modId = module.id)
+                        MMRLComponentActivity.startModConfActivity(
+                            context = context,
+                            modId = module.id
+                        )
                     }
                 )
 

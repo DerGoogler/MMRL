@@ -30,9 +30,9 @@ import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.model.online.ModuleFeatures
 import com.dergoogler.mmrl.model.online.OnlineModule
 import com.dergoogler.mmrl.ui.component.LabelItem
-import ext.dergoogler.mmrl.isObjectEmpty
-import ext.dergoogler.mmrl.launchCustomTab
-import ext.dergoogler.mmrl.shareText
+import ext.dergoogler.mmrl.ext.isObjectEmpty
+import ext.dergoogler.mmrl.ext.launchCustomTab
+import ext.dergoogler.mmrl.ext.shareText
 
 @Composable
 fun AboutPage(

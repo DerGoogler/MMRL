@@ -3,9 +3,7 @@ package com.dergoogler.mmrl.ui.activity
 import android.content.ComponentName
 import android.content.pm.PackageManager
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.Crossfade
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -22,35 +20,30 @@ import com.dergoogler.mmrl.datastore.UserPreferencesCompat.Companion.isRoot
 import com.dergoogler.mmrl.datastore.UserPreferencesCompat.Companion.isSetup
 import com.dergoogler.mmrl.datastore.WorkingMode
 import com.dergoogler.mmrl.network.NetworkUtils
-import com.dergoogler.mmrl.repository.LocalRepository
-import com.dergoogler.mmrl.repository.UserPreferencesRepository
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.theme.AppTheme
-import dagger.hilt.android.AndroidEntryPoint
+import ext.dergoogler.mmrl.activity.MMRLComponentActivity
+import ext.dergoogler.mmrl.activity.setBaseContent
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import javax.inject.Inject
 
-@AndroidEntryPoint
-class MainActivity : ComponentActivity() {
-    @Inject lateinit var userPreferencesRepository: UserPreferencesRepository
-    @Inject lateinit var localRepository: LocalRepository
+
+class MainActivity : MMRLComponentActivity() {
 
     private var isLoading by mutableStateOf(true)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
 
         splashScreen.setKeepOnScreenCondition { isLoading }
 
-        setContent {
+        setBaseContent {
             val userPreferences by userPreferencesRepository.data
                 .collectAsStateWithLifecycle(initialValue = null)
 
             val preferences = if (userPreferences == null) {
-                return@setContent
+                return@setBaseContent
             } else {
                 isLoading = false
                 checkNotNull(userPreferences)
@@ -67,25 +60,16 @@ class MainActivity : ComponentActivity() {
                 setInstallActivityEnabled(preferences.workingMode.isRoot)
             }
 
-            CompositionLocalProvider(
-                LocalUserPreferences provides preferences
-            ) {
-                AppTheme(
-                    darkMode = preferences.isDarkMode(),
-                    themeColor = preferences.themeColor
-                ) {
-                    Crossfade(
-                        targetState = preferences.workingMode.isSetup,
-                        label = "MainActivity"
-                    ) { isSetup ->
-                        if (isSetup) {
-                            SetupScreen(
-                                setMode = ::setWorkingMode
-                            )
-                        } else {
-                            MainScreen()
-                        }
-                    }
+            Crossfade(
+                targetState = preferences.workingMode.isSetup,
+                label = "MainActivity"
+            ) { isSetup ->
+                if (isSetup) {
+                    SetupScreen(
+                        setMode = ::setWorkingMode
+                    )
+                } else {
+                    MainScreen()
                 }
             }
         }
@@ -114,4 +98,5 @@ class MainActivity : ComponentActivity() {
             PackageManager.DONT_KILL_APP
         )
     }
+
 }
