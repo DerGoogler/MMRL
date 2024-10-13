@@ -100,8 +100,7 @@
             android:name=".service.DownloadService"
             android:foregroundServiceType="dataSync"
             android:exported="false" />
-
-
+        
         <provider
             android:name="rikka.shizuku.ShizukuProvider"
             android:authorities="${applicationId}.shizuku"
@@ -110,12 +109,5 @@
             android:multiprocess="false"
             android:permission="android.permission.INTERACT_ACROSS_USERS_FULL" />
 
-        <meta-data
-            android:name="android.service.foreground"
-            android:value="true" />
-
-        <meta-data
-            android:name="foregroundServiceType"
-            android:value="dataSync" />
     </application>
 </manifest>

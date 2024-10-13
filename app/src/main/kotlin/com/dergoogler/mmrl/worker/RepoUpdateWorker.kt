@@ -16,25 +16,23 @@ import com.dergoogler.mmrl.stub.IRepoManager
 import timber.log.Timber
 
 class RepoUpdateWorker(
-    private val context: Context,
+    context: Context,
     params: WorkerParameters
 ) : CoroutineWorker(context, params) {
 
     override suspend fun doWork(): Result {
-        setForeground(createForegroundInfo())
-
         return try {
             val updated = updateRepositories()
 
             if (updated) {
                 createNotification(
-                    title = context.getString(R.string.repo_update_service),
-                    message = context.getString(R.string.repo_update_service_desc)
+                    title = applicationContext.getString(R.string.repo_update_service),
+                    message = applicationContext.getString(R.string.repo_update_service_desc)
                 )
             } else {
                 createNotification(
-                    title = context.getString(R.string.repo_update_service_failed),
-                    message = context.getString(R.string.repo_update_service_failed_desc)
+                    title = applicationContext.getString(R.string.repo_update_service_failed),
+                    message = applicationContext.getString(R.string.repo_update_service_failed_desc)
                 )
             }
             Result.success()
@@ -44,7 +42,6 @@ class RepoUpdateWorker(
     }
 
     private suspend fun updateRepositories(): Boolean {
-
         val database: AppDatabase = Room.databaseBuilder(
             applicationContext,
             AppDatabase::class.java,
@@ -52,15 +49,13 @@ class RepoUpdateWorker(
         ).build()
 
         val repoDao = database.repoDao()
-        val repos = database.repoDao().getAll()
-
+        val repos = repoDao.getAll()
 
         repos.forEach { repo ->
             val repoManager = IRepoManager.build(repo.url)
 
             try {
-                val response =
-                    repoManager.modules.execute()
+                val response = repoManager.modules.execute()
 
                 if (response.isSuccessful && response.body() != null) {
                     val modulesJson = response.body()!!
@@ -78,14 +73,12 @@ class RepoUpdateWorker(
                 return false
             }
         }
-
         return true
     }
 
     private fun createNotification(title: String, message: String) {
         val notificationManager =
-            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
+            applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         val channel = NotificationChannel(
             "RepoUpdateChannel",
@@ -94,26 +87,12 @@ class RepoUpdateWorker(
         )
         notificationManager.createNotificationChannel(channel)
 
-        val notification = NotificationCompat.Builder(context, "RepoUpdateChannel")
+        val notification = NotificationCompat.Builder(applicationContext, "RepoUpdateChannel")
             .setContentTitle(title)
             .setContentText(message)
             .setSmallIcon(R.drawable.box)
             .build()
 
         notificationManager.notify(1, notification)
-    }
-
-    private fun createForegroundInfo(): ForegroundInfo {
-        val notification = NotificationCompat.Builder(applicationContext, "repo_update_channel")
-            .setContentTitle("Updating Repositories")
-            .setSmallIcon(R.drawable.box)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .build()
-
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            ForegroundInfo(1, notification, FOREGROUND_SERVICE_TYPE_DATA_SYNC)
-        } else {
-            ForegroundInfo(1, notification)
-        }
     }
 }
