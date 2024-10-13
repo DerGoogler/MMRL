@@ -145,6 +145,8 @@
     <string name="settings_blacklist_desc">Listed modules that may closed source or dangerous</string>
     <string name="settings_date_pattern">Date pattern</string>
     <string name="settings_date_pattern_desc">Use your own date format</string>
+    <string name="settings_recommended_repos">Recommended Repos</string>
+    <string name="settings_recommended_repos_desc">Explore new repos and add them directly</string>
 
     <!-- App Theme -->
     <string name="app_theme_palette">Theme Palette</string>
@@ -206,5 +208,6 @@
     <string name="report_to_issues">Report to issues</string>
     <string name="stack_trace_truncated">%s\n… %d more</string>
     <string name="additional_notes">Additional Notes</string>
+    <string name="repo_added">Repo added</string>
 
 </resources>

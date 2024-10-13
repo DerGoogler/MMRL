@@ -80,20 +80,20 @@ fun SettingsScreen(
             )
 
             SettingNormalItem(
-                icon = R.drawable.file_shredder,
-                title = stringResource(id = R.string.settings_blacklist),
-                desc = stringResource(id = R.string.settings_blacklist_desc),
-                onClick = {
-                    navController.navigateSingleTopTo(SettingsScreen.Blacklist.route)
-                }
-            )
-
-            SettingNormalItem(
                 icon = R.drawable.git_pull_request,
                 title = stringResource(id = R.string.settings_repo),
                 desc = stringResource(id = R.string.settings_repo_desc),
                 onClick = {
                     navController.navigateSingleTopTo(SettingsScreen.Repositories.route)
+                }
+            )
+
+            SettingNormalItem(
+                icon = R.drawable.git_pull_request_draft,
+                title = stringResource(id = R.string.settings_recommended_repos),
+                desc = stringResource(id = R.string.settings_recommended_repos_desc),
+                onClick = {
+                    navController.navigateSingleTopTo(SettingsScreen.RecommendedRepos.route)
                 }
             )
 
@@ -130,6 +130,13 @@ fun SettingsScreen(
                     navController.navigateSingleTopTo(SettingsScreen.Changelog.route)
                 }
             )
+
+            SettingNormalItem(icon = R.drawable.file_shredder,
+                title = stringResource(id = R.string.settings_blacklist),
+                desc = stringResource(id = R.string.settings_blacklist_desc),
+                onClick = {
+                    navController.navigateSingleTopTo(SettingsScreen.Blacklist.route)
+                })
 
             SettingNormalItem(
                 icon = R.drawable.award,

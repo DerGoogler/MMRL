@@ -30,8 +30,9 @@ class RepositoriesViewModel @Inject constructor(
         private set
     var progress by mutableStateOf(false)
         private set
+
     private inline fun <T> T.refreshing(callback: T.() -> Unit) {
-        progress  = true
+        progress = true
         callback()
         progress = false
     }
@@ -54,11 +55,18 @@ class RepositoriesViewModel @Inject constructor(
 
     fun insert(
         url: String,
-        onFailure: (Throwable) -> Unit
+        onSuccess: (() -> Unit)? = null,
+        onFailure: (Throwable) -> Unit,
     ) = viewModelScope.launch {
         refreshing {
-            modulesRepository.getRepo(url.toRepo())
-                .onFailure(onFailure)
+            modulesRepository.getRepo(url.toRepo()).apply {
+                onFailure(onFailure)
+                onSuccess?.let {
+                    onSuccess {
+                        it()
+                    }
+                }
+            }
         }
     }
 
