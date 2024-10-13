@@ -140,7 +140,7 @@
     <string name="repo_modules">%d 個のモジュール</string>
     <string name="repo_update_at">最終更新: %s</string>
     <string name="repo_incompatible">互換性なし</string>
-    <string name="repo_options_update">更新</string>
+    <string name="repo_options_update">リポジトリを更新</string>
     <string name="repo_options_delete">リポジトリを削除</string>
     <string name="repo_options_support">サポート</string>
     <string name="repo_options_submission">モジュールを提出</string>
