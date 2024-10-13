@@ -147,6 +147,10 @@
     <string name="settings_date_pattern_desc">Use your own date format</string>
     <string name="settings_recommended_repos">Recommended Repos</string>
     <string name="settings_recommended_repos_desc">Explore new repos and add them directly</string>
+    <string name="settings_auto_update_repos">Auto Update Repo</string>
+    <string name="settings_auto_update_repos_desc">Automatically update repos in the background</string>
+    <string name="settings_updates">Updates</string>
+    <string name="settings_updates_desc">Manage your preferences on the updating process</string>
 
     <!-- App Theme -->
     <string name="app_theme_palette">Theme Palette</string>
@@ -209,6 +213,8 @@
     <string name="stack_trace_truncated">%s\n… %d more</string>
     <string name="additional_notes">Additional Notes</string>
     <string name="repo_added">Repo added</string>
+
+    <!-- Repo Update Service -->
     <string name="repo_update_service">Repositories updated successfully</string>
     <string name="repo_update_service_desc">Don\'t worry, MMRL updated your installed repos for you. 😋</string>
     <string name="repo_update_service_failed">No updates found for repositories</string>

@@ -15,6 +15,7 @@ import androidx.compose.runtime.CompositionContext
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.NetworkType
@@ -30,6 +31,8 @@ import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.theme.AppTheme
 import com.dergoogler.mmrl.worker.RepoUpdateWorker
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import kotlin.system.exitProcess
@@ -80,20 +83,26 @@ open class MMRLComponentActivity : ComponentActivity() {
     }
 
     fun startRepoUpdateService() {
-        val updateRequest = PeriodicWorkRequestBuilder<RepoUpdateWorker>(6, TimeUnit.HOURS)
-            .setConstraints(
-                Constraints.Builder()
-                    .setRequiredNetworkType(NetworkType.CONNECTED)
-                    .build()
-            )
-            .build()
+        lifecycleScope.launch {
+            val userPreferences = userPreferencesRepository.data.first()
 
-        WorkManager.getInstance(this)
-            .enqueueUniquePeriodicWork(
-                "RepoUpdateWork",
-                ExistingPeriodicWorkPolicy.UPDATE,
-                updateRequest
-            )
+            if (userPreferences.autoUpdateRepos) {
+                val updateRequest = PeriodicWorkRequestBuilder<RepoUpdateWorker>(6, TimeUnit.HOURS)
+                    .setConstraints(
+                        Constraints.Builder()
+                            .setRequiredNetworkType(NetworkType.CONNECTED)
+                            .build()
+                    )
+                    .build()
+
+                WorkManager.getInstance(applicationContext)
+                    .enqueueUniquePeriodicWork(
+                        "RepoUpdateWork",
+                        ExistingPeriodicWorkPolicy.UPDATE,
+                        updateRequest
+                    )
+            }
+        }
     }
 
     companion object {

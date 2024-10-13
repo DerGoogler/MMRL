@@ -80,4 +80,9 @@ class SettingsViewModel @Inject constructor(
             userPreferencesRepository.setDatePattern(value)
         }
     }
+    fun setAutoUpdateRepos(value: Boolean) {
+        viewModelScope.launch {
+            userPreferencesRepository.setAutoUpdateRepos(value)
+        }
+    }
 }

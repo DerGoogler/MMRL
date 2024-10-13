@@ -71,6 +71,15 @@ fun SettingsScreen(
             )
 
             SettingNormalItem(
+                icon = R.drawable.refresh,
+                title = stringResource(id = R.string.settings_updates),
+                desc = stringResource(id = R.string.settings_updates_desc),
+                onClick = {
+                    navController.navigateSingleTopTo(SettingsScreen.Updates.route)
+                }
+            )
+
+            SettingNormalItem(
                 icon = R.drawable.tool,
                 title = stringResource(id = R.string.settings_other),
                 desc = stringResource(id = R.string.settings_other_desc),

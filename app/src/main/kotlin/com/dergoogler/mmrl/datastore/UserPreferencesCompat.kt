@@ -19,6 +19,7 @@ data class UserPreferencesCompat(
     val confirmReboot: Boolean,
     val terminalTextWrap: Boolean,
     val datePattern: String,
+    val autoUpdateRepos: Boolean,
     val repositoryMenu: RepositoryMenuCompat,
     val modulesMenu: ModulesMenuCompat
 ) {
@@ -33,6 +34,7 @@ data class UserPreferencesCompat(
         confirmReboot = original.confirmReboot,
         terminalTextWrap = original.terminalTextWrap,
         datePattern = original.datePattern,
+        autoUpdateRepos = original.autoUpdateRepos,
         repositoryMenu = when {
             original.hasRepositoryMenu() -> RepositoryMenuCompat(original.repositoryMenu)
             else -> RepositoryMenuCompat.default()
@@ -59,6 +61,7 @@ data class UserPreferencesCompat(
         .setDownloadPath(downloadPath.path)
         .setConfirmReboot(confirmReboot).setTerminalTextWrap(terminalTextWrap)
         .setDatePattern(datePattern)
+        .setAutoUpdateRepos(autoUpdateRepos)
         .setRepositoryMenu(repositoryMenu.toProto())
         .setModulesMenu(modulesMenu.toProto())
         .build()
@@ -73,6 +76,7 @@ data class UserPreferencesCompat(
             downloadPath = Const.PUBLIC_DOWNLOADS,
             confirmReboot = true, terminalTextWrap = false,
             datePattern = "d MMM yyyy",
+            autoUpdateRepos = true,
             repositoryMenu = RepositoryMenuCompat.default(),
             modulesMenu = ModulesMenuCompat.default()
         )

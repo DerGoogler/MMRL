@@ -20,4 +20,5 @@ message UserPreferences {
   bool confirmReboot = 9;
   bool terminalTextWrap = 10;
   string datePattern = 11;
+  bool autoUpdateRepos = 12;
 }

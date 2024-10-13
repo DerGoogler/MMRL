@@ -34,6 +34,9 @@ class UserPreferencesRepository @Inject constructor(
 
     suspend fun setDatePattern(value: String) = userPreferencesDataSource.setDatePattern(value)
 
+    suspend fun setAutoUpdateRepos(value: Boolean) =
+        userPreferencesDataSource.setAutoUpdateRepos(value)
+
     suspend fun setRepositoryMenu(value: RepositoryMenuCompat) =
         userPreferencesDataSource.setRepositoryMenu(value)
 

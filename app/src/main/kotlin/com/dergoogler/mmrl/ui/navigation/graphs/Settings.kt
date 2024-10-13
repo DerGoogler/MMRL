@@ -17,6 +17,7 @@ import com.dergoogler.mmrl.ui.screens.settings.other.OtherScreen
 import com.dergoogler.mmrl.ui.screens.settings.recommendedRepos.RecommendedRepoScreen
 import com.dergoogler.mmrl.ui.screens.settings.repositories.RepositoriesScreen
 import com.dergoogler.mmrl.ui.screens.settings.security.SecurityScreen
+import com.dergoogler.mmrl.ui.screens.settings.updates.UpdatesScreen
 import com.dergoogler.mmrl.ui.screens.settings.workingmode.WorkingModeScreen
 
 enum class SettingsScreen(val route: String) {
@@ -24,6 +25,7 @@ enum class SettingsScreen(val route: String) {
     Repositories("Repositories"),
     RecommendedRepos("RecommendedRepos"),
     Appearance("Appearance"),
+    Updates("Updates"),
     Security("Security"),
     Other("Other"),
     Blacklist("Blacklist"),
@@ -55,7 +57,17 @@ fun NavGraphBuilder.settingsScreen(
             navController = navController
         )
     }
-    
+
+    composable(
+        route = SettingsScreen.Updates.route,
+        enterTransition = { scaleIn() + fadeIn() },
+        exitTransition = { fadeOut() }
+    ) {
+        UpdatesScreen(
+            navController = navController
+        )
+    }
+
     composable(
         route = SettingsScreen.RecommendedRepos.route,
         enterTransition = { scaleIn() + fadeIn() },
