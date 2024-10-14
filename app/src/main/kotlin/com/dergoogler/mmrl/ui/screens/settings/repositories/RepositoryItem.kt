@@ -189,6 +189,7 @@ private fun BottomSheet(
     windowInsets = WindowInsets(0)
 ) {
     val context = LocalContext.current
+    val userPreferences = LocalUserPreferences.current
 
     Column(
         modifier = Modifier
@@ -213,7 +214,8 @@ private fun BottomSheet(
 
                 Text(
                     text = stringResource(
-                        id = R.string.module_update_at, repo.timestamp.toFormattedDate()
+                        id = R.string.module_update_at,
+                        repo.timestamp.toFormattedDateSafely(userPreferences.datePattern)
                     ),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.outline

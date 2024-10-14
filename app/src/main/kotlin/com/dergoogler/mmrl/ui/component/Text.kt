@@ -19,8 +19,6 @@ import coil.Coil
 import ext.dergoogler.mmrl.ext.launchCustomTab
 import dev.jeziellago.compose.markdowntext.MarkdownText
 
-//import io.noties.markwon.Markwon
-
 @Composable
 internal fun ProvideContentColorTextStyle(
     contentColor: Color,
@@ -58,32 +56,6 @@ fun HtmlText(
         }
     )
 }
-
-//@Composable
-//fun MarkdownText(
-//    text: String,
-//    modifier: Modifier = Modifier,
-//    style: TextStyle = LocalTextStyle.current,
-//    color: Color = LocalContentColor.current,
-//) {
-//    val context = LocalContext.current
-//    val markdown = Markwon.create(context)
-//    val linkTextColor = MaterialTheme.colorScheme.primary.toArgb()
-//
-//    AndroidView(
-//        modifier = modifier,
-//        factory = { TextView(it) },
-//        update = {
-//            it.setLinkTextColor(linkTextColor)
-//            it.highlightColor = style.background.toArgb()
-//
-//            it.textSize = style.fontSize.value
-//            it.setTextColor(color.toArgb())
-//            it.setBackgroundColor(style.background.toArgb())
-//            markdown.setMarkdown(it, text)
-//        }
-//    )
-//}
 
 @Composable
 fun MarkdownText(

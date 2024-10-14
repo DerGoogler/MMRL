@@ -37,6 +37,7 @@ import com.dergoogler.mmrl.model.local.LocalModule
 import com.dergoogler.mmrl.model.local.versionDisplay
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import ext.dergoogler.mmrl.ext.toDate
+import ext.dergoogler.mmrl.ext.toFormattedDateSafely
 
 @Composable
 fun ModuleItem(
@@ -93,7 +94,8 @@ fun ModuleItem(
                     if (module.lastUpdated != 0L && menu.showUpdatedTime) {
                         Text(
                             text = stringResource(id = R.string.module_update_at,
-                                module.lastUpdated.toDate()),
+                                module.lastUpdated.toFormattedDateSafely(userPreferences.datePattern)
+                            ),
                             style = MaterialTheme.typography.bodySmall,
                             textDecoration = decoration,
                             color = MaterialTheme.colorScheme.outline

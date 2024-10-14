@@ -60,6 +60,7 @@ fun ReadmePage(
                 text = readme,
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier
+                    .fillMaxSize()
                     .padding(horizontal = 18.dp)
                     .padding(top = 8.dp)
                     .padding(bottom = 18.dp)

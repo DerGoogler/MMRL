@@ -79,7 +79,7 @@ fun ChangelogScreen(
                 MarkdownText(
                     text = changelog,
                     style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier
+                    modifier = Modifier.fillMaxSize()
                         .padding(horizontal = 18.dp)
                         .padding(top = 8.dp)
                         .padding(bottom = 18.dp)
