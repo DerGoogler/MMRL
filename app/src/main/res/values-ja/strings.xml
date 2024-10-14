@@ -135,7 +135,11 @@
     <string name="settings_date_pattern">日付のパターン</string>
     <string name="settings_date_pattern_desc">日付形式を変更します。</string>
     <string name="settings_recommended_repos">おすすめのリポジトリ</string>
-    <string name="settings_recommended_repos_desc">新しいリポジトリを探して直接的に追加します</string>
+    <string name="settings_recommended_repos_desc">新しいリポジトリを探して追加をします</string>
+    <string name="settings_auto_update_repos">リポジトリの自動更新</string>
+    <string name="settings_auto_update_repos_desc">バックグラウンドでリポジトリの自動更新をします。</string>
+    <string name="settings_updates">更新</string>
+    <string name="settings_updates_desc">更新プロセスに関する設定を管理します</string>
     <!-- App Theme -->
     <string name="app_theme_palette">テーマパレット</string>
     <string name="app_theme_dark_theme">ダークテーマ</string>
@@ -191,6 +195,7 @@
     <string name="stack_trace_truncated">%s\n… %d 件以上</string>
     <string name="additional_notes">補足事項</string>
     <string name="repo_added">リポジトリを追加しました</string>
+    <!-- Repo Update Service -->
     <string name="repo_update_service">リポジトリが正常に更新されました</string>
     <string name="repo_update_service_desc">ご心配なく、MMRL はインストールしたリポジトリを更新しました。😋</string>
     <string name="repo_update_service_failed">リポジトリの更新が見つかりません</string>
