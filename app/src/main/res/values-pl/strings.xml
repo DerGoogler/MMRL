@@ -157,4 +157,24 @@
     <string name="view_module_features_sepolicy_sub">Dodaje niestandardowe zasady bezpieczeństwa (reguły SEPolicy).</string>
     <string name="view_module_features_webui_sub">Interfejs sieciowy do zarządzania modułami (KernelSU i APatch, nie Magisk).&gt;</string>
     <string name="settings_appearance_desc">Dostosuj aplikację do swoich potrzeb</string>
+    <string name="settings_blacklist">Czarna lista</string>
+    <string name="settings_blacklist_desc">Wymienione moduły mogą być zamknięte lub niebezpieczne</string>
+    <string name="settings_date_pattern">Wzór daty</string>
+    <string name="settings_date_pattern_desc">Użyj własnego formatu daty</string>
+    <string name="settings_recommended_repos">Zalecane repozytoria</string>
+    <string name="settings_recommended_repos_desc">Przeglądaj nowe repozytoria i dodawaj je bezpośrednio</string>
+    <string name="settings_auto_update_repos">Auto aktualizuj repo</string>
+    <string name="settings_auto_update_repos_desc">Automatyczna aktualizacja repozytoriów w tle</string>
+    <string name="settings_updates">Aktualizacje</string>
+    <string name="settings_updates_desc">Zarządzaj swoimi preferencjami dotyczącymi procesu aktualizacji</string>
+    <string name="we_hit_a_brick_crash">Trafiliśmy na ścianę!</string>
+    <string name="report_to_issues">Zgłoś w sekcji Issues</string>
+    <string name="stack_trace_truncated">%s
+\n… %d więcej</string>
+    <string name="additional_notes">Dodatkowe uwagi</string>
+    <string name="repo_added">Repo zostało dodane</string>
+    <string name="repo_update_service">Pomyślnie zaktualizowano repozytoria</string>
+    <string name="repo_update_service_desc">Nie martw się, MMRL zaktualizował twoje zainstalowane repozytoria dla Ciebie 😋</string>
+    <string name="repo_update_service_failed">Nie znaleziono aktualizacji dla repozytoriów</string>
+    <string name="repo_update_service_failed_desc">Nie ma aktualizacji dla repozytoriów</string>
 </resources>
