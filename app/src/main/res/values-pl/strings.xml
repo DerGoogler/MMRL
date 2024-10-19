@@ -163,12 +163,12 @@
     <string name="settings_date_pattern_desc">Użyj własnego formatu daty</string>
     <string name="settings_recommended_repos">Zalecane repozytoria</string>
     <string name="settings_recommended_repos_desc">Przeglądaj nowe repozytoria i dodawaj je bezpośrednio</string>
-    <string name="settings_auto_update_repos">Auto aktualizuj repo</string>
+    <string name="settings_auto_update_repos">Automatyczna aktualizacja</string>
     <string name="settings_auto_update_repos_desc">Automatyczna aktualizacja repozytoriów w tle</string>
     <string name="settings_updates">Aktualizacje</string>
     <string name="settings_updates_desc">Zarządzaj swoimi preferencjami dotyczącymi procesu aktualizacji</string>
     <string name="we_hit_a_brick_crash">Trafiliśmy na ścianę!</string>
-    <string name="report_to_issues">Zgłoś w sekcji Issues</string>
+    <string name="report_to_issues">Zgłoś problemy</string>
     <string name="stack_trace_truncated">%s
 \n… %d więcej</string>
     <string name="additional_notes">Dodatkowe uwagi</string>
@@ -177,12 +177,18 @@
     <string name="repo_update_service_desc">Nie martw się, MMRL zaktualizował twoje zainstalowane repozytoria dla Ciebie 😋</string>
     <string name="repo_update_service_failed">Nie znaleziono aktualizacji dla repozytoriów</string>
     <string name="repo_update_service_failed_desc">Nie ma aktualizacji dla repozytoriów</string>
-    <string name="settings_repo_update_interval">Częstotliwość aktualizacji Repo</string>
+    <string name="settings_repo_update_interval">Częstotliwość aktualizacji</string>
     <string name="settings_repo_update_interval_suffix">" godz."</string>
     <string name="settings_repo_update_interval_desc">Wybierz przedział czasowy aktualizacji repozytoriów</string>
-    <string name="settings_check_modules_update">Sprawdź aktualizacje modułów</string>
+    <string name="settings_check_modules_update">Wyszukiwanie aktualizacji</string>
     <string name="settings_check_modules_update_desc">Włącza sprawdzanie aktualizacji dla zainstalowanych modułów</string>
     <string name="settings_check_modules_update_interval_suffix">" godz."</string>
-    <string name="settings_check_modules_update_interval">Częstotliwość sprawdzania aktualizacji modułu</string>
+    <string name="settings_check_modules_update_interval">Częstotliwość sprawdzania aktualizacji</string>
     <string name="settings_check_modules_update_interval_desc">Wybierz przedział czasowy sprawdzania zainstalowanych modułów</string>
+    <string name="work_repository_updates">Aktualizacje repozytorium</string>
+    <string name="work_updates_for_repositories">Aktualizacje dla repozytoriów</string>
+    <string name="work_module_updates">Aktualizacje modułów</string>
+    <string name="work_update_checker_for_modules">Usługa sprawdzania aktualizacji modułów</string>
+    <string name="has_a_new_update">%1$s ma nową aktualizację!</string>
+    <string name="update_available_from_to">Aktualizacja dostępna od %s (%d) do %s (%d).</string>
 </resources>
