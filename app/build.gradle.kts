@@ -131,6 +131,7 @@ protobuf {
 }
 
 dependencies {
+    implementation(libs.androidx.lifecycle.process)
     compileOnly(projects.hiddenApi)
 
     implementation(libs.hiddenApiBypass)

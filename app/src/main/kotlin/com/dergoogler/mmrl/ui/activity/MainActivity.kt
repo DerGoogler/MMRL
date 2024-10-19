@@ -21,8 +21,11 @@ import com.dergoogler.mmrl.datastore.UserPreferencesCompat.Companion.isRoot
 import com.dergoogler.mmrl.datastore.UserPreferencesCompat.Companion.isSetup
 import com.dergoogler.mmrl.datastore.WorkingMode
 import com.dergoogler.mmrl.network.NetworkUtils
+import com.dergoogler.mmrl.worker.ModuleUpdateWorker
+import com.dergoogler.mmrl.worker.RepoUpdateWorker
 import ext.dergoogler.mmrl.activity.MMRLComponentActivity
 import ext.dergoogler.mmrl.activity.setBaseContent
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -39,8 +42,24 @@ class MainActivity : MMRLComponentActivity() {
         splashScreen.setKeepOnScreenCondition { isLoading }
 
         if (permissionsGranted) {
-            startRepoUpdateService()
-            startModuleUpdateService()
+            lifecycleScope.launch {
+                val userPreferences = userPreferencesRepository.data.first()
+
+                startWorkTask<RepoUpdateWorker>(
+                    context = this@MainActivity,
+                    enabled = userPreferences.autoUpdateRepos,
+                    repeatInterval = userPreferences.autoUpdateReposInterval,
+                    workName = REPO_UPDATE_WORK_NAME
+                )
+
+                startWorkTask<ModuleUpdateWorker>(
+                    context = this@MainActivity,
+                    enabled = userPreferences.checkModuleUpdates,
+                    repeatInterval = userPreferences.checkModuleUpdatesInterval,
+                    workName = MODULE_UPDATE_WORK_NAME
+                )
+
+            }
         }
 
         setBaseContent {

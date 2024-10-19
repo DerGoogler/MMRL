@@ -11,10 +11,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionContext
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.lifecycleScope
 import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.ListenableWorker
 import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
@@ -27,18 +30,14 @@ import com.dergoogler.mmrl.ui.activity.InstallActivity
 import com.dergoogler.mmrl.ui.activity.ModConfActivity
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.theme.AppTheme
-import com.dergoogler.mmrl.worker.ModuleUpdateWorker
-import com.dergoogler.mmrl.worker.RepoUpdateWorker
 import dagger.hilt.android.AndroidEntryPoint
 import dev.dergoogler.mmrl.compat.BuildCompat
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import kotlin.system.exitProcess
 
 @AndroidEntryPoint
-open class MMRLComponentActivity : ComponentActivity() {
+open class MMRLComponentActivity : ComponentActivity(), DefaultLifecycleObserver {
     @Inject
     lateinit var userPreferencesRepository: UserPreferencesRepository
 
@@ -49,8 +48,12 @@ open class MMRLComponentActivity : ComponentActivity() {
     var permissionsGranted = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        super<ComponentActivity>.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
+            startCrashActivity(thread, throwable)
+        }
 
         val granted = if (BuildCompat.atLeastT) {
             PermissionCompat.checkPermissions(
@@ -67,9 +70,7 @@ open class MMRLComponentActivity : ComponentActivity() {
             }
         }
 
-        Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
-            startCrashActivity(thread, throwable)
-        }
+        ProcessLifecycleOwner.get().lifecycle.addObserver(this)
     }
 
     private fun startCrashActivity(thread: Thread, throwable: Throwable) {
@@ -99,62 +100,58 @@ open class MMRLComponentActivity : ComponentActivity() {
         }
     }
 
-    fun startRepoUpdateService() {
-        lifecycleScope.launch {
-            val userPreferences = userPreferencesRepository.data.first()
-
-            if (userPreferences.autoUpdateRepos) {
-                val updateRequest = PeriodicWorkRequestBuilder<RepoUpdateWorker>(
-                    userPreferences.autoUpdateReposInterval.toLong(),
-                    TimeUnit.HOURS
-                )
-                    .setConstraints(
-                        Constraints.Builder()
-                            .setRequiredNetworkType(NetworkType.CONNECTED)
-                            .setRequiresBatteryNotLow(true)
-                            .build()
-                    )
-                    .build()
-
-                WorkManager.getInstance(applicationContext)
-                    .enqueueUniquePeriodicWork(
-                        "RepoUpdateWork",
-                        ExistingPeriodicWorkPolicy.UPDATE,
-                        updateRequest
-                    )
-            }
-        }
+    override fun onStart(owner: LifecycleOwner) {
+        super<DefaultLifecycleObserver>.onStart(owner)
+        isAppInForeground = true
     }
 
-    fun startModuleUpdateService() {
-        lifecycleScope.launch {
-            val userPreferences = userPreferencesRepository.data.first()
-
-            if (userPreferences.checkModuleUpdates) {
-                val updateRequest = PeriodicWorkRequestBuilder<ModuleUpdateWorker>(
-                    10,
-//                    userPreferences.checkModuleUpdatesInterval.toLong(),
-                    TimeUnit.SECONDS
-                )
-                    .setConstraints(
-                        Constraints.Builder()
-                            .setRequiredNetworkType(NetworkType.CONNECTED)
-                            .setRequiresBatteryNotLow(true)
-                            .build()
-                    )
-                    .build()
-
-                WorkManager.getInstance(applicationContext)
-                    .enqueueUniquePeriodicWork(
-                        "ModuleUpdateWork",
-                        ExistingPeriodicWorkPolicy.UPDATE,
-                        updateRequest
-                    )
-            }
-        }
+    override fun onStop(owner: LifecycleOwner) {
+        super<DefaultLifecycleObserver>.onStop(owner)
+        isAppInForeground = false
     }
 
     companion object {
+        var isAppInForeground = false
+        const val MODULE_UPDATE_WORK_NAME = "ModuleUpdateWork"
+        const val REPO_UPDATE_WORK_NAME = "RepoUpdateWork"
+
+        inline fun <reified W : ListenableWorker> startWorkTask(
+            context: Context,
+            enabled: Boolean,
+            repeatInterval: Int,
+            repeatIntervalUnit: TimeUnit = TimeUnit.HOURS,
+            workName: String,
+        ) {
+            if (enabled) {
+                val updateRequest = PeriodicWorkRequestBuilder<W>(
+                    repeatInterval.toLong(),
+                    repeatIntervalUnit
+                )
+                    .setConstraints(
+                        Constraints.Builder()
+                            .setRequiredNetworkType(NetworkType.CONNECTED)
+                            .setRequiresBatteryNotLow(true)
+                            .build()
+                    )
+                    .build()
+
+                WorkManager.getInstance(context)
+                    .enqueueUniquePeriodicWork(
+                        workName,
+                        ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE,
+                        updateRequest
+                    )
+            } else {
+                WorkManager.getInstance(context)
+                    .cancelUniqueWork(workName)
+            }
+        }
+
+        fun cancelWorkTask(context: Context, workName: String) {
+            WorkManager.getInstance(context)
+                .cancelUniqueWork(workName)
+        }
+
         fun startModConfActivity(context: Context, modId: String) {
             val intent = Intent(context, ModConfActivity::class.java)
                 .apply {

@@ -11,6 +11,7 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.database.AppDatabase
+import ext.dergoogler.mmrl.activity.MMRLComponentActivity
 import timber.log.Timber
 
 open class MMRLCoroutineWorker(
@@ -64,17 +65,19 @@ open class MMRLCoroutineWorker(
         pendingIntent: PendingIntent? = null,
         @DrawableRes icon: Int = R.drawable.box
     ) {
-        val notification = NotificationCompat.Builder(applicationContext, channelId).apply {
-            setContentTitle(title)
-            setContentText(message)
-            setSmallIcon(icon)
-            setContentIntent(pendingIntent)
+        if (!MMRLComponentActivity.isAppInForeground) {
+            val notification = NotificationCompat.Builder(applicationContext, channelId).apply {
+                setContentTitle(title)
+                setContentText(message)
+                setSmallIcon(icon)
+                setContentIntent(pendingIntent)
 
-            Timber.d("Channel ID: $channelId")
-            Timber.d("Channel Name: $channelName")
-            Timber.d("Channel Description: $channelDescription")
-        }.build()
+                Timber.d("Channel ID: $channelId")
+                Timber.d("Channel Name: $channelName")
+                Timber.d("Channel Description: $channelDescription")
+            }.build()
 
-        notificationManager.notify(id, notification)
+            notificationManager.notify(id, notification)
+        }
     }
 }
