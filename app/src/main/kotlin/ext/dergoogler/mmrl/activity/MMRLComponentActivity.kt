@@ -147,7 +147,7 @@ open class MMRLComponentActivity : ComponentActivity() {
                 WorkManager.getInstance(applicationContext)
                     .enqueueUniquePeriodicWork(
                         "ModuleUpdateWork",
-                        ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE,
+                        ExistingPeriodicWorkPolicy.UPDATE,
                         updateRequest
                     )
             }
