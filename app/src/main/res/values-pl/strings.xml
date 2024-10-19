@@ -98,7 +98,7 @@
     <string name="view_module_update_ignore">Ignoruj</string>
     <string name="settings_download_path">Ścieżka pobierania</string>
     <string name="setup_non_root_desc">Nie wymaga uprawnień roota, dostępna jest tylko funkcja pobierania modułów</string>
-    <string name="install_screen_reboot_confirm">Tak</string>
+    <string name="install_screen_reboot_confirm">OK</string>
     <string name="install_screen_reboot_dismiss">Odrzuć</string>
     <string name="menu_show_cover">Pokaż okładkę</string>
     <string name="menu_show_verified">Pokaż zweryfikowane</string>
@@ -177,4 +177,12 @@
     <string name="repo_update_service_desc">Nie martw się, MMRL zaktualizował twoje zainstalowane repozytoria dla Ciebie 😋</string>
     <string name="repo_update_service_failed">Nie znaleziono aktualizacji dla repozytoriów</string>
     <string name="repo_update_service_failed_desc">Nie ma aktualizacji dla repozytoriów</string>
+    <string name="settings_repo_update_interval">Częstotliwość aktualizacji Repo</string>
+    <string name="settings_repo_update_interval_suffix">" godz."</string>
+    <string name="settings_repo_update_interval_desc">Wybierz przedział czasowy aktualizacji repozytoriów</string>
+    <string name="settings_check_modules_update">Sprawdź aktualizacje modułów</string>
+    <string name="settings_check_modules_update_desc">Włącza sprawdzanie aktualizacji dla zainstalowanych modułów</string>
+    <string name="settings_check_modules_update_interval_suffix">" godz."</string>
+    <string name="settings_check_modules_update_interval">Częstotliwość sprawdzania aktualizacji modułu</string>
+    <string name="settings_check_modules_update_interval_desc">Wybierz przedział czasowy sprawdzania zainstalowanych modułów</string>
 </resources>
