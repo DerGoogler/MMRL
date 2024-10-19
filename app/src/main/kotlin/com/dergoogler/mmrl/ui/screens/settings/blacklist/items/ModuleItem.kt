@@ -1,6 +1,5 @@
 package com.dergoogler.mmrl.ui.screens.settings.blacklist.items
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
@@ -27,7 +26,7 @@ import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.model.online.Blacklist
 import com.dergoogler.mmrl.ui.component.AntiFeaturesItem
 import com.dergoogler.mmrl.ui.component.NavigationBarsSpacer
-import com.dergoogler.mmrl.ui.component.SettingNormalItem
+import com.dergoogler.mmrl.ui.component.ListButtonItem
 import com.dergoogler.mmrl.ui.utils.expandedShape
 
 
@@ -43,7 +42,7 @@ fun ModuleItem(
             onClose = { open = false })
     }
 
-    SettingNormalItem(title = module.id, desc = module.source, onClick = { open = true })
+    ListButtonItem(title = module.id, desc = module.source, onClick = { open = true })
 }
 
 

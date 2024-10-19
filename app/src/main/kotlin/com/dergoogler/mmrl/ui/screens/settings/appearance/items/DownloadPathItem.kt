@@ -14,7 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.app.Const
-import com.dergoogler.mmrl.ui.component.SettingNormalItem
+import com.dergoogler.mmrl.ui.component.ListButtonItem
 import com.dergoogler.mmrl.ui.component.TextFieldDialog
 import java.io.File
 
@@ -30,7 +30,7 @@ fun DownloadPathItem(
         onConfirm = { if (it != downloadPath) onChange(it) }
     )
 
-    SettingNormalItem(
+    ListButtonItem(
         icon = R.drawable.files,
         title = stringResource(id = R.string.settings_download_path),
         desc = downloadPath.absolutePath,

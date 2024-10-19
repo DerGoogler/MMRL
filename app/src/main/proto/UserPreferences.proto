@@ -21,4 +21,7 @@ message UserPreferences {
   bool terminalTextWrap = 10;
   string datePattern = 11;
   bool autoUpdateRepos = 12;
+  int32 autoUpdateReposInterval = 13;
+  bool checkModuleUpdates = 14;
+  int32 checkModuleUpdatesInterval = 15;
 }

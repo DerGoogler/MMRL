@@ -16,13 +16,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.dergoogler.mmrl.R
-import com.dergoogler.mmrl.datastore.UserPreferencesCompat.Companion.isRoot
 import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
-import com.dergoogler.mmrl.ui.component.SettingEditTextItem
-import com.dergoogler.mmrl.ui.component.SettingSwitchItem
+import com.dergoogler.mmrl.ui.component.ListEditTextItem
+import com.dergoogler.mmrl.ui.component.ListSwitchItem
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.screens.settings.appearance.items.AppThemeItem
-import com.dergoogler.mmrl.ui.screens.settings.appearance.items.DownloadPathItem
 import com.dergoogler.mmrl.ui.utils.none
 import com.dergoogler.mmrl.viewmodel.SettingsViewModel
 
@@ -58,7 +56,7 @@ fun AppearanceScreen(
                 onDarkModeChange = viewModel::setDarkTheme
             )
 
-            SettingSwitchItem(
+            ListSwitchItem(
                 icon = R.drawable.text_wrap_column,
                 title = stringResource(id = R.string.settings_text_wrap),
                 desc = stringResource(id = R.string.settings_text_wrap_desc),
@@ -66,7 +64,8 @@ fun AppearanceScreen(
                 onChange = viewModel::setTerminalTextWrap
             )
 
-            SettingEditTextItem(icon = R.drawable.calendar_month,
+            ListEditTextItem(
+                icon = R.drawable.calendar_month,
                 title = stringResource(id = R.string.settings_date_pattern),
                 desc = stringResource(id = R.string.settings_date_pattern_desc),
                 value = userPreferences.datePattern,

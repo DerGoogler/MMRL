@@ -35,7 +35,7 @@ import com.dergoogler.mmrl.network.runRequest
 import com.dergoogler.mmrl.stub.IRecommendedReposManager
 import com.dergoogler.mmrl.ui.component.Loading
 import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
-import com.dergoogler.mmrl.ui.component.SettingNormalItem
+import com.dergoogler.mmrl.ui.component.ListButtonItem
 import com.dergoogler.mmrl.ui.screens.settings.repositories.FailureDialog
 import com.dergoogler.mmrl.ui.utils.none
 import com.dergoogler.mmrl.viewmodel.RepositoriesViewModel
@@ -108,7 +108,7 @@ fun RecommendedRepoScreen(
                                 }
                             )
 
-                            SettingNormalItem(
+                            ListButtonItem(
                                 title = repo.name,
                                 desc = repo.url,
                                 onClick = {

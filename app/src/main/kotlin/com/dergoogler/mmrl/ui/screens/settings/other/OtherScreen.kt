@@ -18,9 +18,8 @@ import androidx.navigation.NavController
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.datastore.UserPreferencesCompat.Companion.isRoot
 import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
-import com.dergoogler.mmrl.ui.component.SettingSwitchItem
+import com.dergoogler.mmrl.ui.component.ListSwitchItem
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
-import com.dergoogler.mmrl.ui.screens.settings.appearance.items.AppThemeItem
 import com.dergoogler.mmrl.ui.screens.settings.appearance.items.DownloadPathItem
 import com.dergoogler.mmrl.ui.utils.none
 import com.dergoogler.mmrl.viewmodel.SettingsViewModel
@@ -54,7 +53,7 @@ fun OtherScreen(
                 onChange = viewModel::setDownloadPath
             )
 
-            SettingSwitchItem(
+            ListSwitchItem(
                 icon = R.drawable.file_type_zip,
                 title = stringResource(id = R.string.settings_delete_zip),
                 desc = stringResource(id = R.string.settings_delete_zip_desc),
@@ -63,7 +62,7 @@ fun OtherScreen(
                 enabled = userPreferences.workingMode.isRoot
             )
 
-            SettingSwitchItem(
+            ListSwitchItem(
                 icon = R.drawable.brand_cloudflare,
                 title = stringResource(id = R.string.settings_doh),
                 desc = stringResource(id = R.string.settings_doh_desc),

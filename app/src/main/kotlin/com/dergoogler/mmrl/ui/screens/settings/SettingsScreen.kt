@@ -20,7 +20,7 @@ import com.dergoogler.mmrl.BuildConfig
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.app.Const
 import com.dergoogler.mmrl.datastore.WorkingMode
-import com.dergoogler.mmrl.ui.component.SettingNormalItem
+import com.dergoogler.mmrl.ui.component.ListButtonItem
 import com.dergoogler.mmrl.ui.component.TopAppBarTitle
 import com.dergoogler.mmrl.ui.navigation.graphs.SettingsScreen
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
@@ -52,7 +52,7 @@ fun SettingsScreen(
                 .fillMaxWidth()
                 .verticalScroll(rememberScrollState())
         ) {
-            SettingNormalItem(
+            ListButtonItem(
                 icon = R.drawable.color_swatch,
                 title = stringResource(id = R.string.settings_appearance),
                 desc = stringResource(id = R.string.settings_appearance_desc),
@@ -61,7 +61,7 @@ fun SettingsScreen(
                 }
             )
 
-            SettingNormalItem(
+            ListButtonItem(
                 icon = R.drawable.shield,
                 title = stringResource(id = R.string.settings_security),
                 desc = stringResource(id = R.string.settings_security_desc),
@@ -70,7 +70,7 @@ fun SettingsScreen(
                 }
             )
 
-            SettingNormalItem(
+            ListButtonItem(
                 icon = R.drawable.refresh,
                 title = stringResource(id = R.string.settings_updates),
                 desc = stringResource(id = R.string.settings_updates_desc),
@@ -79,7 +79,7 @@ fun SettingsScreen(
                 }
             )
 
-            SettingNormalItem(
+            ListButtonItem(
                 icon = R.drawable.tool,
                 title = stringResource(id = R.string.settings_other),
                 desc = stringResource(id = R.string.settings_other_desc),
@@ -88,7 +88,7 @@ fun SettingsScreen(
                 }
             )
 
-            SettingNormalItem(
+            ListButtonItem(
                 icon = R.drawable.git_pull_request,
                 title = stringResource(id = R.string.settings_repo),
                 desc = stringResource(id = R.string.settings_repo_desc),
@@ -97,7 +97,7 @@ fun SettingsScreen(
                 }
             )
 
-            SettingNormalItem(
+            ListButtonItem(
                 icon = R.drawable.git_pull_request_draft,
                 title = stringResource(id = R.string.settings_recommended_repos),
                 desc = stringResource(id = R.string.settings_recommended_repos_desc),
@@ -106,7 +106,7 @@ fun SettingsScreen(
                 }
             )
 
-            SettingNormalItem(
+            ListButtonItem(
                 icon = R.drawable.file_3d,
                 title = stringResource(id = R.string.settings_resources),
                 desc = stringResource(id = R.string.settings_resources_desc),
@@ -115,7 +115,7 @@ fun SettingsScreen(
                 }
             )
 
-            SettingNormalItem(
+            ListButtonItem(
                 icon = R.drawable.components,
                 title = stringResource(id = R.string.setup_mode),
                 desc = stringResource(
@@ -131,7 +131,7 @@ fun SettingsScreen(
                 }
             )
 
-            SettingNormalItem(
+            ListButtonItem(
                 icon = R.drawable.files,
                 title = stringResource(id = R.string.settings_changelog),
                 desc = stringResource(id = R.string.settings_changelo_desc),
@@ -140,14 +140,15 @@ fun SettingsScreen(
                 }
             )
 
-            SettingNormalItem(icon = R.drawable.file_shredder,
+            ListButtonItem(
+                icon = R.drawable.file_shredder,
                 title = stringResource(id = R.string.settings_blacklist),
                 desc = stringResource(id = R.string.settings_blacklist_desc),
                 onClick = {
                     navController.navigateSingleTopTo(SettingsScreen.Blacklist.route)
                 })
 
-            SettingNormalItem(
+            ListButtonItem(
                 icon = R.drawable.award,
                 title = stringResource(id = R.string.settings_about),
                 desc = "${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})",

@@ -84,7 +84,10 @@ open class MMRLComponentActivity : ComponentActivity() {
             val userPreferences = userPreferencesRepository.data.first()
 
             if (userPreferences.autoUpdateRepos) {
-                val updateRequest = PeriodicWorkRequestBuilder<RepoUpdateWorker>(6, TimeUnit.HOURS)
+                val updateRequest = PeriodicWorkRequestBuilder<RepoUpdateWorker>(
+                    userPreferences.autoUpdateReposInterval.toLong(),
+                    TimeUnit.HOURS
+                )
                     .setConstraints(
                         Constraints.Builder()
                             .setRequiredNetworkType(NetworkType.CONNECTED)

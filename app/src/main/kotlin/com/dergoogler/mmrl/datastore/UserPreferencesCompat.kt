@@ -20,6 +20,9 @@ data class UserPreferencesCompat(
     val terminalTextWrap: Boolean,
     val datePattern: String,
     val autoUpdateRepos: Boolean,
+    val autoUpdateReposInterval: Int,
+    val checkModuleUpdates: Boolean,
+    val checkModuleUpdatesInterval: Int,
     val repositoryMenu: RepositoryMenuCompat,
     val modulesMenu: ModulesMenuCompat
 ) {
@@ -35,6 +38,9 @@ data class UserPreferencesCompat(
         terminalTextWrap = original.terminalTextWrap,
         datePattern = original.datePattern,
         autoUpdateRepos = original.autoUpdateRepos,
+        autoUpdateReposInterval = original.autoUpdateReposInterval,
+        checkModuleUpdates = original.checkModuleUpdates,
+        checkModuleUpdatesInterval = original.checkModuleUpdatesInterval,
         repositoryMenu = when {
             original.hasRepositoryMenu() -> RepositoryMenuCompat(original.repositoryMenu)
             else -> RepositoryMenuCompat.default()
@@ -62,6 +68,9 @@ data class UserPreferencesCompat(
         .setConfirmReboot(confirmReboot).setTerminalTextWrap(terminalTextWrap)
         .setDatePattern(datePattern)
         .setAutoUpdateRepos(autoUpdateRepos)
+        .setAutoUpdateReposInterval(autoUpdateReposInterval)
+        .setCheckModuleUpdates(checkModuleUpdates)
+        .setCheckModuleUpdatesInterval(checkModuleUpdatesInterval)
         .setRepositoryMenu(repositoryMenu.toProto())
         .setModulesMenu(modulesMenu.toProto())
         .build()
@@ -75,8 +84,11 @@ data class UserPreferencesCompat(
             useDoh = false,
             downloadPath = Const.PUBLIC_DOWNLOADS,
             confirmReboot = true, terminalTextWrap = false,
-            datePattern = "d MMM yyyy",
+            datePattern = "d MMMM yyyy",
             autoUpdateRepos = true,
+            autoUpdateReposInterval = 6,
+            checkModuleUpdates = true,
+            checkModuleUpdatesInterval = 2,
             repositoryMenu = RepositoryMenuCompat.default(),
             modulesMenu = ModulesMenuCompat.default()
         )

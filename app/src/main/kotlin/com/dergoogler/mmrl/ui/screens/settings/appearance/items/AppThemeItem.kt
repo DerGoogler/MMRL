@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.datastore.DarkMode
 import com.dergoogler.mmrl.ui.component.NavigationBarsSpacer
-import com.dergoogler.mmrl.ui.component.SettingNormalItem
+import com.dergoogler.mmrl.ui.component.ListButtonItem
 import com.dergoogler.mmrl.ui.utils.expandedShape
 
 @Composable
@@ -32,7 +32,7 @@ fun AppThemeItem(
 ) {
     var open by rememberSaveable { mutableStateOf(false) }
 
-    SettingNormalItem(
+    ListButtonItem(
         icon = R.drawable.color_swatch,
         title = stringResource(id = R.string.settings_app_theme),
         desc = stringResource(id = R.string.settings_app_theme_desc),

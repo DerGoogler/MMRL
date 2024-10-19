@@ -9,19 +9,27 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.calculateStartPadding
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ripple.rememberRipple
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -46,14 +54,41 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.dergoogler.mmrl.R
+import com.dergoogler.mmrl.ui.screens.repository.ModuleItemDetailed
+import com.dergoogler.mmrl.ui.utils.navigateSingleTopTo
+import com.dergoogler.mmrl.viewmodel.ModuleViewModel
 
 @Composable
-fun SettingStaticItem(
+fun ListHeader(
+    modifier: Modifier = Modifier,
+    title: String,
+    contentPaddingValues: PaddingValues = PaddingValues(vertical = 8.dp, horizontal = 25.dp),
+    itemTextStyle: ListItemTextStyle = ListItemDefaults.itemStyle(),
+    enabled: Boolean = true,
+) {
+    Row(
+        modifier = modifier
+            .alpha(alpha = if (enabled) 1f else 0.5f)
+            .padding(contentPaddingValues)
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            modifier = modifier,
+            text = title,
+            style = itemTextStyle.titleTextStyle,
+            color = MaterialTheme.colorScheme.primary
+        )
+    }
+}
+
+@Composable
+fun ListItem(
     modifier: Modifier = Modifier,
     title: String,
     desc: String? = null,
     contentPaddingValues: PaddingValues = PaddingValues(vertical = 16.dp, horizontal = 25.dp),
-    itemTextStyle: SettingItemTextStyle = SettingItemDefaults.itemStyle(),
+    itemTextStyle: ListItemTextStyle = ListItemDefaults.itemStyle(),
     @DrawableRes icon: Int? = null,
     enabled: Boolean = true,
 ) {
@@ -71,7 +106,7 @@ fun SettingStaticItem(
     ) {
         icon?.let {
             Icon(
-                modifier = Modifier.size(SettingItemDefaults.IconSize),
+                modifier = Modifier.size(ListItemDefaults.IconSize),
                 painter = painterResource(id = icon),
                 contentDescription = null,
                 tint = LocalContentColor.current
@@ -101,13 +136,13 @@ fun SettingStaticItem(
 }
 
 @Composable
-fun SettingNormalItem(
+fun ListButtonItem(
     modifier: Modifier = Modifier,
     title: String,
     desc: String? = null,
     onClick: () -> Unit,
     contentPaddingValues: PaddingValues = PaddingValues(vertical = 16.dp, horizontal = 25.dp),
-    itemTextStyle: SettingItemTextStyle = SettingItemDefaults.itemStyle(),
+    itemTextStyle: ListItemTextStyle = ListItemDefaults.itemStyle(),
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     @DrawableRes icon: Int? = null,
     enabled: Boolean = true,
@@ -132,7 +167,7 @@ fun SettingNormalItem(
     ) {
         icon?.let {
             Icon(
-                modifier = Modifier.size(SettingItemDefaults.IconSize),
+                modifier = Modifier.size(ListItemDefaults.IconSize),
                 painter = painterResource(id = icon),
                 contentDescription = null,
                 tint = LocalContentColor.current
@@ -162,14 +197,14 @@ fun SettingNormalItem(
 }
 
 @Composable
-fun SettingSwitchItem(
+fun ListSwitchItem(
     modifier: Modifier = Modifier,
     title: String,
     desc: String,
     checked: Boolean,
     onChange: (Boolean) -> Unit,
     contentPaddingValues: PaddingValues = PaddingValues(vertical = 16.dp, horizontal = 25.dp),
-    itemTextStyle: SettingItemTextStyle = SettingItemDefaults.itemStyle(),
+    itemTextStyle: ListItemTextStyle = ListItemDefaults.itemStyle(),
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     @DrawableRes icon: Int? = null,
     enabled: Boolean = true
@@ -196,7 +231,7 @@ fun SettingSwitchItem(
     ) {
         icon?.let {
             Icon(
-                modifier = Modifier.size(SettingItemDefaults.IconSize),
+                modifier = Modifier.size(ListItemDefaults.IconSize),
                 painter = painterResource(id = icon),
                 contentDescription = null
             )
@@ -207,7 +242,7 @@ fun SettingSwitchItem(
         Column(
             modifier = Modifier
                 .weight(1f)
-                .padding(end = SettingItemDefaults.TextSwitchPadding),
+                .padding(end = ListItemDefaults.TextSwitchPadding),
             verticalArrangement = Arrangement.Center
         ) {
             Text(
@@ -232,14 +267,14 @@ fun SettingSwitchItem(
 
 
 @Composable
-fun SettingEditTextItem(
+fun ListEditTextItem(
     modifier: Modifier = Modifier,
     title: String,
     desc: String? = null,
     value: String,
     onConfirm: (String) -> Unit,
     contentPaddingValues: PaddingValues = PaddingValues(vertical = 16.dp, horizontal = 25.dp),
-    itemTextStyle: SettingItemTextStyle = SettingItemDefaults.itemStyle(),
+    itemTextStyle: ListItemTextStyle = ListItemDefaults.itemStyle(),
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     @DrawableRes icon: Int? = null,
     enabled: Boolean = true,
@@ -252,7 +287,7 @@ fun SettingEditTextItem(
         onConfirm = onConfirm
     )
 
-    SettingNormalItem(
+    ListButtonItem(
         modifier = modifier,
         icon = icon,
         title = title,
@@ -317,9 +352,123 @@ private fun EditTextDialog(
     }
 }
 
+@Composable
+fun <T> ListRadioCheckItem(
+    modifier: Modifier = Modifier,
+    title: String,
+    desc: String? = null,
+    value: T,
+    options: List<T>,
+    suffix: String? = null,
+    prefix: String? = null,
+    onConfirm: (T) -> Unit,
+    contentPaddingValues: PaddingValues = PaddingValues(vertical = 16.dp, horizontal = 25.dp),
+    itemTextStyle: ListItemTextStyle = ListItemDefaults.itemStyle(),
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    @DrawableRes icon: Int? = null,
+    enabled: Boolean = true,
+) {
+    var open by remember { mutableStateOf(false) }
+    if (open) RadioCheckDialog(
+        value = value,
+        title = title,
+        suffix = suffix,
+        prefix = prefix,
+        options = options,
+        onClose = { open = false },
+        onConfirm = onConfirm
+    )
+
+    ListButtonItem(
+        modifier = modifier,
+        icon = icon,
+        title = title,
+        desc = desc,
+        onClick = { open = true },
+        contentPaddingValues = contentPaddingValues,
+        interactionSource = interactionSource,
+        enabled = enabled,
+        itemTextStyle = itemTextStyle
+    )
+}
+
+
+@Composable
+fun <T> RadioCheckDialog(
+    value: T,
+    title: String,
+    suffix: String? = null,
+    prefix: String? = null,
+    options: List<T>,
+    onClose: () -> Unit,
+    onConfirm: (T) -> Unit,
+) {
+    var selectedOption by remember { mutableStateOf(value) }
+
+    val onDone: () -> Unit = {
+        onConfirm(selectedOption)
+        onClose()
+    }
+
+    AlertDialog(
+        onDismissRequest = onClose,
+        title = { Text(title) },
+        text = {
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                items(
+                    items = options,
+                ) { option ->
+                    val checked = option == selectedOption
+                    val interactionSource = remember { MutableInteractionSource() }
+
+                    Row(
+                        modifier = Modifier
+                            .toggleable(
+                                value = checked,
+                                onValueChange = {
+                                    selectedOption = option
+                                },
+                                role = Role.RadioButton,
+                                interactionSource = interactionSource,
+                                indication = rememberRipple()
+                            )
+                            .fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        RadioButton(
+                            selected = checked,
+                            onClick = null
+                        )
+
+                        Spacer(modifier = Modifier.width(8.dp))
+
+                        when {
+                            prefix != null -> Text(text = "$prefix${option.toString()}")
+                            suffix != null -> Text(text = "${option.toString()}$suffix")
+                            else -> Text(text = option.toString())
+                        }
+                    }
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = onDone) {
+                Text(stringResource(id = R.string.install_screen_reboot_confirm))
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onClose) {
+                Text(stringResource(id = R.string.dialog_cancel))
+            }
+        }
+    )
+}
+
 
 @Immutable
-class SettingItemTextStyle internal constructor(
+class ListItemTextStyle internal constructor(
     val titleTextColor: Color,
     val descTextColor: Color,
     val titleTextStyle: TextStyle,
@@ -328,7 +477,7 @@ class SettingItemTextStyle internal constructor(
     @Suppress("RedundantIf")
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other == null || other !is SettingItemTextStyle) return false
+        if (other == null || other !is ListItemTextStyle) return false
 
         if (titleTextColor != other.titleTextColor) return false
         if (descTextColor != other.descTextColor) return false
@@ -347,7 +496,7 @@ class SettingItemTextStyle internal constructor(
     }
 }
 
-object SettingItemDefaults {
+object ListItemDefaults {
     val IconSize = 24.dp
     val TextSwitchPadding = 16.dp
 
@@ -357,7 +506,7 @@ object SettingItemDefaults {
         descTextColor: Color = MaterialTheme.colorScheme.outline,
         titleTextStyle: TextStyle = MaterialTheme.typography.bodyLarge,
         descTextStyle: TextStyle = MaterialTheme.typography.bodyMedium
-    ) = SettingItemTextStyle(
+    ) = ListItemTextStyle(
         titleTextColor = titleTextColor,
         descTextColor = descTextColor,
         titleTextStyle = titleTextStyle,

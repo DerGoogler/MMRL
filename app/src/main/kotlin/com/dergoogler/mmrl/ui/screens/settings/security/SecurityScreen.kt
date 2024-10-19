@@ -17,7 +17,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
-import com.dergoogler.mmrl.ui.component.SettingSwitchItem
+import com.dergoogler.mmrl.ui.component.ListSwitchItem
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.utils.none
 import com.dergoogler.mmrl.viewmodel.SettingsViewModel
@@ -46,7 +46,7 @@ fun SecurityScreen(
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
-            SettingSwitchItem(
+            ListSwitchItem(
                 icon = R.drawable.power,
                 title = stringResource(id = R.string.settings_reboot_protection),
                 desc = stringResource(id = R.string.settings_reboot_protection_desc),

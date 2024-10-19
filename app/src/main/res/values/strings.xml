@@ -147,11 +147,22 @@
     <string name="settings_date_pattern_desc">Use your own date format</string>
     <string name="settings_recommended_repos">Recommended Repos</string>
     <string name="settings_recommended_repos_desc">Explore new repos and add them directly</string>
-    <string name="settings_auto_update_repos">Auto Update Repo</string>
-    <string name="settings_auto_update_repos_desc">Automatically update repos in the background</string>
     <string name="settings_updates">Updates</string>
     <string name="settings_updates_desc">Manage your preferences on the updating process</string>
 
+    <string name="settings_auto_update_repos">Auto Update Repo</string>
+    <string name="settings_auto_update_repos_desc">Automatically update repos in the background</string>
+    <string name="settings_repo_update_interval">Repo Update Interval</string>
+    <string name="settings_repo_update_interval_suffix">\u0020hour/s</string>
+    <string name="settings_repo_update_interval_desc">Select the time interval for updating the repositories</string>
+
+    <string name="settings_check_modules_update">Check for Module Updates</string>
+    <string name="settings_check_modules_update_desc">Enables update check for installed moudles</string>
+    <string name="settings_check_modules_update_interval_suffix">\u0020hour/s</string>
+    <string name="settings_check_modules_update_interval">Module update check interval</string>
+    <string name="settings_check_modules_update_interval_desc">Select the time interval for checking your installed modules</string>
+
+    
     <!-- App Theme -->
     <string name="app_theme_palette">Theme Palette</string>
     <string name="app_theme_dark_theme">Dark Theme</string>

@@ -22,8 +22,8 @@ import com.dergoogler.mmrl.app.Const
 import com.dergoogler.mmrl.datastore.UserPreferencesCompat.Companion.isNonRoot
 import com.dergoogler.mmrl.datastore.UserPreferencesCompat.Companion.isRoot
 import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
-import com.dergoogler.mmrl.ui.component.SettingNormalItem
-import com.dergoogler.mmrl.ui.component.SettingStaticItem
+import com.dergoogler.mmrl.ui.component.ListButtonItem
+import com.dergoogler.mmrl.ui.component.ListItem
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.utils.none
 import ext.dergoogler.mmrl.ext.launchCustomTab
@@ -57,7 +57,7 @@ fun AboutScreen(
 
 
             when {
-                userPreferences.workingMode.isRoot -> SettingStaticItem(
+                userPreferences.workingMode.isRoot -> ListItem(
                     icon = if (viewModel.isProviderAlive) {
                         R.drawable.circle_check_filled
                     } else {
@@ -84,7 +84,7 @@ fun AboutScreen(
                     },
                 )
 
-                userPreferences.workingMode.isNonRoot -> SettingStaticItem(
+                userPreferences.workingMode.isNonRoot -> ListItem(
                     icon = R.drawable.info_circle_filled,
                     title = stringResource(id = R.string.settings_non_root),
                     desc = stringResource(id = R.string.settings_non_root_desc),
@@ -97,19 +97,19 @@ fun AboutScreen(
 //                title = stringResource(id = R.string.about_weblate)
 //            )
 
-            SettingNormalItem(
+            ListButtonItem(
                 onClick = { context.launchCustomTab(Const.TELEGRAM_URL) },
                 icon = R.drawable.telegram,
                 title = stringResource(id = R.string.about_telegram)
             )
 
-            SettingNormalItem(
+            ListButtonItem(
                 onClick = { context.launchCustomTab(Const.GITHUB_URL) },
                 icon = R.drawable.github,
                 title = stringResource(id = R.string.about_github)
             )
 
-            SettingStaticItem(
+            ListItem(
                 title = stringResource(
                     id = R.string.about_app_version,
                     BuildConfig.VERSION_NAME,

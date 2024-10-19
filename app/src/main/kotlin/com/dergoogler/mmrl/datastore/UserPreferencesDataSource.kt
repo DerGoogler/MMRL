@@ -93,6 +93,32 @@ class UserPreferencesDataSource @Inject constructor(
         }
     }
 
+    suspend fun setAutoUpdateReposInterval(value: Int) = withContext(Dispatchers.IO) {
+        userPreferences.updateData {
+            it.copy(
+                autoUpdateReposInterval = value
+            )
+        }
+    }
+
+    suspend fun setCheckModuleUpdates(value: Boolean) = withContext(Dispatchers.IO) {
+        userPreferences.updateData {
+            it.copy(
+                checkModuleUpdates = value
+            )
+        }
+    }
+
+    suspend fun setCheckModuleUpdatesInterval(value: Int) = withContext(Dispatchers.IO) {
+        userPreferences.updateData {
+            it.copy(
+                checkModuleUpdatesInterval = value
+            )
+        }
+    }
+
+
+
     suspend fun setRepositoryMenu(value: RepositoryMenuCompat) = withContext(Dispatchers.IO) {
         userPreferences.updateData {
             it.copy(

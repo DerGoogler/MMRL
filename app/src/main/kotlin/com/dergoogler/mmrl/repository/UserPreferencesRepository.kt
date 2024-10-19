@@ -37,6 +37,15 @@ class UserPreferencesRepository @Inject constructor(
     suspend fun setAutoUpdateRepos(value: Boolean) =
         userPreferencesDataSource.setAutoUpdateRepos(value)
 
+    suspend fun setAutoUpdateReposInterval(value: Int) =
+        userPreferencesDataSource.setAutoUpdateReposInterval(value)
+
+    suspend fun setCheckModuleUpdates(value: Boolean) =
+        userPreferencesDataSource.setCheckModuleUpdates(value)
+
+    suspend fun setCheckModuleUpdatesInterval(value: Int) =
+        userPreferencesDataSource.setCheckModuleUpdatesInterval(value)
+
     suspend fun setRepositoryMenu(value: RepositoryMenuCompat) =
         userPreferencesDataSource.setRepositoryMenu(value)
 
