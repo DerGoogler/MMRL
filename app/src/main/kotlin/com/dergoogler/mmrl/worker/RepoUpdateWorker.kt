@@ -13,8 +13,8 @@ class RepoUpdateWorker(
 ) : MMRLCoroutineWorker(context, params) {
 
     override val channelId = "RepoUpdateChannel"
-    override val channelName = "Repository Updates"
-    override val channelDescription = "Updates for repositories"
+    override val channelName = context.getString(R.string.work_repository_updates)
+    override val channelDescription = context.getString(R.string.work_updates_for_repositories)
 
     override suspend fun doWork(): Result {
         super.doWork()

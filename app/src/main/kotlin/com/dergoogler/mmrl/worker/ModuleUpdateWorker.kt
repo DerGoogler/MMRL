@@ -20,8 +20,8 @@ class ModuleUpdateWorker(
 ) : MMRLCoroutineWorker(context, workerParams) {
 
     override val channelId = "ModuleUpdateChannel"
-    override val channelName = "Module Updates"
-    override val channelDescription = "Update Checker for Modules"
+    override val channelName = context.getString(R.string.work_module_updates)
+    override val channelDescription = context.getString(R.string.work_update_checker_for_modules)
 
     override suspend fun doWork(): Result {
         super.doWork()
@@ -105,8 +105,15 @@ class ModuleUpdateWorker(
         pushNotification(
             id = localModule.id.hashCode(),
             icon = R.drawable.file_3d,
-            title = "${localModule.name} as a new update!",
-            message = "Update available from ${localModule.version} (${localModule.versionCode}) to ${onlineModule.version} (${onlineModule.versionCode}).",
+            title = applicationContext.getString(R.string.has_a_new_update, localModule.name),
+            message = applicationContext.getString(
+                R.string.update_available_from_to,
+                localModule.version,
+                localModule.versionCode,
+                onlineModule.version,
+                onlineModule.versionCode
+            ),
+            pendingIntent = pendingIntent
         )
     }
 }

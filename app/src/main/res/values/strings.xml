@@ -225,10 +225,17 @@
     <string name="additional_notes">Additional Notes</string>
     <string name="repo_added">Repo added</string>
 
+    <!-- Work Manager -->
+    <string name="work_repository_updates">Repository Updates</string>
+    <string name="work_updates_for_repositories">Updates for repositories</string>
+    <string name="work_module_updates">Module Updates</string>
+    <string name="work_update_checker_for_modules">Update Checker for Modules</string>
+
     <!-- Repo Update Service -->
     <string name="repo_update_service">Repositories updated successfully</string>
     <string name="repo_update_service_desc">Don\'t worry, MMRL updated your installed repos for you. 😋</string>
     <string name="repo_update_service_failed">No updates found for repositories</string>
     <string name="repo_update_service_failed_desc">There are no updates for repositories</string>
-
+    <string name="has_a_new_update">%1$s has a new update!</string>
+    <string name="update_available_from_to">Update available from %s (%d) to %s (%d).</string>
 </resources>
