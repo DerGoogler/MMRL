@@ -19,6 +19,7 @@ import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.dergoogler.mmrl.R
+import com.dergoogler.mmrl.compat.PermissionCompat
 import com.dergoogler.mmrl.repository.LocalRepository
 import com.dergoogler.mmrl.repository.UserPreferencesRepository
 import com.dergoogler.mmrl.ui.activity.CrashHandlerActivity
@@ -26,8 +27,10 @@ import com.dergoogler.mmrl.ui.activity.InstallActivity
 import com.dergoogler.mmrl.ui.activity.ModConfActivity
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.theme.AppTheme
+import com.dergoogler.mmrl.worker.ModuleUpdateWorker
 import com.dergoogler.mmrl.worker.RepoUpdateWorker
 import dagger.hilt.android.AndroidEntryPoint
+import dev.dergoogler.mmrl.compat.BuildCompat
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
@@ -42,10 +45,27 @@ open class MMRLComponentActivity : ComponentActivity() {
     @Inject
     lateinit var localRepository: LocalRepository
 
+    open val requirePermissions = listOf<String>()
+    var permissionsGranted = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        val granted = if (BuildCompat.atLeastT) {
+            PermissionCompat.checkPermissions(
+                this,
+                requirePermissions
+            ).allGranted
+        } else {
+            true
+        }
+
+        if (!granted) {
+            PermissionCompat.requestPermissions(this, requirePermissions) { state ->
+                permissionsGranted = state.allGranted
+            }
+        }
 
         Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
             startCrashActivity(thread, throwable)
@@ -100,6 +120,34 @@ open class MMRLComponentActivity : ComponentActivity() {
                     .enqueueUniquePeriodicWork(
                         "RepoUpdateWork",
                         ExistingPeriodicWorkPolicy.UPDATE,
+                        updateRequest
+                    )
+            }
+        }
+    }
+
+    fun startModuleUpdateService() {
+        lifecycleScope.launch {
+            val userPreferences = userPreferencesRepository.data.first()
+
+            if (userPreferences.checkModuleUpdates) {
+                val updateRequest = PeriodicWorkRequestBuilder<ModuleUpdateWorker>(
+                    10,
+//                    userPreferences.checkModuleUpdatesInterval.toLong(),
+                    TimeUnit.SECONDS
+                )
+                    .setConstraints(
+                        Constraints.Builder()
+                            .setRequiredNetworkType(NetworkType.CONNECTED)
+                            .setRequiresBatteryNotLow(true)
+                            .build()
+                    )
+                    .build()
+
+                WorkManager.getInstance(applicationContext)
+                    .enqueueUniquePeriodicWork(
+                        "ModuleUpdateWork",
+                        ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE,
                         updateRequest
                     )
             }

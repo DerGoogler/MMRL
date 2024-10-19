@@ -1,8 +1,11 @@
 package com.dergoogler.mmrl.ui.activity
 
+import android.Manifest
 import android.content.ComponentName
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.Crossfade
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -24,16 +27,21 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class MainActivity : MMRLComponentActivity() {
-
     private var isLoading by mutableStateOf(true)
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    override val requirePermissions = listOf(Manifest.permission.POST_NOTIFICATIONS)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
 
-        startRepoUpdateService()
-
         splashScreen.setKeepOnScreenCondition { isLoading }
+
+        if (permissionsGranted) {
+            startRepoUpdateService()
+            startModuleUpdateService()
+        }
 
         setBaseContent {
             val userPreferences by userPreferencesRepository.data

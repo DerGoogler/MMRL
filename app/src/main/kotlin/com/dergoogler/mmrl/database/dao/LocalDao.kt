@@ -14,6 +14,9 @@ interface LocalDao {
     @Query("SELECT * FROM localModules")
     fun getAllAsFlow(): Flow<List<LocalModuleEntity>>
 
+    @Query("SELECT * FROM localModules")
+    fun getAll(): List<LocalModuleEntity>
+
     @Query("SELECT * FROM localModules WHERE id = :id LIMIT 1")
     suspend fun getByIdOrNull(id: String): LocalModuleEntity?
 

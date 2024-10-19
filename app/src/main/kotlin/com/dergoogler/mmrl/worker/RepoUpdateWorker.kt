@@ -1,36 +1,36 @@
 package com.dergoogler.mmrl.worker
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.content.Context
-import android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
-import android.os.Build
-import androidx.core.app.NotificationCompat
-import androidx.room.Room
-import androidx.work.CoroutineWorker
-import androidx.work.ForegroundInfo
 import androidx.work.WorkerParameters
 import com.dergoogler.mmrl.R
-import com.dergoogler.mmrl.database.AppDatabase
 import com.dergoogler.mmrl.stub.IRepoManager
+import ext.dergoogler.mmrl.worker.MMRLCoroutineWorker
 import timber.log.Timber
 
 class RepoUpdateWorker(
     context: Context,
     params: WorkerParameters
-) : CoroutineWorker(context, params) {
+) : MMRLCoroutineWorker(context, params) {
+
+    override val channelId = "RepoUpdateChannel"
+    override val channelName = "Repository Updates"
+    override val channelDescription = "Updates for repositories"
 
     override suspend fun doWork(): Result {
+        super.doWork()
+
         return try {
             val updated = updateRepositories()
 
             if (updated) {
-                createNotification(
+                pushNotification(
+                    id = 1,
                     title = applicationContext.getString(R.string.repo_update_service),
                     message = applicationContext.getString(R.string.repo_update_service_desc)
                 )
             } else {
-                createNotification(
+                pushNotification(
+                    id = 1,
                     title = applicationContext.getString(R.string.repo_update_service_failed),
                     message = applicationContext.getString(R.string.repo_update_service_failed_desc)
                 )
@@ -42,12 +42,6 @@ class RepoUpdateWorker(
     }
 
     private suspend fun updateRepositories(): Boolean {
-        val database: AppDatabase = Room.databaseBuilder(
-            applicationContext,
-            AppDatabase::class.java,
-            "mmrl"
-        ).build()
-
         val repoDao = database.repoDao()
         val repos = repoDao.getAll()
 
@@ -74,25 +68,5 @@ class RepoUpdateWorker(
             }
         }
         return true
-    }
-
-    private fun createNotification(title: String, message: String) {
-        val notificationManager =
-            applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-        val channel = NotificationChannel(
-            "RepoUpdateChannel",
-            "Repo Updates",
-            NotificationManager.IMPORTANCE_DEFAULT
-        )
-        notificationManager.createNotificationChannel(channel)
-
-        val notification = NotificationCompat.Builder(applicationContext, "RepoUpdateChannel")
-            .setContentTitle(title)
-            .setContentText(message)
-            .setSmallIcon(R.drawable.box)
-            .build()
-
-        notificationManager.notify(1, notification)
     }
 }
