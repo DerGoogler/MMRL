@@ -16,25 +16,18 @@ fun NavController.navigateSingleTopTo(
 }
 
 fun NavController.navigatePopUpTo(
-    route: String
+    route: String,
+    restoreState: Boolean = true,
+    inclusive: Boolean = true,
 ) = navigateSingleTopTo(
     route = route
 ) {
     popUpTo(
         id = currentDestination?.parent?.id ?: graph.findStartDestination().id
     ) {
-        saveState = true
-        inclusive = true
+        this.saveState = restoreState
+        this.inclusive = inclusive
     }
-}
-
-fun NavController.navigatePopBackTo(
-    route: String
-) = navigateSingleTopTo(
-    route = route
-) {
-    popUpTo(route) {
-        inclusive = false
-    }
-    launchSingleTop = true
+    this.launchSingleTop = true
+    this.restoreState = restoreState
 }

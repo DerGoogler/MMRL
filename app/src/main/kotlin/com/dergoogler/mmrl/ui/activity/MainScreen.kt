@@ -26,7 +26,6 @@ import com.dergoogler.mmrl.ui.navigation.graphs.modulesScreen
 import com.dergoogler.mmrl.ui.navigation.graphs.repositoryScreen
 import com.dergoogler.mmrl.ui.navigation.graphs.settingsScreen
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
-import com.dergoogler.mmrl.ui.utils.navigatePopBackTo
 import com.dergoogler.mmrl.ui.utils.navigatePopUpTo
 
 @Composable
@@ -104,11 +103,10 @@ private fun BottomNav(
                     )
                 },
                 alwaysShowLabel = true, selected = selected, onClick = {
-                    if (!selected) {
-                        navController.navigatePopUpTo(screen.route)
-                    } else {
-                        navController.navigatePopBackTo(screen.route)
-                    }
+                    navController.navigatePopUpTo(
+                        route = screen.route,
+                        restoreState = !selected
+                    )
                 }
             )
         }
