@@ -26,6 +26,7 @@ import com.dergoogler.mmrl.ui.navigation.graphs.modulesScreen
 import com.dergoogler.mmrl.ui.navigation.graphs.repositoryScreen
 import com.dergoogler.mmrl.ui.navigation.graphs.settingsScreen
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
+import com.dergoogler.mmrl.ui.utils.navigatePopBackTo
 import com.dergoogler.mmrl.ui.utils.navigatePopUpTo
 
 @Composable
@@ -86,11 +87,13 @@ private fun BottomNav(
             NavigationBarItem(
                 icon = {
                     Icon(
-                        painter = painterResource(id = if (selected) {
-                            screen.iconFilled
-                        } else {
-                            screen.icon
-                        }),
+                        painter = painterResource(
+                            id = if (selected) {
+                                screen.iconFilled
+                            } else {
+                                screen.icon
+                            }
+                        ),
                         contentDescription = null,
                     )
                 },
@@ -100,9 +103,13 @@ private fun BottomNav(
                         style = MaterialTheme.typography.labelLarge
                     )
                 },
-                alwaysShowLabel = true,
-                selected = selected,
-                onClick = { if (!selected) navController.navigatePopUpTo(screen.route) }
+                alwaysShowLabel = true, selected = selected, onClick = {
+                    if (!selected) {
+                        navController.navigatePopUpTo(screen.route)
+                    } else {
+                        navController.navigatePopBackTo(screen.route)
+                    }
+                }
             )
         }
     }

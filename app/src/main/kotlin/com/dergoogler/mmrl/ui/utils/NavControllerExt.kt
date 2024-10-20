@@ -27,3 +27,14 @@ fun NavController.navigatePopUpTo(
         inclusive = true
     }
 }
+
+fun NavController.navigatePopBackTo(
+    route: String
+) = navigateSingleTopTo(
+    route = route
+) {
+    popUpTo(route) {
+        inclusive = false
+    }
+    launchSingleTop = true
+}

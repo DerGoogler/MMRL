@@ -141,6 +141,7 @@ open class MMRLComponentActivity : ComponentActivity(), DefaultLifecycleObserver
             enabled: Boolean,
             repeatInterval: Int,
             repeatIntervalUnit: TimeUnit = TimeUnit.HOURS,
+            existingPeriodicWorkPolicy: ExistingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.KEEP,
             workName: String,
         ) {
             if (enabled) {
@@ -159,7 +160,7 @@ open class MMRLComponentActivity : ComponentActivity(), DefaultLifecycleObserver
                 WorkManager.getInstance(context)
                     .enqueueUniquePeriodicWork(
                         workName,
-                        ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE,
+                        existingPeriodicWorkPolicy,
                         updateRequest
                     )
             } else {

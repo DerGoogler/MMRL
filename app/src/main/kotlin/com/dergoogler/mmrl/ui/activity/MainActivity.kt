@@ -14,6 +14,7 @@ import androidx.compose.runtime.setValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.work.ExistingPeriodicWorkPolicy
 import com.dergoogler.mmrl.Compat
 import com.dergoogler.mmrl.app.Const
 import com.dergoogler.mmrl.database.entity.Repo.Companion.toRepo
@@ -49,14 +50,16 @@ class MainActivity : MMRLComponentActivity() {
                     context = this@MainActivity,
                     enabled = userPreferences.autoUpdateRepos,
                     repeatInterval = userPreferences.autoUpdateReposInterval,
-                    workName = REPO_UPDATE_WORK_NAME
+                    workName = REPO_UPDATE_WORK_NAME,
+                    existingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.UPDATE
                 )
 
                 startWorkTask<ModuleUpdateWorker>(
                     context = this@MainActivity,
                     enabled = userPreferences.checkModuleUpdates,
                     repeatInterval = userPreferences.checkModuleUpdatesInterval,
-                    workName = MODULE_UPDATE_WORK_NAME
+                    workName = MODULE_UPDATE_WORK_NAME,
+                    existingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.UPDATE
                 )
 
             }
