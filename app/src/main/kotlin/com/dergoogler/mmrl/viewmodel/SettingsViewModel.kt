@@ -1,12 +1,16 @@
 package com.dergoogler.mmrl.viewmodel
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
 import androidx.lifecycle.viewModelScope
 import com.dergoogler.mmrl.Compat
 import com.dergoogler.mmrl.datastore.DarkMode
 import com.dergoogler.mmrl.datastore.WorkingMode
 import com.dergoogler.mmrl.repository.UserPreferencesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import ext.dergoogler.mmrl.activity.MMRLComponentActivity
+import ext.dergoogler.mmrl.activity.MMRLComponentActivity.Companion.MODULE_UPDATE_WORK_NAME
+import ext.dergoogler.mmrl.activity.MMRLComponentActivity.Companion.REPO_UPDATE_WORK_NAME
+import ext.dergoogler.mmrl.viewmodel.MMRLViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.File
@@ -14,8 +18,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
-    private val userPreferencesRepository: UserPreferencesRepository
-) : ViewModel() {
+    application: Application,
+    userPreferencesRepository: UserPreferencesRepository
+) : MMRLViewModel(application, userPreferencesRepository) {
     val isProviderAlive get() = Compat.isAlive
 
     val version
@@ -82,6 +87,10 @@ class SettingsViewModel @Inject constructor(
     }
 
     fun setAutoUpdateRepos(value: Boolean) {
+        if (!value) {
+            MMRLComponentActivity.cancelWorkTask(context, REPO_UPDATE_WORK_NAME)
+        }
+
         viewModelScope.launch {
             userPreferencesRepository.setAutoUpdateRepos(value)
         }
@@ -94,6 +103,10 @@ class SettingsViewModel @Inject constructor(
     }
 
     fun setCheckModuleUpdates(value: Boolean) {
+        if (!value) {
+            MMRLComponentActivity.cancelWorkTask(context, MODULE_UPDATE_WORK_NAME)
+        }
+
         viewModelScope.launch {
             userPreferencesRepository.setCheckModuleUpdates(value)
         }

@@ -58,8 +58,8 @@ fun UpdatesScreen(
                 icon = R.drawable.refresh,
                 title = stringResource(id = R.string.settings_auto_update_repos),
                 desc = stringResource(id = R.string.settings_auto_update_repos_desc),
-                checked = userPreferences.confirmReboot,
-                onChange = viewModel::setConfirmReboot
+                checked = userPreferences.autoUpdateRepos,
+                onChange = viewModel::setAutoUpdateRepos
             )
 
             ListRadioCheckItem(title = stringResource(R.string.settings_repo_update_interval),
@@ -68,6 +68,7 @@ fun UpdatesScreen(
                     R.string.settings_repo_update_interval_desc,
                     userPreferences.autoUpdateReposInterval
                 ),
+                enabled = userPreferences.autoUpdateRepos,
                 suffix = stringResource(id = R.string.settings_repo_update_interval_suffix),
                 value = userPreferences.autoUpdateReposInterval,
                 options = listOf(3, 6, 12, 16, 24, 36, 48, 72),
@@ -93,6 +94,7 @@ fun UpdatesScreen(
                     R.string.settings_check_modules_update_interval_desc,
                     userPreferences.checkModuleUpdatesInterval
                 ),
+                enabled = userPreferences.checkModuleUpdates,
                 suffix = stringResource(id = R.string.settings_check_modules_update_interval_suffix),
                 value = userPreferences.checkModuleUpdatesInterval,
                 options = listOf(1, 2, 3, 6, 12, 24, 48, 72),
