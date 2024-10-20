@@ -1,17 +1,12 @@
 package com.dergoogler.mmrl.worker
 
 import android.content.Context
-import androidx.compose.runtime.mutableStateOf
-import androidx.work.ListenableWorker
 import androidx.work.WorkerParameters
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.database.entity.Repo.Companion.toRepo
 import com.dergoogler.mmrl.model.online.ModulesJson
-import com.dergoogler.mmrl.repository.LocalRepository
 import com.dergoogler.mmrl.repository.ModulesRepository
-import com.dergoogler.mmrl.stub.IRepoManager
 import ext.dergoogler.mmrl.worker.MMRLCoroutineWorker
-import timber.log.Timber
 import javax.inject.Inject
 
 
