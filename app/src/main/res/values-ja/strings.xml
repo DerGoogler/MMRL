@@ -141,11 +141,11 @@
     <string name="settings_auto_update_repos">リポジトリの自動更新</string>
     <string name="settings_auto_update_repos_desc">バックグラウンドでリポジトリの自動更新をします。</string>
     <string name="settings_repo_update_interval">リポジトリ更新の間隔</string>
-    <string name="settings_repo_update_interval_suffix">\u0020 時間後</string>
+    <string name="settings_repo_update_interval_suffix">\u0020 時間ごと</string>
     <string name="settings_repo_update_interval_desc">リポジトリを自動更新する間隔を設定します。</string>
     <string name="settings_check_modules_update">モジュールの更新を確認する</string>
     <string name="settings_check_modules_update_desc">インストールされているモジュールの更新を自動で確認します。</string>
-    <string name="settings_check_modules_update_interval_suffix">\u0020 時間後</string>
+    <string name="settings_check_modules_update_interval_suffix">\u0020 時間ごと</string>
     <string name="settings_check_modules_update_interval">モジュールの更新を確認する間隔</string>
     <string name="settings_check_modules_update_interval_desc">インストールされたモジュールを自動で確認する間隔を設定します。</string>
     <!-- App Theme -->
@@ -158,6 +158,7 @@
     <string name="repo_modules">%d 個のモジュール</string>
     <string name="repo_update_at">最終更新: %s</string>
     <string name="repo_incompatible">互換性なし</string>
+    <string name="repo_options">オプション</string>
     <string name="repo_options_update">更新</string>
     <string name="repo_options_delete">リポジトリを削除</string>
     <string name="repo_options_support">サポート</string>
@@ -207,7 +208,7 @@
     <string name="work_repository_updates">リポジトリの更新</string>
     <string name="work_updates_for_repositories">リポジトリの更新</string>
     <string name="work_module_updates">モジュールの更新</string>
-    <string name="work_update_checker_for_modules">モジュールの更新チェッカー</string>
+    <string name="work_update_checker_for_modules">モジュール更新チェッカー</string>
     <!-- Repo Update Service -->
     <string name="repo_update_service">リポジトリが正常に更新されました</string>
     <string name="repo_update_service_desc">ご心配なく、MMRL はインストールしたリポジトリを更新しました。😋</string>
