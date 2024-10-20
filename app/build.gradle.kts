@@ -11,6 +11,8 @@ plugins {
 }
 
 val baseVersionName = "4.26.33"
+val baseAppName = "MMRL"
+val baseModConfName = "ModConf"
 
 android {
     namespace = "com.dergoogler.mmrl"
@@ -62,6 +64,8 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            resValue("string", "app_name", baseAppName)
+            resValue("string", "modconf_activity", baseModConfName)
             buildConfigField("Boolean", "IS_DEV_VERSION", "false")
             isDebuggable = false
             isJniDebuggable = false
@@ -70,6 +74,8 @@ android {
         }
 
         debug {
+            resValue("string", "app_name", "$baseAppName Debug")
+            resValue("string", "modconf_activity", "$baseModConfName Debug")
             buildConfigField("Boolean", "IS_DEV_VERSION", "true")
             applicationIdSuffix = ".debug"
             isJniDebuggable = true

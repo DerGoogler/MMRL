@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
@@ -32,6 +33,7 @@ import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import dev.dergoogler.mmrl.compat.BuildCompat
+import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import kotlin.system.exitProcess
@@ -47,12 +49,22 @@ open class MMRLComponentActivity : ComponentActivity(), DefaultLifecycleObserver
     open val requirePermissions = listOf<String>()
     var permissionsGranted = true
 
+    /**
+     * The window flags to apply to the activity window. These flags will be cleared once the activity is destroyed.
+     */
+    open val windowFlags: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super<ComponentActivity>.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
         Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
             startCrashActivity(thread, throwable)
+        }
+
+        if (windowFlags != 0) {
+            Timber.d("Setting window flags")
+            this.window.addFlags(windowFlags)
         }
 
         val granted = if (BuildCompat.atLeastT) {
@@ -97,6 +109,15 @@ open class MMRLComponentActivity : ComponentActivity(), DefaultLifecycleObserver
             getString(R.string.stack_trace_truncated, trimmedStackTrace, moreCount)
         } else {
             stackTraceElements
+        }
+    }
+
+    override fun onDestroy() {
+        super<ComponentActivity>.onDestroy()
+
+        if (windowFlags != 0) {
+            Timber.d("Clearing window flags")
+            this.window.clearFlags(windowFlags)
         }
     }
 

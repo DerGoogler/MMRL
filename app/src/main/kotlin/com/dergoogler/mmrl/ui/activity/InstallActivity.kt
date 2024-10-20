@@ -2,6 +2,7 @@ package com.dergoogler.mmrl.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import ext.dergoogler.mmrl.ext.tmpDir
@@ -13,6 +14,8 @@ import timber.log.Timber
 
 class InstallActivity : MMRLComponentActivity() {
     private val viewModel: InstallViewModel by viewModels()
+
+    override val windowFlags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Timber.d("InstallActivity onCreate")

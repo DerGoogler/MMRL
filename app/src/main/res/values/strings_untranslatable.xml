@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">MMRL</string>
     <string name="install_activity" translatable="false">@string/module_install</string>
-    <string name="modconf_activity" translatable="false">ModConf</string>
 
     <!-- Setup -->
     <string name="setup_shizuku_title" translatable="false">Shizuku</string>
