@@ -52,6 +52,9 @@ class ModConfViewModel @Inject constructor(
             with(moduleManager) { managerName }
         }
 
+    private var isStandalone = false
+    private var dexFilePath: Path? = null
+
     @SuppressLint("PrivateApi")
     fun loadComposablePlugin(
         context: Context,
@@ -66,13 +69,18 @@ class ModConfViewModel @Inject constructor(
 
             var modId by mutableStateOf(fixedModId)
 
-            val optimizedDir = File(context.cacheDir, "dex_optimized").apply { mkdirs() }
+            val optimizedDir = File(context.cacheDir, "dex_optimized").apply {
+                if (exists()) {
+                    deleteRecursively()
+                }
+                mkdirs()
+            }
 
-            val isStandalone = standaloneData != null
+            isStandalone = standaloneData != null
 
             Timber.d("Standalone: $standaloneData")
 
-            val dexFilePath: Path? = when {
+            dexFilePath = when {
                 isStandalone -> {
                     val tmpFile = context.copyToDir(standaloneData!!, context.filesDir)
                     val cr = context.contentResolver
@@ -98,7 +106,7 @@ class ModConfViewModel @Inject constructor(
                 return null
             }
 
-            val dexFile = dexFilePath.toFile()
+            val dexFile = dexFilePath!!.toFile()
             val isAPK = getFileExtension(dexFile).equals("apk", ignoreCase = true)
 
             Timber.d("Dex file type: ${getFileExtension(dexFile)}")
@@ -137,6 +145,15 @@ class ModConfViewModel @Inject constructor(
             Timber.e("Unable to invoke ModConf: %s", e)
             null
         }
+    }
+
+    override fun onCleared() {
+        if (isStandalone && dexFilePath != null) {
+            Timber.d("Removing standalone file")
+            File(dexFilePath!!.toFile().path).delete()
+        }
+
+        super.onCleared()
     }
 
     private fun setField(fieldName: String, value: Any?) {
