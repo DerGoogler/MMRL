@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
 import android.os.Build
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Composer
 import androidx.compose.runtime.getValue
@@ -69,7 +70,9 @@ class ModConfViewModel @Inject constructor(
 
             val isStandalone = standaloneData != null
 
-            val dexFilePath: Path = when {
+            Timber.d("Standalone: $standaloneData")
+
+            val dexFilePath: Path? = when {
                 isStandalone -> {
                     val tmpFile = context.copyToDir(standaloneData!!, context.filesDir)
                     val cr = context.contentResolver
@@ -81,13 +84,19 @@ class ModConfViewModel @Inject constructor(
 
                     val name = Path(context.getPathForUri(standaloneData)).nameWithoutExtension
                     modId = name
-                    context.tmpDir.path.findFileGlob(modId)
+
+                    context.filesDir.path.findFileGlob(modId)
                 }
 
                 isDebug -> context.filesDir.path.findFileGlob(modId)
                 Build.SUPPORTED_64_BIT_ABIS.isNotEmpty() -> "/system/lib64".findFileGlob(modId)
                 else -> "/system/lib".findFileGlob(modId)
-            } ?: return null
+            }
+
+            if (dexFilePath == null) {
+                Timber.e("Unable to find dex file")
+                return null
+            }
 
             val dexFile = dexFilePath.toFile()
             val isAPK = getFileExtension(dexFile).equals("apk", ignoreCase = true)

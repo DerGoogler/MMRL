@@ -15,4 +15,8 @@ open class MMRLViewModel @Inject constructor(
         get(): Context {
             return getApplication<Application>().applicationContext
         }
+
+    override fun onCleared() {
+        super.onCleared()
+    }
 }

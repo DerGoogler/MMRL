@@ -3,6 +3,7 @@ package com.dergoogler.mmrl.ui.activity
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.compose.material3.Text
 import androidx.compose.runtime.currentComposer
 import androidx.compose.runtime.currentCompositeKeyHash
 import androidx.compose.ui.platform.LocalContext
