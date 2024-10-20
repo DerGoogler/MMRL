@@ -1,15 +1,22 @@
 package com.dergoogler.mmrl.worker
 
 import android.content.Context
+import androidx.compose.runtime.mutableStateOf
+import androidx.work.ListenableWorker
 import androidx.work.WorkerParameters
 import com.dergoogler.mmrl.R
+import com.dergoogler.mmrl.database.entity.Repo.Companion.toRepo
+import com.dergoogler.mmrl.model.online.ModulesJson
+import com.dergoogler.mmrl.repository.LocalRepository
+import com.dergoogler.mmrl.repository.ModulesRepository
 import com.dergoogler.mmrl.stub.IRepoManager
 import ext.dergoogler.mmrl.worker.MMRLCoroutineWorker
 import timber.log.Timber
+import javax.inject.Inject
 
-class RepoUpdateWorker(
-    context: Context,
-    params: WorkerParameters
+
+class RepoUpdateWorker @Inject constructor(
+    context: Context, params: WorkerParameters, private val modulesRepository: ModulesRepository
 ) : MMRLCoroutineWorker(context, params) {
 
     override val channelId = "RepoUpdateChannel"
@@ -20,53 +27,45 @@ class RepoUpdateWorker(
         super.doWork()
 
         return try {
-            val updated = updateRepositories()
-
-            if (updated) {
-                pushNotification(
-                    id = 1,
-                    title = applicationContext.getString(R.string.repo_update_service),
-                    message = applicationContext.getString(R.string.repo_update_service_desc)
-                )
-            } else {
+            val result = updateRepositories(onFailure = {
                 pushNotification(
                     id = 1,
                     title = applicationContext.getString(R.string.repo_update_service_failed),
                     message = applicationContext.getString(R.string.repo_update_service_failed_desc)
                 )
-            }
-            Result.success()
+            }, onSuccess = {
+                pushNotification(
+                    id = 1,
+                    title = applicationContext.getString(R.string.repo_update_service),
+                    message = applicationContext.getString(R.string.repo_update_service_desc)
+                )
+            })
+
+            result
         } catch (e: Exception) {
             Result.failure()
         }
     }
 
-    private suspend fun updateRepositories(): Boolean {
+    private suspend fun updateRepositories(
+        onSuccess: (value: ModulesJson) -> Unit,
+        onFailure: (Throwable) -> Unit,
+    ): Result {
         val repoDao = database.repoDao()
         val repos = repoDao.getAll()
 
-        repos.forEach { repo ->
-            val repoManager = IRepoManager.build(repo.url)
-
-            try {
-                val response = repoManager.modules.execute()
-
-                if (response.isSuccessful && response.body() != null) {
-                    val modulesJson = response.body()!!
-
-                    if (repo.metadata.timestamp != modulesJson.metadata.timestamp) {
-                        val updatedRepo = repo.copy(modulesJson = modulesJson)
-                        repoDao.insert(updatedRepo)
-                    }
-                } else {
-                    Timber.e("Failed to fetch data for repo: ${repo.url}")
-                    return false
+        return try {
+            repos.forEach { repo ->
+                modulesRepository.getRepo(repo.url.toRepo()).apply {
+                    onFailure(onFailure)
+                    onSuccess(onSuccess)
                 }
-            } catch (e: Exception) {
-                Timber.e(e, "Error while updating repo: ${repo.url}")
-                return false
             }
+
+            Result.success()
+        } catch (e: Exception) {
+            onFailure(e)
+            Result.failure()
         }
-        return true
     }
 }
