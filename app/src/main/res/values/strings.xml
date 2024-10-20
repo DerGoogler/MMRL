@@ -173,6 +173,7 @@
     <string name="repo_modules">%d modules</string>
     <string name="repo_update_at">Updated at: %s</string>
     <string name="repo_incompatible">Incompatible</string>
+    <string name="repo_options">Options</string>
     <string name="repo_options_update">Update</string>
     <string name="repo_options_delete">Delete</string>
     <string name="repo_options_support">Support</string>

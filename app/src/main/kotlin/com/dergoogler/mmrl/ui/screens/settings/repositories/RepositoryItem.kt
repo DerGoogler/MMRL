@@ -167,6 +167,7 @@ fun RepositoryItem(
 
             ButtonItem(
                 icon = R.drawable.at,
+                label = R.string.repo_options,
                 onClick = { open = true }
             )
 
