@@ -51,7 +51,6 @@ import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.utils.expandedShape
 import ext.dergoogler.mmrl.ext.launchCustomTab
 import ext.dergoogler.mmrl.ext.shareText
-import ext.dergoogler.mmrl.ext.toFormattedDate
 import ext.dergoogler.mmrl.ext.toFormattedDateSafely
 
 @Composable

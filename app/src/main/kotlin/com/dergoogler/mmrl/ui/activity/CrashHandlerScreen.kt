@@ -28,6 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import com.dergoogler.mmrl.R
+import com.dergoogler.mmrl.ui.component.NavigationBarsSpacer
 import com.dergoogler.mmrl.ui.component.TopAppBarTitle
 import com.dergoogler.mmrl.ui.utils.none
 import ext.dergoogler.mmrl.ext.launchCustomTab
@@ -107,6 +108,8 @@ fun CrashHandlerScreen(
             Button(onClick = { context.launchCustomTab("https://github.com/DerGoogler/MMRL/issues") }) {
                 Text(text = stringResource(R.string.report_to_issues))
             }
+
+            NavigationBarsSpacer()
         }
     }
 }
