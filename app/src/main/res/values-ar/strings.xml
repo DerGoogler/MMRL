@@ -140,12 +140,33 @@
     <string name="settings_doh_desc">حل لمشكلة تلوث DNS في بعض الدول</string>
     <string name="settings_reboot_protection">حماية إعادة التشغيل</string>
     <string name="settings_reboot_protection_desc">إذا تم تفعيله، يجب عليك تأكيد كل إعادة تشغيل</string>
+<string name="settings_blacklist">القائمة السوداء</string>
+<string name="settings_blacklist_desc">إضافات مدرجة قد تكون مغلقة المصدر أو خطيرة</string>
+<string name="settings_date_pattern">نمط التاريخ</string>
+<string name="settings_date_pattern_desc">استخدم تنسيق التاريخ الخاص بك</string>
+<string name="settings_recommended_repos">المستودعات الموصى بها</string>
+<string name="settings_recommended_repos_desc">استكشف مستودعات جديدة وأضفها مباشرة</string>
+<string name="settings_updates">التحديثات</string>
+<string name="settings_updates_desc">إدارة تفضيلاتك في عملية التحديث</string>
+
+<string name="settings_auto_update_repos">تحديث المستودع تلقائيًا</string>
+<string name="settings_auto_update_repos_desc">تحديث المستودعات تلقائيًا في الخلفية</string>
+<string name="settings_repo_update_interval">فترة تحديث المستودع</string>
+<string name="settings_repo_update_interval_suffix">\u0020ساعة/ساعات</string>
+<string name="settings_repo_update_interval_desc">حدد الفترة الزمنية لتحديث المستودعات</string>
+
+<string name="settings_check_modules_update">التحقق من تحديثات الإضافات</string>
+<string name="settings_check_modules_update_desc">يمكنك التحقق من التحديثات للإضافات المثبتة</string>
+<string name="settings_check_modules_update_interval_suffix">\u0020ساعة/ساعات</string>
+<string name="settings_check_modules_update_interval">فترة التحقق من تحديث الإضافات</string>
+<string name="settings_check_modules_update_interval_desc">حدد الفترة الزمنية للتحقق من الإضافات المثبتة لديك</string>
 
     <!-- App Theme -->
     <string name="app_theme_palette">لوحة الثيمات</string>
     <string name="app_theme_dark_theme">ثيم داكن</string>
     <string name="app_theme_dark_theme_auto">تلقائي</string>
     <string name="app_theme_dark_theme_light">فاتح</string>
+<string name="app_theme_dark_theme_dark">داكن</string>
     <!-- Repo -->
     <string name="repo_modules">%d إضافات</string>
     <string name="repo_update_at">تم التحديث في: %s</string>
@@ -197,5 +218,23 @@
     <string name="open">فتح</string>
     <string name="help">مساعدة</string>
     <string name="module_config">الإعدادات</string>
+    <string name="we_hit_a_brick_crash">لقد واجهتنا مشكلة!</string>
+    <string name="report_to_issues">الإبلاغ عن مشاكل</string>
+    <string name="stack_trace_truncated">%s\n… %d المزيد</string>
+    <string name="additional_notes">ملاحظات إضافية</string>
+    <string name="repo_added">تم إضافة المستودع</string>
 
+<!-- Work Manager -->
+<string name="work_repository_updates">تحديثات المستودعات</string>
+<string name="work_updates_for_repositories">تحديثات للمستودعات</string>
+<string name="work_module_updates">تحديثات الإضافات</string>
+<string name="work_update_checker_for_modules">مدقق تحديثات الإضافات</string>
+
+<!-- Repo Update Service -->
+<string name="repo_update_service">تم تحديث المستودعات بنجاح</string>
+<string name="repo_update_service_desc">لا تقلق، MMRL قام بتحديث المستودعات المثبتة لديك. 😋</string>
+<string name="repo_update_service_failed">لم يتم العثور على تحديثات للمستودعات</string>
+<string name="repo_update_service_failed_desc">لا توجد تحديثات للمستودعات</string>
+<string name="has_a_new_update">%1$s لديه تحديث جديد!</string>
+<string name="update_available_from_to">التحديث متاح من %s (%d) إلى %s (%d).</string>
 </resources>
