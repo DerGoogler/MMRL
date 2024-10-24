@@ -191,4 +191,5 @@
     <string name="work_update_checker_for_modules">Usługa sprawdzania aktualizacji modułów</string>
     <string name="has_a_new_update">%1$s ma nową aktualizację!</string>
     <string name="update_available_from_to">Aktualizacja dostępna od %s (%d) do %s (%d).</string>
+    <string name="repo_options">Opcje</string>
 </resources>
