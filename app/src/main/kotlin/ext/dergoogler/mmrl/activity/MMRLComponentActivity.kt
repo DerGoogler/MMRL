@@ -39,7 +39,7 @@ import javax.inject.Inject
 import kotlin.system.exitProcess
 
 @AndroidEntryPoint
-open class MMRLComponentActivity : ComponentActivity(), DefaultLifecycleObserver {
+open class MMRLComponentActivity : ComponentActivity() {
     @Inject
     lateinit var userPreferencesRepository: UserPreferencesRepository
 
@@ -55,7 +55,7 @@ open class MMRLComponentActivity : ComponentActivity(), DefaultLifecycleObserver
     open val windowFlags: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super<ComponentActivity>.onCreate(savedInstanceState)
+        super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
         Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
@@ -81,8 +81,6 @@ open class MMRLComponentActivity : ComponentActivity(), DefaultLifecycleObserver
                 permissionsGranted = state.allGranted
             }
         }
-
-        ProcessLifecycleOwner.get().lifecycle.addObserver(this)
     }
 
     private fun startCrashActivity(thread: Thread, throwable: Throwable) {
@@ -113,7 +111,7 @@ open class MMRLComponentActivity : ComponentActivity(), DefaultLifecycleObserver
     }
 
     override fun onDestroy() {
-        super<ComponentActivity>.onDestroy()
+        super.onDestroy()
 
         if (windowFlags != 0) {
             Timber.d("Clearing window flags")
@@ -121,59 +119,7 @@ open class MMRLComponentActivity : ComponentActivity(), DefaultLifecycleObserver
         }
     }
 
-    override fun onStart(owner: LifecycleOwner) {
-        super<DefaultLifecycleObserver>.onStart(owner)
-        isAppInForeground = true
-    }
-
-    override fun onStop(owner: LifecycleOwner) {
-        super<DefaultLifecycleObserver>.onStop(owner)
-        isAppInForeground = false
-    }
-
     companion object {
-        var isAppInForeground = false
-        const val MODULE_UPDATE_WORK_NAME = "ModuleUpdateWork"
-        const val REPO_UPDATE_WORK_NAME = "RepoUpdateWork"
-
-        inline fun <reified W : ListenableWorker> startWorkTask(
-            context: Context,
-            enabled: Boolean,
-            repeatInterval: Int,
-            repeatIntervalUnit: TimeUnit = TimeUnit.HOURS,
-            existingPeriodicWorkPolicy: ExistingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.KEEP,
-            workName: String,
-        ) {
-            if (enabled) {
-                val updateRequest = PeriodicWorkRequestBuilder<W>(
-                    repeatInterval.toLong(),
-                    repeatIntervalUnit
-                )
-                    .setConstraints(
-                        Constraints.Builder()
-                            .setRequiredNetworkType(NetworkType.CONNECTED)
-                            .setRequiresBatteryNotLow(true)
-                            .build()
-                    )
-                    .build()
-
-                WorkManager.getInstance(context)
-                    .enqueueUniquePeriodicWork(
-                        workName,
-                        existingPeriodicWorkPolicy,
-                        updateRequest
-                    )
-            } else {
-                WorkManager.getInstance(context)
-                    .cancelUniqueWork(workName)
-            }
-        }
-
-        fun cancelWorkTask(context: Context, workName: String) {
-            WorkManager.getInstance(context)
-                .cancelUniqueWork(workName)
-        }
-
         fun startModConfActivity(context: Context, modId: String) {
             val intent = Intent(context, ModConfActivity::class.java)
                 .apply {

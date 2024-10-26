@@ -7,9 +7,6 @@ import com.dergoogler.mmrl.datastore.DarkMode
 import com.dergoogler.mmrl.datastore.WorkingMode
 import com.dergoogler.mmrl.repository.UserPreferencesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import ext.dergoogler.mmrl.activity.MMRLComponentActivity
-import ext.dergoogler.mmrl.activity.MMRLComponentActivity.Companion.MODULE_UPDATE_WORK_NAME
-import ext.dergoogler.mmrl.activity.MMRLComponentActivity.Companion.REPO_UPDATE_WORK_NAME
 import ext.dergoogler.mmrl.viewmodel.MMRLViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -87,10 +84,6 @@ class SettingsViewModel @Inject constructor(
     }
 
     fun setAutoUpdateRepos(value: Boolean) {
-        if (!value) {
-            MMRLComponentActivity.cancelWorkTask(context, REPO_UPDATE_WORK_NAME)
-        }
-
         viewModelScope.launch {
             userPreferencesRepository.setAutoUpdateRepos(value)
         }
@@ -103,10 +96,6 @@ class SettingsViewModel @Inject constructor(
     }
 
     fun setCheckModuleUpdates(value: Boolean) {
-        if (!value) {
-            MMRLComponentActivity.cancelWorkTask(context, MODULE_UPDATE_WORK_NAME)
-        }
-
         viewModelScope.launch {
             userPreferencesRepository.setCheckModuleUpdates(value)
         }

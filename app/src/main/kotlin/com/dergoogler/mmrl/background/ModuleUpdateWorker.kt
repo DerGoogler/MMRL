@@ -1,4 +1,4 @@
-package com.dergoogler.mmrl.worker
+package com.dergoogler.mmrl.background
 
 import android.content.Context
 import android.app.PendingIntent
@@ -7,6 +7,7 @@ import androidx.work.WorkerParameters
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.database.entity.LocalModuleEntity
 import com.dergoogler.mmrl.database.entity.OnlineModuleEntity
+import com.dergoogler.mmrl.repository.ModulesRepository
 import com.dergoogler.mmrl.stub.IRepoManager
 import com.dergoogler.mmrl.ui.activity.MainActivity
 import ext.dergoogler.mmrl.worker.MMRLCoroutineWorker
@@ -16,89 +17,86 @@ import timber.log.Timber
 
 class ModuleUpdateWorker(
     context: Context,
-    workerParams: WorkerParameters
-) : MMRLCoroutineWorker(context, workerParams) {
+    workerParams: WorkerParameters,
+    modulesRepository: ModulesRepository
+) : MMRLCoroutineWorker(context, workerParams, modulesRepository) {
 
+    override val notificationId = 2
     override val channelId = "ModuleUpdateChannel"
     override val channelName = context.getString(R.string.work_module_updates)
     override val channelDescription = context.getString(R.string.work_update_checker_for_modules)
 
     override suspend fun doWork(): Result {
         super.doWork()
-
         return try {
             checkForUpdatesAndNotify()
             Result.success()
         } catch (e: Exception) {
-            e.printStackTrace()
+            Timber.e(e, "Update check failed")
             Result.retry()
         }
     }
 
+    /**
+     * Checks online modules against local modules for any available updates
+     * and sends notifications if updates are available.
+     */
     private suspend fun checkForUpdatesAndNotify() {
-        val onlineModules =
-            fetchOnlineModules()
+        val onlineModules = fetchOnlineModules()
         val localModules = database.localDao().getAll()
-
         val onlineModuleMap = onlineModules.associateBy { it.id }
 
-        for (localModule in localModules) {
-            val onlineModule = onlineModuleMap[localModule.id]
-            if (onlineModule != null && isNewerVersion(onlineModule, localModule)) {
-                sendUpdateNotification(localModule, onlineModule)
+        localModules.forEach { localModule ->
+            onlineModuleMap[localModule.id]?.let { onlineModule ->
+                if (isNewerVersion(onlineModule, localModule)) {
+                    sendUpdateNotification(localModule, onlineModule)
+                }
             }
         }
     }
 
-    private suspend fun fetchOnlineModules(): List<OnlineModuleEntity> {
-        return withContext(Dispatchers.IO) {
-            val repoDao = database.repoDao()
-            val repos = repoDao.getAll()
+    /**
+     * Fetches all online modules from configured repositories.
+     * @return List of online modules.
+     */
+    private suspend fun fetchOnlineModules(): List<OnlineModuleEntity> =
+        withContext(Dispatchers.IO) {
             val onlineModules = mutableListOf<OnlineModuleEntity>()
-
-            repos.forEach { repo ->
+            database.repoDao().getAll().forEach { repo ->
                 val repoManager = IRepoManager.build(repo.url)
-
                 try {
                     val response = repoManager.modules.execute()
-
-                    if (response.isSuccessful && response.body() != null) {
-                        val modulesJson = response.body()!!
-                        onlineModules.addAll(modulesJson.modules.map {
-                            OnlineModuleEntity(
-                                it,
-                                repo.url
-                            )
+                    response.body()?.modules?.let { modulesJson ->
+                        onlineModules.addAll(modulesJson.map { module ->
+                            OnlineModuleEntity(module, repo.url)
                         })
-                    } else {
-                        Timber.e("Failed to fetch data for repo: ${repo.url}")
-                    }
+                    } ?: Timber.e("No data found for repo: ${repo.url}")
                 } catch (e: Exception) {
                     Timber.e(e, "Error while fetching repo: ${repo.url}")
                 }
             }
-
             onlineModules
-        }
     }
 
+    /**
+     * Compares versions of local and online modules.
+     * @return true if the online module has a newer version.
+     */
     private fun isNewerVersion(
         onlineModule: OnlineModuleEntity,
         localModule: LocalModuleEntity
-    ): Boolean {
-        return onlineModule.versionCode > localModule.versionCode
-    }
+    ): Boolean = onlineModule.versionCode > localModule.versionCode
 
+    /**
+     * Sends a notification if a module update is available.
+     */
     private fun sendUpdateNotification(
         localModule: LocalModuleEntity,
         onlineModule: OnlineModuleEntity
     ) {
         val intent = Intent(applicationContext, MainActivity::class.java)
-
         val pendingIntent = PendingIntent.getActivity(
-            applicationContext,
-            0,
-            intent,
+            applicationContext, 0, intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
@@ -108,10 +106,8 @@ class ModuleUpdateWorker(
             title = applicationContext.getString(R.string.has_a_new_update, localModule.name),
             message = applicationContext.getString(
                 R.string.update_available_from_to,
-                localModule.version,
-                localModule.versionCode,
-                onlineModule.version,
-                onlineModule.versionCode
+                localModule.version, localModule.versionCode,
+                onlineModule.version, onlineModule.versionCode
             ),
             pendingIntent = pendingIntent
         )
