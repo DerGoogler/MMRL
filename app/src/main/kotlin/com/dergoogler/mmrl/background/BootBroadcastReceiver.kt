@@ -5,14 +5,14 @@ import android.content.Intent
 import androidx.work.ExistingPeriodicWorkPolicy
 import ext.dergoogler.mmrl.worker.MMRLBroadcastReceiver
 import kotlinx.coroutines.flow.first
-import kotlin.coroutines.CoroutineContext
+import timber.log.Timber
 
-class BootBroadcastReceiver(
-    coroutineContext: CoroutineContext
-) : MMRLBroadcastReceiver(coroutineContext) {
+class BootBroadcastReceiver : MMRLBroadcastReceiver() {
 
     override suspend fun onBooted(context: Context, intent: Intent) {
         val userPreferences = userPreferencesRepository.data.first()
+
+        Timber.d("BootBroadcastReceiver onBooted")
 
         startWorkTask<RepoUpdateWorker>(
             context = context,

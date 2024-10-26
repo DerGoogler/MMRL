@@ -3,7 +3,6 @@ package ext.dergoogler.mmrl.worker
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import androidx.lifecycle.lifecycleScope
 import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.ListenableWorker
@@ -14,23 +13,21 @@ import com.dergoogler.mmrl.repository.LocalRepository
 import com.dergoogler.mmrl.repository.UserPreferencesRepository
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
-import kotlin.coroutines.CoroutineContext
 
 @AndroidEntryPoint
-open class MMRLBroadcastReceiver(override val coroutineContext: CoroutineContext) :
-    BroadcastReceiver(), CoroutineScope {
+open class MMRLBroadcastReceiver : BroadcastReceiver() {
     @Inject
     lateinit var userPreferencesRepository: UserPreferencesRepository
 
     @Inject
     lateinit var localRepository: LocalRepository
 
-
     override fun onReceive(context: Context, intent: Intent) {
-        launch {
+        CoroutineScope(Dispatchers.Main).launch {
             if (Intent.ACTION_BOOT_COMPLETED == intent.action) {
                 onBooted(context, intent)
             }
