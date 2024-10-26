@@ -15,6 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -53,6 +54,9 @@ open class MMRLBroadcastReceiver : BroadcastReceiver() {
         ) {
             val workManager = WorkManager.getInstance(context)
             if (enabled) {
+
+                Timber.d("Starting work task: $workName")
+
                 val updateRequest = PeriodicWorkRequestBuilder<W>(
                     repeatInterval.toLong(),
                     repeatIntervalUnit
