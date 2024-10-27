@@ -26,6 +26,8 @@ import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.utils.none
 import com.dergoogler.mmrl.viewmodel.SettingsViewModel
 
+val optionsOfHours = listOf(1, 2, 3, 4, 5, 10, 12, 16, 24, 48, 72)
+
 @Composable
 fun UpdatesScreen(
     navController: NavController,
@@ -71,7 +73,7 @@ fun UpdatesScreen(
                 enabled = userPreferences.autoUpdateRepos,
                 suffix = stringResource(id = R.string.settings_repo_update_interval_suffix),
                 value = userPreferences.autoUpdateReposInterval,
-                options = listOf(3, 6, 12, 16, 24, 36, 48, 72),
+                options = optionsOfHours,
                 onConfirm = {
                     viewModel.setAutoUpdateReposInterval(it)
                 })
@@ -97,7 +99,7 @@ fun UpdatesScreen(
                 enabled = userPreferences.checkModuleUpdates,
                 suffix = stringResource(id = R.string.settings_check_modules_update_interval_suffix),
                 value = userPreferences.checkModuleUpdatesInterval,
-                options = listOf(1, 2, 3, 6, 12, 24, 48, 72),
+                options = optionsOfHours,
                 onConfirm = {
                     viewModel.setCheckModuleUpdatesInterval(it)
                 })
