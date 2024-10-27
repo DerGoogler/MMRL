@@ -1,6 +1,5 @@
 package ext.dergoogler.mmrl.worker
 
-import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
@@ -15,6 +14,7 @@ import com.dergoogler.mmrl.database.AppDatabase
 import com.dergoogler.mmrl.repository.ModulesRepository
 import timber.log.Timber
 import javax.inject.Inject
+import kotlin.random.Random
 
 open class MMRLCoroutineWorker @Inject constructor(
     context: Context,
@@ -22,35 +22,20 @@ open class MMRLCoroutineWorker @Inject constructor(
     val modulesRepository: ModulesRepository
 ) : CoroutineWorker(context, params) {
     private val notificationManager =
-        applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     open val notificationId = 0
-    open val channelId = ""
     open val channelName = ""
+    open val channelTitle = ""
     open val channelDescription = ""
 
     override suspend fun doWork(): Result {
-        if (channelId.isEmpty() || channelName.isEmpty() || channelDescription.isEmpty()) {
+        if (channelName.isEmpty() || channelTitle.isEmpty() || channelDescription.isEmpty()) {
             return Result.failure()
         }
 
         setForeground(createForegroundInfo())
 
-        createNotificationChannel()
-
         return Result.success()
-    }
-
-    private fun createNotificationChannel() {
-        val channel = NotificationChannel(
-            channelId,
-            channelName,
-            NotificationManager.IMPORTANCE_DEFAULT
-        )
-
-        channel.description = channelDescription
-
-        notificationManager.createNotificationChannel(channel)
-
     }
 
     val database
@@ -65,8 +50,8 @@ open class MMRLCoroutineWorker @Inject constructor(
         }
 
     private fun createForegroundInfo(): ForegroundInfo {
-        val notification = NotificationCompat.Builder(applicationContext, channelId).apply {
-            setContentTitle(channelName)
+        val notification = NotificationCompat.Builder(applicationContext, channelName).apply {
+            setContentTitle(channelTitle)
             setContentText(channelDescription)
             setSmallIcon(R.drawable.box)
             priority = NotificationCompat.PRIORITY_LOW
@@ -76,13 +61,13 @@ open class MMRLCoroutineWorker @Inject constructor(
     }
 
     fun pushNotification(
-        id: Int,
+        id: Int = Random.nextInt(0, 100),
         title: String,
         message: String,
         pendingIntent: PendingIntent? = null,
         @DrawableRes icon: Int = R.drawable.box
     ) {
-        val notification = NotificationCompat.Builder(applicationContext, channelId).apply {
+        val notification = NotificationCompat.Builder(applicationContext, channelName).apply {
             setContentTitle(title)
             setContentText(message)
             setSmallIcon(icon)
@@ -91,8 +76,8 @@ open class MMRLCoroutineWorker @Inject constructor(
             priority = NotificationCompat.PRIORITY_HIGH
             setDefaults(NotificationCompat.DEFAULT_ALL)
 
-            Timber.d("Channel ID: $channelId")
-            Timber.d("Channel Name: $channelName")
+            Timber.d("Channel ID: $channelName")
+            Timber.d("Channel Name: $channelTitle")
             Timber.d("Channel Description: $channelDescription")
         }.build()
 

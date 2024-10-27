@@ -21,10 +21,10 @@ class ModuleUpdateWorker(
     modulesRepository: ModulesRepository
 ) : MMRLCoroutineWorker(context, workerParams, modulesRepository) {
 
-    override val notificationId = 2
-    override val channelId = "ModuleUpdateChannel"
-    override val channelName = context.getString(R.string.work_module_updates)
-    override val channelDescription = context.getString(R.string.work_update_checker_for_modules)
+    override val notificationId = MainActivity.MODULE_WORKER_ID
+    override val channelName = MainActivity.MODULE_WORKER_CHANNEL_NAME
+    override val channelTitle = context.getString(MainActivity.MODULE_WORKER_CHANNEL_TITLE)
+    override val channelDescription = context.getString(MainActivity.MODULE_WORKER_CHANNEL_DESC)
 
     override suspend fun doWork(): Result {
         super.doWork()
@@ -76,7 +76,7 @@ class ModuleUpdateWorker(
                 }
             }
             onlineModules
-    }
+        }
 
     /**
      * Compares versions of local and online modules.

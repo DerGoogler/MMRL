@@ -1,5 +1,7 @@
 package ext.dergoogler.mmrl.activity
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -8,6 +10,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionContext
 import androidx.compose.runtime.CompositionLocalProvider
@@ -117,6 +120,25 @@ open class MMRLComponentActivity : ComponentActivity() {
             Timber.d("Clearing window flags")
             this.window.clearFlags(windowFlags)
         }
+    }
+
+    fun createNotificationChannel(
+        channelName: String,
+        @StringRes channelTitle: Int,
+        @StringRes channelDesc: Int
+    ) {
+        val notificationManager =
+            applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        val channel = NotificationChannel(
+            channelName,
+            applicationContext.getString(channelTitle),
+            NotificationManager.IMPORTANCE_DEFAULT
+        )
+
+        channel.description = applicationContext.getString(channelDesc)
+
+        notificationManager.createNotificationChannel(channel)
     }
 
     companion object {

@@ -16,6 +16,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.work.ExistingPeriodicWorkPolicy
 import com.dergoogler.mmrl.Compat
+import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.app.Const
 import com.dergoogler.mmrl.database.entity.Repo.Companion.toRepo
 import com.dergoogler.mmrl.datastore.UserPreferencesCompat.Companion.isRoot
@@ -41,6 +42,18 @@ class MainActivity : MMRLComponentActivity() {
         super.onCreate(savedInstanceState)
 
         splashScreen.setKeepOnScreenCondition { isLoading }
+
+        createNotificationChannel(
+            channelName = REPO_WORKER_CHANNEL_NAME,
+            channelTitle = REPO_WORKER_CHANNEL_TITLE,
+            channelDesc = REPO_WORKER_CHANNEL_DESC
+        )
+
+        createNotificationChannel(
+            channelName = MODULE_WORKER_CHANNEL_NAME,
+            channelTitle = MODULE_WORKER_CHANNEL_TITLE,
+            channelDesc = MODULE_WORKER_CHANNEL_DESC
+        )
 
         setBaseContent {
             val userPreferences by userPreferencesRepository.data
@@ -103,4 +116,17 @@ class MainActivity : MMRLComponentActivity() {
         )
     }
 
+    companion object {
+        const val REPO_UPDATE_WORK_NAME = "RepoUpdateWork"
+        const val REPO_WORKER_ID = 1
+        const val REPO_WORKER_CHANNEL_NAME = "RepoUpdateChannel"
+        val REPO_WORKER_CHANNEL_TITLE = R.string.work_repository_updates
+        val REPO_WORKER_CHANNEL_DESC = R.string.work_updates_for_repositories
+
+        const val MODULE_UPDATE_WORK_NAME = "ModuleUpdateWork"
+        const val MODULE_WORKER_ID = 2
+        const val MODULE_WORKER_CHANNEL_NAME = "ModuleUpdateChannel"
+        val MODULE_WORKER_CHANNEL_TITLE = R.string.work_module_updates
+        val MODULE_WORKER_CHANNEL_DESC = R.string.work_update_checker_for_modules
+    }
 }

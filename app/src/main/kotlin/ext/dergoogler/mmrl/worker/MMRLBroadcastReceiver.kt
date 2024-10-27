@@ -9,11 +9,13 @@ import androidx.work.ListenableWorker
 import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
+import com.dergoogler.mmrl.datastore.UserPreferencesCompat
 import com.dergoogler.mmrl.repository.LocalRepository
 import com.dergoogler.mmrl.repository.UserPreferencesRepository
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
@@ -28,23 +30,25 @@ open class MMRLBroadcastReceiver : BroadcastReceiver() {
     lateinit var localRepository: LocalRepository
 
     override fun onReceive(context: Context, intent: Intent) {
-        CoroutineScope(Dispatchers.Main).launch {
-            if (Intent.ACTION_BOOT_COMPLETED == intent.action) {
-                onBooted(context, intent)
+        synchronized(lock) {
+            CoroutineScope(Dispatchers.Main).launch {
+                if (Intent.ACTION_BOOT_COMPLETED == intent.action) {
+                    onBooted(context, intent)
+                }
             }
         }
     }
 
     /**
-     * Called when the device is booted. Called inside of a `CoroutineContext`
+     * Called when the device is booted. Called inside of a `CoroutineScope`
      */
     open suspend fun onBooted(context: Context, intent: Intent) {}
 
-    companion object {
-        const val MODULE_UPDATE_WORK_NAME = "ModuleUpdateWork"
-        const val REPO_UPDATE_WORK_NAME = "RepoUpdateWork"
 
-        inline fun <reified W : ListenableWorker> startWorkTask(
+    companion object {
+        val lock = Any()
+
+        inline fun <reified W : MMRLCoroutineWorker> startWorkTask(
             context: Context,
             enabled: Boolean,
             repeatInterval: Int,
@@ -52,6 +56,8 @@ open class MMRLBroadcastReceiver : BroadcastReceiver() {
             existingPeriodicWorkPolicy: ExistingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.KEEP,
             workName: String,
         ) {
+            W::class.java
+
             val workManager = WorkManager.getInstance(context)
             if (enabled) {
 

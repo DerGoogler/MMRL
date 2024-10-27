@@ -5,6 +5,8 @@ import androidx.work.WorkerParameters
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.database.entity.Repo.Companion.toRepo
 import com.dergoogler.mmrl.repository.ModulesRepository
+import com.dergoogler.mmrl.ui.activity.MainActivity
+import ext.dergoogler.mmrl.activity.MMRLComponentActivity
 import ext.dergoogler.mmrl.worker.MMRLCoroutineWorker
 
 class RepoUpdateWorker(
@@ -13,10 +15,10 @@ class RepoUpdateWorker(
     modulesRepository: ModulesRepository
 ) : MMRLCoroutineWorker(context, params, modulesRepository) {
 
-    override val notificationId = 1
-    override val channelId = "RepoUpdateChannel"
-    override val channelName = context.getString(R.string.work_repository_updates)
-    override val channelDescription = context.getString(R.string.work_updates_for_repositories)
+    override val notificationId = MainActivity.REPO_WORKER_ID
+    override val channelName = MainActivity.REPO_WORKER_CHANNEL_NAME
+    override val channelTitle = context.getString(MainActivity.REPO_WORKER_CHANNEL_TITLE)
+    override val channelDescription = context.getString(MainActivity.REPO_WORKER_CHANNEL_DESC)
 
     override suspend fun doWork(): Result {
         super.doWork()
@@ -45,7 +47,6 @@ class RepoUpdateWorker(
 
     private fun sendSuccessNotification() {
         pushNotification(
-            id = notificationId,
             title = applicationContext.getString(R.string.repo_update_service),
             message = applicationContext.getString(R.string.repo_update_service_desc)
         )
@@ -53,7 +54,6 @@ class RepoUpdateWorker(
 
     private fun sendFailureNotification() {
         pushNotification(
-            id = notificationId,
             title = applicationContext.getString(R.string.repo_update_service_failed),
             message = applicationContext.getString(R.string.repo_update_service_failed_desc)
         )
