@@ -149,6 +149,8 @@
     <string name="settings_recommended_repos_desc">Explore new repos and add them directly</string>
     <string name="settings_updates">Updates</string>
     <string name="settings_updates_desc">Manage your preferences on the updating process</string>
+    <string name="settings_homepage">App homepage</string>
+    <string name="settings_homepage_desc">Select the start screen of the app</string>
 
     <string name="settings_auto_update_repos">Auto Update Repo</string>
     <string name="settings_auto_update_repos_desc">Automatically update repos in the background</string>

@@ -18,7 +18,9 @@ import androidx.navigation.NavController
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
 import com.dergoogler.mmrl.ui.component.ListEditTextItem
+import com.dergoogler.mmrl.ui.component.ListRadioCheckItem
 import com.dergoogler.mmrl.ui.component.ListSwitchItem
+import com.dergoogler.mmrl.ui.navigation.MainScreen
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.screens.settings.appearance.items.AppThemeItem
 import com.dergoogler.mmrl.ui.utils.none
@@ -71,6 +73,16 @@ fun AppearanceScreen(
                 value = userPreferences.datePattern,
                 onConfirm = {
                     viewModel.setDatePattern(it)
+                })
+
+            ListRadioCheckItem(
+                title = stringResource(R.string.settings_homepage),
+                icon = R.drawable.player_play,
+                desc = stringResource(R.string.settings_homepage_desc),
+                value = userPreferences.homepage,
+                options = listOf(MainScreen.Repository.route, MainScreen.Modules.route),
+                onConfirm = {
+                    viewModel.setHomepage(it)
                 })
         }
     }

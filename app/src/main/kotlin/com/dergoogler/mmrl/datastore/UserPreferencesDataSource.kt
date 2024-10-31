@@ -117,6 +117,13 @@ class UserPreferencesDataSource @Inject constructor(
         }
     }
 
+    suspend fun setHomepage(value: String) = withContext(Dispatchers.IO) {
+        userPreferences.updateData {
+            it.copy(
+                homepage = value
+            )
+        }
+    }
 
 
     suspend fun setRepositoryMenu(value: RepositoryMenuCompat) = withContext(Dispatchers.IO) {

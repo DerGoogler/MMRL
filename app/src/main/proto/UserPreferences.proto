@@ -24,4 +24,5 @@ message UserPreferences {
   int32 autoUpdateReposInterval = 13;
   bool checkModuleUpdates = 14;
   int32 checkModuleUpdatesInterval = 15;
+  string homepage = 16;
 }

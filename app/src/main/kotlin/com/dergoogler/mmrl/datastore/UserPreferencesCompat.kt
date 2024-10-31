@@ -6,6 +6,7 @@ import com.dergoogler.mmrl.app.Const
 import dev.dergoogler.mmrl.compat.BuildCompat
 import com.dergoogler.mmrl.datastore.modules.ModulesMenuCompat
 import com.dergoogler.mmrl.datastore.repository.RepositoryMenuCompat
+import com.dergoogler.mmrl.ui.navigation.MainScreen
 import com.dergoogler.mmrl.ui.theme.Colors
 import java.io.File
 
@@ -23,6 +24,7 @@ data class UserPreferencesCompat(
     val autoUpdateReposInterval: Int,
     val checkModuleUpdates: Boolean,
     val checkModuleUpdatesInterval: Int,
+    val homepage: String,
     val repositoryMenu: RepositoryMenuCompat,
     val modulesMenu: ModulesMenuCompat
 ) {
@@ -41,6 +43,7 @@ data class UserPreferencesCompat(
         autoUpdateReposInterval = original.autoUpdateReposInterval,
         checkModuleUpdates = original.checkModuleUpdates,
         checkModuleUpdatesInterval = original.checkModuleUpdatesInterval,
+        homepage = original.homepage,
         repositoryMenu = when {
             original.hasRepositoryMenu() -> RepositoryMenuCompat(original.repositoryMenu)
             else -> RepositoryMenuCompat.default()
@@ -71,6 +74,7 @@ data class UserPreferencesCompat(
         .setAutoUpdateReposInterval(autoUpdateReposInterval)
         .setCheckModuleUpdates(checkModuleUpdates)
         .setCheckModuleUpdatesInterval(checkModuleUpdatesInterval)
+        .setHomepage(homepage)
         .setRepositoryMenu(repositoryMenu.toProto())
         .setModulesMenu(modulesMenu.toProto())
         .build()
@@ -89,6 +93,7 @@ data class UserPreferencesCompat(
             autoUpdateReposInterval = 6,
             checkModuleUpdates = true,
             checkModuleUpdatesInterval = 2,
+            homepage = MainScreen.Repository.route,
             repositoryMenu = RepositoryMenuCompat.default(),
             modulesMenu = ModulesMenuCompat.default()
         )

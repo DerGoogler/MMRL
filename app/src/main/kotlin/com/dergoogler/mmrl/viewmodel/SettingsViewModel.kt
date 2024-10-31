@@ -106,4 +106,10 @@ class SettingsViewModel @Inject constructor(
             userPreferencesRepository.setCheckModuleUpdatesInterval(value)
         }
     }
+
+    fun setHomepage(value: String) {
+        viewModelScope.launch {
+            userPreferencesRepository.setHomepage(value)
+        }
+    }
 }

@@ -44,7 +44,7 @@ fun MainScreen() {
         NavHost(
             modifier = Modifier.padding(bottom = it.calculateBottomPadding()),
             navController = navController,
-            startDestination = MainScreen.Repository.route
+            startDestination = userPreferences.homepage.ifBlank { MainScreen.Repository.route }
         ) {
             repositoryScreen(
                 navController = navController
