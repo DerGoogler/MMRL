@@ -48,10 +48,6 @@ fun RepositoryScreen(
         onBack = viewModel::closeSearch
     )
 
-//    DisposableEffect(true) {
-//        onDispose(viewModel::closeSearch)
-//    }
-
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
