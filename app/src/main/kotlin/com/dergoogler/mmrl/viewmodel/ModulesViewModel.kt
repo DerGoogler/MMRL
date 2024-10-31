@@ -53,6 +53,7 @@ class ModulesViewModel @Inject constructor(
     var isSearch by mutableStateOf(false)
         private set
     private val keyFlow = MutableStateFlow("")
+    val query get() = keyFlow.asStateFlow()
 
     private val cacheFlow = MutableStateFlow(listOf<LocalModule>())
     private val localFlow = MutableStateFlow(listOf<LocalModule>())

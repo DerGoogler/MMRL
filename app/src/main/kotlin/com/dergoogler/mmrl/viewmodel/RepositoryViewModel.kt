@@ -37,8 +37,8 @@ class RepositoryViewModel @Inject constructor(
 
     var isSearch by mutableStateOf(false)
         private set
-    private val _keyFlow = MutableStateFlow("")
-    val query get() = _keyFlow.asStateFlow()
+    private val keyFlow = MutableStateFlow("")
+    val query get() = keyFlow.asStateFlow()
 
     private val cacheFlow = MutableStateFlow(listOf<Pair<OnlineState, OnlineModule>>())
     private val onlineFlow = MutableStateFlow(listOf<Pair<OnlineState, OnlineModule>>())
@@ -86,7 +86,7 @@ class RepositoryViewModel @Inject constructor(
 
     private fun keyObserver() {
         combine(
-            _keyFlow,
+            keyFlow,
             cacheFlow
         ) { key, source ->
             onlineFlow.value = source
@@ -122,7 +122,7 @@ class RepositoryViewModel @Inject constructor(
     }
 
     fun search(key: String) {
-        _keyFlow.value = key
+        keyFlow.value = key
     }
 
     fun openSearch() {
@@ -131,7 +131,7 @@ class RepositoryViewModel @Inject constructor(
 
     fun closeSearch() {
         isSearch = false
-        _keyFlow.value = ""
+        keyFlow.value = ""
     }
 
     fun setRepositoryMenu(value: RepositoryMenuCompat) {

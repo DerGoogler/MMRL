@@ -103,7 +103,7 @@ private fun TopBar(
 
     SearchTopBar(
         isSearch = isSearch,
-        query = query,
+        query = currentQuery,
         onQueryChange = {
             onQueryChange(it)
             currentQuery = it

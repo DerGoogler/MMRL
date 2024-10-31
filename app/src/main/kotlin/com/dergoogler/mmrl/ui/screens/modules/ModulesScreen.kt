@@ -60,6 +60,7 @@ fun ModulesScreen(
     val context = LocalContext.current
 
     val list by viewModel.local.collectAsStateWithLifecycle()
+    val query by viewModel.query.collectAsStateWithLifecycle()
 
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val listState = rememberLazyListState()
@@ -87,15 +88,12 @@ fun ModulesScreen(
         onBack = viewModel::closeSearch
     )
 
-    DisposableEffect(true) {
-        onDispose(viewModel::closeSearch)
-    }
-
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             TopBar(
                 isSearch = viewModel.isSearch,
+                query = query,
                 onQueryChange = viewModel::search,
                 onOpenSearch = viewModel::openSearch,
                 onCloseSearch = viewModel::closeSearch,
@@ -150,27 +148,28 @@ fun ModulesScreen(
 @Composable
 private fun TopBar(
     isSearch: Boolean,
+    query: String,
     onQueryChange: (String) -> Unit,
     onOpenSearch: () -> Unit,
     onCloseSearch: () -> Unit,
     setMenu: (ModulesMenuCompat) -> Unit,
     scrollBehavior: TopAppBarScrollBehavior,
 ) {
-    var query by remember { mutableStateOf("") }
+    var currentQuery by remember { mutableStateOf(query) }
     DisposableEffect(isSearch) {
-        onDispose { query = "" }
+        onDispose { currentQuery = "" }
     }
 
     SearchTopBar(
         isSearch = isSearch,
-        query = query,
+        query = currentQuery,
         onQueryChange = {
             onQueryChange(it)
-            query = it
+            currentQuery = it
         },
         onClose = {
             onCloseSearch()
-            query = ""
+            currentQuery = ""
         },
         title = { TopAppBarTitle(text = stringResource(id = R.string.page_modules)) },
         scrollBehavior = scrollBehavior,
