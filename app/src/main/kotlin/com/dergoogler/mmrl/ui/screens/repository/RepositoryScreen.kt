@@ -38,6 +38,7 @@ fun RepositoryScreen(
     viewModel: RepositoryViewModel = hiltViewModel()
 ) {
     val list by viewModel.online.collectAsStateWithLifecycle()
+    val query by viewModel.query.collectAsStateWithLifecycle()
 
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val listState = rememberLazyListState()
@@ -47,15 +48,16 @@ fun RepositoryScreen(
         onBack = viewModel::closeSearch
     )
 
-    DisposableEffect(true) {
-        onDispose(viewModel::closeSearch)
-    }
+//    DisposableEffect(true) {
+//        onDispose(viewModel::closeSearch)
+//    }
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             TopBar(
                 isSearch = viewModel.isSearch,
+                query = query,
                 onQueryChange = viewModel::search,
                 onOpenSearch = viewModel::openSearch,
                 onCloseSearch = viewModel::closeSearch,
@@ -91,15 +93,16 @@ fun RepositoryScreen(
 @Composable
 private fun TopBar(
     isSearch: Boolean,
+    query: String,
     onQueryChange: (String) -> Unit,
     onOpenSearch: () -> Unit,
     onCloseSearch: () -> Unit,
     setMenu: (RepositoryMenuCompat) -> Unit,
     scrollBehavior: TopAppBarScrollBehavior,
 ) {
-    var query by remember { mutableStateOf("") }
+    var currentQuery by remember { mutableStateOf(query) }
     DisposableEffect(isSearch) {
-        onDispose { query = "" }
+        onDispose { currentQuery = "" }
     }
 
     SearchTopBar(
@@ -107,11 +110,11 @@ private fun TopBar(
         query = query,
         onQueryChange = {
             onQueryChange(it)
-            query = it
+            currentQuery = it
         },
         onClose = {
             onCloseSearch()
-            query = ""
+            currentQuery = ""
         },
         title = { TopAppBarTitle(text = stringResource(id = R.string.page_repository)) },
         scrollBehavior = scrollBehavior,

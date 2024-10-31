@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.dergoogler.mmrl.Compat
 import com.dergoogler.mmrl.datastore.DarkMode
 import com.dergoogler.mmrl.datastore.WorkingMode
+import com.dergoogler.mmrl.repository.LocalRepository
+import com.dergoogler.mmrl.repository.ModulesRepository
 import com.dergoogler.mmrl.repository.UserPreferencesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ext.dergoogler.mmrl.viewmodel.MMRLViewModel
@@ -16,8 +18,10 @@ import javax.inject.Inject
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     application: Application,
+    localRepository: LocalRepository,
+    modulesRepository: ModulesRepository,
     userPreferencesRepository: UserPreferencesRepository
-) : MMRLViewModel(application, userPreferencesRepository) {
+) : MMRLViewModel(application, localRepository, modulesRepository, userPreferencesRepository) {
     val isProviderAlive get() = Compat.isAlive
 
     val version

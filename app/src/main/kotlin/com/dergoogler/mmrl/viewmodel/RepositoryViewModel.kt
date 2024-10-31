@@ -1,9 +1,9 @@
 package com.dergoogler.mmrl.viewmodel
 
+import android.app.Application
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dergoogler.mmrl.datastore.repository.Option
 import com.dergoogler.mmrl.datastore.repository.RepositoryMenuCompat
@@ -14,6 +14,7 @@ import com.dergoogler.mmrl.repository.LocalRepository
 import com.dergoogler.mmrl.repository.ModulesRepository
 import com.dergoogler.mmrl.repository.UserPreferencesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import ext.dergoogler.mmrl.viewmodel.MMRLViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
@@ -25,16 +26,19 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RepositoryViewModel @Inject constructor(
-    private val localRepository: LocalRepository,
-    private val modulesRepository: ModulesRepository,
-    private val userPreferencesRepository: UserPreferencesRepository
-) : ViewModel() {
-    private val repositoryMenu get() = userPreferencesRepository.data
-        .map { it.repositoryMenu }
+    application: Application,
+    localRepository: LocalRepository,
+    modulesRepository: ModulesRepository,
+    userPreferencesRepository: UserPreferencesRepository
+) : MMRLViewModel(application, localRepository, modulesRepository, userPreferencesRepository) {
+    private val repositoryMenu
+        get() = userPreferencesRepository.data
+            .map { it.repositoryMenu }
 
     var isSearch by mutableStateOf(false)
         private set
-    private val keyFlow = MutableStateFlow("")
+    private val _keyFlow = MutableStateFlow("")
+    val query get() = _keyFlow.asStateFlow()
 
     private val cacheFlow = MutableStateFlow(listOf<Pair<OnlineState, OnlineModule>>())
     private val onlineFlow = MutableStateFlow(listOf<Pair<OnlineState, OnlineModule>>())
@@ -82,7 +86,7 @@ class RepositoryViewModel @Inject constructor(
 
     private fun keyObserver() {
         combine(
-            keyFlow,
+            _keyFlow,
             cacheFlow
         ) { key, source ->
             onlineFlow.value = source
@@ -118,7 +122,7 @@ class RepositoryViewModel @Inject constructor(
     }
 
     fun search(key: String) {
-        keyFlow.value = key
+        _keyFlow.value = key
     }
 
     fun openSearch() {
@@ -127,7 +131,7 @@ class RepositoryViewModel @Inject constructor(
 
     fun closeSearch() {
         isSearch = false
-        keyFlow.value = ""
+        _keyFlow.value = ""
     }
 
     fun setRepositoryMenu(value: RepositoryMenuCompat) {
