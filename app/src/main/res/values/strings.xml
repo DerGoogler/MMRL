@@ -241,4 +241,8 @@
     <string name="repo_update_service_failed_desc">There are no updates for repositories</string>
     <string name="has_a_new_update">%1$s has a new update!</string>
     <string name="update_available_from_to">Update available from %s (%d) to %s (%d).</string>
+    <string name="events_birthday">%1$s years MMRL!</string>
+    <string name="events_halloween">BOO! … AHH</string>
+    <string name="events_christmas">← Tree.</string>
+    <string name="events_new_years_eve">New Years Eve!</string>
 </resources>

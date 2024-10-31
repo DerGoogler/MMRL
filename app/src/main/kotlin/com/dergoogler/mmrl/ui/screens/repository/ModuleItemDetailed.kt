@@ -112,9 +112,12 @@ fun ModuleItemDetailed(
                     Row(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
+
+                        val fontStyle =
+                            MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold)
                         Text(
                             text = module.name,
-                            style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold),
+                            style = fontStyle,
                             maxLines = 2,
                             textDecoration = decoration,
                             overflow = TextOverflow.Ellipsis
@@ -123,7 +126,7 @@ fun ModuleItemDetailed(
                             Spacer(modifier = Modifier.width(4.dp))
 
                             val iconSize =
-                                with(LocalDensity.current) { MaterialTheme.typography.titleSmall.fontSize.toDp() * 1.0f }
+                                with(LocalDensity.current) { fontStyle.fontSize.toDp() * 1.0f }
 
                             Icon(
                                 modifier = Modifier.size(iconSize),
