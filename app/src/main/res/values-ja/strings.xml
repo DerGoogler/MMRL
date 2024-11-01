@@ -135,9 +135,11 @@
     <string name="settings_date_pattern">日付のパターン</string>
     <string name="settings_date_pattern_desc">日付形式を変更します。</string>
     <string name="settings_recommended_repos">おすすめのリポジトリ</string>
-    <string name="settings_recommended_repos_desc">新しいリポジトリを探して追加をします</string>
+    <string name="settings_recommended_repos_desc">新しいリポジトリを探して追加します</string>
     <string name="settings_updates">更新</string>
     <string name="settings_updates_desc">更新プロセスに関する設定を管理します</string>
+    <string name="settings_homepage">アプリホームページ</string>
+    <string name="settings_homepage_desc">アプリの開始時に開く画面を設定します。</string>
     <string name="settings_auto_update_repos">リポジトリの自動更新</string>
     <string name="settings_auto_update_repos_desc">バックグラウンドでリポジトリの自動更新をします。</string>
     <string name="settings_repo_update_interval">リポジトリ更新の間隔</string>
@@ -216,4 +218,8 @@
     <string name="repo_update_service_failed_desc">リポジトリの更新はありません</string>
     <string name="has_a_new_update">%1$s に新しい更新があります！</string>
     <string name="update_available_from_to">%s (%d) から %s (%d) への更新が利用可能です。</string>
+    <string name="events_birthday">MMRL は %1$s 周年です！</string>
+    <string name="events_halloween">ばぁー！… アッー！</string>
+    <string name="events_christmas">← ツリー。</string>
+    <string name="events_new_years_eve">大晦日です！</string>
 </resources>

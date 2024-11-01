@@ -1,0 +1,9 @@
+MMRL はモジュールリポジトリを管理するための Android アプリです。
+
+機能:
+- モジュールリポジトリの管理
+- 複数のリポジトリに対応
+- Magisk と KernelSU に対応
+- Jetpack Compose とマテリアルデザイン 3 を使用した UI
+
+https://github.com/DerGoogler/MMRL

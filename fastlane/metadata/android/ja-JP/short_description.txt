@@ -1,0 +1,1 @@
+Magisk と KernelSU のモジュールを管理します。
