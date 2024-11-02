@@ -2,11 +2,13 @@ package com.dergoogler.mmrl.ui.screens.repository.view.pages
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -40,6 +42,7 @@ import com.dergoogler.mmrl.ui.component.Alert
 import com.dergoogler.mmrl.ui.component.AntiFeaturesItem
 import com.dergoogler.mmrl.ui.component.LabelItem
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
+import ext.dergoogler.mmrl.ext.ignoreHorizontalParentPadding
 import ext.dergoogler.mmrl.ext.toFormattedDate
 import ext.dergoogler.mmrl.ext.toFormattedDateSafely
 import java.util.Locale
@@ -53,7 +56,7 @@ fun OverviewPage(
     rootVersionName: String,
     notifyUpdates: Boolean,
     setUpdatesTag: (Boolean) -> Unit,
-    onInstall: (VersionItem) -> Unit
+    onInstall: (VersionItem) -> Unit,
 ) = Column(
     modifier = Modifier
         .fillMaxSize()
@@ -164,8 +167,6 @@ fun OverviewPage(
     online.screenshots?.let {
         if (it.isNotEmpty()) {
             ScreenshotsItem(images = it)
-
-            HorizontalDivider(thickness = 0.9.dp)
         }
     }
 }
@@ -175,7 +176,7 @@ private fun CloudItem(
     item: VersionItem,
     size: Int?,
     isProviderAlive: Boolean,
-    onInstall: (VersionItem) -> Unit
+    onInstall: (VersionItem) -> Unit,
 ) = Column(
     modifier = Modifier
         .padding(all = 16.dp)
@@ -232,7 +233,7 @@ private fun CloudItem(
 private fun LocalItem(
     local: LocalModule,
     notifyUpdates: Boolean,
-    setUpdatesTag: (Boolean) -> Unit
+    setUpdatesTag: (Boolean) -> Unit,
 ) = Column(
     modifier = Modifier
         .padding(all = 16.dp)
@@ -300,7 +301,7 @@ private fun LocalItem(
 private fun ValueItem(
     key: String,
     value: String?,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     if (value.isNullOrBlank()) return
 
@@ -338,8 +339,12 @@ private fun ScreenshotsItem(
     )
 
     LazyRow(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(4.dp)
+        modifier = Modifier
+            .ignoreHorizontalParentPadding(16.dp)
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        contentPadding = PaddingValues(start = 16.dp, end = 16.dp)
+
     ) {
         items(images.size) { imageUrl ->
             AsyncImage(
@@ -347,7 +352,7 @@ private fun ScreenshotsItem(
                 contentDescription = null,
                 modifier = Modifier
                     .width(200.dp)
-                    .clip(RoundedCornerShape(8.dp)),
+                    .clip(RoundedCornerShape(20.dp)),
                 contentScale = ContentScale.Crop
             )
         }
