@@ -1,8 +1,10 @@
 package com.dergoogler.mmrl.ui.component
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
@@ -16,7 +18,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.dergoogler.mmrl.BuildConfig
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.app.Event
 import java.time.LocalDate
@@ -26,7 +27,7 @@ import java.time.temporal.ChronoUnit
 @Composable
 fun TopAppBarTitle(
     text: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) = Row(
     modifier = modifier,
     horizontalArrangement = Arrangement.Start,
@@ -39,74 +40,57 @@ fun TopAppBarTitle(
         overflow = TextOverflow.Ellipsis,
         color = LocalContentColor.current
     )
-
-    if (BuildConfig.IS_DEV_VERSION) {
-        Spacer(modifier = Modifier.width(10.dp))
-        Icon(
-            painter = painterResource(id = R.drawable.ci_label),
-            contentDescription = null,
-            tint = LocalContentColor.current
-        )
-    }
-
-    EventIcon()
 }
 
-
 @Composable
-fun EventIcon() {
+fun TopAppBarIcon(
+    modifier: Modifier = Modifier,
+    @DrawableRes icon: Int = R.drawable.launcher_outline,
+    disableEvents: Boolean = false,
+    tint: Color = MaterialTheme.colorScheme.surfaceTint,
+) = Row(
+    modifier = modifier,
+    horizontalArrangement = Arrangement.Start,
+    verticalAlignment = Alignment.CenterVertically
+) {
     val events = when {
-        Event.isHalloween -> Triple(
+        Event.isHalloween -> Pair(
             R.drawable.pumpkin_scary,
             stringResource(R.string.events_halloween),
-            null
         )
 
-        Event.isChristmas -> Triple(
+        Event.isChristmas -> Pair(
             R.drawable.christmas_tree,
-            stringResource(R.string.events_christmas),
-            null
+            stringResource(R.string.events_christmas)
         )
 
         Event.isMMRLBirthday -> {
             val initialRelease = LocalDate.of(2022, 4, 25)
             val currentDate = LocalDate.now()
             val yearsCount = ChronoUnit.YEARS.between(initialRelease, currentDate)
-            Triple(
-                R.drawable.gift, stringResource(R.string.events_birthday, yearsCount),
-                null
+            Pair(
+                R.drawable.gift, stringResource(R.string.events_birthday, yearsCount)
             )
         }
 
-        Event.isNewYearsEve -> Triple(
+        Event.isNewYearsEve -> Pair(
             R.drawable.sparkles,
             stringResource(R.string.events_new_years_eve),
-            MaterialTheme.colorScheme.surfaceTint
         )
 
-        Event.isSomeRandomDates -> Triple(
+        Event.isSomeRandomDates -> Pair(
             R.drawable.balloon,
             null,
-            Color(0xFFB90000)
         )
 
-        else -> Triple(null, null, null)
+        else -> Pair(icon, null)
     }
-
-    if (events.first == null) return
-
-    val color = if (events.third == null) {
-        MaterialTheme.colorScheme.surfaceTint
-    } else {
-        events.third!!
-    }
-
-    Spacer(modifier = Modifier.width(10.dp))
 
     Icon(
-        painter = painterResource(id = events.first!!),
-        tint = color,
+        modifier = Modifier.size(30.dp),
+        painter = painterResource(id = events.first),
         contentDescription = null,
+        tint = tint
     )
 
     Spacer(modifier = Modifier.width(5.dp))
@@ -117,7 +101,9 @@ fun EventIcon() {
             style = MaterialTheme.typography.titleSmall,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
-            color = color
+            color = tint
         )
     }
+
+
 }

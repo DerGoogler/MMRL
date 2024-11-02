@@ -32,7 +32,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -41,11 +40,10 @@ import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.datastore.modules.ModulesMenuCompat
 import com.dergoogler.mmrl.model.local.LocalModule
 import com.dergoogler.mmrl.model.online.VersionItem
-import com.dergoogler.mmrl.ui.activity.InstallActivity
 import com.dergoogler.mmrl.ui.component.Loading
 import com.dergoogler.mmrl.ui.component.PageIndicator
 import com.dergoogler.mmrl.ui.component.SearchTopBar
-import com.dergoogler.mmrl.ui.component.TopAppBarTitle
+import com.dergoogler.mmrl.ui.component.TopAppBarIcon
 import com.dergoogler.mmrl.ui.utils.isScrollingUp
 import com.dergoogler.mmrl.ui.utils.none
 import com.dergoogler.mmrl.viewmodel.ModulesViewModel
@@ -171,7 +169,7 @@ private fun TopBar(
             onCloseSearch()
             currentQuery = ""
         },
-        title = { TopAppBarTitle(text = stringResource(id = R.string.page_modules)) },
+        title = { TopAppBarIcon() },
         scrollBehavior = scrollBehavior,
         actions = {
             if (!isSearch) {

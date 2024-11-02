@@ -19,7 +19,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
@@ -28,14 +27,14 @@ import com.dergoogler.mmrl.datastore.repository.RepositoryMenuCompat
 import com.dergoogler.mmrl.ui.component.Loading
 import com.dergoogler.mmrl.ui.component.PageIndicator
 import com.dergoogler.mmrl.ui.component.SearchTopBar
-import com.dergoogler.mmrl.ui.component.TopAppBarTitle
+import com.dergoogler.mmrl.ui.component.TopAppBarIcon
 import com.dergoogler.mmrl.ui.utils.none
 import com.dergoogler.mmrl.viewmodel.RepositoryViewModel
 
 @Composable
 fun RepositoryScreen(
     navController: NavController,
-    viewModel: RepositoryViewModel = hiltViewModel()
+    viewModel: RepositoryViewModel = hiltViewModel(),
 ) {
     val list by viewModel.online.collectAsStateWithLifecycle()
     val query by viewModel.query.collectAsStateWithLifecycle()
@@ -111,8 +110,7 @@ private fun TopBar(
         onClose = {
             onCloseSearch()
             currentQuery = ""
-        },
-        title = { TopAppBarTitle(text = stringResource(id = R.string.page_repository)) },
+        }, title = { TopAppBarIcon() },
         scrollBehavior = scrollBehavior,
         actions = {
             if (!isSearch) {
