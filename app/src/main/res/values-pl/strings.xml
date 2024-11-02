@@ -192,4 +192,10 @@
     <string name="has_a_new_update">%1$s ma nową aktualizację!</string>
     <string name="update_available_from_to">Aktualizacja dostępna od %s (%d) do %s (%d).</string>
     <string name="repo_options">Opcje</string>
+    <string name="settings_homepage">Strona startowa</string>
+    <string name="events_birthday">%1$s lat MMRL!</string>
+    <string name="events_christmas">← Choinka.</string>
+    <string name="events_halloween">BOO! … AHH</string>
+    <string name="settings_homepage_desc">Wybierz ekran startowy aplikacji</string>
+    <string name="events_new_years_eve">Sylwester!</string>
 </resources>
