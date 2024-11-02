@@ -115,23 +115,40 @@ class ModulesViewModel @Inject constructor(
 
         }.launchIn(viewModelScope)
     }
-
+    
     private fun keyObserver() {
         combine(
             keyFlow,
             cacheFlow
         ) { key, source ->
-            localFlow.value = source
-                .filter {
-                    if (key.isNotBlank()) {
-                        it.name.contains(key, ignoreCase = true)
-                                || it.author.contains(key, ignoreCase = true)
-                                || it.description.contains(key, ignoreCase = true)
-                    } else {
-                        true
-                    }
-                }
+            val newKey = when {
+                key.startsWith("id:", ignoreCase = true) -> key.removePrefix("id:")
+                key.startsWith("name:", ignoreCase = true) -> key.removePrefix("name:")
+                key.startsWith("author:", ignoreCase = true) -> key.removePrefix("author:")
+                else -> key
+            }.trim()
 
+            localFlow.value = source.filter {
+                if (key.isNotBlank() || newKey.isNotBlank()) {
+                    when {
+                        key.startsWith("id:", ignoreCase = true) ->
+                            it.id.equals(newKey, ignoreCase = true)
+
+                        key.startsWith("name:", ignoreCase = true) ->
+                            it.name.equals(newKey, ignoreCase = true)
+
+                        key.startsWith("author:", ignoreCase = true) ->
+                            it.author.equals(newKey, ignoreCase = true) ?: false
+
+                        else ->
+                            it.name.contains(key, ignoreCase = true) ||
+                                    it.author.contains(key, ignoreCase = true) ||
+                                    it.description.contains(key, ignoreCase = true)
+                    }
+                } else {
+                    true
+                }
+            }
         }.launchIn(viewModelScope)
     }
 

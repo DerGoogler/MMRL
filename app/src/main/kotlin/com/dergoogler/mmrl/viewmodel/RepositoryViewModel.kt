@@ -29,7 +29,7 @@ class RepositoryViewModel @Inject constructor(
     application: Application,
     localRepository: LocalRepository,
     modulesRepository: ModulesRepository,
-    userPreferencesRepository: UserPreferencesRepository
+    userPreferencesRepository: UserPreferencesRepository,
 ) : MMRLViewModel(application, localRepository, modulesRepository, userPreferencesRepository) {
     private val repositoryMenu
         get() = userPreferencesRepository.data
@@ -89,23 +89,49 @@ class RepositoryViewModel @Inject constructor(
             keyFlow,
             cacheFlow
         ) { key, source ->
-            onlineFlow.value = source
-                .filter { (_, m) ->
-                    if (key.isNotBlank()) {
-                        m.name.contains(key, ignoreCase = true)
-                                || m.author.contains(key, ignoreCase = true)
-                                || m.description.contains(key, ignoreCase = true)
-                    } else {
-                        true
-                    }
-                }
+            val newKey = when {
+                key.startsWith("id:", ignoreCase = true) -> key.removePrefix("id:")
+                key.startsWith("name:", ignoreCase = true) -> key.removePrefix("name:")
+                key.startsWith("author:", ignoreCase = true) -> key.removePrefix("author:")
+                key.startsWith("category:", ignoreCase = true) -> key.removePrefix("category:")
+                else -> key
+            }.trim()
 
+            onlineFlow.value = source.filter { (_, m) ->
+                if (key.isNotBlank() || newKey.isNotBlank()) {
+                    when {
+                        key.startsWith("id:", ignoreCase = true) ->
+                            m.id.equals(newKey, ignoreCase = true)
+
+                        key.startsWith("name:", ignoreCase = true) ->
+                            m.name.equals(newKey, ignoreCase = true)
+
+                        key.startsWith("author:", ignoreCase = true) ->
+                            m.author.equals(newKey, ignoreCase = true) ?: false
+
+                        key.startsWith("category:", ignoreCase = true) ->
+                            m.categories?.any {
+                                it.equals(
+                                    newKey,
+                                    ignoreCase = true
+                                )
+                            } ?: false
+
+                        else ->
+                            m.name.contains(key, ignoreCase = true) ||
+                                    m.author.contains(key, ignoreCase = true) ||
+                                    m.description.contains(key, ignoreCase = true)
+                    }
+                } else {
+                    true
+                }
+            }
         }.launchIn(viewModelScope)
     }
 
     private fun comparator(
         option: Option,
-        descending: Boolean
+        descending: Boolean,
     ): Comparator<Pair<OnlineState, OnlineModule>> = if (descending) {
         when (option) {
             Option.NAME -> compareByDescending { it.second.name.lowercase() }
