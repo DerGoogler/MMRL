@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
@@ -26,7 +27,7 @@ import androidx.navigation.NavController
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.model.online.Blacklist
 import com.dergoogler.mmrl.network.runRequest
-import com.dergoogler.mmrl.stub.IBlacklistManager
+import com.dergoogler.mmrl.stub.IMMRLApiManager
 import com.dergoogler.mmrl.ui.component.Loading
 import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
 import com.dergoogler.mmrl.ui.screens.settings.blacklist.items.ModuleItem
@@ -48,7 +49,7 @@ fun BlacklistScreen(
     LaunchedEffect(Unit) {
         runRequest {
             withContext(Dispatchers.IO) {
-                val api = IBlacklistManager.build()
+                val api = IMMRLApiManager.build()
                 return@withContext api.blacklist.execute()
             }
         }.onSuccess { list ->
@@ -58,7 +59,7 @@ fun BlacklistScreen(
         }
 
     }
-
+    
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection), topBar = {
             TopBar(

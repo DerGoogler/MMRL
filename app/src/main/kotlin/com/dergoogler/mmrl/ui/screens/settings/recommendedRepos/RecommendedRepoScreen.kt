@@ -32,7 +32,7 @@ import androidx.navigation.NavController
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.model.online.RecommendedRepo
 import com.dergoogler.mmrl.network.runRequest
-import com.dergoogler.mmrl.stub.IRecommendedReposManager
+import com.dergoogler.mmrl.stub.IMMRLApiManager
 import com.dergoogler.mmrl.ui.component.Loading
 import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
 import com.dergoogler.mmrl.ui.component.ListButtonItem
@@ -59,8 +59,8 @@ fun RecommendedRepoScreen(
     LaunchedEffect(Unit) {
         runRequest {
             withContext(Dispatchers.IO) {
-                val api = IRecommendedReposManager.build()
-                return@withContext api.recommendedRepos.execute()
+                val api = IMMRLApiManager.build()
+                return@withContext api.repositories.execute()
             }
         }.onSuccess { list ->
             recommendedRepos = list

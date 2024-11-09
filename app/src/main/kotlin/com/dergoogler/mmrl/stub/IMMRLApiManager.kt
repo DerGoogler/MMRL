@@ -2,6 +2,7 @@ package com.dergoogler.mmrl.stub
 
 import com.dergoogler.mmrl.model.online.Blacklist
 import com.dergoogler.mmrl.model.online.Changelog
+import com.dergoogler.mmrl.model.online.RecommendedRepo
 import com.dergoogler.mmrl.network.NetworkUtils
 import retrofit2.Call
 import retrofit2.create
@@ -14,8 +15,8 @@ interface IMMRLApiManager {
     @get:GET("blacklist.json")
     val blacklist: Call<List<Blacklist>>
 
-    // @get:GET("repositories.json")
-    // val repositories: Call<List<Blacklist>>
+    @get:GET("repositories.json")
+    val repositories: Call<List<RecommendedRepo>>
 
     companion object {
         fun build(): IMMRLApiManager {

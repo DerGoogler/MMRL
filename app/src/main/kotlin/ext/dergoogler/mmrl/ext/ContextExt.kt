@@ -8,6 +8,7 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Composer
 import androidx.core.app.ShareCompat
+import timber.log.Timber
 
 val Context.tmpDir
     get() = cacheDir.resolve("tmp")
@@ -23,14 +24,19 @@ fun Context.openUrl(url: String) {
 
 // TODO: add colors from theme
 fun Context.launchCustomTab(url: String) {
-    val colorSchemeParams = CustomTabColorSchemeParams.Builder()
-        .build()
+    try {
+        val colorSchemeParams = CustomTabColorSchemeParams.Builder()
+            .build()
 
-    val customTabsIntent = CustomTabsIntent.Builder()
-        .setDefaultColorSchemeParams(colorSchemeParams)
-        .build()
+        val customTabsIntent = CustomTabsIntent.Builder()
+            .setDefaultColorSchemeParams(colorSchemeParams)
+            .build()
 
-    customTabsIntent.launchUrl(this, Uri.parse(url))
+        customTabsIntent.launchUrl(this, Uri.parse(url))
+    } catch (activityNotFoundException: Exception) {
+        Timber.e(activityNotFoundException, "unable to launch custom tab")
+        this.openUrl(url)
+    }
 }
 
 @get:Composable

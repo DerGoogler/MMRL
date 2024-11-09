@@ -1,9 +1,5 @@
 package com.dergoogler.mmrl.ui.screens.settings.changelogs.items
 
-import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.spring
-import androidx.compose.foundation.layout.fillMaxSize
 import com.dergoogler.mmrl.model.online.Changelog
 import com.dergoogler.mmrl.ui.component.MarkdownText
 import androidx.compose.foundation.layout.Column
