@@ -155,7 +155,8 @@ private fun BottomSheet(
                     )
 
                     BulletList(
-                        style = MaterialTheme.typography.titleMedium, items = it
+                        style = MaterialTheme.typography.titleMedium.copy(color = MaterialTheme.colorScheme.outline),
+                        items = it
                     )
                 }
 

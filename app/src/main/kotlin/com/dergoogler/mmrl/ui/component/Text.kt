@@ -78,6 +78,7 @@ fun MarkdownText(
         modifier = modifier,
         style = style,
         markdown = text,
+
         imageLoader = Coil.imageLoader(context),
         linkifyMask = Linkify.WEB_URLS,
         linkColor = MaterialTheme.colorScheme.primary,

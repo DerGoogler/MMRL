@@ -29,6 +29,7 @@ import com.dergoogler.mmrl.model.online.Blacklist
 import com.dergoogler.mmrl.ui.component.AntiFeaturesItem
 import com.dergoogler.mmrl.ui.component.NavigationBarsSpacer
 import com.dergoogler.mmrl.ui.component.ListButtonItem
+import com.dergoogler.mmrl.ui.component.MarkdownText
 import com.dergoogler.mmrl.ui.utils.expandedShape
 import ext.dergoogler.mmrl.ext.launchCustomTab
 
@@ -93,10 +94,9 @@ private fun BottomSheet(
                                 fontWeight = FontWeight.Bold,
                                 modifier = Modifier.padding(bottom = 4.dp)
                             )
-                            Text(
+                            MarkdownText(
                                 text = it,
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.outline,
+                                style = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.outline),
                             )
                         }
                     }
