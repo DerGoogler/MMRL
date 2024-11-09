@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBarDefaults
@@ -35,12 +34,10 @@ import com.dergoogler.mmrl.network.runRequest
 import com.dergoogler.mmrl.stub.IMMRLApiManager
 import com.dergoogler.mmrl.ui.component.Loading
 import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
-import com.dergoogler.mmrl.ui.component.ListButtonItem
-import com.dergoogler.mmrl.ui.screens.settings.repositories.FailureDialog
+import com.dergoogler.mmrl.ui.screens.settings.recommendedRepos.items.RepoItem
 import com.dergoogler.mmrl.ui.utils.none
 import com.dergoogler.mmrl.viewmodel.RepositoriesViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
@@ -48,7 +45,7 @@ import timber.log.Timber
 @Composable
 fun RecommendedRepoScreen(
     navController: NavController,
-    viewModel: RepositoriesViewModel = hiltViewModel()
+    viewModel: RepositoriesViewModel = hiltViewModel(),
 ) {
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
@@ -96,37 +93,13 @@ fun RecommendedRepoScreen(
                 recommendedRepos?.let { bl ->
                     LazyColumn {
                         items(items = bl, key = { it.url }) { repo ->
-                            var failure by remember { mutableStateOf(false) }
-                            var message: String by remember { mutableStateOf("") }
 
-                            if (failure) FailureDialog(
-                                name = repo.url,
-                                message = message,
-                                onClose = {
-                                    failure = false
-                                    message = ""
-                                }
-                            )
 
-                            ListButtonItem(
-                                title = repo.name,
-                                desc = repo.url,
-                                onClick = {
-                                    viewModel.insert(
-                                        url = repo.url,
-                                        onSuccess = {
-                                            scope.launch {
-                                                snackbarHostState.showSnackbar(
-                                                    message = context.getString(R.string.repo_added),
-                                                    duration = SnackbarDuration.Short
-                                                )
-                                            }
-                                        },
-                                        onFailure = { e ->
-                                            failure = true
-                                            message = e.stackTraceToString()
-                                        })
-                                }
+                            RepoItem(
+                                repo = repo,
+                                scope = scope,
+                                snackbarHostState = snackbarHostState,
+                                viewModel = viewModel
                             )
                         }
                     }

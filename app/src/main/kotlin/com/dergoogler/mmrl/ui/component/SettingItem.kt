@@ -2,6 +2,7 @@ package com.dergoogler.mmrl.ui.component
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -141,6 +142,7 @@ fun ListButtonItem(
     title: String,
     desc: String? = null,
     onClick: () -> Unit,
+    onLongClick: () -> Unit = {},
     contentPaddingValues: PaddingValues = PaddingValues(vertical = 16.dp, horizontal = 25.dp),
     itemTextStyle: ListItemTextStyle = ListItemDefaults.itemStyle(),
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
@@ -155,9 +157,10 @@ fun ListButtonItem(
     Row(
         modifier = modifier
             .alpha(alpha = if (enabled) 1f else 0.5f)
-            .clickable(
+            .combinedClickable(
                 enabled = enabled,
                 onClick = onClick,
+                onLongClick = onLongClick,
                 interactionSource = interactionSource,
                 indication = rememberRipple()
             )
@@ -207,7 +210,7 @@ fun ListSwitchItem(
     itemTextStyle: ListItemTextStyle = ListItemDefaults.itemStyle(),
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     @DrawableRes icon: Int? = null,
-    enabled: Boolean = true
+    enabled: Boolean = true,
 ) {
     val layoutDirection = LocalLayoutDirection.current
     val start by remember {
@@ -305,7 +308,7 @@ private fun EditTextDialog(
     title: String,
     value: String,
     onClose: () -> Unit,
-    onConfirm: (String) -> Unit
+    onConfirm: (String) -> Unit,
 ) {
     var text by remember { mutableStateOf(value) }
 
@@ -472,7 +475,7 @@ class ListItemTextStyle internal constructor(
     val titleTextColor: Color,
     val descTextColor: Color,
     val titleTextStyle: TextStyle,
-    val descTextStyle: TextStyle
+    val descTextStyle: TextStyle,
 ) {
     @Suppress("RedundantIf")
     override fun equals(other: Any?): Boolean {
@@ -505,7 +508,7 @@ object ListItemDefaults {
         titleTextColor: Color = LocalContentColor.current,
         descTextColor: Color = MaterialTheme.colorScheme.outline,
         titleTextStyle: TextStyle = MaterialTheme.typography.bodyLarge,
-        descTextStyle: TextStyle = MaterialTheme.typography.bodyMedium
+        descTextStyle: TextStyle = MaterialTheme.typography.bodyMedium,
     ) = ListItemTextStyle(
         titleTextColor = titleTextColor,
         descTextColor = descTextColor,
