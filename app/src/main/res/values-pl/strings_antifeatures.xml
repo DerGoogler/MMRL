@@ -6,7 +6,7 @@
     <string name="knownvuln_desc">Moduł ten zawiera znaną lukę w zabezpieczeniach</string>
     <string name="nsfw_name">NSFW</string>
     <string name="nsfw_desc">Ten moduł zawiera treści, które nie powinny być publikowane lub widoczne wszędzie</string>
-    <string name="nosourcesince_name">Brak źródła od</string>
+    <string name="nosourcesince_name">Brak otwartego kodu źródłowego</string>
     <string name="nosourcesince_desc">Kod źródłowy nie jest już dostępny, aktualizacje nie są możliwe.</string>
     <string name="nonfreeadd_name">Niewolne dodatki</string>
     <string name="nonfreeadd_desc">Moduł ten promuje niewolne dodatki</string>
