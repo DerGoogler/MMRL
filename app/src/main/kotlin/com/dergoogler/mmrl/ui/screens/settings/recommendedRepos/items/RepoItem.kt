@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.model.online.RecommendedRepo
 import com.dergoogler.mmrl.ui.component.BulletList
+import com.dergoogler.mmrl.ui.component.HtmlText
 import com.dergoogler.mmrl.ui.component.NavigationBarsSpacer
 import com.dergoogler.mmrl.ui.component.ListButtonItem
 import com.dergoogler.mmrl.ui.component.MarkdownText
@@ -125,7 +126,7 @@ private fun BottomSheet(
                         tonalElevation = 1.dp,
                         shape = RoundedCornerShape(20.dp)
                     ) {
-                        MarkdownText(
+                        HtmlText(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(16.dp),

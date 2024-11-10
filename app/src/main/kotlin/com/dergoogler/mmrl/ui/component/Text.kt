@@ -1,5 +1,6 @@
 package com.dergoogler.mmrl.ui.component
 
+import android.text.SpannableStringBuilder
 import android.text.method.LinkMovementMethod
 import android.text.util.Linkify
 import android.widget.TextView
@@ -27,6 +28,7 @@ import androidx.core.text.HtmlCompat
 import coil.Coil
 import ext.dergoogler.mmrl.ext.launchCustomTab
 import dev.jeziellago.compose.markdowntext.MarkdownText
+import ext.dergoogler.mmrl.ext.toAnnotatedString
 
 @Composable
 internal fun ProvideContentColorTextStyle(
@@ -49,20 +51,14 @@ fun HtmlText(
     style: TextStyle = LocalTextStyle.current,
     color: Color = LocalContentColor.current,
 ) {
-    val linkTextColor = MaterialTheme.colorScheme.primary.toArgb()
-    AndroidView(
-        modifier = modifier,
-        factory = { TextView(it) },
-        update = {
-            it.movementMethod = LinkMovementMethod.getInstance()
-            it.setLinkTextColor(linkTextColor)
-            it.highlightColor = style.background.toArgb()
+    val spannableString = SpannableStringBuilder(text).toString()
+    val spanned = HtmlCompat.fromHtml(spannableString, HtmlCompat.FROM_HTML_MODE_COMPACT)
 
-            it.textSize = style.fontSize.value
-            it.setTextColor(color.toArgb())
-            it.setBackgroundColor(style.background.toArgb())
-            it.text = HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_COMPACT)
-        }
+    Text(
+        modifier = modifier,
+        style = style,
+        color = color,
+        text = spanned.toAnnotatedString()
     )
 }
 
