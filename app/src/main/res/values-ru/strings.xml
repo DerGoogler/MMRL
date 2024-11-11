@@ -62,7 +62,7 @@
     <string name="view_module_homepage">Домашняя страница</string>
     <string name="view_module_source">Исходный код</string>
     <string name="view_module_support">Поддержка</string>
-    <string name="view_module_view_track">Просмотреть ветку</string>
+    <string name="view_module_view_track">Просмотр веток</string>
     <string name="view_module_type">Тип: %s</string>
     <string name="view_module_added">Добавлено: %s</string>
     <string name="view_module_file_size">Размер файла</string>
@@ -89,7 +89,7 @@
     <string name="view_module_features_sepolicy_sub">Добавляет пользовательские политики безопасности (правила SEPolicy).</string>
     <string name="view_module_features_zygisk_sub">Позволяет модулям взаимодействовать с фреймворком Zygisk, включая изменения и взаимодействия с системой.</string>
     <string name="view_module_features_apks_sub">Включает дополнительные APK внутри модуля.</string>
-    <string name="view_module_features_webui_sub">Веб-интерфейс для управления модулями (KernelSU и APatch, не Magisk).</string>
+    <string name="view_module_features_webui_sub">Веб-интерфейс для управления модулем (KernelSU и APatch, не Magisk).</string>
     <string name="view_module_features_postmount_sub">Выполнение скрипта после монтирования OverlayFS (KernelSU и APatch).</string>
     <string name="view_module_features_bootcompleted_sub">Выполнение скрипта после завершения загрузки (KernelSU и APatch).</string>
 
@@ -148,7 +148,7 @@
     <string name="settings_recommended_repos">Рекомендуемые репозитории</string>
     <string name="settings_recommended_repos_desc">Изучите новые репозитории и добавьте их напрямую</string>
     <string name="settings_updates">Обновления</string>
-    <string name="settings_updates_desc">Управляйте своими предпочтениями в процессе обновления</string>
+    <string name="settings_updates_desc">Управляйте своими предпочтениями над процессом обновления</string>
     <string name="settings_homepage">Домашняя страница приложения</string>
     <string name="settings_homepage_desc">Выберите начальный экран приложения</string>
 
