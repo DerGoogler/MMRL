@@ -198,4 +198,6 @@
     <string name="events_halloween">BOO! … AHH</string>
     <string name="settings_homepage_desc">Wybierz ekran startowy aplikacji</string>
     <string name="events_new_years_eve">Sylwester!</string>
+    <string name="open_source">Otwórz źródło</string>
+    <string name="maintained_by">Rozwijany przez</string>
 </resources>
