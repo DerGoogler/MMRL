@@ -80,7 +80,11 @@ fun AppearanceScreen(
                 icon = R.drawable.player_play,
                 desc = stringResource(R.string.settings_homepage_desc),
                 value = userPreferences.homepage,
-                options = listOf(MainScreen.Repository.route, MainScreen.Modules.route),
+                options = listOf(
+                    MainScreen.Home.route,
+                    MainScreen.Repository.route,
+                    MainScreen.Modules.route
+                ),
                 onConfirm = {
                     viewModel.setHomepage(it)
                 })

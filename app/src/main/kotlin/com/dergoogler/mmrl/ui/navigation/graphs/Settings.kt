@@ -9,7 +9,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.dergoogler.mmrl.ui.navigation.MainScreen
 import com.dergoogler.mmrl.ui.screens.settings.SettingsScreen
-import com.dergoogler.mmrl.ui.screens.settings.about.AboutScreen
 import com.dergoogler.mmrl.ui.screens.settings.appearance.AppearanceScreen
 import com.dergoogler.mmrl.ui.screens.settings.blacklist.BlacklistScreen
 import com.dergoogler.mmrl.ui.screens.settings.changelogs.ChangelogScreen
@@ -29,7 +28,8 @@ enum class SettingsScreen(val route: String) {
     Security("Security"),
     Other("Other"),
     Blacklist("Blacklist"),
-    WorkingMode("WorkingMode"), About("About"), Changelog("Changelog"),
+    WorkingMode("WorkingMode"),
+    Changelog("Changelog"),
 }
 
 fun NavGraphBuilder.settingsScreen(
@@ -124,16 +124,6 @@ fun NavGraphBuilder.settingsScreen(
         exitTransition = { fadeOut() }
     ) {
         WorkingModeScreen(
-            navController = navController
-        )
-    }
-
-    composable(
-        route = SettingsScreen.About.route,
-        enterTransition = { scaleIn() + fadeIn() },
-        exitTransition = { fadeOut() }
-    ) {
-        AboutScreen(
             navController = navController
         )
     }

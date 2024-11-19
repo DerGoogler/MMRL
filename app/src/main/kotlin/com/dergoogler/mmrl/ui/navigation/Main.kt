@@ -10,6 +10,12 @@ enum class MainScreen(
     @DrawableRes val icon: Int,
     @DrawableRes val iconFilled: Int
 ) {
+    Home(
+        route = "HomeScreen",
+        label = R.string.page_home,
+        icon = R.drawable.home,
+        iconFilled = R.drawable.home_filled
+    ),
     Repository(
         route = "RepositoryScreen",
         label = R.string.page_repository,

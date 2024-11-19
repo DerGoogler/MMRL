@@ -93,7 +93,7 @@ data class UserPreferencesCompat(
             autoUpdateReposInterval = 6,
             checkModuleUpdates = true,
             checkModuleUpdatesInterval = 2,
-            homepage = MainScreen.Repository.route,
+            homepage = MainScreen.Home.route,
             repositoryMenu = RepositoryMenuCompat.default(),
             modulesMenu = ModulesMenuCompat.default()
         )

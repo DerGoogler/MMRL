@@ -26,6 +26,7 @@
     <string name="license_fsf_libre">FSF Libre</string>
 
     <!-- Page -->
+    <string name="page_home">Home</string>
     <string name="page_repository">Repository</string>
     <string name="page_modules">Modules</string>
     <string name="page_settings">Settings</string>
@@ -239,6 +240,24 @@
     <string name="repo_update_service_desc">Don\'t worry, MMRL updated your installed repos for you. 😋</string>
     <string name="repo_update_service_failed">No updates found for repositories</string>
     <string name="repo_update_service_failed_desc">There are no updates for repositories</string>
+
+    <!-- SELinux -->
+    <string name="selinux_status">SELinux status</string>
+    <string name="selinux_status_disabled">Disabled</string>
+    <string name="selinux_status_enforcing">Enforcing</string>
+    <string name="selinux_status_permissive">Permissive</string>
+    <string name="selinux_status_unknown">Unknown</string>
+
+    <string name="reboot">Reboot</string>
+    <string name="reboot_userspace">Soft Reboot</string>
+    <string name="reboot_recovery">Reboot to Recovery</string>
+    <string name="reboot_bootloader">Reboot to Bootloader</string>
+    <string name="reboot_download">Reboot to Download</string>
+    <string name="reboot_edl">Reboot to EDL</string>
+
+    <string name="home_support_title">Support Me</string>
+    <string name="home_support_content">MMRL is, and always will be, free, and open source. You can however show me that you care by making a donation.</string>
+
     <string name="has_a_new_update">%1$s has a new update!</string>
     <string name="update_available_from_to">Update available from %s (%d) to %s (%d).</string>
     <string name="events_birthday">%1$s years MMRL!</string>
@@ -247,4 +266,7 @@
     <string name="events_new_years_eve">New Years Eve!</string>
     <string name="open_source">Open Source</string>
     <string name="maintained_by">Maintained By</string>
+    <string name="kernel">Kernel</string>
+    <string name="manager_version">Manager Version</string>
+    <string name="fingerprint">Fingerprint</string>
 </resources>

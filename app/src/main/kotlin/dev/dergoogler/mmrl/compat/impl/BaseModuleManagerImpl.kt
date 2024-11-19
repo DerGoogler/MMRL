@@ -13,7 +13,7 @@ import java.io.File
 import java.util.zip.ZipFile
 
 internal abstract class BaseModuleManagerImpl(
-    private val shell: Shell
+    private val shell: Shell,
 ) : IModuleManager.Stub() {
     internal val modulesDir = File(MODULES_PATH)
 
@@ -41,8 +41,12 @@ internal abstract class BaseModuleManagerImpl(
         return mVersionCode
     }
 
-    override fun reboot() {
-        "svc power reboot || reboot".exec()
+    override fun reboot(reason: String) {
+        if (reason == "recovery") {
+            "/system/bin/input keyevent 26".exec()
+        }
+
+        "/system/bin/svc power reboot $reason || /system/bin/reboot $reason".exec()
     }
 
     override fun getModules() = modulesDir.listFiles()
@@ -126,7 +130,7 @@ internal abstract class BaseModuleManagerImpl(
     }
 
     private fun Map<String, String>.toModule(
-        dir: File
+        dir: File,
     ) = toModule(
         path = dir.name,
         state = readState(dir),
@@ -138,7 +142,7 @@ internal abstract class BaseModuleManagerImpl(
         path: String = "unknown",
         state: State = State.ENABLE,
         lastUpdated: Long = 0L,
-        hasModConf: Boolean = false
+        hasModConf: Boolean = false,
     ) = LocalModule(
         id = getOrDefault("id", path),
         name = getOrDefault("name", path),

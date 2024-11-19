@@ -147,22 +147,13 @@ fun SettingsScreen(
                 onClick = {
                     navController.navigateSingleTopTo(SettingsScreen.Blacklist.route)
                 })
-
-            ListButtonItem(
-                icon = R.drawable.award,
-                title = stringResource(id = R.string.settings_about),
-                desc = "${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})",
-                onClick = {
-                    navController.navigateSingleTopTo(SettingsScreen.About.route)
-                }
-            )
         }
     }
 }
 
 @Composable
 private fun TopBar(
-    scrollBehavior: TopAppBarScrollBehavior
+    scrollBehavior: TopAppBarScrollBehavior,
 ) = TopAppBar(
     title = {
         TopAppBarTitle(text = stringResource(id = R.string.page_settings))

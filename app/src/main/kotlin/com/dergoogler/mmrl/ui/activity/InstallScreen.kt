@@ -55,6 +55,7 @@ import com.dergoogler.mmrl.app.Event
 import com.dergoogler.mmrl.app.Event.Companion.isFinished
 import com.dergoogler.mmrl.app.Event.Companion.isLoading
 import com.dergoogler.mmrl.app.Event.Companion.isSucceeded
+import com.dergoogler.mmrl.ui.component.ConfirmRebootDialog
 import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.utils.isScrollingUp
@@ -241,43 +242,6 @@ private fun TopBar(
         }
     }
 )
-
-
-@Composable
-private fun ConfirmRebootDialog(
-    onClose: () -> Unit,
-    onConfirm: () -> Unit
-) {
-    AlertDialog(
-        title = {
-            Text(text = stringResource(id = R.string.install_screen_reboot_title))
-        },
-        text = {
-            Text(text = stringResource(id = R.string.install_screen_reboot_text))
-        },
-        onDismissRequest = {
-            onClose()
-        },
-        confirmButton = {
-            TextButton(
-                onClick = {
-                    onConfirm()
-                }
-            ) {
-                Text(text = stringResource(id = R.string.install_screen_reboot_confirm))
-            }
-        },
-        dismissButton = {
-            TextButton(
-                onClick = {
-                    onClose()
-                }
-            ) {
-                Text(text = stringResource(id = R.string.install_screen_reboot_dismiss))
-            }
-        }
-    )
-}
 
 @Composable
 private fun FloatingButton(

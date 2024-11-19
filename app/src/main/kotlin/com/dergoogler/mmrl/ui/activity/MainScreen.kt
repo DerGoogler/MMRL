@@ -22,6 +22,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.dergoogler.mmrl.datastore.UserPreferencesCompat.Companion.isRoot
 import com.dergoogler.mmrl.ui.navigation.MainScreen
+import com.dergoogler.mmrl.ui.navigation.graphs.homeScreen
 import com.dergoogler.mmrl.ui.navigation.graphs.modulesScreen
 import com.dergoogler.mmrl.ui.navigation.graphs.repositoryScreen
 import com.dergoogler.mmrl.ui.navigation.graphs.settingsScreen
@@ -44,8 +45,11 @@ fun MainScreen() {
         NavHost(
             modifier = Modifier.padding(bottom = it.calculateBottomPadding()),
             navController = navController,
-            startDestination = userPreferences.homepage.ifBlank { MainScreen.Repository.route }
+            startDestination = userPreferences.homepage.ifBlank { MainScreen.Home.route }
         ) {
+            homeScreen(
+                navController = navController
+            )
             repositoryScreen(
                 navController = navController
             )
@@ -62,7 +66,7 @@ fun MainScreen() {
 @Composable
 private fun BottomNav(
     navController: NavController,
-    isRoot: Boolean
+    isRoot: Boolean,
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
@@ -70,9 +74,14 @@ private fun BottomNav(
     val mainScreens by remember(isRoot) {
         derivedStateOf {
             if (isRoot) {
-                listOf(MainScreen.Repository, MainScreen.Modules, MainScreen.Settings)
+                listOf(
+                    MainScreen.Home,
+                    MainScreen.Repository,
+                    MainScreen.Modules,
+                    MainScreen.Settings
+                )
             } else {
-                listOf(MainScreen.Repository, MainScreen.Settings)
+                listOf(MainScreen.Home, MainScreen.Repository, MainScreen.Settings)
             }
         }
     }

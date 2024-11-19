@@ -45,9 +45,9 @@ class InstallViewModel @Inject constructor(
         Timber.d("InstallViewModel init")
     }
 
-    fun reboot() {
+    fun reboot(reason: String = "") {
         with(moduleManager) {
-            reboot()
+            reboot(reason)
         }
     }
 
