@@ -24,9 +24,10 @@ data class UserPreferencesCompat(
     val autoUpdateReposInterval: Int,
     val checkModuleUpdates: Boolean,
     val checkModuleUpdatesInterval: Int,
+    val checkAppUpdates: Boolean,
     val homepage: String,
     val repositoryMenu: RepositoryMenuCompat,
-    val modulesMenu: ModulesMenuCompat
+    val modulesMenu: ModulesMenuCompat,
 ) {
     constructor(original: UserPreferences) : this(
         workingMode = original.workingMode,
@@ -43,6 +44,7 @@ data class UserPreferencesCompat(
         autoUpdateReposInterval = original.autoUpdateReposInterval,
         checkModuleUpdates = original.checkModuleUpdates,
         checkModuleUpdatesInterval = original.checkModuleUpdatesInterval,
+        checkAppUpdates = original.checkAppUpdates,
         homepage = original.homepage,
         repositoryMenu = when {
             original.hasRepositoryMenu() -> RepositoryMenuCompat(original.repositoryMenu)
@@ -74,6 +76,7 @@ data class UserPreferencesCompat(
         .setAutoUpdateReposInterval(autoUpdateReposInterval)
         .setCheckModuleUpdates(checkModuleUpdates)
         .setCheckModuleUpdatesInterval(checkModuleUpdatesInterval)
+        .setCheckAppUpdates(checkAppUpdates)
         .setHomepage(homepage)
         .setRepositoryMenu(repositoryMenu.toProto())
         .setModulesMenu(modulesMenu.toProto())
@@ -93,6 +96,7 @@ data class UserPreferencesCompat(
             autoUpdateReposInterval = 6,
             checkModuleUpdates = true,
             checkModuleUpdatesInterval = 2,
+            checkAppUpdates = true,
             homepage = MainScreen.Home.route,
             repositoryMenu = RepositoryMenuCompat.default(),
             modulesMenu = ModulesMenuCompat.default()

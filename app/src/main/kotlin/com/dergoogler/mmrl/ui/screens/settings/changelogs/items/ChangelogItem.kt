@@ -30,7 +30,7 @@ fun ChangelogItem(
 ) {
     var open by remember { mutableStateOf(false) }
     if (open) {
-        BottomSheet(changelog = changelog, onClose = { open = false })
+        ChangelogBottomSheet(changelog = changelog, onClose = { open = false })
     }
 
     ListButtonItem(title = changelog.versionName,
@@ -40,7 +40,7 @@ fun ChangelogItem(
 
 
 @Composable
-private fun BottomSheet(
+fun ChangelogBottomSheet(
     changelog: Changelog, onClose: () -> Unit,
 ) = ModalBottomSheet(
     onDismissRequest = onClose,

@@ -157,7 +157,7 @@ fun AboutScreen(
                 HtmlText(
                     text = stringResource(
                         id = R.string.about_desc2,
-                        "<a href=\"${Const.SANMER_GITHUB_URL}\">Sanmer</a> & <a href=\"${Const.GOOGLER_GITHUB_URL}\">Github</a>"
+                        "<a href=\"${Const.SANMER_GITHUB_URL}\">Sanmer</a> & <a href=\"${Const.GOOGLER_GITHUB_URL}\">Der_Googler</a>"
                     ),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant

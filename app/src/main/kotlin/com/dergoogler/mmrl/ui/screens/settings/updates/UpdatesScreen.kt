@@ -29,7 +29,7 @@ private val optionsOfHours = listOf(1, 2, 3, 4, 5, 10, 12, 16, 24, 48, 72)
 @Composable
 fun UpdatesScreen(
     navController: NavController,
-    viewModel: SettingsViewModel = hiltViewModel()
+    viewModel: SettingsViewModel = hiltViewModel(),
 ) {
     val userPreferences = LocalUserPreferences.current
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
@@ -51,6 +51,18 @@ fun UpdatesScreen(
                 .verticalScroll(rememberScrollState())
         ) {
             ListHeader(
+                title = stringResource(id = R.string.settings_app)
+            )
+
+            ListSwitchItem(
+                icon = R.drawable.launcher_outline,
+                title = stringResource(id = R.string.settings_check_app_updates),
+                desc = stringResource(id = R.string.settings_check_app_updates_desc),
+                checked = userPreferences.checkAppUpdates,
+                onChange = viewModel::setCheckAppUpdates
+            )
+
+            ListHeader(
                 title = stringResource(id = R.string.page_repository)
             )
 
@@ -59,7 +71,7 @@ fun UpdatesScreen(
                 title = stringResource(id = R.string.settings_auto_update_repos),
                 desc = stringResource(id = R.string.settings_auto_update_repos_desc),
                 checked = userPreferences.autoUpdateRepos,
-                onChange = viewModel::setAutoUpdateRepos
+                onChange = viewModel::setCheckModuleUpdates
             )
 
             ListRadioCheckItem(title = stringResource(R.string.settings_repo_update_interval),
@@ -108,7 +120,7 @@ fun UpdatesScreen(
 @Composable
 private fun TopBar(
     scrollBehavior: TopAppBarScrollBehavior,
-    navController: NavController
+    navController: NavController,
 ) = NavigateUpTopBar(
     title = stringResource(id = R.string.settings_updates),
     scrollBehavior = scrollBehavior,

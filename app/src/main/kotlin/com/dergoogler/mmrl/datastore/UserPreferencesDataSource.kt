@@ -117,6 +117,14 @@ class UserPreferencesDataSource @Inject constructor(
         }
     }
 
+    suspend fun setCheckAppUpdates(value: Boolean) = withContext(Dispatchers.IO) {
+        userPreferences.updateData {
+            it.copy(
+                checkAppUpdates = value
+            )
+        }
+    }
+
     suspend fun setHomepage(value: String) = withContext(Dispatchers.IO) {
         userPreferences.updateData {
             it.copy(

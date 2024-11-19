@@ -46,6 +46,9 @@ class UserPreferencesRepository @Inject constructor(
     suspend fun setCheckModuleUpdatesInterval(value: Int) =
         userPreferencesDataSource.setCheckModuleUpdatesInterval(value)
 
+    suspend fun setCheckAppUpdates(value: Boolean) =
+        userPreferencesDataSource.setCheckAppUpdates(value)
+
     suspend fun setHomepage(value: String) =
         userPreferencesDataSource.setHomepage(value)
 

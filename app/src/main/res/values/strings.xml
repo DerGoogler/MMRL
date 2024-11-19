@@ -269,4 +269,7 @@
     <string name="kernel">Kernel</string>
     <string name="manager_version">Manager Version</string>
     <string name="fingerprint">Fingerprint</string>
+    <string name="new_version_available">New version %s is available, click to upgrade.</string>
+    <string name="settings_check_app_updates">Check for App Updates</string>
+    <string name="settings_check_app_updates_desc">Automatically checks for App Updates every time you open the app</string>
 </resources>

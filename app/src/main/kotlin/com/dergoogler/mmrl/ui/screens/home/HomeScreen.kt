@@ -2,6 +2,11 @@ package com.dergoogler.mmrl.ui.screens.home
 
 import android.os.Build
 import android.system.Os
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -22,6 +27,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,19 +43,26 @@ import androidx.navigation.NavController
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.datastore.UserPreferencesCompat.Companion.isNonRoot
 import com.dergoogler.mmrl.datastore.UserPreferencesCompat.Companion.isRoot
+import com.dergoogler.mmrl.model.online.Changelog
+import com.dergoogler.mmrl.network.runRequest
+import com.dergoogler.mmrl.stub.IMMRLApiManager
 import com.dergoogler.mmrl.ui.component.ListItem
-import com.dergoogler.mmrl.ui.component.TopAppBarTitle
+import com.dergoogler.mmrl.ui.component.TopAppBarIcon
 import com.dergoogler.mmrl.ui.navigation.graphs.HomeScreen
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.screens.home.items.NonRootItem
 import com.dergoogler.mmrl.ui.screens.home.items.RebootBottomSheet
 import com.dergoogler.mmrl.ui.screens.home.items.RootItem
+import com.dergoogler.mmrl.ui.screens.settings.changelogs.items.ChangelogBottomSheet
 import com.dergoogler.mmrl.ui.utils.navigateSingleTopTo
 import com.dergoogler.mmrl.ui.utils.none
 import com.dergoogler.mmrl.viewmodel.HomeViewModel
 import ext.dergoogler.mmrl.ext.launchCustomTab
 import ext.dergoogler.mmrl.ext.managerVersion
 import ext.dergoogler.mmrl.ext.seLinuxStatus
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 @Composable
 fun HomeScreen(
@@ -95,6 +108,64 @@ fun HomeScreen(
             }
 
             Spacer(Modifier.height(16.dp))
+
+            if (userPreferences.checkAppUpdates) {
+                var changelog by remember { mutableStateOf<List<Changelog>?>(null) }
+                LaunchedEffect(Unit) {
+                    runRequest {
+                        withContext(Dispatchers.IO) {
+                            val api = IMMRLApiManager.build()
+                            return@withContext api.changelog.execute()
+                        }
+                    }.onSuccess { list ->
+                        changelog = list
+                    }.onFailure {
+                        Timber.e(it, "unable to get changelog")
+                    }
+
+                }
+
+                changelog?.let {
+                    val latest = it.first()
+
+                    Timber.d("changelog: $latest")
+
+                    var changelogSheet by remember { mutableStateOf(false) }
+                    if (changelogSheet) {
+                        ChangelogBottomSheet(
+                            changelog = latest,
+                            onClose = { changelogSheet = false })
+                    }
+
+                    AnimatedVisibility(
+                        visible = latest.versionCode > context.managerVersion.second,
+                        enter = fadeIn() + expandVertically(),
+                        exit = shrinkVertically() + fadeOut()
+                    ) {
+                        Surface(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 16.dp),
+                            color = MaterialTheme.colorScheme.outlineVariant,
+                            shape = RoundedCornerShape(15.dp),
+                        ) {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .clickable {
+                                        changelogSheet = true
+                                    }
+                            ) {
+                                ListItem(
+                                    title = stringResource(
+                                        R.string.new_version_available, latest.versionName
+                                    )
+                                )
+                            }
+                        }
+                    }
+                }
+            }
 
             Surface(
                 color = MaterialTheme.colorScheme.surface,
@@ -165,7 +236,7 @@ private fun TopBar(
     onInfoClick: () -> Unit = {},
     scrollBehavior: TopAppBarScrollBehavior,
 ) = TopAppBar(title = {
-    TopAppBarTitle(text = stringResource(id = R.string.page_home))
+    TopAppBarIcon()
 }, scrollBehavior = scrollBehavior, actions = {
     if (isProviderAlive) {
         IconButton(onClick = onRebootClick) {

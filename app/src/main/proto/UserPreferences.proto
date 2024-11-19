@@ -25,4 +25,5 @@ message UserPreferences {
   bool checkModuleUpdates = 14;
   int32 checkModuleUpdatesInterval = 15;
   string homepage = 16;
+  bool checkAppUpdates = 17;
 }

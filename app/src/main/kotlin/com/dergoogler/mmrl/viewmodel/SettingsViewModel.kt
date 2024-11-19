@@ -111,6 +111,12 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
+    fun setCheckAppUpdates(value: Boolean) {
+        viewModelScope.launch {
+            userPreferencesRepository.setCheckAppUpdates(value)
+        }
+    }
+
     fun setHomepage(value: String) {
         viewModelScope.launch {
             userPreferencesRepository.setHomepage(value)
