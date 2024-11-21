@@ -241,7 +241,7 @@
     <string name="maintained_by">管理者:</string>
     <string name="kernel">カーネル</string>
     <string name="manager_version">マネージャーのバージョン</string>
-    <string name="fingerprint">Fingerprint</string>
+    <string name="fingerprint">フィンガープリント</string>
     <string name="new_version_available">新しいバージョン %s が利用可能です。タップで更新します。</string>
     <string name="settings_check_app_updates">アプリの更新を確認</string>
     <string name="settings_check_app_updates_desc">アプリを開いたときに自動でアプリの更新を確認します。</string>
