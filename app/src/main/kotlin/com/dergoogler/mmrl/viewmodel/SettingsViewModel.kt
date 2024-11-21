@@ -117,6 +117,12 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
+    fun setHideFingerprintInHome(value: Boolean) {
+        viewModelScope.launch {
+            userPreferencesRepository.setHideFingerprintInHome(value)
+        }
+    }
+
     fun setHomepage(value: String) {
         viewModelScope.launch {
             userPreferencesRepository.setHomepage(value)

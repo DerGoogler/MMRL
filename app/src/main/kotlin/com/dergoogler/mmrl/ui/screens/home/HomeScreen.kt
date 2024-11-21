@@ -189,7 +189,12 @@ fun HomeScreen(
                     )
 
                     ListItem(
-                        title = stringResource(R.string.fingerprint), desc = Build.FINGERPRINT
+                        title = stringResource(R.string.fingerprint),
+                        desc = if (userPreferences.hideFingerprintInHome) {
+                            stringResource(id = R.string.hidden)
+                        } else {
+                            Build.FINGERPRINT
+                        }
                     )
 
                     ListItem(

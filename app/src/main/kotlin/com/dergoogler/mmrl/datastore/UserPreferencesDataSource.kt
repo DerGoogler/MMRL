@@ -125,6 +125,14 @@ class UserPreferencesDataSource @Inject constructor(
         }
     }
 
+    suspend fun setHideFingerprintInHome(value: Boolean) = withContext(Dispatchers.IO) {
+        userPreferences.updateData {
+            it.copy(
+                hideFingerprintInHome = value
+            )
+        }
+    }
+
     suspend fun setHomepage(value: String) = withContext(Dispatchers.IO) {
         userPreferences.updateData {
             it.copy(

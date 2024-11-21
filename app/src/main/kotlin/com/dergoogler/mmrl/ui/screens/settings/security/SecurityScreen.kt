@@ -53,6 +53,14 @@ fun SecurityScreen(
                 checked = userPreferences.confirmReboot,
                 onChange = viewModel::setConfirmReboot
             )
+
+            ListSwitchItem(
+                icon = R.drawable.fingerprint,
+                title = stringResource(id = R.string.settings_hide_fingerprint),
+                desc = stringResource(id = R.string.settings_hide_fingerprint_desc),
+                checked = userPreferences.hideFingerprintInHome,
+                onChange = viewModel::setHideFingerprintInHome
+            )
         }
     }
 }

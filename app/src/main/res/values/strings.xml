@@ -159,6 +159,10 @@
     <string name="settings_repo_update_interval_suffix">\u0020hour/s</string>
     <string name="settings_repo_update_interval_desc">Select the time interval for updating the repositories</string>
 
+    <string name="settings_check_app_updates">Check for App Updates</string>
+    <string name="settings_check_app_updates_desc">Automatically checks for App Updates every time you open the app</string>
+    <string name="settings_hide_fingerprint">Hide Fingerprint in Home</string>
+    <string name="settings_hide_fingerprint_desc">Doesn\'t matter if it is a real or fake one</string>
     <string name="settings_check_modules_update">Check for Module Updates</string>
     <string name="settings_check_modules_update_desc">Enables update check for installed moudles</string>
     <string name="settings_check_modules_update_interval_suffix">\u0020hour/s</string>
@@ -270,6 +274,5 @@
     <string name="manager_version">Manager Version</string>
     <string name="fingerprint">Fingerprint</string>
     <string name="new_version_available">New version %s is available, click to upgrade.</string>
-    <string name="settings_check_app_updates">Check for App Updates</string>
-    <string name="settings_check_app_updates_desc">Automatically checks for App Updates every time you open the app</string>
+    <string name="hidden">Hidden</string>
 </resources>
