@@ -13,6 +13,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
@@ -31,6 +32,7 @@ import com.dergoogler.mmrl.ui.utils.navigatePopUpTo
 
 @Composable
 fun MainScreen() {
+    val context = LocalContext.current
     val userPreferences = LocalUserPreferences.current
     val navController = rememberNavController()
 
@@ -44,8 +46,12 @@ fun MainScreen() {
     ) {
         NavHost(
             modifier = Modifier.padding(bottom = it.calculateBottomPadding()),
-            navController = navController,
-            startDestination = userPreferences.homepage.ifBlank { MainScreen.Home.route }
+            navController = navController, startDestination = when (userPreferences.homepage) {
+                context.getString(MainScreen.Home.label) -> MainScreen.Home.route
+                context.getString(MainScreen.Repository.label) -> MainScreen.Repository.route
+                context.getString(MainScreen.Modules.label) -> MainScreen.Modules.route
+                else -> MainScreen.Home.route
+            }
         ) {
             homeScreen(
                 navController = navController

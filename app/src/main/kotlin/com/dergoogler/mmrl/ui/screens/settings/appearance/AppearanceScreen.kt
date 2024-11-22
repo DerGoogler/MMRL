@@ -12,6 +12,7 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -31,6 +32,7 @@ fun AppearanceScreen(
     navController: NavController,
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current
     val userPreferences = LocalUserPreferences.current
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
@@ -81,9 +83,9 @@ fun AppearanceScreen(
                 desc = stringResource(R.string.settings_homepage_desc),
                 value = userPreferences.homepage,
                 options = listOf(
-                    MainScreen.Home.route,
-                    MainScreen.Repository.route,
-                    MainScreen.Modules.route
+                    context.getString(MainScreen.Home.label),
+                    context.getString(MainScreen.Repository.label),
+                    context.getString(MainScreen.Modules.label)
                 ),
                 onConfirm = {
                     viewModel.setHomepage(it)
