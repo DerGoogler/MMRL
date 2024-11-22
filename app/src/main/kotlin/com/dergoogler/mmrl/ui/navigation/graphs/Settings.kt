@@ -51,7 +51,7 @@ fun NavGraphBuilder.settingsScreen(
 
     composable(
         route = SettingsScreen.Repositories.route,
-        deepLinks = listOf(navDeepLink { uriPattern = "mmrl://add-repo/{repoUrl}" }),
+        // deepLinks = listOf(navDeepLink { uriPattern = "mmrl://add-repo/{repoUrl}" }),
         enterTransition = { scaleIn() + fadeIn() },
         exitTransition = { fadeOut() }
     ) {
