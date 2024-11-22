@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -326,7 +327,10 @@ private fun ValueItem(
 @Composable
 private fun ScreenshotsItem(
     images: List<String>,
-) = Column(
+) {
+    val lazyListState = rememberLazyListState()
+
+    Column(
     modifier = Modifier
         .padding(all = 16.dp)
         .fillMaxWidth(),
@@ -339,6 +343,7 @@ private fun ScreenshotsItem(
     )
 
     LazyRow(
+        state = lazyListState,
         modifier = Modifier
             .ignoreHorizontalParentPadding(16.dp)
             .fillMaxWidth(),
@@ -357,6 +362,7 @@ private fun ScreenshotsItem(
             )
         }
     }
+}
 }
 
 
