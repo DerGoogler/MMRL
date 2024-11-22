@@ -8,6 +8,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import androidx.navigation.navDeepLink
 import androidx.navigation.navigation
 import com.dergoogler.mmrl.ui.navigation.MainScreen
 import com.dergoogler.mmrl.ui.screens.repository.RepositoryScreen
@@ -19,7 +20,7 @@ enum class RepositoryScreen(val route: String) {
 }
 
 fun NavGraphBuilder.repositoryScreen(
-    navController: NavController
+    navController: NavController,
 ) = navigation(
     startDestination = RepositoryScreen.Home.route,
     route = MainScreen.Repository.route
@@ -37,6 +38,9 @@ fun NavGraphBuilder.repositoryScreen(
     composable(
         route = RepositoryScreen.View.route,
         arguments = listOf(navArgument("moduleId") { type = NavType.StringType }),
+        deepLinks = listOf(navDeepLink { uriPattern = "mmrl://module/{moduleId}" },
+            navDeepLink { uriPattern = "https://mmrl.dergoogler.com/module/{moduleId}" },
+            navDeepLink { uriPattern = "http://mmrl.dergoogler.com/module/{moduleId}" }),
         enterTransition = { scaleIn() + fadeIn() },
         exitTransition = { fadeOut() }
     ) {

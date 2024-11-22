@@ -3,6 +3,7 @@ package com.dergoogler.mmrl.viewmodel
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dergoogler.mmrl.database.entity.Repo.Companion.toRepo
@@ -21,10 +22,19 @@ import javax.inject.Inject
 @HiltViewModel
 class RepositoriesViewModel @Inject constructor(
     private val localRepository: LocalRepository,
-    private val modulesRepository: ModulesRepository
+    private val modulesRepository: ModulesRepository,
+    savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
     private val reposFlow = MutableStateFlow(listOf<RepoState>())
     val repos get() = reposFlow.asStateFlow()
+
+
+    val sharedRepoUrl = getRepoUrl(savedStateHandle)
+
+    companion object {
+        fun getRepoUrl(savedStateHandle: SavedStateHandle): String =
+            checkNotNull(savedStateHandle["repoUrl"])
+    }
 
     var isLoading by mutableStateOf(true)
         private set

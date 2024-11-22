@@ -6,6 +6,7 @@ import androidx.compose.animation.scaleIn
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import androidx.navigation.navDeepLink
 import androidx.navigation.navigation
 import com.dergoogler.mmrl.ui.navigation.MainScreen
 import com.dergoogler.mmrl.ui.screens.settings.SettingsScreen
@@ -50,6 +51,7 @@ fun NavGraphBuilder.settingsScreen(
 
     composable(
         route = SettingsScreen.Repositories.route,
+        deepLinks = listOf(navDeepLink { uriPattern = "mmrl://add-repo/{repoUrl}" }),
         enterTransition = { scaleIn() + fadeIn() },
         exitTransition = { fadeOut() }
     ) {

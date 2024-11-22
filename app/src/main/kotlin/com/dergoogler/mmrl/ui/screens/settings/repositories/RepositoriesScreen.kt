@@ -54,7 +54,7 @@ import com.dergoogler.mmrl.viewmodel.RepositoriesViewModel
 @Composable
 fun RepositoriesScreen(
     navController: NavController,
-    viewModel: RepositoriesViewModel = hiltViewModel()
+    viewModel: RepositoriesViewModel = hiltViewModel(),
 ) {
     val list by viewModel.repos.collectAsStateWithLifecycle()
 
@@ -74,6 +74,13 @@ fun RepositoriesScreen(
             message = ""
         }
     )
+
+    if (viewModel.sharedRepoUrl.isNotBlank()) {
+        viewModel.insert("https://${viewModel.sharedRepoUrl}/") { e ->
+            failure = true
+            message = e.stackTraceToString()
+        }
+    }
 
     var add by remember { mutableStateOf(false) }
     if (add) AddDialog(
@@ -152,7 +159,7 @@ fun RepositoriesScreen(
 @Composable
 private fun AddDialog(
     onClose: () -> Unit,
-    onAdd: (String) -> Unit
+    onAdd: (String) -> Unit,
 ) {
     var domain by remember { mutableStateOf("") }
 
@@ -204,7 +211,7 @@ private fun AddDialog(
 private fun TopBar(
     scrollBehavior: TopAppBarScrollBehavior,
     navController: NavController,
-    onRefresh: () -> Unit
+    onRefresh: () -> Unit,
 ) = NavigateUpTopBar(
     title = stringResource(id = R.string.settings_repo),
     actions = {
@@ -223,7 +230,7 @@ private fun TopBar(
 
 @Composable
 private fun FloatingButton(
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) = FloatingActionButton(
     onClick = onClick,
     contentColor = MaterialTheme.colorScheme.onPrimary,

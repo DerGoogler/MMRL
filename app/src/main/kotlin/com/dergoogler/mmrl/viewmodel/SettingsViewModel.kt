@@ -1,6 +1,7 @@
 package com.dergoogler.mmrl.viewmodel
 
 import android.app.Application
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.dergoogler.mmrl.Compat
 import com.dergoogler.mmrl.datastore.DarkMode
@@ -20,7 +21,7 @@ class SettingsViewModel @Inject constructor(
     application: Application,
     localRepository: LocalRepository,
     modulesRepository: ModulesRepository,
-    userPreferencesRepository: UserPreferencesRepository
+    userPreferencesRepository: UserPreferencesRepository,
 ) : MMRLViewModel(application, localRepository, modulesRepository, userPreferencesRepository) {
     val isProviderAlive get() = Compat.isAlive
 

@@ -30,7 +30,7 @@ import ext.dergoogler.mmrl.activity.MMRLComponentActivity
 @Composable
 fun ViewScreen(
     navController: NavController,
-    viewModel: ModuleViewModel = hiltViewModel()
+    viewModel: ModuleViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
 

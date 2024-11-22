@@ -78,7 +78,7 @@ fun UpdatesScreen(
                 title = stringResource(id = R.string.settings_auto_update_repos),
                 desc = stringResource(id = R.string.settings_auto_update_repos_desc),
                 checked = userPreferences.autoUpdateRepos,
-                onChange = viewModel::setCheckModuleUpdates
+                onChange = viewModel::setAutoUpdateRepos
             )
 
             ListRadioCheckItem(title = stringResource(R.string.settings_repo_update_interval),
