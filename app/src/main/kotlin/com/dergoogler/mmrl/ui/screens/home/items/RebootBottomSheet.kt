@@ -27,6 +27,7 @@ import com.dergoogler.mmrl.ui.component.ListButtonItem
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.utils.expandedShape
 import com.dergoogler.mmrl.viewmodel.HomeViewModel
+import ext.dergoogler.mmrl.then
 
 @Composable
 fun RebootBottomSheet(
@@ -44,9 +45,17 @@ fun RebootBottomSheet(
         RebootItem(title = R.string.reboot)
 
         val pm = LocalContext.current.getSystemService(Context.POWER_SERVICE) as PowerManager?
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && pm?.isRebootingUserspaceSupported == true) {
-            RebootItem(title = R.string.reboot_userspace, reason = "userspace")
-        }
+
+        val hasSoftReboot =
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && pm?.isRebootingUserspaceSupported == true
+
+        RebootItem(
+            enabled = hasSoftReboot,
+            title = R.string.reboot_userspace,
+            labels = !hasSoftReboot then listOf("Android +11"),
+            reason = "userspace"
+        )
+
         RebootItem(title = R.string.reboot_recovery, reason = "recovery")
         RebootItem(title = R.string.reboot_bootloader, reason = "bootloader")
         RebootItem(title = R.string.reboot_download, reason = "download")
@@ -58,6 +67,8 @@ fun RebootBottomSheet(
 
 @Composable
 private fun RebootItem(
+    enabled: Boolean = true,
+    labels: List<String>? = null,
     viewModel: HomeViewModel = hiltViewModel(),
     @StringRes title: Int, reason: String = "",
 ) {
@@ -72,11 +83,14 @@ private fun RebootItem(
         }
     )
 
-    ListButtonItem(title = stringResource(id = title), onClick = {
-        if (userPreferences.confirmReboot) {
-            confirmReboot = true
-        } else {
-            viewModel.reboot(reason)
-        }
-    })
+    ListButtonItem(
+        labels = labels,
+        enabled = enabled,
+        title = stringResource(id = title), onClick = {
+            if (userPreferences.confirmReboot) {
+                confirmReboot = true
+            } else {
+                viewModel.reboot(reason)
+            }
+        })
 }

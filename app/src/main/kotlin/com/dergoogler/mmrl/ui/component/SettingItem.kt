@@ -84,6 +84,43 @@ fun ListHeader(
 }
 
 @Composable
+private fun BaseListContent(
+    modifier: Modifier = Modifier,
+    title: String,
+    desc: String? = null,
+    itemTextStyle: ListItemTextStyle = ListItemDefaults.itemStyle(),
+    labels: List<String>? = null,
+) {
+    Column(
+        modifier = modifier.fillMaxWidth(), verticalArrangement = Arrangement.Center
+    ) {
+        Text(
+            text = title, style = itemTextStyle.titleTextStyle, color = itemTextStyle.titleTextColor
+        )
+        desc?.let {
+            Text(
+                text = desc,
+                style = itemTextStyle.descTextStyle,
+                color = itemTextStyle.descTextColor
+            )
+        }
+        labels?.let {
+            Row(
+                modifier = Modifier.padding(top = 5.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(2.dp)
+            ) {
+                it.forEach { label ->
+                    LabelItem(
+                        text = label,
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
 fun ListItem(
     modifier: Modifier = Modifier,
     title: String,
@@ -92,6 +129,7 @@ fun ListItem(
     itemTextStyle: ListItemTextStyle = ListItemDefaults.itemStyle(),
     @DrawableRes icon: Int? = null,
     enabled: Boolean = true,
+    labels: List<String>? = null,
 ) {
     val layoutDirection = LocalLayoutDirection.current
     val start by remember {
@@ -116,23 +154,9 @@ fun ListItem(
             Spacer(modifier = Modifier.width(start))
         }
 
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.Center
-        ) {
-            Text(
-                text = title,
-                style = itemTextStyle.titleTextStyle,
-                color = itemTextStyle.titleTextColor
-            )
-            desc?.let {
-                Text(
-                    text = desc,
-                    style = itemTextStyle.descTextStyle,
-                    color = itemTextStyle.descTextColor
-                )
-            }
-        }
+        BaseListContent(
+            title = title, desc = desc, itemTextStyle = itemTextStyle, labels = labels
+        )
     }
 }
 
@@ -148,6 +172,7 @@ fun ListButtonItem(
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     @DrawableRes icon: Int? = null,
     enabled: Boolean = true,
+    labels: List<String>? = null,
 ) {
     val layoutDirection = LocalLayoutDirection.current
     val start by remember {
@@ -179,23 +204,9 @@ fun ListButtonItem(
             Spacer(modifier = Modifier.width(start))
         }
 
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.Center
-        ) {
-            Text(
-                text = title,
-                style = itemTextStyle.titleTextStyle,
-                color = itemTextStyle.titleTextColor
-            )
-            desc?.let {
-                Text(
-                    text = desc,
-                    style = itemTextStyle.descTextStyle,
-                    color = itemTextStyle.descTextColor
-                )
-            }
-        }
+        BaseListContent(
+            title = title, desc = desc, itemTextStyle = itemTextStyle, labels = labels
+        )
     }
 }
 
@@ -203,7 +214,7 @@ fun ListButtonItem(
 fun ListSwitchItem(
     modifier: Modifier = Modifier,
     title: String,
-    desc: String,
+    desc: String? = null,
     checked: Boolean,
     onChange: (Boolean) -> Unit,
     contentPaddingValues: PaddingValues = PaddingValues(vertical = 16.dp, horizontal = 25.dp),
@@ -211,6 +222,7 @@ fun ListSwitchItem(
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     @DrawableRes icon: Int? = null,
     enabled: Boolean = true,
+    labels: List<String>? = null,
 ) {
     val layoutDirection = LocalLayoutDirection.current
     val start by remember {
@@ -242,24 +254,16 @@ fun ListSwitchItem(
             Spacer(modifier = Modifier.width(start))
         }
 
-        Column(
+
+        BaseListContent(
             modifier = Modifier
                 .weight(1f)
                 .padding(end = ListItemDefaults.TextSwitchPadding),
-            verticalArrangement = Arrangement.Center
-        ) {
-            Text(
-                text = title,
-                style = itemTextStyle.titleTextStyle,
-                color = itemTextStyle.titleTextColor
-            )
-
-            Text(
-                text = desc,
-                style = itemTextStyle.descTextStyle,
-                color = itemTextStyle.descTextColor
-            )
-        }
+            title = title,
+            desc = desc,
+            itemTextStyle = itemTextStyle,
+            labels = labels
+        )
 
         Switch(
             checked = checked,
@@ -281,6 +285,7 @@ fun ListEditTextItem(
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     @DrawableRes icon: Int? = null,
     enabled: Boolean = true,
+    labels: List<String>? = null,
 ) {
     var open by remember { mutableStateOf(false) }
     if (open) EditTextDialog(
@@ -298,8 +303,7 @@ fun ListEditTextItem(
         onClick = { open = true },
         contentPaddingValues = contentPaddingValues,
         interactionSource = interactionSource,
-        enabled = enabled,
-        itemTextStyle = itemTextStyle
+        enabled = enabled, itemTextStyle = itemTextStyle, labels = labels
     )
 }
 
@@ -370,6 +374,7 @@ fun <T> ListRadioCheckItem(
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     @DrawableRes icon: Int? = null,
     enabled: Boolean = true,
+    labels: List<String>? = null,
 ) {
     var open by remember { mutableStateOf(false) }
     if (open) RadioCheckDialog(
@@ -390,8 +395,7 @@ fun <T> ListRadioCheckItem(
         onClick = { open = true },
         contentPaddingValues = contentPaddingValues,
         interactionSource = interactionSource,
-        enabled = enabled,
-        itemTextStyle = itemTextStyle
+        enabled = enabled, itemTextStyle = itemTextStyle, labels = labels
     )
 }
 

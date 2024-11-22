@@ -9,7 +9,7 @@ import java.io.File
 import javax.inject.Inject
 
 class UserPreferencesDataSource @Inject constructor(
-    private val userPreferences: DataStore<UserPreferencesCompat>
+    private val userPreferences: DataStore<UserPreferencesCompat>,
 ) {
     val data get() = userPreferences.data
 
@@ -121,6 +121,14 @@ class UserPreferencesDataSource @Inject constructor(
         userPreferences.updateData {
             it.copy(
                 checkAppUpdates = value
+            )
+        }
+    }
+
+    suspend fun setCheckAppUpdatesPreReleases(value: Boolean) = withContext(Dispatchers.IO) {
+        userPreferences.updateData {
+            it.copy(
+                checkAppUpdatesPreReleases = value
             )
         }
     }

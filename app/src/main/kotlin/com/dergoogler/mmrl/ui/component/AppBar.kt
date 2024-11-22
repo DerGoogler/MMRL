@@ -53,7 +53,10 @@ fun TopAppBarIcon(
     horizontalArrangement = Arrangement.Start,
     verticalAlignment = Alignment.CenterVertically
 ) {
+    
     val events = when {
+        disableEvents -> Pair(icon, null)
+
         Event.isHalloween -> Pair(
             R.drawable.pumpkin_scary,
             stringResource(R.string.events_halloween),

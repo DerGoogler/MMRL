@@ -25,6 +25,7 @@ data class UserPreferencesCompat(
     val checkModuleUpdates: Boolean,
     val checkModuleUpdatesInterval: Int,
     val checkAppUpdates: Boolean,
+    val checkAppUpdatesPreReleases: Boolean,
     val hideFingerprintInHome: Boolean,
     val homepage: String,
     val repositoryMenu: RepositoryMenuCompat,
@@ -46,6 +47,7 @@ data class UserPreferencesCompat(
         checkModuleUpdates = original.checkModuleUpdates,
         checkModuleUpdatesInterval = original.checkModuleUpdatesInterval,
         checkAppUpdates = original.checkAppUpdates,
+        checkAppUpdatesPreReleases = original.checkAppUpdatesPreReleases,
         hideFingerprintInHome = original.hideFingerprintInHome,
         homepage = original.homepage,
         repositoryMenu = when {
@@ -79,6 +81,7 @@ data class UserPreferencesCompat(
         .setCheckModuleUpdates(checkModuleUpdates)
         .setCheckModuleUpdatesInterval(checkModuleUpdatesInterval)
         .setCheckAppUpdates(checkAppUpdates)
+        .setCheckAppUpdatesPreReleases(checkAppUpdatesPreReleases)
         .setHideFingerprintInHome(hideFingerprintInHome)
         .setHomepage(homepage)
         .setRepositoryMenu(repositoryMenu.toProto())
@@ -100,6 +103,7 @@ data class UserPreferencesCompat(
             checkModuleUpdates = true,
             checkModuleUpdatesInterval = 2,
             checkAppUpdates = true,
+            checkAppUpdatesPreReleases = false,
             hideFingerprintInHome = true,
             homepage = MainScreen.Home.route,
             repositoryMenu = RepositoryMenuCompat.default(),

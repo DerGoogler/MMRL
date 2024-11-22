@@ -7,4 +7,5 @@ data class Changelog(
     val versionName: String,
     val versionCode: Int,
     val changes: String,
+    val preRelease: Boolean = false,
 )

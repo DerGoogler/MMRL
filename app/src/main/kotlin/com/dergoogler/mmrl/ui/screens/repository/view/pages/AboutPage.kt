@@ -47,7 +47,6 @@ fun AboutPage(
     HorizontalDivider(thickness = 0.9.dp)
 
     online.features?.let {
-        // TODO: find other way to check if is empty. build.gradle at exclude : "kotlin/**" to reduce size
         if (!it.isObjectEmpty()) {
             FeaturesItem(features = it)
 

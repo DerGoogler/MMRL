@@ -138,7 +138,11 @@ fun HomeScreen(
                     }
 
                     AnimatedVisibility(
-                        visible = latest.versionCode > context.managerVersion.second,
+                        visible = if (latest.preRelease) {
+                            userPreferences.checkAppUpdatesPreReleases && latest.versionCode > context.managerVersion.second
+                        } else {
+                            latest.versionCode > context.managerVersion.second
+                        },
                         enter = fadeIn() + expandVertically(),
                         exit = shrinkVertically() + fadeOut()
                     ) {

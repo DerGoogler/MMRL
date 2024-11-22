@@ -62,6 +62,13 @@ fun UpdatesScreen(
                 onChange = viewModel::setCheckAppUpdates
             )
 
+            ListSwitchItem(
+                icon = R.drawable.launcher_outline,
+                title = stringResource(id = R.string.settings_include_preleases),
+                checked = userPreferences.checkAppUpdatesPreReleases,
+                onChange = viewModel::setCheckAppUpdatesPreReleases
+            )
+
             ListHeader(
                 title = stringResource(id = R.string.page_repository)
             )

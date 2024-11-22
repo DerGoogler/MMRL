@@ -26,5 +26,6 @@ message UserPreferences {
   int32 checkModuleUpdatesInterval = 15;
   string homepage = 16;
   bool checkAppUpdates = 17;
+  bool checkAppUpdatesPreReleases = 19;
   bool hideFingerprintInHome = 18;
 }

@@ -24,11 +24,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.dergoogler.mmrl.R
+import com.dergoogler.mmrl.datastore.UserPreferences
 import com.dergoogler.mmrl.model.online.Changelog
 import com.dergoogler.mmrl.network.runRequest
 import com.dergoogler.mmrl.stub.IMMRLApiManager
 import com.dergoogler.mmrl.ui.component.Loading
 import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
+import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.screens.settings.changelogs.items.ChangelogItem
 import com.dergoogler.mmrl.ui.utils.none
 import kotlinx.coroutines.Dispatchers
@@ -40,7 +42,7 @@ fun ChangelogScreen(
     navController: NavController,
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
-
+    val userPreferences = LocalUserPreferences.current
     var changelog by remember { mutableStateOf<List<Changelog>?>(null) }
 
     LaunchedEffect(Unit) {
@@ -84,6 +86,8 @@ fun ChangelogScreen(
                 changelog?.let { bl ->
                     LazyColumn {
                         items(items = bl, key = { it.versionCode }) { entry ->
+                            if (!userPreferences.checkAppUpdatesPreReleases && entry.preRelease) return@items
+
                             ChangelogItem(changelog = entry)
                         }
                     }

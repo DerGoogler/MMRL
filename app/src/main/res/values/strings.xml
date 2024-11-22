@@ -168,6 +168,7 @@
     <string name="settings_check_modules_update_interval_suffix">\u0020hour/s</string>
     <string name="settings_check_modules_update_interval">Module update check interval</string>
     <string name="settings_check_modules_update_interval_desc">Select the time interval for checking your installed modules</string>
+    <string name="settings_include_preleases">Include Pre-Releases</string>
 
     
     <!-- App Theme -->
@@ -275,4 +276,5 @@
     <string name="fingerprint">Fingerprint</string>
     <string name="new_version_available">New version %s is available, click to upgrade.</string>
     <string name="hidden">Hidden</string>
+    <string name="pre_release">Pre-release</string>
 </resources>

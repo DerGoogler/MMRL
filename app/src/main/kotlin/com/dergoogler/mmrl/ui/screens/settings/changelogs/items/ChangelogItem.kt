@@ -18,10 +18,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.ui.component.NavigationBarsSpacer
 import com.dergoogler.mmrl.ui.component.ListButtonItem
 import com.dergoogler.mmrl.ui.utils.expandedShape
+import ext.dergoogler.mmrl.then
 
 
 @Composable
@@ -33,9 +36,12 @@ fun ChangelogItem(
         ChangelogBottomSheet(changelog = changelog, onClose = { open = false })
     }
 
-    ListButtonItem(title = changelog.versionName,
+    ListButtonItem(
+        title = changelog.versionName,
         desc = "${changelog.versionCode}",
-        onClick = { open = true })
+        onClick = { open = true },
+        labels = changelog.preRelease then listOf(stringResource(id = R.string.pre_release))
+    )
 }
 
 
