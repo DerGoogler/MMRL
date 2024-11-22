@@ -75,12 +75,12 @@ fun RepositoriesScreen(
         }
     )
 
-    if (viewModel.sharedRepoUrl.isNotBlank()) {
-        viewModel.insert("https://${viewModel.sharedRepoUrl}/") { e ->
-            failure = true
-            message = e.stackTraceToString()
-        }
-    }
+//    if (viewModel.sharedRepoUrl.isNotBlank()) {
+//        viewModel.insert("https://${viewModel.sharedRepoUrl}/") { e ->
+//            failure = true
+//            message = e.stackTraceToString()
+//        }
+//    }
 
     var add by remember { mutableStateOf(false) }
     if (add) AddDialog(

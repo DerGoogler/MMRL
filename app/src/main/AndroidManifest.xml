@@ -108,7 +108,8 @@
             android:name=".ui.activity.ModConfActivity"
             android:excludeFromRecents="true"
             android:exported="true"
-            android:label="@string/modconf_activity">
+            android:label="@string/modconf_activity"
+            android:taskAffinity="${applicationId}.MODCONF">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 

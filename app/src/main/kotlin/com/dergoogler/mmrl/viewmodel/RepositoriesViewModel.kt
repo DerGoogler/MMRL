@@ -23,18 +23,18 @@ import javax.inject.Inject
 class RepositoriesViewModel @Inject constructor(
     private val localRepository: LocalRepository,
     private val modulesRepository: ModulesRepository,
-    savedStateHandle: SavedStateHandle,
+//    savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
     private val reposFlow = MutableStateFlow(listOf<RepoState>())
     val repos get() = reposFlow.asStateFlow()
 
 
-    val sharedRepoUrl = getRepoUrl(savedStateHandle)
+//    val sharedRepoUrl = getRepoUrl(savedStateHandle)
 
-    companion object {
-        fun getRepoUrl(savedStateHandle: SavedStateHandle): String =
-            checkNotNull(savedStateHandle["repoUrl"])
-    }
+//    companion object {
+//        fun getRepoUrl(savedStateHandle: SavedStateHandle): String =
+//            checkNotNull(savedStateHandle["repoUrl"])
+//    }
 
     var isLoading by mutableStateOf(true)
         private set
