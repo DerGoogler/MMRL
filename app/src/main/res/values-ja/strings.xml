@@ -23,6 +23,7 @@
     <string name="license_osi_approved">OSI Approved</string>
     <string name="license_fsf_libre">FSF Libre</string>
     <!-- Page -->
+    <string name="page_home">ホーム</string>
     <string name="page_repository">リポジトリ</string>
     <string name="page_modules">モジュール</string>
     <string name="page_settings">設定</string>
@@ -216,10 +217,32 @@
     <string name="repo_update_service_desc">ご心配なく、MMRL はインストールしたリポジトリを更新しました。😋</string>
     <string name="repo_update_service_failed">リポジトリの更新が見つかりません</string>
     <string name="repo_update_service_failed_desc">リポジトリの更新はありません</string>
+    <!-- SELinux -->
+    <string name="selinux_status">SELinux ステータス</string>
+    <string name="selinux_status_disabled">Disabled</string>
+    <string name="selinux_status_enforcing">Enforcing</string>
+    <string name="selinux_status_permissive">Permissive</string>
+    <string name="selinux_status_unknown">Unknown</string>
+    <string name="reboot">再起動</string>
+    <string name="reboot_userspace">ソフトリブート</string>
+    <string name="reboot_recovery">リカバリーで再起動</string>
+    <string name="reboot_bootloader">ブートローダーで再起動</string>
+    <string name="reboot_download">ダウンロードモードで再起動</string>
+    <string name="reboot_edl">EDL で再起動</string>
+    <string name="home_support_title">ご支援をお願いします</string>
+    <string name="home_support_content">MMRL は無料であり、オープンソースです。ですが、寄付をすることで開発者の今後の励みに繋がります。</string>
     <string name="has_a_new_update">%1$s に新しい更新があります！</string>
     <string name="update_available_from_to">%s (%d) から %s (%d) への更新が利用可能です。</string>
     <string name="events_birthday">MMRL は %1$s 周年です！</string>
     <string name="events_halloween">ばぁー！… アッー！</string>
     <string name="events_christmas">← ツリー。</string>
     <string name="events_new_years_eve">大晦日です！</string>
+    <string name="open_source">ソースを開く</string>
+    <string name="maintained_by">管理者:</string>
+    <string name="kernel">カーネル</string>
+    <string name="manager_version">マネージャーのバージョン</string>
+    <string name="fingerprint">フィンガープリント</string>
+    <string name="new_version_available">新しいバージョン %s が利用可能です。タップで更新します。</string>
+    <string name="settings_check_app_updates">アプリの更新を確認</string>
+    <string name="settings_check_app_updates_desc">アプリを開いたときに自動でアプリの更新を確認します。</string>
 </resources>
