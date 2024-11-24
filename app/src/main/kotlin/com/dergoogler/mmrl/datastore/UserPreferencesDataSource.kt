@@ -149,6 +149,14 @@ class UserPreferencesDataSource @Inject constructor(
         }
     }
 
+    suspend fun setDeveloperMode(value: Boolean) = withContext(Dispatchers.IO) {
+        userPreferences.updateData {
+            it.copy(
+                developerMode = value
+            )
+        }
+    }
+
 
     suspend fun setRepositoryMenu(value: RepositoryMenuCompat) = withContext(Dispatchers.IO) {
         userPreferences.updateData {

@@ -74,6 +74,7 @@ import ext.dergoogler.mmrl.ext.ifNotEmpty
 import ext.dergoogler.mmrl.ext.ifNotNullOrBlank
 import ext.dergoogler.mmrl.ext.isObjectEmpty
 import ext.dergoogler.mmrl.ext.launchCustomTab
+import ext.dergoogler.mmrl.ext.takeTrue
 import ext.dergoogler.mmrl.ext.toFormatedFileSize
 import ext.dergoogler.mmrl.ext.toFormattedDateSafely
 
@@ -392,9 +393,6 @@ fun NewViewScreen(
                         }
                     )
                 }
-                module.license?.ifNotNullOrBlank {
-                    LicenseItem(licenseId = it, itemTextStyle = subListItemStyle)
-                }
             }
 
             module.features?.let {
@@ -487,6 +485,27 @@ fun NewViewScreen(
                 thickness = 0.9.dp
             )
 
+            userPreferences.developerMode.takeTrue {
+                ModuleInfoListItem(
+                    title = R.string.view_module_module_id,
+                    desc = module.id
+                )
+            }
+
+            module.license.ifNotNullOrBlank {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 14.dp),
+                ) {
+                    Text(
+                        style = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.outline),
+                        modifier = Modifier.weight(1f),
+                        text = stringResource(id = R.string.view_module_license)
+                    )
+                    LicenseItem(licenseId = it)
+                }
+            }
             ModuleInfoListItem(
                 infoCanDiffer = true,
                 title = R.string.view_module_version,
@@ -526,7 +545,6 @@ fun NewViewScreen(
 //            )
 
             module.track.added?.let {
-
                 ModuleInfoListItem(
                     infoCanDiffer = true,
                     title = R.string.view_module_added_on,

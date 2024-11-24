@@ -3,11 +3,11 @@ package com.dergoogler.mmrl.datastore
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import com.dergoogler.mmrl.app.Const
-import dev.dergoogler.mmrl.compat.BuildCompat
 import com.dergoogler.mmrl.datastore.modules.ModulesMenuCompat
 import com.dergoogler.mmrl.datastore.repository.RepositoryMenuCompat
 import com.dergoogler.mmrl.ui.navigation.MainScreen
 import com.dergoogler.mmrl.ui.theme.Colors
+import dev.dergoogler.mmrl.compat.BuildCompat
 import java.io.File
 
 data class UserPreferencesCompat(
@@ -28,6 +28,7 @@ data class UserPreferencesCompat(
     val checkAppUpdatesPreReleases: Boolean,
     val hideFingerprintInHome: Boolean,
     val homepage: String,
+    val developerMode: Boolean,
     val repositoryMenu: RepositoryMenuCompat,
     val modulesMenu: ModulesMenuCompat,
 ) {
@@ -50,6 +51,7 @@ data class UserPreferencesCompat(
         checkAppUpdatesPreReleases = original.checkAppUpdatesPreReleases,
         hideFingerprintInHome = original.hideFingerprintInHome,
         homepage = original.homepage,
+        developerMode = original.developerMode,
         repositoryMenu = when {
             original.hasRepositoryMenu() -> RepositoryMenuCompat(original.repositoryMenu)
             else -> RepositoryMenuCompat.default()
@@ -84,6 +86,7 @@ data class UserPreferencesCompat(
         .setCheckAppUpdatesPreReleases(checkAppUpdatesPreReleases)
         .setHideFingerprintInHome(hideFingerprintInHome)
         .setHomepage(homepage)
+        .setDeveloperMode(developerMode)
         .setRepositoryMenu(repositoryMenu.toProto())
         .setModulesMenu(modulesMenu.toProto())
         .build()
@@ -106,6 +109,7 @@ data class UserPreferencesCompat(
             checkAppUpdatesPreReleases = false,
             hideFingerprintInHome = true,
             homepage = MainScreen.Home.route,
+            developerMode = false,
             repositoryMenu = RepositoryMenuCompat.default(),
             modulesMenu = ModulesMenuCompat.default()
         )

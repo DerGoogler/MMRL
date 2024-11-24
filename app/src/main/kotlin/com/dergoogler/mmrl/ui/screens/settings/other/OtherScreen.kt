@@ -17,8 +17,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.datastore.UserPreferencesCompat.Companion.isRoot
-import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
 import com.dergoogler.mmrl.ui.component.ListSwitchItem
+import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.screens.settings.appearance.items.DownloadPathItem
 import com.dergoogler.mmrl.ui.utils.none
@@ -68,6 +68,14 @@ fun OtherScreen(
                 desc = stringResource(id = R.string.settings_doh_desc),
                 checked = userPreferences.useDoh,
                 onChange = viewModel::setUseDoh
+            )
+
+            ListSwitchItem(
+                icon = R.drawable.bug,
+                title = stringResource(id = R.string.settings_developer_mode),
+                desc = stringResource(id = R.string.settings_developer_mode_desc),
+                checked = userPreferences.developerMode,
+                onChange = viewModel::setDeveloperMode,
             )
         }
     }

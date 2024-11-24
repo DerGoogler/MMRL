@@ -58,6 +58,9 @@ class UserPreferencesRepository @Inject constructor(
     suspend fun setHomepage(value: String) =
         userPreferencesDataSource.setHomepage(value)
 
+    suspend fun setDeveloperMode(value: Boolean) =
+        userPreferencesDataSource.setDeveloperMode(value)
+
     suspend fun setRepositoryMenu(value: RepositoryMenuCompat) =
         userPreferencesDataSource.setRepositoryMenu(value)
 

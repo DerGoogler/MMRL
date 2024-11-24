@@ -72,6 +72,7 @@
     <string name="view_module_antifeatures">Anti-Features</string>
     <string name="view_module_unsupported">Unsupported</string>
     <string name="view_module_unsupported_desc">Seems like that you device doesn\'t support this module version. Install at your own risk!</string>
+    <string name="view_module_license">License</string>
 
     <!-- View Module / Features -->
     <string name="view_module_features">Features</string>
@@ -92,7 +93,15 @@
     <string name="view_module_features_apks_sub">Including additional APKs inside the module.</string>
     <string name="view_module_features_webui_sub">Web interface for managing modules (KernelSU &amp; APatch, not Magisk).></string>
     <string name="view_module_features_postmount_sub">Script execution after OverlayFS mounts (KernelSU &amp; APatch).></string>
-    <string name="view_module_features_bootcompleted_sub">Script execution after boot completes (KernelSU &amp; APatch).></string>
+    <string name="view_module_features_bootcompleted_sub">Script execution after boot completes (KernelSU &amp; APatch).></string>  <string name="view_module_module_support">Module Support</string>
+    <string name="view_module_provided_by">Provided By</string>
+    <string name="view_module_added_on">Added On</string>
+    <string name="view_module_about_this_module">About This Module</string>
+    <string name="view_module_mod_infos_disclaimer"><![CDATA[Infos marked with a <b>*</b> can differ due to multiple added repos. You can view the actual information by clicking on <font color=\"%1$s\">View Track</font> above.]]></string>
+    <string name="view_module_section_count">%1$s+</string>
+    <string name="view_module_donate">Donate</string>
+    <string name="view_module_donate_desc">Show some love to this module developer by donating the developer a coffee! ☕</string>
+    <string name="view_module_module_id">Module ID</string>
 
 
     <!-- Modules -->
@@ -169,6 +178,8 @@
     <string name="settings_check_modules_update_interval">Module update check interval</string>
     <string name="settings_check_modules_update_interval_desc">Select the time interval for checking your installed modules</string>
     <string name="settings_include_preleases">Include Pre-Releases</string>
+    <string name="settings_developer_mode">Developer Mode</string>
+    <string name="settings_developer_mode_desc">Shows IDs of modules and more</string>
 
     
     <!-- App Theme -->
@@ -277,12 +288,4 @@
     <string name="new_version_available">New version %s is available, click to upgrade.</string>
     <string name="hidden">Hidden</string>
     <string name="pre_release">Pre-release</string>
-    <string name="view_module_module_support">Module Support</string>
-    <string name="view_module_provided_by">Provided By</string>
-    <string name="view_module_added_on">Added On</string>
-    <string name="view_module_about_this_module">About This Module</string>
-    <string name="view_module_mod_infos_disclaimer"><![CDATA[Infos marked with a <b>*</b> can differ due to multiple added repos. You can view the actual information by clicking on <font color=\"%1$s\">View Track</font> above.]]></string>
-    <string name="view_module_section_count">%1$s+</string>
-    <string name="view_module_donate">Donate</string>
-    <string name="view_module_donate_desc">Show some love to this module developer by donating the developer a coffee! ☕</string>
 </resources>
