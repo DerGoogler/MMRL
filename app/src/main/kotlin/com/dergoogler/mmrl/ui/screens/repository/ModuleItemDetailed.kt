@@ -46,8 +46,9 @@ fun ModuleItemDetailed(
     module: OnlineModule,
     state: OnlineState,
     alpha: Float = 1f,
-    onClick: () -> Unit = {}, decoration: TextDecoration = TextDecoration.None,
-    enabled: Boolean = true
+    onClick: () -> Unit = {},
+    decoration: TextDecoration = TextDecoration.None,
+    enabled: Boolean = true,
 ) = Surface(
     onClick = onClick, enabled = enabled,
     color = MaterialTheme.colorScheme.surface,
@@ -167,6 +168,8 @@ fun ModuleItemDetailed(
                     .alpha(alpha = alpha)
                     .padding(end = 16.dp, bottom = 16.dp, start = 16.dp),
                 text = module.description,
+                maxLines = 5,
+                overflow = TextOverflow.Ellipsis,
                 style = MaterialTheme.typography.bodySmall,
                 textDecoration = decoration,
                 color = MaterialTheme.colorScheme.outline
