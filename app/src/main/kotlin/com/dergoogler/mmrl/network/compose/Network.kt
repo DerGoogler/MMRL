@@ -14,7 +14,7 @@ import timber.log.Timber
 fun <T> runRequest(
     get: suspend () -> Result<T>,
     onFailure: (Throwable) -> Unit = {},
-    onSuccess: (T) -> Unit
+    onSuccess: (T) -> Unit,
 ): Event {
     var event by remember { mutableStateOf(Event.LOADING) }
 
@@ -35,20 +35,23 @@ fun <T> runRequest(
 
 @Composable
 fun requestString(
-    url: String,
+    url: String?,
     onFailure: (Throwable) -> Unit = {},
-    onSuccess: (String) -> Unit
-) = runRequest(
-    get = { NetworkUtils.requestString(url) },
-    onSuccess = onSuccess,
-    onFailure = onFailure
-)
+    onSuccess: (String) -> Unit,
+): Event {
+    if (url.isNullOrBlank()) return Event.FAILED
+    return runRequest(
+        get = { NetworkUtils.requestString(url) },
+        onSuccess = onSuccess,
+        onFailure = onFailure
+    )
+}
 
 @Composable
 inline fun <reified T> requestJson(
     url: String,
     noinline onFailure: (Throwable) -> Unit = {},
-    noinline onSuccess: (T) -> Unit
+    noinline onSuccess: (T) -> Unit,
 ) = runRequest(
     get = { NetworkUtils.requestJson(url) },
     onSuccess = onSuccess,

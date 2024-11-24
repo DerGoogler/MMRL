@@ -1,6 +1,7 @@
 package com.dergoogler.mmrl.ui.screens.repository.view.items
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,6 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.database.entity.Repo
@@ -39,13 +41,17 @@ import ext.dergoogler.mmrl.ext.toDateTime
 
 @Composable
 fun TrackItem(
+    style: TextStyle = MaterialTheme.typography.bodyMedium,
     tracks: List<Pair<Repo, TrackJson>>
 ) = Box {
     var open by rememberSaveable { mutableStateOf(false) }
 
-    TagItem(
-        icon = R.drawable.tag,
-        onClick = { open = true }
+    Text(
+        style = style.copy(color = MaterialTheme.colorScheme.surfaceTint),
+        modifier = Modifier.clickable(
+            onClick = { open = true }
+        ),
+        text = stringResource(id = R.string.view_module_view_track),
     )
 
     if (open) {

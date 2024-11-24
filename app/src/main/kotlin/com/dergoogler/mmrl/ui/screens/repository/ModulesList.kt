@@ -24,7 +24,7 @@ import com.dergoogler.mmrl.viewmodel.ModuleViewModel
 fun ModulesList(
     list: List<Pair<OnlineState, OnlineModule>>,
     state: LazyListState,
-    navController: NavController
+    navController: NavController,
 ) {
     val userPreferences = LocalUserPreferences.current
     val menu = userPreferences.repositoryMenu
@@ -39,7 +39,7 @@ fun ModulesList(
 fun Detailed(
     list: List<Pair<OnlineState, OnlineModule>>,
     state: LazyListState,
-    navController: NavController
+    navController: NavController,
 ) {
     Box(
         modifier = Modifier.fillMaxSize()
@@ -77,7 +77,7 @@ fun Detailed(
 fun Compact(
     list: List<Pair<OnlineState, OnlineModule>>,
     state: LazyListState,
-    navController: NavController
+    navController: NavController,
 ) {
     Box(
         modifier = Modifier.fillMaxSize()

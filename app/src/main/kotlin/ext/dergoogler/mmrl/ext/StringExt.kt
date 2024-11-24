@@ -34,3 +34,7 @@ fun String.findFileGlob(
 
     return null
 }
+
+inline fun <R> String?.ifNotNullOrBlank(block: (String) -> R): R? {
+    return if (!this.isNullOrBlank()) block(this) else null
+}

@@ -3,9 +3,6 @@ package com.dergoogler.mmrl.model.online
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import io.github.z4kn4fein.semver.constraints.toConstraint
-import io.github.z4kn4fein.semver.satisfies
-import io.github.z4kn4fein.semver.toVersionOrNull
 
 @JsonClass(generateAdapter = true)
 data class ModuleFeatures(
@@ -22,5 +19,17 @@ data class ModuleFeatures(
 ) {
     fun isNotEmpty() =
         service != null || postFsData != null || resetprop != null || sepolicy != null || zygisk != null || apks != null || webroot != null || postMount != null || bootCompleted != null //|| modconf != null
+
+    val size = listOf(
+        service,
+        postFsData,
+        resetprop,
+        sepolicy,
+        zygisk,
+        apks,
+        webroot,
+        postMount,
+        bootCompleted
+    ).count { it != null }
 }
 

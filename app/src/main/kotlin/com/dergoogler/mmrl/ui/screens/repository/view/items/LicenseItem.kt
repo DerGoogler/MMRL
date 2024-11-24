@@ -1,6 +1,7 @@
 package com.dergoogler.mmrl.ui.screens.repository.view.items
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.BottomSheetDefaults
@@ -18,18 +19,26 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.ui.component.LicenseContent
+import com.dergoogler.mmrl.ui.component.ListButtonItem
+import com.dergoogler.mmrl.ui.component.ListItemTextStyle
 import com.dergoogler.mmrl.ui.component.NavigationBarsSpacer
 import com.dergoogler.mmrl.ui.utils.expandedShape
 
 @Composable
 fun LicenseItem(
-    licenseId: String
+    licenseId: String,
+    itemTextStyle: ListItemTextStyle,
 ) = Box {
     var open by rememberSaveable { mutableStateOf(false) }
 
-    TagItem(
+    ListButtonItem(
+        itemTextStyle = itemTextStyle,
+        contentPaddingValues = PaddingValues(vertical = 8.dp, horizontal = 16.dp),
         icon = R.drawable.file_certificate,
-        onClick = { open = true }
+        title = stringResource(id = R.string.menu_show_license),
+        onClick = {
+            open = true
+        }
     )
 
     if (open) {

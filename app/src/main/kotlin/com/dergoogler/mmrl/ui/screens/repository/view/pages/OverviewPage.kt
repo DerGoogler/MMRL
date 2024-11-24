@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -44,7 +43,6 @@ import com.dergoogler.mmrl.ui.component.AntiFeaturesItem
 import com.dergoogler.mmrl.ui.component.LabelItem
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import ext.dergoogler.mmrl.ext.ignoreHorizontalParentPadding
-import ext.dergoogler.mmrl.ext.toFormattedDate
 import ext.dergoogler.mmrl.ext.toFormattedDateSafely
 import java.util.Locale
 
@@ -165,7 +163,7 @@ fun OverviewPage(
         }
     }
 
-    online.screenshots?.let {
+    online.screenshots   ?.let {
         if (it.isNotEmpty()) {
             ScreenshotsItem(images = it)
         }

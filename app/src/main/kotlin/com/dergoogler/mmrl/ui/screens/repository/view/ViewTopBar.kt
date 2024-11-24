@@ -35,7 +35,6 @@ import com.dergoogler.mmrl.ui.component.CollapsingTopAppBar
 import com.dergoogler.mmrl.ui.component.CollapsingTopAppBarDefaults
 import com.dergoogler.mmrl.ui.component.Logo
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
-import com.dergoogler.mmrl.ui.screens.repository.view.items.LicenseItem
 import com.dergoogler.mmrl.ui.screens.repository.view.items.TagItem
 import com.dergoogler.mmrl.ui.screens.repository.view.items.TrackItem
 import ext.dergoogler.mmrl.ext.launchCustomTab
@@ -175,12 +174,12 @@ private fun topBarContent(
             tracks = tracks
         )
 
-
-        module.license?.let {
-            LicenseItem(
-                licenseId = it
-            )
-        }
+//
+//        module.license?.let {
+//            LicenseItem(
+//                licenseId = it
+//            )
+//        }
 
 
         module.donate?.let {

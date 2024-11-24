@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.dergoogler.mmrl.datastore.repository.Option
 import com.dergoogler.mmrl.datastore.repository.RepositoryMenuCompat
@@ -13,6 +14,7 @@ import com.dergoogler.mmrl.model.state.OnlineState.Companion.createState
 import com.dergoogler.mmrl.repository.LocalRepository
 import com.dergoogler.mmrl.repository.ModulesRepository
 import com.dergoogler.mmrl.repository.UserPreferencesRepository
+import com.dergoogler.mmrl.ui.navigation.graphs.RepositoryScreen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ext.dergoogler.mmrl.viewmodel.MMRLViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,6 +32,7 @@ class RepositoryViewModel @Inject constructor(
     localRepository: LocalRepository,
     modulesRepository: ModulesRepository,
     userPreferencesRepository: UserPreferencesRepository,
+    savedStateHandle: SavedStateHandle
 ) : MMRLViewModel(application, localRepository, modulesRepository, userPreferencesRepository) {
     private val repositoryMenu
         get() = userPreferencesRepository.data
@@ -43,6 +46,8 @@ class RepositoryViewModel @Inject constructor(
     private val cacheFlow = MutableStateFlow(listOf<Pair<OnlineState, OnlineModule>>())
     private val onlineFlow = MutableStateFlow(listOf<Pair<OnlineState, OnlineModule>>())
     val online get() = onlineFlow.asStateFlow()
+
+    val category = getCategory(savedStateHandle)
 
     var isLoading by mutableStateOf(true)
         private set
@@ -164,5 +169,15 @@ class RepositoryViewModel @Inject constructor(
         viewModelScope.launch {
             userPreferencesRepository.setRepositoryMenu(value)
         }
+    }
+
+    companion object {
+        fun putCategory(category: String) =
+            RepositoryScreen.Category.route.replace(
+                "{category}", category
+            )
+
+        fun getCategory(savedStateHandle: SavedStateHandle): String? =
+            savedStateHandle["category"]
     }
 }

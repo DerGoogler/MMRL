@@ -1,7 +1,9 @@
 package com.dergoogler.mmrl.ui.component
 
 import androidx.annotation.DrawableRes
-import androidx.compose.foundation.clickable
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -9,23 +11,20 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
@@ -46,6 +45,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -53,11 +53,9 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.dergoogler.mmrl.R
-import com.dergoogler.mmrl.ui.screens.repository.ModuleItemDetailed
-import com.dergoogler.mmrl.ui.utils.navigateSingleTopTo
-import com.dergoogler.mmrl.viewmodel.ModuleViewModel
 
 @Composable
 fun ListHeader(
@@ -145,7 +143,7 @@ fun ListItem(
     ) {
         icon?.let {
             Icon(
-                modifier = Modifier.size(ListItemDefaults.IconSize),
+                modifier = Modifier.size(itemTextStyle.iconSize),
                 painter = painterResource(id = icon),
                 contentDescription = null,
                 tint = LocalContentColor.current
@@ -171,12 +169,17 @@ fun ListButtonItem(
     itemTextStyle: ListItemTextStyle = ListItemDefaults.itemStyle(),
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     @DrawableRes icon: Int? = null,
+    iconToRight: Boolean = false,
     enabled: Boolean = true,
     labels: List<String>? = null,
 ) {
     val layoutDirection = LocalLayoutDirection.current
     val start by remember {
-        derivedStateOf { contentPaddingValues.calculateStartPadding(layoutDirection) }
+        derivedStateOf {
+            if (!iconToRight) contentPaddingValues.calculateStartPadding(
+                layoutDirection
+            ) else contentPaddingValues.calculateEndPadding(layoutDirection)
+        }
     }
 
     Row(
@@ -193,22 +196,137 @@ fun ListButtonItem(
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        icon?.let {
-            Icon(
-                modifier = Modifier.size(ListItemDefaults.IconSize),
-                painter = painterResource(id = icon),
-                contentDescription = null,
-                tint = LocalContentColor.current
-            )
+        if (!iconToRight) {
+            icon?.let {
+                Icon(
+                    modifier = Modifier.size(itemTextStyle.iconSize),
+                    painter = painterResource(id = icon),
+                    contentDescription = null,
+                    tint = LocalContentColor.current
+                )
 
-            Spacer(modifier = Modifier.width(start))
+                Spacer(modifier = Modifier.width(start))
+            }
         }
 
         BaseListContent(
-            title = title, desc = desc, itemTextStyle = itemTextStyle, labels = labels
+            modifier = Modifier.weight(1f),
+            title = title,
+            desc = desc,
+            itemTextStyle = itemTextStyle,
+            labels = labels
         )
+
+        if (iconToRight) {
+            Spacer(modifier = Modifier.width(start))
+            icon?.let {
+                Icon(
+                    modifier = Modifier.size(itemTextStyle.iconSize),
+                    painter = painterResource(id = icon),
+                    contentDescription = null,
+                    tint = LocalContentColor.current
+                )
+            }
+        }
     }
 }
+
+
+@Composable
+fun ListCollapseItem(
+    modifier: Modifier = Modifier,
+    title: String,
+    desc: String? = null,
+    contentPaddingValues: PaddingValues = PaddingValues(vertical = 16.dp, horizontal = 25.dp),
+    itemTextStyle: ListItemTextStyle = ListItemDefaults.itemStyle(),
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    iconToRight: Boolean = false,
+    enabled: Boolean = true,
+    labels: List<String>? = null,
+    isInitiallyExpanded: Boolean = false,
+    content: @Composable () -> Unit,
+) {
+    val layoutDirection = LocalLayoutDirection.current
+    val start by remember {
+        derivedStateOf {
+            if (!iconToRight) contentPaddingValues.calculateStartPadding(
+                layoutDirection
+            ) else contentPaddingValues.calculateEndPadding(layoutDirection)
+        }
+    }
+    var isExpanded by remember { mutableStateOf(isInitiallyExpanded) }
+
+    val rotation by animateFloatAsState(
+        targetValue = if (isExpanded) 180f else 0f,
+        animationSpec = tween(durationMillis = 300), label = title
+    )
+
+    val onClick: () -> Unit = {
+        isExpanded = !isExpanded
+    }
+
+    val icon = if (isExpanded) R.drawable.chevron_up else R.drawable.chevron_down
+
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .animateContentSize()
+    ) {
+        Row(
+            modifier = modifier
+                .alpha(alpha = if (enabled) 1f else 0.5f)
+                .combinedClickable(
+                    enabled = enabled,
+                    onClick = onClick,
+                    interactionSource = interactionSource,
+                    indication = rememberRipple()
+                )
+                .padding(contentPaddingValues)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            if (!iconToRight) {
+                Icon(
+                    modifier = Modifier
+                        .size(itemTextStyle.iconSize)
+                        .graphicsLayer(rotationZ = rotation),
+                    painter = painterResource(id = icon),
+                    contentDescription = null,
+                    tint = LocalContentColor.current
+                )
+
+                Spacer(modifier = Modifier.width(start))
+            }
+
+
+            BaseListContent(
+                modifier = Modifier.weight(1f),
+                title = title,
+                desc = desc,
+                itemTextStyle = itemTextStyle,
+                labels = labels
+            )
+
+            if (iconToRight) {
+                Spacer(modifier = Modifier.width(start))
+
+                Icon(
+                    modifier = Modifier
+                        .size(itemTextStyle.iconSize)
+                        .graphicsLayer(rotationZ = rotation),
+                    painter = painterResource(id = icon),
+                    contentDescription = null,
+                    tint = LocalContentColor.current
+                )
+            }
+        }
+
+        if (isExpanded) {
+            content()
+        }
+    }
+}
+
 
 @Composable
 fun ListSwitchItem(
@@ -246,7 +364,7 @@ fun ListSwitchItem(
     ) {
         icon?.let {
             Icon(
-                modifier = Modifier.size(ListItemDefaults.IconSize),
+                modifier = Modifier.size(itemTextStyle.iconSize),
                 painter = painterResource(id = icon),
                 contentDescription = null
             )
@@ -258,7 +376,7 @@ fun ListSwitchItem(
         BaseListContent(
             modifier = Modifier
                 .weight(1f)
-                .padding(end = ListItemDefaults.TextSwitchPadding),
+                .padding(end = itemTextStyle.textSwitchPadding),
             title = title,
             desc = desc,
             itemTextStyle = itemTextStyle,
@@ -480,6 +598,8 @@ class ListItemTextStyle internal constructor(
     val descTextColor: Color,
     val titleTextStyle: TextStyle,
     val descTextStyle: TextStyle,
+    val iconSize: Dp = 24.dp,
+    val textSwitchPadding: Dp = 16.dp,
 ) {
     @Suppress("RedundantIf")
     override fun equals(other: Any?): Boolean {
@@ -490,6 +610,8 @@ class ListItemTextStyle internal constructor(
         if (descTextColor != other.descTextColor) return false
         if (titleTextStyle != other.titleTextStyle) return false
         if (descTextStyle != other.descTextStyle) return false
+        if (iconSize != other.iconSize) return false
+        if (textSwitchPadding != other.textSwitchPadding) return false
 
         return true
     }
@@ -499,13 +621,13 @@ class ListItemTextStyle internal constructor(
         result = 31 * result + descTextColor.hashCode()
         result = 31 * result + titleTextStyle.hashCode()
         result = 31 * result + descTextStyle.hashCode()
+        result = 31 * result + iconSize.hashCode()
+        result = 31 * result + textSwitchPadding.hashCode()
         return result
     }
 }
 
 object ListItemDefaults {
-    val IconSize = 24.dp
-    val TextSwitchPadding = 16.dp
 
     @Composable
     fun itemStyle(
@@ -513,10 +635,14 @@ object ListItemDefaults {
         descTextColor: Color = MaterialTheme.colorScheme.outline,
         titleTextStyle: TextStyle = MaterialTheme.typography.bodyLarge,
         descTextStyle: TextStyle = MaterialTheme.typography.bodyMedium,
+        iconSize: Dp = 24.dp,
+        textSwitchPadding: Dp = 16.dp,
     ) = ListItemTextStyle(
         titleTextColor = titleTextColor,
         descTextColor = descTextColor,
         titleTextStyle = titleTextStyle,
-        descTextStyle = descTextStyle
+        descTextStyle = descTextStyle,
+        iconSize = iconSize,
+        textSwitchPadding = textSwitchPadding
     )
 }

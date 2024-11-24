@@ -38,10 +38,10 @@ fun PageIndicator(
     icon: @Composable ColumnScope.() -> Unit,
     text: @Composable ColumnScope.() -> Unit,
     modifier: Modifier = Modifier,
-    minHeight: Dp? = null
+    minHeight: Dp? = null,
 ) = Column(
     modifier = modifier
-            then(if (minHeight != null) {
+            then (if (minHeight != null) {
         Modifier
             .defaultMinSize(minHeight = minHeight)
             .fillMaxWidth()
@@ -63,7 +63,7 @@ fun PageIndicator(
     @DrawableRes icon: Int,
     text: String,
     modifier: Modifier = Modifier,
-    minHeight: Dp? = null
+    minHeight: Dp? = null,
 ) = PageIndicator(
     modifier = modifier,
     icon = {
@@ -90,7 +90,7 @@ fun PageIndicator(
     @DrawableRes icon: Int,
     @StringRes text: Int,
     modifier: Modifier = Modifier,
-    minHeight: Dp? = null
+    minHeight: Dp? = null,
 ) = PageIndicator(
     modifier = modifier,
     icon = icon,
@@ -100,8 +100,10 @@ fun PageIndicator(
 
 @Composable
 fun Loading(
-    minHeight: Dp? = null
+    modifier: Modifier = Modifier,
+    minHeight: Dp? = null,
 ) = PageIndicator(
+    modifier = modifier,
     icon = {
         CircularProgressIndicator(
             modifier = Modifier.size(50.dp),
@@ -121,8 +123,8 @@ fun Loading(
 
 @Composable
 fun Failed(
-    message: String?,
-    minHeight: Dp? = null
+    message: String? = null,
+    minHeight: Dp? = null,
 ) = PageIndicator(
     icon = R.drawable.alert_triangle,
     text = message ?: stringResource(id = R.string.unknown_error),
@@ -133,11 +135,12 @@ object PageIndicatorDefaults {
     val iconSize = 80.dp
     val iconColor @Composable get() = MaterialTheme.colorScheme.outline.copy(0.5f)
 
-    val textStyle @Composable get() = TextStyle(
-        color = MaterialTheme.colorScheme.outline.copy(0.5f),
-        fontSize = 20.sp,
-        fontFamily = FontFamily.SansSerif,
-        fontWeight = FontWeight.SemiBold,
-        textAlign = TextAlign.Center
-    )
+    val textStyle
+        @Composable get() = TextStyle(
+            color = MaterialTheme.colorScheme.outline.copy(0.5f),
+            fontSize = 20.sp,
+            fontFamily = FontFamily.SansSerif,
+            fontWeight = FontWeight.SemiBold,
+            textAlign = TextAlign.Center
+        )
 }

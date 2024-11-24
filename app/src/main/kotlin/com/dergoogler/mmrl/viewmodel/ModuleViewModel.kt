@@ -16,15 +16,18 @@ import com.dergoogler.mmrl.database.entity.Repo
 import com.dergoogler.mmrl.database.entity.Repo.Companion.toRepo
 import com.dergoogler.mmrl.model.json.UpdateJson
 import com.dergoogler.mmrl.model.local.LocalModule
+import com.dergoogler.mmrl.model.local.State
 import com.dergoogler.mmrl.model.online.OnlineModule
 import com.dergoogler.mmrl.model.online.TrackJson
 import com.dergoogler.mmrl.model.online.VersionItem
 import com.dergoogler.mmrl.repository.LocalRepository
+import com.dergoogler.mmrl.repository.ModulesRepository
 import com.dergoogler.mmrl.repository.UserPreferencesRepository
 import com.dergoogler.mmrl.service.DownloadService
 import com.dergoogler.mmrl.ui.navigation.graphs.RepositoryScreen
 import com.dergoogler.mmrl.utils.Utils
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.dergoogler.mmrl.compat.stub.IModuleOpsCallback
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -34,16 +37,17 @@ import javax.inject.Inject
 @HiltViewModel
 class ModuleViewModel @Inject constructor(
     private val localRepository: LocalRepository,
+    private val modulesRepository: ModulesRepository,
     private val userPreferencesRepository: UserPreferencesRepository,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
     val isProviderAlive get() = Compat.isAlive
 
 
     val version: String
         get() = Compat.get("") {
-        with(moduleManager) { version }
-    }
+            with(moduleManager) { version }
+        }
 
     private val moduleId = getModuleId(savedStateHandle)
     var online: OnlineModule by mutableStateOf(OnlineModule.example())
@@ -52,9 +56,10 @@ class ModuleViewModel @Inject constructor(
         versions.firstOrNull()?.second
     }
 
-    val isEmptyAbout get() = online.homepage.orEmpty().isBlank()
-            && online.track.source.isBlank()
-            && online.support.orEmpty().isBlank()
+    val isEmptyAbout
+        get() = online.homepage.orEmpty().isBlank()
+                && online.track.source.isBlank()
+                && online.support.orEmpty().isBlank()
 
     val isEmptyReadme get() = !online.hasReadme
     val readme get() = online.readme.orEmpty()
@@ -65,8 +70,9 @@ class ModuleViewModel @Inject constructor(
     var notifyUpdates by mutableStateOf(false)
         private set
 
-    val localVersionCode get() =
-        if (notifyUpdates && installed) local!!.versionCode else Int.MAX_VALUE
+    val localVersionCode
+        get() =
+            if (notifyUpdates && installed) local!!.versionCode else Int.MAX_VALUE
     val updatableSize by derivedStateOf {
         versions.count { it.second.versionCode > localVersionCode }
     }
@@ -93,7 +99,7 @@ class ModuleViewModel @Inject constructor(
             val repo = localRepository.getRepoByUrl(it.repoUrl)
 
             val item = repo to it
-            val track =  repo to localRepository.getOnlineByIdAndUrl(
+            val track = repo to localRepository.getOnlineByIdAndUrl(
                 id = online.id,
                 repoUrl = it.repoUrl
             ).track
@@ -119,7 +125,7 @@ class ModuleViewModel @Inject constructor(
     fun downloader(
         context: Context,
         item: VersionItem,
-        onSuccess: (File) -> Unit
+        onSuccess: (File) -> Unit,
     ) {
         viewModelScope.launch {
             val downloadPath = userPreferencesRepository.data
@@ -167,13 +173,78 @@ class ModuleViewModel @Inject constructor(
         return progress
     }
 
+    private val opsTasks = mutableStateListOf<String>()
+    private val opsCallback = object : IModuleOpsCallback.Stub() {
+        override fun onSuccess(id: String) {
+            viewModelScope.launch {
+                modulesRepository.getLocal(id)
+                opsTasks.remove(id)
+            }
+        }
+
+        override fun onFailure(id: String, msg: String?) {
+            opsTasks.remove(id)
+            Timber.w("$id: $msg")
+        }
+    }
+
+    fun createModuleOps(module: LocalModule) = when (module.state) {
+        State.ENABLE -> ModuleOps(
+            isOpsRunning = opsTasks.contains(module.id),
+            toggle = {
+                opsTasks.add(module.id)
+                Compat.moduleManager.disable(module.id, opsCallback)
+            },
+            change = {
+                opsTasks.add(module.id)
+                Compat.moduleManager.remove(module.id, opsCallback)
+                local = local?.copy(state = State.REMOVE)
+            }
+        )
+
+        State.DISABLE -> ModuleOps(
+            isOpsRunning = opsTasks.contains(module.id),
+            toggle = {
+                opsTasks.add(module.id)
+                Compat.moduleManager.enable(module.id, opsCallback)
+            },
+            change = {
+                opsTasks.add(module.id)
+                Compat.moduleManager.remove(module.id, opsCallback)
+                local = local?.copy(state = State.REMOVE)
+            }
+        )
+
+        State.REMOVE -> ModuleOps(
+            isOpsRunning = opsTasks.contains(module.id),
+            toggle = {},
+            change = {
+                opsTasks.add(module.id)
+                Compat.moduleManager.enable(module.id, opsCallback)
+                local = local?.copy(state = State.ENABLE)
+            }
+        )
+
+        State.UPDATE -> ModuleOps(
+            isOpsRunning = opsTasks.contains(module.id),
+            toggle = {},
+            change = {}
+        )
+    }
+
     companion object {
-        fun putModuleId(module: OnlineModule) =
-            RepositoryScreen.View.route.replace(
+        fun putModuleId(module: OnlineModule, route: String = RepositoryScreen.View.route) =
+            route.replace(
                 "{moduleId}", module.id
             )
 
         fun getModuleId(savedStateHandle: SavedStateHandle): String =
             checkNotNull(savedStateHandle["moduleId"])
     }
+
+    data class ModuleOps(
+        val isOpsRunning: Boolean,
+        val toggle: (Boolean) -> Unit,
+        val change: () -> Unit
+    )
 }

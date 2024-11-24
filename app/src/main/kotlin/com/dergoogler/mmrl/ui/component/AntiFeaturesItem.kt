@@ -1,11 +1,12 @@
 package com.dergoogler.mmrl.ui.component
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -14,51 +15,33 @@ import com.dergoogler.mmrl.R
 
 @Composable
 fun AntiFeaturesItem(
+    modifier: Modifier = Modifier,
+    state: LazyListState = rememberLazyListState(),
     antifeatures: List<String>,
-) = Column(
-    modifier = Modifier
-        .padding(all = 16.dp)
-        .fillMaxWidth(),
-    verticalArrangement = Arrangement.spacedBy(16.dp)
+    contentPaddingValues: PaddingValues = PaddingValues(vertical = 16.dp, horizontal = 25.dp),
+    itemTextStyle: ListItemTextStyle = ListItemDefaults.itemStyle(),
 ) {
-    Text(
-        text = stringResource(id = R.string.view_module_antifeatures),
-        style = MaterialTheme.typography.titleSmall,
-        color = MaterialTheme.colorScheme.primary
-    )
 
-    antifeatures.forEach { antifeature ->
-        val result = getAntifeatureDetails(antifeature)
-        result?.let {
-            val (nameResId, descResId) = result
-            ValueItem(key = stringResource(id = nameResId), value = stringResource(id = descResId))
-        }
-    }
-}
-
-@Composable
-private fun ValueItem(
-    key: String,
-    value: String?,
-    modifier: Modifier = Modifier
-) {
-    if (value.isNullOrBlank()) return
-
-    Column(
-        modifier = modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(4.dp)
+    LazyColumn(
+        state = state,
+        modifier = modifier.fillMaxSize(),
+        contentPadding = PaddingValues(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Text(
-            text = key,
-            style = MaterialTheme.typography.titleSmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
-
-        Text(
-            text = value,
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.outline
-        )
+        items(
+            items = antifeatures,
+        ) { antifeature ->
+            val result = getAntifeatureDetails(antifeature)
+            result?.let {
+                val (nameResId, descResId) = result
+                ListItem(
+                    itemTextStyle = itemTextStyle,
+                    contentPaddingValues = contentPaddingValues,
+                    title = stringResource(id = nameResId),
+                    desc = stringResource(id = descResId)
+                )
+            }
+        }
     }
 }
 
