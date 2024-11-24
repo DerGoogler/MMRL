@@ -102,7 +102,8 @@
     <string name="view_module_donate">Donate</string>
     <string name="view_module_donate_desc">Show some love to this module developer by donating the developer a coffee! ☕</string>
     <string name="view_module_module_id">Module ID</string>
-    <string name="settings_open_notification_settings">Open Notification Settings</string>
+    <string name="view_module_required_os">Required OS</string>
+    <string name="view_module_required_os_value">Android %1$s and up</string>
 
 
     <!-- Modules -->
@@ -133,6 +134,7 @@
     <string name="settings_text_wrap_desc">Enables text wrap inside the install terminal</string>
     <string name="settings_changelog">Changelog</string>
     <string name="settings_changelo_desc">All current changes within MMRL</string>
+    <string name="settings_open_notification_settings">Open Notification Settings</string>
     
     <!-- Root Item -->
     <string name="settings_root_access">Root Access: %s</string>

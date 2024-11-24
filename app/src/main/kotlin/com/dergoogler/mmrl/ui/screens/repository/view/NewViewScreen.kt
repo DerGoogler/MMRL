@@ -1,5 +1,7 @@
 package com.dergoogler.mmrl.ui.screens.repository.view
 
+import android.R.attr.version
+import android.os.Build
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -54,6 +56,7 @@ import coil.compose.AsyncImage
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.model.local.State
 import com.dergoogler.mmrl.model.online.VersionItem
+import com.dergoogler.mmrl.ui.component.Alert
 import com.dergoogler.mmrl.ui.component.AntiFeaturesItem
 import com.dergoogler.mmrl.ui.component.HtmlText
 import com.dergoogler.mmrl.ui.component.ListButtonItem
@@ -77,6 +80,7 @@ import ext.dergoogler.mmrl.ext.launchCustomTab
 import ext.dergoogler.mmrl.ext.takeTrue
 import ext.dergoogler.mmrl.ext.toFormatedFileSize
 import ext.dergoogler.mmrl.ext.toFormattedDateSafely
+
 
 @Composable
 fun NewViewScreen(
@@ -134,8 +138,6 @@ fun NewViewScreen(
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
         ) {
-
-
             Spacer(modifier = Modifier.height(16.dp))
 
             Row(
@@ -252,6 +254,43 @@ fun NewViewScreen(
             }
 
             Spacer(modifier = Modifier.height(16.dp))
+
+            module.root?.let {
+                if (it.isNotSupported(viewModel.version)) {
+                    Alert(
+                        title = stringResource(id = R.string.view_module_unsupported),
+                        backgroundColor = MaterialTheme.colorScheme.errorContainer,
+                        textColor = MaterialTheme.colorScheme.onErrorContainer,
+                        message = stringResource(id = R.string.view_module_unsupported_desc),
+                        modifier = Modifier.padding(horizontal = 16.dp)
+                    )
+
+                    Spacer(modifier = Modifier.height(16.dp))
+                }
+
+            }
+
+            module.note?.let {
+                it.message?.let { it1 ->
+                    if (it.title != null && it.title.lowercase() == "deprecated") {
+                        Alert(
+                            backgroundColor = MaterialTheme.colorScheme.errorContainer,
+                            textColor = MaterialTheme.colorScheme.onErrorContainer,
+                            title = it.title,
+                            message = it1,
+                            modifier = Modifier.padding(horizontal = 16.dp)
+                        )
+                    } else {
+                        Alert(
+                            title = it.title,
+                            message = it1,
+                            modifier = Modifier.padding(horizontal = 16.dp)
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(16.dp))
+                }
+            }
 
             if (!module.readme.isNullOrBlank()) {
                 ListButtonItem(
@@ -539,10 +578,33 @@ fun NewViewScreen(
                 TrackItem(tracks = viewModel.tracks)
             }
 
-//            ModuleInfoListItem(
-//                title = R.string.view_module_required_os,
-//                desc = "null"
-//            )
+            module.minApi?.let {
+                ModuleInfoListItem(
+                    title = R.string.view_module_required_os,
+                    desc = stringResource(
+                        R.string.view_module_required_os_value, when (it) {
+                            Build.VERSION_CODES.JELLY_BEAN -> "4.1"
+                            Build.VERSION_CODES.JELLY_BEAN_MR1 -> "4.2"
+                            Build.VERSION_CODES.JELLY_BEAN_MR2 -> "4.3"
+                            Build.VERSION_CODES.KITKAT -> "4.4"
+                            Build.VERSION_CODES.KITKAT_WATCH -> "4.4"
+                            Build.VERSION_CODES.LOLLIPOP -> "5.0"
+                            Build.VERSION_CODES.LOLLIPOP_MR1 -> "5.1"
+                            Build.VERSION_CODES.M -> "6.0"
+                            Build.VERSION_CODES.N -> "7.0"
+                            Build.VERSION_CODES.N_MR1 -> "7.1"
+                            Build.VERSION_CODES.O -> "8.0"
+                            Build.VERSION_CODES.O_MR1 -> "8.1"
+                            Build.VERSION_CODES.P -> "9.0"
+                            Build.VERSION_CODES.Q -> "10"
+                            Build.VERSION_CODES.R -> "11"
+                            Build.VERSION_CODES.S -> "12"
+                            Build.VERSION_CODES.S_V2 -> "12"
+                            else -> "[Sdk: $version]"
+                        }
+                    )
+                )
+            }
 
             module.track.added?.let {
                 ModuleInfoListItem(
