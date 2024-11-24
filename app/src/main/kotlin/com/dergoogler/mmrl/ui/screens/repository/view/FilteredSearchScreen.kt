@@ -27,18 +27,23 @@ import com.dergoogler.mmrl.ui.utils.none
 import com.dergoogler.mmrl.viewmodel.RepositoryViewModel
 
 @Composable
-fun CategoryScreen(
+fun FilteredSearchScreen(
+    type: String,
     navController: NavController,
     viewModel: RepositoryViewModel = hiltViewModel(),
 ) {
-    val category = viewModel.category
+    val value = when (type) {
+        "category" -> viewModel.category
+        "author" -> viewModel.author
+        else -> null
+    }
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val list by viewModel.online.collectAsStateWithLifecycle()
     val listState = rememberLazyListState()
 
     LaunchedEffect(list) {
-        if (!category.isNullOrBlank()) {
-            viewModel.search("category:${category}")
+        if (!value.isNullOrBlank()) {
+            viewModel.search("${type}:${value}")
         }
     }
 
@@ -54,7 +59,7 @@ fun CategoryScreen(
                         )
                     }
                 },
-                title = { Text(text = category.orEmpty()) },
+                title = { Text(text = value.orEmpty()) },
                 scrollBehavior = scrollBehavior
             )
         },
@@ -67,7 +72,7 @@ fun CategoryScreen(
                 Loading()
             }
 
-            if (list.isEmpty() && !viewModel.isLoading && !category.isNullOrBlank()) {
+            if (list.isEmpty() && !viewModel.isLoading && !value.isNullOrBlank()) {
                 PageIndicator(
                     icon = R.drawable.cloud,
                     text = if (viewModel.isSearch) R.string.search_empty else R.string.repository_empty,

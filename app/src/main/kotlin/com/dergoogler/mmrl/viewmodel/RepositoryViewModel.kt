@@ -48,6 +48,7 @@ class RepositoryViewModel @Inject constructor(
     val online get() = onlineFlow.asStateFlow()
 
     val category = getCategory(savedStateHandle)
+    val author = getAuthor(savedStateHandle)
 
     var isLoading by mutableStateOf(true)
         private set
@@ -179,5 +180,14 @@ class RepositoryViewModel @Inject constructor(
 
         fun getCategory(savedStateHandle: SavedStateHandle): String? =
             savedStateHandle["category"]
+
+
+        fun putAuthor(author: String) =
+            RepositoryScreen.Author.route.replace(
+                "{author}", author
+            )
+
+        fun getAuthor(savedStateHandle: SavedStateHandle): String? =
+            savedStateHandle["author"]
     }
 }

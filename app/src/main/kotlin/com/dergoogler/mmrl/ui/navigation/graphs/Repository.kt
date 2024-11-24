@@ -12,7 +12,7 @@ import androidx.navigation.navDeepLink
 import androidx.navigation.navigation
 import com.dergoogler.mmrl.ui.navigation.MainScreen
 import com.dergoogler.mmrl.ui.screens.repository.RepositoryScreen
-import com.dergoogler.mmrl.ui.screens.repository.view.CategoryScreen
+import com.dergoogler.mmrl.ui.screens.repository.view.FilteredSearchScreen
 import com.dergoogler.mmrl.ui.screens.repository.view.NewViewScreen
 import com.dergoogler.mmrl.ui.screens.repository.view.ViewDescriptionScreen
 
@@ -20,7 +20,8 @@ enum class RepositoryScreen(val route: String) {
     Home("Repository"),
     View("View/{moduleId}"),
     Description("Description/{moduleId}"),
-    Category("Category/{category}")
+    Category("FilteredSearch/{category}"),
+    Author("FilteredSearch/{author}")
 }
 
 fun NavGraphBuilder.repositoryScreen(
@@ -76,7 +77,23 @@ fun NavGraphBuilder.repositoryScreen(
         enterTransition = { scaleIn() + fadeIn() },
         exitTransition = { fadeOut() }
     ) {
-        CategoryScreen(
+        FilteredSearchScreen(
+            type = "category",
+            navController = navController
+        )
+    }
+
+    composable(
+        route = RepositoryScreen.Author.route,
+        arguments = listOf(navArgument("author") { type = NavType.StringType }),
+        deepLinks = listOf(navDeepLink { uriPattern = "mmrl://author/{author}" },
+            navDeepLink { uriPattern = "https://mmrl.dergoogler.com/author/{author}" },
+            navDeepLink { uriPattern = "http://mmrl.dergoogler.com/author/{author}" }),
+        enterTransition = { scaleIn() + fadeIn() },
+        exitTransition = { fadeOut() }
+    ) {
+        FilteredSearchScreen(
+            type = "author",
             navController = navController
         )
     }

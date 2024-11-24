@@ -3,6 +3,7 @@ package com.dergoogler.mmrl.ui.screens.repository.view
 import android.R.attr.version
 import android.os.Build
 import androidx.annotation.StringRes
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -199,6 +200,13 @@ fun NewViewScreen(
                     Spacer(modifier = Modifier.height(4.dp))
 
                     Text(
+                        modifier = Modifier.clickable(
+                            onClick = {
+                                navController.navigateSingleTopTo(
+                                    RepositoryViewModel.putAuthor(module.author)
+                                )
+                            }
+                        ),
                         text = module.author,
                         style = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.surfaceTint),
                         maxLines = 2,
@@ -515,7 +523,10 @@ fun NewViewScreen(
                     title = stringResource(R.string.view_module_antifeatures),
                     labels = listOf(stringResource(R.string.view_module_section_count, it.size))
                 ) {
-                    AntiFeaturesItem(antifeatures = it)
+                    AntiFeaturesItem(
+                        contentPaddingValues = PaddingValues(vertical = 8.dp, horizontal = 16.dp),
+                        antifeatures = it
+                    )
                 }
             }
 
