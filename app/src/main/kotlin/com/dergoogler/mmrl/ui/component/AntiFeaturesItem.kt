@@ -1,49 +1,29 @@
 package com.dergoogler.mmrl.ui.component
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.dergoogler.mmrl.R
 
 @Composable
 fun AntiFeaturesItem(
-    modifier: Modifier = Modifier,
-    state: LazyListState = rememberLazyListState(),
     antifeatures: List<String>,
     contentPaddingValues: PaddingValues = PaddingValues(vertical = 16.dp, horizontal = 25.dp),
     itemTextStyle: ListItemTextStyle = ListItemDefaults.itemStyle(),
-) {
-
-    LazyColumn(
-        state = state,
-        modifier = modifier.fillMaxSize(),
-        contentPadding = PaddingValues(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        items(
-            items = antifeatures,
-        ) { antifeature ->
-            val result = getAntifeatureDetails(antifeature)
-            result?.let {
-                val (nameResId, descResId) = result
-                ListItem(
-                    itemTextStyle = itemTextStyle,
-                    contentPaddingValues = contentPaddingValues,
-                    title = stringResource(id = nameResId),
-                    desc = stringResource(id = descResId)
-                )
-            }
-        }
+) = antifeatures.forEach {
+    val result = getAntifeatureDetails(it)
+    result?.let {
+        val (nameResId, descResId) = result
+        ListItem(
+            itemTextStyle = itemTextStyle,
+            contentPaddingValues = contentPaddingValues,
+            title = stringResource(id = nameResId),
+            desc = stringResource(id = descResId)
+        )
     }
 }
+
 
 private fun getAntifeatureDetails(id: String?): Pair<Int, Int>? {
     val antifeatureMap = mapOf(

@@ -102,6 +102,7 @@
     <string name="view_module_donate">Donate</string>
     <string name="view_module_donate_desc">Show some love to this module developer by donating the developer a coffee! ☕</string>
     <string name="view_module_module_id">Module ID</string>
+    <string name="settings_open_notification_settings">Open Notification Settings</string>
 
 
     <!-- Modules -->
