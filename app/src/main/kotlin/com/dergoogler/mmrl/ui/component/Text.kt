@@ -1,9 +1,7 @@
 package com.dergoogler.mmrl.ui.component
 
 import android.text.SpannableStringBuilder
-import android.text.method.LinkMovementMethod
 import android.text.util.Linkify
-import android.widget.TextView
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -17,17 +15,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.text.HtmlCompat
 import coil.Coil
-import ext.dergoogler.mmrl.ext.launchCustomTab
 import dev.jeziellago.compose.markdowntext.MarkdownText
+import ext.dergoogler.mmrl.ext.launchCustomTab
 import ext.dergoogler.mmrl.ext.toAnnotatedString
 
 @Composable
@@ -66,6 +62,7 @@ fun HtmlText(
 fun MarkdownText(
     text: String,
     modifier: Modifier = Modifier,
+    isTextSelectable: Boolean = false,
     style: TextStyle = LocalTextStyle.current,
 ) {
     val context = LocalContext.current
@@ -74,7 +71,7 @@ fun MarkdownText(
         modifier = modifier,
         style = style,
         markdown = text,
-
+        isTextSelectable = isTextSelectable,
         imageLoader = Coil.imageLoader(context),
         linkifyMask = Linkify.WEB_URLS,
         linkColor = MaterialTheme.colorScheme.primary,
