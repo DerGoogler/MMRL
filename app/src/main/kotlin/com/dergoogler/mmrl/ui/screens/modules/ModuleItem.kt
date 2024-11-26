@@ -36,6 +36,7 @@ import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.model.local.LocalModule
 import com.dergoogler.mmrl.model.local.versionDisplay
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
+import ext.dergoogler.mmrl.ext.takeTrue
 import ext.dergoogler.mmrl.ext.toDate
 import ext.dergoogler.mmrl.ext.toFormattedDateSafely
 
@@ -96,6 +97,15 @@ fun ModuleItem(
                             text = stringResource(id = R.string.module_update_at,
                                 module.lastUpdated.toFormattedDateSafely(userPreferences.datePattern)
                             ),
+                            style = MaterialTheme.typography.bodySmall,
+                            textDecoration = decoration,
+                            color = MaterialTheme.colorScheme.outline
+                        )
+                    }
+
+                    userPreferences.developerMode.takeTrue {
+                        Text(
+                            text = stringResource(R.string.module_id, module.id),
                             style = MaterialTheme.typography.bodySmall,
                             textDecoration = decoration,
                             color = MaterialTheme.colorScheme.outline
