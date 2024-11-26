@@ -27,6 +27,7 @@ import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.utils.navigateSingleTopTo
 import com.dergoogler.mmrl.ui.utils.none
 import ext.dergoogler.mmrl.ext.launchCustomTab
+import ext.dergoogler.mmrl.ext.takeTrue
 
 @Composable
 fun SettingsScreen(
@@ -146,7 +147,18 @@ fun SettingsScreen(
                 desc = stringResource(id = R.string.settings_blacklist_desc),
                 onClick = {
                     navController.navigateSingleTopTo(SettingsScreen.Blacklist.route)
-                })
+                }
+            )
+
+            BuildConfig.IS_GOOGLE_PLAY_BUILD.takeTrue {
+                ListButtonItem(
+                    icon = R.drawable.spy,
+                    title = stringResource(id = R.string.settings_privacy_policy),
+                    onClick = {
+                        context.launchCustomTab(Const.PRIVACY_POLICY_URL)
+                    }
+                )
+            }
         }
     }
 }

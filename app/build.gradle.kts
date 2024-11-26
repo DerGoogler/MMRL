@@ -67,16 +67,35 @@ android {
             resValue("string", "app_name", baseAppName)
             resValue("string", "modconf_activity", baseModConfName)
             buildConfigField("Boolean", "IS_DEV_VERSION", "false")
+            buildConfigField("Boolean", "IS_GOOGLE_PLAY_BUILD", "false")
             isDebuggable = false
             isJniDebuggable = false
             renderscriptOptimLevel = 3
             multiDexEnabled = true
         }
 
+        create("playstore") {
+            initWith(buildTypes.getByName("release"))
+            isMinifyEnabled = false
+            isShrinkResources = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+            resValue("string", "app_name", baseAppName)
+            resValue("string", "modconf_activity", baseModConfName)
+            buildConfigField("Boolean", "IS_DEV_VERSION", "false")
+            buildConfigField("Boolean", "IS_GOOGLE_PLAY_BUILD", "true")
+            isDebuggable = false
+            multiDexEnabled = true
+            signingConfig = releaseSigning
+        }
+
         debug {
             resValue("string", "app_name", "$baseAppName Debug")
             resValue("string", "modconf_activity", "$baseModConfName Debug")
             buildConfigField("Boolean", "IS_DEV_VERSION", "true")
+            buildConfigField("Boolean", "IS_GOOGLE_PLAY_BUILD", "false")
             applicationIdSuffix = ".debug"
             isJniDebuggable = true
             isDebuggable = true

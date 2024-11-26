@@ -8,6 +8,7 @@ object Const {
         Environment.DIRECTORY_DOWNLOADS
     )
 
+    const val PRIVACY_POLICY_URL = "https://dergoogler.com/legal/privacy"
     const val SANMER_GITHUB_URL = "https://github.com/SanmerDev"
     const val GOOGLER_GITHUB_URL = "https://github.com/DerGoogler"
     const val RESOURCES_URL = "https://github.com/DerGoogler/MMRL/wiki"

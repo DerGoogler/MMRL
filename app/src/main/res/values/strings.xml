@@ -183,6 +183,7 @@
     <string name="settings_include_preleases">Include Pre-Releases</string>
     <string name="settings_developer_mode">Developer Mode</string>
     <string name="settings_developer_mode_desc">Shows IDs of modules and more</string>
+    <string name="settings_privacy_policy">Privacy Policy</string>
 
     
     <!-- App Theme -->
