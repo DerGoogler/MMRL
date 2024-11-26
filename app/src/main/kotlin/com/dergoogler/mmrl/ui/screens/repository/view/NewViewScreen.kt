@@ -625,6 +625,30 @@ fun NewViewScreen(
                 )
             }
 
+            local?.let {
+                ListCollapseItem(
+                    contentPaddingValues = PaddingValues(vertical = 8.dp, horizontal = 16.dp),
+                    iconToRight = true,
+                    title = stringResource(R.string.module_installed)
+                ) {
+                    userPreferences.developerMode.takeTrue {
+                        ModuleInfoListItem(
+                            title = R.string.view_module_module_id,
+                            desc = it.id
+                        )
+                    }
+
+                    ModuleInfoListItem(
+                        title = R.string.view_module_version,
+                        desc = "${it.version} (${it.versionCode})"
+                    )
+                    ModuleInfoListItem(
+                        title = R.string.view_module_last_updated,
+                        desc = it.lastUpdated.toFormattedDateSafely(userPreferences.datePattern)
+                    )
+                }
+            }
+
             HtmlText(
                 modifier = Modifier.padding(16.dp),
                 style = MaterialTheme.typography.bodySmall,
