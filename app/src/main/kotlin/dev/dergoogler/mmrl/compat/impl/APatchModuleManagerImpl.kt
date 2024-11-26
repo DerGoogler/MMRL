@@ -15,12 +15,13 @@ internal class APatchModuleManagerImpl(
         val dir = modulesDir.resolve(id)
         if (!dir.exists()) callback.onFailure(id, null)
 
-        "apd module enable $id".submit {
-            if (it.isSuccess) {
-                callback.onSuccess(id)
-            } else {
-                callback.onFailure(id, it.out.joinToString())
-            }
+        runCatching {
+            dir.resolve("remove").apply { if (exists()) delete() }
+            dir.resolve("disable").apply { if (exists()) delete() }
+        }.onSuccess {
+            callback.onSuccess(id)
+        }.onFailure {
+            callback.onFailure(id, it.message)
         }
     }
 
@@ -28,12 +29,13 @@ internal class APatchModuleManagerImpl(
         val dir = modulesDir.resolve(id)
         if (!dir.exists()) return callback.onFailure(id, null)
 
-        "apd module disable $id".submit {
-            if (it.isSuccess) {
-                callback.onSuccess(id)
-            } else {
-                callback.onFailure(id, it.out.joinToString())
-            }
+        runCatching {
+            dir.resolve("remove").apply { if (exists()) delete() }
+            dir.resolve("disable").createNewFile()
+        }.onSuccess {
+            callback.onSuccess(id)
+        }.onFailure {
+            callback.onFailure(id, it.message)
         }
     }
 
@@ -41,12 +43,13 @@ internal class APatchModuleManagerImpl(
         val dir = modulesDir.resolve(id)
         if (!dir.exists()) return callback.onFailure(id, null)
 
-        "apd module uninstall $id".submit {
-            if (it.isSuccess) {
-                callback.onSuccess(id)
-            } else {
-                callback.onFailure(id, it.out.joinToString())
-            }
+        runCatching {
+            dir.resolve("disable").apply { if (exists()) delete() }
+            dir.resolve("remove").createNewFile()
+        }.onSuccess {
+            callback.onSuccess(id)
+        }.onFailure {
+            callback.onFailure(id, it.message)
         }
     }
 
