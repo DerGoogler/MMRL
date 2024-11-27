@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,6 +23,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Button
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -36,7 +39,9 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -123,11 +128,53 @@ fun NewViewScreen(
         iconSize = 20.dp
     )
 
+    var menuExpanded by remember { mutableStateOf(false) }
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             TopBar(
+                actions = {
+                    IconButton(onClick = { menuExpanded = true }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.dots_vertical),
+                            contentDescription = null,
+                        )
+                    }
+                    DropdownMenu(
+                        expanded = menuExpanded,
+                        onDismissRequest = { menuExpanded = false }
+                    ) {
+                        DropdownMenuItem(
+                            leadingIcon = {
+                                Icon(
+                                    painter = painterResource(
+                                        id = if (viewModel.notifyUpdates) {
+                                            R.drawable.target_off
+                                        } else {
+                                            R.drawable.target
+                                        }
+                                    ),
+                                    contentDescription = null,
+                                )
+                            },
+                            text = {
+                                Text(
+                                    text = stringResource(
+                                        id = if (viewModel.notifyUpdates) {
+                                            R.string.view_module_update_ignore
+                                        } else {
+                                            R.string.view_module_update_notify
+                                        }
+                                    )
+                                )
+                            },
+                            onClick = {
+                                menuExpanded = false
+                                viewModel.setUpdatesTag(!viewModel.notifyUpdates)
+                            })
+                    }
+                },
                 navController = navController,
                 scrollBehavior = scrollBehavior
             )
@@ -711,6 +758,7 @@ private fun TopBar(
     modifier: Modifier = Modifier,
     navController: NavController,
     scrollBehavior: TopAppBarScrollBehavior,
+    actions: @Composable RowScope.() -> Unit = {},
 ) = TopAppBar(
     modifier = modifier,
     navigationIcon = {
@@ -719,5 +767,8 @@ private fun TopBar(
                 painter = painterResource(id = R.drawable.arrow_left), contentDescription = null
             )
         }
-    }, title = {}, scrollBehavior = scrollBehavior
+    },
+    actions = actions,
+    title = {},
+    scrollBehavior = scrollBehavior
 )
