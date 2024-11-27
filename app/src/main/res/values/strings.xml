@@ -104,6 +104,8 @@
     <string name="view_module_module_id">Module ID</string>
     <string name="view_module_required_os">Required OS</string>
     <string name="view_module_required_os_value">Android %1$s and up</string>
+    <string name="view_module_dependencies">Dependencies</string>
+    <string name="view_module_dependencies_not_found">Required Dependencies Not Found</string>
 
 
     <!-- Modules -->

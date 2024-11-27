@@ -57,6 +57,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.dergoogler.mmrl.R
@@ -92,6 +93,7 @@ import ext.dergoogler.mmrl.ext.toFormattedDateSafely
 fun NewViewScreen(
     navController: NavController,
     viewModel: ModuleViewModel = hiltViewModel(),
+    repositoryViewModel: RepositoryViewModel = hiltViewModel(),
 ) {
     val userPreferences = LocalUserPreferences.current
     val repositoryMenu = userPreferences.repositoryMenu
@@ -103,7 +105,6 @@ fun NewViewScreen(
     val context = LocalContext.current
 
     val listItemContentPaddingValues = PaddingValues(vertical = 16.dp, horizontal = 16.dp)
-
 
     val screenshotsLazyListState = rememberLazyListState()
     val categoriesLazyListState = rememberLazyListState()
@@ -574,6 +575,54 @@ fun NewViewScreen(
                         contentPaddingValues = PaddingValues(vertical = 8.dp, horizontal = 16.dp),
                         antifeatures = it
                     )
+                }
+            }
+
+            module.require?.let { requiredIds ->
+                val repositoryList by repositoryViewModel.online.collectAsStateWithLifecycle()
+
+                // Ensure requiredIds is a list
+                val foundRequires = repositoryList.filter { onlineModules ->
+                    onlineModules.second.id in requiredIds
+                }
+
+                ListCollapseItem(
+                    contentPaddingValues = listItemContentPaddingValues,
+                    iconToRight = true,
+                    title = stringResource(R.string.view_module_dependencies),
+                    labels = if (foundRequires.isNotEmpty()) {
+                        listOf(
+                            stringResource(
+                                R.string.view_module_section_count,
+                                requiredIds.size
+                            )
+                        )
+                    } else {
+                        listOf(
+                            stringResource(
+                                R.string.view_module_dependencies_not_found
+                            )
+                        )
+                    }
+                ) {
+                    foundRequires.forEach { online ->
+                        val item = online.second
+
+                        ListItem(
+                            contentPaddingValues = PaddingValues(
+                                vertical = 8.dp,
+                                horizontal = 16.dp
+                            ),
+                            itemTextStyle = subListItemStyle,
+                            title = item.name,
+                            desc = item.versionDisplay,
+//                            onClick = {
+//                                navController.navigateSingleTopTo(
+//                                    ModuleViewModel.putModuleId(item)
+//                                )
+//                            }
+                        )
+                    }
                 }
             }
 
