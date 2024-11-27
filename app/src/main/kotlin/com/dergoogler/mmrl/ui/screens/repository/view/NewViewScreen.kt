@@ -578,7 +578,7 @@ fun NewViewScreen(
                 }
             }
 
-            module.require?.let { requiredIds ->
+            module.require?.ifNotEmpty { requiredIds ->
                 val repositoryList by repositoryViewModel.online.collectAsStateWithLifecycle()
 
                 // Ensure requiredIds is a list
@@ -586,42 +586,36 @@ fun NewViewScreen(
                     onlineModules.second.id in requiredIds
                 }
 
-                ListCollapseItem(
-                    contentPaddingValues = listItemContentPaddingValues,
-                    iconToRight = true,
-                    title = stringResource(R.string.view_module_dependencies),
-                    labels = if (foundRequires.isNotEmpty()) {
-                        listOf(
+                foundRequires.ifNotEmpty {
+                    ListCollapseItem(
+                        contentPaddingValues = listItemContentPaddingValues,
+                        iconToRight = true,
+                        title = stringResource(R.string.view_module_dependencies),
+                        labels = listOf(
                             stringResource(
                                 R.string.view_module_section_count,
                                 requiredIds.size
                             )
                         )
-                    } else {
-                        listOf(
-                            stringResource(
-                                R.string.view_module_dependencies_not_found
-                            )
-                        )
-                    }
-                ) {
-                    foundRequires.forEach { online ->
-                        val item = online.second
+                    ) {
+                        foundRequires.forEach { online ->
+                            val item = online.second
 
-                        ListItem(
-                            contentPaddingValues = PaddingValues(
-                                vertical = 8.dp,
-                                horizontal = 16.dp
-                            ),
-                            itemTextStyle = subListItemStyle,
-                            title = item.name,
-                            desc = item.versionDisplay,
+                            ListItem(
+                                contentPaddingValues = PaddingValues(
+                                    vertical = 8.dp,
+                                    horizontal = 16.dp
+                                ),
+                                itemTextStyle = subListItemStyle,
+                                title = item.name,
+                                desc = item.versionDisplay,
 //                            onClick = {
 //                                navController.navigateSingleTopTo(
 //                                    ModuleViewModel.putModuleId(item)
 //                                )
 //                            }
-                        )
+                            )
+                        }
                     }
                 }
             }
