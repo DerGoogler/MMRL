@@ -131,49 +131,58 @@ fun NewViewScreen(
 
     var menuExpanded by remember { mutableStateOf(false) }
 
+    val topBarVertEnabled = when {
+        local != null -> true
+        else -> false
+    }
+
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             TopBar(
                 actions = {
-                    IconButton(onClick = { menuExpanded = true }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.dots_vertical),
-                            contentDescription = null,
-                        )
-                    }
-                    DropdownMenu(
-                        expanded = menuExpanded,
-                        onDismissRequest = { menuExpanded = false }
-                    ) {
-                        DropdownMenuItem(
-                            leadingIcon = {
-                                Icon(
-                                    painter = painterResource(
-                                        id = if (viewModel.notifyUpdates) {
-                                            R.drawable.target_off
-                                        } else {
-                                            R.drawable.target
-                                        }
-                                    ),
-                                    contentDescription = null,
-                                )
-                            },
-                            text = {
-                                Text(
-                                    text = stringResource(
-                                        id = if (viewModel.notifyUpdates) {
-                                            R.string.view_module_update_ignore
-                                        } else {
-                                            R.string.view_module_update_notify
-                                        }
-                                    )
-                                )
-                            },
-                            onClick = {
-                                menuExpanded = false
-                                viewModel.setUpdatesTag(!viewModel.notifyUpdates)
-                            })
+                    topBarVertEnabled.takeTrue {
+                        IconButton(onClick = { menuExpanded = true }) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.dots_vertical),
+                                contentDescription = null,
+                            )
+                        }
+                        DropdownMenu(
+                            expanded = menuExpanded,
+                            onDismissRequest = { menuExpanded = false }
+                        ) {
+                            local?.let {
+                                DropdownMenuItem(
+                                    leadingIcon = {
+                                        Icon(
+                                            painter = painterResource(
+                                                id = if (viewModel.notifyUpdates) {
+                                                    R.drawable.target_off
+                                                } else {
+                                                    R.drawable.target
+                                                }
+                                            ),
+                                            contentDescription = null,
+                                        )
+                                    },
+                                    text = {
+                                        Text(
+                                            text = stringResource(
+                                                id = if (viewModel.notifyUpdates) {
+                                                    R.string.view_module_update_ignore
+                                                } else {
+                                                    R.string.view_module_update_notify
+                                                }
+                                            )
+                                        )
+                                    },
+                                    onClick = {
+                                        menuExpanded = false
+                                        viewModel.setUpdatesTag(!viewModel.notifyUpdates)
+                                    })
+                            }
+                        }
                     }
                 },
                 navController = navController,
@@ -719,6 +728,7 @@ fun NewViewScreen(
                 ListCollapseItem(
                     contentPaddingValues = PaddingValues(vertical = 8.dp, horizontal = 16.dp),
                     iconToRight = true,
+                    itemTextStyle = subListItemStyle.copy(titleTextColor = MaterialTheme.colorScheme.surfaceTint),
                     title = stringResource(R.string.module_installed)
                 ) {
                     userPreferences.developerMode.takeTrue {
