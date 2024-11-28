@@ -60,6 +60,7 @@ import com.dergoogler.mmrl.viewmodel.HomeViewModel
 import ext.dergoogler.mmrl.ext.launchCustomTab
 import ext.dergoogler.mmrl.ext.managerVersion
 import ext.dergoogler.mmrl.ext.seLinuxStatus
+import ext.dergoogler.mmrl.ext.takeTrue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -178,7 +179,6 @@ fun HomeScreen(
             ) {
                 val uname = Os.uname()
 
-
                 Column(
                     modifier = Modifier.fillMaxWidth()
                 ) {
@@ -205,6 +205,40 @@ fun HomeScreen(
                         title = stringResource(id = R.string.selinux_status),
                         desc = context.seLinuxStatus
                     )
+                }
+            }
+
+            Spacer(Modifier.height(16.dp))
+
+            viewModel.isProviderAlive.takeTrue {
+                Surface(
+                    color = MaterialTheme.colorScheme.surface,
+                    tonalElevation = 1.dp,
+                    shape = RoundedCornerShape(20.dp)
+                ) {
+                    Column(
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+
+                        val stats = viewModel.stats
+
+                        ListItem(
+                            title = "Installed Modules",
+                            desc = stats.totalFolders.toString()
+                        )
+                        ListItem(
+                            title = "Installed Modules With Service Files",
+                            desc = stats.foldersWithServiceFiles.toString()
+                        )
+                        ListItem(
+                            title = "Disabled Modules",
+                            desc = stats.disabledModules.toString()
+                        )
+                        ListItem(
+                            title = "Updatable Modules",
+                            desc = stats.updatableModules.toString()
+                        )
+                    }
                 }
             }
 
