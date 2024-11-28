@@ -78,6 +78,7 @@ import com.dergoogler.mmrl.ui.screens.repository.view.items.TrackItem
 import com.dergoogler.mmrl.ui.utils.navigateSingleTopTo
 import com.dergoogler.mmrl.ui.utils.none
 import com.dergoogler.mmrl.viewmodel.ModuleViewModel
+import com.dergoogler.mmrl.viewmodel.ModulesViewModel
 import com.dergoogler.mmrl.viewmodel.RepositoryViewModel
 import ext.dergoogler.mmrl.activity.MMRLComponentActivity
 import ext.dergoogler.mmrl.ext.ifNotEmpty
@@ -94,6 +95,7 @@ fun NewViewScreen(
     navController: NavController,
     viewModel: ModuleViewModel = hiltViewModel(),
     repositoryViewModel: RepositoryViewModel = hiltViewModel(),
+    modulesViewModel: ModulesViewModel = hiltViewModel(),
 ) {
     val userPreferences = LocalUserPreferences.current
     val repositoryMenu = userPreferences.repositoryMenu
@@ -227,8 +229,6 @@ fun NewViewScreen(
                 Column(
                     modifier = Modifier.weight(1f)
                 ) {
-
-
                     Row(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -304,21 +304,42 @@ fun NewViewScreen(
                     }
                 }
 
-                Button(
-                    enabled = viewModel.isProviderAlive && lastVersionItem != null,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f),
-                    onClick = {
-                        lastVersionItem?.let {
-                            download(it, true)
+                if (local != null) {
+                    val item = modulesViewModel.getVersionItem(local)
+
+                    Button(
+                        enabled = viewModel.isProviderAlive && item != null,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f),
+                        onClick = {
+                            item?.let {
+                                download(it, true)
+                            }
                         }
-                    }) {
-                    Text(stringResource(id = R.string.module_install))
+                    ) {
+                        Text(stringResource(id = R.string.module_update))
+                    }
+                } else {
+                    Button(
+                        enabled = viewModel.isProviderAlive && lastVersionItem != null,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f),
+                        onClick = {
+                            lastVersionItem?.let {
+                                download(it, true)
+                            }
+                        }) {
+                        Text(stringResource(id = R.string.module_install))
+                    }
                 }
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            HorizontalDivider(
+                modifier = Modifier.padding(vertical = 16.dp),
+                thickness = 0.9.dp
+            )
 
             module.root?.let {
                 if (it.isNotSupported(viewModel.version)) {
