@@ -85,8 +85,14 @@ internal abstract class BaseModuleManagerImpl(
         }
     }
 
-     override fun fetchModuleInfo(): ModuleInfo {
-        val serviceFiles = listOf("service.sh", "post-fs-data.sh", "boot-completed.sh")
+    override fun fetchModuleInfo(): ModuleInfo {
+        val serviceFiles = listOf(
+            "service.sh",
+            "post-fs-data.sh",
+            "action.sh",
+            "post-mount.sh",
+            "boot-completed.sh"
+        )
         val folders = modulesDir.listFiles()?.filter { it.isDirectory } ?: emptyList()
 
         var total = 0
@@ -94,7 +100,7 @@ internal abstract class BaseModuleManagerImpl(
         var disabled = 0
         var updatable = 0
         val disabledList = mutableListOf<String>()
-        val updatableList = mutableListOf<String>()
+        val updatedList = mutableListOf<String>()
 
         for (folder in folders) {
             total++
@@ -109,17 +115,18 @@ internal abstract class BaseModuleManagerImpl(
 
             if (File(folder, "update").exists()) {
                 updatable++
-                updatableList.add(folder.name)
+                updatedList.add(folder.name)
             }
         }
 
         return ModuleInfo(
-            totalFolders = total,
-            foldersWithServiceFiles = withServiceFiles,
+            totalModules = total,
+            modulesWithServiceFiles = withServiceFiles,
             disabledModules = disabled,
             updatableModules = updatable,
+            enabledModules = total.minus(disabled),
             disabledModulesList = disabledList,
-            updatableModulesList = updatableList
+            updatedModulesList = updatedList
         )
     }
 

@@ -9,6 +9,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -217,25 +218,37 @@ fun HomeScreen(
                     shape = RoundedCornerShape(20.dp)
                 ) {
                     Column(
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 8.dp)
                     ) {
-
                         val stats = viewModel.stats
+                        val listItemContentPaddingValues =
+                            PaddingValues(vertical = 8.dp, horizontal = 25.dp)
 
                         ListItem(
-                            title = "Installed Modules",
-                            desc = stats.totalFolders.toString()
+                            contentPaddingValues = listItemContentPaddingValues,
+                            title = stringResource(R.string.home_installed_modules),
+                            desc = stats.totalModules.toString()
                         )
                         ListItem(
-                            title = "Installed Modules With Service Files",
-                            desc = stats.foldersWithServiceFiles.toString()
+                            contentPaddingValues = listItemContentPaddingValues,
+                            title = stringResource(R.string.home_enabled_modules),
+                            desc = stats.enabledModules.toString()
                         )
                         ListItem(
-                            title = "Disabled Modules",
+                            contentPaddingValues = listItemContentPaddingValues,
+                            title = stringResource(R.string.home_installed_modules_with_service_files),
+                            desc = stats.modulesWithServiceFiles.toString()
+                        )
+                        ListItem(
+                            contentPaddingValues = listItemContentPaddingValues,
+                            title = stringResource(R.string.home_disabled_modules),
                             desc = stats.disabledModules.toString()
                         )
                         ListItem(
-                            title = "Updatable Modules",
+                            contentPaddingValues = listItemContentPaddingValues,
+                            title = stringResource(R.string.home_updated_modules),
                             desc = stats.updatableModules.toString()
                         )
                     }
