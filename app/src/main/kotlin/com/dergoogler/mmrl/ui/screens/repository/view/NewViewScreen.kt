@@ -79,7 +79,6 @@ import com.dergoogler.mmrl.ui.component.ListCollapseItem
 import com.dergoogler.mmrl.ui.component.ListItem
 import com.dergoogler.mmrl.ui.component.ListItemTextStyle
 import com.dergoogler.mmrl.ui.component.Logo
-import com.dergoogler.mmrl.ui.component.VersionItemBottomSheet
 import com.dergoogler.mmrl.ui.navigation.graphs.RepositoryScreen
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.screens.repository.view.items.LicenseItem
@@ -92,7 +91,6 @@ import com.dergoogler.mmrl.viewmodel.RepositoryViewModel
 import ext.dergoogler.mmrl.activity.MMRLComponentActivity
 import ext.dergoogler.mmrl.ext.ifNotEmpty
 import ext.dergoogler.mmrl.ext.ifNotNullOrBlank
-import ext.dergoogler.mmrl.ext.ignoreParentPadding
 import ext.dergoogler.mmrl.ext.isNotNullOrBlank
 import ext.dergoogler.mmrl.ext.isObjectEmpty
 import ext.dergoogler.mmrl.ext.launchCustomTab
@@ -308,12 +306,15 @@ fun NewViewScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            val currentItem = local?.let {
+                modulesViewModel.getVersionItem(it)
+            }?.takeIf { it.versionCode > module.versionCode } ?: lastVersionItem
+
             Row(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 verticalAlignment = Alignment.Top,
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-
                 local?.let {
                     val ops by remember(it.state) {
                         derivedStateOf { viewModel.createModuleOps(it) }
@@ -337,10 +338,6 @@ fun NewViewScreen(
                         )
                     }
                 }
-
-                val currentItem = local?.let {
-                    modulesViewModel.getVersionItem(it)
-                }?.takeIf { it.versionCode > module.versionCode } ?: lastVersionItem
 
                 val buttonTextResId = when {
                     local == null -> R.string.module_install
@@ -366,10 +363,25 @@ fun NewViewScreen(
                 }
             }
 
-            HorizontalDivider(
-                modifier = Modifier.padding(vertical = 16.dp),
-                thickness = 0.9.dp
-            )
+            val progress = currentItem?.let {
+                viewModel.getProgress(it)
+            } ?: 0f
+
+            if (progress != 0f) {
+                LinearProgressIndicator(
+                    progress = { progress },
+                    strokeCap = StrokeCap.Round,
+                    modifier = Modifier
+                        .padding(vertical = 16.dp)
+                        .height(0.9.dp)
+                        .fillMaxWidth()
+                )
+            } else {
+                HorizontalDivider(
+                    modifier = Modifier.padding(vertical = 16.dp),
+                    thickness = 0.9.dp
+                )
+            }
 
             module.root?.let {
                 if (it.isNotSupported(viewModel.version)) {
