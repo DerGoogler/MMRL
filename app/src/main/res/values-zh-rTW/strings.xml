@@ -97,13 +97,17 @@
     <string name="view_module_provided_by">中介平臺</string>
     <string name="view_module_added_on">上架日期</string>
     <string name="view_module_about_this_module">關於模組</string>
-    <string name="view_module_mod_infos_disclaimer"><![CDATA[Infos marked with a <b>*</b> can differ due to multiple added repos. You can view the actual information by clicking on <font color=\"%1$s\">View Track</font> above.]]></string>
+    <string name="view_module_mod_infos_disclaimer"><![CDATA[留有 <b>*</b> 標記的版本，其內容在各中介平臺之間稍有不同。欲知詳情，請點選上方<font color=\"%1$s\">中繼資料檢視</font>按鈕。]]></string>
     <string name="view_module_section_count">%1$s+</string>
     <string name="view_module_donate">小額捐款</string>
     <string name="view_module_donate_desc">以一杯咖啡 ☕ 的錢，表達你對模組開發人員的大力支持！</string>
     <string name="view_module_module_id">模組代號</string>
     <string name="view_module_required_os">所需作業系統版本</string>
     <string name="view_module_required_os_value">Android %1$s 以上</string>
+    <string name="view_module_dependencies">相依模組</string>
+    <string name="view_module_dependencies_not_found">查無所需的相依模組</string>
+    <string name="view_module_share">分享</string>
+    <string name="view_module_not_found">查無模組</string>
 
 
     <!-- 模組主畫面 -->
@@ -113,8 +117,10 @@
     <string name="module_remove">移除</string>
     <string name="module_restore">復原</string>
     <string name="module_install">安裝</string>
+    <string name="module_reinstall">重裝</string>
     <string name="module_download">下載</string>
     <string name="module_update">更新</string>
+    <string name="module_id">代號%1$s</string>
 
     <!-- 設定 -->
     <string name="settings_app">應用程式</string>
@@ -172,7 +178,7 @@
     <string name="settings_repo_update_interval_desc">選擇每次更新之間相隔的時長</string>
 
     <string name="settings_check_app_updates">檢查應用程式更新</string>
-    <string name="settings_check_app_updates_desc">Automatically checks for App Updates every time you open the app</string>
+    <string name="settings_check_app_updates_desc">進入主畫面時自動檢查應用程式更新</string>
     <string name="settings_hide_fingerprint">隱藏首頁的指紋資訊</string>
     <string name="settings_hide_fingerprint_desc">不論真實與否，一律隱藏</string>
     <string name="settings_check_modules_update">檢查模組更新</string>
@@ -183,13 +189,14 @@
     <string name="settings_include_preleases">檢查預先發布版本</string>
     <string name="settings_developer_mode">開發專用</string>
     <string name="settings_developer_mode_desc">顯示有模組代號在內的詳細資訊</string>
+    <string name="settings_privacy_policy">《隱私權政策》</string>
 
     
     <!-- 應用程式主題 -->
     <string name="app_theme_palette">主題配色</string>
     <string name="app_theme_dark_theme">主題模式</string>
     <string name="app_theme_dark_theme_auto">自動</string>
-    <string name="app_theme_dark_theme_light">日光</string>
+    <string name="app_theme_dark_theme_light">白日</string>
     <string name="app_theme_dark_theme_dark">黑夜</string>
     <!-- 中介平臺 -->
     <string name="repo_modules">%d 個模組</string>
@@ -207,88 +214,93 @@
     <string name="repo_add_dialog_add">新增</string>
     <!-- 本體資訊 -->
     <string name="about_app_version">版本 %1$s（%2$s）</string>
-    <string name="about_desc1">Provide modules repositories and Manage modules for Magisk and KernelSU.</string>
+    <string name="about_desc1">整合各家中介平臺的 Magisk、KernelSU 模組管理工具。</string>
     <string name="about_desc2">由 %s 用 ❤️ 製作</string>
 
     <!-- 對話 -->
-    <string name="dialog_attention">Attention</string>
+    <string name="dialog_attention">請注意</string>
     <string name="dialog_cancel">取消</string>
     <string name="dialog_ok">確定</string>
 
     <!-- 選單 -->
-    <string name="menu_advanced_menu">Advanced Menu</string>
-    <string name="menu_sort_mode">Sort Mode</string>
-    <string name="menu_sort_option_name">Name</string>
-    <string name="menu_sort_option_updated">Updated Time</string>
-    <string name="menu_descending">Descending</string>
-    <string name="menu_pin_enabled">Pin Enabled</string>
-    <string name="menu_show_updated">Show Updated Time</string>
-    <string name="menu_show_antifeatures">Show Anti-Features</string>
+    <string name="menu_advanced_menu">進階選單</string>
+    <string name="menu_sort_mode">排序方式</string>
+    <string name="menu_sort_option_name">按名稱排序</string>
+    <string name="menu_sort_option_updated">按更新日期排序</string>
+    <string name="menu_descending">遞降排序</string>
+    <string name="menu_pin_enabled">釘選已啟用模組</string>
+    <string name="menu_show_updated">顯示更新日期</string>
+    <string name="menu_show_antifeatures">顯示「損益功能」標記</string>
 
     <!-- 訊息 -->
-    <string name="message_download_success">Download successful</string>
-    <string name="message_loading">Loading…</string>
+    <string name="message_download_success">已成功下載</string>
+    <string name="message_loading">正在載入……</string>
 
     <!-- 通知 -->
     <string name="notification_name_download">模組下載服務</string>
 
     <!-- 搜尋 -->
-    <string name="search_empty">Empty list</string>
-    <string name="search_placeholder">Search…</string>
+    <string name="search_empty">查無結果</string>
+    <string name="search_placeholder">開始搜尋……</string>
 
     <!-- 其他 -->
-    <string name="unknown_error">Unknown error</string>
-    <string name="verified">Verified</string>
-    <string name="open">Open</string>
-    <string name="help">Help</string>
-    <string name="module_config">Config</string>
-    <string name="we_hit_a_brick_crash">We hit a brick!</string>
-    <string name="report_to_issues">Report to issues</string>
-    <string name="stack_trace_truncated">%s\n… %d more</string>
-    <string name="additional_notes">Additional Notes</string>
-    <string name="repo_added">Repo added</string>
+    <string name="unknown_error">錯誤內容不詳</string>
+    <string name="verified">已驗證</string>
+    <string name="open">開啟</string>
+    <string name="help">協助</string>
+    <string name="module_config">組態</string>
+    <string name="we_hit_a_brick_crash">發生錯誤！</string>
+    <string name="report_to_issues">提起錯誤回報</string>
+    <string name="stack_trace_truncated">%s\n……尚有 %d 行</string>
+    <string name="additional_notes">附加提示</string>
+    <string name="repo_added">中介平臺新增日期</string>
 
-    <!-- Work Manager -->
-    <string name="work_repository_updates">Repository Updates</string>
-    <string name="work_updates_for_repositories">Updates for repositories</string>
-    <string name="work_module_updates">Module Updates</string>
-    <string name="work_update_checker_for_modules">Update Checker for Modules</string>
+    <!-- 即時管理工具 -->
+    <string name="work_repository_updates">中介平臺更新</string>
+    <string name="work_updates_for_repositories">檢查中介平臺更新</string>
+    <string name="work_module_updates">模組更新</string>
+    <string name="work_update_checker_for_modules">用於檢查模組更新的工具</string>
 
-    <!-- Repo Update Service -->
-    <string name="repo_update_service">Repositories updated successfully</string>
-    <string name="repo_update_service_desc">Don\'t worry, MMRL updated your installed repos for you. 😋</string>
-    <string name="repo_update_service_failed">No updates found for repositories</string>
-    <string name="repo_update_service_failed_desc">There are no updates for repositories</string>
+    <!-- 中介平臺更新背景服務 -->
+    <string name="repo_update_service">已成功更新所有中介平臺</string>
+    <string name="repo_update_service_desc">MMRL 已為你更新了所有中介平臺。😋</string>
+    <string name="repo_update_service_failed">無需更新中介平臺</string>
+    <string name="repo_update_service_failed_desc">查無可更新的中介平臺</string>
 
     <!-- SELinux -->
-    <string name="selinux_status">SELinux status</string>
-    <string name="selinux_status_disabled">Disabled</string>
-    <string name="selinux_status_enforcing">Enforcing</string>
-    <string name="selinux_status_permissive">Permissive</string>
-    <string name="selinux_status_unknown">Unknown</string>
+    <string name="selinux_status">SELinux 狀態</string>
+    <string name="selinux_status_disabled">已停用</string>
+    <string name="selinux_status_enforcing">強制執行</string>
+    <string name="selinux_status_permissive">容許執行</string>
+    <string name="selinux_status_unknown">不明</string>
 
-    <string name="reboot">Reboot</string>
-    <string name="reboot_userspace">Soft Reboot</string>
-    <string name="reboot_recovery">Reboot to Recovery</string>
-    <string name="reboot_bootloader">Reboot to Bootloader</string>
-    <string name="reboot_download">Reboot to Download</string>
-    <string name="reboot_edl">Reboot to EDL</string>
+    <string name="reboot">重新啟動</string>
+    <string name="reboot_userspace">軟重啟</string>
+    <string name="reboot_recovery">重新啟動至 Recovery</string>
+    <string name="reboot_bootloader">重新啟動至 Bootloader</string>
+    <string name="reboot_download">重新啟動至 Download</string>
+    <string name="reboot_edl">重新啟動至 EDL</string>
 
-    <string name="home_support_title">Support Me</string>
-    <string name="home_support_content">MMRL is, and always will be, free, and open source. You can however show me that you care by making a donation.</string>
+    <string name="home_support_title">協助發展</string>
+    <string name="home_support_content">MMRL 一向以免費製品與開放原始碼自居，矢志不渝。若想協助本人進行開發，請以小額捐款表達你對專案發展的大力支持。</string>
+    <string name="home_installed_modules">Installed Modules</string>
+    <string name="home_enabled_modules">Enabled Modules</string>
+    <string name="home_installed_modules_with_service_files">Installed Modules With Service Files</string>
+    <string name="home_disabled_modules">Disabled Modules</string>
+    <string name="home_updated_modules">Updated Modules</string>
 
-    <string name="has_a_new_update">%1$s has a new update!</string>
-    <string name="update_available_from_to">Update available from %s (%d) to %s (%d).</string>
-    <string name="events_birthday">%1$s years MMRL!</string>
-    <string name="events_halloween">BOO! … AHH</string>
-    <string name="events_christmas">← Tree.</string>
-    <string name="events_new_years_eve">New Years Eve!</string>
-    <string name="open_source">Open Source</string>
-    <string name="maintained_by">Maintained By</string>
-    <string name="kernel">Kernel</string>
-    <string name="manager_version">Manager Version</string>
-    <string name="fingerprint">Fingerprint</string>
-    <string name="new_version_available">New version %s is available, click to upgrade.</string>
-    <string name="hidden">Hidden</string>
-    <string name="pre_release">Pre-release</string>
+    <string name="has_a_new_update">%1$s 已可更新！</string>
+    <string name="update_available_from_to">將版本 %s（%d）更新至 %s（%d）。</string>
+    <string name="events_birthday">祝 MMRL %1$s 歲生日快樂！</string>
+    <string name="events_halloween">不給糖！……就搗蛋</string>
+    <string name="events_christmas">← 聖誕樹。</string>
+    <string name="events_new_years_eve">祝跨年愉快！</string>
+    <string name="open_source">開放原始碼</string>
+    <string name="maintained_by">維護人員</string>
+    <string name="kernel">裝置核心</string>
+    <string name="manager_version">管理工具</string>
+    <string name="fingerprint">指紋資訊</string>
+    <string name="new_version_available">版本 %s 現已開放下載，點選開始更新。</string>
+    <string name="hidden">已隱藏</string>
+    <string name="pre_release">搶先發布版本</string>
 </resources>
