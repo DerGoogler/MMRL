@@ -5,6 +5,8 @@ import androidx.compose.runtime.Composable
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.utils.Utils
 import com.squareup.moshi.JsonClass
+import ext.dergoogler.mmrl.ext.isNotNullOrBlank
+import ext.dergoogler.mmrl.ext.isNotNullOrEmpty
 
 @JsonClass(generateAdapter = true)
 data class OnlineModule(
@@ -84,10 +86,10 @@ data class OnlineModule(
         val userPreferences = LocalUserPreferences.current
         val menu = userPreferences.repositoryMenu
 
-        return when {
-            !cover.isNullOrBlank() && menu.showCover -> block(cover, screenshots)
-            !screenshots.isNullOrEmpty() -> block(cover, screenshots)
-            else -> block(null, null)
+        return if ((cover.isNotNullOrBlank() && menu.showCover) || screenshots.isNotNullOrEmpty()) {
+            block(cover, screenshots)
+        } else {
+            null
         }
     }
 

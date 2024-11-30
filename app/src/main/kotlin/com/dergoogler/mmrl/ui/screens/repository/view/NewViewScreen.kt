@@ -449,7 +449,7 @@ fun NewViewScreen(
                 val commonHeight = 160.dp
 
                 Spacer(modifier = Modifier.height(16.dp))
-
+                
                 LazyRow(
                     state = screenshotsLazyListState,
                     modifier = Modifier

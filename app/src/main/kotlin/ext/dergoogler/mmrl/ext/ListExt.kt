@@ -9,3 +9,8 @@ inline fun <reified T> List<List<T>>.merge(): List<T> {
 inline fun <T, R> List<T>?.ifNotEmpty(block: (List<T>) -> R): R? {
     return this?.takeIf { it.isNotEmpty() }?.let(block)
 }
+
+fun <T> List<T>?.isNotNullOrEmpty(): Boolean {
+    return !this.isNullOrEmpty()
+}
+
