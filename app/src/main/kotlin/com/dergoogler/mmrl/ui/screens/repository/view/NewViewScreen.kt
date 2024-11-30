@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -432,7 +433,14 @@ fun NewViewScreen(
             }
 
 
-            module.screenshots?.ifNotEmpty {
+            val hasScreenshotsOrCover =
+                !module.cover.isNullOrBlank() || !module.screenshots.isNullOrEmpty()
+
+            hasScreenshotsOrCover.takeTrue {
+                val coverAspectRatio = 2.048f
+                val screenshotAspectRatio = 9f / 16f
+                val commonHeight = 160.dp
+
                 Spacer(modifier = Modifier.height(16.dp))
 
                 LazyRow(
@@ -443,15 +451,32 @@ fun NewViewScreen(
                     contentPadding = PaddingValues(start = 16.dp, end = 16.dp)
 
                 ) {
-                    items(it.size) { imageUrl ->
-                        AsyncImage(
-                            model = it[imageUrl],
-                            contentDescription = null,
-                            modifier = Modifier
-                                .width(100.dp)
-                                .clip(RoundedCornerShape(15.dp)),
-                            contentScale = ContentScale.Crop
-                        )
+                    module.cover.ifNotNullOrBlank {
+                        item {
+                            AsyncImage(
+                                model = it,
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .height(commonHeight)
+                                    .aspectRatio(coverAspectRatio)
+                                    .clip(RoundedCornerShape(10.dp)),
+                                contentScale = ContentScale.Crop
+                            )
+                        }
+                    }
+
+                    module.screenshots?.ifNotEmpty {
+                        items(it.size) { index ->
+                            AsyncImage(
+                                model = it[index],
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .height(commonHeight)
+                                    .aspectRatio(screenshotAspectRatio)
+                                    .clip(RoundedCornerShape(10.dp)),
+                                contentScale = ContentScale.Crop
+                            )
+                        }
                     }
                 }
             }
