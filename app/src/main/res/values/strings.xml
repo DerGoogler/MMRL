@@ -106,6 +106,7 @@
     <string name="view_module_required_os_value">Android %1$s and up</string>
     <string name="view_module_dependencies">Dependencies</string>
     <string name="view_module_dependencies_not_found">Required Dependencies Not Found</string>
+    <string name="view_module_share">Share</string>
 
 
     <!-- Modules -->
@@ -115,6 +116,7 @@
     <string name="module_remove">Remove</string>
     <string name="module_restore">Restore</string>
     <string name="module_install">Install</string>
+    <string name="module_reinstall">Re-Install</string>
     <string name="module_download">Download</string>
     <string name="module_update">Update</string>
     <string name="module_id">ID: %1$s</string>

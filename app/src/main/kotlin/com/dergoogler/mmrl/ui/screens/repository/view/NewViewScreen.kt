@@ -86,6 +86,7 @@ import ext.dergoogler.mmrl.ext.ifNotEmpty
 import ext.dergoogler.mmrl.ext.ifNotNullOrBlank
 import ext.dergoogler.mmrl.ext.isObjectEmpty
 import ext.dergoogler.mmrl.ext.launchCustomTab
+import ext.dergoogler.mmrl.ext.shareText
 import ext.dergoogler.mmrl.ext.takeTrue
 import ext.dergoogler.mmrl.ext.toFormatedFileSize
 import ext.dergoogler.mmrl.ext.toFormattedDateSafely
@@ -134,57 +135,69 @@ fun NewViewScreen(
 
     var menuExpanded by remember { mutableStateOf(false) }
 
-    val topBarVertEnabled = when {
-        local != null -> true
-        else -> false
-    }
-
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             TopBar(
                 actions = {
-                    topBarVertEnabled.takeTrue {
-                        IconButton(onClick = { menuExpanded = true }) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.dots_vertical),
-                                contentDescription = null,
-                            )
-                        }
-                        DropdownMenu(
-                            expanded = menuExpanded,
-                            onDismissRequest = { menuExpanded = false }
-                        ) {
-                            local?.let {
-                                DropdownMenuItem(
-                                    leadingIcon = {
-                                        Icon(
-                                            painter = painterResource(
-                                                id = if (viewModel.notifyUpdates) {
-                                                    R.drawable.target_off
-                                                } else {
-                                                    R.drawable.target
-                                                }
-                                            ),
-                                            contentDescription = null,
-                                        )
-                                    },
-                                    text = {
-                                        Text(
-                                            text = stringResource(
-                                                id = if (viewModel.notifyUpdates) {
-                                                    R.string.view_module_update_ignore
-                                                } else {
-                                                    R.string.view_module_update_notify
-                                                }
-                                            )
-                                        )
-                                    },
-                                    onClick = {
-                                        menuExpanded = false
-                                        viewModel.setUpdatesTag(!viewModel.notifyUpdates)
-                                    })
+                    IconButton(onClick = { menuExpanded = true }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.dots_vertical),
+                            contentDescription = null,
+                        )
+                    }
+                    DropdownMenu(
+                        expanded = menuExpanded,
+                        onDismissRequest = { menuExpanded = false }
+                    ) {
+                        DropdownMenuItem(
+                            leadingIcon = {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.share),
+                                    contentDescription = null,
+                                )
+                            },
+                            text = {
+                                Text(
+                                    text = stringResource(id = R.string.view_module_share)
+                                )
+                            },
+                            onClick = {
+                                menuExpanded = false
+                                context.shareText("https://mmrl.dergoogler.com/module/${module.id}")
                             }
+                        )
+
+                        local?.let {
+                            DropdownMenuItem(
+                                leadingIcon = {
+                                    Icon(
+                                        painter = painterResource(
+                                            id = if (viewModel.notifyUpdates) {
+                                                R.drawable.target_off
+                                            } else {
+                                                R.drawable.target
+                                            }
+                                        ),
+                                        contentDescription = null,
+                                    )
+                                },
+                                text = {
+                                    Text(
+                                        text = stringResource(
+                                            id = if (viewModel.notifyUpdates) {
+                                                R.string.view_module_update_ignore
+                                            } else {
+                                                R.string.view_module_update_notify
+                                            }
+                                        )
+                                    )
+                                },
+                                onClick = {
+                                    menuExpanded = false
+                                    viewModel.setUpdatesTag(!viewModel.notifyUpdates)
+                                }
+                            )
                         }
                     }
                 },
@@ -305,35 +318,27 @@ fun NewViewScreen(
                     }
                 }
 
-                if (local != null) {
-                    val item = modulesViewModel.getVersionItem(local)
+                val currentItem = local?.let {
+                    modulesViewModel.getVersionItem(it)
+                }?.takeIf { it.versionCode > module.versionCode } ?: lastVersionItem
 
-                    Button(
-                        enabled = viewModel.isProviderAlive && item != null,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(1f),
-                        onClick = {
-                            item?.let {
-                                download(it, true)
-                            }
-                        }
-                    ) {
-                        Text(stringResource(id = R.string.module_update))
+                val buttonTextResId = when {
+                    local == null -> R.string.module_install
+                    currentItem == null -> R.string.module_reinstall
+                    currentItem.versionCode > module.versionCode -> R.string.module_update
+                    else -> R.string.module_reinstall
+                }
+
+                Button(
+                    enabled = viewModel.isProviderAlive && currentItem != null,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f),
+                    onClick = {
+                        currentItem?.let { download(it, true) }
                     }
-                } else {
-                    Button(
-                        enabled = viewModel.isProviderAlive && lastVersionItem != null,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(1f),
-                        onClick = {
-                            lastVersionItem?.let {
-                                download(it, true)
-                            }
-                        }) {
-                        Text(stringResource(id = R.string.module_install))
-                    }
+                ) {
+                    Text(stringResource(id = buttonTextResId))
                 }
             }
 
@@ -627,7 +632,10 @@ fun NewViewScreen(
                     labels = listOf(stringResource(R.string.view_module_section_count, it.size))
                 ) {
                     AntiFeaturesItem(
-                        contentPaddingValues = PaddingValues(vertical = 8.dp, horizontal = 16.dp),
+                        contentPaddingValues = PaddingValues(
+                            vertical = 8.dp,
+                            horizontal = 16.dp
+                        ),
                         antifeatures = it
                     )
                 }
