@@ -283,11 +283,11 @@
 
     <string name="home_support_title">協助發展</string>
     <string name="home_support_content">MMRL 一向以免費製品與開放原始碼自居，矢志不渝。若想協助本人進行開發，請以小額捐款表達你對專案發展的大力支持。</string>
-    <string name="home_installed_modules">Installed Modules</string>
-    <string name="home_enabled_modules">Enabled Modules</string>
-    <string name="home_installed_modules_with_service_files">Installed Modules With Service Files</string>
-    <string name="home_disabled_modules">Disabled Modules</string>
-    <string name="home_updated_modules">Updated Modules</string>
+    <string name="home_installed_modules">已安裝模組</string>
+    <string name="home_enabled_modules">已啟用模組</string>
+    <string name="home_installed_modules_with_service_files">已安裝模組（背景服務）</string>
+    <string name="home_disabled_modules">已停用模組</string>
+    <string name="home_updated_modules">已更新模組</string>
 
     <string name="has_a_new_update">%1$s 已可更新！</string>
     <string name="update_available_from_to">將版本 %s（%d）更新至 %s（%d）。</string>
