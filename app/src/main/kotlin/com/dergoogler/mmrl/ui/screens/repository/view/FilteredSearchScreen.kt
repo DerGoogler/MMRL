@@ -38,9 +38,6 @@ fun FilteredSearchScreen(
     val list by viewModel.online.collectAsStateWithLifecycle()
     val listState = rememberLazyListState()
 
-    Timber.d(value)
-    Timber.d(type)
-
     LaunchedEffect(list, value) {
         if (!value.isNullOrBlank() && !type.isNullOrBlank()) {
             viewModel.search("${type}:${value}")

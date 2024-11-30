@@ -21,10 +21,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.dergoogler.mmrl.R
-import com.dergoogler.mmrl.datastore.UserPreferences
 import com.dergoogler.mmrl.model.online.Changelog
 import com.dergoogler.mmrl.network.runRequest
 import com.dergoogler.mmrl.stub.IMMRLApiManager
@@ -77,7 +75,7 @@ fun ChangelogScreen(
             AnimatedVisibility(
                 visible = changelog == null, enter = fadeIn(), exit = fadeOut()
             ) {
-                Loading(minHeight = 200.dp)
+                Loading()
             }
 
             AnimatedVisibility(

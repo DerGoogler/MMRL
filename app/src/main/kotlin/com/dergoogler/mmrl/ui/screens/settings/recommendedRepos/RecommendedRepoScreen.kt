@@ -25,7 +25,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.dergoogler.mmrl.R
@@ -84,7 +83,7 @@ fun RecommendedRepoScreen(
             AnimatedVisibility(
                 visible = recommendedRepos == null, enter = fadeIn(), exit = fadeOut()
             ) {
-                Loading(minHeight = 200.dp)
+                Loading()
             }
 
             AnimatedVisibility(
