@@ -3,6 +3,7 @@ package com.dergoogler.mmrl.ui.screens.repository.view
 import android.R.attr.version
 import android.os.Build
 import androidx.annotation.StringRes
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -61,6 +62,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import coil.compose.AsyncImagePainter
+import coil.compose.rememberAsyncImagePainter
+import coil.request.CachePolicy
+import coil.request.ImageRequest
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.model.local.State
 import com.dergoogler.mmrl.model.online.VersionItem
@@ -84,6 +89,7 @@ import com.dergoogler.mmrl.viewmodel.RepositoryViewModel
 import ext.dergoogler.mmrl.activity.MMRLComponentActivity
 import ext.dergoogler.mmrl.ext.ifNotEmpty
 import ext.dergoogler.mmrl.ext.ifNotNullOrBlank
+import ext.dergoogler.mmrl.ext.isNotNullOrBlank
 import ext.dergoogler.mmrl.ext.isObjectEmpty
 import ext.dergoogler.mmrl.ext.launchCustomTab
 import ext.dergoogler.mmrl.ext.shareText
@@ -219,7 +225,7 @@ fun NewViewScreen(
                 verticalAlignment = Alignment.Top
             ) {
                 if (repositoryMenu.showIcon) {
-                    if (module.icon.orEmpty().isNotEmpty()) {
+                    if (module.icon.isNotNullOrBlank()) {
                         AsyncImage(
                             model = module.icon,
                             modifier = Modifier
@@ -437,11 +443,7 @@ fun NewViewScreen(
                 }
             }
 
-
-            val hasScreenshotsOrCover =
-                !module.cover.isNullOrBlank() || !module.screenshots.isNullOrEmpty()
-
-            hasScreenshotsOrCover.takeTrue {
+            module.hasCoverOrScreenshots { cover, screenshots ->
                 val coverAspectRatio = 2.048f
                 val screenshotAspectRatio = 9f / 16f
                 val commonHeight = 160.dp
@@ -456,21 +458,41 @@ fun NewViewScreen(
                     contentPadding = PaddingValues(start = 16.dp, end = 16.dp)
 
                 ) {
-                    module.cover.ifNotNullOrBlank {
-                        item {
-                            AsyncImage(
-                                model = it,
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .height(commonHeight)
-                                    .aspectRatio(coverAspectRatio)
-                                    .clip(RoundedCornerShape(10.dp)),
-                                contentScale = ContentScale.Crop
-                            )
-                        }
+                    cover.ifNotNullOrBlank {
+                        if (repositoryMenu.showCover)
+                            item {
+                                val painter = rememberAsyncImagePainter(
+                                    model = ImageRequest.Builder(context).data(it)
+                                        .memoryCacheKey(it)
+                                        .diskCacheKey(it).diskCachePolicy(CachePolicy.ENABLED)
+                                        .memoryCachePolicy(CachePolicy.ENABLED).build(),
+                                )
+
+                                if (painter.state !is AsyncImagePainter.State.Error) {
+                                    Image(
+                                        painter = painter,
+                                        contentDescription = null,
+                                        contentScale = ContentScale.Crop,
+                                        modifier = Modifier
+                                            .height(commonHeight)
+                                            .aspectRatio(coverAspectRatio)
+                                            .clip(RoundedCornerShape(10.dp)),
+                                    )
+                                } else {
+                                    Logo(
+                                        icon = R.drawable.alert_triangle,
+                                        shape = RoundedCornerShape(0.dp),
+                                        modifier = Modifier
+                                            .height(commonHeight)
+                                            .aspectRatio(coverAspectRatio)
+                                            .clip(RoundedCornerShape(10.dp)),
+
+                                        )
+                                }
+                            }
                     }
 
-                    module.screenshots?.ifNotEmpty {
+                    screenshots.ifNotEmpty {
                         items(it.size) { index ->
                             AsyncImage(
                                 model = it[index],

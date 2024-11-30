@@ -4,6 +4,8 @@ import java.nio.file.FileSystems
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.contract
 import kotlin.io.path.nameWithoutExtension
 
 
@@ -17,7 +19,7 @@ import kotlin.io.path.nameWithoutExtension
  * @return  a new `Path` object
  */
 fun String.findFileGlob(
-    prefix: String, vararg patterns: String = arrayOf("*.apk", "*.jar", "*.dex")
+    prefix: String, vararg patterns: String = arrayOf("*.apk", "*.jar", "*.dex"),
 ): Path? {
     val dirPath: Path = Paths.get(this)
 
@@ -37,4 +39,13 @@ fun String.findFileGlob(
 
 inline fun <R> String?.ifNotNullOrBlank(block: (String) -> R): R? {
     return if (!this.isNullOrBlank()) block(this) else null
+}
+
+@OptIn(ExperimentalContracts::class)
+fun CharSequence?.isNotNullOrBlank(): Boolean {
+    contract {
+        returns(true) implies (this@isNotNullOrBlank != null)
+    }
+
+    return !this.isNullOrBlank()
 }
