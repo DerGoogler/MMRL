@@ -84,6 +84,12 @@ class ModConfViewModel @Inject constructor(
                 isStandalone -> {
                     val tmpFile = context.copyToDir(standaloneData!!, context.filesDir)
                     val cr = context.contentResolver
+
+                    if (tmpFile == null) {
+                        Timber.e("Unable to copy standalone file")
+                        return null
+                    }
+
                     cr.openInputStream(standaloneData)?.use { input ->
                         tmpFile.outputStream().use { output ->
                             input.copyTo(output)

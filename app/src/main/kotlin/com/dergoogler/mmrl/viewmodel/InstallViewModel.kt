@@ -86,6 +86,13 @@ class InstallViewModel @Inject constructor(
         console.add("- Copying zip to temp directory")
         val tmpFile = context.copyToDir(uri, context.tmpDir)
         val cr = context.contentResolver
+
+        if (tmpFile == null) {
+            event = Event.FAILED
+            console.add("- Copying failed")
+            return@withContext
+        }
+
         cr.openInputStream(uri)?.use { input ->
             tmpFile.outputStream().use { output ->
                 input.copyTo(output)
