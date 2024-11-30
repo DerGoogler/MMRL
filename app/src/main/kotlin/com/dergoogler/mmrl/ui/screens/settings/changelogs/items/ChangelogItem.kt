@@ -1,17 +1,13 @@
 package com.dergoogler.mmrl.ui.screens.settings.changelogs.items
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -25,10 +21,9 @@ import com.dergoogler.mmrl.BuildConfig
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.app.Const
 import com.dergoogler.mmrl.model.online.Changelog
+import com.dergoogler.mmrl.ui.component.BottomSheet
 import com.dergoogler.mmrl.ui.component.ListButtonItem
 import com.dergoogler.mmrl.ui.component.MarkdownText
-import com.dergoogler.mmrl.ui.component.NavigationBarsSpacer
-import com.dergoogler.mmrl.ui.utils.expandedShape
 import ext.dergoogler.mmrl.ext.launchCustomTab
 import ext.dergoogler.mmrl.then
 
@@ -54,12 +49,7 @@ fun ChangelogItem(
 @Composable
 fun ChangelogBottomSheet(
     changelog: Changelog, onClose: () -> Unit,
-) = ModalBottomSheet(
-    onDismissRequest = onClose,
-    sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
-    shape = BottomSheetDefaults.expandedShape(15.dp),
-    windowInsets = WindowInsets(0),
-) {
+) = BottomSheet(onDismissRequest = onClose) {
     val context = LocalContext.current
 
     Column(
@@ -91,7 +81,5 @@ fun ChangelogBottomSheet(
         ) {
             Text(stringResource(id = R.string.module_download))
         }
-
-        NavigationBarsSpacer()
     }
 }

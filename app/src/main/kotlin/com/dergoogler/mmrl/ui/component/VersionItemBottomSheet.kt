@@ -14,19 +14,16 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.SheetState
 import androidx.compose.material3.Surface
@@ -50,7 +47,6 @@ import com.dergoogler.mmrl.app.Event.Companion.isLoading
 import com.dergoogler.mmrl.app.Event.Companion.isSucceeded
 import com.dergoogler.mmrl.model.online.VersionItem
 import com.dergoogler.mmrl.network.compose.requestString
-import com.dergoogler.mmrl.ui.utils.expandedShape
 import kotlinx.coroutines.launch
 
 @Composable
@@ -66,11 +62,9 @@ fun VersionItemBottomSheet(
         derivedStateOf { item.changelog.isNotBlank() }
     }
 
-    ModalBottomSheet(
+    BottomSheet(
         onDismissRequest = onClose,
         sheetState = state,
-        shape = BottomSheetDefaults.expandedShape(15.dp),
-        windowInsets = WindowInsets(0),
         dragHandle = {
             if (hasChangelog) {
                 BottomSheetDefaults.DragHandle()
@@ -108,8 +102,6 @@ fun VersionItemBottomSheet(
                 )
             }
         }
-
-        NavigationBarsSpacer()
     }
 }
 

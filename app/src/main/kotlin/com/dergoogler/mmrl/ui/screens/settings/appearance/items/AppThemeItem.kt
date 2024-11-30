@@ -1,12 +1,8 @@
 package com.dergoogler.mmrl.ui.screens.settings.appearance.items
 
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -18,9 +14,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.datastore.DarkMode
-import com.dergoogler.mmrl.ui.component.NavigationBarsSpacer
+import com.dergoogler.mmrl.ui.component.BottomSheet
 import com.dergoogler.mmrl.ui.component.ListButtonItem
-import com.dergoogler.mmrl.ui.utils.expandedShape
 
 @Composable
 fun AppThemeItem(
@@ -40,7 +35,7 @@ fun AppThemeItem(
     )
 
     if (open) {
-        BottomSheet(
+        AppThemeBottomSheet(
             onClose = { open = false },
             themeColor = themeColor,
             darkMode = darkMode,
@@ -52,19 +47,14 @@ fun AppThemeItem(
 }
 
 @Composable
-private fun BottomSheet(
+private fun AppThemeBottomSheet(
     onClose: () -> Unit,
     themeColor: Int,
     darkMode: DarkMode,
     isDarkMode: Boolean,
     onThemeColorChange: (Int) -> Unit,
     onDarkModeChange: (DarkMode) -> Unit,
-) = ModalBottomSheet(
-    onDismissRequest = onClose,
-    sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
-    shape = BottomSheetDefaults.expandedShape(15.dp),
-    windowInsets = WindowInsets(0)
-) {
+) = BottomSheet(onDismissRequest = onClose) {
     Text(
         text = stringResource(id = R.string.settings_app_theme),
         style = MaterialTheme.typography.headlineSmall,
@@ -83,8 +73,6 @@ private fun BottomSheet(
         darkMode = darkMode,
         onChange = onDarkModeChange
     )
-
-    NavigationBarsSpacer()
 }
 
 @Composable
