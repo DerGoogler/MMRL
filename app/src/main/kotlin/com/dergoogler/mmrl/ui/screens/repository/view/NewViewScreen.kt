@@ -274,7 +274,7 @@ fun NewViewScreen(
                         modifier = Modifier.clickable(
                             onClick = {
                                 navController.navigateSingleTopTo(
-                                    RepositoryViewModel.putAuthor(module.author)
+                                    RepositoryViewModel.putSearch("author", module.author)
                                 )
                             }
                         ),
@@ -428,7 +428,7 @@ fun NewViewScreen(
                         AssistChip(
                             onClick = {
                                 navController.navigateSingleTopTo(
-                                    RepositoryViewModel.putCategory(it[category])
+                                    RepositoryViewModel.putSearch("category", it[category])
                                 )
                             },
                             label = { Text(it[category]) }

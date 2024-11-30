@@ -32,7 +32,7 @@ class RepositoryViewModel @Inject constructor(
     localRepository: LocalRepository,
     modulesRepository: ModulesRepository,
     userPreferencesRepository: UserPreferencesRepository,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
 ) : MMRLViewModel(application, localRepository, modulesRepository, userPreferencesRepository) {
     private val repositoryMenu
         get() = userPreferencesRepository.data
@@ -46,9 +46,6 @@ class RepositoryViewModel @Inject constructor(
     private val cacheFlow = MutableStateFlow(listOf<Pair<OnlineState, OnlineModule>>())
     private val onlineFlow = MutableStateFlow(listOf<Pair<OnlineState, OnlineModule>>())
     val online get() = onlineFlow.asStateFlow()
-
-    val category = getCategory(savedStateHandle)
-    val author = getAuthor(savedStateHandle)
 
     var isLoading by mutableStateOf(true)
         private set
@@ -113,7 +110,7 @@ class RepositoryViewModel @Inject constructor(
                             m.name.equals(newKey, ignoreCase = true)
 
                         key.startsWith("author:", ignoreCase = true) ->
-                            m.author.equals(newKey, ignoreCase = true) ?: false
+                            m.author.equals(newKey, ignoreCase = true)
 
                         key.startsWith("category:", ignoreCase = true) ->
                             m.categories?.any {
@@ -173,21 +170,15 @@ class RepositoryViewModel @Inject constructor(
     }
 
     companion object {
-        fun putCategory(category: String) =
-            RepositoryScreen.Category.route.replace(
-                "{category}", category
-            )
-
-        fun getCategory(savedStateHandle: SavedStateHandle): String? =
-            savedStateHandle["category"]
-
-
-        fun putAuthor(author: String) =
-            RepositoryScreen.Author.route.replace(
-                "{author}", author
-            )
-
-        fun getAuthor(savedStateHandle: SavedStateHandle): String? =
-            savedStateHandle["author"]
+        fun putSearch(type: String, value: String) =
+            RepositoryScreen.RepoSearch.route
+                .replace(
+                    "{type}", type.replace("/", "\\/"),
+                    ignoreCase = true
+                )
+                .replace(
+                    "{value}", value.replace("/", "\\/"),
+                    ignoreCase = true
+                )
     }
 }

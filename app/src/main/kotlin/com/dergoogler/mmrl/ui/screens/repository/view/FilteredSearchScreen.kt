@@ -25,24 +25,24 @@ import com.dergoogler.mmrl.ui.component.PageIndicator
 import com.dergoogler.mmrl.ui.screens.repository.ModulesList
 import com.dergoogler.mmrl.ui.utils.none
 import com.dergoogler.mmrl.viewmodel.RepositoryViewModel
+import timber.log.Timber
 
 @Composable
 fun FilteredSearchScreen(
-    type: String,
+    type: String?,
+    value: String?,
     navController: NavController,
     viewModel: RepositoryViewModel = hiltViewModel(),
 ) {
-    val value = when (type) {
-        "category" -> viewModel.category
-        "author" -> viewModel.author
-        else -> null
-    }
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val list by viewModel.online.collectAsStateWithLifecycle()
     val listState = rememberLazyListState()
 
-    LaunchedEffect(list) {
-        if (!value.isNullOrBlank()) {
+    Timber.d(value)
+    Timber.d(type)
+
+    LaunchedEffect(list, value) {
+        if (!value.isNullOrBlank() && !type.isNullOrBlank()) {
             viewModel.search("${type}:${value}")
         }
     }
