@@ -24,12 +24,12 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AssistChip
-import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -47,6 +47,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
@@ -71,12 +72,14 @@ import com.dergoogler.mmrl.model.local.State
 import com.dergoogler.mmrl.model.online.VersionItem
 import com.dergoogler.mmrl.ui.component.Alert
 import com.dergoogler.mmrl.ui.component.AntiFeaturesItem
+import com.dergoogler.mmrl.ui.component.DoubleButton
 import com.dergoogler.mmrl.ui.component.HtmlText
 import com.dergoogler.mmrl.ui.component.ListButtonItem
 import com.dergoogler.mmrl.ui.component.ListCollapseItem
 import com.dergoogler.mmrl.ui.component.ListItem
 import com.dergoogler.mmrl.ui.component.ListItemTextStyle
 import com.dergoogler.mmrl.ui.component.Logo
+import com.dergoogler.mmrl.ui.component.VersionItemBottomSheet
 import com.dergoogler.mmrl.ui.navigation.graphs.RepositoryScreen
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.screens.repository.view.items.LicenseItem
@@ -89,6 +92,7 @@ import com.dergoogler.mmrl.viewmodel.RepositoryViewModel
 import ext.dergoogler.mmrl.activity.MMRLComponentActivity
 import ext.dergoogler.mmrl.ext.ifNotEmpty
 import ext.dergoogler.mmrl.ext.ifNotNullOrBlank
+import ext.dergoogler.mmrl.ext.ignoreParentPadding
 import ext.dergoogler.mmrl.ext.isNotNullOrBlank
 import ext.dergoogler.mmrl.ext.isObjectEmpty
 import ext.dergoogler.mmrl.ext.launchCustomTab
@@ -140,6 +144,16 @@ fun NewViewScreen(
     )
 
     var menuExpanded by remember { mutableStateOf(false) }
+
+    var versionSelectBottomSheet by remember { mutableStateOf(false) }
+    if (versionSelectBottomSheet) VersionSelectBottomSheet(
+        onClose = { versionSelectBottomSheet = false },
+        versions = viewModel.versions,
+        localVersionCode = viewModel.localVersionCode,
+        isProviderAlive = viewModel.isProviderAlive,
+        getProgress = { viewModel.getProgress(it) },
+        onDownload = download
+    )
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -335,13 +349,17 @@ fun NewViewScreen(
                     else -> R.string.module_reinstall
                 }
 
-                Button(
+                DoubleButton(
                     enabled = viewModel.isProviderAlive && currentItem != null,
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(1f),
+                    rowModifier = Modifier.weight(1f),
                     onClick = {
                         currentItem?.let { download(it, true) }
+                    },
+                    onDropdownClick = {
+                        versionSelectBottomSheet = true
                     }
                 ) {
                     Text(stringResource(id = buttonTextResId))

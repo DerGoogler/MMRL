@@ -202,6 +202,7 @@ private fun ChangelogItem(url: String) {
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier
                     .verticalScroll(rememberScrollState())
+                    .fillMaxWidth()
                     .padding(horizontal = 18.dp)
                     .padding(bottom = 18.dp)
             )
