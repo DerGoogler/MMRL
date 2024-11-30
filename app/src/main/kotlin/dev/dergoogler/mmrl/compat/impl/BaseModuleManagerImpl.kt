@@ -5,6 +5,7 @@ import com.topjohnwu.superuser.CallbackList
 import com.topjohnwu.superuser.Shell
 import com.topjohnwu.superuser.ShellUtils
 import dev.dergoogler.mmrl.compat.content.LocalModule
+import dev.dergoogler.mmrl.compat.content.ModuleInfo
 import dev.dergoogler.mmrl.compat.content.State
 import dev.dergoogler.mmrl.compat.stub.IInstallCallback
 import dev.dergoogler.mmrl.compat.stub.IModuleManager
@@ -82,6 +83,51 @@ internal abstract class BaseModuleManagerImpl(
                 .let(::readProps)
                 .toModule()
         }
+    }
+
+    override fun fetchModuleInfo(): ModuleInfo {
+        val serviceFiles = listOf(
+            "service.sh",
+            "post-fs-data.sh",
+            "action.sh",
+            "post-mount.sh",
+            "boot-completed.sh"
+        )
+        val folders = modulesDir.listFiles()?.filter { it.isDirectory } ?: emptyList()
+
+        var total = 0
+        var withServiceFiles = 0
+        var disabled = 0
+        var updatable = 0
+        val disabledList = mutableListOf<String>()
+        val updatedList = mutableListOf<String>()
+
+        for (folder in folders) {
+            total++
+
+            val serviceFileExists = serviceFiles.any { File(folder, it).exists() }
+            if (serviceFileExists) withServiceFiles++
+
+            if (File(folder, "disable").exists()) {
+                disabled++
+                disabledList.add(folder.name)
+            }
+
+            if (File(folder, "update").exists()) {
+                updatable++
+                updatedList.add(folder.name)
+            }
+        }
+
+        return ModuleInfo(
+            totalModules = total,
+            modulesWithServiceFiles = withServiceFiles,
+            disabledModules = disabled,
+            updatableModules = updatable,
+            enabledModules = total.minus(disabled),
+            disabledModulesList = disabledList,
+            updatedModulesList = updatedList
+        )
     }
 
     private fun readProps(props: String) = props.lines()

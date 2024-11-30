@@ -3,20 +3,16 @@ package com.dergoogler.mmrl.ui.screens.settings.recommendedRepos.items
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -28,13 +24,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.model.online.RecommendedRepo
+import com.dergoogler.mmrl.ui.component.BottomSheet
 import com.dergoogler.mmrl.ui.component.BulletList
 import com.dergoogler.mmrl.ui.component.HtmlText
-import com.dergoogler.mmrl.ui.component.NavigationBarsSpacer
 import com.dergoogler.mmrl.ui.component.ListButtonItem
-import com.dergoogler.mmrl.ui.component.MarkdownText
 import com.dergoogler.mmrl.ui.screens.settings.repositories.FailureDialog
-import com.dergoogler.mmrl.ui.utils.expandedShape
 import com.dergoogler.mmrl.viewmodel.RepositoriesViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -73,7 +67,7 @@ fun RepoItem(
     }
 
     if (open) {
-        BottomSheet(repo = repo, onAdd = onAdd, onClose = { open = false })
+        RepoBottomSheet(repo = repo, onAdd = onAdd, onClose = { open = false })
     }
 
     ListButtonItem(
@@ -82,16 +76,11 @@ fun RepoItem(
 }
 
 @Composable
-private fun BottomSheet(
+private fun RepoBottomSheet(
     repo: RecommendedRepo,
     onAdd: () -> Unit,
     onClose: () -> Unit,
-) = ModalBottomSheet(
-    onDismissRequest = onClose,
-    sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
-    shape = BottomSheetDefaults.expandedShape(15.dp),
-    windowInsets = WindowInsets(0),
-) {
+) = BottomSheet(onDismissRequest = onClose) {
     Column(
         modifier = Modifier.padding(bottom = 18.dp),
     ) {
@@ -176,6 +165,6 @@ private fun BottomSheet(
             Text(stringResource(R.string.repo_add_dialog_add))
         }
 
-        NavigationBarsSpacer()
+        Spacer(modifier = Modifier.height(16.dp))
     }
 }

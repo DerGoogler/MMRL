@@ -6,9 +6,9 @@ import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.DocumentsContract
+import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.system.Os
-import android.provider.MediaStore
 import androidx.annotation.RequiresApi
 import androidx.core.net.toFile
 import androidx.core.net.toUri
@@ -36,7 +36,7 @@ object MediaStoreCompat {
     }
 
     private fun createDownloadUri(
-        path: String
+        path: String,
     ) = Environment.getExternalStoragePublicDirectory(
         Environment.DIRECTORY_DOWNLOADS
     ).let {
@@ -47,7 +47,7 @@ object MediaStoreCompat {
 
     fun Context.createDownloadUri(
         path: String,
-        mimeType: String
+        mimeType: String,
     ) = when {
         BuildCompat.atLeastR -> runCatching {
             createMediaStoreUri(
@@ -81,22 +81,28 @@ object MediaStoreCompat {
 
     fun Context.getFileForUri(uri: Uri) = File(getPathForUri(uri))
 
-    fun Context.copyToDir(uri: Uri, dir: File): File {
+    fun Context.copyToDir(uri: Uri, dir: File): File? {
         val tmp = dir.resolve(getDisplayNameForUri(uri))
-        contentResolver.openInputStream(uri)?.buffered()?.use { input ->
-            tmp.outputStream().use { output ->
-                input.copyTo(output)
-            }
-        }
+        val inputStream = contentResolver.openInputStream(uri)
 
-        return tmp
+        if (inputStream != null) {
+            inputStream.buffered().use { input ->
+                tmp.outputStream().use { output ->
+                    input.copyTo(output)
+                }
+            }
+            inputStream.close()
+            return tmp
+        } else {
+            return null
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.R)
     fun Context.createMediaStoreUri(
         file: File,
         collection: Uri = MediaStore.Downloads.getContentUri(MediaStore.VOLUME_EXTERNAL),
-        mimeType: String
+        mimeType: String,
     ): Uri {
         val entry = ContentValues().apply {
             put(MediaStore.MediaColumns.DISPLAY_NAME, file.name)

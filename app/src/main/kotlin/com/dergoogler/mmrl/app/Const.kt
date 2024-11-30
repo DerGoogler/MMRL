@@ -8,6 +8,9 @@ object Const {
         Environment.DIRECTORY_DOWNLOADS
     )
 
+    const val PRIVACY_POLICY_URL = "https://dergoogler.com/legal/privacy"
+    const val GOOGLE_PLAY_DOWNLOAD = "https://play.google.com/store/apps/details?id=com.dergoogler.mmrl"
+    const val GITHUB_DOWNLOAD = "https://github.com/DerGoogler/MMRL/releases"
     const val SANMER_GITHUB_URL = "https://github.com/SanmerDev"
     const val GOOGLER_GITHUB_URL = "https://github.com/DerGoogler"
     const val RESOURCES_URL = "https://github.com/DerGoogler/MMRL/wiki"

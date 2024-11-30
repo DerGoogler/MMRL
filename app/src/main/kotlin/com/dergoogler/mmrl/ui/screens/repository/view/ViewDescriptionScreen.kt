@@ -94,6 +94,7 @@ fun ViewDescriptionScreen(
                 MarkdownText(
                     text = readme,
                     style = MaterialTheme.typography.bodyMedium,
+                    isTextSelectable = true,
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(16.dp)

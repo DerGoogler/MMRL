@@ -9,6 +9,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -60,6 +61,7 @@ import com.dergoogler.mmrl.viewmodel.HomeViewModel
 import ext.dergoogler.mmrl.ext.launchCustomTab
 import ext.dergoogler.mmrl.ext.managerVersion
 import ext.dergoogler.mmrl.ext.seLinuxStatus
+import ext.dergoogler.mmrl.ext.takeTrue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -178,7 +180,6 @@ fun HomeScreen(
             ) {
                 val uname = Os.uname()
 
-
                 Column(
                     modifier = Modifier.fillMaxWidth()
                 ) {
@@ -205,6 +206,52 @@ fun HomeScreen(
                         title = stringResource(id = R.string.selinux_status),
                         desc = context.seLinuxStatus
                     )
+                }
+            }
+
+            Spacer(Modifier.height(16.dp))
+
+            viewModel.isProviderAlive.takeTrue {
+                Surface(
+                    color = MaterialTheme.colorScheme.surface,
+                    tonalElevation = 1.dp,
+                    shape = RoundedCornerShape(20.dp)
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 8.dp)
+                    ) {
+                        val stats = viewModel.stats
+                        val listItemContentPaddingValues =
+                            PaddingValues(vertical = 8.dp, horizontal = 25.dp)
+
+                        ListItem(
+                            contentPaddingValues = listItemContentPaddingValues,
+                            title = stringResource(R.string.home_installed_modules),
+                            desc = stats.totalModules.toString()
+                        )
+                        ListItem(
+                            contentPaddingValues = listItemContentPaddingValues,
+                            title = stringResource(R.string.home_enabled_modules),
+                            desc = stats.enabledModules.toString()
+                        )
+                        ListItem(
+                            contentPaddingValues = listItemContentPaddingValues,
+                            title = stringResource(R.string.home_installed_modules_with_service_files),
+                            desc = stats.modulesWithServiceFiles.toString()
+                        )
+                        ListItem(
+                            contentPaddingValues = listItemContentPaddingValues,
+                            title = stringResource(R.string.home_disabled_modules),
+                            desc = stats.disabledModules.toString()
+                        )
+                        ListItem(
+                            contentPaddingValues = listItemContentPaddingValues,
+                            title = stringResource(R.string.home_updated_modules),
+                            desc = stats.updatableModules.toString()
+                        )
+                    }
                 }
             }
 

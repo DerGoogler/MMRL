@@ -66,6 +66,7 @@
     <string name="view_module_antifeatures">アンチ機能</string>
     <string name="view_module_unsupported">非対応</string>
     <string name="view_module_unsupported_desc">使用中のデバイスは、このモジュールのバージョンに対応していないようです。自己責任でインストールしてください！</string>
+    <string name="view_module_license">ライセンス</string>
     <!-- View Module / Features -->
     <string name="view_module_features">機能</string>
     <string name="view_module_features_service">サービス</string>
@@ -86,6 +87,19 @@
     <string name="view_module_features_webui_sub">モジュールを Web インターフェースで管理します (KernelSU と APatch、Magiskではなく)。&gt;</string>
     <string name="view_module_features_postmount_sub">OverlayFS マウント後にスクリプトを実行 (KernelSU と APatch)。&gt;</string>
     <string name="view_module_features_bootcompleted_sub">起動完了時にスクリプトを実行 (KernelSU と APatch)。&gt;</string>
+    <string name="view_module_module_support">モジュールのサポート</string>
+    <string name="view_module_provided_by">提供元</string>
+    <string name="view_module_added_on">追加日</string>
+    <string name="view_module_about_this_module">このモジュールについて</string>
+    <string name="view_module_mod_infos_disclaimer"><![CDATA[<b>*</b> でマークされた情報は、複数のリポジトリが追加されているため異なる場合があります。実際の情報を表示するには、上記の<font color=\"%1$s\">トラックを表示</font>をタップしてください。]]></string>
+    <string name="view_module_section_count">%1$s+</string>
+    <string name="view_module_donate">寄付</string>
+    <string name="view_module_donate_desc">このモジュールの開発者にコーヒーをご馳走して愛を伝えましょう！ ☕</string>
+    <string name="view_module_module_id">モジュール ID</string>
+    <string name="view_module_required_os">必要な OS 環境</string>
+    <string name="view_module_required_os_value">Android %1$s 以降</string>
+    <string name="view_module_dependencies">依存関係</string>
+    <string name="view_module_dependencies_not_found">必要な依存関係は見つかりません</string>
     <!-- Modules -->
     <string name="modules_empty">モジュールが見つかりません</string>
     <!-- Module Item -->
@@ -95,6 +109,7 @@
     <string name="module_install">インストール</string>
     <string name="module_download">ダウンロード</string>
     <string name="module_update">更新</string>
+    <string name="module_id">ID: %1$s</string>
     <!-- Settings -->
     <string name="settings_app">アプリ</string>
     <string name="settings_app_desc">MMRL アプリの設定をします</string>
@@ -113,6 +128,7 @@
     <string name="settings_text_wrap_desc">インストールターミナル内でのテキストの折り返しを有効化します。</string>
     <string name="settings_changelog">更新履歴</string>
     <string name="settings_changelo_desc">MMRL の変更点を表示します</string>
+    <string name="settings_open_notification_settings">通知設定を開く</string>
     <!-- Root Item -->
     <string name="settings_root_access">Root アクセス: %s</string>
     <string name="settings_root_provider">プロバイダー: %s</string>
@@ -146,11 +162,19 @@
     <string name="settings_repo_update_interval">リポジトリ更新の間隔</string>
     <string name="settings_repo_update_interval_suffix">\u0020 時間ごと</string>
     <string name="settings_repo_update_interval_desc">リポジトリを自動更新する間隔を設定します。</string>
+    <string name="settings_check_app_updates">アプリの更新を確認</string>
+    <string name="settings_check_app_updates_desc">アプリを開いたときに自動でアプリの更新を確認します。</string>
+    <string name="settings_hide_fingerprint">ホームでフィンガープリントを隠す</string>
+    <string name="settings_hide_fingerprint_desc">本物か偽物かどうかは関係がありません</string>
     <string name="settings_check_modules_update">モジュールの更新を確認する</string>
     <string name="settings_check_modules_update_desc">インストールされているモジュールの更新を自動で確認します。</string>
     <string name="settings_check_modules_update_interval_suffix">\u0020 時間ごと</string>
     <string name="settings_check_modules_update_interval">モジュールの更新を確認する間隔</string>
     <string name="settings_check_modules_update_interval_desc">インストールされたモジュールを自動で確認する間隔を設定します。</string>
+    <string name="settings_include_preleases">プレリリースを含める</string>
+    <string name="settings_developer_mode">開発者モード</string>
+    <string name="settings_developer_mode_desc">モジュール ID などを表示します</string>
+    <string name="settings_privacy_policy">プライバシーポリシー</string>
     <!-- App Theme -->
     <string name="app_theme_palette">テーマパレット</string>
     <string name="app_theme_dark_theme">ダークテーマ</string>
@@ -243,6 +267,6 @@
     <string name="manager_version">マネージャーのバージョン</string>
     <string name="fingerprint">フィンガープリント</string>
     <string name="new_version_available">新しいバージョン %s が利用可能です。タップで更新します。</string>
-    <string name="settings_check_app_updates">アプリの更新を確認</string>
-    <string name="settings_check_app_updates_desc">アプリを開いたときに自動でアプリの更新を確認します。</string>
+    <string name="hidden">非表示</string>
+    <string name="pre_release">プレリリース</string>
 </resources>

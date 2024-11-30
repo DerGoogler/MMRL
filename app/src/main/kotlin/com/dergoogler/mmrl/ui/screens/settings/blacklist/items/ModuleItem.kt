@@ -2,18 +2,14 @@ package com.dergoogler.mmrl.ui.screens.settings.blacklist.items
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -27,10 +23,10 @@ import androidx.compose.ui.unit.dp
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.model.online.Blacklist
 import com.dergoogler.mmrl.ui.component.AntiFeaturesItem
-import com.dergoogler.mmrl.ui.component.NavigationBarsSpacer
+import com.dergoogler.mmrl.ui.component.BottomSheet
 import com.dergoogler.mmrl.ui.component.ListButtonItem
 import com.dergoogler.mmrl.ui.component.MarkdownText
-import com.dergoogler.mmrl.ui.utils.expandedShape
+import com.dergoogler.mmrl.ui.component.NavigationBarsSpacer
 import ext.dergoogler.mmrl.ext.launchCustomTab
 
 
@@ -40,7 +36,7 @@ fun ModuleItem(
 ) {
     var open by remember { mutableStateOf(false) }
     if (open) {
-        BottomSheet(
+        BlacklistBottomSheet(
             module = module,
             onClose = { open = false })
     }
@@ -50,16 +46,10 @@ fun ModuleItem(
 
 
 @Composable
-private fun BottomSheet(
+private fun BlacklistBottomSheet(
     module: Blacklist, onClose: () -> Unit,
-) = ModalBottomSheet(
-    onDismissRequest = onClose,
-    sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
-    shape = BottomSheetDefaults.expandedShape(15.dp),
-    windowInsets = WindowInsets(0),
-) {
+) = BottomSheet(onDismissRequest = onClose) {
     val context = LocalContext.current
-
 
     Column(
         modifier = Modifier.padding(bottom = 18.dp),

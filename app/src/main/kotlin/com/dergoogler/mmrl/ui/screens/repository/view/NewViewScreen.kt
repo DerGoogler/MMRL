@@ -3,13 +3,16 @@ package com.dergoogler.mmrl.ui.screens.repository.view
 import android.R.attr.version
 import android.os.Build
 import androidx.annotation.StringRes
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -21,10 +24,12 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AssistChip
-import androidx.compose.material3.Button
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -36,10 +41,13 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
@@ -52,13 +60,19 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import coil.compose.AsyncImagePainter
+import coil.compose.rememberAsyncImagePainter
+import coil.request.CachePolicy
+import coil.request.ImageRequest
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.model.local.State
 import com.dergoogler.mmrl.model.online.VersionItem
 import com.dergoogler.mmrl.ui.component.Alert
 import com.dergoogler.mmrl.ui.component.AntiFeaturesItem
+import com.dergoogler.mmrl.ui.component.DoubleButton
 import com.dergoogler.mmrl.ui.component.HtmlText
 import com.dergoogler.mmrl.ui.component.ListButtonItem
 import com.dergoogler.mmrl.ui.component.ListCollapseItem
@@ -72,12 +86,15 @@ import com.dergoogler.mmrl.ui.screens.repository.view.items.TrackItem
 import com.dergoogler.mmrl.ui.utils.navigateSingleTopTo
 import com.dergoogler.mmrl.ui.utils.none
 import com.dergoogler.mmrl.viewmodel.ModuleViewModel
+import com.dergoogler.mmrl.viewmodel.ModulesViewModel
 import com.dergoogler.mmrl.viewmodel.RepositoryViewModel
 import ext.dergoogler.mmrl.activity.MMRLComponentActivity
 import ext.dergoogler.mmrl.ext.ifNotEmpty
 import ext.dergoogler.mmrl.ext.ifNotNullOrBlank
+import ext.dergoogler.mmrl.ext.isNotNullOrBlank
 import ext.dergoogler.mmrl.ext.isObjectEmpty
 import ext.dergoogler.mmrl.ext.launchCustomTab
+import ext.dergoogler.mmrl.ext.shareText
 import ext.dergoogler.mmrl.ext.takeTrue
 import ext.dergoogler.mmrl.ext.toFormatedFileSize
 import ext.dergoogler.mmrl.ext.toFormattedDateSafely
@@ -87,6 +104,8 @@ import ext.dergoogler.mmrl.ext.toFormattedDateSafely
 fun NewViewScreen(
     navController: NavController,
     viewModel: ModuleViewModel = hiltViewModel(),
+    repositoryViewModel: RepositoryViewModel = hiltViewModel(),
+    modulesViewModel: ModulesViewModel = hiltViewModel(),
 ) {
     val userPreferences = LocalUserPreferences.current
     val repositoryMenu = userPreferences.repositoryMenu
@@ -98,7 +117,6 @@ fun NewViewScreen(
     val context = LocalContext.current
 
     val listItemContentPaddingValues = PaddingValues(vertical = 16.dp, horizontal = 16.dp)
-
 
     val screenshotsLazyListState = rememberLazyListState()
     val categoriesLazyListState = rememberLazyListState()
@@ -123,11 +141,84 @@ fun NewViewScreen(
         iconSize = 20.dp
     )
 
+    var menuExpanded by remember { mutableStateOf(false) }
+
+    var versionSelectBottomSheet by remember { mutableStateOf(false) }
+    if (versionSelectBottomSheet) VersionSelectBottomSheet(
+        onClose = { versionSelectBottomSheet = false },
+        versions = viewModel.versions,
+        localVersionCode = viewModel.localVersionCode,
+        isProviderAlive = viewModel.isProviderAlive,
+        getProgress = { viewModel.getProgress(it) },
+        onDownload = download
+    )
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             TopBar(
+                actions = {
+                    IconButton(onClick = { menuExpanded = true }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.dots_vertical),
+                            contentDescription = null,
+                        )
+                    }
+                    DropdownMenu(
+                        expanded = menuExpanded,
+                        onDismissRequest = { menuExpanded = false }
+                    ) {
+                        DropdownMenuItem(
+                            leadingIcon = {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.share),
+                                    contentDescription = null,
+                                )
+                            },
+                            text = {
+                                Text(
+                                    text = stringResource(id = R.string.view_module_share)
+                                )
+                            },
+                            onClick = {
+                                menuExpanded = false
+                                context.shareText("https://mmrl.dergoogler.com/module/${module.id}")
+                            }
+                        )
+
+                        local?.let {
+                            DropdownMenuItem(
+                                leadingIcon = {
+                                    Icon(
+                                        painter = painterResource(
+                                            id = if (viewModel.notifyUpdates) {
+                                                R.drawable.target_off
+                                            } else {
+                                                R.drawable.target
+                                            }
+                                        ),
+                                        contentDescription = null,
+                                    )
+                                },
+                                text = {
+                                    Text(
+                                        text = stringResource(
+                                            id = if (viewModel.notifyUpdates) {
+                                                R.string.view_module_update_ignore
+                                            } else {
+                                                R.string.view_module_update_notify
+                                            }
+                                        )
+                                    )
+                                },
+                                onClick = {
+                                    menuExpanded = false
+                                    viewModel.setUpdatesTag(!viewModel.notifyUpdates)
+                                }
+                            )
+                        }
+                    }
+                },
                 navController = navController,
                 scrollBehavior = scrollBehavior
             )
@@ -146,7 +237,7 @@ fun NewViewScreen(
                 verticalAlignment = Alignment.Top
             ) {
                 if (repositoryMenu.showIcon) {
-                    if (module.icon.orEmpty().isNotEmpty()) {
+                    if (module.icon.isNotNullOrBlank()) {
                         AsyncImage(
                             model = module.icon,
                             modifier = Modifier
@@ -170,8 +261,6 @@ fun NewViewScreen(
                 Column(
                     modifier = Modifier.weight(1f)
                 ) {
-
-
                     Row(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -203,7 +292,7 @@ fun NewViewScreen(
                         modifier = Modifier.clickable(
                             onClick = {
                                 navController.navigateSingleTopTo(
-                                    RepositoryViewModel.putAuthor(module.author)
+                                    RepositoryViewModel.putSearch("author", module.author)
                                 )
                             }
                         ),
@@ -217,12 +306,15 @@ fun NewViewScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            val currentItem = local?.let {
+                modulesViewModel.getVersionItem(it)
+            }?.takeIf { it.versionCode > module.versionCode } ?: lastVersionItem
+
             Row(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 verticalAlignment = Alignment.Top,
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-
                 local?.let {
                     val ops by remember(it.state) {
                         derivedStateOf { viewModel.createModuleOps(it) }
@@ -247,21 +339,49 @@ fun NewViewScreen(
                     }
                 }
 
-                Button(
-                    enabled = viewModel.isProviderAlive && lastVersionItem != null,
+                val buttonTextResId = when {
+                    local == null -> R.string.module_install
+                    currentItem == null -> R.string.module_reinstall
+                    currentItem.versionCode > module.versionCode -> R.string.module_update
+                    else -> R.string.module_reinstall
+                }
+
+                DoubleButton(
+                    enabled = viewModel.isProviderAlive && currentItem != null,
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(1f),
+                    rowModifier = Modifier.weight(1f),
                     onClick = {
-                        lastVersionItem?.let {
-                            download(it, true)
-                        }
-                    }) {
-                    Text(stringResource(id = R.string.module_install))
+                        currentItem?.let { download(it, true) }
+                    },
+                    onDropdownClick = {
+                        versionSelectBottomSheet = true
+                    }
+                ) {
+                    Text(stringResource(id = buttonTextResId))
                 }
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            val progress = currentItem?.let {
+                viewModel.getProgress(it)
+            } ?: 0f
+
+            if (progress != 0f) {
+                LinearProgressIndicator(
+                    progress = { progress },
+                    strokeCap = StrokeCap.Round,
+                    modifier = Modifier
+                        .padding(vertical = 16.dp)
+                        .height(0.9.dp)
+                        .fillMaxWidth()
+                )
+            } else {
+                HorizontalDivider(
+                    modifier = Modifier.padding(vertical = 16.dp),
+                    thickness = 0.9.dp
+                )
+            }
 
             module.root?.let {
                 if (it.isNotSupported(viewModel.version)) {
@@ -344,7 +464,7 @@ fun NewViewScreen(
                         AssistChip(
                             onClick = {
                                 navController.navigateSingleTopTo(
-                                    RepositoryViewModel.putCategory(it[category])
+                                    RepositoryViewModel.putSearch("category", it[category])
                                 )
                             },
                             label = { Text(it[category]) }
@@ -353,8 +473,11 @@ fun NewViewScreen(
                 }
             }
 
+            module.hasCoverOrScreenshots { cover, screenshots ->
+                val coverAspectRatio = 2.048f
+                val screenshotAspectRatio = 9f / 16f
+                val commonHeight = 160.dp
 
-            module.screenshots?.ifNotEmpty {
                 Spacer(modifier = Modifier.height(16.dp))
 
                 LazyRow(
@@ -365,15 +488,52 @@ fun NewViewScreen(
                     contentPadding = PaddingValues(start = 16.dp, end = 16.dp)
 
                 ) {
-                    items(it.size) { imageUrl ->
-                        AsyncImage(
-                            model = it[imageUrl],
-                            contentDescription = null,
-                            modifier = Modifier
-                                .width(100.dp)
-                                .clip(RoundedCornerShape(15.dp)),
-                            contentScale = ContentScale.Crop
-                        )
+                    cover.ifNotNullOrBlank {
+                        if (repositoryMenu.showCover)
+                            item {
+                                val painter = rememberAsyncImagePainter(
+                                    model = ImageRequest.Builder(context).data(it)
+                                        .memoryCacheKey(it)
+                                        .diskCacheKey(it).diskCachePolicy(CachePolicy.ENABLED)
+                                        .memoryCachePolicy(CachePolicy.ENABLED).build(),
+                                )
+
+                                if (painter.state !is AsyncImagePainter.State.Error) {
+                                    Image(
+                                        painter = painter,
+                                        contentDescription = null,
+                                        contentScale = ContentScale.Crop,
+                                        modifier = Modifier
+                                            .height(commonHeight)
+                                            .aspectRatio(coverAspectRatio)
+                                            .clip(RoundedCornerShape(10.dp)),
+                                    )
+                                } else {
+                                    Logo(
+                                        icon = R.drawable.alert_triangle,
+                                        shape = RoundedCornerShape(0.dp),
+                                        modifier = Modifier
+                                            .height(commonHeight)
+                                            .aspectRatio(coverAspectRatio)
+                                            .clip(RoundedCornerShape(10.dp)),
+
+                                        )
+                                }
+                            }
+                    }
+
+                    screenshots.ifNotEmpty {
+                        items(it.size) { index ->
+                            AsyncImage(
+                                model = it[index],
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .height(commonHeight)
+                                    .aspectRatio(screenshotAspectRatio)
+                                    .clip(RoundedCornerShape(10.dp)),
+                                contentScale = ContentScale.Crop
+                            )
+                        }
                     }
                 }
             }
@@ -524,9 +684,73 @@ fun NewViewScreen(
                     labels = listOf(stringResource(R.string.view_module_section_count, it.size))
                 ) {
                     AntiFeaturesItem(
-                        contentPaddingValues = PaddingValues(vertical = 8.dp, horizontal = 16.dp),
+                        contentPaddingValues = PaddingValues(
+                            vertical = 8.dp,
+                            horizontal = 16.dp
+                        ),
                         antifeatures = it
                     )
+                }
+            }
+
+            module.require?.ifNotEmpty { requiredIds ->
+                val repositoryList by repositoryViewModel.online.collectAsStateWithLifecycle()
+
+                val foundRequires = repositoryList.filter { onlineModules ->
+                    onlineModules.second.id in requiredIds
+                }
+
+                ListCollapseItem(
+                    contentPaddingValues = listItemContentPaddingValues,
+                    iconToRight = true,
+                    title = stringResource(R.string.view_module_dependencies),
+                    labels = listOf(
+                        stringResource(
+                            R.string.view_module_section_count,
+                            requiredIds.size
+                        )
+                    )
+                ) {
+                    requiredIds.forEach { requiredId ->
+                        // val parts = requiredId.split("@")
+
+                        // val id = parts[0]
+                        // val version = (parts.getOrElse(1) { "-1" }).toInt()
+
+                        val onlineModule =
+                            foundRequires.find { online -> online.second.id == requiredId }
+
+                        if (onlineModule != null) {
+                            val item = onlineModule.second
+
+                            ListButtonItem(
+                                contentPaddingValues = PaddingValues(
+                                    vertical = 8.dp,
+                                    horizontal = 16.dp
+                                ),
+                                itemTextStyle = subListItemStyle,
+                                title = item.name,
+                                desc = item.versionCode.toString(),
+                                onClick = {
+                                    navController.navigateSingleTopTo(
+                                        ModuleViewModel.putModuleId(item),
+                                        launchSingleTop = false
+                                    )
+                                }
+                            )
+                        } else {
+                            ListItem(
+                                contentPaddingValues = PaddingValues(
+                                    vertical = 8.dp,
+                                    horizontal = 16.dp
+                                ),
+                                enabled = false,
+                                itemTextStyle = subListItemStyle,
+                                title = requiredId,
+                                labels = listOf(stringResource(R.string.view_module_not_found))
+                            )
+                        }
+                    }
                 }
             }
 
@@ -625,6 +849,31 @@ fun NewViewScreen(
                 )
             }
 
+            local?.let {
+                ListCollapseItem(
+                    contentPaddingValues = PaddingValues(vertical = 8.dp, horizontal = 16.dp),
+                    iconToRight = true,
+                    itemTextStyle = subListItemStyle.copy(titleTextColor = MaterialTheme.colorScheme.surfaceTint),
+                    title = stringResource(R.string.module_installed)
+                ) {
+                    userPreferences.developerMode.takeTrue {
+                        ModuleInfoListItem(
+                            title = R.string.view_module_module_id,
+                            desc = it.id
+                        )
+                    }
+
+                    ModuleInfoListItem(
+                        title = R.string.view_module_version,
+                        desc = "${it.version} (${it.versionCode})"
+                    )
+                    ModuleInfoListItem(
+                        title = R.string.view_module_last_updated,
+                        desc = it.lastUpdated.toFormattedDateSafely(userPreferences.datePattern)
+                    )
+                }
+            }
+
             HtmlText(
                 modifier = Modifier.padding(16.dp),
                 style = MaterialTheme.typography.bodySmall,
@@ -687,6 +936,7 @@ private fun TopBar(
     modifier: Modifier = Modifier,
     navController: NavController,
     scrollBehavior: TopAppBarScrollBehavior,
+    actions: @Composable RowScope.() -> Unit = {},
 ) = TopAppBar(
     modifier = modifier,
     navigationIcon = {
@@ -695,5 +945,8 @@ private fun TopBar(
                 painter = painterResource(id = R.drawable.arrow_left), contentDescription = null
             )
         }
-    }, title = {}, scrollBehavior = scrollBehavior
+    },
+    actions = actions,
+    title = {},
+    scrollBehavior = scrollBehavior
 )

@@ -616,6 +616,22 @@ class ListItemTextStyle internal constructor(
         return true
     }
 
+    fun copy(
+        titleTextColor: Color = this.titleTextColor,
+        descTextColor: Color = this.descTextColor,
+        titleTextStyle: TextStyle = this.titleTextStyle,
+        descTextStyle: TextStyle = this.descTextStyle,
+        iconSize: Dp = this.iconSize,
+        textSwitchPadding: Dp = this.textSwitchPadding,
+    ): ListItemTextStyle = ListItemTextStyle(
+        titleTextColor,
+        descTextColor,
+        titleTextStyle,
+        descTextStyle,
+        iconSize,
+        textSwitchPadding,
+    )
+
     override fun hashCode(): Int {
         var result = titleTextColor.hashCode()
         result = 31 * result + descTextColor.hashCode()

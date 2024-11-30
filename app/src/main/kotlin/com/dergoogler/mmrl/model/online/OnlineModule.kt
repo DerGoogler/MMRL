@@ -1,7 +1,12 @@
 package com.dergoogler.mmrl.model.online
 
+import android.annotation.SuppressLint
+import androidx.compose.runtime.Composable
+import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.utils.Utils
 import com.squareup.moshi.JsonClass
+import ext.dergoogler.mmrl.ext.isNotNullOrBlank
+import ext.dergoogler.mmrl.ext.isNotNullOrEmpty
 
 @JsonClass(generateAdapter = true)
 data class OnlineModule(
@@ -30,9 +35,9 @@ data class OnlineModule(
     val require: List<String>? = null,
     val verified: Boolean? = null,
 
-    val root: ModuleRoot? =null,
+    val root: ModuleRoot? = null,
     val note: ModuleNote? = null,
-    val features: ModuleFeatures? = null
+    val features: ModuleFeatures? = null,
 ) {
     val versionDisplay get() = Utils.getVersionDisplay(version, versionCode)
     val hasLicense
@@ -55,6 +60,38 @@ data class OnlineModule(
     val hasSize = size != null
     val isVerified = verified != null && verified
 
+    inline fun <R> hasScreenshots(block: (List<String>) -> R): R? {
+        return if (!screenshots.isNullOrEmpty()) block(screenshots) else null
+    }
+
+    @Composable
+    inline fun <R> hasIcon(block: (String?) -> R): R? {
+        val userPreferences = LocalUserPreferences.current
+        val menu = userPreferences.repositoryMenu
+
+        return if (menu.showIcon) block(icon) else null
+    }
+
+    @Composable
+    inline fun <R> hasCover(block: (String) -> R): R? {
+        val userPreferences = LocalUserPreferences.current
+        val menu = userPreferences.repositoryMenu
+
+        return if (!cover.isNullOrBlank() && menu.showCover) block(cover) else null
+    }
+
+    @SuppressLint("ComposableNaming")
+    @Composable
+    inline fun <R> hasCoverOrScreenshots(block: (String?, List<String>?) -> R): R? {
+        val userPreferences = LocalUserPreferences.current
+        val menu = userPreferences.repositoryMenu
+
+        return if ((cover.isNotNullOrBlank() && menu.showCover) || screenshots.isNotNullOrEmpty()) {
+            block(cover, screenshots)
+        } else {
+            null
+        }
+    }
 
     override fun equals(other: Any?): Boolean {
         return when (other) {

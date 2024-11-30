@@ -3,17 +3,13 @@ package com.dergoogler.mmrl.ui.screens.repository
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -28,13 +24,12 @@ import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.datastore.repository.Option
 import com.dergoogler.mmrl.datastore.repository.RepoListMode
 import com.dergoogler.mmrl.datastore.repository.RepositoryMenuCompat
+import com.dergoogler.mmrl.ui.component.BottomSheet
 import com.dergoogler.mmrl.ui.component.MenuChip
-import com.dergoogler.mmrl.ui.component.NavigationBarsSpacer
 import com.dergoogler.mmrl.ui.component.Segment
 import com.dergoogler.mmrl.ui.component.SegmentedButtons
 import com.dergoogler.mmrl.ui.component.SegmentedButtonsDefaults
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
-import com.dergoogler.mmrl.ui.utils.expandedShape
 
 @Composable
 fun RepositoryMenu(
@@ -52,7 +47,7 @@ fun RepositoryMenu(
         )
 
         if (open) {
-            BottomSheet(
+            MenuBottomSheet(
                 onClose = { open = false },
                 menu = userPreferences.repositoryMenu,
                 setMenu = setMenu
@@ -62,16 +57,11 @@ fun RepositoryMenu(
 }
 
 @Composable
-private fun BottomSheet(
+private fun MenuBottomSheet(
     onClose: () -> Unit,
     menu: RepositoryMenuCompat,
     setMenu: (RepositoryMenuCompat) -> Unit
-) = ModalBottomSheet(
-    onDismissRequest = onClose,
-    sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
-    shape = BottomSheetDefaults.expandedShape(15.dp),
-    windowInsets = WindowInsets(0)
-) {
+) = BottomSheet(onDismissRequest = onClose) {
     val options = listOf(
         Option.NAME to R.string.menu_sort_option_name,
         Option.UPDATED_TIME to R.string.menu_sort_option_updated
@@ -210,7 +200,5 @@ private fun BottomSheet(
                 label = { Text(text = stringResource(id = R.string.menu_show_updated)) }
             )
         }
-
-        NavigationBarsSpacer()
     }
 }

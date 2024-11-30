@@ -22,6 +22,8 @@ import com.dergoogler.mmrl.viewmodel.ModuleViewModel
 
 @Composable
 fun ModulesList(
+    before: (@Composable () -> Unit)? = null,
+    after: (@Composable () -> Unit)? = null,
     list: List<Pair<OnlineState, OnlineModule>>,
     state: LazyListState,
     navController: NavController,
@@ -29,14 +31,16 @@ fun ModulesList(
     val userPreferences = LocalUserPreferences.current
     val menu = userPreferences.repositoryMenu
     when (menu.repoListMode) {
-        RepoListMode.COMPACT -> Compact(list, state, navController)
-        RepoListMode.DETAILED -> Detailed(list, state, navController)
-        RepoListMode.UNRECOGNIZED -> Detailed(list, state, navController)
+        RepoListMode.COMPACT -> Compact(before, after, list, state, navController)
+        RepoListMode.DETAILED -> Detailed(before, after, list, state, navController)
+        RepoListMode.UNRECOGNIZED -> Detailed(before, after, list, state, navController)
     }
 }
 
 @Composable
 fun Detailed(
+    before: (@Composable () -> Unit)? = null,
+    after: (@Composable () -> Unit)? = null,
     list: List<Pair<OnlineState, OnlineModule>>,
     state: LazyListState,
     navController: NavController,
@@ -50,6 +54,12 @@ fun Detailed(
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+            before?.let {
+                item {
+                    it()
+                }
+            }
+
             items(
                 items = list,
                 key = { it.second.id }
@@ -64,6 +74,12 @@ fun Detailed(
                     }
                 )
             }
+
+            after?.let {
+                item {
+                    it()
+                }
+            }
         }
 
         VerticalFastScrollbar(
@@ -75,6 +91,8 @@ fun Detailed(
 
 @Composable
 fun Compact(
+    before: (@Composable () -> Unit)? = null,
+    after: (@Composable () -> Unit)? = null,
     list: List<Pair<OnlineState, OnlineModule>>,
     state: LazyListState,
     navController: NavController,
@@ -87,6 +105,12 @@ fun Compact(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(5.dp)
         ) {
+            before?.let {
+                item {
+                    it()
+                }
+            }
+
             items(
                 items = list,
                 key = { it.second.id }
@@ -100,6 +124,12 @@ fun Compact(
                         )
                     }
                 )
+            }
+
+            after?.let {
+                item {
+                    it()
+                }
             }
         }
 

@@ -104,6 +104,10 @@
     <string name="view_module_module_id">Module ID</string>
     <string name="view_module_required_os">Required OS</string>
     <string name="view_module_required_os_value">Android %1$s and up</string>
+    <string name="view_module_dependencies">Dependencies</string>
+    <string name="view_module_dependencies_not_found">Required Dependencies Not Found</string>
+    <string name="view_module_share">Share</string>
+    <string name="view_module_not_found">Module Not Found</string>
 
 
     <!-- Modules -->
@@ -113,8 +117,10 @@
     <string name="module_remove">Remove</string>
     <string name="module_restore">Restore</string>
     <string name="module_install">Install</string>
+    <string name="module_reinstall">Re-Install</string>
     <string name="module_download">Download</string>
     <string name="module_update">Update</string>
+    <string name="module_id">ID: %1$s</string>
 
     <!-- Settings -->
     <string name="settings_app">App</string>
@@ -183,6 +189,7 @@
     <string name="settings_include_preleases">Include Pre-Releases</string>
     <string name="settings_developer_mode">Developer Mode</string>
     <string name="settings_developer_mode_desc">Shows IDs of modules and more</string>
+    <string name="settings_privacy_policy">Privacy Policy</string>
 
     
     <!-- App Theme -->
@@ -276,6 +283,11 @@
 
     <string name="home_support_title">Support Me</string>
     <string name="home_support_content">MMRL is, and always will be, free, and open source. You can however show me that you care by making a donation.</string>
+    <string name="home_installed_modules">Installed Modules</string>
+    <string name="home_enabled_modules">Enabled Modules</string>
+    <string name="home_installed_modules_with_service_files">Installed Modules With Service Files</string>
+    <string name="home_disabled_modules">Disabled Modules</string>
+    <string name="home_updated_modules">Updated Modules</string>
 
     <string name="has_a_new_update">%1$s has a new update!</string>
     <string name="update_available_from_to">Update available from %s (%d) to %s (%d).</string>

@@ -20,8 +20,7 @@ enum class RepositoryScreen(val route: String) {
     Home("Repository"),
     View("View/{moduleId}"),
     Description("Description/{moduleId}"),
-    Category("FilteredSearch/{category}"),
-    Author("FilteredSearch/{author}")
+    RepoSearch("RepoSearch/{type}/{value}")
 }
 
 fun NavGraphBuilder.repositoryScreen(
@@ -69,32 +68,23 @@ fun NavGraphBuilder.repositoryScreen(
     }
 
     composable(
-        route = RepositoryScreen.Category.route,
-        arguments = listOf(navArgument("category") { type = NavType.StringType }),
-        deepLinks = listOf(navDeepLink { uriPattern = "mmrl://category/{category}" },
-            navDeepLink { uriPattern = "https://mmrl.dergoogler.com/category/{category}" },
-            navDeepLink { uriPattern = "http://mmrl.dergoogler.com/category/{category}" }),
+        route = RepositoryScreen.RepoSearch.route,
+        arguments = listOf(navArgument("type") { type = NavType.StringType },navArgument("value") { type = NavType.StringType }),
+        deepLinks = listOf(navDeepLink { uriPattern = "mmrl://search/{type}/{value}" },
+            navDeepLink { uriPattern = "https://mmrl.dergoogler.com/search/{type}/{value}" },
+            navDeepLink { uriPattern = "http://mmrl.dergoogler.com/search/{type}/{value}" }),
         enterTransition = { scaleIn() + fadeIn() },
         exitTransition = { fadeOut() }
-    ) {
-        FilteredSearchScreen(
-            type = "category",
-            navController = navController
-        )
-    }
+    ) { nav ->
+        nav.arguments?.let {
+            val type = it.getString("type")
+            val value = it.getString("value")
 
-    composable(
-        route = RepositoryScreen.Author.route,
-        arguments = listOf(navArgument("author") { type = NavType.StringType }),
-        deepLinks = listOf(navDeepLink { uriPattern = "mmrl://author/{author}" },
-            navDeepLink { uriPattern = "https://mmrl.dergoogler.com/author/{author}" },
-            navDeepLink { uriPattern = "http://mmrl.dergoogler.com/author/{author}" }),
-        enterTransition = { scaleIn() + fadeIn() },
-        exitTransition = { fadeOut() }
-    ) {
-        FilteredSearchScreen(
-            type = "author",
-            navController = navController
-        )
+            FilteredSearchScreen(
+                type = type,
+                value = value,
+                navController = navController
+            )
+        }
     }
 }
