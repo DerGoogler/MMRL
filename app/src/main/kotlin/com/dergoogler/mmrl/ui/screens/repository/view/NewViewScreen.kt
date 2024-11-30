@@ -449,7 +449,7 @@ fun NewViewScreen(
                 val commonHeight = 160.dp
 
                 Spacer(modifier = Modifier.height(16.dp))
-                
+
                 LazyRow(
                     state = screenshotsLazyListState,
                     modifier = Modifier
@@ -666,39 +666,58 @@ fun NewViewScreen(
             module.require?.ifNotEmpty { requiredIds ->
                 val repositoryList by repositoryViewModel.online.collectAsStateWithLifecycle()
 
-                // Ensure requiredIds is a list
                 val foundRequires = repositoryList.filter { onlineModules ->
                     onlineModules.second.id in requiredIds
                 }
 
-                foundRequires.ifNotEmpty {
-                    ListCollapseItem(
-                        contentPaddingValues = listItemContentPaddingValues,
-                        iconToRight = true,
-                        title = stringResource(R.string.view_module_dependencies),
-                        labels = listOf(
-                            stringResource(
-                                R.string.view_module_section_count,
-                                requiredIds.size
-                            )
+                ListCollapseItem(
+                    contentPaddingValues = listItemContentPaddingValues,
+                    iconToRight = true,
+                    title = stringResource(R.string.view_module_dependencies),
+                    labels = listOf(
+                        stringResource(
+                            R.string.view_module_section_count,
+                            requiredIds.size
                         )
-                    ) {
-                        foundRequires.forEach { online ->
-                            val item = online.second
+                    )
+                ) {
+                    requiredIds.forEach { requiredId ->
+                        // val parts = requiredId.split("@")
 
-                            ListItem(
+                        // val id = parts[0]
+                        // val version = (parts.getOrElse(1) { "-1" }).toInt()
+
+                        val onlineModule =
+                            foundRequires.find { online -> online.second.id == requiredId }
+
+                        if (onlineModule != null) {
+                            val item = onlineModule.second
+
+                            ListButtonItem(
                                 contentPaddingValues = PaddingValues(
                                     vertical = 8.dp,
                                     horizontal = 16.dp
                                 ),
                                 itemTextStyle = subListItemStyle,
                                 title = item.name,
-                                desc = item.versionDisplay,
-//                            onClick = {
-//                                navController.navigateSingleTopTo(
-//                                    ModuleViewModel.putModuleId(item)
-//                                )
-//                            }
+                                desc = item.versionCode.toString(),
+                                onClick = {
+                                    navController.navigateSingleTopTo(
+                                        ModuleViewModel.putModuleId(item),
+                                        launchSingleTop = false
+                                    )
+                                }
+                            )
+                        } else {
+                            ListItem(
+                                contentPaddingValues = PaddingValues(
+                                    vertical = 8.dp,
+                                    horizontal = 16.dp
+                                ),
+                                enabled = false,
+                                itemTextStyle = subListItemStyle,
+                                title = requiredId,
+                                labels = listOf(stringResource(R.string.view_module_not_found))
                             )
                         }
                     }

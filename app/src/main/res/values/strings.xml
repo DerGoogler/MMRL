@@ -107,6 +107,7 @@
     <string name="view_module_dependencies">Dependencies</string>
     <string name="view_module_dependencies_not_found">Required Dependencies Not Found</string>
     <string name="view_module_share">Share</string>
+    <string name="view_module_not_found">Module Not Found</string>
 
 
     <!-- Modules -->

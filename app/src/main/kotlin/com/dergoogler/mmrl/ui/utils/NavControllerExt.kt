@@ -6,17 +6,19 @@ import androidx.navigation.NavOptionsBuilder
 
 fun NavController.navigateSingleTopTo(
     route: String,
+    launchSingleTop: Boolean = true,
     builder: NavOptionsBuilder.() -> Unit = {}
 ) = navigate(
     route = route
 ) {
-    launchSingleTop = true
+    this.launchSingleTop = launchSingleTop
     restoreState = true
     builder()
 }
 
 fun NavController.navigatePopUpTo(
     route: String,
+    launchSingleTop: Boolean = true,
     restoreState: Boolean = true,
     inclusive: Boolean = true,
 ) = navigateSingleTopTo(
@@ -28,6 +30,6 @@ fun NavController.navigatePopUpTo(
         this.saveState = restoreState
         this.inclusive = inclusive
     }
-    this.launchSingleTop = true
+    this.launchSingleTop = launchSingleTop
     this.restoreState = restoreState
 }
