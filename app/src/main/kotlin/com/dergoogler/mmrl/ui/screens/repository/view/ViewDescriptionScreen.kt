@@ -65,9 +65,8 @@ fun ViewDescriptionScreen(
     ) { innerPadding ->
         Column(
             modifier = Modifier
-                .fillMaxSize()
                 .padding(innerPadding)
-                .verticalScroll(rememberScrollState()),
+                .fillMaxSize()
         ) {
             AnimatedVisibility(
                 modifier = Modifier.fillMaxSize(),
@@ -91,14 +90,20 @@ fun ViewDescriptionScreen(
                 enter = fadeIn(),
                 exit = fadeOut()
             ) {
-                MarkdownText(
-                    text = readme,
-                    style = MaterialTheme.typography.bodyMedium,
-                    isTextSelectable = true,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(16.dp)
-                )
+//                LazyColumn {
+//                    item {
+
+                        MarkdownText(
+                            text = readme,
+                            style = MaterialTheme.typography.bodyMedium,
+                            isTextSelectable = true,
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .verticalScroll(rememberScrollState())
+                                .padding(16.dp)
+                        )
+//                    }
+//                }
             }
         }
     }
