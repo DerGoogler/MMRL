@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="search_results">
+        <item quantity="one"><![CDATA[查有 <font color=\"%1$s\">%2$s 條搜尋結果</font>與關鍵字相符]]></item>
+        <item quantity="other"><![CDATA[查有 <font color=\"%1$s\">%2$s 條搜尋結果</font>與關鍵字相符]]></item>
+    </plurals>
+</resources>
