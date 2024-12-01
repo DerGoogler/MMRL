@@ -100,6 +100,8 @@
     <string name="view_module_required_os_value">Android %1$s 以降</string>
     <string name="view_module_dependencies">依存関係</string>
     <string name="view_module_dependencies_not_found">必要な依存関係は見つかりません</string>
+    <string name="view_module_share">共有</string>
+    <string name="view_module_not_found">モジュールが見つかりません</string>
     <!-- Modules -->
     <string name="modules_empty">モジュールが見つかりません</string>
     <!-- Module Item -->
@@ -107,6 +109,7 @@
     <string name="module_remove">削除</string>
     <string name="module_restore">復元</string>
     <string name="module_install">インストール</string>
+    <string name="module_reinstall">再インストール</string>
     <string name="module_download">ダウンロード</string>
     <string name="module_update">更新</string>
     <string name="module_id">ID: %1$s</string>
@@ -165,7 +168,7 @@
     <string name="settings_check_app_updates">アプリの更新を確認</string>
     <string name="settings_check_app_updates_desc">アプリを開いたときに自動でアプリの更新を確認します。</string>
     <string name="settings_hide_fingerprint">ホームでフィンガープリントを隠す</string>
-    <string name="settings_hide_fingerprint_desc">本物か偽物かどうかは関係がありません</string>
+    <string name="settings_hide_fingerprint_desc">本物か偽物かどうかは関係がありません。</string>
     <string name="settings_check_modules_update">モジュールの更新を確認する</string>
     <string name="settings_check_modules_update_desc">インストールされているモジュールの更新を自動で確認します。</string>
     <string name="settings_check_modules_update_interval_suffix">\u0020 時間ごと</string>
@@ -173,7 +176,7 @@
     <string name="settings_check_modules_update_interval_desc">インストールされたモジュールを自動で確認する間隔を設定します。</string>
     <string name="settings_include_preleases">プレリリースを含める</string>
     <string name="settings_developer_mode">開発者モード</string>
-    <string name="settings_developer_mode_desc">モジュール ID などを表示します</string>
+    <string name="settings_developer_mode_desc">モジュール ID などを表示します。</string>
     <string name="settings_privacy_policy">プライバシーポリシー</string>
     <!-- App Theme -->
     <string name="app_theme_palette">テーマパレット</string>
@@ -255,6 +258,11 @@
     <string name="reboot_edl">EDL で再起動</string>
     <string name="home_support_title">ご支援をお願いします</string>
     <string name="home_support_content">MMRL は無料であり、オープンソースです。ですが、寄付をすることで開発者の今後の励みに繋がります。</string>
+    <string name="home_installed_modules">インストール済みのモジュール</string>
+    <string name="home_enabled_modules">有効化済みのモジュール</string>
+    <string name="home_installed_modules_with_service_files">インストール済みのモジュール (サービスファイルを含む)</string>
+    <string name="home_disabled_modules">無効化済みのモジュール</string>
+    <string name="home_updated_modules">更新済みのモジュール</string>
     <string name="has_a_new_update">%1$s に新しい更新があります！</string>
     <string name="update_available_from_to">%s (%d) から %s (%d) への更新が利用可能です。</string>
     <string name="events_birthday">MMRL は %1$s 周年です！</string>
