@@ -328,13 +328,14 @@ fun NewViewScreen(
                         onClick = ops.change
                     ) {
                         Text(
-                            stringResource(
+                            text = stringResource(
                                 id = if (it.state == State.REMOVE) {
                                     R.string.module_restore
                                 } else {
                                     R.string.module_remove
                                 }
-                            )
+                            ),
+                            maxLines = 1
                         )
                     }
                 }
@@ -359,7 +360,10 @@ fun NewViewScreen(
                         versionSelectBottomSheet = true
                     }
                 ) {
-                    Text(stringResource(id = buttonTextResId))
+                    Text(
+                        text = stringResource(id = buttonTextResId),
+                        maxLines = 1
+                    )
                 }
             }
 
@@ -395,7 +399,6 @@ fun NewViewScreen(
 
                     Spacer(modifier = Modifier.height(16.dp))
                 }
-
             }
 
             module.note?.let {
