@@ -134,6 +134,7 @@ fun ModulesScreen(
                 list = list,
                 state = listState,
                 isProviderAlive = viewModel.isProviderAlive,
+                managerName = viewModel.managerName,
                 getModuleOps = viewModel::createModuleOps,
                 getVersionItem = { viewModel.getVersionItem(it) },
                 getProgress = { viewModel.getProgress(it) },

@@ -47,6 +47,11 @@ class ModulesViewModel @Inject constructor(
 ) : ViewModel() {
     val isProviderAlive get() = Compat.isAlive
 
+    val managerName: String
+        get() = Compat.get("") {
+            with(moduleManager) { managerName }
+        }
+
     private val modulesMenu get() = userPreferencesRepository.data
         .map { it.modulesMenu }
 

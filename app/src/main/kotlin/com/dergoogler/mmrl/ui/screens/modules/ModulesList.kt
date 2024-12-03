@@ -31,7 +31,6 @@ import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.model.local.LocalModule
 import com.dergoogler.mmrl.model.local.State
 import com.dergoogler.mmrl.model.online.VersionItem
-import com.dergoogler.mmrl.ui.activity.ModConfActivity
 import com.dergoogler.mmrl.ui.component.VersionItemBottomSheet
 import com.dergoogler.mmrl.ui.component.scrollbar.VerticalFastScrollbar
 import com.dergoogler.mmrl.viewmodel.ModulesViewModel
@@ -42,10 +41,11 @@ fun ModulesList(
     list: List<LocalModule>,
     state: LazyListState,
     isProviderAlive: Boolean,
+    managerName: String,
     getModuleOps: (LocalModule) -> ModulesViewModel.ModuleOps,
     getVersionItem: @Composable (LocalModule) -> VersionItem?,
     getProgress: @Composable (VersionItem?) -> Float,
-    onDownload: (LocalModule, VersionItem, Boolean) -> Unit
+    onDownload: (LocalModule, VersionItem, Boolean) -> Unit,
 ) = Box(
     modifier = Modifier.fillMaxSize()
 ) {
@@ -62,6 +62,7 @@ fun ModulesList(
             ModuleItem(
                 module = module,
                 isProviderAlive = isProviderAlive,
+                managerName = managerName,
                 getModuleOps = getModuleOps,
                 getVersionItem = getVersionItem,
                 getProgress = getProgress,
@@ -80,10 +81,11 @@ fun ModulesList(
 fun ModuleItem(
     module: LocalModule,
     isProviderAlive: Boolean,
+    managerName: String,
     getModuleOps: (LocalModule) -> ModulesViewModel.ModuleOps,
     getVersionItem: @Composable (LocalModule) -> VersionItem?,
     getProgress: @Composable (VersionItem?) -> Float,
-    onDownload: (LocalModule, VersionItem, Boolean) -> Unit
+    onDownload: (LocalModule, VersionItem, Boolean) -> Unit,
 ) {
     val ops by remember(module.state) {
         derivedStateOf { getModuleOps(module) }
@@ -118,10 +120,15 @@ fun ModuleItem(
             else -> TextDecoration.None
         },
         switch = {
+            val enabled = when (managerName.lowercase()) {
+                "kernelsu", "apatch" -> isProviderAlive && module.state != State.UPDATE
+                else -> isProviderAlive
+            }
+
             Switch(
                 checked = module.state == State.ENABLE,
                 onCheckedChange = ops.toggle,
-                enabled = isProviderAlive
+                enabled = enabled && module.state != State.REMOVE
             )
         },
         indicator = {
@@ -170,7 +177,7 @@ fun ModuleItem(
 @Composable
 private fun UpdateButton(
     enabled: Boolean,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) = FilledTonalButton(
     onClick = onClick,
     enabled = enabled,
@@ -192,7 +199,7 @@ private fun UpdateButton(
 private fun RemoveOrRestore(
     module: LocalModule,
     enabled: Boolean,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) = FilledTonalButton(
     onClick = onClick,
     enabled = enabled,
@@ -225,7 +232,7 @@ private fun RemoveOrRestore(
 @Composable
 private fun ModConf(
     enabled: Boolean,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) = FilledTonalButton(
     onClick = onClick,
     enabled = enabled,

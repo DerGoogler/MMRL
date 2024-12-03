@@ -316,7 +316,7 @@ fun NewViewScreen(
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 local?.let {
-                    val ops by remember(it.state) {
+                    val ops by remember(it, it.state) {
                         derivedStateOf { viewModel.createModuleOps(it) }
                     }
 

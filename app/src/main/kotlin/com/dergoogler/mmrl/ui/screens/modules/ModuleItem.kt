@@ -37,7 +37,6 @@ import com.dergoogler.mmrl.model.local.LocalModule
 import com.dergoogler.mmrl.model.local.versionDisplay
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import ext.dergoogler.mmrl.ext.takeTrue
-import ext.dergoogler.mmrl.ext.toDate
 import ext.dergoogler.mmrl.ext.toFormattedDateSafely
 
 @Composable
@@ -139,7 +138,7 @@ fun ModuleItem(
                     strokeCap = StrokeCap.Round,
                     modifier = Modifier
                         .padding(top = 8.dp)
-                        .height(2.dp)
+                        .height(1.5.dp)
                         .fillMaxWidth()
                 )
                 else -> HorizontalDivider(
