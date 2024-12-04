@@ -45,19 +45,44 @@ class MMRLWebUIHandler(
     private fun appColors(): WebResourceResponse {
         val cssContent = buildString {
             append(":root {\n")
-
-            ColorScheme::class.memberProperties.forEach { property ->
-                val colorValue = property.get(colorScheme)
-                colorValue?.let {
-                    if (colorValue is Color) {
-                        append("    --${property.name}: ${colorValue.toCssValue()};\n")
-                    }
-                }
-            }
-
+            append("    --primary: ${colorScheme.primary.toCssValue()};\n")
+            append("    --onPrimary: ${colorScheme.onPrimary.toCssValue()};\n")
+            append("    --primaryContainer: ${colorScheme.primaryContainer.toCssValue()};\n")
+            append("    --onPrimaryContainer: ${colorScheme.onPrimaryContainer.toCssValue()};\n")
+            append("    --inversePrimary: ${colorScheme.inversePrimary.toCssValue()};\n")
+            append("    --secondary: ${colorScheme.secondary.toCssValue()};\n")
+            append("    --onSecondary: ${colorScheme.onSecondary.toCssValue()};\n")
+            append("    --secondaryContainer: ${colorScheme.secondaryContainer.toCssValue()};\n")
+            append("    --onSecondaryContainer: ${colorScheme.onSecondaryContainer.toCssValue()};\n")
+            append("    --tertiary: ${colorScheme.tertiary.toCssValue()};\n")
+            append("    --onTertiary: ${colorScheme.onTertiary.toCssValue()};\n")
+            append("    --tertiaryContainer: ${colorScheme.tertiaryContainer.toCssValue()};\n")
+            append("    --onTertiaryContainer: ${colorScheme.onTertiaryContainer.toCssValue()};\n")
+            append("    --background: ${colorScheme.background.toCssValue()};\n")
+            append("    --onBackground: ${colorScheme.onBackground.toCssValue()};\n")
+            append("    --surface: ${colorScheme.surface.toCssValue()};\n")
+            append("    --onSurface: ${colorScheme.onSurface.toCssValue()};\n")
+            append("    --surfaceVariant: ${colorScheme.surfaceVariant.toCssValue()};\n")
+            append("    --onSurfaceVariant: ${colorScheme.onSurfaceVariant.toCssValue()};\n")
+            append("    --surfaceTint: ${colorScheme.surfaceTint.toCssValue()};\n")
+            append("    --inverseSurface: ${colorScheme.inverseSurface.toCssValue()};\n")
+            append("    --inverseOnSurface: ${colorScheme.inverseOnSurface.toCssValue()};\n")
+            append("    --error: ${colorScheme.error.toCssValue()};\n")
+            append("    --onError: ${colorScheme.onError.toCssValue()};\n")
+            append("    --errorContainer: ${colorScheme.errorContainer.toCssValue()};\n")
+            append("    --onErrorContainer: ${colorScheme.onErrorContainer.toCssValue()};\n")
+            append("    --outline: ${colorScheme.outline.toCssValue()};\n")
+            append("    --outlineVariant: ${colorScheme.outlineVariant.toCssValue()};\n")
+            append("    --scrim: ${colorScheme.scrim.toCssValue()};\n")
+            append("    --surfaceBright: ${colorScheme.surfaceBright.toCssValue()};\n")
+            append("    --surfaceDim: ${colorScheme.surfaceDim.toCssValue()};\n")
+            append("    --surfaceContainer: ${colorScheme.surfaceContainer.toCssValue()};\n")
+            append("    --surfaceContainerHigh: ${colorScheme.surfaceContainerHigh.toCssValue()};\n")
+            append("    --surfaceContainerHighest: ${colorScheme.surfaceContainerHighest.toCssValue()};\n")
+            append("    --surfaceContainerLow: ${colorScheme.surfaceContainerLow.toCssValue()};\n")
+            append("    --surfaceContainerLowest: ${colorScheme.surfaceContainerLowest.toCssValue()};\n")
             append("}")
         }
-
         return style(cssContent)
     }
 
