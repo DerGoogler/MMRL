@@ -7,7 +7,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.StringRes
@@ -15,29 +14,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionContext
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
-import androidx.lifecycle.DefaultLifecycleObserver
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.work.Constraints
-import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.ListenableWorker
-import androidx.work.NetworkType
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.compat.PermissionCompat
 import com.dergoogler.mmrl.repository.LocalRepository
 import com.dergoogler.mmrl.repository.UserPreferencesRepository
 import com.dergoogler.mmrl.ui.activity.CrashHandlerActivity
 import com.dergoogler.mmrl.ui.activity.InstallActivity
-import com.dergoogler.mmrl.ui.activity.ModConfActivity
+import com.dergoogler.mmrl.ui.activity.webui.WebUIActivity
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import dev.dergoogler.mmrl.compat.BuildCompat
 import timber.log.Timber
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import kotlin.system.exitProcess
 
@@ -125,7 +114,7 @@ open class MMRLComponentActivity : ComponentActivity() {
     fun createNotificationChannel(
         channelName: String,
         @StringRes channelTitle: Int,
-        @StringRes channelDesc: Int
+        @StringRes channelDesc: Int,
     ) {
         val notificationManager =
             applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -143,7 +132,7 @@ open class MMRLComponentActivity : ComponentActivity() {
 
     companion object {
         fun startModConfActivity(context: Context, modId: String) {
-            val intent = Intent(context, ModConfActivity::class.java)
+            val intent = Intent(context, WebUIActivity::class.java)
                 .apply {
                     putExtra("MOD_ID", modId)
                 }
@@ -164,7 +153,7 @@ open class MMRLComponentActivity : ComponentActivity() {
 
 fun MMRLComponentActivity.setBaseContent(
     parent: CompositionContext? = null,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     this.setContent(
         parent = parent,

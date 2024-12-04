@@ -48,6 +48,7 @@ fun ModuleItem(
     decoration: TextDecoration = TextDecoration.None,
     switch: @Composable (() -> Unit?)? = null,
     indicator: @Composable (BoxScope.() -> Unit?)? = null,
+    startTrailingButton: (@Composable RowScope.() -> Unit)? = null,
     trailingButton: @Composable RowScope.() -> Unit,
 ) = Surface(
     color = MaterialTheme.colorScheme.surface,
@@ -154,8 +155,9 @@ fun ModuleItem(
                     .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                startTrailingButton?.invoke(this)
                 Spacer(modifier = Modifier.weight(1f))
-                trailingButton()
+                trailingButton.invoke(this)
             }
         }
 

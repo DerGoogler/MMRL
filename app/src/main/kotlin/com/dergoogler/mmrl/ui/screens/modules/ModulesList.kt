@@ -138,9 +138,7 @@ fun ModuleItem(
                 else -> {}
             }
         },
-        trailingButton = {
-
-
+        startTrailingButton = {
             if (module.hasModConf) {
                 ModConf(
                     enabled = isProviderAlive,
@@ -151,10 +149,9 @@ fun ModuleItem(
                         )
                     }
                 )
-
-                Spacer(modifier = Modifier.width(12.dp))
             }
-
+        },
+        trailingButton = {
             if (item != null) {
                 UpdateButton(
                     enabled = item.versionCode > module.versionCode,

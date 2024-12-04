@@ -13,6 +13,7 @@ androidxHiltNavigationCompose = "1.2.0"
 androidxLifecycle = "2.8.0"
 androidxNavigation = "2.7.7"
 foundation = "1.7.3"
+webkit = "1.12.1"
 multidex = "2.0.1"
 navigationRuntimeKtx = "2.8.2"
 androidxRoom = "2.6.1"
@@ -61,6 +62,7 @@ androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lif
 androidx-lifecycle-service = { group = "androidx.lifecycle", name = "lifecycle-service", version.ref = "androidxLifecycle" }
 androidx-lifecycle-viewModel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "androidxLifecycle" }
 androidx-material = { module = "androidx.compose.material:material" }
+androidx-webkit = { module = "androidx.webkit:webkit", version.ref = "webkit" }
 androidx-multidex = { module = "androidx.multidex:multidex", version.ref = "multidex" }
 androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigationRuntimeKtx" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "androidxNavigation" }

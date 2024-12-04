@@ -1,6 +1,5 @@
 package dev.dergoogler.mmrl.compat.impl
 
-import android.os.Build
 import com.topjohnwu.superuser.CallbackList
 import com.topjohnwu.superuser.Shell
 import com.topjohnwu.superuser.ShellUtils
@@ -9,7 +8,6 @@ import dev.dergoogler.mmrl.compat.content.ModuleInfo
 import dev.dergoogler.mmrl.compat.content.State
 import dev.dergoogler.mmrl.compat.stub.IInstallCallback
 import dev.dergoogler.mmrl.compat.stub.IModuleManager
-import ext.dergoogler.mmrl.ext.findFileGlob
 import java.io.File
 import java.util.zip.ZipFile
 
@@ -57,15 +55,9 @@ internal abstract class BaseModuleManagerImpl(
         }
 
     private fun hasModConf(id: String): Boolean {
-        val fixedModId = id.replace(Regex("[^a-zA-Z0-9._]"), "_")
-
-        val dexFilePath = if (Build.SUPPORTED_64_BIT_ABIS.isNotEmpty()) {
-            "/system/lib64".findFileGlob(fixedModId)
-        } else {
-            "/system/lib".findFileGlob(fixedModId)
-        } ?: return false
-
-        return dexFilePath.toFile().exists()
+        val moduleDir = modulesDir.resolve(id)
+        val webroot = moduleDir.resolve(WEBROOT)
+        return webroot.exists() && webroot.isDirectory
     }
 
     override fun getModuleById(id: String): LocalModule? {
@@ -86,13 +78,6 @@ internal abstract class BaseModuleManagerImpl(
     }
 
     override fun fetchModuleInfo(): ModuleInfo {
-        val serviceFiles = listOf(
-            "service.sh",
-            "post-fs-data.sh",
-            "action.sh",
-            "post-mount.sh",
-            "boot-completed.sh"
-        )
         val folders = modulesDir.listFiles()?.filter { it.isDirectory } ?: emptyList()
 
         var total = 0
@@ -105,7 +90,7 @@ internal abstract class BaseModuleManagerImpl(
         for (folder in folders) {
             total++
 
-            val serviceFileExists = serviceFiles.any { File(folder, it).exists() }
+            val serviceFileExists = MODULE_SERVICE_FILES.any { File(folder, it).exists() }
             if (serviceFileExists) withServiceFiles++
 
             if (File(folder, "disable").exists()) {
@@ -237,13 +222,23 @@ internal abstract class BaseModuleManagerImpl(
 
     companion object {
         const val PROP_FILE = "module.prop"
+        const val WEBROOT = "webroot"
         const val MODULES_PATH = "/data/adb/modules"
 
+        val MODULE_SERVICE_FILES = listOf(
+            "service.sh",
+            "post-fs-data.sh",
+            "action.sh",
+            "post-mount.sh",
+            "boot-completed.sh",
+            "webroot"
+        )
         val MODULE_FILES = listOf(
             "post-fs-data.sh", "service.sh", "uninstall.sh",
             "system", "system.prop", "module.prop",
-            // KernelSU and APatch related files
-            "action.sh", "post-mount.sh", "boot-completed.sh"
+            // KernelSU, APatch and MMRL related files
+            "action.sh", "post-mount.sh", "boot-completed.sh",
+            "webroot"
         )
     }
 }

@@ -153,23 +153,11 @@
         </activity>
 
         <activity
-            android:name=".ui.activity.ModConfActivity"
-            android:excludeFromRecents="true"
-            android:exported="true"
-            android:label="@string/modconf_activity"
-            android:taskAffinity="${applicationId}.MODCONF">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="content" />
-                <data android:mimeType="application/vnd.android.dex" />
-                <data android:mimeType="application/java-archive" />
-                <data android:mimeType="application/vnd.android.package-archive" />
-            </intent-filter>
-        </activity>
+            android:name=".ui.activity.webui.WebUIActivity"
+            android:autoRemoveFromRecents="true"
+            android:documentLaunchMode="intoExisting"
+            android:exported="false"
+            android:taskAffinity="${applicationId}.WEBUI" />
 
         <service
             android:name=".service.DownloadService"
