@@ -241,7 +241,9 @@ internal abstract class BaseModuleManagerImpl(
 
         val MODULE_FILES = listOf(
             "post-fs-data.sh", "service.sh", "uninstall.sh",
-            "system", "system.prop", "module.prop"
+            "system", "system.prop", "module.prop",
+            // KernelSU and APatch related files
+            "action.sh", "post-mount.sh", "boot-completed.sh"
         )
     }
 }
