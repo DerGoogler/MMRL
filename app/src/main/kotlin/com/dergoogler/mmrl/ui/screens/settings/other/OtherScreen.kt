@@ -71,6 +71,14 @@ fun OtherScreen(
             )
 
             ListSwitchItem(
+                icon = R.drawable.clear_all,
+                title = stringResource(id = R.string.settings_clear_install_terminal),
+                desc = stringResource(id = R.string.settings_clear_install_terminal_desc),
+                checked = userPreferences.clearInstallTerminal,
+                onChange = viewModel::setClearInstallTerminal,
+            )
+
+            ListSwitchItem(
                 icon = R.drawable.bug,
                 title = stringResource(id = R.string.settings_developer_mode),
                 desc = stringResource(id = R.string.settings_developer_mode_desc),

@@ -22,7 +22,6 @@ class InstallActivity : MMRLComponentActivity() {
         Timber.d("InstallActivity onCreate")
         super.onCreate(savedInstanceState)
 
-
         val uris: ArrayList<Uri>? = if (BuildCompat.atLeastT) {
             intent.getParcelableArrayListExtra("uris", Uri::class.java)
         } else {
@@ -30,11 +29,10 @@ class InstallActivity : MMRLComponentActivity() {
             intent.getParcelableArrayListExtra("uris")
         }
 
-
         if (uris.isNullOrEmpty()) {
             finish()
         } else {
-            Timber.d("InstallActivity onCreate: ${uris}")
+            Timber.d("InstallActivity onCreate: $uris")
             initModule(uris.toList())
         }
 

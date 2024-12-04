@@ -29,6 +29,7 @@ data class UserPreferencesCompat(
     val hideFingerprintInHome: Boolean,
     val homepage: String,
     val developerMode: Boolean,
+    val clearInstallTerminal: Boolean,
     val repositoryMenu: RepositoryMenuCompat,
     val modulesMenu: ModulesMenuCompat,
 ) {
@@ -52,6 +53,7 @@ data class UserPreferencesCompat(
         hideFingerprintInHome = original.hideFingerprintInHome,
         homepage = original.homepage,
         developerMode = original.developerMode,
+        clearInstallTerminal = original.clearInstallTerminal,
         repositoryMenu = when {
             original.hasRepositoryMenu() -> RepositoryMenuCompat(original.repositoryMenu)
             else -> RepositoryMenuCompat.default()
@@ -87,6 +89,7 @@ data class UserPreferencesCompat(
         .setHideFingerprintInHome(hideFingerprintInHome)
         .setHomepage(homepage)
         .setDeveloperMode(developerMode)
+        .setClearInstallTerminal(clearInstallTerminal)
         .setRepositoryMenu(repositoryMenu.toProto())
         .setModulesMenu(modulesMenu.toProto())
         .build()
@@ -110,6 +113,7 @@ data class UserPreferencesCompat(
             hideFingerprintInHome = true,
             homepage = MainScreen.Home.route,
             developerMode = false,
+            clearInstallTerminal = true,
             repositoryMenu = RepositoryMenuCompat.default(),
             modulesMenu = ModulesMenuCompat.default()
         )

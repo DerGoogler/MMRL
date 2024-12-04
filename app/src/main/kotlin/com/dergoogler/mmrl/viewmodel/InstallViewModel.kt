@@ -60,12 +60,18 @@ class InstallViewModel @Inject constructor(
         }
     }
 
-    fun installModules(context: Context, uris: List<Uri>) {
+    suspend fun installModules(context: Context, uris: List<Uri>) {
+        val userPreferences = userPreferencesRepository.data.first()
+
         viewModelScope.launch {
             event = Event.LOADING
             var allSucceeded = true
 
             for (uri in uris) {
+                if (userPreferences.clearInstallTerminal && uris.size > 1) {
+                    console.clear()
+                }
+
                 val result = loadAndInstallModule(context, uri)
                 if (!result) {
                     allSucceeded = false
@@ -82,46 +88,47 @@ class InstallViewModel @Inject constructor(
         }
     }
 
-    private suspend fun loadAndInstallModule(context: Context, uri: Uri): Boolean = withContext(Dispatchers.IO) {
-        val userPreferences = userPreferencesRepository.data.first()
+    private suspend fun loadAndInstallModule(context: Context, uri: Uri): Boolean =
+        withContext(Dispatchers.IO) {
+            val userPreferences = userPreferencesRepository.data.first()
 
-        if (!Compat.init(userPreferences.workingMode)) {
-            event = Event.FAILED
-            console.add("- Service is not available")
-            return@withContext false
-        }
-
-        val path = context.getPathForUri(uri)
-
-        Timber.d("Path: $path")
-
-        Compat.moduleManager.getModuleInfo(path)?.let {
-            Timber.d("Module info: $it")
-            return@withContext install(path)
-        }
-
-        console.add("- Copying zip to temp directory")
-        val tmpFile = context.copyToDir(uri, context.tmpDir) ?: run {
-            event = Event.FAILED
-            console.add("- Copying failed")
-            return@withContext false
-        }
-
-        context.contentResolver.openInputStream(uri)?.use { input ->
-            tmpFile.outputStream().use { output ->
-                input.copyTo(output)
+            if (!Compat.init(userPreferences.workingMode)) {
+                event = Event.FAILED
+                console.add("- Service is not available")
+                return@withContext false
             }
-        }
 
-        Compat.moduleManager.getModuleInfo(tmpFile.path)?.let {
-            Timber.d("Module info: $it")
-            return@withContext install(tmpFile.path)
-        }
+            val path = context.getPathForUri(uri)
 
-        event = Event.FAILED
-        console.add("- Zip parsing failed")
-        false
-    }
+            Timber.d("Path: $path")
+
+            Compat.moduleManager.getModuleInfo(path)?.let {
+                Timber.d("Module info: $it")
+                return@withContext install(path)
+            }
+
+            console.add("- Copying zip to temp directory")
+            val tmpFile = context.copyToDir(uri, context.tmpDir) ?: run {
+                event = Event.FAILED
+                console.add("- Copying failed")
+                return@withContext false
+            }
+
+            context.contentResolver.openInputStream(uri)?.use { input ->
+                tmpFile.outputStream().use { output ->
+                    input.copyTo(output)
+                }
+            }
+
+            Compat.moduleManager.getModuleInfo(tmpFile.path)?.let {
+                Timber.d("Module info: $it")
+                return@withContext install(tmpFile.path)
+            }
+
+            event = Event.FAILED
+            console.add("- Zip parsing failed")
+            false
+        }
 
     private suspend fun install(zipPath: String): Boolean = withContext(Dispatchers.IO) {
         val zipFile = File(zipPath)

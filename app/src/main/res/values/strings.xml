@@ -190,6 +190,8 @@
     <string name="settings_developer_mode">Developer Mode</string>
     <string name="settings_developer_mode_desc">Shows IDs of modules and more</string>
     <string name="settings_privacy_policy">Privacy Policy</string>
+    <string name="settings_clear_install_terminal">Clear Install Terminal</string>
+    <string name="settings_clear_install_terminal_desc">Clear Install Terminal when installing more than one Module</string>
 
     
     <!-- App Theme -->

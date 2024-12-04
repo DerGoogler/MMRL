@@ -61,6 +61,9 @@ class UserPreferencesRepository @Inject constructor(
     suspend fun setDeveloperMode(value: Boolean) =
         userPreferencesDataSource.setDeveloperMode(value)
 
+    suspend fun setClearInstallTerminal(value: Boolean) =
+        userPreferencesDataSource.setClearInstallTerminal(value)
+
     suspend fun setRepositoryMenu(value: RepositoryMenuCompat) =
         userPreferencesDataSource.setRepositoryMenu(value)
 

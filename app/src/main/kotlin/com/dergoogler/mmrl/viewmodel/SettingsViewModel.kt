@@ -140,4 +140,10 @@ class SettingsViewModel @Inject constructor(
             userPreferencesRepository.setDeveloperMode(value)
         }
     }
+
+    fun setClearInstallTerminal(value: Boolean) {
+        viewModelScope.launch {
+            userPreferencesRepository.setClearInstallTerminal(value)
+        }
+    }
 }

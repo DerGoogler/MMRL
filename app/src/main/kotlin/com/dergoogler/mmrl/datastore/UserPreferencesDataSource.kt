@@ -157,6 +157,14 @@ class UserPreferencesDataSource @Inject constructor(
         }
     }
 
+    suspend fun setClearInstallTerminal(value: Boolean) = withContext(Dispatchers.IO) {
+        userPreferences.updateData {
+            it.copy(
+                clearInstallTerminal = value
+            )
+        }
+    }
+
 
     suspend fun setRepositoryMenu(value: RepositoryMenuCompat) = withContext(Dispatchers.IO) {
         userPreferences.updateData {
