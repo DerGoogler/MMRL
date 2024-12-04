@@ -91,7 +91,7 @@ class MMRLWebUIHandler(
     }
 
     private fun Color.toCssValue(): String {
-        return "#${red.toHex()}${green.toHex()}${blue.toHex()}"
+        return "#${red.toHex()}${green.toHex()}${blue.toHex()}${alpha.toHex()}"
     }
 
     private fun Float.toHex(): String {
