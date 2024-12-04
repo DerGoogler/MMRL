@@ -253,9 +253,10 @@ fun HomeScreen(
                         )
                     }
                 }
+
+                Spacer(Modifier.height(16.dp))
             }
 
-            Spacer(Modifier.height(16.dp))
 
             Surface(
                 color = MaterialTheme.colorScheme.surface,

@@ -141,7 +141,7 @@ fun ModuleItem(
         startTrailingButton = {
             if (module.hasModConf) {
                 ModConf(
-                    enabled = isProviderAlive,
+                    enabled = isProviderAlive && module.state != State.REMOVE,
                     onClick = {
                         MMRLComponentActivity.startModConfActivity(
                             context = context,

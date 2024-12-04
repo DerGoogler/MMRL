@@ -24,6 +24,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AssistChip
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.HorizontalDivider
@@ -31,6 +32,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
@@ -115,6 +117,7 @@ fun NewViewScreen(
 
     val lastVersionItem = viewModel.lastVersionItem
     val context = LocalContext.current
+    val density = LocalDensity.current
 
     val listItemContentPaddingValues = PaddingValues(vertical = 16.dp, horizontal = 16.dp)
 
@@ -274,7 +277,7 @@ fun NewViewScreen(
                             Spacer(modifier = Modifier.width(4.dp))
 
                             val iconSize =
-                                with(LocalDensity.current) { MaterialTheme.typography.titleMedium.fontSize.toDp() * 1.0f }
+                                with(density) { MaterialTheme.typography.titleMedium.fontSize.toDp() * 1.0f }
 
                             Icon(
                                 modifier = Modifier.size(iconSize),
@@ -321,22 +324,34 @@ fun NewViewScreen(
                     }
 
                     OutlinedButton(
-                        enabled = viewModel.isProviderAlive,
+                        enabled = viewModel.isProviderAlive && !ops.isOpsRunning,
                         modifier = Modifier
                             .fillMaxWidth()
                             .weight(1f),
-                        onClick = ops.change
+                        onClick = { if (!ops.isOpsRunning) ops.change() }
                     ) {
-                        Text(
-                            text = stringResource(
-                                id = if (it.state == State.REMOVE) {
-                                    R.string.module_restore
-                                } else {
-                                    R.string.module_remove
-                                }
-                            ),
-                            maxLines = 1
-                        )
+                        val style = LocalTextStyle.current
+                        val progressSize =
+                            with(density) { style.fontSize.toDp() * 1.0f }
+
+                        if (ops.isOpsRunning) {
+                            CircularProgressIndicator(
+                                modifier = Modifier.size(progressSize),
+                                color = MaterialTheme.colorScheme.onPrimary,
+                                strokeWidth = 2.dp
+                            )
+                        } else {
+                            Text(
+                                text = stringResource(
+                                    id = if (it.state == State.REMOVE) {
+                                        R.string.module_restore
+                                    } else {
+                                        R.string.module_remove
+                                    }
+                                ),
+                                maxLines = 1
+                            )
+                        }
                     }
                 }
 
