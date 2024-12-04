@@ -14,7 +14,11 @@ import java.io.IOException
 import java.io.InputStream
 import java.util.zip.GZIPInputStream
 
-class SuFilePathHandler(context: Context, directory: File, rootShell: Shell?) :
+class SuFilePathHandler(
+    context: Context,
+    directory: File,
+    rootShell: Shell?,
+) :
     PathHandler {
     private var mDirectory: File
 
@@ -51,7 +55,9 @@ class SuFilePathHandler(context: Context, directory: File, rootShell: Shell?) :
     }
 
     @WorkerThread
-    override fun handle(path: String): WebResourceResponse {
+    override fun handle(path: String): WebResourceResponse? {
+        if (path.startsWith("mmrl/")) return null
+
         try {
             val file = getCanonicalFileIfChild(mDirectory, path)
             if (file != null) {

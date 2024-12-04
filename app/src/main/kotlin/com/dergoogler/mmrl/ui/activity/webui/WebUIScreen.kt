@@ -5,12 +5,18 @@ import android.view.ViewGroup
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
-import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.statusBarsPadding
+import android.webkit.WebViewClient
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.webkit.WebViewAssetLoader
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
@@ -26,6 +32,8 @@ fun WebUIScreen(
 ) {
     val context = LocalContext.current
     val userPrefs = LocalUserPreferences.current
+    val density = LocalDensity.current
+    val colorScheme = MaterialTheme.colorScheme
 
     val rootShell = viewModel.createRootShell(
         globalMnt = true,
@@ -34,6 +42,9 @@ fun WebUIScreen(
 
     val moduleDir = "/data/adb/modules/$modId"
     val webRoot = File("$moduleDir/webroot")
+
+    var topInset by remember { mutableIntStateOf(0) }
+    var bottomInset by remember { mutableIntStateOf(0) }
 
     val webViewAssetLoader = WebViewAssetLoader.Builder()
         .setDomain("mui.kernelsu.org")
@@ -45,24 +56,38 @@ fun WebUIScreen(
                 rootShell
             )
         )
-        .build()
 
     AndroidView(
-        modifier = Modifier
-            .statusBarsPadding()
-            .navigationBarsPadding(),
         factory = {
             WebView(context).apply {
                 layoutParams = ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT
                 )
-                webViewClient = object : android.webkit.WebViewClient() {
+
+                ViewCompat.setOnApplyWindowInsetsListener(this) { _, insets ->
+                    val inset = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+                    topInset = (inset.top / density.density).toInt()
+                    bottomInset = (inset.bottom / density.density).toInt()
+
+                    webViewAssetLoader.addPathHandler(
+                        "/mmrl/",
+                        MMRLWebUIHandler(
+                            topInset = topInset,
+                            bottomInset = bottomInset,
+                            colorScheme = colorScheme
+                        )
+                    )
+
+                    WindowInsetsCompat.CONSUMED;
+                }
+
+                webViewClient = object : WebViewClient() {
                     override fun shouldInterceptRequest(
                         view: WebView,
                         request: WebResourceRequest,
                     ): WebResourceResponse? {
-                        return webViewAssetLoader.shouldInterceptRequest(request.url)
+                        return webViewAssetLoader.build().shouldInterceptRequest(request.url)
                     }
                 }
 
@@ -74,8 +99,17 @@ fun WebUIScreen(
                 allowFileAccess = false
             }
             webview.apply {
+                addJavascriptInterface(
+                    WebViewInterface(
+                        context,
+                        this,
+                        moduleDir,
+                        viewModel,
+                        userPrefs
+                    ), "ksu"
+                )
                 loadUrl("https://mui.kernelsu.org/index.html")
-                addJavascriptInterface(WebViewInterface(context, this, moduleDir, viewModel, userPrefs), "ksu")
             }
-        })
+        }
+    )
 }
