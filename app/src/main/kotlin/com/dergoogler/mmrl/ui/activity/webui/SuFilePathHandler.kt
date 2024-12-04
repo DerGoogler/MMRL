@@ -56,7 +56,7 @@ class SuFilePathHandler(
 
     @WorkerThread
     override fun handle(path: String): WebResourceResponse? {
-        if (path.startsWith("mmrl/")) return null
+        if (path.startsWith("mmrl/") || path.startsWith("favicon.ico")) return null
 
         try {
             val file = getCanonicalFileIfChild(mDirectory, path)

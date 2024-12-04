@@ -2,7 +2,10 @@ package com.dergoogler.mmrl.ui.activity.webui
 
 import android.webkit.WebResourceResponse
 import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.Typography
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.TextUnit
 import androidx.webkit.WebViewAssetLoader.PathHandler
 import timber.log.Timber
 import java.io.ByteArrayInputStream
@@ -15,6 +18,7 @@ class MMRLWebUIHandler(
     private val topInset: Int,
     private val bottomInset: Int,
     private val colorScheme: ColorScheme,
+    private val typography: Typography,
 ) : PathHandler {
     override fun handle(path: String): WebResourceResponse? {
         Timber.d("Handling path: $path")
@@ -22,6 +26,7 @@ class MMRLWebUIHandler(
         return when (path) {
             "insets.css" -> windowInsetsStyle()
             "colors.css" -> appColors()
+            "typography.css" -> appTypography()
             else -> null
         }
     }
@@ -38,19 +43,40 @@ class MMRLWebUIHandler(
     }
 
     private fun appColors(): WebResourceResponse {
-        val cssContent = StringBuilder(":root {\n")
+        val cssContent = buildString {
+            append(":root {\n")
 
-        ColorScheme::class.memberProperties.forEach { property ->
-            val colorValue = property.get(colorScheme)
-            colorValue?.let {
-                if (colorValue is Color) {
-                    cssContent.append("    --${property.name}: ${colorValue.toCssValue()};\n")
+            ColorScheme::class.memberProperties.forEach { property ->
+                val colorValue = property.get(colorScheme)
+                colorValue?.let {
+                    if (colorValue is Color) {
+                        append("    --${property.name}: ${colorValue.toCssValue()};\n")
+                    }
                 }
             }
+
+            append("}")
         }
 
-        cssContent.append("}")
-        return style(cssContent.toString())
+        return style(cssContent)
+    }
+
+    private fun appTypography(): WebResourceResponse {
+        val cssContent = buildString {
+            append(":root {\n")
+
+            Typography::class.memberProperties.forEach { property ->
+                val textStyle = property.get(typography)
+                if (textStyle != null && textStyle is TextStyle) {
+                    append("    /* ${property.name} */\n")
+                    append("    --${property.name}-color: ${textStyle.color.toCssValue()};\n")
+                    append("    --${property.name}-font-size: ${textStyle.fontSize.toCssValue()};\n")
+                }
+            }
+            append("}")
+        }
+
+        return style(cssContent)
     }
 
     private fun style(content: String): WebResourceResponse {
@@ -70,5 +96,9 @@ class MMRLWebUIHandler(
 
     private fun Float.toHex(): String {
         return (this * 255).toInt().coerceIn(0, 255).toString(16).padStart(2, '0')
+    }
+
+    private fun TextUnit.toCssValue(): String {
+        return "${this.value}px"
     }
 }

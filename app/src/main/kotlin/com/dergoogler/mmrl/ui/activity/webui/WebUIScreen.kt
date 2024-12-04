@@ -34,11 +34,14 @@ fun WebUIScreen(
     val userPrefs = LocalUserPreferences.current
     val density = LocalDensity.current
     val colorScheme = MaterialTheme.colorScheme
+    val typography = MaterialTheme.typography
 
     val rootShell = viewModel.createRootShell(
         globalMnt = true,
         devMode = userPrefs.developerMode
     )
+
+    WebView.setWebContentsDebuggingEnabled(userPrefs.developerMode)
 
     val moduleDir = "/data/adb/modules/$modId"
     val webRoot = File("$moduleDir/webroot")
@@ -75,7 +78,8 @@ fun WebUIScreen(
                         MMRLWebUIHandler(
                             topInset = topInset,
                             bottomInset = bottomInset,
-                            colorScheme = colorScheme
+                            colorScheme = colorScheme,
+                            typography = typography
                         )
                     )
 
