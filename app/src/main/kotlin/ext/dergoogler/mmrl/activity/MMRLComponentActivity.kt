@@ -140,13 +140,17 @@ open class MMRLComponentActivity : ComponentActivity() {
             context.startActivity(intent)
         }
 
-        fun startInstallActivity(context: Context, uri: Uri) {
+        fun startInstallActivity(context: Context, uri: List<Uri>) {
             val intent = Intent(context, InstallActivity::class.java)
                 .apply {
-                    data = uri
+                    putParcelableArrayListExtra("uris", ArrayList(uri))
                 }
 
             context.startActivity(intent)
+        }
+
+        fun startInstallActivity(context: Context, uri: Uri) {
+            startInstallActivity(context, listOf(uri))
         }
     }
 }

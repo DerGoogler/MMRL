@@ -195,8 +195,8 @@ private fun TopBar(
 private fun FloatingButton() {
     val context = LocalContext.current
     val interactionSource = remember { MutableInteractionSource() }
-    val launcher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-        if (uri == null) return@rememberLauncherForActivityResult
+    val launcher = rememberLauncherForActivityResult(ActivityResultContracts.GetMultipleContents()) { uri ->
+        if (uri.isEmpty()) return@rememberLauncherForActivityResult
 
         MMRLComponentActivity.startInstallActivity(
             context = context,

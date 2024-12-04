@@ -1,14 +1,15 @@
 package com.dergoogler.mmrl.ui.activity
 
-import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
-import ext.dergoogler.mmrl.ext.tmpDir
 import com.dergoogler.mmrl.viewmodel.InstallViewModel
+import dev.dergoogler.mmrl.compat.BuildCompat
 import ext.dergoogler.mmrl.activity.MMRLComponentActivity
 import ext.dergoogler.mmrl.activity.setBaseContent
+import ext.dergoogler.mmrl.ext.tmpDir
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -21,10 +22,20 @@ class InstallActivity : MMRLComponentActivity() {
         Timber.d("InstallActivity onCreate")
         super.onCreate(savedInstanceState)
 
-        if (intent.data == null) {
+
+        val uris: ArrayList<Uri>? = if (BuildCompat.atLeastT) {
+            intent.getParcelableArrayListExtra("uris", Uri::class.java)
+        } else {
+            @Suppress("DEPRECATION")
+            intent.getParcelableArrayListExtra("uris")
+        }
+
+
+        if (uris.isNullOrEmpty()) {
             finish()
         } else {
-            initModule(intent)
+            Timber.d("InstallActivity onCreate: ${uris}")
+            initModule(uris.toList())
         }
 
         setBaseContent {
@@ -38,11 +49,11 @@ class InstallActivity : MMRLComponentActivity() {
         super.onDestroy()
     }
 
-    private fun initModule(intent: Intent) {
+    private fun initModule(uris: List<Uri>) {
         lifecycleScope.launch {
-            viewModel.loadModule(
+            viewModel.installModules(
                 context = applicationContext,
-                uri = checkNotNull(intent.data)
+                uris = uris
             )
         }
     }
