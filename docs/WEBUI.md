@@ -4,6 +4,10 @@ MMRL supports WebUI from KernelSU but it come with some additions for you all!
 
 You can use the app theme with automatic dark mode support. Also it supports window safe insets which you'll have to set youself.
 
+| Dark                                                  | Light                                                  |
+| ----------------------------------------------------- | ------------------------------------------------------ |
+| <img src="assets/webui/webui-dark.png" width="32%" /> | <img src="assets/webui/webui-light.png" width="32%" /> |
+
 ## Setup
 
 To use window safe area insets which you basiclly need here, otherwise your config will move below the status bar
