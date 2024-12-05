@@ -179,7 +179,7 @@
     <string name="settings_developer_mode_desc">モジュール ID などを表示します。</string>
     <string name="settings_privacy_policy">プライバシーポリシー</string>
     <string name="settings_clear_install_terminal">インストールターミナルを消去</string>
-    <string name="settings_clear_install_terminal_desc">複数のモジュールをインストール時にインストールターミナルを消去します。</string>
+    <string name="settings_clear_install_terminal_desc">複数のモジュールをインストール時にインストールターミナルのログを消去します。</string>
     <!-- App Theme -->
     <string name="app_theme_palette">テーマパレット</string>
     <string name="app_theme_dark_theme">ダークテーマ</string>
