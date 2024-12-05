@@ -1,5 +1,8 @@
 -verbose
 -optimizationpasses 5
+-dontpreverify
+-dontskipnonpubliclibraryclasses
+-dontobfuscate
 
 -dontwarn org.conscrypt.**
 -dontwarn kotlinx.serialization.**
