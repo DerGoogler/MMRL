@@ -26,12 +26,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.datastore.repository.RepositoryMenuCompat
+import com.dergoogler.mmrl.model.local.BulkModule
 import com.dergoogler.mmrl.ui.component.Loading
 import com.dergoogler.mmrl.ui.component.PageIndicator
 import com.dergoogler.mmrl.ui.component.SearchTopBar
@@ -41,6 +43,7 @@ import com.dergoogler.mmrl.ui.utils.isScrollingUp
 import com.dergoogler.mmrl.ui.utils.none
 import com.dergoogler.mmrl.viewmodel.BulkInstallViewModel
 import com.dergoogler.mmrl.viewmodel.RepositoryViewModel
+import ext.dergoogler.mmrl.activity.MMRLComponentActivity
 
 @Composable
 fun RepositoryScreen(
@@ -62,12 +65,33 @@ fun RepositoryScreen(
         }
     }
 
+    val context = LocalContext.current
+
+    val bulkDownload: (List<BulkModule>, Boolean) -> Unit = { item, install ->
+        bulkInstallViewModel.downloadMultiple(
+            items = item,
+            onAllSuccess = {
+                bulkInstallViewModel.clearBulkModules()
+                if (install) {
+                    MMRLComponentActivity.startInstallActivity(
+                        context = context,
+                        uri = it
+                    )
+                }
+            },
+            onFailure = {
+
+            }
+        )
+    }
+
     var bulkInstallBottomSheet by remember { mutableStateOf(false) }
     if (bulkInstallBottomSheet) BulkBottomSheet(
         onClose = {
             bulkInstallBottomSheet = false
         },
         modules = bulkModules,
+        onDownload = bulkDownload,
         removeBulkModule = bulkInstallViewModel::removeBulkModule
     )
 

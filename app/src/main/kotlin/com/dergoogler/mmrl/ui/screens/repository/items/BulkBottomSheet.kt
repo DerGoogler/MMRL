@@ -40,6 +40,7 @@ fun BulkBottomSheet(
     onClose: () -> Unit,
     modules: List<BulkModule>,
     removeBulkModule: (BulkModule) -> Unit,
+    onDownload: (List<BulkModule>, Boolean) -> Unit,
 ) = BottomSheet(onDismissRequest = onClose) {
     val scope = rememberCoroutineScope()
 
@@ -137,7 +138,8 @@ fun BulkBottomSheet(
             .padding(16.dp)
             .fillMaxWidth(),
         onClick = {
-
+            onDownload(modules, true)
+            onClose()
         }
     ) {
         Text(stringResource(id = R.string.module_install))

@@ -1,15 +1,28 @@
 package com.dergoogler.mmrl.viewmodel
 
 import android.app.Application
+import android.net.Uri
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.core.net.toUri
+import androidx.lifecycle.viewModelScope
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.model.local.BulkModule
+import com.dergoogler.mmrl.model.online.OnlineModule
 import com.dergoogler.mmrl.repository.LocalRepository
 import com.dergoogler.mmrl.repository.ModulesRepository
 import com.dergoogler.mmrl.repository.UserPreferencesRepository
+import com.dergoogler.mmrl.service.DownloadService
+import com.dergoogler.mmrl.utils.Utils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ext.dergoogler.mmrl.viewmodel.MMRLViewModel
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,6 +34,9 @@ class BulkInstallViewModel @Inject constructor(
 ) : MMRLViewModel(application, localRepository, modulesRepository, userPreferencesRepository) {
     private val bulkModulesFlow = MutableStateFlow(listOf<BulkModule>())
     val bulkModules get() = bulkModulesFlow.asStateFlow()
+
+    var online: OnlineModule by mutableStateOf(OnlineModule.example())
+        private set
 
     fun addBulkModule(
         module: BulkModule,
@@ -38,5 +54,74 @@ class BulkInstallViewModel @Inject constructor(
 
     fun removeBulkModule(module: BulkModule) {
         bulkModulesFlow.value -= module
+    }
+
+    fun clearBulkModules() {
+        bulkModulesFlow.value = listOf()
+    }
+
+    fun downloadMultiple(
+        items: List<BulkModule>,
+        onAllSuccess: (List<Uri>) -> Unit,
+        onFailure: (Throwable) -> Unit,
+    ) {
+        viewModelScope.launch {
+            val downloadPath = userPreferencesRepository.data.first().downloadPath
+
+            val downloadedFiles = mutableListOf<Uri>()
+            val exceptions = mutableListOf<Throwable>()
+
+            items.forEach {
+                val item = it.versionItem
+
+                val filename = Utils.getFilename(
+                    name = it.name,
+                    version = item.version,
+                    versionCode = item.versionCode,
+                    extension = "zip"
+                )
+
+                val task = DownloadService.TaskItem(
+                    key = item.hashCode(),
+                    url = item.zipUrl,
+                    filename = filename,
+                    title = it.name,
+                    desc = item.versionDisplay
+                )
+
+                val downloadDeferred = CompletableDeferred<Uri>()
+                val listener = object : DownloadService.IDownloadListener {
+                    override fun getProgress(value: Float) {}
+
+                    override fun onSuccess() {
+                        val file = downloadPath.resolve(filename)
+                        downloadDeferred.complete(file.toUri())
+                    }
+
+                    override fun onFailure(e: Throwable) {
+                        downloadDeferred.completeExceptionally(e)
+                    }
+                }
+
+                try {
+                    DownloadService.start(
+                        context = context,
+                        task = task,
+                        listener = listener
+                    )
+                    val file = downloadDeferred.await()
+                    downloadedFiles.add(file)
+                } catch (e: Throwable) {
+                    exceptions.add(e)
+                    Timber.d(e)
+                }
+            }
+
+            if (exceptions.isEmpty()) {
+                onAllSuccess(downloadedFiles)
+            } else {
+                onFailure(exceptions.first())
+            }
+        }
     }
 }
