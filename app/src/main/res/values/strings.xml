@@ -291,6 +291,10 @@
     <string name="home_disabled_modules">Disabled Modules</string>
     <string name="home_updated_modules">Updated Modules</string>
 
+    <string name="bulk_install_module_already_added">Module already added</string>
+    <string name="bulk_install_module_added">Module added</string>
+    <string name="bulk_module_install">Bulk Module Install</string>
+
     <string name="has_a_new_update">%1$s has a new update!</string>
     <string name="update_available_from_to">Update available from %s (%d) to %s (%d).</string>
     <string name="events_birthday">%1$s years MMRL!</string>

@@ -1,17 +1,25 @@
 package com.dergoogler.mmrl.ui.screens.repository
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -28,19 +36,40 @@ import com.dergoogler.mmrl.ui.component.Loading
 import com.dergoogler.mmrl.ui.component.PageIndicator
 import com.dergoogler.mmrl.ui.component.SearchTopBar
 import com.dergoogler.mmrl.ui.component.TopAppBarIcon
+import com.dergoogler.mmrl.ui.screens.repository.items.BulkBottomSheet
+import com.dergoogler.mmrl.ui.utils.isScrollingUp
 import com.dergoogler.mmrl.ui.utils.none
+import com.dergoogler.mmrl.viewmodel.BulkInstallViewModel
 import com.dergoogler.mmrl.viewmodel.RepositoryViewModel
 
 @Composable
 fun RepositoryScreen(
     navController: NavController,
     viewModel: RepositoryViewModel = hiltViewModel(),
+    bulkInstallViewModel: BulkInstallViewModel,
 ) {
     val list by viewModel.online.collectAsStateWithLifecycle()
     val query by viewModel.query.collectAsStateWithLifecycle()
+    val bulkModules by bulkInstallViewModel.bulkModules.collectAsStateWithLifecycle()
 
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val listState = rememberLazyListState()
+
+    val isScrollingUp by listState.isScrollingUp()
+    val showFab by remember {
+        derivedStateOf {
+            isScrollingUp && !viewModel.isSearch && viewModel.isProviderAlive
+        }
+    }
+
+    var bulkInstallBottomSheet by remember { mutableStateOf(false) }
+    if (bulkInstallBottomSheet) BulkBottomSheet(
+        onClose = {
+            bulkInstallBottomSheet = false
+        },
+        modules = bulkModules,
+        removeBulkModule = bulkInstallViewModel::removeBulkModule
+    )
 
     BackHandler(
         enabled = viewModel.isSearch,
@@ -59,6 +88,25 @@ fun RepositoryScreen(
                 setMenu = viewModel::setRepositoryMenu,
                 scrollBehavior = scrollBehavior
             )
+        },
+        floatingActionButton = {
+            AnimatedVisibility(
+                visible = showFab,
+                enter = scaleIn(
+                    animationSpec = tween(100),
+                    initialScale = 0.8f
+                ),
+                exit = scaleOut(
+                    animationSpec = tween(100),
+                    targetScale = 0.8f
+                )
+            ) {
+                FloatingButton(
+                    onClick = {
+                        bulkInstallBottomSheet = true
+                    }
+                )
+            }
         },
         contentWindowInsets = WindowInsets.none
     ) { innerPadding ->
@@ -129,4 +177,23 @@ private fun TopBar(
             )
         }
     )
+}
+
+@Composable
+private fun FloatingButton(
+    onClick: () -> Unit,
+) {
+    val interactionSource = remember { MutableInteractionSource() }
+
+    FloatingActionButton(
+        interactionSource = interactionSource,
+        onClick = onClick,
+        contentColor = MaterialTheme.colorScheme.onPrimary,
+        containerColor = MaterialTheme.colorScheme.primary
+    ) {
+        Icon(
+            painter = painterResource(id = R.drawable.package_import),
+            contentDescription = null
+        )
+    }
 }

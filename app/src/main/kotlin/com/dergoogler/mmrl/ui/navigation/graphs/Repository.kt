@@ -15,6 +15,7 @@ import com.dergoogler.mmrl.ui.screens.repository.RepositoryScreen
 import com.dergoogler.mmrl.ui.screens.repository.view.FilteredSearchScreen
 import com.dergoogler.mmrl.ui.screens.repository.view.NewViewScreen
 import com.dergoogler.mmrl.ui.screens.repository.view.ViewDescriptionScreen
+import com.dergoogler.mmrl.viewmodel.BulkInstallViewModel
 
 enum class RepositoryScreen(val route: String) {
     Home("Repository"),
@@ -25,6 +26,7 @@ enum class RepositoryScreen(val route: String) {
 
 fun NavGraphBuilder.repositoryScreen(
     navController: NavController,
+    bulkInstallViewModel: BulkInstallViewModel
 ) = navigation(
     startDestination = RepositoryScreen.Home.route,
     route = MainScreen.Repository.route
@@ -35,7 +37,8 @@ fun NavGraphBuilder.repositoryScreen(
         exitTransition = { fadeOut() }
     ) {
         RepositoryScreen(
-            navController = navController
+            navController = navController,
+            bulkInstallViewModel = bulkInstallViewModel
         )
     }
 
@@ -49,7 +52,8 @@ fun NavGraphBuilder.repositoryScreen(
         exitTransition = { fadeOut() }
     ) {
         NewViewScreen(
-            navController = navController
+            navController = navController,
+            bulkInstallViewModel = bulkInstallViewModel
         )
     }
 

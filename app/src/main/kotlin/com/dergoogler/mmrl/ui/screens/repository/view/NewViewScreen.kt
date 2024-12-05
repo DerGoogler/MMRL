@@ -36,6 +36,9 @@ import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -45,6 +48,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -70,6 +74,7 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.CachePolicy
 import coil.request.ImageRequest
 import com.dergoogler.mmrl.R
+import com.dergoogler.mmrl.model.local.BulkModule
 import com.dergoogler.mmrl.model.local.State
 import com.dergoogler.mmrl.model.online.VersionItem
 import com.dergoogler.mmrl.ui.component.Alert
@@ -87,6 +92,7 @@ import com.dergoogler.mmrl.ui.screens.repository.view.items.LicenseItem
 import com.dergoogler.mmrl.ui.screens.repository.view.items.TrackItem
 import com.dergoogler.mmrl.ui.utils.navigateSingleTopTo
 import com.dergoogler.mmrl.ui.utils.none
+import com.dergoogler.mmrl.viewmodel.BulkInstallViewModel
 import com.dergoogler.mmrl.viewmodel.ModuleViewModel
 import com.dergoogler.mmrl.viewmodel.ModulesViewModel
 import com.dergoogler.mmrl.viewmodel.RepositoryViewModel
@@ -100,6 +106,7 @@ import ext.dergoogler.mmrl.ext.shareText
 import ext.dergoogler.mmrl.ext.takeTrue
 import ext.dergoogler.mmrl.ext.toFormatedFileSize
 import ext.dergoogler.mmrl.ext.toFormattedDateSafely
+import kotlinx.coroutines.launch
 
 
 @Composable
@@ -108,6 +115,7 @@ fun NewViewScreen(
     viewModel: ModuleViewModel = hiltViewModel(),
     repositoryViewModel: RepositoryViewModel = hiltViewModel(),
     modulesViewModel: ModulesViewModel = hiltViewModel(),
+    bulkInstallViewModel: BulkInstallViewModel,
 ) {
     val userPreferences = LocalUserPreferences.current
     val repositoryMenu = userPreferences.repositoryMenu
@@ -124,6 +132,8 @@ fun NewViewScreen(
     val screenshotsLazyListState = rememberLazyListState()
     val categoriesLazyListState = rememberLazyListState()
 
+    val scope = rememberCoroutineScope()
+    val snackbarHostState = remember { SnackbarHostState() }
 
     val download: (VersionItem, Boolean) -> Unit = { item, install ->
         viewModel.downloader(context, item) {
@@ -189,6 +199,48 @@ fun NewViewScreen(
                             }
                         )
 
+                        lastVersionItem?.let {
+                            DropdownMenuItem(
+                                leadingIcon = {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.package_import),
+                                        contentDescription = null,
+                                    )
+                                },
+                                text = {
+                                    Text(
+                                        text = "Add as Bulk"
+                                    )
+                                },
+                                onClick = {
+                                    menuExpanded = false
+                                    bulkInstallViewModel.addBulkModule(
+                                        module = BulkModule(
+                                            id = module.id,
+                                            name = module.name,
+                                            versionItem = it
+                                        ),
+                                        onSuccess = {
+                                            scope.launch {
+                                                snackbarHostState.showSnackbar(
+                                                    message = context.getString(R.string.repo_added),
+                                                    duration = SnackbarDuration.Short
+                                                )
+                                            }
+                                        },
+                                        onFailure = { error ->
+                                            scope.launch {
+                                                snackbarHostState.showSnackbar(
+                                                    message = error,
+                                                    duration = SnackbarDuration.Short
+                                                )
+                                            }
+                                        }
+                                    )
+                                }
+                            )
+                        }
+
                         local?.let {
                             DropdownMenuItem(
                                 leadingIcon = {
@@ -226,6 +278,7 @@ fun NewViewScreen(
                 scrollBehavior = scrollBehavior
             )
         },
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         contentWindowInsets = WindowInsets.none
     ) { innerPadding ->
         Column(

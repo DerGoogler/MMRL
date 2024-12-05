@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.dergoogler.mmrl.Compat
 import com.dergoogler.mmrl.datastore.repository.Option
 import com.dergoogler.mmrl.datastore.repository.RepositoryMenuCompat
 import com.dergoogler.mmrl.model.online.OnlineModule
@@ -34,6 +35,8 @@ class RepositoryViewModel @Inject constructor(
     userPreferencesRepository: UserPreferencesRepository,
     savedStateHandle: SavedStateHandle,
 ) : MMRLViewModel(application, localRepository, modulesRepository, userPreferencesRepository) {
+    val isProviderAlive get() = Compat.isAlive
+
     private val repositoryMenu
         get() = userPreferencesRepository.data
             .map { it.repositoryMenu }
