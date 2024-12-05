@@ -2,14 +2,10 @@ package com.dergoogler.mmrl.viewmodel
 
 import android.app.Application
 import android.net.Uri
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.core.net.toUri
 import androidx.lifecycle.viewModelScope
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.model.local.BulkModule
-import com.dergoogler.mmrl.model.online.OnlineModule
 import com.dergoogler.mmrl.repository.LocalRepository
 import com.dergoogler.mmrl.repository.ModulesRepository
 import com.dergoogler.mmrl.repository.UserPreferencesRepository
@@ -34,9 +30,6 @@ class BulkInstallViewModel @Inject constructor(
 ) : MMRLViewModel(application, localRepository, modulesRepository, userPreferencesRepository) {
     private val bulkModulesFlow = MutableStateFlow(listOf<BulkModule>())
     val bulkModules get() = bulkModulesFlow.asStateFlow()
-
-    var online: OnlineModule by mutableStateOf(OnlineModule.example())
-        private set
 
     fun addBulkModule(
         module: BulkModule,

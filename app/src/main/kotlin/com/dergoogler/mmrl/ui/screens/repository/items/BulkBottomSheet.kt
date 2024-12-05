@@ -25,6 +25,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -32,6 +34,8 @@ import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.model.local.BulkModule
 import com.dergoogler.mmrl.ui.component.BottomSheet
 import com.dergoogler.mmrl.ui.component.LabelItem
+import com.dergoogler.mmrl.ui.component.PageIndicator
+import ext.dergoogler.mmrl.ext.fadingEdge
 import ext.dergoogler.mmrl.ext.toFormatedFileSize
 import kotlinx.coroutines.launch
 
@@ -44,20 +48,34 @@ fun BulkBottomSheet(
 ) = BottomSheet(onDismissRequest = onClose) {
     val scope = rememberCoroutineScope()
 
+    Text(
+        modifier = Modifier.padding(16.dp),
+        style = MaterialTheme.typography.titleLarge,
+        text = stringResource(R.string.bulk_module_install)
+    )
+
+    val topBottomFade = Brush.verticalGradient(
+        0f to Color.Transparent,
+        0.03f to Color.Red,
+        0.97f to Color.Red,
+        1f to Color.Transparent
+    )
+
+    if (modules.isEmpty()) {
+        PageIndicator(
+            icon = R.drawable.cloud,
+            text = R.string.search_empty,
+        )
+    }
+
     LazyColumn(
         modifier = Modifier
-            .animateContentSize(),
+            .weight(1f)
+            .animateContentSize()
+            .fadingEdge(topBottomFade),
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-
-        item {
-            Text(
-                style = MaterialTheme.typography.titleLarge,
-                text = stringResource(R.string.bulk_module_install)
-            )
-        }
-
         items(
             items = modules,
             key = { it.id }
