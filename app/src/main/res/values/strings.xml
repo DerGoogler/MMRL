@@ -108,6 +108,11 @@
     <string name="view_module_dependencies_not_found">Required Dependencies Not Found</string>
     <string name="view_module_share">Share</string>
     <string name="view_module_not_found">Module Not Found</string>
+    <string name="view_module_install_confirm_title">Install this Module?</string>
+    <string name="view_module_install_confirm_confirm_deps">Install (deps)</string>
+    <string name="view_module_install_confirm_confirm">Install</string>
+    <string name="view_module_install_confirm_desc"><![CDATA[Are you sure that you want to install <font color=\"%1$s\">%2$s</font>?]]></string>
+    <string name="view_module_install_confirm_desc_deps"><![CDATA[Are you sure that you want to install <font color=\"%1$s\">%2$s</font>? This module requires also:]]></string>
 
 
     <!-- Modules -->
@@ -309,9 +314,4 @@
     <string name="new_version_available">New version %s is available, click to upgrade.</string>
     <string name="hidden">Hidden</string>
     <string name="pre_release">Pre-release</string>
-    <string name="view_module_install_confirm_title">Install this Module?</string>
-    <string name="view_module_install_confirm_confirm_deps">Install (deps)</string>
-    <string name="view_module_install_confirm_confirm">Install</string>
-    <string name="view_module_install_confirm_desc"><![CDATA[Are you sure that you want to install <font color=\"%1$s\">%2$s</font>?]]></string>
-    <string name="view_module_install_confirm_desc_deps"><![CDATA[Are you sure that you want to install <font color=\"%1$s\">%2$s</font>? This module requires also:]]></string>
 </resources>
