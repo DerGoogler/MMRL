@@ -29,6 +29,7 @@ internal fun NonRootItem(modifier: Modifier = Modifier) = Surface(
 ) {
     Row(
         modifier = Modifier
+            .padding(all = 20.dp)
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
