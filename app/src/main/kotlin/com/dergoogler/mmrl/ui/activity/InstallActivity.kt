@@ -50,7 +50,6 @@ class InstallActivity : MMRLComponentActivity() {
     private fun initModule(uris: List<Uri>) {
         lifecycleScope.launch {
             viewModel.installModules(
-                context = applicationContext,
                 uris = uris
             )
         }

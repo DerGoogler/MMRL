@@ -2,6 +2,7 @@ package com.dergoogler.mmrl.ui.component
 
 import android.text.SpannableStringBuilder
 import android.text.util.Linkify
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -46,12 +47,16 @@ fun HtmlText(
     modifier: Modifier = Modifier,
     style: TextStyle = LocalTextStyle.current,
     color: Color = LocalContentColor.current,
+    onClick: () -> Unit = {},
 ) {
     val spannableString = SpannableStringBuilder(text).toString()
     val spanned = HtmlCompat.fromHtml(spannableString, HtmlCompat.FROM_HTML_MODE_COMPACT)
 
     Text(
-        modifier = modifier,
+        modifier = modifier
+            .clickable(
+                onClick = onClick
+            ),
         style = style,
         color = color,
         text = spanned.toAnnotatedString()
@@ -83,10 +88,11 @@ fun MarkdownText(
 @Composable
 fun BulletList(
     modifier: Modifier = Modifier,
-    style: TextStyle,
+    style: TextStyle = LocalTextStyle.current,
     indent: Dp = 20.dp,
     lineSpacing: Dp = 0.dp,
     items: List<String>,
+    onItemClick: () -> Unit = {},
 ) {
     Column(modifier = modifier) {
         items.forEach {
@@ -100,6 +106,7 @@ fun BulletList(
                     text = it,
                     style = style,
                     modifier = Modifier.weight(1f, fill = true),
+                    onClick = onItemClick
                 )
             }
             if (lineSpacing > 0.dp && it != items.last()) {

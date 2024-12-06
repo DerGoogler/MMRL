@@ -88,6 +88,7 @@ import com.dergoogler.mmrl.ui.component.ListItemTextStyle
 import com.dergoogler.mmrl.ui.component.Logo
 import com.dergoogler.mmrl.ui.navigation.graphs.RepositoryScreen
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
+import com.dergoogler.mmrl.ui.screens.repository.view.items.InstallConfirmDialog
 import com.dergoogler.mmrl.ui.screens.repository.view.items.LicenseItem
 import com.dergoogler.mmrl.ui.screens.repository.view.items.TrackItem
 import com.dergoogler.mmrl.ui.screens.repository.view.items.VersionsItem
@@ -108,6 +109,7 @@ import ext.dergoogler.mmrl.ext.takeTrue
 import ext.dergoogler.mmrl.ext.toFormatedFileSize
 import ext.dergoogler.mmrl.ext.toFormattedDateSafely
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 
 @Composable
@@ -124,6 +126,8 @@ fun NewViewScreen(
     val module = viewModel.online
     val local = viewModel.local
 
+    val repositoryList by repositoryViewModel.online.collectAsStateWithLifecycle()
+
     val lastVersionItem = viewModel.lastVersionItem
     val context = LocalContext.current
     val density = LocalDensity.current
@@ -136,9 +140,12 @@ fun NewViewScreen(
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
 
+    var installConfirm by remember { mutableStateOf(false) }
+
     val download: (VersionItem, Boolean) -> Unit = { item, install ->
         viewModel.downloader(context, item) {
             if (install) {
+                installConfirm = false
                 MMRLComponentActivity.startInstallActivity(
                     context = context,
                     uri = it.toUri()
@@ -156,6 +163,59 @@ fun NewViewScreen(
     )
 
     var menuExpanded by remember { mutableStateOf(false) }
+
+    val requires = module.require?.let {
+        repositoryList.filter { onlineModules ->
+            onlineModules.second.id in it
+        }.map { it.second }
+    } ?: emptyList()
+
+    if (installConfirm) InstallConfirmDialog(
+        name = module.name,
+        requires = requires,
+        onClose = {
+            installConfirm = false
+        },
+        onConfirm = {
+            lastVersionItem?.let { download(it, true) }
+        },
+        onConfirmDeps = {
+            lastVersionItem?.let { item ->
+                val bulkModules = mutableListOf<BulkModule>()
+                bulkModules.add(
+                    BulkModule(
+                        id = module.id,
+                        name = module.name,
+                        versionItem = item
+                    )
+                )
+                bulkModules.addAll(requires.map { r ->
+                    BulkModule(
+                        id = r.id,
+                        name = r.name,
+                        versionItem = r.versions.first()
+                    )
+                })
+
+                bulkModules.ifNotEmpty {
+                    bulkInstallViewModel.downloadMultiple(
+                        items = bulkModules,
+                        onAllSuccess = { uris ->
+                            installConfirm = false
+                            MMRLComponentActivity.startInstallActivity(
+                                context = context,
+                                uri = uris
+                            )
+                        },
+                        onFailure = { err ->
+                            installConfirm = false
+                            Timber.e(err)
+                        }
+                    )
+                }
+            }
+        }
+    )
 
     var versionSelectBottomSheet by remember { mutableStateOf(false) }
     if (versionSelectBottomSheet) VersionSelectBottomSheet(
@@ -426,7 +486,7 @@ fun NewViewScreen(
                         .fillMaxWidth()
                         .weight(1f),
                     onClick = {
-                        lastVersionItem?.let { download(it, true) }
+                        installConfirm = true
                     },
                 ) {
                     Text(
@@ -765,13 +825,7 @@ fun NewViewScreen(
                 }
             }
 
-            module.require?.ifNotEmpty { requiredIds ->
-                val repositoryList by repositoryViewModel.online.collectAsStateWithLifecycle()
-
-                val foundRequires = repositoryList.filter { onlineModules ->
-                    onlineModules.second.id in requiredIds
-                }
-
+            requires.ifNotEmpty { requiredIds ->
                 ListCollapseItem(
                     contentPaddingValues = listItemContentPaddingValues,
                     iconToRight = true,
@@ -783,45 +837,27 @@ fun NewViewScreen(
                         )
                     )
                 ) {
-                    requiredIds.forEach { requiredId ->
+                    requiredIds.forEach { onlineModule ->
                         // val parts = requiredId.split("@")
 
                         // val id = parts[0]
                         // val version = (parts.getOrElse(1) { "-1" }).toInt()
 
-                        val onlineModule =
-                            foundRequires.find { online -> online.second.id == requiredId }
-
-                        if (onlineModule != null) {
-                            val item = onlineModule.second
-
-                            ListButtonItem(
-                                contentPaddingValues = PaddingValues(
-                                    vertical = 8.dp,
-                                    horizontal = 16.dp
-                                ),
-                                itemTextStyle = subListItemStyle,
-                                title = item.name,
-                                desc = item.versionCode.toString(),
-                                onClick = {
-                                    navController.navigateSingleTopTo(
-                                        ModuleViewModel.putModuleId(item),
-                                        launchSingleTop = false
-                                    )
-                                }
-                            )
-                        } else {
-                            ListItem(
-                                contentPaddingValues = PaddingValues(
-                                    vertical = 8.dp,
-                                    horizontal = 16.dp
-                                ),
-                                enabled = false,
-                                itemTextStyle = subListItemStyle,
-                                title = requiredId,
-                                labels = listOf(stringResource(R.string.view_module_not_found))
-                            )
-                        }
+                        ListButtonItem(
+                            contentPaddingValues = PaddingValues(
+                                vertical = 8.dp,
+                                horizontal = 16.dp
+                            ),
+                            itemTextStyle = subListItemStyle,
+                            title = onlineModule.name,
+                            desc = onlineModule.versionCode.toString(),
+                            onClick = {
+                                navController.navigateSingleTopTo(
+                                    ModuleViewModel.putModuleId(onlineModule),
+                                    launchSingleTop = false
+                                )
+                            }
+                        )
                     }
                 }
             }
