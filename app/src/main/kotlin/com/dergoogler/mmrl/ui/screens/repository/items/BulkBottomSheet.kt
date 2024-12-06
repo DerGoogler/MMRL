@@ -1,13 +1,12 @@
 package com.dergoogler.mmrl.ui.screens.repository.items
 
 import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,17 +15,16 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -35,19 +33,18 @@ import com.dergoogler.mmrl.model.local.BulkModule
 import com.dergoogler.mmrl.ui.component.BottomSheet
 import com.dergoogler.mmrl.ui.component.LabelItem
 import com.dergoogler.mmrl.ui.component.PageIndicator
+import com.dergoogler.mmrl.viewmodel.BulkInstallViewModel
 import ext.dergoogler.mmrl.ext.fadingEdge
+import ext.dergoogler.mmrl.ext.ignoreParentPadding
 import ext.dergoogler.mmrl.ext.toFormatedFileSize
-import kotlinx.coroutines.launch
 
 @Composable
 fun BulkBottomSheet(
     onClose: () -> Unit,
     modules: List<BulkModule>,
-    removeBulkModule: (BulkModule) -> Unit,
+    bulkInstallViewModel: BulkInstallViewModel,
     onDownload: (List<BulkModule>, Boolean) -> Unit,
 ) = BottomSheet(onDismissRequest = onClose) {
-    val scope = rememberCoroutineScope()
-
     Text(
         modifier = Modifier.padding(16.dp),
         style = MaterialTheme.typography.titleLarge,
@@ -60,8 +57,6 @@ fun BulkBottomSheet(
         0.97f to Color.Red,
         1f to Color.Transparent
     )
-
-
 
     if (modules.isEmpty()) {
         PageIndicator(
@@ -82,72 +77,23 @@ fun BulkBottomSheet(
                 items = modules,
                 key = { it.id }
             ) { module ->
+                BulkModuleItem(
+                    modifier = Modifier.animateItem(),
+                    module = module,
+                    removeBulkModule = bulkInstallViewModel::removeBulkModule
+                )
 
-                val itemVisibility = remember {
-                    Animatable(1f)
-                }
-
-                Surface(
-                    modifier = Modifier
-                        .alpha(itemVisibility.value),
-                    color = MaterialTheme.colorScheme.surface,
-                    tonalElevation = 1.dp,
-                    shape = RoundedCornerShape(20.dp)
-                ) {
-                    Row(
+                val progress = bulkInstallViewModel.getProgress(module.versionItem)
+                if (progress != 0f) {
+                    LinearProgressIndicator(
+                        progress = { progress },
+                        strokeCap = StrokeCap.Round,
                         modifier = Modifier
-                            .padding(all = 16.dp)
-                            .fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Column(
-                            modifier = Modifier.weight(1f),
-                            verticalArrangement = Arrangement.spacedBy(4.dp)
-                        ) {
-                            Row(
-                                horizontalArrangement = Arrangement.spacedBy(4.dp),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Text(
-                                    text = module.name,
-                                    style = MaterialTheme.typography.bodyMedium
-                                )
-
-                                module.versionItem.size?.let {
-                                    LabelItem(
-                                        text = it.toFormatedFileSize(),
-                                        containerColor = MaterialTheme.colorScheme.error,
-                                        contentColor = MaterialTheme.colorScheme.onError
-                                    )
-                                }
-                            }
-
-                            Text(
-                                text = module.versionItem.versionDisplay,
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.primary
-                            )
-                        }
-
-                        FilledTonalButton(
-                            onClick = {
-                                scope.launch {
-                                    itemVisibility.animateTo(
-                                        targetValue = 0f,
-                                        animationSpec = tween(20)
-                                    )
-                                    removeBulkModule(module)
-                                }
-                            },
-                            contentPadding = PaddingValues(horizontal = 12.dp)
-                        ) {
-                            Icon(
-                                modifier = Modifier.size(20.dp),
-                                painter = painterResource(id = R.drawable.trash),
-                                contentDescription = null
-                            )
-                        }
-                    }
+                            .height(2.dp)
+                            .padding(horizontal = 20.dp)
+                            .ignoreParentPadding(vertical = 2.dp)
+                            .fillMaxWidth()
+                    )
                 }
             }
         }
@@ -160,9 +106,72 @@ fun BulkBottomSheet(
             .fillMaxWidth(),
         onClick = {
             onDownload(modules, true)
-            onClose()
         }
     ) {
         Text(stringResource(id = R.string.module_install))
+    }
+}
+
+
+@Composable
+fun BulkModuleItem(
+    modifier: Modifier = Modifier,
+    module: BulkModule,
+    removeBulkModule: (BulkModule) -> Unit,
+) {
+    Surface(
+        modifier = modifier,
+        color = MaterialTheme.colorScheme.surface,
+        tonalElevation = 1.dp,
+        shape = RoundedCornerShape(20.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(all = 16.dp)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = module.name,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+
+                    module.versionItem.size?.let {
+                        LabelItem(
+                            text = it.toFormatedFileSize(),
+                            containerColor = MaterialTheme.colorScheme.error,
+                            contentColor = MaterialTheme.colorScheme.onError
+                        )
+                    }
+                }
+
+                Text(
+                    text = module.versionItem.versionDisplay,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.primary
+                )
+            }
+
+            FilledTonalButton(
+                onClick = {
+                    removeBulkModule(module)
+                },
+                contentPadding = PaddingValues(horizontal = 12.dp)
+            ) {
+                Icon(
+                    modifier = Modifier.size(20.dp),
+                    painter = painterResource(id = R.drawable.trash),
+                    contentDescription = null
+                )
+            }
+        }
     }
 }

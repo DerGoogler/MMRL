@@ -44,6 +44,7 @@ import com.dergoogler.mmrl.ui.utils.none
 import com.dergoogler.mmrl.viewmodel.BulkInstallViewModel
 import com.dergoogler.mmrl.viewmodel.RepositoryViewModel
 import ext.dergoogler.mmrl.activity.MMRLComponentActivity
+import timber.log.Timber
 
 @Composable
 fun RepositoryScreen(
@@ -67,11 +68,14 @@ fun RepositoryScreen(
 
     val context = LocalContext.current
 
+    var bulkInstallBottomSheet by remember { mutableStateOf(false) }
+
     val bulkDownload: (List<BulkModule>, Boolean) -> Unit = { item, install ->
         bulkInstallViewModel.downloadMultiple(
             items = item,
             onAllSuccess = {
                 bulkInstallViewModel.clearBulkModules()
+                bulkInstallBottomSheet = false
                 if (install) {
                     MMRLComponentActivity.startInstallActivity(
                         context = context,
@@ -80,19 +84,18 @@ fun RepositoryScreen(
                 }
             },
             onFailure = {
-
+                Timber.e(it)
             }
         )
     }
 
-    var bulkInstallBottomSheet by remember { mutableStateOf(false) }
     if (bulkInstallBottomSheet) BulkBottomSheet(
         onClose = {
             bulkInstallBottomSheet = false
         },
         modules = bulkModules,
         onDownload = bulkDownload,
-        removeBulkModule = bulkInstallViewModel::removeBulkModule
+        bulkInstallViewModel = bulkInstallViewModel,
     )
 
     BackHandler(
