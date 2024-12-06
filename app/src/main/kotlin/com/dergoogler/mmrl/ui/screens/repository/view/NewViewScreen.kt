@@ -24,6 +24,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AssistChip
+import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -79,7 +80,6 @@ import com.dergoogler.mmrl.model.local.State
 import com.dergoogler.mmrl.model.online.VersionItem
 import com.dergoogler.mmrl.ui.component.Alert
 import com.dergoogler.mmrl.ui.component.AntiFeaturesItem
-import com.dergoogler.mmrl.ui.component.DoubleButton
 import com.dergoogler.mmrl.ui.component.HtmlText
 import com.dergoogler.mmrl.ui.component.ListButtonItem
 import com.dergoogler.mmrl.ui.component.ListCollapseItem
@@ -90,6 +90,7 @@ import com.dergoogler.mmrl.ui.navigation.graphs.RepositoryScreen
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.screens.repository.view.items.LicenseItem
 import com.dergoogler.mmrl.ui.screens.repository.view.items.TrackItem
+import com.dergoogler.mmrl.ui.screens.repository.view.items.VersionsItem
 import com.dergoogler.mmrl.ui.utils.navigateSingleTopTo
 import com.dergoogler.mmrl.ui.utils.none
 import com.dergoogler.mmrl.viewmodel.BulkInstallViewModel
@@ -171,6 +172,15 @@ fun NewViewScreen(
         topBar = {
             TopBar(
                 actions = {
+                    VersionsItem(
+                        count = viewModel.versions.size,
+                        onClick = {
+                            versionSelectBottomSheet = true
+                        }
+                    )
+
+                    Spacer(modifier = Modifier.width(4.dp))
+
                     IconButton(onClick = { menuExpanded = true }) {
                         Icon(
                             painter = painterResource(id = R.drawable.dots_vertical),
@@ -362,10 +372,6 @@ fun NewViewScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            val currentItem = local?.let {
-                modulesViewModel.getVersionItem(it)
-            }?.takeIf { it.versionCode > module.versionCode } ?: lastVersionItem
-
             Row(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 verticalAlignment = Alignment.Top,
@@ -410,23 +416,18 @@ fun NewViewScreen(
 
                 val buttonTextResId = when {
                     local == null -> R.string.module_install
-                    currentItem == null -> R.string.module_reinstall
-                    currentItem.versionCode > module.versionCode -> R.string.module_update
+                    lastVersionItem != null && module.versionCode > local.versionCode -> R.string.module_update
                     else -> R.string.module_reinstall
                 }
 
-                DoubleButton(
-                    enabled = viewModel.isProviderAlive && currentItem != null,
+                Button(
+                    enabled = viewModel.isProviderAlive && lastVersionItem != null,
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(1f),
-                    rowModifier = Modifier.weight(1f),
                     onClick = {
-                        currentItem?.let { download(it, true) }
+                        lastVersionItem?.let { download(it, true) }
                     },
-                    onDropdownClick = {
-                        versionSelectBottomSheet = true
-                    }
                 ) {
                     Text(
                         text = stringResource(id = buttonTextResId),
@@ -435,7 +436,7 @@ fun NewViewScreen(
                 }
             }
 
-            val progress = currentItem?.let {
+            val progress = lastVersionItem?.let {
                 viewModel.getProgress(it)
             } ?: 0f
 
