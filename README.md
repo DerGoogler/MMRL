@@ -7,6 +7,18 @@
 
 MMRL is an Android app that helps manage your own modules repository.
 
+## Features
+
+- Wide root manager support (Magisk, KernelSU & APatch)
+- WebUI support with features like [Edge-to-Edge](https://developer.android.com/develop/ui/compose/layouts/insets) support and dynamic app theme
+- Full supported bulk install for online and local install
+- Support for module dependencies to make it for the end-user easier to install your developed module system
+- Providing Magisk Modules Repositories for everyone from everyone
+- A blacklist for user transparency
+- Customizable module pages (categories, screenshots, icon, cover and more)
+- Transparency about module included files (APKs, service files and more)
+- Analytics on the homepage
+
 ## Preview
 
 <p>
