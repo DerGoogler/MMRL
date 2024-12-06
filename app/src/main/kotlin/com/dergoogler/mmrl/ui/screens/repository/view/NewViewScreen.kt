@@ -102,7 +102,6 @@ import ext.dergoogler.mmrl.activity.MMRLComponentActivity
 import ext.dergoogler.mmrl.ext.ifNotEmpty
 import ext.dergoogler.mmrl.ext.ifNotNullOrBlank
 import ext.dergoogler.mmrl.ext.isNotNullOrBlank
-import ext.dergoogler.mmrl.ext.isObjectEmpty
 import ext.dergoogler.mmrl.ext.launchCustomTab
 import ext.dergoogler.mmrl.ext.shareText
 import ext.dergoogler.mmrl.ext.takeTrue
@@ -735,7 +734,7 @@ fun NewViewScreen(
             }
 
             module.features?.let {
-                if (!it.isObjectEmpty()) {
+                if (it.isNotEmpty()) {
                     ListCollapseItem(
                         contentPaddingValues = listItemContentPaddingValues,
                         iconToRight = true,
@@ -788,7 +787,7 @@ fun NewViewScreen(
                             feature = it.webroot,
                             key = R.string.view_module_features_webui,
                             value = R.string.view_module_features_webui_sub,
-                            rootSolutions = listOf("KernelSU", "APatch")
+                            rootSolutions = listOf("KernelSU", "APatch", "MMRL")
                         )
                         FeatureListItem(
                             itemTextStyle = subListItemStyle,
