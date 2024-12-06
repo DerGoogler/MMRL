@@ -80,3 +80,10 @@ interface ksu {
 
 console.log(ksu.mmrl()); // true or false
 ```
+
+
+## Launch a WebUI from Shell
+
+```bash
+am start -n "com.dergoogler.mmrl/.ui.activity.webui.WebUIActivity" -e MOD_ID "your_id"
+```
