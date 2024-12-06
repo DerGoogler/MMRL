@@ -61,89 +61,92 @@ fun BulkBottomSheet(
         1f to Color.Transparent
     )
 
+
+
     if (modules.isEmpty()) {
         PageIndicator(
+            modifier = Modifier.weight(1f),
             icon = R.drawable.cloud,
             text = R.string.search_empty,
         )
-    }
+    } else {
+        LazyColumn(
+            modifier = Modifier
+                .weight(1f)
+                .animateContentSize()
+                .fadingEdge(topBottomFade),
+            contentPadding = PaddingValues(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            items(
+                items = modules,
+                key = { it.id }
+            ) { module ->
 
-    LazyColumn(
-        modifier = Modifier
-            .weight(1f)
-            .animateContentSize()
-            .fadingEdge(topBottomFade),
-        contentPadding = PaddingValues(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        items(
-            items = modules,
-            key = { it.id }
-        ) { module ->
+                val itemVisibility = remember {
+                    Animatable(1f)
+                }
 
-            val itemVisibility = remember {
-                Animatable(1f)
-            }
-
-            Surface(
-                modifier = Modifier
-                    .alpha(itemVisibility.value),
-                color = MaterialTheme.colorScheme.surface,
-                tonalElevation = 1.dp,
-                shape = RoundedCornerShape(20.dp)
-            ) {
-                Row(
+                Surface(
                     modifier = Modifier
-                        .padding(all = 16.dp)
-                        .fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
+                        .alpha(itemVisibility.value),
+                    color = MaterialTheme.colorScheme.surface,
+                    tonalElevation = 1.dp,
+                    shape = RoundedCornerShape(20.dp)
                 ) {
-                    Column(
-                        modifier = Modifier.weight(1f),
-                        verticalArrangement = Arrangement.spacedBy(4.dp)
+                    Row(
+                        modifier = Modifier
+                            .padding(all = 16.dp)
+                            .fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Row(
-                            horizontalArrangement = Arrangement.spacedBy(4.dp),
-                            verticalAlignment = Alignment.CenterVertically
+                        Column(
+                            modifier = Modifier.weight(1f),
+                            verticalArrangement = Arrangement.spacedBy(4.dp)
                         ) {
-                            Text(
-                                text = module.name,
-                                style = MaterialTheme.typography.bodyMedium
-                            )
-
-                            module.versionItem.size?.let {
-                                LabelItem(
-                                    text = it.toFormatedFileSize(),
-                                    containerColor = MaterialTheme.colorScheme.error,
-                                    contentColor = MaterialTheme.colorScheme.onError
+                            Row(
+                                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    text = module.name,
+                                    style = MaterialTheme.typography.bodyMedium
                                 )
+
+                                module.versionItem.size?.let {
+                                    LabelItem(
+                                        text = it.toFormatedFileSize(),
+                                        containerColor = MaterialTheme.colorScheme.error,
+                                        contentColor = MaterialTheme.colorScheme.onError
+                                    )
+                                }
                             }
+
+                            Text(
+                                text = module.versionItem.versionDisplay,
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.primary
+                            )
                         }
 
-                        Text(
-                            text = module.versionItem.versionDisplay,
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.primary
-                        )
-                    }
-
-                    FilledTonalButton(
-                        onClick = {
-                            scope.launch {
-                                itemVisibility.animateTo(
-                                    targetValue = 0f,
-                                    animationSpec = tween(20)
-                                )
-                                removeBulkModule(module)
-                            }
-                        },
-                        contentPadding = PaddingValues(horizontal = 12.dp)
-                    ) {
-                        Icon(
-                            modifier = Modifier.size(20.dp),
-                            painter = painterResource(id = R.drawable.trash),
-                            contentDescription = null
-                        )
+                        FilledTonalButton(
+                            onClick = {
+                                scope.launch {
+                                    itemVisibility.animateTo(
+                                        targetValue = 0f,
+                                        animationSpec = tween(20)
+                                    )
+                                    removeBulkModule(module)
+                                }
+                            },
+                            contentPadding = PaddingValues(horizontal = 12.dp)
+                        ) {
+                            Icon(
+                                modifier = Modifier.size(20.dp),
+                                painter = painterResource(id = R.drawable.trash),
+                                contentDescription = null
+                            )
+                        }
                     }
                 }
             }

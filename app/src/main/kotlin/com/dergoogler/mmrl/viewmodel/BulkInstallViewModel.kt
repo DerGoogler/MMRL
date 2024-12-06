@@ -2,10 +2,14 @@ package com.dergoogler.mmrl.viewmodel
 
 import android.app.Application
 import android.net.Uri
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.core.net.toUri
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.model.local.BulkModule
+import com.dergoogler.mmrl.model.online.VersionItem
 import com.dergoogler.mmrl.repository.LocalRepository
 import com.dergoogler.mmrl.repository.ModulesRepository
 import com.dergoogler.mmrl.repository.UserPreferencesRepository
@@ -116,5 +120,13 @@ class BulkInstallViewModel @Inject constructor(
                 onFailure(exceptions.first())
             }
         }
+    }
+
+    @Composable
+    fun getProgress(item: VersionItem): Float {
+        val progress by DownloadService.getProgressByKey(item.hashCode())
+            .collectAsStateWithLifecycle(initialValue = 0f)
+
+        return progress
     }
 }
