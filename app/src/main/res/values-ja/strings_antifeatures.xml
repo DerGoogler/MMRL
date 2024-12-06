@@ -19,7 +19,7 @@
     <string name="tracking_name">追跡</string>
     <string name="tracking_desc">このモジュールはアクティビティを追跡して報告します。</string>
     <string name="upstreamnonfree_name">Non-Free の上流</string>
-    <string name="upstreamnonfree_desc">上流のソースコードは Non-Free です。</string>
+    <string name="upstreamnonfree_desc">上流のソースコードは完全に無料ではありません。</string>
     <string name="obfuscation_name">難読化</string>
     <string name="obfuscation_desc">モジュールのソースコードが難読化されており、解析や変更が困難になっています。</string>
     <string name="unaskedremoval_name">要求されていない削除</string>
