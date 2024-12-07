@@ -37,7 +37,7 @@ import com.dergoogler.mmrl.database.entity.Repo
 import com.dergoogler.mmrl.model.online.TrackJson
 import com.dergoogler.mmrl.ui.component.NavigationBarsSpacer
 import com.dergoogler.mmrl.ui.utils.expandedShape
-import ext.dergoogler.mmrl.ext.toDateTime
+import ext.dergoogler.mmrl.ext.toFormattedDateSafely
 
 @Composable
 fun TrackItem(
@@ -131,16 +131,15 @@ private fun ValueItem(
                 color = MaterialTheme.colorScheme.outline
             )
 
-            stringResource(id = R.string.view_module_added,
-                track.added!!.toDateTime()
-            )
+            track.added?.let {
 
             Text(
                 text = stringResource(id = R.string.view_module_added,
-                    track.added.toDateTime()),
+                    it.toFormattedDateSafely),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.outline
             )
+            }
         }
     }
 }

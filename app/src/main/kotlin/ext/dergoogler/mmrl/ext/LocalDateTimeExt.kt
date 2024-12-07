@@ -53,11 +53,12 @@ private fun formatDate(localDateTime: LocalDateTime, formatter: DateTimeFormatte
     }
 }
 
-@Composable
-fun Float.toFormattedDateSafely(): String {
-    val prefs = LocalUserPreferences.current
-    return this.toFormattedDateSafely(prefs.datePattern)
-}
+val Float.toFormattedDateSafely: String
+    @Composable
+    get() {
+        val prefs = LocalUserPreferences.current
+        return this.toFormattedDateSafely(prefs.datePattern)
+    }
 
 fun Float.toFormattedDateSafely(pattern: String? = null): String {
     return try {
@@ -68,11 +69,12 @@ fun Float.toFormattedDateSafely(pattern: String? = null): String {
     }
 }
 
-@Composable
-fun Long.toFormattedDateSafely(): String {
-    val prefs = LocalUserPreferences.current
-    return this.toFormattedDateSafely(prefs.datePattern)
-}
+val Long.toFormattedDateSafely: String
+    @Composable
+    get() {
+        val prefs = LocalUserPreferences.current
+        return this.toFormattedDateSafely(prefs.datePattern)
+    }
 
 fun Long.toFormattedDateSafely(pattern: String? = null): String {
     return try {
@@ -90,4 +92,5 @@ private fun formatDate(localDateTime: LocalDateTime): String {
     return "$month $day, $year"
 }
 
-fun LocalDateTime.Companion.now() = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
+fun LocalDateTime.Companion.now() =
+    Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())

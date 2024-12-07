@@ -90,20 +90,14 @@ fun ViewDescriptionScreen(
                 enter = fadeIn(),
                 exit = fadeOut()
             ) {
-//                LazyColumn {
-//                    item {
-
-                        MarkdownText(
-                            text = readme,
-                            style = MaterialTheme.typography.bodyMedium,
-                            isTextSelectable = true,
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .verticalScroll(rememberScrollState())
-                                .padding(16.dp)
-                        )
-//                    }
-//                }
+                MarkdownText(
+                    text = readme,
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState())
+                        .padding(16.dp)
+                )
             }
         }
     }

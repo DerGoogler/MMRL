@@ -13,8 +13,7 @@ androidxHiltNavigationCompose = "1.2.0"
 androidxLifecycle = "2.8.0"
 androidxNavigation = "2.7.7"
 foundation = "1.7.3"
-multiplatformMarkdownRendererAndroid = "0.27.0"
-multiplatformMarkdownRendererM3 = "0.27.0"
+multiplatformMarkdownRenderer = "0.27.0"
 webkit = "1.12.1"
 multidex = "2.0.1"
 navigationRuntimeKtx = "2.8.2"
@@ -85,8 +84,9 @@ kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime",
 libsu-core = { group = "com.github.topjohnwu.libsu", name = "core", version.ref = "libsu" }
 libsu-service = { group = "com.github.topjohnwu.libsu", name = "service", version.ref = "libsu" }
 libsu-io = { module = "com.github.topjohnwu.libsu:io", version.ref = "libsu" }
-multiplatform-markdown-renderer-android = { module = "com.mikepenz:multiplatform-markdown-renderer-android", version.ref = "multiplatformMarkdownRendererAndroid" }
-multiplatform-markdown-renderer-m3 = { module = "com.mikepenz:multiplatform-markdown-renderer-m3", version.ref = "multiplatformMarkdownRendererM3" }
+multiplatform-markdown-renderer-android = { module = "com.mikepenz:multiplatform-markdown-renderer-android", version.ref = "multiplatformMarkdownRenderer" }
+multiplatform-markdown-renderer-coil3 = { module = "com.mikepenz:multiplatform-markdown-renderer-coil3", version.ref = "multiplatformMarkdownRenderer" }
+multiplatform-markdown-renderer-m3 = { module = "com.mikepenz:multiplatform-markdown-renderer-m3", version.ref = "multiplatformMarkdownRenderer" }
 protobuf-kotlin-lite = { group = "com.google.protobuf", name = "protobuf-kotlin-lite", version.ref = "protobuf" }
 protobuf-protoc = { group = "com.google.protobuf", name = "protoc", version.ref = "protobuf" }
 rikka-refine-annotation = { module = "dev.rikka.tools.refine:annotation", version.ref = "hiddenApiRefine" }

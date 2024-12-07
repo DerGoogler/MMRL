@@ -14,6 +14,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionContext
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.compat.PermissionCompat
@@ -26,6 +28,7 @@ import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import dev.dergoogler.mmrl.compat.BuildCompat
+import ext.dergoogler.mmrl.MMRLUriHandler
 import timber.log.Timber
 import javax.inject.Inject
 import kotlin.system.exitProcess
@@ -173,7 +176,8 @@ fun MMRLComponentActivity.setBaseContent(
         }
 
         CompositionLocalProvider(
-            LocalUserPreferences provides preferences
+            LocalUserPreferences provides preferences,
+            LocalUriHandler provides MMRLUriHandler(LocalContext.current)
         ) {
             AppTheme(
                 darkMode = preferences.isDarkMode(), themeColor = preferences.themeColor

@@ -153,7 +153,7 @@ fun ModuleItemDetailed(
                         Text(
                             text = stringResource(
                                 id = R.string.module_update_at,
-                                state.lastUpdated.toFormattedDateSafely(userPreferences.datePattern)
+                                state.lastUpdated.toFormattedDateSafely
                             ),
                             style = MaterialTheme.typography.bodySmall,
                             textDecoration = decoration,

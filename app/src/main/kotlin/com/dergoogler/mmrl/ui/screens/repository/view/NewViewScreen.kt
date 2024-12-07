@@ -952,7 +952,7 @@ fun NewViewScreen(
                 ModuleInfoListItem(
                     infoCanDiffer = true,
                     title = R.string.view_module_added_on,
-                    desc = it.toFormattedDateSafely(userPreferences.datePattern)
+                    desc = it.toFormattedDateSafely()
                 )
             }
 
@@ -976,7 +976,7 @@ fun NewViewScreen(
                     )
                     ModuleInfoListItem(
                         title = R.string.view_module_last_updated,
-                        desc = it.lastUpdated.toFormattedDateSafely(userPreferences.datePattern)
+                        desc = it.lastUpdated.toFormattedDateSafely
                     )
                 }
             }

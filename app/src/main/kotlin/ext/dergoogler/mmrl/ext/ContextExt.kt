@@ -2,7 +2,6 @@ package ext.dergoogler.mmrl.ext
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.runtime.Composable
@@ -10,6 +9,7 @@ import androidx.compose.runtime.Composer
 import androidx.compose.ui.res.stringResource
 import androidx.core.app.ShareCompat
 import androidx.core.content.pm.PackageInfoCompat
+import androidx.core.net.toUri
 import com.dergoogler.mmrl.R
 import com.topjohnwu.superuser.Shell
 import timber.log.Timber
@@ -26,8 +26,11 @@ fun Context.openUrl(url: String) {
     }
 }
 
-// TODO: add colors from theme
-fun Context.launchCustomTab(url: String) {
+fun Context.launchCustomTab(
+    url: String,
+    onSuccess: ((customTabsIntent: CustomTabsIntent, url: String) -> Unit)? = null,
+    onError: ((Exception) -> Unit)? = null,
+) {
     try {
         val colorSchemeParams = CustomTabColorSchemeParams.Builder()
             .build()
@@ -36,11 +39,26 @@ fun Context.launchCustomTab(url: String) {
             .setDefaultColorSchemeParams(colorSchemeParams)
             .build()
 
-        customTabsIntent.launchUrl(this, Uri.parse(url))
+        customTabsIntent.apply {
+            if (onSuccess != null) {
+                onSuccess(this, url)
+            } else {
+                launchUrl(this@launchCustomTab, url.toUri())
+            }
+        }
     } catch (activityNotFoundException: Exception) {
-        Timber.e(activityNotFoundException, "unable to launch custom tab")
-        this.openUrl(url)
+        if (onError != null) {
+            onError(activityNotFoundException)
+        } else {
+            Timber.e(activityNotFoundException, "unable to launch custom tab")
+            this.openUrl(url)
+        }
     }
+}
+
+// TODO: add colors from theme
+fun Context.launchCustomTab(url: String) {
+    launchCustomTab(url)
 }
 
 @get:Composable

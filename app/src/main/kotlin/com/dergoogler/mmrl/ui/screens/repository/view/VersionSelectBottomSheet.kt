@@ -31,7 +31,6 @@ import com.dergoogler.mmrl.model.online.VersionItem
 import com.dergoogler.mmrl.ui.component.BottomSheet
 import com.dergoogler.mmrl.ui.component.LabelItem
 import com.dergoogler.mmrl.ui.component.VersionItemBottomSheet
-import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import ext.dergoogler.mmrl.ext.ignoreParentPadding
 import ext.dergoogler.mmrl.ext.toFormattedDateSafely
 
@@ -84,8 +83,6 @@ private fun VersionItem(
     isProviderAlive: Boolean,
     onDownload: (Boolean) -> Unit,
 ) {
-    val userPreferences = LocalUserPreferences.current
-
     var open by remember { mutableStateOf(false) }
     if (open) VersionItemBottomSheet(
         isUpdate = false,
@@ -137,7 +134,7 @@ private fun VersionItem(
             }
 
             Text(
-                text = item.timestamp.toFormattedDateSafely(userPreferences.datePattern),
+                text = item.timestamp.toFormattedDateSafely,
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.outline
             )

@@ -95,7 +95,7 @@ fun ModuleItem(
                     if (module.lastUpdated != 0L && menu.showUpdatedTime) {
                         Text(
                             text = stringResource(id = R.string.module_update_at,
-                                module.lastUpdated.toFormattedDateSafely(userPreferences.datePattern)
+                                module.lastUpdated.toFormattedDateSafely
                             ),
                             style = MaterialTheme.typography.bodySmall,
                             textDecoration = decoration,

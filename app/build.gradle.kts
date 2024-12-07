@@ -200,9 +200,9 @@ dependencies {
     implementation(libs.kotlinx.datetime)
     implementation(libs.kotlin.reflect)
     implementation(libs.protobuf.kotlin.lite)
-    implementation(libs.compose.markdown)
     implementation(libs.multiplatform.markdown.renderer.m3)
     implementation(libs.multiplatform.markdown.renderer.android)
+    implementation(libs.multiplatform.markdown.renderer.coil3)
     implementation(libs.androidx.multidex)
 
     implementation(libs.square.retrofit)
