@@ -22,11 +22,16 @@ class InstallActivity : MMRLComponentActivity() {
         Timber.d("InstallActivity onCreate")
         super.onCreate(savedInstanceState)
 
-        val uris: ArrayList<Uri>? = if (BuildCompat.atLeastT) {
-            intent.getParcelableArrayListExtra("uris", Uri::class.java)
+
+        val uris: ArrayList<Uri>? = if (intent.data != null) {
+            arrayListOf(intent.data!!)
         } else {
-            @Suppress("DEPRECATION")
-            intent.getParcelableArrayListExtra("uris")
+            if (BuildCompat.atLeastT) {
+                intent.getParcelableArrayListExtra("uris", Uri::class.java)
+            } else {
+                @Suppress("DEPRECATION")
+                intent.getParcelableArrayListExtra("uris")
+            }
         }
 
         if (uris.isNullOrEmpty()) {
