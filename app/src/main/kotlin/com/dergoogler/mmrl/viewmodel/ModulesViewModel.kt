@@ -52,8 +52,9 @@ class ModulesViewModel @Inject constructor(
             with(moduleManager) { managerName }
         }
 
-    private val modulesMenu get() = userPreferencesRepository.data
-        .map { it.modulesMenu }
+    private val modulesMenu
+        get() = userPreferencesRepository.data
+            .map { it.modulesMenu }
 
     var isSearch by mutableStateOf(false)
         private set
@@ -106,7 +107,7 @@ class ModulesViewModel @Inject constructor(
         ) { list, menu ->
             if (list.isEmpty()) return@combine
 
-            cacheFlow.value  = list.sortedWith(
+            cacheFlow.value = list.sortedWith(
                 comparator(menu.option, menu.descending)
             ).let { v ->
                 if (menu.pinEnabled) {
@@ -120,7 +121,7 @@ class ModulesViewModel @Inject constructor(
 
         }.launchIn(viewModelScope)
     }
-    
+
     private fun keyObserver() {
         combine(
             keyFlow,
@@ -159,7 +160,7 @@ class ModulesViewModel @Inject constructor(
 
     private fun comparator(
         option: Option,
-        descending: Boolean
+        descending: Boolean,
     ): Comparator<LocalModule> = if (descending) {
         when (option) {
             Option.NAME -> compareByDescending { it.name.lowercase() }
@@ -200,18 +201,18 @@ class ModulesViewModel @Inject constructor(
         }
     }
 
-    fun createModuleOps(module: LocalModule) = when (module.state) {
+    fun createModuleOps(useShell: Boolean, module: LocalModule) = when (module.state) {
         State.ENABLE -> ModuleOps(
             isOpsRunning = opsTasks.contains(module.id),
             toggle = {
                 opsTasks.add(module.id)
                 Compat.moduleManager
-                    .disable(module.id, opsCallback)
+                    .disable(module.id, useShell, opsCallback)
             },
             change = {
                 opsTasks.add(module.id)
                 Compat.moduleManager
-                    .remove(module.id, opsCallback)
+                    .remove(module.id, useShell, opsCallback)
             }
         )
 
@@ -220,12 +221,12 @@ class ModulesViewModel @Inject constructor(
             toggle = {
                 opsTasks.add(module.id)
                 Compat.moduleManager
-                    .enable(module.id, opsCallback)
+                    .enable(module.id, useShell, opsCallback)
             },
             change = {
                 opsTasks.add(module.id)
                 Compat.moduleManager
-                    .remove(module.id, opsCallback)
+                    .remove(module.id, useShell, opsCallback)
             }
         )
 
@@ -235,7 +236,7 @@ class ModulesViewModel @Inject constructor(
             change = {
                 opsTasks.add(module.id)
                 Compat.moduleManager
-                    .enable(module.id, opsCallback)
+                    .enable(module.id, useShell, opsCallback)
             }
         )
 
@@ -277,7 +278,7 @@ class ModulesViewModel @Inject constructor(
         context: Context,
         module: LocalModule,
         item: VersionItem,
-        onSuccess: (File) -> Unit
+        onSuccess: (File) -> Unit,
     ) {
         viewModelScope.launch {
             val downloadPath = userPreferencesRepository.data
@@ -328,6 +329,6 @@ class ModulesViewModel @Inject constructor(
     data class ModuleOps(
         val isOpsRunning: Boolean,
         val toggle: (Boolean) -> Unit,
-        val change: () -> Unit
+        val change: () -> Unit,
     )
 }

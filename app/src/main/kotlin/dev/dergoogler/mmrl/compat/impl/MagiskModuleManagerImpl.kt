@@ -5,13 +5,14 @@ import dev.dergoogler.mmrl.compat.stub.IInstallCallback
 import dev.dergoogler.mmrl.compat.stub.IModuleOpsCallback
 
 internal class MagiskModuleManagerImpl(
-    private val shell: Shell
+    private val shell: Shell,
 ) : BaseModuleManagerImpl(shell) {
     override fun getManagerName(): String {
         return "Magisk"
     }
 
-    override fun enable(id: String, callback: IModuleOpsCallback) {
+
+    override fun enable(id: String, useShell: Boolean, callback: IModuleOpsCallback) {
         val dir = modulesDir.resolve(id)
         if (!dir.exists()) callback.onFailure(id, null)
 
@@ -25,7 +26,7 @@ internal class MagiskModuleManagerImpl(
         }
     }
 
-    override fun disable(id: String, callback: IModuleOpsCallback) {
+    override fun disable(id: String, useShell: Boolean, callback: IModuleOpsCallback) {
         val dir = modulesDir.resolve(id)
         if (!dir.exists()) return callback.onFailure(id, null)
 
@@ -39,7 +40,7 @@ internal class MagiskModuleManagerImpl(
         }
     }
 
-    override fun remove(id: String, callback: IModuleOpsCallback) {
+    override fun remove(id: String, useShell: Boolean, callback: IModuleOpsCallback) {
         val dir = modulesDir.resolve(id)
         if (!dir.exists()) return callback.onFailure(id, null)
 

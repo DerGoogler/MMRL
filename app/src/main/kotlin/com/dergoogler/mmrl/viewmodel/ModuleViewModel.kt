@@ -188,16 +188,17 @@ class ModuleViewModel @Inject constructor(
         }
     }
 
-    fun createModuleOps(module: LocalModule) = when (module.state) {
+    fun createModuleOps(useShell: Boolean, module: LocalModule) = when (module.state) {
         State.ENABLE -> ModuleOps(
             isOpsRunning = opsTasks.contains(module.id),
             toggle = {
                 opsTasks.add(module.id)
-                Compat.moduleManager.disable(module.id, opsCallback)
+                Compat.moduleManager.disable(module.id, useShell, opsCallback)
             },
             change = {
+                Timber.d("Pressed ENABLE")
                 opsTasks.add(module.id)
-                Compat.moduleManager.remove(module.id, opsCallback)
+                Compat.moduleManager.remove(module.id, useShell, opsCallback)
                 local = local?.copy(state = State.REMOVE)
             }
         )
@@ -206,11 +207,12 @@ class ModuleViewModel @Inject constructor(
             isOpsRunning = opsTasks.contains(module.id),
             toggle = {
                 opsTasks.add(module.id)
-                Compat.moduleManager.enable(module.id, opsCallback)
+                Compat.moduleManager.enable(module.id, useShell, opsCallback)
             },
             change = {
+                Timber.d("Pressed DISABLE")
                 opsTasks.add(module.id)
-                Compat.moduleManager.remove(module.id, opsCallback)
+                Compat.moduleManager.remove(module.id, useShell, opsCallback)
                 local = local?.copy(state = State.REMOVE)
             }
         )
@@ -219,8 +221,9 @@ class ModuleViewModel @Inject constructor(
             isOpsRunning = opsTasks.contains(module.id),
             toggle = {},
             change = {
+                Timber.d("Pressed REMOVE")
                 opsTasks.add(module.id)
-                Compat.moduleManager.enable(module.id, opsCallback)
+                Compat.moduleManager.enable(module.id, useShell, opsCallback)
                 local = local?.copy(state = State.ENABLE)
             }
         )
@@ -245,6 +248,6 @@ class ModuleViewModel @Inject constructor(
     data class ModuleOps(
         val isOpsRunning: Boolean,
         val toggle: (Boolean) -> Unit,
-        val change: () -> Unit
+        val change: () -> Unit,
     )
 }

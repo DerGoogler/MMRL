@@ -61,6 +61,9 @@ class UserPreferencesRepository @Inject constructor(
     suspend fun setDeveloperMode(value: Boolean) =
         userPreferencesDataSource.setDeveloperMode(value)
 
+    suspend fun setUseShellForModuleStateChange(value: Boolean) =
+        userPreferencesDataSource.setUseShellForModuleStateChange(value)
+
     suspend fun setClearInstallTerminal(value: Boolean) =
         userPreferencesDataSource.setClearInstallTerminal(value)
 

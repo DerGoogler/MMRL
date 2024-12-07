@@ -157,6 +157,14 @@ class UserPreferencesDataSource @Inject constructor(
         }
     }
 
+    suspend fun setUseShellForModuleStateChange(value: Boolean) = withContext(Dispatchers.IO) {
+        userPreferences.updateData {
+            it.copy(
+                useShellForModuleStateChange = value
+            )
+        }
+    }
+
     suspend fun setClearInstallTerminal(value: Boolean) = withContext(Dispatchers.IO) {
         userPreferences.updateData {
             it.copy(

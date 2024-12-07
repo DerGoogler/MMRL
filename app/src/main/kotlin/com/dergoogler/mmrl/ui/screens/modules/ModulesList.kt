@@ -33,6 +33,7 @@ import com.dergoogler.mmrl.model.local.State
 import com.dergoogler.mmrl.model.online.VersionItem
 import com.dergoogler.mmrl.ui.component.VersionItemBottomSheet
 import com.dergoogler.mmrl.ui.component.scrollbar.VerticalFastScrollbar
+import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.viewmodel.ModulesViewModel
 import ext.dergoogler.mmrl.activity.MMRLComponentActivity
 
@@ -42,7 +43,7 @@ fun ModulesList(
     state: LazyListState,
     isProviderAlive: Boolean,
     managerName: String,
-    getModuleOps: (LocalModule) -> ModulesViewModel.ModuleOps,
+    getModuleOps: (Boolean, LocalModule) -> ModulesViewModel.ModuleOps,
     getVersionItem: @Composable (LocalModule) -> VersionItem?,
     getProgress: @Composable (VersionItem?) -> Float,
     onDownload: (LocalModule, VersionItem, Boolean) -> Unit,
@@ -82,13 +83,15 @@ fun ModuleItem(
     module: LocalModule,
     isProviderAlive: Boolean,
     managerName: String,
-    getModuleOps: (LocalModule) -> ModulesViewModel.ModuleOps,
+    getModuleOps: (Boolean, LocalModule) -> ModulesViewModel.ModuleOps,
     getVersionItem: @Composable (LocalModule) -> VersionItem?,
     getProgress: @Composable (VersionItem?) -> Float,
     onDownload: (LocalModule, VersionItem, Boolean) -> Unit,
 ) {
-    val ops by remember(module.state) {
-        derivedStateOf { getModuleOps(module) }
+    val userPreferences = LocalUserPreferences.current
+
+    val ops by remember(userPreferences.useShellForModuleStateChange, module.state) {
+        derivedStateOf { getModuleOps(userPreferences.useShellForModuleStateChange, module) }
     }
 
     val context = LocalContext.current
@@ -163,7 +166,7 @@ fun ModuleItem(
 
             RemoveOrRestore(
                 module = module,
-                enabled = isProviderAlive,
+                enabled = isProviderAlive && (!userPreferences.useShellForModuleStateChange || module.state != State.REMOVE),
                 onClick = ops.change
             )
 

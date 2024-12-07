@@ -27,7 +27,7 @@ import com.dergoogler.mmrl.viewmodel.SettingsViewModel
 @Composable
 fun OtherScreen(
     navController: NavController,
-    viewModel: SettingsViewModel = hiltViewModel()
+    viewModel: SettingsViewModel = hiltViewModel(),
 ) {
     val userPreferences = LocalUserPreferences.current
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
@@ -85,6 +85,16 @@ fun OtherScreen(
                 checked = userPreferences.developerMode,
                 onChange = viewModel::setDeveloperMode,
             )
+
+            ListSwitchItem(
+                enabled = viewModel.managerName.lowercase() != "magisk",
+                icon = R.drawable.stars_outlined,
+                title = stringResource(id = R.string.settings_shell_module_state_change),
+                desc = stringResource(id = R.string.settings_shell_module_state_change_desc),
+                checked = userPreferences.useShellForModuleStateChange,
+                onChange = viewModel::setUseShellForModuleStateChange,
+                labels = listOf("KernelSU", "APatch")
+            )
         }
     }
 }
@@ -92,7 +102,7 @@ fun OtherScreen(
 @Composable
 private fun TopBar(
     scrollBehavior: TopAppBarScrollBehavior,
-    navController: NavController
+    navController: NavController,
 ) = NavigateUpTopBar(
     title = stringResource(id = R.string.settings_other),
     scrollBehavior = scrollBehavior,

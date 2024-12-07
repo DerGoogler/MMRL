@@ -29,6 +29,11 @@ class SettingsViewModel @Inject constructor(
             with(moduleManager) { "$version (${versionCode})" }
         }
 
+    val managerName
+        get() = Compat.get("") {
+            with(moduleManager) { managerName }
+        }
+
     init {
         Timber.d("SettingsViewModel init")
     }
@@ -138,6 +143,12 @@ class SettingsViewModel @Inject constructor(
     fun setDeveloperMode(value: Boolean) {
         viewModelScope.launch {
             userPreferencesRepository.setDeveloperMode(value)
+        }
+    }
+
+    fun setUseShellForModuleStateChange(value: Boolean) {
+        viewModelScope.launch {
+            userPreferencesRepository.setUseShellForModuleStateChange(value)
         }
     }
 

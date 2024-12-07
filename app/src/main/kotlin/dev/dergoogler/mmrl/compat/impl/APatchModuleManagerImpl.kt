@@ -11,45 +11,75 @@ internal class APatchModuleManagerImpl(
         return "APatch"
     }
 
-    override fun enable(id: String, callback: IModuleOpsCallback) {
+    override fun enable(id: String, useShell: Boolean, callback: IModuleOpsCallback) {
         val dir = modulesDir.resolve(id)
         if (!dir.exists()) callback.onFailure(id, null)
 
-        runCatching {
-            dir.resolve("remove").apply { if (exists()) delete() }
-            dir.resolve("disable").apply { if (exists()) delete() }
-        }.onSuccess {
-            callback.onSuccess(id)
-        }.onFailure {
-            callback.onFailure(id, it.message)
+        if (useShell) {
+            "apd module enable $id".submit {
+                if (it.isSuccess) {
+                    callback.onSuccess(id)
+                } else {
+                    callback.onFailure(id, it.out.joinToString())
+                }
+            }
+        } else {
+            runCatching {
+                dir.resolve("remove").apply { if (exists()) delete() }
+                dir.resolve("disable").apply { if (exists()) delete() }
+            }.onSuccess {
+                callback.onSuccess(id)
+            }.onFailure {
+                callback.onFailure(id, it.message)
+            }
         }
     }
 
-    override fun disable(id: String, callback: IModuleOpsCallback) {
+    override fun disable(id: String, useShell: Boolean, callback: IModuleOpsCallback) {
         val dir = modulesDir.resolve(id)
         if (!dir.exists()) return callback.onFailure(id, null)
 
-        runCatching {
-            dir.resolve("remove").apply { if (exists()) delete() }
-            dir.resolve("disable").createNewFile()
-        }.onSuccess {
-            callback.onSuccess(id)
-        }.onFailure {
-            callback.onFailure(id, it.message)
+        if (useShell) {
+            "apd module disable $id".submit {
+                if (it.isSuccess) {
+                    callback.onSuccess(id)
+                } else {
+                    callback.onFailure(id, it.out.joinToString())
+                }
+            }
+        } else {
+            runCatching {
+                dir.resolve("remove").apply { if (exists()) delete() }
+                dir.resolve("disable").createNewFile()
+            }.onSuccess {
+                callback.onSuccess(id)
+            }.onFailure {
+                callback.onFailure(id, it.message)
+            }
         }
     }
 
-    override fun remove(id: String, callback: IModuleOpsCallback) {
+    override fun remove(id: String, useShell: Boolean, callback: IModuleOpsCallback) {
         val dir = modulesDir.resolve(id)
         if (!dir.exists()) return callback.onFailure(id, null)
 
-        runCatching {
-            dir.resolve("disable").apply { if (exists()) delete() }
-            dir.resolve("remove").createNewFile()
-        }.onSuccess {
-            callback.onSuccess(id)
-        }.onFailure {
-            callback.onFailure(id, it.message)
+        if (useShell) {
+            "apd module uninstall $id".submit {
+                if (it.isSuccess) {
+                    callback.onSuccess(id)
+                } else {
+                    callback.onFailure(id, it.out.joinToString())
+                }
+            }
+        } else {
+            runCatching {
+                dir.resolve("disable").apply { if (exists()) delete() }
+                dir.resolve("remove").createNewFile()
+            }.onSuccess {
+                callback.onSuccess(id)
+            }.onFailure {
+                callback.onFailure(id, it.message)
+            }
         }
     }
 

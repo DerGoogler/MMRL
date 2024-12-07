@@ -437,16 +437,25 @@ fun NewViewScreen(
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 local?.let {
-                    val ops by remember(it, it.state) {
-                        derivedStateOf { viewModel.createModuleOps(it) }
+                    val ops by remember(
+                        userPreferences.useShellForModuleStateChange,
+                        it,
+                        it.state
+                    ) {
+                        derivedStateOf {
+                            viewModel.createModuleOps(
+                                userPreferences.useShellForModuleStateChange,
+                                it
+                            )
+                        }
                     }
 
                     OutlinedButton(
-                        enabled = viewModel.isProviderAlive && !ops.isOpsRunning,
+                        enabled = viewModel.isProviderAlive && (!userPreferences.useShellForModuleStateChange || it.state != State.REMOVE),
                         modifier = Modifier
                             .fillMaxWidth()
                             .weight(1f),
-                        onClick = { if (!ops.isOpsRunning) ops.change() }
+                        onClick = ops.change
                     ) {
                         val style = LocalTextStyle.current
                         val progressSize =

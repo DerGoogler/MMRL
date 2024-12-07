@@ -93,7 +93,8 @@
     <string name="view_module_features_apks_sub">Including additional APKs inside the module.</string>
     <string name="view_module_features_webui_sub">Web interface for managing modules (KernelSU &amp; APatch, not Magisk).></string>
     <string name="view_module_features_postmount_sub">Script execution after OverlayFS mounts (KernelSU &amp; APatch).></string>
-    <string name="view_module_features_bootcompleted_sub">Script execution after boot completes (KernelSU &amp; APatch).></string>  <string name="view_module_module_support">Module Support</string>
+    <string name="view_module_features_bootcompleted_sub">Script execution after boot completes (KernelSU &amp; APatch).></string>
+    <string name="view_module_module_support">Module Support</string>
     <string name="view_module_provided_by">Provided By</string>
     <string name="view_module_added_on">Added On</string>
     <string name="view_module_about_this_module">About This Module</string>
@@ -146,7 +147,7 @@
     <string name="settings_changelog">Changelog</string>
     <string name="settings_changelo_desc">All current changes within MMRL</string>
     <string name="settings_open_notification_settings">Open Notification Settings</string>
-    
+
     <!-- Root Item -->
     <string name="settings_root_access">Root Access: %s</string>
     <string name="settings_root_provider">Provider: %s</string>
@@ -197,8 +198,10 @@
     <string name="settings_privacy_policy">Privacy Policy</string>
     <string name="settings_clear_install_terminal">Clear Install Terminal</string>
     <string name="settings_clear_install_terminal_desc">Clear Install Terminal when installing more than one Module</string>
+    <string name="settings_shell_module_state_change">Use Shell for States</string>
+    <string name="settings_shell_module_state_change_desc">Uses shell instead of creating files in the module directory. Once enabled you won\'t able to use the restore button due limitations.</string>
 
-    
+
     <!-- App Theme -->
     <string name="app_theme_palette">Theme Palette</string>
     <string name="app_theme_dark_theme">Dark Theme</string>
