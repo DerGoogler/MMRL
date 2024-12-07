@@ -20,7 +20,7 @@ With this you could build progress bars
 ```shell
 ui_print "- I'm going to be replaced"
 
-am broadcast -a com.dergoogler.mmrl.debug.SET_LAST_LINE --es text "- Replaced"
+am broadcast -a com.dergoogler.mmrl.SET_LAST_LINE --es text "- Replaced"
 ```
 
 ## Remove last line
@@ -28,5 +28,5 @@ am broadcast -a com.dergoogler.mmrl.debug.SET_LAST_LINE --es text "- Replaced"
 This command removes the last line of the terminal. No arguments can be passed
 
 ```shell
-am broadcast -a com.dergoogler.mmrl.debug.REMOVE_LAST_LINE
+am broadcast -a com.dergoogler.mmrl.REMOVE_LAST_LINE
 ```
