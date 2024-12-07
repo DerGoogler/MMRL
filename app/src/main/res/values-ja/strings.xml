@@ -102,6 +102,11 @@
     <string name="view_module_dependencies_not_found">必要な依存関係は見つかりません</string>
     <string name="view_module_share">共有</string>
     <string name="view_module_not_found">モジュールが見つかりません</string>
+    <string name="view_module_install_confirm_title">このモジュールをインストールしますか？</string>
+    <string name="view_module_install_confirm_confirm_deps">インストール (一部)</string>
+    <string name="view_module_install_confirm_confirm">インストール</string>
+    <string name="view_module_install_confirm_desc"><![CDATA[<font color=\"%1$s\">%2$s</font> をインストールしてもよろしいですか？]]></string>
+    <string name="view_module_install_confirm_desc_deps"><![CDATA[<font color=\"%1$s\">%2$s</font> をインストールしてもよろしいですか？このモジュールは以下も必要です:]]></string>
     <!-- Modules -->
     <string name="modules_empty">モジュールが見つかりません</string>
     <!-- Module Item -->
@@ -265,6 +270,9 @@
     <string name="home_installed_modules_with_service_files">インストール済みのモジュール (サービスファイルを含む)</string>
     <string name="home_disabled_modules">無効化済みのモジュール</string>
     <string name="home_updated_modules">更新済みのモジュール</string>
+    <string name="bulk_install_module_already_added">モジュールはすでに追加されています</string>
+    <string name="bulk_install_module_added">モジュールを追加しました</string>
+    <string name="bulk_module_install">モジュールの一括インストール</string>
     <string name="has_a_new_update">%1$s に新しい更新があります！</string>
     <string name="update_available_from_to">%s (%d) から %s (%d) への更新が利用可能です。</string>
     <string name="events_birthday">MMRL は %1$s 周年です！</string>
