@@ -12,7 +12,7 @@ import timber.log.Timber
 @HiltAndroidApp
 class App : Application() {
     init {
-        if (BuildConfig.DEBUG) {
+        if (BuildConfig.IS_DEV_VERSION) {
             Timber.plant(DebugTree())
         } else {
             Timber.plant(ReleaseTree())
