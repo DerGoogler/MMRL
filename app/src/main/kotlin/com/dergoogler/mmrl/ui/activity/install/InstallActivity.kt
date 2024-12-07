@@ -1,4 +1,4 @@
-package com.dergoogler.mmrl.ui.activity
+package com.dergoogler.mmrl.ui.activity.install
 
 import android.net.Uri
 import android.os.Bundle

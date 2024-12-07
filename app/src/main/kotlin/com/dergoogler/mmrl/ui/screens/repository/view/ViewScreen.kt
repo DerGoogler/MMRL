@@ -11,13 +11,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.model.online.VersionItem
-import com.dergoogler.mmrl.ui.activity.InstallActivity
 import com.dergoogler.mmrl.ui.component.CollapsingTopAppBarDefaults
 import com.dergoogler.mmrl.ui.screens.repository.view.pages.AboutPage
 import com.dergoogler.mmrl.ui.screens.repository.view.pages.OverviewPage

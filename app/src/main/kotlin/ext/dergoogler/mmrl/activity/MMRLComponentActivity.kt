@@ -20,7 +20,7 @@ import com.dergoogler.mmrl.compat.PermissionCompat
 import com.dergoogler.mmrl.repository.LocalRepository
 import com.dergoogler.mmrl.repository.UserPreferencesRepository
 import com.dergoogler.mmrl.ui.activity.CrashHandlerActivity
-import com.dergoogler.mmrl.ui.activity.InstallActivity
+import com.dergoogler.mmrl.ui.activity.install.InstallActivity
 import com.dergoogler.mmrl.ui.activity.webui.WebUIActivity
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.theme.AppTheme

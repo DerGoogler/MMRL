@@ -126,7 +126,7 @@
         </activity>
 
         <activity
-            android:name=".ui.activity.InstallActivity"
+            android:name=".ui.activity.install.InstallActivity"
             android:excludeFromRecents="true"
             android:exported="true"
             android:label="@string/install_activity"

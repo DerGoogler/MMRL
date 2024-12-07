@@ -1,4 +1,4 @@
-package com.dergoogler.mmrl.ui.activity
+package com.dergoogler.mmrl.ui.activity.install
 
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -28,6 +28,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -82,6 +83,14 @@ fun InstallScreen(
 
     LaunchedEffect(focusRequester) {
         focusRequester.requestFocus()
+    }
+
+    DisposableEffect(Unit) {
+        viewModel.registerReceiver()
+
+        onDispose {
+            viewModel.unregisterReceiver()
+        }
     }
 
     BackHandler(

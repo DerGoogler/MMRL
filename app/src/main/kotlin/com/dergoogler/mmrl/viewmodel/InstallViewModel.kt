@@ -1,6 +1,9 @@
 package com.dergoogler.mmrl.viewmodel
 
 import android.app.Application
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.IntentFilter
 import android.net.Uri
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -15,7 +18,10 @@ import com.dergoogler.mmrl.model.local.LocalModule
 import com.dergoogler.mmrl.repository.LocalRepository
 import com.dergoogler.mmrl.repository.ModulesRepository
 import com.dergoogler.mmrl.repository.UserPreferencesRepository
+import com.dergoogler.mmrl.ui.activity.install.Actions
+import com.dergoogler.mmrl.ui.activity.install.ShellBroadcastReceiver
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.dergoogler.mmrl.compat.BuildCompat
 import dev.dergoogler.mmrl.compat.content.State
 import dev.dergoogler.mmrl.compat.stub.IInstallCallback
 import ext.dergoogler.mmrl.ext.tmpDir
@@ -48,6 +54,42 @@ class InstallViewModel @Inject constructor(
 
     init {
         Timber.d("InstallViewModel initialized")
+    }
+
+    private var receiver: BroadcastReceiver? = null
+
+    fun registerReceiver() {
+        if (receiver == null) {
+            receiver = ShellBroadcastReceiver(context, console, logs)
+
+            val filter = IntentFilter().apply {
+                addAction(Actions.SET_LAST_LINE)
+                addAction(Actions.REMOVE_LAST_LINE)
+                addAction(Actions.CLEAR_TERMINAL)
+                addAction(Actions.LOG)
+            }
+
+            if (BuildCompat.atLeastT) {
+                context.registerReceiver(receiver, filter, Context.RECEIVER_NOT_EXPORTED)
+            } else {
+                @Suppress("UnspecifiedRegisterReceiverFlag")
+                context.registerReceiver(receiver, filter)
+            }
+        }
+    }
+
+    fun unregisterReceiver() {
+        if (receiver == null) {
+            Timber.w("ShellBroadcastReceiver is already null")
+            return
+        }
+
+        context.unregisterReceiver(receiver)
+        receiver = null
+    }
+
+    private fun IntentFilter.addAction(action: Actions) {
+        addAction("${context.packageName}.${action.name}")
     }
 
     fun reboot(reason: String = "") {
