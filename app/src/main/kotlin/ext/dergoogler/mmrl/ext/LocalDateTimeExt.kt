@@ -1,5 +1,7 @@
 package ext.dergoogler.mmrl.ext
 
+import androidx.compose.runtime.Composable
+import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDateTime
@@ -51,6 +53,12 @@ private fun formatDate(localDateTime: LocalDateTime, formatter: DateTimeFormatte
     }
 }
 
+@Composable
+fun Float.toFormattedDateSafely(): String {
+    val prefs = LocalUserPreferences.current
+    return this.toFormattedDateSafely(prefs.datePattern)
+}
+
 fun Float.toFormattedDateSafely(pattern: String? = null): String {
     return try {
         val formatter = pattern?.let { DateTimeFormatter.ofPattern(it) }
@@ -60,6 +68,11 @@ fun Float.toFormattedDateSafely(pattern: String? = null): String {
     }
 }
 
+@Composable
+fun Long.toFormattedDateSafely(): String {
+    val prefs = LocalUserPreferences.current
+    return this.toFormattedDateSafely(prefs.datePattern)
+}
 
 fun Long.toFormattedDateSafely(pattern: String? = null): String {
     return try {

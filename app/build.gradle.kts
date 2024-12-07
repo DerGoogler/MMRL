@@ -201,6 +201,8 @@ dependencies {
     implementation(libs.kotlin.reflect)
     implementation(libs.protobuf.kotlin.lite)
     implementation(libs.compose.markdown)
+    implementation(libs.multiplatform.markdown.renderer.m3)
+    implementation(libs.multiplatform.markdown.renderer.android)
     implementation(libs.androidx.multidex)
 
     implementation(libs.square.retrofit)
