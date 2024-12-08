@@ -17,6 +17,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.unit.dp
@@ -31,7 +32,10 @@ import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.screens.repository.ModulesList
 import com.dergoogler.mmrl.ui.utils.none
 import com.dergoogler.mmrl.viewmodel.RepositoryViewModel
+import dev.dergoogler.mmrl.compat.ext.shareText
 import dev.dergoogler.mmrl.compat.ext.takeTrue
+import java.net.URLDecoder
+import java.net.URLEncoder
 
 @Composable
 fun FilteredSearchScreen(
@@ -44,10 +48,12 @@ fun FilteredSearchScreen(
     val list by viewModel.online.collectAsStateWithLifecycle()
     val listState = rememberLazyListState()
     val userPrefs = LocalUserPreferences.current
+    val context = LocalContext.current
 
     LaunchedEffect(list, value) {
         if (!value.isNullOrBlank() && !type.isNullOrBlank()) {
-            viewModel.search("${type}:${value}")
+            val decoded = URLDecoder.decode(value, "UTF-8")
+            viewModel.search("${type}:${decoded}")
         }
     }
 
@@ -56,7 +62,9 @@ fun FilteredSearchScreen(
         topBar = {
             TopAppBar(
                 navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
+                    IconButton(
+                        onClick = { navController.popBackStack() }
+                    ) {
                         Icon(
                             painter = painterResource(id = R.drawable.arrow_left),
                             contentDescription = null
@@ -64,6 +72,21 @@ fun FilteredSearchScreen(
                     }
                 },
                 title = { Text(text = value.orEmpty()) },
+                actions = {
+                    if (!value.isNullOrBlank() && !type.isNullOrBlank()) {
+                        val encoded = URLEncoder.encode(value, "UTF-8")
+                        IconButton(
+                            onClick = {
+                                context.shareText("https://mmrl.dergoogler.com/search/${type}/${encoded}")
+                            }
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.share),
+                                contentDescription = null,
+                            )
+                        }
+                    }
+                },
                 scrollBehavior = scrollBehavior
             )
         },
