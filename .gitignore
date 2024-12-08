@@ -12,6 +12,7 @@ signing.properties
 # Android Studio
 captures/
 release/
+app/debug/*
 app/playstore/*
 .externalNativeBuild/
 .cxx/

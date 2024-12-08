@@ -87,7 +87,7 @@ fun OtherScreen(
             )
 
             ListSwitchItem(
-                enabled = viewModel.managerName.lowercase() != "magisk",
+                enabled = viewModel.isProviderAlive && viewModel.managerName.lowercase() != "magisk",
                 icon = R.drawable.stars_outlined,
                 title = stringResource(id = R.string.settings_shell_module_state_change),
                 desc = stringResource(id = R.string.settings_shell_module_state_change_desc),
