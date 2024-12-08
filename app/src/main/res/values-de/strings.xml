@@ -27,7 +27,7 @@
     <string name="view_module_local">Lokal</string>
     <string name="view_module_source">Quellcode</string>
     <string name="modules_empty">Keine Module gefunden</string>
-    <string name="module_remove">Löschen</string>
+    <string name="module_remove">Entfernen</string>
     <string name="module_restore">Wiederherstellen</string>
     <string name="module_install">Installieren</string>
     <string name="view_module_homepage">Webseite</string>
@@ -97,4 +97,18 @@
     <string name="view_module_update_notify">Benachrichtigen</string>
     <string name="view_module_update_ignore">Ignorieren</string>
     <string name="module_update">Update</string>
+    <string name="install_screen_reboot_text">Bist du dir sicher, dass du dein Gerät neu starten willst?</string>
+    <string name="install_screen_reboot_confirm">Bestätigen</string>
+    <string name="page_home">Startseite</string>
+    <string name="menu_show_cover">Cover anzeigen</string>
+    <string name="menu_show_verified">Verifizierung anzeigen</string>
+    <string name="menu_sort_repolistmode_detailed">Detaliert</string>
+    <string name="menu_sort_repolistmode_compact">Kompakt</string>
+    <string name="view_module_page_readme">Readme</string>
+    <string name="view_module_file_size">Dateigröße</string>
+    <string name="view_module_screenshots">Screenshots</string>
+    <string name="view_module_help">Hilfe</string>
+    <string name="view_module_antifeatures">Anti-Features</string>
+    <string name="view_module_unsupported">Nicht unterstützt</string>
+    <string name="install_screen_reboot_title">Getät neu starten?</string>
 </resources>
