@@ -62,17 +62,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data
-                    android:scheme="mmrl"
-                    android:host="add-repo" />
-            </intent-filter>
-
-            <intent-filter android:autoVerify="true">
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
                 <data android:scheme="mmrl" />
                 <data android:host="module" />
 
@@ -93,34 +82,15 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data android:scheme="mmrl" />
-                <data android:host="category" />
+                <data android:host="search" />
 
                 <data android:scheme="http" />
                 <data android:host="mmrl.dergoogler.com" />
-                <data android:pathPrefix="/category" />
+                <data android:pathPrefix="/search" />
 
                 <data android:scheme="https" />
                 <data android:host="mmrl.dergoogler.com" />
-                <data android:pathPrefix="/category" />
-
-            </intent-filter>
-
-            <intent-filter android:autoVerify="true">
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="mmrl" />
-                <data android:host="author" />
-
-                <data android:scheme="http" />
-                <data android:host="mmrl.dergoogler.com" />
-                <data android:pathPrefix="/author" />
-
-                <data android:scheme="https" />
-                <data android:host="mmrl.dergoogler.com" />
-                <data android:pathPrefix="/author" />
+                <data android:pathPrefix="/search" />
 
             </intent-filter>
         </activity>
