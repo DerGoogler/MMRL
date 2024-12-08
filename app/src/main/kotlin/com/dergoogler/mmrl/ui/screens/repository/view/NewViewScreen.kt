@@ -825,6 +825,7 @@ fun NewViewScreen(
                     labels = listOf(stringResource(R.string.view_module_section_count, it.size))
                 ) {
                     AntiFeaturesItem(
+                        itemTextStyle = subListItemStyle,
                         contentPaddingValues = PaddingValues(
                             vertical = 8.dp,
                             horizontal = 16.dp
