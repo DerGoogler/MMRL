@@ -539,26 +539,24 @@ fun NewViewScreen(
                 }
             }
 
-            module.note?.let {
-                it.message?.let { it1 ->
-                    if (it.title != null && it.title.lowercase() == "deprecated") {
-                        Alert(
-                            backgroundColor = MaterialTheme.colorScheme.errorContainer,
-                            textColor = MaterialTheme.colorScheme.onErrorContainer,
-                            title = it.title,
-                            message = it1,
-                            modifier = Modifier.padding(horizontal = 16.dp)
-                        )
-                    } else {
-                        Alert(
-                            title = it.title,
-                            message = it1,
-                            modifier = Modifier.padding(horizontal = 16.dp)
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(16.dp))
+            if (module.note?.message != null) {
+                if (module.note.title != null && module.note.title.lowercase() == "deprecated") {
+                    Alert(
+                        backgroundColor = MaterialTheme.colorScheme.errorContainer,
+                        textColor = MaterialTheme.colorScheme.onErrorContainer,
+                        title = module.note.title,
+                        message = module.note.message,
+                        modifier = Modifier.padding(horizontal = 16.dp)
+                    )
+                } else {
+                    Alert(
+                        title = module.note.title,
+                        message = module.note.message,
+                        modifier = Modifier.padding(horizontal = 16.dp)
+                    )
                 }
+
+                Spacer(modifier = Modifier.height(16.dp))
             }
 
             if (!module.readme.isNullOrBlank()) {

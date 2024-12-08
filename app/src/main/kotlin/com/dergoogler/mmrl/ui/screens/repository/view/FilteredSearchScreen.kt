@@ -77,7 +77,7 @@ fun FilteredSearchScreen(
                         val encoded = URLEncoder.encode(value, "UTF-8")
                         IconButton(
                             onClick = {
-                                context.shareText("https://mmrl.dergoogler.com/search/${type}/${encoded}")
+                                context.shareText("https://mmrl.dergoogler.com/search/${type}/${encoded}?utm_medium=share&utm_source=${context.packageName}")
                             }
                         ) {
                             Icon(
