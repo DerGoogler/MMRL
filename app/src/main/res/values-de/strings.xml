@@ -97,4 +97,5 @@
     <string name="view_module_update_notify">Benachrichtigen</string>
     <string name="view_module_update_ignore">Ignorieren</string>
     <string name="module_update">Update</string>
+    <string name="install_screen_reboot_title">Gerät neu starten?</string>
 </resources>
