@@ -139,8 +139,8 @@
     <string name="install_screen_reboot_text">Czy na pewno chcesz uruchomić ponownie urządzenie?</string>
     <string name="view_module_features_zygisk_sub">Umożliwia modułom interakcję z frameworkiem Zygisk, umożliwiając modyfikacje i interakcje na poziomie systemu.</string>
     <string name="view_module_features_apks_sub">Zawiera dodatkowe apki wewnątrz modułu.</string>
-    <string name="view_module_features_postmount_sub">Wykonanie skryptu po zamontowaniu OverlayFS (KernelSU i APatch).&gt;</string>
-    <string name="view_module_features_bootcompleted_sub">Wykonanie skryptu po zakończeniu rozruchu (KernelSU i APatch).&gt;</string>
+    <string name="view_module_features_postmount_sub">Wykonanie skryptu po montowaniach OverlayFS</string>
+    <string name="view_module_features_bootcompleted_sub">Wykonanie skryptu po zakończeniu rozruchu</string>
     <string name="settings_resources">Zasoby</string>
     <string name="settings_resources_desc">Dokumentacja, obsługiwane repozytoria i wszystko inne</string>
     <string name="settings_security">Bezpieczeństwo</string>
@@ -155,7 +155,7 @@
     <string name="setup_shizuku_desc">Wymaga uprawnienia udzielonego przez Sui lub Shizuku (root)</string>
     <string name="view_module_features_resetprop_sub">Ustawia właściwości systemu załadowane przez resetprop Magiska.</string>
     <string name="view_module_features_sepolicy_sub">Dodaje niestandardowe zasady bezpieczeństwa (reguły SEPolicy).</string>
-    <string name="view_module_features_webui_sub">Interfejs sieciowy do zarządzania modułami (KernelSU i APatch, nie Magisk).&gt;</string>
+    <string name="view_module_features_webui_sub">Interfejs sieciowy do zarządzania modułami</string>
     <string name="settings_appearance_desc">Dostosuj aplikację do swoich potrzeb</string>
     <string name="settings_blacklist">Czarna lista</string>
     <string name="settings_blacklist_desc">Wymienione moduły mogą być zamknięte lub niebezpieczne</string>
@@ -257,4 +257,12 @@
     <string name="new_version_available">Nowa wersja %s jest dostępna, kliknij aby zaktualizować.</string>
     <string name="hidden">Ukryte</string>
     <string name="pre_release">Wersja wstępna</string>
+    <string name="view_module_install_confirm_title">Zainstalować ten moduł?</string>
+    <string name="settings_shell_module_state_change">Użyj powłoki dla stanów</string>
+    <string name="view_module_install_confirm_desc"><![CDATA[Czy na pewno chcesz zainstalować <font color=\"%1$s\">%2$s</font>?]]></string>
+    <string name="settings_shell_module_state_change_desc">Używa powłoki zamiast tworzenia plików w katalogu modułu. Po włączeniu nie będzie można użyć przycisku przywracania z powodu ograniczeń.</string>
+    <string name="view_module_install_confirm_confirm_deps">Instaluj (zależności)</string>
+    <string name="view_module_install_confirm_confirm">Instaluj</string>
+    <string name="view_module_install_confirm_desc_deps"><![CDATA[Czy na pewno chcesz zainstalować <font color=\"%1$s\">%2$s</font>? Ten moduł wymaga także:]]></string>
+    <string name="unsafe_url_redirecting">Niebezpieczny link: %1$s. Przekierowywanie…</string>
 </resources>
