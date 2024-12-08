@@ -41,16 +41,19 @@ fun HtmlText(
     modifier: Modifier = Modifier,
     style: TextStyle = LocalTextStyle.current,
     color: Color = LocalContentColor.current,
-    onClick: () -> Unit = {},
+    onClick: (() -> Unit)? = null,
 ) {
     val spannableString = SpannableStringBuilder(text).toString()
     val spanned = HtmlCompat.fromHtml(spannableString, HtmlCompat.FROM_HTML_MODE_COMPACT)
 
     Text(
-        modifier = modifier
-            .clickable(
+        modifier = if (onClick != null) {
+            modifier.clickable(
                 onClick = onClick
-            ),
+            )
+        } else {
+            modifier
+        },
         style = style,
         color = color,
         text = spanned.toAnnotatedString()

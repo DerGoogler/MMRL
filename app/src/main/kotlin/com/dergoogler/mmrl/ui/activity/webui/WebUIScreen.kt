@@ -6,6 +6,7 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.Toast
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -14,13 +15,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.webkit.WebViewAssetLoader
+import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.viewmodel.WebUIViewModel
+import dev.dergoogler.mmrl.compat.core.MMRLUriHandlerImpl
 import java.io.File
 
 
@@ -33,6 +38,7 @@ fun WebUIScreen(
     val context = LocalContext.current
     val userPrefs = LocalUserPreferences.current
     val density = LocalDensity.current
+    val browser = LocalUriHandler.current as MMRLUriHandlerImpl
     val colorScheme = MaterialTheme.colorScheme
     val typography = MaterialTheme.typography
 
@@ -45,6 +51,7 @@ fun WebUIScreen(
 
     val moduleDir = "/data/adb/modules/$modId"
     val webRoot = File("$moduleDir/webroot")
+    val domainSafeRegex = Regex("^https?://mui\\.kernelsu\\.org(/.*)?$")
 
     var topInset by remember { mutableIntStateOf(0) }
     var bottomInset by remember { mutableIntStateOf(0) }
@@ -87,6 +94,31 @@ fun WebUIScreen(
                 }
 
                 webViewClient = object : WebViewClient() {
+                    override fun shouldOverrideUrlLoading(
+                        view: WebView,
+                        request: WebResourceRequest?,
+                    ): Boolean {
+                        val mUrl = request?.url?.toString() ?: return false
+
+                        return if (!domainSafeRegex.matches(mUrl)) {
+                            browser.openUri(
+                                uri = mUrl,
+                                onSuccess = { intent, uri ->
+                                    intent.launchUrl(context, uri.toUri())
+                                    Toast.makeText(
+                                        context,
+                                        context.getString(R.string.unsafe_url_redirecting, uri),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            )
+                            true
+                        } else {
+                            view.loadUrl(mUrl)
+                            false
+                        }
+                    }
+
                     override fun shouldInterceptRequest(
                         view: WebView,
                         request: WebResourceRequest,

@@ -317,4 +317,5 @@
     <string name="new_version_available">New version %s is available, click to upgrade.</string>
     <string name="hidden">Hidden</string>
     <string name="pre_release">Pre-release</string>
+    <string name="unsafe_url_redirecting">Unsafe URL: %1$s. Redirecting…</string>
 </resources>
