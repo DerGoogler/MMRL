@@ -47,7 +47,7 @@ import com.dergoogler.mmrl.ui.component.TopAppBarIcon
 import com.dergoogler.mmrl.ui.utils.isScrollingUp
 import com.dergoogler.mmrl.ui.utils.none
 import com.dergoogler.mmrl.viewmodel.ModulesViewModel
-import ext.dergoogler.mmrl.activity.MMRLComponentActivity
+import dev.dergoogler.mmrl.compat.activity.MMRLComponentActivity
 
 @Composable
 fun ModulesScreen(

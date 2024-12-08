@@ -171,13 +171,11 @@
     <string name="settings_updates_desc">管理你的更新配置</string>
     <string name="settings_homepage">用用主页</string>
     <string name="settings_homepage_desc">设置应用启动后的主页</string>
-    <string name="settings_delete_zip_desc">安装成功后删除模块压缩包，这将由超级用户执行</string>
     <string name="settings_auto_update_repos">自动更新仓库</string>
     <string name="settings_auto_update_repos_desc">在后台自动更新仓库</string>
     <string name="settings_repo_update_interval">仓库更新间隔</string>
     <string name="settings_repo_update_interval_suffix">\u0020hour/s</string>
     <string name="settings_repo_update_interval_desc">选择应用更新间隔</string>
-    <string name="settings_doh">安全 DNS (DoH)</string>
     <string name="settings_check_app_updates">检查应用更新</string>
     <string name="settings_check_app_updates_desc">启动应用时检查更新</string>
     <string name="settings_hide_fingerprint">在主页隐藏指纹</string>
@@ -193,7 +191,6 @@
     <string name="settings_privacy_policy">隐私条款</string>
     <string name="settings_clear_install_terminal">清除安装终端日志</string>
     <string name="settings_clear_install_terminal_desc">在安装不止一个模块时清除安装终端</string>
-    <string name="settings_doh_desc">解决某些地区的 DNS 污染问题</string>
     <!-- App Theme -->
     <string name="app_theme_palette">主题调色板</string>
     <string name="app_theme_dark_theme">深色主题</string>

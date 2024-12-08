@@ -1,4 +1,4 @@
-package ext.dergoogler.mmrl.ext
+package dev.dergoogler.mmrl.compat.ext
 
 import androidx.compose.runtime.Composable
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences

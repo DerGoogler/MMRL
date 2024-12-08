@@ -1,4 +1,4 @@
-package ext.dergoogler.mmrl.viewmodel
+package dev.dergoogler.mmrl.compat.viewmodel
 
 import android.app.Application
 import android.content.Context

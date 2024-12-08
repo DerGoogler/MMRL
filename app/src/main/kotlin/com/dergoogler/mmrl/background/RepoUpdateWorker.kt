@@ -6,8 +6,7 @@ import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.database.entity.Repo.Companion.toRepo
 import com.dergoogler.mmrl.repository.ModulesRepository
 import com.dergoogler.mmrl.ui.activity.MainActivity
-import ext.dergoogler.mmrl.activity.MMRLComponentActivity
-import ext.dergoogler.mmrl.worker.MMRLCoroutineWorker
+import dev.dergoogler.mmrl.compat.worker.MMRLCoroutineWorker
 
 class RepoUpdateWorker(
     context: Context,

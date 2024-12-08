@@ -1,4 +1,4 @@
-package ext.dergoogler.mmrl.ext
+package dev.dergoogler.mmrl.compat.ext
 
 inline fun Boolean?.takeTrue(block: () -> Unit) {
     if (this == true) {

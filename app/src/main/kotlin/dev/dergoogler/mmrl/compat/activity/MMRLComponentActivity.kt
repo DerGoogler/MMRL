@@ -1,4 +1,4 @@
-package ext.dergoogler.mmrl.activity
+package dev.dergoogler.mmrl.compat.activity
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -10,6 +10,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.StringRes
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionContext
 import androidx.compose.runtime.CompositionLocalProvider
@@ -28,7 +29,7 @@ import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import dev.dergoogler.mmrl.compat.BuildCompat
-import ext.dergoogler.mmrl.MMRLUriHandler
+import dev.dergoogler.mmrl.compat.core.MMRLUriHandler
 import timber.log.Timber
 import javax.inject.Inject
 import kotlin.system.exitProcess
@@ -161,29 +162,31 @@ open class MMRLComponentActivity : ComponentActivity() {
 fun MMRLComponentActivity.setBaseContent(
     parent: CompositionContext? = null,
     content: @Composable () -> Unit,
+) = this.setContent(
+    parent = parent,
 ) {
-    this.setContent(
-        parent = parent,
-    ) {
-        val userPreferences by userPreferencesRepository.data.collectAsStateWithLifecycle(
-            initialValue = null
-        )
+    val userPreferences by userPreferencesRepository.data.collectAsStateWithLifecycle(
+        initialValue = null
+    )
 
-        val preferences = if (userPreferences == null) {
-            return@setContent
-        } else {
-            checkNotNull(userPreferences)
-        }
+    val preferences = if (userPreferences == null) {
+        return@setContent
+    } else {
+        checkNotNull(userPreferences)
+    }
+
+    val context = LocalContext.current
+    
+    AppTheme(
+        darkMode = preferences.isDarkMode(), themeColor = preferences.themeColor
+    ) {
+        val toolbarColor = MaterialTheme.colorScheme.surface
 
         CompositionLocalProvider(
             LocalUserPreferences provides preferences,
-            LocalUriHandler provides MMRLUriHandler(LocalContext.current)
+            LocalUriHandler provides MMRLUriHandler(context, toolbarColor)
         ) {
-            AppTheme(
-                darkMode = preferences.isDarkMode(), themeColor = preferences.themeColor
-            ) {
-                content()
-            }
+            content()
         }
     }
 }

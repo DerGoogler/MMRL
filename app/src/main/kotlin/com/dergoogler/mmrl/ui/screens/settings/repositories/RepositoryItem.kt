@@ -37,6 +37,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -49,9 +50,8 @@ import com.dergoogler.mmrl.ui.component.LabelItem
 import com.dergoogler.mmrl.ui.component.NavigationBarsSpacer
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.utils.expandedShape
-import ext.dergoogler.mmrl.ext.launchCustomTab
-import ext.dergoogler.mmrl.ext.shareText
-import ext.dergoogler.mmrl.ext.toFormattedDateSafely
+import dev.dergoogler.mmrl.compat.ext.shareText
+import dev.dergoogler.mmrl.compat.ext.toFormattedDateSafely
 
 @Composable
 fun RepositoryItem(
@@ -188,7 +188,7 @@ private fun BottomSheet(
     shape = BottomSheetDefaults.expandedShape(15.dp),
     windowInsets = WindowInsets(0)
 ) {
-    val context = LocalContext.current
+    val browser = LocalUriHandler.current
     val userPreferences = LocalUserPreferences.current
 
     Column(
@@ -247,14 +247,14 @@ private fun BottomSheet(
             ValueItem(
                 icon = R.drawable.brand_git,
                 label = R.string.repo_options_support,
-                onClick = { context.launchCustomTab(it) })
+                onClick = { browser.openUri(it) })
         }
 
         repo.donate?.let {
             ValueItem(
                 icon = R.drawable.heart_handshake,
                 label = R.string.repo_options_donate,
-                onClick = { context.launchCustomTab(it) }
+                onClick = { browser.openUri(it) }
             )
         }
 
@@ -262,7 +262,7 @@ private fun BottomSheet(
             ValueItem(
                 icon = R.drawable.world_www,
                 label = R.string.repo_options_website,
-                onClick = { context.launchCustomTab(it) }
+                onClick = { browser.openUri(it) }
             )
         }
 
@@ -270,7 +270,7 @@ private fun BottomSheet(
             ValueItem(
                 icon = R.drawable.cloud_upload,
                 label = R.string.repo_options_submission,
-                onClick = { context.launchCustomTab(it) }
+                onClick = { browser.openUri(it) }
             )
         }
 

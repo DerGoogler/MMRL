@@ -60,6 +60,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -98,15 +99,14 @@ import com.dergoogler.mmrl.viewmodel.BulkInstallViewModel
 import com.dergoogler.mmrl.viewmodel.ModuleViewModel
 import com.dergoogler.mmrl.viewmodel.ModulesViewModel
 import com.dergoogler.mmrl.viewmodel.RepositoryViewModel
-import ext.dergoogler.mmrl.activity.MMRLComponentActivity
-import ext.dergoogler.mmrl.ext.ifNotEmpty
-import ext.dergoogler.mmrl.ext.ifNotNullOrBlank
-import ext.dergoogler.mmrl.ext.isNotNullOrBlank
-import ext.dergoogler.mmrl.ext.launchCustomTab
-import ext.dergoogler.mmrl.ext.shareText
-import ext.dergoogler.mmrl.ext.takeTrue
-import ext.dergoogler.mmrl.ext.toFormatedFileSize
-import ext.dergoogler.mmrl.ext.toFormattedDateSafely
+import dev.dergoogler.mmrl.compat.activity.MMRLComponentActivity
+import dev.dergoogler.mmrl.compat.ext.ifNotEmpty
+import dev.dergoogler.mmrl.compat.ext.ifNotNullOrBlank
+import dev.dergoogler.mmrl.compat.ext.isNotNullOrBlank
+import dev.dergoogler.mmrl.compat.ext.shareText
+import dev.dergoogler.mmrl.compat.ext.takeTrue
+import dev.dergoogler.mmrl.compat.ext.toFormatedFileSize
+import dev.dergoogler.mmrl.compat.ext.toFormattedDateSafely
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -130,6 +130,7 @@ fun NewViewScreen(
     val lastVersionItem = viewModel.lastVersionItem
     val context = LocalContext.current
     val density = LocalDensity.current
+    val browser = LocalUriHandler.current
 
     val listItemContentPaddingValues = PaddingValues(vertical = 16.dp, horizontal = 16.dp)
 
@@ -696,7 +697,7 @@ fun NewViewScreen(
                         title = stringResource(id = R.string.view_module_donate),
                         desc = stringResource(id = R.string.view_module_donate_desc),
                         onClick = {
-                            context.launchCustomTab(it)
+                            browser.openUri(it)
                         }
                     )
                 }
@@ -707,7 +708,7 @@ fun NewViewScreen(
                     itemTextStyle = subListItemStyle,
                     title = stringResource(id = R.string.view_module_source),
                     onClick = {
-                        context.launchCustomTab(module.track.source)
+                        browser.openUri(module.track.source)
                     }
                 )
 
@@ -721,7 +722,7 @@ fun NewViewScreen(
                         itemTextStyle = subListItemStyle,
                         title = stringResource(id = R.string.view_module_homepage),
                         onClick = {
-                            context.launchCustomTab(it)
+                            browser.openUri(it)
                         }
                     )
                 }
@@ -736,7 +737,7 @@ fun NewViewScreen(
                         itemTextStyle = subListItemStyle,
                         title = stringResource(id = R.string.view_module_support),
                         onClick = {
-                            context.launchCustomTab(it)
+                            browser.openUri(it)
                         }
                     )
                 }

@@ -36,8 +36,8 @@ import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.model.local.LocalModule
 import com.dergoogler.mmrl.model.local.versionDisplay
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
-import ext.dergoogler.mmrl.ext.takeTrue
-import ext.dergoogler.mmrl.ext.toFormattedDateSafely
+import dev.dergoogler.mmrl.compat.ext.takeTrue
+import dev.dergoogler.mmrl.compat.ext.toFormattedDateSafely
 
 @Composable
 fun ModuleItem(

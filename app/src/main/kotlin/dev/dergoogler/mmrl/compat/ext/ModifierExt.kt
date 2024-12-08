@@ -1,4 +1,4 @@
-package ext.dergoogler.mmrl.ext
+package dev.dergoogler.mmrl.compat.ext
 
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent

@@ -31,7 +31,7 @@ import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.screens.repository.ModulesList
 import com.dergoogler.mmrl.ui.utils.none
 import com.dergoogler.mmrl.viewmodel.RepositoryViewModel
-import ext.dergoogler.mmrl.ext.takeTrue
+import dev.dergoogler.mmrl.compat.ext.takeTrue
 
 @Composable
 fun FilteredSearchScreen(

@@ -2,7 +2,7 @@ package com.dergoogler.mmrl.background
 
 import android.content.Context
 import android.content.Intent
-import ext.dergoogler.mmrl.worker.MMRLBroadcastReceiver
+import dev.dergoogler.mmrl.compat.worker.MMRLBroadcastReceiver
 import kotlinx.coroutines.flow.first
 import timber.log.Timber
 

@@ -36,6 +36,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -58,10 +59,9 @@ import com.dergoogler.mmrl.ui.screens.settings.changelogs.items.ChangelogBottomS
 import com.dergoogler.mmrl.ui.utils.navigateSingleTopTo
 import com.dergoogler.mmrl.ui.utils.none
 import com.dergoogler.mmrl.viewmodel.HomeViewModel
-import ext.dergoogler.mmrl.ext.launchCustomTab
-import ext.dergoogler.mmrl.ext.managerVersion
-import ext.dergoogler.mmrl.ext.seLinuxStatus
-import ext.dergoogler.mmrl.ext.takeTrue
+import dev.dergoogler.mmrl.compat.ext.managerVersion
+import dev.dergoogler.mmrl.compat.ext.seLinuxStatus
+import dev.dergoogler.mmrl.compat.ext.takeTrue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -74,6 +74,8 @@ fun HomeScreen(
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val context = LocalContext.current
     val userPreferences = LocalUserPreferences.current
+
+    val browser = LocalUriHandler.current
 
     var openRebootSheet by remember { mutableStateOf(false) }
     if (openRebootSheet) {
@@ -267,7 +269,7 @@ fun HomeScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clickable {
-                            context.launchCustomTab("https://github.com/sponsors/DerGoogler")
+                            browser.openUri("https://github.com/sponsors/DerGoogler")
                         }
                         .padding(24.dp),
                 ) {

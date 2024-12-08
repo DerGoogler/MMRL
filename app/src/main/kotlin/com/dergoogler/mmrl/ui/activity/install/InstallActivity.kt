@@ -7,9 +7,9 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.dergoogler.mmrl.viewmodel.InstallViewModel
 import dev.dergoogler.mmrl.compat.BuildCompat
-import ext.dergoogler.mmrl.activity.MMRLComponentActivity
-import ext.dergoogler.mmrl.activity.setBaseContent
-import ext.dergoogler.mmrl.ext.tmpDir
+import dev.dergoogler.mmrl.compat.activity.MMRLComponentActivity
+import dev.dergoogler.mmrl.compat.activity.setBaseContent
+import dev.dergoogler.mmrl.compat.ext.tmpDir
 import kotlinx.coroutines.launch
 import timber.log.Timber
 

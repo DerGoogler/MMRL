@@ -19,7 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.text.HtmlCompat
-import ext.dergoogler.mmrl.ext.toAnnotatedString
+import dev.dergoogler.mmrl.compat.ext.toAnnotatedString
 
 @Composable
 internal fun ProvideContentColorTextStyle(

@@ -43,7 +43,7 @@ import com.dergoogler.mmrl.ui.utils.isScrollingUp
 import com.dergoogler.mmrl.ui.utils.none
 import com.dergoogler.mmrl.viewmodel.BulkInstallViewModel
 import com.dergoogler.mmrl.viewmodel.RepositoryViewModel
-import ext.dergoogler.mmrl.activity.MMRLComponentActivity
+import dev.dergoogler.mmrl.compat.activity.MMRLComponentActivity
 import timber.log.Timber
 
 @Composable

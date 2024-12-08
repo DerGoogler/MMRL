@@ -12,8 +12,16 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.ServiceCompat
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
+import com.dergoogler.mmrl.R
+import com.dergoogler.mmrl.app.Const
+import com.dergoogler.mmrl.app.utils.NotificationUtils
+import com.dergoogler.mmrl.compat.MediaStoreCompat.createDownloadUri
+import com.dergoogler.mmrl.compat.NetworkCompat
 import com.dergoogler.mmrl.compat.PermissionCompat
+import com.dergoogler.mmrl.repository.UserPreferencesRepository
 import dagger.hilt.android.AndroidEntryPoint
+import dev.dergoogler.mmrl.compat.BuildCompat
+import dev.dergoogler.mmrl.compat.ext.parcelable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -32,14 +40,6 @@ import kotlinx.parcelize.Parcelize
 import timber.log.Timber
 import java.io.File
 import javax.inject.Inject
-import com.dergoogler.mmrl.R
-import com.dergoogler.mmrl.app.Const
-import com.dergoogler.mmrl.app.utils.NotificationUtils
-import com.dergoogler.mmrl.compat.MediaStoreCompat.createDownloadUri
-import com.dergoogler.mmrl.compat.NetworkCompat
-import com.dergoogler.mmrl.repository.UserPreferencesRepository
-import ext.dergoogler.mmrl.ext.parcelable
-import dev.dergoogler.mmrl.compat.BuildCompat
 
 @AndroidEntryPoint
 class DownloadService : LifecycleService() {

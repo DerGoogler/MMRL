@@ -1,79 +1,18 @@
-package ext.dergoogler.mmrl.ext
+package dev.dergoogler.mmrl.compat.ext
 
 import android.content.Context
-import android.content.Intent
-import androidx.browser.customtabs.CustomTabColorSchemeParams
-import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Composer
 import androidx.compose.ui.res.stringResource
 import androidx.core.app.ShareCompat
 import androidx.core.content.pm.PackageInfoCompat
-import androidx.core.net.toUri
 import com.dergoogler.mmrl.R
 import com.topjohnwu.superuser.Shell
-import timber.log.Timber
 
 val Context.tmpDir
     get() = cacheDir.resolve("tmp")
         .apply {
             if (!exists()) mkdirs()
         }
-
-fun Context.openUrl(url: String) {
-    Intent.parseUri(url, Intent.URI_INTENT_SCHEME).apply {
-        startActivity(this)
-    }
-}
-
-fun Context.launchCustomTab(
-    url: String,
-    onSuccess: ((customTabsIntent: CustomTabsIntent, url: String) -> Unit)? = null,
-    onError: ((Exception) -> Unit)? = null,
-) {
-    try {
-        val colorSchemeParams = CustomTabColorSchemeParams.Builder()
-            .build()
-
-        val customTabsIntent = CustomTabsIntent.Builder()
-            .setDefaultColorSchemeParams(colorSchemeParams)
-            .build()
-
-        customTabsIntent.apply {
-            if (onSuccess != null) {
-                onSuccess(this, url)
-            } else {
-                launchUrl(this@launchCustomTab, url.toUri())
-            }
-        }
-    } catch (activityNotFoundException: Exception) {
-        if (onError != null) {
-            onError(activityNotFoundException)
-        } else {
-            Timber.e(activityNotFoundException, "unable to launch custom tab")
-            this.openUrl(url)
-        }
-    }
-}
-
-// TODO: add colors from theme
-fun Context.launchCustomTab(url: String) {
-    launchCustomTab(url)
-}
-
-@get:Composable
-val Context.currentComposer
-    get(): Composer? {
-        return try {
-            val composerField = Class.forName("androidx.compose.runtime.ComposerKt")
-                .getDeclaredField("currentComposer")
-            composerField.isAccessible = true
-            composerField.get(null) as? Composer
-        } catch (e: Exception) {
-            e.printStackTrace()
-            null
-        }
-    }
 
 fun Context.shareText(text: String) {
     ShareCompat.IntentBuilder(this)

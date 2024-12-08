@@ -1,4 +1,4 @@
-package ext.dergoogler.mmrl.worker
+package dev.dergoogler.mmrl.compat.worker
 
 import android.app.NotificationManager
 import android.app.PendingIntent

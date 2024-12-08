@@ -31,8 +31,8 @@ import com.dergoogler.mmrl.model.online.VersionItem
 import com.dergoogler.mmrl.ui.component.BottomSheet
 import com.dergoogler.mmrl.ui.component.LabelItem
 import com.dergoogler.mmrl.ui.component.VersionItemBottomSheet
-import ext.dergoogler.mmrl.ext.ignoreParentPadding
-import ext.dergoogler.mmrl.ext.toFormattedDateSafely
+import dev.dergoogler.mmrl.compat.ext.ignoreParentPadding
+import dev.dergoogler.mmrl.compat.ext.toFormattedDateSafely
 
 @Composable
 fun VersionSelectBottomSheet(

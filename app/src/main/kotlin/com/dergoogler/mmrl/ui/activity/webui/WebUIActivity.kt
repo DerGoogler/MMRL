@@ -10,8 +10,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.dergoogler.mmrl.R
-import ext.dergoogler.mmrl.activity.MMRLComponentActivity
-import ext.dergoogler.mmrl.activity.setBaseContent
+import dev.dergoogler.mmrl.compat.activity.MMRLComponentActivity
+import dev.dergoogler.mmrl.compat.activity.setBaseContent
 import timber.log.Timber
 
 class WebUIActivity : MMRLComponentActivity() {

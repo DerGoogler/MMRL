@@ -34,9 +34,9 @@ import com.dergoogler.mmrl.ui.component.BottomSheet
 import com.dergoogler.mmrl.ui.component.LabelItem
 import com.dergoogler.mmrl.ui.component.PageIndicator
 import com.dergoogler.mmrl.viewmodel.BulkInstallViewModel
-import ext.dergoogler.mmrl.ext.fadingEdge
-import ext.dergoogler.mmrl.ext.ignoreParentPadding
-import ext.dergoogler.mmrl.ext.toFormatedFileSize
+import dev.dergoogler.mmrl.compat.ext.fadingEdge
+import dev.dergoogler.mmrl.compat.ext.ignoreParentPadding
+import dev.dergoogler.mmrl.compat.ext.toFormatedFileSize
 
 @Composable
 fun BulkBottomSheet(

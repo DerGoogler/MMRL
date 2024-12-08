@@ -16,8 +16,8 @@ import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.model.online.OnlineModule
 import com.dergoogler.mmrl.ui.component.BulletList
 import com.dergoogler.mmrl.ui.component.HtmlText
-import ext.dergoogler.mmrl.ext.ifNotEmpty
-import ext.dergoogler.mmrl.ext.isNotNullOrEmpty
+import dev.dergoogler.mmrl.compat.ext.ifNotEmpty
+import dev.dergoogler.mmrl.compat.ext.isNotNullOrEmpty
 
 @Composable
 fun InstallConfirmDialog(

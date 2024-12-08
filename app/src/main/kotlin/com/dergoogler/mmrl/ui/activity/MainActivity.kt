@@ -23,8 +23,8 @@ import com.dergoogler.mmrl.datastore.UserPreferencesCompat.Companion.isSetup
 import com.dergoogler.mmrl.datastore.WorkingMode
 import com.dergoogler.mmrl.network.NetworkUtils
 import com.dergoogler.mmrl.ui.activity.install.InstallActivity
-import ext.dergoogler.mmrl.activity.MMRLComponentActivity
-import ext.dergoogler.mmrl.activity.setBaseContent
+import dev.dergoogler.mmrl.compat.activity.MMRLComponentActivity
+import dev.dergoogler.mmrl.compat.activity.setBaseContent
 import kotlinx.coroutines.launch
 import timber.log.Timber
 

@@ -5,8 +5,8 @@ import androidx.compose.runtime.Composable
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.utils.Utils
 import com.squareup.moshi.JsonClass
-import ext.dergoogler.mmrl.ext.isNotNullOrBlank
-import ext.dergoogler.mmrl.ext.isNotNullOrEmpty
+import dev.dergoogler.mmrl.compat.ext.isNotNullOrBlank
+import dev.dergoogler.mmrl.compat.ext.isNotNullOrEmpty
 
 @JsonClass(generateAdapter = true)
 data class OnlineModule(

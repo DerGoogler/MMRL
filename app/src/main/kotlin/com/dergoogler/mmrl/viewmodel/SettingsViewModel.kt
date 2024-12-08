@@ -9,7 +9,7 @@ import com.dergoogler.mmrl.repository.LocalRepository
 import com.dergoogler.mmrl.repository.ModulesRepository
 import com.dergoogler.mmrl.repository.UserPreferencesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import ext.dergoogler.mmrl.viewmodel.MMRLViewModel
+import dev.dergoogler.mmrl.compat.viewmodel.MMRLViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.File

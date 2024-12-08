@@ -1,4 +1,4 @@
-package ext.dergoogler.mmrl.ext
+package dev.dergoogler.mmrl.compat.ext
 
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.contract

@@ -1,7 +1,7 @@
 package com.dergoogler.mmrl.background
 
-import android.content.Context
 import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import androidx.work.WorkerParameters
 import com.dergoogler.mmrl.R
@@ -10,7 +10,7 @@ import com.dergoogler.mmrl.database.entity.OnlineModuleEntity
 import com.dergoogler.mmrl.repository.ModulesRepository
 import com.dergoogler.mmrl.stub.IRepoManager
 import com.dergoogler.mmrl.ui.activity.MainActivity
-import ext.dergoogler.mmrl.worker.MMRLCoroutineWorker
+import dev.dergoogler.mmrl.compat.worker.MMRLCoroutineWorker
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber

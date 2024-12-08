@@ -24,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
@@ -31,7 +32,6 @@ import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.ui.component.NavigationBarsSpacer
 import com.dergoogler.mmrl.ui.component.TopAppBarTitle
 import com.dergoogler.mmrl.ui.utils.none
-import ext.dergoogler.mmrl.ext.launchCustomTab
 
 @Composable
 fun CrashHandlerScreen(
@@ -39,6 +39,8 @@ fun CrashHandlerScreen(
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val context = LocalContext.current
+
+    val browser = LocalUriHandler.current
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection), topBar = {
@@ -105,7 +107,7 @@ fun CrashHandlerScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Button(onClick = { context.launchCustomTab("https://github.com/DerGoogler/MMRL/issues") }) {
+            Button(onClick = { browser.openUri("https://github.com/DerGoogler/MMRL/issues") }) {
                 Text(text = stringResource(R.string.report_to_issues))
             }
 

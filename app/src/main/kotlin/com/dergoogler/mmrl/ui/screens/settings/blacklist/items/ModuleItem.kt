@@ -16,7 +16,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -27,7 +27,6 @@ import com.dergoogler.mmrl.ui.component.BottomSheet
 import com.dergoogler.mmrl.ui.component.ListButtonItem
 import com.dergoogler.mmrl.ui.component.MarkdownText
 import com.dergoogler.mmrl.ui.component.NavigationBarsSpacer
-import ext.dergoogler.mmrl.ext.launchCustomTab
 
 
 @Composable
@@ -49,7 +48,8 @@ fun ModuleItem(
 private fun BlacklistBottomSheet(
     module: Blacklist, onClose: () -> Unit,
 ) = BottomSheet(onDismissRequest = onClose) {
-    val context = LocalContext.current
+//    val context = LocalContext.current
+    val browser = LocalUriHandler.current
 
     Column(
         modifier = Modifier.padding(bottom = 18.dp),
@@ -105,12 +105,14 @@ private fun BlacklistBottomSheet(
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        Button(modifier = Modifier
-            .padding(horizontal = 16.dp)
-            .fillMaxWidth(), onClick = {
-            context.launchCustomTab(module.source)
-
-        }) {
+        Button(
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .fillMaxWidth(),
+            onClick = {
+                browser.openUri(module.source)
+            }
+        ) {
             Text(stringResource(R.string.open_source))
         }
 

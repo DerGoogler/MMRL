@@ -23,7 +23,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.dergoogler.mmrl.ui.utils.expandedShape
-import ext.dergoogler.mmrl.ext.takeTrue
+import dev.dergoogler.mmrl.compat.ext.takeTrue
 
 @Composable
 fun BottomSheet(

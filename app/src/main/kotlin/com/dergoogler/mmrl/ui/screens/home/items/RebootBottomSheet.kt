@@ -22,12 +22,12 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.ui.component.ConfirmRebootDialog
-import com.dergoogler.mmrl.ui.component.NavigationBarsSpacer
 import com.dergoogler.mmrl.ui.component.ListButtonItem
+import com.dergoogler.mmrl.ui.component.NavigationBarsSpacer
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.utils.expandedShape
 import com.dergoogler.mmrl.viewmodel.HomeViewModel
-import ext.dergoogler.mmrl.then
+import dev.dergoogler.mmrl.compat.then
 
 @Composable
 fun RebootBottomSheet(

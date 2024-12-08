@@ -13,7 +13,7 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.dergoogler.mmrl.BuildConfig
@@ -26,8 +26,7 @@ import com.dergoogler.mmrl.ui.navigation.graphs.SettingsScreen
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.utils.navigateSingleTopTo
 import com.dergoogler.mmrl.ui.utils.none
-import ext.dergoogler.mmrl.ext.launchCustomTab
-import ext.dergoogler.mmrl.ext.takeTrue
+import dev.dergoogler.mmrl.compat.ext.takeTrue
 
 @Composable
 fun SettingsScreen(
@@ -36,7 +35,7 @@ fun SettingsScreen(
     val userPreferences = LocalUserPreferences.current
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
-    val context = LocalContext.current
+    val browser = LocalUriHandler.current
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -112,7 +111,7 @@ fun SettingsScreen(
                 title = stringResource(id = R.string.settings_resources),
                 desc = stringResource(id = R.string.settings_resources_desc),
                 onClick = {
-                    context.launchCustomTab(Const.RESOURCES_URL)
+                    browser.openUri(Const.RESOURCES_URL)
                 }
             )
 
@@ -155,7 +154,7 @@ fun SettingsScreen(
                     icon = R.drawable.spy,
                     title = stringResource(id = R.string.settings_privacy_policy),
                     onClick = {
-                        context.launchCustomTab(Const.PRIVACY_POLICY_URL)
+                        browser.openUri(Const.PRIVACY_POLICY_URL)
                     }
                 )
             }

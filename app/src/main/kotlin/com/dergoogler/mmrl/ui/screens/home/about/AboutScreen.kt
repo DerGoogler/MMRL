@@ -26,7 +26,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -37,14 +37,13 @@ import com.dergoogler.mmrl.app.Const
 import com.dergoogler.mmrl.ui.component.HtmlText
 import com.dergoogler.mmrl.ui.component.Logo
 import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
-import ext.dergoogler.mmrl.ext.launchCustomTab
 
 @Composable
 fun AboutScreen(
     navController: NavController,
 ) {
-    val context = LocalContext.current
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+    val browser = LocalUriHandler.current
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -97,7 +96,7 @@ fun AboutScreen(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 FilledTonalButton(
-                    onClick = { context.launchCustomTab(Const.GITHUB_URL) }
+                    onClick = { browser.openUri(Const.GITHUB_URL) }
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.github),
@@ -124,7 +123,7 @@ fun AboutScreen(
 //                    }
 
                     FilledTonalButton(
-                        onClick = { context.launchCustomTab(Const.TELEGRAM_URL) }
+                        onClick = { browser.openUri(Const.TELEGRAM_URL) }
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.telegram),

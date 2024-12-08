@@ -16,7 +16,7 @@ import com.dergoogler.mmrl.repository.UserPreferencesRepository
 import com.dergoogler.mmrl.service.DownloadService
 import com.dergoogler.mmrl.utils.Utils
 import dagger.hilt.android.lifecycle.HiltViewModel
-import ext.dergoogler.mmrl.viewmodel.MMRLViewModel
+import dev.dergoogler.mmrl.compat.viewmodel.MMRLViewModel
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

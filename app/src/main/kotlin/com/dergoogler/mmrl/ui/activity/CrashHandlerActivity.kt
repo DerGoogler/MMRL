@@ -1,8 +1,8 @@
 package com.dergoogler.mmrl.ui.activity
 
 import android.os.Bundle
-import ext.dergoogler.mmrl.activity.MMRLComponentActivity
-import ext.dergoogler.mmrl.activity.setBaseContent
+import dev.dergoogler.mmrl.compat.activity.MMRLComponentActivity
+import dev.dergoogler.mmrl.compat.activity.setBaseContent
 
 class CrashHandlerActivity : MMRLComponentActivity() {
 

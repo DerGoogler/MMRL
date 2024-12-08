@@ -23,9 +23,9 @@ import com.dergoogler.mmrl.ui.activity.install.ShellBroadcastReceiver
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.dergoogler.mmrl.compat.BuildCompat
 import dev.dergoogler.mmrl.compat.content.State
+import dev.dergoogler.mmrl.compat.ext.tmpDir
 import dev.dergoogler.mmrl.compat.stub.IInstallCallback
-import ext.dergoogler.mmrl.ext.tmpDir
-import ext.dergoogler.mmrl.viewmodel.MMRLViewModel
+import dev.dergoogler.mmrl.compat.viewmodel.MMRLViewModel
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

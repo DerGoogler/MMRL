@@ -8,7 +8,7 @@ import com.dergoogler.mmrl.repository.ModulesRepository
 import com.dergoogler.mmrl.repository.UserPreferencesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.dergoogler.mmrl.compat.content.ModuleInfo
-import ext.dergoogler.mmrl.viewmodel.MMRLViewModel
+import dev.dergoogler.mmrl.compat.viewmodel.MMRLViewModel
 import timber.log.Timber
 import javax.inject.Inject
 
