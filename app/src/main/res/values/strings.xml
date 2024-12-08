@@ -91,9 +91,9 @@
     <string name="view_module_features_sepolicy_sub">Adds custom security policies (SEPolicy rules).</string>
     <string name="view_module_features_zygisk_sub">Allows modules to interact with the Zygisk framework, enabling system-level modifications and interactions.</string>
     <string name="view_module_features_apks_sub">Including additional APKs inside the module.</string>
-    <string name="view_module_features_webui_sub">Web interface for managing modules (KernelSU &amp; APatch, not Magisk).></string>
-    <string name="view_module_features_postmount_sub">Script execution after OverlayFS mounts (KernelSU &amp; APatch).></string>
-    <string name="view_module_features_bootcompleted_sub">Script execution after boot completes (KernelSU &amp; APatch).></string>
+    <string name="view_module_features_webui_sub">Web interface for managing modules</string>
+    <string name="view_module_features_postmount_sub">Script execution after OverlayFS mounts</string>
+    <string name="view_module_features_bootcompleted_sub">Script execution after boot completes</string>
     <string name="view_module_module_support">Module Support</string>
     <string name="view_module_provided_by">Provided By</string>
     <string name="view_module_added_on">Added On</string>
