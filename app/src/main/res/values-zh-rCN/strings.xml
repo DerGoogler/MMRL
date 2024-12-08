@@ -15,13 +15,17 @@
     <string name="install_failure">失败</string>
     <string name="install_logs_saved">日志已保存</string>
     <string name="install_logs_save_failed">保存失败：%s</string>
-
+    <string name="install_screen_reboot_title">立即重新启动？</string>
+    <string name="install_screen_reboot_text">你是否要立即重新启动设备？</string>
+    <string name="install_screen_reboot_confirm">确认</string>
+    <string name="install_screen_reboot_dismiss">稍后</string>
     <!-- License -->
     <string name="license_title">查看许可证</string>
     <string name="license_osi_approved">OSI 获批</string>
     <string name="license_fsf_libre">自由软件</string>
 
     <!-- Page -->
+    <string name="page_home">首页</string>
     <string name="page_repository">存储库</string>
     <string name="page_modules">模块</string>
     <string name="page_settings">设置</string>
@@ -29,16 +33,21 @@
     <!-- Repository -->
     <string name="repository_empty">存储库为空</string>
     <string name="module_installed">已安装</string>
-    <string name="module_new">新</string>
+    <string name="module_new">新的模块</string>
     <!-- Advanced Menu -->
-    <string name="menu_pin_installed">置顶已安装</string>
-    <string name="menu_pin_updatable">置顶可更新</string>
+    <string name="menu_pin_installed">置顶已安装模块</string>
+    <string name="menu_pin_updatable">置顶可更新模块</string>
     <string name="menu_show_icon">显示图标</string>
     <string name="menu_show_license">显示许可证</string>
+    <string name="menu_show_cover">显示封面</string>
+    <string name="menu_show_verified">显示认证</string>
+    <string name="menu_sort_repolistmode_detailed">详细</string>
+    <string name="menu_sort_repolistmode_compact">紧凑</string>
     <!-- View Module -->
     <string name="view_module_page_overview">概览</string>
     <string name="view_module_page_versions">版本</string>
     <string name="view_module_page_about">关于</string>
+    <string name="view_module_page_readme">Readme文档</string>
     <string name="view_module_description">描述</string>
     <string name="view_module_cloud">云端</string>
     <string name="view_module_version">版本</string>
@@ -54,15 +63,66 @@
     <string name="view_module_view_track">追踪信息</string>
     <string name="view_module_type">类型：%s</string>
     <string name="view_module_added">添加于：%s</string>
+    <string name="view_module_file_size">文件大小</string>
+    <string name="view_module_screenshots">屏幕截图</string>
+    <string name="view_module_help">帮助</string>
+    <string name="view_module_antifeatures">不受欢迎的功能</string>
+    <string name="view_module_unsupported">不支持的</string>
+    <string name="view_module_unsupported_desc">你的设备不支持这个版本的模块，请自行承担安装风险</string>
+    <string name="view_module_license">许可证</string>
+
+    <!-- View Module / Features -->
+    <string name="view_module_features">特色功能</string>
+    <string name="view_module_features_service">服务</string>
+    <string name="view_module_features_post_fs_data">Post FS Data</string>
+    <string name="view_module_features_system_properties">系统属性</string>
+    <string name="view_module_features_selinux_policy">SELinux状态</string>
+    <string name="view_module_features_zygisk">Zygisk</string>
+    <string name="view_module_features_apks">APKs</string>
+    <string name="view_module_features_webui">WebUI</string>
+    <string name="view_module_features_post_mount">Post Mount</string>
+    <string name="view_module_features_boot_completed">启动后</string>
+    <string name="view_module_features_service_sub">在启动时执行脚本(更长的启动时间)</string>
+    <string name="view_module_features_post_fs_data_sub">启动时更早地执行脚本(部分启动系统)</string>
+    <string name="view_module_features_resetprop_sub">设置由Magisk resetprop加载的系统属性</string>
+    <string name="view_module_features_sepolicy_sub">添加自定义SEPolicy属性</string>
+    <string name="view_module_features_zygisk_sub">允许模块与Zygisk交互</string>
+    <string name="view_module_features_apks_sub">在模块内包含额外的APK</string>
+    <string name="view_module_features_webui_sub">带有WebUI模块管理界面(仅限KernelSU和APatch，不支持Magisk)></string>
+    <string name="view_module_features_postmount_sub">在OverlayFS挂载后执行脚本(仅限KernelSU和APatch)></string>
+    <string name="view_module_features_bootcompleted_sub">启动后执行脚本(KernelSU和APatch)></string>  <string name="view_module_module_support">Module Support</string>
+    <string name="view_module_provided_by">提供者</string>
+    <string name="view_module_added_on">额外的</string>
+    <string name="view_module_about_this_module">关于此模块</string>
+    <string name="view_module_mod_infos_disclaimer"><![CDATA[ <b>*</b> 由于添加多个仓库产生了不同的描述,点击链接了解详情 <font color=\"%1$s\">View Track</font>]]></string>
+    <string name="view_module_section_count">%1$s+</string>
+    <string name="view_module_donate">捐赠</string>
+    <string name="view_module_donate_desc">通过捐赠一杯咖啡表达对开发者的支持 ☕</string>
+    <string name="view_module_module_id">模块ID</string>
+    <string name="view_module_required_os">要求的系统</string>
+    <string name="view_module_required_os_value">Android %1$s 及以上</string>
+    <string name="view_module_dependencies">依赖</string>
+    <string name="view_module_dependencies_not_found">依赖项未找到</string>
+    <string name="view_module_share">分享</string>
+    <string name="view_module_not_found">未找到模块</string>
+    <string name="view_module_install_confirm_title">安装此模块?</string>
+    <string name="view_module_install_confirm_confirm_deps">安装 (deps)</string>
+    <string name="view_module_install_confirm_confirm">安装</string>
+    <string name="view_module_install_confirm_desc"><![CDATA[确定要安装 <font color=\"%1$s\">%2$s</font>吗?]]></string>
+    <string name="view_module_install_confirm_desc_deps"><![CDATA[确定要安装 <font color=\"%1$s\">%2$s</font>吗? 这个模块还需要:]]></string>
+
 
     <!-- Modules -->
     <string name="modules_empty">没找到任何模块</string>
+    <!-- Module Item -->
     <string name="module_version_author">%1$s，作者 %2$s</string>
     <string name="module_remove">移除</string>
     <string name="module_restore">还原</string>
     <string name="module_install">安装</string>
+    <string name="module_reinstall">重新安装</string>
     <string name="module_download">下载</string>
     <string name="module_update">更新</string>
+    <string name="module_id">ID: %1$s</string>
 
     <!-- Settings-->
     <string name="settings_app">应用</string>
@@ -70,6 +130,19 @@
     <string name="settings_repo">存储库</string>
     <string name="settings_repo_desc">管理 Magisk 模块存储库</string>
     <string name="settings_about">关于</string>
+    <string name="settings_resources">资源</string>
+    <string name="settings_resources_desc">文档, 支持的仓库及其他</string>
+    <string name="settings_security">安全</string>
+    <string name="settings_security_desc">应用安全相关</string>
+    <string name="settings_appearance">外观</string>
+    <string name="settings_appearance_desc">调整成你想要的样子</string>
+    <string name="settings_other">其他</string>
+    <string name="settings_other_desc">DoH, 下载路径</string>
+    <string name="settings_text_wrap">文本自动换行</string>
+    <string name="settings_text_wrap_desc">在模块安装终端内自动换行文本</string>
+    <string name="settings_changelog">更新日志</string>
+    <string name="settings_changelo_desc">MMRL的所有更新细节</string>
+    <string name="settings_open_notification_settings">打开通知设置</string>
     <!-- Root Item -->
     <string name="settings_root_access">Root 权限：%s</string>
     <string name="settings_root_provider">授权应用：%s</string>
@@ -83,8 +156,43 @@
     <string name="settings_app_theme_desc">更改主题配色和深色模式</string>
     <string name="settings_download_path">下载路径</string>
     <string name="settings_delete_zip">删除压缩包</string>
+    <string name="settings_delete_zip_desc">安装成功后删除下载的模块, 由超级用户执行</string>
+    <string name="settings_doh">DNS over HTTPS</string>
+    <string name="settings_doh_desc">解决某些地区的DNS污染问题</string>
+    <string name="settings_reboot_protection">重启保护</string>
+    <string name="settings_reboot_protection_desc">打开后在每次重启前需要手动确认</string>
+    <string name="settings_blacklist">黑名单模块</string>
+    <string name="settings_blacklist_desc">显示闭源的或者不安全的模块</string>
+    <string name="settings_date_pattern">日期设置</string>
+    <string name="settings_date_pattern_desc">自定义日期格式</string>
+    <string name="settings_recommended_repos">推荐仓库</string>
+    <string name="settings_recommended_repos_desc">探索新仓库并直接添加</string>
+    <string name="settings_updates">更新</string>
+    <string name="settings_updates_desc">管理你的更新配置</string>
+    <string name="settings_homepage">用用主页</string>
+    <string name="settings_homepage_desc">设置应用启动后的主页</string>
     <string name="settings_delete_zip_desc">安装成功后删除模块压缩包，这将由超级用户执行</string>
-    <string name="settings_doh">安全 DNS（DoH）</string>
+    <string name="settings_auto_update_repos">自动更新仓库</string>
+    <string name="settings_auto_update_repos_desc">在后台自动更新仓库</string>
+    <string name="settings_repo_update_interval">仓库更新间隔</string>
+    <string name="settings_repo_update_interval_suffix">\u0020hour/s</string>
+    <string name="settings_repo_update_interval_desc">选择应用更新间隔</string>
+    <string name="settings_doh">安全 DNS (DoH)</string>
+    <string name="settings_check_app_updates">检查应用更新</string>
+    <string name="settings_check_app_updates_desc">启动应用时检查更新</string>
+    <string name="settings_hide_fingerprint">在主页隐藏指纹</string>
+    <string name="settings_hide_fingerprint_desc">无论指纹是真的还是假的</string>
+    <string name="settings_check_modules_update">检查模块更新</string>
+    <string name="settings_check_modules_update_desc">启用对已安装的模块检查更新</string>
+    <string name="settings_check_modules_update_interval_suffix">\u0020hour/s</string>
+    <string name="settings_check_modules_update_interval">模块检查更新间隔</string>
+    <string name="settings_check_modules_update_interval_desc">设置检查已安装模块的更新间隔</string>
+    <string name="settings_include_preleases">包括预发行版</string>
+    <string name="settings_developer_mode">开发者模式</string>
+    <string name="settings_developer_mode_desc">显示模块ID及其他信息</string>
+    <string name="settings_privacy_policy">隐私条款</string>
+    <string name="settings_clear_install_terminal">清除安装终端日志</string>
+    <string name="settings_clear_install_terminal_desc">在安装不止一个模块时清除安装终端</string>
     <string name="settings_doh_desc">解决某些地区的 DNS 污染问题</string>
     <!-- App Theme -->
     <string name="app_theme_palette">主题调色板</string>
@@ -96,8 +204,13 @@
     <string name="repo_modules">%d 个模块</string>
     <string name="repo_update_at">更新于：%s</string>
     <string name="repo_incompatible">不兼容</string>
+    <string name="repo_options">选项</string>
     <string name="repo_options_update">更新</string>
     <string name="repo_options_delete">删除</string>
+    <string name="repo_options_support">支持</string>
+    <string name="repo_options_submission">提交</string>
+    <string name="repo_options_website">网站</string>
+    <string name="repo_options_donate">捐赠</string>
     <string name="repo_delete_dialog_desc">你确定要删除 %s？</string>
     <string name="repo_add_dialog_title">添加存储库</string>
     <string name="repo_add_dialog_add">添加</string>
@@ -119,6 +232,7 @@
     <string name="menu_descending">降序</string>
     <string name="menu_pin_enabled">置顶已启用</string>
     <string name="menu_show_updated">显示更新时间</string>
+    <string name="menu_show_antifeatures">显示不受欢迎的功能</string>
 
     <!-- Message -->
     <string name="message_download_success">下载成功</string>
@@ -133,5 +247,66 @@
 
     <!-- Other -->
     <string name="unknown_error">未知错误</string>
+    <string name="verified">已认证</string>
+    <string name="open">打开</string>
+    <string name="help">帮助</string>
+    <string name="module_config">配置</string>
+    <string name="we_hit_a_brick_crash">我们遇到了问题!</string>
+    <string name="report_to_issues">汇报Issue</string>
+    <string name="stack_trace_truncated">%s\n… %d 更多</string>
+    <string name="additional_notes">附加说明</string>
+    <string name="repo_added">仓库已添加</string>
 
+    <!-- Work Manager -->
+    <string name="work_repository_updates">仓库更新</string>
+    <string name="work_updates_for_repositories">检查仓库更新</string>
+    <string name="work_module_updates">模块更新</string>
+    <string name="work_update_checker_for_modules">检查模块更新</string>
+
+    <!-- Repo Update Service -->
+    <string name="repo_update_service">仓库更新成功</string>
+    <string name="repo_update_service_desc">别担心, MMRL已经为你更新了安装的仓库 😋</string>
+    <string name="repo_update_service_failed">仓库已是最新</string>
+    <string name="repo_update_service_failed_desc">没有可以更新的仓库</string>
+
+    <!-- SELinux -->
+    <string name="selinux_status">SELinux状态</string>
+    <string name="selinux_status_disabled">Disabled</string>
+    <string name="selinux_status_enforcing">Enforcing</string>
+    <string name="selinux_status_permissive">Permissive</string>
+    <string name="selinux_status_unknown">Unknown</string>
+
+    <string name="reboot">重启</string>
+    <string name="reboot_userspace">软重启</string>
+    <string name="reboot_recovery">重启到Recovery模式</string>
+    <string name="reboot_bootloader">重启到Bootloader模式</string>
+    <string name="reboot_download">重启到Download模式</string>
+    <string name="reboot_edl">重启到EDL模式</string>
+
+    <string name="home_support_title">支持我</string>
+    <string name="home_support_content">MMRL 永远是免费、开源的软件，欢迎向我捐赠</string>
+    <string name="home_installed_modules">安装模块</string>
+    <string name="home_enabled_modules">启用模块</string>
+    <string name="home_installed_modules_with_service_files">带有服务的模块</string>
+    <string name="home_disabled_modules">禁用模块</string>
+    <string name="home_updated_modules">更新模块</string>
+
+    <string name="bulk_install_module_already_added">模块已存在</string>
+    <string name="bulk_install_module_added">模块已添加</string>
+    <string name="bulk_module_install">大模块安装</string>
+
+    <string name="has_a_new_update">%1$s 有更新</string>
+    <string name="update_available_from_to">可用更新 %s (%d) 到 %s (%d).</string>
+    <string name="events_birthday">MMRL %1$s 年!</string>
+    <string name="events_halloween">BOO! … AHH</string>
+    <string name="events_christmas">← Tree.</string>
+    <string name="events_new_years_eve">New Years Eve!</string>
+    <string name="open_source">开源</string>
+    <string name="maintained_by">维护者</string>
+    <string name="kernel">内核版本</string>
+    <string name="manager_version">管理器版本</string>
+    <string name="fingerprint">设备指纹</string>
+    <string name="new_version_available">新版本 %s 可用, 点击更新</string>
+    <string name="hidden">隐藏</string>
+    <string name="pre_release">预发布版本</string>
 </resources>
