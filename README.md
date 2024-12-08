@@ -37,6 +37,12 @@ MMRL is an Android app that helps manage your own modules repository.
 - KernelSU 0.5.1 ~ latest
 - APatch 10253 ~ latest
 
+## Translate
+
+Get involved with MMRL by translating it into your language!
+
+[![Translation status](https://hosted.weblate.org/widget/mmrl/multi-auto.svg)](https://hosted.weblate.org/engage/mmrl/)
+
 ## Modules Repository
 
 - [Googlers-Repo/magisk-modules-repo-util](https://github.com/Googlers-Repo/magisk-modules-repo-util): A command line interface for building modules repository
