@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ads_name">الدعاية</string>
+    <string name="ads_desc">هذه الإضافة بها إعلانات</string>
+    <string name="knownvuln_name">ثغرة معروفة</string>
+    <string name="nsfw_name">محتوى إباحي</string>
+    <string name="nsfw_desc">هذه الإضافة تتضمن محتوى لا يجب عرضه للعامة.</string>
+    <string name="knownvuln_desc">هذه الإضافة بها ثغرة أمنية معروفة.</string>
+    <string name="nosourcesince_name">كود المصدر غير موجود</string>
+    <string name="nonfreeadd_name">إضافات غير مجانية</string>
+    <string name="nosourcesince_desc">كود المصدر غير متوافر، لا تحديثات ممكنه.</string>
+    <string name="nonfreeassets_name">موارد غير مجانية</string>
+    <string name="nonfreedep_name">متطلبات غير مجانية</string>
+    <string name="nonfreenet_name">خدمات شبكة غير مجانية</string>
+    <string name="tracking_name">التعقب</string>
+    <string name="upstreamnonfree_name">كود المصدر العلوي الغير مجاني</string>
+    <string name="tracking_desc">هذه الإضافة تقوم بتعقب و تدوين نشاطاتك في الجهاز.</string>
+    <string name="obfuscation_name">التشفير</string>
+    <string name="unaskedremoval_name">حذف دون إذن</string>
+    <string name="unaskedremoval_desc">هذه الإضافة تقوم بحذف تطبيقات، ملفات او اضافات أخرى دون طلب الإذن من المستخدم.</string>
+    <string name="nonfreeadd_desc">هذه الإضافة تقوم بدعاية تكوينات غير مجانية.</string>
+    <string name="nonfreeassets_desc">هذه الإضافة تتضمن موارد غير مجانية.</string>
+    <string name="nonfreedep_desc">هذه الإضافة تتطلب إضافات اخرى غير مجانية لكي تعمل.</string>
+    <string name="nonfreenet_desc">هذه الإضافة تقوم بدعاية أو تعتمد كليا على خدمة شبكة غير قابلة للتغير أو غير مجانية.</string>
+    <string name="upstreamnonfree_desc">كود المصدر العلوي ليس مجانياً بالكامل.</string>
+    <string name="obfuscation_desc">كود مصدر هذه الإضافة قد يكون مشفراً مما يمنع فهم أو تعديل الكود.</string>
+</resources>
