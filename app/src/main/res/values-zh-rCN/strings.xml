@@ -7,7 +7,6 @@
     <string name="setup_shizuku_desc">需要由 Sui 或 Shizuku (root) 提供权限</string>
     <string name="setup_non_root_title">免 Root</string>
     <string name="setup_non_root_desc">不需要 Root 权限，只有模块下载功能可用</string>
-
     <!-- Install -->
     <string name="install_screen_title">安装</string>
     <string name="install_flashing">正在刷入</string>
@@ -23,13 +22,11 @@
     <string name="license_title">查看许可证</string>
     <string name="license_osi_approved">OSI 获批</string>
     <string name="license_fsf_libre">自由软件</string>
-
     <!-- Page -->
     <string name="page_home">首页</string>
     <string name="page_repository">存储库</string>
     <string name="page_modules">模块</string>
     <string name="page_settings">设置</string>
-
     <!-- Repository -->
     <string name="repository_empty">存储库为空</string>
     <string name="module_installed">已安装</string>
@@ -70,7 +67,6 @@
     <string name="view_module_unsupported">不支持的</string>
     <string name="view_module_unsupported_desc">你的设备不支持这个版本的模块，请自行承担安装风险</string>
     <string name="view_module_license">许可证</string>
-
     <!-- View Module / Features -->
     <string name="view_module_features">特色功能</string>
     <string name="view_module_features_service">服务</string>
@@ -88,9 +84,10 @@
     <string name="view_module_features_sepolicy_sub">添加自定义SEPolicy属性</string>
     <string name="view_module_features_zygisk_sub">允许模块与Zygisk交互</string>
     <string name="view_module_features_apks_sub">在模块内包含额外的APK</string>
-    <string name="view_module_features_webui_sub">带有WebUI模块管理界面(仅限KernelSU和APatch，不支持Magisk)></string>
-    <string name="view_module_features_postmount_sub">在OverlayFS挂载后执行脚本(仅限KernelSU和APatch)></string>
-    <string name="view_module_features_bootcompleted_sub">启动后执行脚本(KernelSU和APatch)></string>  <string name="view_module_module_support">Module Support</string>
+    <string name="view_module_features_webui_sub">带有WebUI模块管理界面(仅限KernelSU和APatch，不支持Magisk)&gt;</string>
+    <string name="view_module_features_postmount_sub">在OverlayFS挂载后执行脚本(仅限KernelSU和APatch)&gt;</string>
+    <string name="view_module_features_bootcompleted_sub">启动后执行脚本(KernelSU和APatch)&gt;</string>
+    <string name="view_module_module_support">Module Support</string>
     <string name="view_module_provided_by">提供者</string>
     <string name="view_module_added_on">额外的</string>
     <string name="view_module_about_this_module">关于此模块</string>
@@ -110,8 +107,6 @@
     <string name="view_module_install_confirm_confirm">安装</string>
     <string name="view_module_install_confirm_desc"><![CDATA[确定要安装 <font color=\"%1$s\">%2$s</font>吗?]]></string>
     <string name="view_module_install_confirm_desc_deps"><![CDATA[确定要安装 <font color=\"%1$s\">%2$s</font>吗? 这个模块还需要:]]></string>
-
-
     <!-- Modules -->
     <string name="modules_empty">没找到任何模块</string>
     <!-- Module Item -->
@@ -123,7 +118,6 @@
     <string name="module_download">下载</string>
     <string name="module_update">更新</string>
     <string name="module_id">ID: %1$s</string>
-
     <!-- Settings-->
     <string name="settings_app">应用</string>
     <string name="settings_app_desc">关于 MMRL 应用本身的设置</string>
@@ -215,12 +209,10 @@
     <string name="about_app_version">版本 %1$s (%2$s)</string>
     <string name="about_desc1">为 Magisk 和 KernelSU 提供模块存储库以及模块管理。</string>
     <string name="about_desc2">由 %s 用 ❤️ 制作</string>
-
     <!-- Dialog-->
     <string name="dialog_attention">注意</string>
     <string name="dialog_cancel">取消</string>
     <string name="dialog_ok">确定</string>
-
     <!-- Menu -->
     <string name="menu_advanced_menu">高级菜单</string>
     <string name="menu_sort_mode">排序模式</string>
@@ -230,18 +222,14 @@
     <string name="menu_pin_enabled">置顶已启用</string>
     <string name="menu_show_updated">显示更新时间</string>
     <string name="menu_show_antifeatures">显示不受欢迎的功能</string>
-
     <!-- Message -->
     <string name="message_download_success">下载成功</string>
     <string name="message_loading">加载中…</string>
-
     <!-- Notification -->
     <string name="notification_name_download">下载服务</string>
-
     <!-- Search -->
     <string name="search_empty">空列表</string>
     <string name="search_placeholder">搜索…</string>
-
     <!-- Other -->
     <string name="unknown_error">未知错误</string>
     <string name="verified">已认证</string>
@@ -253,33 +241,28 @@
     <string name="stack_trace_truncated">%s\n… %d 更多</string>
     <string name="additional_notes">附加说明</string>
     <string name="repo_added">仓库已添加</string>
-
     <!-- Work Manager -->
     <string name="work_repository_updates">仓库更新</string>
     <string name="work_updates_for_repositories">检查仓库更新</string>
     <string name="work_module_updates">模块更新</string>
     <string name="work_update_checker_for_modules">检查模块更新</string>
-
     <!-- Repo Update Service -->
     <string name="repo_update_service">仓库更新成功</string>
     <string name="repo_update_service_desc">别担心, MMRL已经为你更新了安装的仓库 😋</string>
     <string name="repo_update_service_failed">仓库已是最新</string>
     <string name="repo_update_service_failed_desc">没有可以更新的仓库</string>
-
     <!-- SELinux -->
     <string name="selinux_status">SELinux状态</string>
     <string name="selinux_status_disabled">Disabled</string>
     <string name="selinux_status_enforcing">Enforcing</string>
     <string name="selinux_status_permissive">Permissive</string>
     <string name="selinux_status_unknown">Unknown</string>
-
     <string name="reboot">重启</string>
     <string name="reboot_userspace">软重启</string>
     <string name="reboot_recovery">重启到Recovery模式</string>
     <string name="reboot_bootloader">重启到Bootloader模式</string>
     <string name="reboot_download">重启到Download模式</string>
     <string name="reboot_edl">重启到EDL模式</string>
-
     <string name="home_support_title">支持我</string>
     <string name="home_support_content">MMRL 永远是免费、开源的软件，欢迎向我捐赠</string>
     <string name="home_installed_modules">安装模块</string>
@@ -287,11 +270,9 @@
     <string name="home_installed_modules_with_service_files">带有服务的模块</string>
     <string name="home_disabled_modules">禁用模块</string>
     <string name="home_updated_modules">更新模块</string>
-
     <string name="bulk_install_module_already_added">模块已存在</string>
     <string name="bulk_install_module_added">模块已添加</string>
     <string name="bulk_module_install">大模块安装</string>
-
     <string name="has_a_new_update">%1$s 有更新</string>
     <string name="update_available_from_to">可用更新 %s (%d) 到 %s (%d).</string>
     <string name="events_birthday">MMRL %1$s 年!</string>
@@ -306,4 +287,7 @@
     <string name="new_version_available">新版本 %s 可用, 点击更新</string>
     <string name="hidden">隐藏</string>
     <string name="pre_release">预发布版本</string>
+    <string name="unsafe_url_redirecting">危险的URL：%1$s。正在进行重定向…</string>
+    <string name="settings_shell_module_state_change_desc">使用shell操作而并非在模块目录下直接创建文件,但是由于限制,模块恢复按钮将不再可用</string>
+    <string name="settings_shell_module_state_change">使用shell操作</string>
 </resources>
