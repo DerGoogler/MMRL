@@ -192,4 +192,5 @@
     <string name="settings_developer_mode_desc">Mostra IDs de módulos e mais</string>
     <string name="settings_privacy_policy">política de Privacidade</string>
     <string name="view_module_added_on">Adicionado em</string>
+    <string name="settings_clear_install_terminal">Limpar Terminal de Instalação</string>
 </resources>
