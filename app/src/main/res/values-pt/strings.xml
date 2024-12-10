@@ -193,4 +193,6 @@
     <string name="settings_privacy_policy">política de Privacidade</string>
     <string name="view_module_added_on">Adicionado em</string>
     <string name="settings_clear_install_terminal">Limpar Terminal de Instalação</string>
+    <string name="settings_clear_install_terminal_desc">Limpar o Terminal de instalação ao instalar mais de um módulo</string>
+    <string name="settings_shell_module_state_change">Use Shell para Estados</string>
 </resources>
