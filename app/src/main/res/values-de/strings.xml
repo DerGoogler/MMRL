@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setup_root_title">Root</string>
-    <string name="setup_non_root_title">Non-Root</string>
-    <string name="install_flashing">Installiet</string>
+    <string name="setup_non_root_title">Ohne Root</string>
+    <string name="install_flashing">Installiert</string>
     <string name="install_failure">Fehlgeschlagen</string>
     <string name="license_title">Lizenz anschauen</string>
     <string name="license_osi_approved">OSI Zugelassen</string>
@@ -72,7 +72,7 @@
     <string name="menu_pin_enabled">Aktivierte anheften</string>
     <string name="menu_show_updated">Zuletzt aktualisiert anzeigen</string>
     <string name="repo_options_update">Update</string>
-    <string name="about_desc2">Made with ❤️ by %s</string>
+    <string name="about_desc2">Mit ❤️ gemacht von %s</string>
     <string name="dialog_ok">OK</string>
     <string name="menu_sort_option_name">Name</string>
     <string name="message_download_success">Herunterladen erfolgreich</string>
@@ -111,4 +111,25 @@
     <string name="view_module_antifeatures">Anti-Features</string>
     <string name="view_module_unsupported">Nicht unterstützt</string>
     <string name="install_screen_reboot_title">Getät neu starten?</string>
+    <string name="setup_root_desc">Benötigt Root-Rechte, entweder durch Magisk oder KernelSU</string>
+    <string name="setup_shizuku_desc">Benögt Berechtigungen von Sui oder Shizuku (Root)</string>
+    <string name="install_screen_reboot_dismiss">Verwerfen</string>
+    <string name="setup_non_root_desc">Es sind keine Root-Berechtigungen erforderlich, es ist nur die Funktion zum Herunterladen des Moduls verfügbar</string>
+    <string name="view_module_unsupported_desc">Sieht aus, als wenn dein Gerät diese Modul Version nicht unterstützt. Installation auf eigene Gefahr!</string>
+    <string name="view_module_license">Lizenz</string>
+    <string name="view_module_features">Besonderheiten</string>
+    <string name="view_module_features_service">Service</string>
+    <string name="view_module_features_system_properties">Systemeigenschaften</string>
+    <string name="view_module_features_selinux_policy">SELinux-Richtlinie</string>
+    <string name="view_module_features_zygisk">Zygisk</string>
+    <string name="view_module_features_apks">APKs</string>
+    <string name="view_module_features_boot_completed">Startvorgang abgeschlossen</string>
+    <string name="view_module_features_zygisk_sub">Erlaube Modulen die Interaktion mit dem Zygisk Framework, erlaubt System Modifikationen und Interaktion auf System-Level</string>
+    <string name="view_module_features_apks_sub">Enthält zusätzlichs APKs in dem Modul</string>
+    <string name="view_module_features_webui_sub">Wein-Oberfläche zum verwalten von Modulen</string>
+    <string name="view_module_module_support">Modul Unterstützung</string>
+    <string name="view_module_provided_by">Bereitgestellt von</string>
+    <string name="view_module_added_on">Hinzugefügt am</string>
+    <string name="view_module_about_this_module">Über dieses Modul</string>
+    <string name="view_module_donate">Spende</string>
 </resources>
