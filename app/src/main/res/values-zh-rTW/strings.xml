@@ -7,7 +7,6 @@
     <string name="setup_shizuku_desc">需經 Sui 或 Shizuku（Root 模式）授權</string>
     <string name="setup_non_root_title">無 Root</string>
     <string name="setup_non_root_desc">不以 Root 存取權執行本應用程式。僅可使用模組下載功能</string>
-
     <!-- 安裝介面 -->
     <string name="install_screen_title">安裝</string>
     <string name="install_flashing">正在閃刷</string>
@@ -19,23 +18,19 @@
     <string name="install_screen_reboot_text">你是否要立即重新啟動裝置？</string>
     <string name="install_screen_reboot_confirm">確認</string>
     <string name="install_screen_reboot_dismiss">稍後</string>
-
     <!-- 授權條款 -->
     <string name="license_title">參閱授權條款</string>
     <string name="license_osi_approved">開放原始碼授權</string>
     <string name="license_fsf_libre">自由軟體授權</string>
-
     <!-- 頁面按鈕 -->
     <string name="page_home">首頁</string>
     <string name="page_repository">庫存</string>
     <string name="page_modules">模組</string>
     <string name="page_settings">設定</string>
-
     <!-- 庫存介面 -->
     <string name="repository_empty">查無中介平臺</string>
     <string name="module_installed">已安裝</string>
     <string name="module_new">新品上架</string>
-
     <!-- 進階選單 -->
     <string name="menu_pin_installed">釘選已安裝模組</string>
     <string name="menu_pin_updatable">釘選可更新模組</string>
@@ -45,7 +40,6 @@
     <string name="menu_show_verified">顯示驗證徽章</string>
     <string name="menu_sort_repolistmode_detailed">細緻化排版</string>
     <string name="menu_sort_repolistmode_compact">緊縮化排版</string>
-
     <!-- 模組檢視介面 -->
     <string name="view_module_page_overview">概觀</string>
     <string name="view_module_page_versions">版本</string>
@@ -60,11 +54,11 @@
     <string name="view_module_update_ignore">忽略</string>
     <string name="view_module_provided">中介平臺：%s</string>
     <string name="view_module_version_dialog_desc">你是否要安裝或下載此版本的模組？</string>
-    <string name="view_module_homepage">模組主頁</string>
+    <string name="view_module_homepage">模組網站主頁</string>
     <string name="view_module_source">原始碼儲存庫</string>
     <string name="view_module_support">模組使用協助</string>
     <string name="view_module_view_track">中繼資料檢視</string>
-    <string name="view_module_type">分類：%s</string>
+    <string name="view_module_type">資料分類：%s</string>
     <string name="view_module_added">新增日期：%s</string>
     <string name="view_module_file_size">檔案大小</string>
     <string name="view_module_screenshots">螢幕截圖</string>
@@ -73,9 +67,8 @@
     <string name="view_module_unsupported">未受支援</string>
     <string name="view_module_unsupported_desc">你的裝置尚未支援此模組版本。謹慎安裝，風險自負！</string>
     <string name="view_module_license">授權條款</string>
-
     <!-- 模組／功能檢視介面 -->
-    <string name="view_module_features">功能</string>
+    <string name="view_module_features">基本功能</string>
     <string name="view_module_features_service">背景服務</string>
     <string name="view_module_features_post_fs_data">檔案修補</string>
     <string name="view_module_features_system_properties">屬性編修</string>
@@ -91,9 +84,9 @@
     <string name="view_module_features_sepolicy_sub">將 SEPolicy 規則改制為自訂的安全性政策。</string>
     <string name="view_module_features_zygisk_sub">准許模組存取 Zygisk 框架，達致系統層級的修改與關連。</string>
     <string name="view_module_features_apks_sub">模組另有附隨安裝的 APK 程式。</string>
-    <string name="view_module_features_webui_sub">含有可供管理模組的網頁介面（適用 KernelSU 以及 APatch；不含 Magisk）。></string>
-    <string name="view_module_features_postmount_sub">始於 OverlayFS 掛載而後置執行的腳本（適用 KernelSU 以及 APatch）。></string>
-    <string name="view_module_features_bootcompleted_sub">系統初始化後，待機期間執行的腳本（適用 KernelSU 以及 APatch）。></string>
+    <string name="view_module_features_webui_sub">含有可供管理模組的網頁介面</string>
+    <string name="view_module_features_postmount_sub">始於 OverlayFS 掛載而後置執行的腳本</string>
+    <string name="view_module_features_bootcompleted_sub">系統初始化後，待機期間執行的腳本</string>
     <string name="view_module_module_support">關連頁面</string>
     <string name="view_module_provided_by">中介平臺</string>
     <string name="view_module_added_on">上架日期</string>
@@ -109,8 +102,6 @@
     <string name="view_module_dependencies_not_found">查無所需的相依模組</string>
     <string name="view_module_share">分享</string>
     <string name="view_module_not_found">查無模組</string>
-
-
     <!-- 模組主畫面 -->
     <string name="modules_empty">查無模組</string>
     <!-- 模組管理介面 -->
@@ -122,7 +113,6 @@
     <string name="module_download">下載</string>
     <string name="module_update">更新</string>
     <string name="module_id">模組代號：%1$s</string>
-
     <!-- 設定 -->
     <string name="settings_app">應用程式</string>
     <string name="settings_app_desc">有關 MMRL 應用程式自身的設定項目</string>
@@ -130,7 +120,7 @@
     <string name="settings_repo_desc">管理 Magisk 模組中介平臺</string>
     <string name="settings_about">本體資訊</string>
     <string name="settings_resources">線上資源</string>
-    <string name="settings_resources_desc">包含說明手冊、中介平臺支援列表等資源，應有盡有</string>
+    <string name="settings_resources_desc">包含說明手冊、中介平臺支援列表等等，應有盡有</string>
     <string name="settings_security">安全措施</string>
     <string name="settings_security_desc">有關本應用程式配備的安全措施</string>
     <string name="settings_appearance">介面外觀</string>
@@ -142,7 +132,6 @@
     <string name="settings_changelog">更新說明</string>
     <string name="settings_changelo_desc">有關目前 MMRL 所更動的內容</string>
     <string name="settings_open_notification_settings">開啟通知設定</string>
-    
     <!-- Root 相關 -->
     <string name="settings_root_access">Root 狀態：%s</string>
     <string name="settings_root_provider">授權平臺：%s</string>
@@ -171,20 +160,18 @@
     <string name="settings_updates_desc">管理你的更新過程偏好</string>
     <string name="settings_homepage">應用程式主畫面</string>
     <string name="settings_homepage_desc">選擇在應用程式開啟後最先顯示的畫面</string>
-
     <string name="settings_auto_update_repos">自動執行中介平臺更新</string>
     <string name="settings_auto_update_repos_desc">自動在背景執行中介平臺更新</string>
     <string name="settings_repo_update_interval">中介平臺更新間隔</string>
-    <string name="settings_repo_update_interval_suffix">\u0020 小時／次</string>
+    <string name="settings_repo_update_interval_suffix">" 小時／次"</string>
     <string name="settings_repo_update_interval_desc">選擇每次更新之間相隔的時長</string>
-
     <string name="settings_check_app_updates">檢查應用程式更新</string>
     <string name="settings_check_app_updates_desc">進入主畫面時自動檢查應用程式更新</string>
     <string name="settings_hide_fingerprint">隱藏首頁的指紋資訊</string>
     <string name="settings_hide_fingerprint_desc">不論真實與否，一律隱藏</string>
     <string name="settings_check_modules_update">檢查模組更新</string>
     <string name="settings_check_modules_update_desc">為已啟用模組檢查更新</string>
-    <string name="settings_check_modules_update_interval_suffix">\u0020 小時／次</string>
+    <string name="settings_check_modules_update_interval_suffix">" 小時／次"</string>
     <string name="settings_check_modules_update_interval">模組更新間隔</string>
     <string name="settings_check_modules_update_interval_desc">選擇每次更新之間相隔的時長</string>
     <string name="settings_include_preleases">檢查預先發布版本</string>
@@ -193,8 +180,6 @@
     <string name="settings_privacy_policy">《隱私權政策》</string>
     <string name="settings_clear_install_terminal">清除終端機訊息</string>
     <string name="settings_clear_install_terminal_desc">若有多個模組等待安裝，則在安裝下一個模組之前清除終端機訊息</string>
-
-
     <!-- 應用程式主題 -->
     <string name="app_theme_palette">主題配色</string>
     <string name="app_theme_dark_theme">主題模式</string>
@@ -219,12 +204,10 @@
     <string name="about_app_version">版本 %1$s（%2$s）</string>
     <string name="about_desc1">整合各家中介平臺的 Magisk、KernelSU 模組管理工具。</string>
     <string name="about_desc2">由 %s 用 ❤️ 製作</string>
-
     <!-- 對話 -->
     <string name="dialog_attention">請注意</string>
     <string name="dialog_cancel">取消</string>
     <string name="dialog_ok">確定</string>
-
     <!-- 選單 -->
     <string name="menu_advanced_menu">進階選單</string>
     <string name="menu_sort_mode">排序方式</string>
@@ -234,18 +217,14 @@
     <string name="menu_pin_enabled">釘選已啟用模組</string>
     <string name="menu_show_updated">顯示更新日期</string>
     <string name="menu_show_antifeatures">顯示「損益功能」標記</string>
-
     <!-- 訊息 -->
     <string name="message_download_success">已成功下載</string>
     <string name="message_loading">正在載入……</string>
-
     <!-- 通知 -->
     <string name="notification_name_download">模組下載服務</string>
-
     <!-- 搜尋 -->
     <string name="search_empty">查無結果</string>
     <string name="search_placeholder">開始搜尋……</string>
-
     <!-- 其他 -->
     <string name="unknown_error">錯誤內容不詳</string>
     <string name="verified">已驗證</string>
@@ -257,33 +236,28 @@
     <string name="stack_trace_truncated">%s\n……尚有 %d 行</string>
     <string name="additional_notes">附加提示</string>
     <string name="repo_added">已新增中介平臺</string>
-
     <!-- 即時管理工具 -->
     <string name="work_repository_updates">中介平臺更新</string>
     <string name="work_updates_for_repositories">檢查中介平臺更新</string>
     <string name="work_module_updates">模組更新</string>
     <string name="work_update_checker_for_modules">用於檢查模組更新的工具</string>
-
     <!-- 中介平臺更新背景服務 -->
     <string name="repo_update_service">已成功更新所有中介平臺</string>
     <string name="repo_update_service_desc">MMRL 已為你更新了所有中介平臺。😋</string>
     <string name="repo_update_service_failed">無需更新中介平臺</string>
     <string name="repo_update_service_failed_desc">查無可更新的中介平臺</string>
-
     <!-- SELinux -->
     <string name="selinux_status">SELinux 狀態</string>
     <string name="selinux_status_disabled">已停用</string>
     <string name="selinux_status_enforcing">強制執行</string>
     <string name="selinux_status_permissive">容許執行</string>
     <string name="selinux_status_unknown">不明</string>
-
     <string name="reboot">重新啟動</string>
     <string name="reboot_userspace">軟重啟</string>
     <string name="reboot_recovery">重新啟動至 Recovery</string>
     <string name="reboot_bootloader">重新啟動至 Bootloader</string>
     <string name="reboot_download">重新啟動至 Download</string>
     <string name="reboot_edl">重新啟動至 EDL</string>
-
     <string name="home_support_title">協助發展</string>
     <string name="home_support_content">MMRL 一向以免費製品與開放原始碼自居，矢志不渝。若想協助本人進行開發，請以小額捐款表達你對專案發展的大力支持。</string>
     <string name="home_installed_modules">已安裝模組</string>
@@ -291,7 +265,6 @@
     <string name="home_installed_modules_with_service_files">已安裝模組（背景服務）</string>
     <string name="home_disabled_modules">已停用模組</string>
     <string name="home_updated_modules">已更新模組</string>
-
     <string name="has_a_new_update">%1$s 已可更新！</string>
     <string name="update_available_from_to">將版本 %s（%d）更新至 %s（%d）。</string>
     <string name="events_birthday">祝 MMRL %1$s 歲生日快樂！</string>
@@ -306,4 +279,15 @@
     <string name="new_version_available">版本 %s 現已開放下載，點選開始更新。</string>
     <string name="hidden">已隱藏</string>
     <string name="pre_release">預先發布版本</string>
+    <string name="view_module_install_confirm_confirm">安裝</string>
+    <string name="view_module_install_confirm_desc"><![CDATA[你是否要安裝<font color=\"%1$s\">「%2$s」</font>？]]></string>
+    <string name="view_module_install_confirm_confirm_deps">安裝（相依模組）</string>
+    <string name="settings_shell_module_state_change">套用系統外殼</string>
+    <string name="settings_shell_module_state_change_desc">選擇以系統外殼進行模組管理，而非逕自在模組目錄建立檔案。選項啟用後，你將無法使用復原按鈕。</string>
+    <string name="bulk_install_module_already_added">本模組已經新增進來了</string>
+    <string name="bulk_install_module_added">已新增模組</string>
+    <string name="bulk_module_install">成批式模組安裝</string>
+    <string name="unsafe_url_redirecting">截獲不安全超連結：%1$s。正在進行重新導向⋯⋯</string>
+    <string name="view_module_install_confirm_title">是否安裝模組？</string>
+    <string name="view_module_install_confirm_desc_deps"><![CDATA[你是否要安裝<font color=\"%1$s\">「%2$s」</font>？本模組另需使用的相依部分：]]></string>
 </resources>
