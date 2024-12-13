@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "57b23e1158295bb6e9fac8230eee7245",
+    "identityHash": "e233d27d506ee10374447598d7ab0727",
     "entities": [
       {
         "tableName": "repos",
@@ -413,7 +413,7 @@
       },
       {
         "tableName": "localModules",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `version` TEXT NOT NULL, `versionCode` INTEGER NOT NULL, `author` TEXT NOT NULL, `description` TEXT NOT NULL, `state` TEXT NOT NULL, `hasModConf` INTEGER NOT NULL, `updateJson` TEXT NOT NULL, `lastUpdated` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `version` TEXT NOT NULL, `versionCode` INTEGER NOT NULL, `author` TEXT NOT NULL, `description` TEXT NOT NULL, `state` TEXT NOT NULL, `updateJson` TEXT NOT NULL, `lastUpdated` INTEGER NOT NULL, `webui` INTEGER NOT NULL, `action` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -458,12 +458,6 @@
             "notNull": true
           },
           {
-            "fieldPath": "hasModConf",
-            "columnName": "hasModConf",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
             "fieldPath": "updateJson",
             "columnName": "updateJson",
             "affinity": "TEXT",
@@ -472,6 +466,18 @@
           {
             "fieldPath": "lastUpdated",
             "columnName": "lastUpdated",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "runners.webui",
+            "columnName": "webui",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "runners.action",
+            "columnName": "action",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -489,7 +495,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '57b23e1158295bb6e9fac8230eee7245')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e233d27d506ee10374447598d7ab0727')"
     ]
   }
 }

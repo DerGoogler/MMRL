@@ -4,6 +4,7 @@ import com.topjohnwu.superuser.CallbackList
 import com.topjohnwu.superuser.Shell
 import com.topjohnwu.superuser.ShellUtils
 import dev.dergoogler.mmrl.compat.content.LocalModule
+import dev.dergoogler.mmrl.compat.content.LocalModuleRunners
 import dev.dergoogler.mmrl.compat.content.ModuleInfo
 import dev.dergoogler.mmrl.compat.content.State
 import dev.dergoogler.mmrl.compat.stub.IInstallCallback
@@ -54,10 +55,16 @@ internal abstract class BaseModuleManagerImpl(
             readProps(dir)?.toModule(dir)
         }
 
-    private fun hasModConf(id: String): Boolean {
+    private fun hasWebUI(id: String): Boolean {
         val moduleDir = modulesDir.resolve(id)
-        val webroot = moduleDir.resolve(WEBROOT)
+        val webroot = moduleDir.resolve(WEBROOT_PATH)
         return webroot.exists() && webroot.isDirectory
+    }
+
+    private fun hasAction(id: String): Boolean {
+        val moduleDir = modulesDir.resolve(id)
+        val webroot = moduleDir.resolve(ACTION_FILE)
+        return webroot.exists() && webroot.isFile
     }
 
     override fun getModuleById(id: String): LocalModule? {
@@ -165,7 +172,10 @@ internal abstract class BaseModuleManagerImpl(
     ) = toModule(
         path = dir.name,
         state = readState(dir),
-        hasModConf = hasModConf(getOrDefault("id", dir.name)),
+        runners = LocalModuleRunners(
+            webui = hasWebUI(getOrDefault("id", dir.name)),
+            action = hasAction(getOrDefault("id", dir.name)),
+        ),
         lastUpdated = readLastUpdated(dir)
     )
 
@@ -173,7 +183,10 @@ internal abstract class BaseModuleManagerImpl(
         path: String = "unknown",
         state: State = State.ENABLE,
         lastUpdated: Long = 0L,
-        hasModConf: Boolean = false,
+        runners: LocalModuleRunners = LocalModuleRunners(
+            webui = false,
+            action = false
+        ),
     ) = LocalModule(
         id = getOrDefault("id", path),
         name = getOrDefault("name", path),
@@ -183,7 +196,7 @@ internal abstract class BaseModuleManagerImpl(
         description = getOrDefault("description", ""),
         updateJson = getOrDefault("updateJson", ""),
         state = state,
-        hasModConf = hasModConf,
+        runners = runners,
         lastUpdated = lastUpdated
     )
 
@@ -222,7 +235,8 @@ internal abstract class BaseModuleManagerImpl(
 
     companion object {
         const val PROP_FILE = "module.prop"
-        const val WEBROOT = "webroot"
+        const val WEBROOT_PATH = "webroot"
+        const val ACTION_FILE = "action.sh"
         const val MODULES_PATH = "/data/adb/modules"
 
         val MODULE_SERVICE_FILES = listOf(

@@ -4,6 +4,14 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
+data class LocalModuleRunners(
+    val webui: Boolean,
+    val action: Boolean
+) : Parcelable {
+    companion object
+}
+
+@Parcelize
 data class LocalModule(
     val id: String,
     val name: String,
@@ -13,7 +21,7 @@ data class LocalModule(
     val description: String,
     val updateJson: String,
     val state: State,
-    val hasModConf: Boolean,
+    val runners: LocalModuleRunners,
     val lastUpdated: Long
 ) : Parcelable {
     companion object

@@ -30,12 +30,14 @@ import androidx.compose.ui.unit.dp
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.model.local.LocalModule
 import com.dergoogler.mmrl.model.local.State
+import com.dergoogler.mmrl.model.local.hasRunners
 import com.dergoogler.mmrl.model.online.VersionItem
 import com.dergoogler.mmrl.ui.component.VersionItemBottomSheet
 import com.dergoogler.mmrl.ui.component.scrollbar.VerticalFastScrollbar
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
+import com.dergoogler.mmrl.ui.screens.modules.items.RunnerBottomSheet
 import com.dergoogler.mmrl.viewmodel.ModulesViewModel
-import dev.dergoogler.mmrl.compat.activity.MMRLComponentActivity
+import dev.dergoogler.mmrl.compat.ext.takeTrue
 
 @Composable
 fun ModulesList(
@@ -110,6 +112,12 @@ fun ModuleItem(
         )
     }
 
+    var runnerSheetOpen by remember { mutableStateOf(false) }
+    if (runnerSheetOpen) RunnerBottomSheet(
+        module = module,
+        onClose = { runnerSheetOpen = false },
+    )
+
     ModuleItem(
         module = module,
         progress = progress,
@@ -142,14 +150,11 @@ fun ModuleItem(
             }
         },
         startTrailingButton = {
-            if (module.hasModConf) {
-                ModConf(
+            module.runners.hasRunners.takeTrue {
+                RunnerButton(
                     enabled = isProviderAlive && module.state != State.REMOVE,
                     onClick = {
-                        MMRLComponentActivity.startModConfActivity(
-                            context = context,
-                            modId = module.id
-                        )
+                        runnerSheetOpen = true
                     }
                 )
             }
@@ -230,7 +235,7 @@ private fun RemoveOrRestore(
 }
 
 @Composable
-private fun ModConf(
+private fun RunnerButton(
     enabled: Boolean,
     onClick: () -> Unit,
 ) = FilledTonalButton(

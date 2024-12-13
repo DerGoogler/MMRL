@@ -2,10 +2,14 @@ package com.dergoogler.mmrl.model.local
 
 import com.dergoogler.mmrl.utils.Utils
 import dev.dergoogler.mmrl.compat.content.LocalModule
+import dev.dergoogler.mmrl.compat.content.LocalModuleRunners
 
 typealias LocalModule = LocalModule
+typealias LocalModuleRunners = LocalModuleRunners
 
 val LocalModule.versionDisplay get() = Utils.getVersionDisplay(version, versionCode)
+
+val LocalModuleRunners.hasRunners get() = webui || action
 
 fun LocalModule.Companion.example() =
     LocalModule(
@@ -17,6 +21,9 @@ fun LocalModule.Companion.example() =
         description = "This is an example!",
         updateJson = "",
         state = State.ENABLE,
-        hasModConf = false,
+        runners = LocalModuleRunners(
+            webui = false,
+            action = false
+        ),
         lastUpdated = 0L
     )
