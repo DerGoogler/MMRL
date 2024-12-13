@@ -84,9 +84,9 @@
     <string name="view_module_features_sepolicy_sub">カスタムセキュリティポリシーを追加します (SE ポリシールール)。</string>
     <string name="view_module_features_zygisk_sub">モジュールが Zygisk フレームワークと対話可能にして、システムレベルの変更と対話ができる状態にします。</string>
     <string name="view_module_features_apks_sub">モジュール内に追加の APK が含まれています。</string>
-    <string name="view_module_features_webui_sub">モジュールを Web インターフェースで管理します (KernelSU と APatch、Magiskではなく)。&gt;</string>
-    <string name="view_module_features_postmount_sub">OverlayFS マウント後にスクリプトを実行 (KernelSU と APatch)。&gt;</string>
-    <string name="view_module_features_bootcompleted_sub">起動完了時にスクリプトを実行 (KernelSU と APatch)。&gt;</string>
+    <string name="view_module_features_webui_sub">Web インターフェースの管理モジュール</string>
+    <string name="view_module_features_postmount_sub">OverlayFS マウント後にスクリプトを実行</string>
+    <string name="view_module_features_bootcompleted_sub">ブート完了後にスクリプトを実行</string>
     <string name="view_module_module_support">モジュールのサポート</string>
     <string name="view_module_provided_by">提供元</string>
     <string name="view_module_added_on">追加日</string>
@@ -172,8 +172,8 @@
     <string name="settings_repo_update_interval_desc">リポジトリを自動更新する間隔を設定します。</string>
     <string name="settings_check_app_updates">アプリの更新を確認</string>
     <string name="settings_check_app_updates_desc">アプリを開いたときに自動でアプリの更新を確認します。</string>
-    <string name="settings_hide_fingerprint">ホームでフィンガープリントを隠す</string>
-    <string name="settings_hide_fingerprint_desc">本物か偽物かどうかは関係がありません。</string>
+    <string name="settings_hide_fingerprint">フィンガープリントを隠す</string>
+    <string name="settings_hide_fingerprint_desc">ホームのフィンガープリントを隠します。本物か偽物かは関係ありません。</string>
     <string name="settings_check_modules_update">モジュールの更新を確認する</string>
     <string name="settings_check_modules_update_desc">インストールされているモジュールの更新を自動で確認します。</string>
     <string name="settings_check_modules_update_interval_suffix">\u0020 時間ごと</string>
@@ -183,8 +183,10 @@
     <string name="settings_developer_mode">開発者モード</string>
     <string name="settings_developer_mode_desc">モジュール ID などを表示します。</string>
     <string name="settings_privacy_policy">プライバシーポリシー</string>
-    <string name="settings_clear_install_terminal">インストールターミナルを消去</string>
+    <string name="settings_clear_install_terminal">ターミナルログを消去</string>
     <string name="settings_clear_install_terminal_desc">複数のモジュールをインストール時にインストールターミナルのログを消去します。</string>
+    <string name="settings_shell_module_state_change">状態にシェルを使用</string>
+    <string name="settings_shell_module_state_change_desc">モジュールディレクトリにファイルを作成する代わりにシェルを使用します。一度有効化すると復元ボタンが使用不可能になります。</string>
     <!-- App Theme -->
     <string name="app_theme_palette">テーマパレット</string>
     <string name="app_theme_dark_theme">ダークテーマ</string>
@@ -287,4 +289,5 @@
     <string name="new_version_available">新しいバージョン %s が利用可能です。タップで更新します。</string>
     <string name="hidden">非表示</string>
     <string name="pre_release">プレリリース</string>
+    <string name="unsafe_url_redirecting">安全でない URL: %1$s にリダイレクト中…</string>
 </resources>

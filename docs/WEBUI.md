@@ -10,7 +10,7 @@ You can use the app theme with automatic dark mode support. Also it supports win
 
 ## Setup
 
-To use window safe area insets which you basiclly need here, otherwise your config will move below the status bar
+To use window safe area insets which you basiclly need here, otherwise your config will move behind the status bar
 
 > Why so?  
 > It improves the design and it presents a much more "native" feel

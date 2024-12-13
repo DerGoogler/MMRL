@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ads_name">Werbung</string>
+    <string name="ads_desc">Das Modul enthält Werbung.</string>
+    <string name="knownvuln_desc">Dieses Modul enthält eine bekannte Sicherheitslücke.</string>
+    <string name="nsfw_name">NSFW</string>
+    <string name="nsfw_desc">Dieses Modul enthält Inhalte, die nicht überall veröffentlicht oder sichtbar sein sollten.</string>
+    <string name="nosourcesince_desc">Der Quellcode ist nicht mehr verfügbar, keine Updates möglich.</string>
+    <string name="knownvuln_name">Bekannte Schwachstelle</string>
+    <string name="nosourcesince_name">Keine Quelle mehr</string>
+    <string name="nonfreeadd_name">Nicht-quelloffene Erweiterungen</string>
+    <string name="nonfreeassets_name">Nicht-quelloffene Bestandteile</string>
+    <string name="nonfreedep_name">Nicht-quelloffene Abhängigkeiten</string>
+    <string name="nonfreedep_desc">Dieses Modul ist von anderen nicht freien Modulen abhängig.</string>
+    <string name="nonfreenet_name">Nicht-quelloffene Netzwerkdienste</string>
+    <string name="nonfreenet_desc">Dieses Modul fördert oder hängt vollständig von einem nicht veränderbaren oder nicht kostenlosen Netzwerkdienst ab.</string>
+    <string name="tracking_name">Überwachung</string>
+    <string name="tracking_desc">Dieses Modul verfolgt und meldet Ihre Aktivitäten.</string>
+    <string name="upstreamnonfree_name">Originalcode nicht-quelloffen</string>
+    <string name="upstreamnonfree_desc">Der Upstream-Quellcode ist nicht völlig kostenlos.</string>
+    <string name="obfuscation_name">Verschleierung</string>
+    <string name="obfuscation_desc">Der Quellcode des Moduls ist möglicherweise verschleiert, was es schwierig macht, ihn zu verstehen, zu prüfen oder zu ändern.</string>
+    <string name="unaskedremoval_name">Unaufgeforderte Entfernung</string>
+    <string name="unaskedremoval_desc">Das Modul entfernt Apps, Dateien oder andere Module ohne Zustimmung des Benutzers.</string>
+    <string name="nonfreeadd_desc">Dieses Modul fördert nicht kostenlose Add-ons.</string>
+    <string name="nonfreeassets_desc">Dieses Modul enthält unfreie Assets.</string>
+</resources>
