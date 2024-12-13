@@ -253,10 +253,10 @@
     <string name="repo_update_service_failed_desc">没有可以更新的仓库</string>
     <!-- SELinux -->
     <string name="selinux_status">SELinux状态</string>
-    <string name="selinux_status_disabled">Disabled</string>
-    <string name="selinux_status_enforcing">Enforcing</string>
-    <string name="selinux_status_permissive">Permissive</string>
-    <string name="selinux_status_unknown">Unknown</string>
+    <string name="selinux_status_disabled">关闭</string>
+    <string name="selinux_status_enforcing">强制模式</string>
+    <string name="selinux_status_permissive">宽容模式</string>
+    <string name="selinux_status_unknown">未知</string>
     <string name="reboot">重启</string>
     <string name="reboot_userspace">软重启</string>
     <string name="reboot_recovery">重启到Recovery模式</string>
