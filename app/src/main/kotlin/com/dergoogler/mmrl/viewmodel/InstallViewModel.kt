@@ -22,6 +22,7 @@ import com.dergoogler.mmrl.ui.activity.install.Actions
 import com.dergoogler.mmrl.ui.activity.install.ShellBroadcastReceiver
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.dergoogler.mmrl.compat.BuildCompat
+import dev.dergoogler.mmrl.compat.content.BulkModule
 import dev.dergoogler.mmrl.compat.content.State
 import dev.dergoogler.mmrl.compat.ext.tmpDir
 import dev.dergoogler.mmrl.compat.stub.IInstallCallback
@@ -116,16 +117,33 @@ class InstallViewModel @Inject constructor(
     suspend fun installModules(uris: List<Uri>) {
         val userPreferences = userPreferencesRepository.data.first()
 
+        val devLog = devLog(userPreferences.developerMode)
+
         viewModelScope.launch {
             event = Event.LOADING
             var allSucceeded = true
+
+            val bulkModules = uris.mapNotNull { uri ->
+                val path = context.getPathForUri(uri)
+                val info = Compat.moduleManager.getModuleInfo(path)
+
+                if (info == null) {
+                    devLog("! Unable to gather module info of file: $path")
+                    return@mapNotNull null
+                }
+
+                BulkModule(
+                    id = info.id,
+                    name = info.name
+                )
+            }
 
             for (uri in uris) {
                 if (userPreferences.clearInstallTerminal && uris.size > 1) {
                     console.clear()
                 }
 
-                val result = loadAndInstallModule(uri, devLog(userPreferences.developerMode))
+                val result = loadAndInstallModule(uri, bulkModules, devLog)
                 if (!result) {
                     allSucceeded = false
                     console.add("- Installation aborted due to an error")
@@ -141,7 +159,11 @@ class InstallViewModel @Inject constructor(
         }
     }
 
-    private suspend fun loadAndInstallModule(uri: Uri, devLog: (String) -> Unit): Boolean =
+    private suspend fun loadAndInstallModule(
+        uri: Uri,
+        bulkModules: List<BulkModule>,
+        devLog: (String) -> Unit,
+    ): Boolean =
         withContext(Dispatchers.IO) {
             val userPreferences = userPreferencesRepository.data.first()
 
@@ -153,11 +175,11 @@ class InstallViewModel @Inject constructor(
 
             val path = context.getPathForUri(uri)
 
-            devLog("Path: $path")
+            devLog("- Path: $path")
 
             Compat.moduleManager.getModuleInfo(path)?.let {
-                devLog("Module info: $it")
-                return@withContext install(path)
+                devLog("- Module info: $it")
+                return@withContext install(path, bulkModules)
             }
 
             console.add("- Copying zip to temp directory")
@@ -189,54 +211,51 @@ class InstallViewModel @Inject constructor(
                 console.add("- Unable to gather module info")
                 return@withContext false
             } else {
-                devLog("Module info: $moduleInfo")
-                return@withContext install(tmpFile.path)
+                devLog("- Module info: $moduleInfo")
+                return@withContext install(tmpFile.path, bulkModules)
 
-            }
-
-//            event = Event.FAILED
-//            console.add("- Zip parsing failed")
-//            false
-        }
-
-    private suspend fun install(zipPath: String): Boolean = withContext(Dispatchers.IO) {
-        val zipFile = File(zipPath)
-        val deleteZipFile = userPreferencesRepository.data.first().deleteZipFile
-
-        val installationResult = CompletableDeferred<Boolean>()
-
-        val callback = object : IInstallCallback.Stub() {
-            override fun onStdout(msg: String) {
-                CoroutineScope(Dispatchers.Main).launch {
-                    console.add(msg)
-                    logs.add(msg)
-                }
-            }
-
-            override fun onStderr(msg: String) {
-                CoroutineScope(Dispatchers.Main).launch {
-                    logs.add(msg)
-                }
-            }
-
-            override fun onSuccess(module: LocalModule?) {
-                module?.let(::insertLocal)
-                if (deleteZipFile) {
-                    deleteBySu(zipPath)
-                }
-                installationResult.complete(true)
-            }
-
-            override fun onFailure() {
-                installationResult.complete(false)
             }
         }
 
-        console.add("- Installing ${zipFile.name}")
-        Compat.moduleManager.install(zipPath, callback)
+    private suspend fun install(zipPath: String, bulkModules: List<BulkModule>): Boolean =
+        withContext(Dispatchers.IO) {
+            val zipFile = File(zipPath)
+            val deleteZipFile = userPreferencesRepository.data.first().deleteZipFile
 
-        return@withContext installationResult.await()
-    }
+            val installationResult = CompletableDeferred<Boolean>()
+
+            val callback = object : IInstallCallback.Stub() {
+                override fun onStdout(msg: String) {
+                    CoroutineScope(Dispatchers.Main).launch {
+                        console.add(msg)
+                        logs.add(msg)
+                    }
+                }
+
+                override fun onStderr(msg: String) {
+                    CoroutineScope(Dispatchers.Main).launch {
+                        logs.add(msg)
+                    }
+                }
+
+                override fun onSuccess(module: LocalModule?) {
+                    module?.let(::insertLocal)
+                    if (deleteZipFile) {
+                        deleteBySu(zipPath)
+                    }
+                    installationResult.complete(true)
+                }
+
+                override fun onFailure() {
+                    installationResult.complete(false)
+                }
+            }
+
+            console.add("- Installing ${zipFile.name}")
+            Compat.moduleManager.install(zipPath, bulkModules, callback)
+
+            return@withContext installationResult.await()
+        }
 
 
     private fun insertLocal(module: LocalModule) {

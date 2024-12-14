@@ -1,6 +1,7 @@
 package dev.dergoogler.mmrl.compat.impl
 
 import com.topjohnwu.superuser.Shell
+import dev.dergoogler.mmrl.compat.content.BulkModule
 import dev.dergoogler.mmrl.compat.stub.IInstallCallback
 import dev.dergoogler.mmrl.compat.stub.IModuleOpsCallback
 
@@ -83,10 +84,11 @@ internal class APatchModuleManagerImpl(
         }
     }
 
-    override fun install(path: String, callback: IInstallCallback) {
+    override fun install(path: String, bulkModules: List<BulkModule>, callback: IInstallCallback) {
         install(
             cmd = "apd module install '${path}'",
             path = path,
+            bulkModules = bulkModules,
             callback = callback
         )
     }

@@ -3,6 +3,7 @@ package dev.dergoogler.mmrl.compat.impl
 import com.topjohnwu.superuser.CallbackList
 import com.topjohnwu.superuser.Shell
 import com.topjohnwu.superuser.ShellUtils
+import dev.dergoogler.mmrl.compat.content.BulkModule
 import dev.dergoogler.mmrl.compat.content.LocalModule
 import dev.dergoogler.mmrl.compat.content.LocalModuleRunners
 import dev.dergoogler.mmrl.compat.content.ModuleInfo
@@ -207,7 +208,7 @@ internal abstract class BaseModuleManagerImpl(
 
     private fun String.exec() = ShellUtils.fastCmd(shell, this)
 
-    internal fun install(cmd: String, path: String, callback: IInstallCallback) {
+    internal fun install(cmd: String, path: String, bulkModules: List<BulkModule>, callback: IInstallCallback) {
         val stdout = object : CallbackList<String?>() {
             override fun onAddElement(msg: String?) {
                 msg?.let(callback::onStdout)
@@ -220,7 +221,12 @@ internal abstract class BaseModuleManagerImpl(
             }
         }
 
-        val result = shell.newJob().add(cmd).to(stdout, stderr).exec()
+        val cmds = arrayOf(
+            "MMRL=true",
+            "BULK_MODULES=\"${bulkModules.joinToString(" ") { it.id }}\"",
+            cmd)
+
+        val result = shell.newJob().add(*cmds).to(stdout, stderr).exec()
         if (result.isSuccess) {
             val module = getModuleInfo(path)
             callback.onSuccess(module)
