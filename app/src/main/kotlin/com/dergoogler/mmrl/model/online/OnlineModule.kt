@@ -32,8 +32,11 @@ data class OnlineModule(
     val screenshots: List<String>? = null,
     val license: String? = "",
     val readme: String? = null,
-    val require: List<String>? = null,
     val verified: Boolean? = null,
+
+    val require: List<String>? = null,
+    val arch: List<String>? = null,
+    val devices: List<String>? = null,
 
     val manager: ModuleManager? = null,
     val root: ModuleRoot? = null,
@@ -65,11 +68,29 @@ data class OnlineModule(
         return if (!screenshots.isNullOrEmpty()) block(screenshots) else null
     }
 
-    fun requires(solution: String) = when {
-        require.isNotNullOrEmpty() -> require
-        manager != null && manager[solution]?.require.isNotNullOrEmpty() -> manager[solution]?.require
-        else -> null
+    private fun <T : List<String>> getFromModuleManagerOrDefault(
+        default: T?,
+        solution: String,
+        extractor: (ModuleManagerSolution?) -> T?,
+    ): T? {
+        return default.takeIf { it.isNotNullOrEmpty() }
+            ?: manager?.let { extractor(it[solution]) }.takeIf { it.isNotNullOrEmpty() }
     }
+
+    private fun requires(solution: String) =
+        getFromModuleManagerOrDefault(require, solution) { it?.require }
+
+    private fun devices(solution: String) =
+        getFromModuleManagerOrDefault(devices, solution) { it?.devices }
+
+    private fun arch(solution: String) = getFromModuleManagerOrDefault(arch, solution) { it?.arch }
+
+    fun manager(solution: String) = ModuleManagerSolution(
+        min = manager?.get(solution)?.min,
+        devices = devices(solution),
+        arch = arch(solution),
+        require = requires(solution)
+    )
 
     @Composable
     inline fun <R> hasIcon(block: (String?) -> R): R? {

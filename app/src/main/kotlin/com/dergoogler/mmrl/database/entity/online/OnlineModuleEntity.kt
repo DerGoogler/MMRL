@@ -27,8 +27,11 @@ data class OnlineModuleEntity(
     val screenshots: List<String>? = null,
     val license: String? = "",
     val readme: String? = null,
-    val require: List<String>? = null,
     val verified: Boolean? = null,
+
+    val require: List<String>? = null,
+    val devices: List<String>? = null,
+    val arch: List<String>? = null,
 
     @Embedded val manager: ModuleManagerEntity? = null,
     @Embedded val root: ModuleRootEntity? = null,
@@ -63,9 +66,12 @@ data class OnlineModuleEntity(
         screenshots = original.screenshots,
         license = original.license,
         readme = original.readme,
-        require = original.require,
         verified = original.verified,
         manager = ModuleManagerEntity(original.manager),
+
+        require = original.require,
+        devices = original.devices,
+        arch = original.arch,
     )
 
     fun toModule() = OnlineModule(
@@ -92,8 +98,11 @@ data class OnlineModuleEntity(
         screenshots = screenshots,
         license = license,
         readme = readme,
-        require = require,
         verified = verified,
         manager = manager?.toManager(),
+
+        require = require,
+        devices = devices,
+        arch = arch,
     )
 }

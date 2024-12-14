@@ -164,8 +164,8 @@ fun NewViewScreen(
 
     var menuExpanded by remember { mutableStateOf(false) }
 
-    val manager = module.manager?.get(viewModel.rootManager)
-    val requires = module.requires(viewModel.rootManager)?.let {
+    val manager = module.manager(viewModel.rootManager)
+    val requires = manager.require?.let {
         repositoryList.filter { onlineModules ->
             onlineModules.second.id in it
         }.map { it.second }
@@ -526,52 +526,50 @@ fun NewViewScreen(
                 )
             }
 
-            manager?.let {
-                it.isNotSupportedRootVersion(viewModel.versionCode) { min ->
-                    if (min == -1) {
-                        Alert(
-                            title = stringResource(id = R.string.view_module_unsupported),
-                            backgroundColor = MaterialTheme.colorScheme.errorContainer,
-                            textColor = MaterialTheme.colorScheme.onErrorContainer,
-                            message = stringResource(id = R.string.view_module_unsupported_desc),
-                            modifier = Modifier.padding(horizontal = 16.dp)
-                        )
-                    } else {
-                        Alert(
-                            title = stringResource(id = R.string.view_module_low_root_version),
-                            backgroundColor = MaterialTheme.colorScheme.tertiaryContainer,
-                            textColor = MaterialTheme.colorScheme.onTertiaryContainer,
-                            message = stringResource(id = R.string.view_module_low_root_version_desc),
-                            modifier = Modifier.padding(horizontal = 16.dp)
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(16.dp))
-                }
-
-                it.isNotSupportedDevice {
+            manager.isNotSupportedRootVersion(viewModel.versionCode) { min ->
+                if (min == -1) {
                     Alert(
-                        title = stringResource(id = R.string.view_module_unsupported_device),
+                        title = stringResource(id = R.string.view_module_unsupported),
                         backgroundColor = MaterialTheme.colorScheme.errorContainer,
                         textColor = MaterialTheme.colorScheme.onErrorContainer,
-                        message = stringResource(id = R.string.view_module_unsupported_device_desc),
+                        message = stringResource(id = R.string.view_module_unsupported_desc),
                         modifier = Modifier.padding(horizontal = 16.dp)
                     )
-
-                    Spacer(modifier = Modifier.height(16.dp))
-                }
-
-                it.isNotSupportedArch {
+                } else {
                     Alert(
-                        title = stringResource(id = R.string.view_module_unsupported_arch),
-                        backgroundColor = MaterialTheme.colorScheme.errorContainer,
-                        textColor = MaterialTheme.colorScheme.onErrorContainer,
-                        message = stringResource(id = R.string.view_module_unsupported_arch_desc),
+                        title = stringResource(id = R.string.view_module_low_root_version),
+                        backgroundColor = MaterialTheme.colorScheme.tertiaryContainer,
+                        textColor = MaterialTheme.colorScheme.onTertiaryContainer,
+                        message = stringResource(id = R.string.view_module_low_root_version_desc),
                         modifier = Modifier.padding(horizontal = 16.dp)
                     )
-
-                    Spacer(modifier = Modifier.height(16.dp))
                 }
+
+                Spacer(modifier = Modifier.height(16.dp))
+            }
+
+            manager.isNotSupportedDevice {
+                Alert(
+                    title = stringResource(id = R.string.view_module_unsupported_device),
+                    backgroundColor = MaterialTheme.colorScheme.errorContainer,
+                    textColor = MaterialTheme.colorScheme.onErrorContainer,
+                    message = stringResource(id = R.string.view_module_unsupported_device_desc),
+                    modifier = Modifier.padding(horizontal = 16.dp)
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+            }
+
+            manager.isNotSupportedArch {
+                Alert(
+                    title = stringResource(id = R.string.view_module_unsupported_arch),
+                    backgroundColor = MaterialTheme.colorScheme.errorContainer,
+                    textColor = MaterialTheme.colorScheme.onErrorContainer,
+                    message = stringResource(id = R.string.view_module_unsupported_arch_desc),
+                    modifier = Modifier.padding(horizontal = 16.dp)
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
             }
 
             if (module.note?.message != null) {
@@ -964,11 +962,11 @@ fun NewViewScreen(
                 TrackItem(tracks = viewModel.tracks)
             }
 
-            manager?.let {
+            manager.min?.let {
                 ModuleInfoListItem(
                     infoCanDiffer = true,
                     title = R.string.view_module_required_root_version,
-                    desc = it.min.toString()
+                    desc = it.toString()
                 )
             }
 
