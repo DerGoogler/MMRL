@@ -315,6 +315,7 @@
     <string name="bulk_install_module_already_added">Module already added</string>
     <string name="bulk_install_module_added">Module added</string>
     <string name="bulk_module_install">Bulk Module Install</string>
+    <string name="bulk_add_as_bulk">Add as Bulk</string>
 
     <string name="action_activity">Action</string>
     <string name="action_failure">Action Failure</string>

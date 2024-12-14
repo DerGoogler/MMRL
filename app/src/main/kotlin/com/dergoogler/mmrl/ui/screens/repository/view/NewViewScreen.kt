@@ -286,7 +286,7 @@ fun NewViewScreen(
                                 },
                                 text = {
                                     Text(
-                                        text = "Add as Bulk"
+                                        text = stringResource(id = R.string.bulk_add_as_bulk)
                                     )
                                 },
                                 onClick = {
@@ -300,7 +300,7 @@ fun NewViewScreen(
                                         onSuccess = {
                                             scope.launch {
                                                 snackbarHostState.showSnackbar(
-                                                    message = context.getString(R.string.repo_added),
+                                                    message = context.getString(R.string.bulk_install_module_added),
                                                     duration = SnackbarDuration.Short
                                                 )
                                             }
@@ -314,6 +314,26 @@ fun NewViewScreen(
                                             }
                                         }
                                     )
+                                }
+                            )
+                        }
+
+                        lastVersionItem?.let {
+                            DropdownMenuItem(
+                                leadingIcon = {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.http_trace),
+                                        contentDescription = null,
+                                    )
+                                },
+                                text = {
+                                    Text(
+                                        text = "track.json"
+                                    )
+                                },
+                                onClick = {
+                                    menuExpanded = false
+                                    browser.openUri("${it.repoUrl}modules/${module.id}/track.json")
                                 }
                             )
                         }
