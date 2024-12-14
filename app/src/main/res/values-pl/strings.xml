@@ -205,7 +205,7 @@
     <string name="view_module_about_this_module">Informacje o module</string>
     <string name="settings_open_notification_settings">Otwórz ustawienia powiadomień</string>
     <string name="settings_developer_mode_desc">Pokazuje ID modułów i więcej</string>
-    <string name="view_module_mod_infos_disclaimer"><![CDATA[Informacje oznaczone <b>*</b> mogą się różnić zależnie od ilości dodanych repozytoriów. Możesz wyświetlić aktualną informację wybierając <font color=\"%1$s\">Zobacz ścieżkę</font> powyżej.]]></string>
+    <string name="view_module_mod_infos_disclaimer">Informacje oznaczone **** mogą się różnić zależnie od ilości dodanych repozytoriów. Możesz wyświetlić aktualną informację wybierając @track(Zobacz ścieżkę) powyżej.</string>
     <string name="settings_check_app_updates">Sprawdzanie aktualizacji aplikacji</string>
     <string name="settings_include_preleases">Uwzględnij wersje wstępne</string>
     <string name="settings_clear_install_terminal_desc">Czyść instalacyjny terminal podczas instalacji więcej niż jednego modułu</string>
