@@ -5,8 +5,8 @@ import android.content.Context
 import android.content.Intent
 import androidx.work.WorkerParameters
 import com.dergoogler.mmrl.R
-import com.dergoogler.mmrl.database.entity.LocalModuleEntity
-import com.dergoogler.mmrl.database.entity.OnlineModuleEntity
+import com.dergoogler.mmrl.database.entity.local.LocalModuleEntity
+import com.dergoogler.mmrl.database.entity.online.OnlineModuleEntity
 import com.dergoogler.mmrl.repository.ModulesRepository
 import com.dergoogler.mmrl.stub.IRepoManager
 import com.dergoogler.mmrl.ui.activity.MainActivity

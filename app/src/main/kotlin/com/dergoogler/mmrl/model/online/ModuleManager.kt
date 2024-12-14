@@ -7,19 +7,19 @@ import com.squareup.moshi.JsonClass
 import dev.dergoogler.mmrl.compat.ext.isNotNullOrEmpty
 
 @JsonClass(generateAdapter = true)
-data class Manager(
-    val magisk: RootManager? = null,
-    val kernelsu: RootManager? = null,
-    val apatch: RootManager? = null,
+data class ModuleManager(
+    val magisk: ModuleManagerSolution? = null,
+    val kernelsu: ModuleManagerSolution? = null,
+    val apatch: ModuleManagerSolution? = null,
 ) {
     operator fun get(solution: String) = when (solution.lowercase()) {
         "magisk" -> magisk
         "kernelsu" -> kernelsu
         "apatch" -> apatch
-        else -> RootManager()
+        else -> ModuleManagerSolution()
     }
 
-    val all: List<RootManager>
+    val all: List<ModuleManagerSolution>
         get() = listOfNotNull(
             magisk,
             kernelsu,
@@ -28,7 +28,7 @@ data class Manager(
 }
 
 @JsonClass(generateAdapter = true)
-data class RootManager(
+data class ModuleManagerSolution(
     val min: Int? = null,
     val devices: List<String>? = null,
     val arch: List<String>? = null,

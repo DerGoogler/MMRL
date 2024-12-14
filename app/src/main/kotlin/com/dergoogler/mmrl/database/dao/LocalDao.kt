@@ -5,8 +5,8 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.dergoogler.mmrl.database.entity.LocalModuleEntity
-import com.dergoogler.mmrl.database.entity.LocalModuleUpdatable
+import com.dergoogler.mmrl.database.entity.local.LocalModuleEntity
+import com.dergoogler.mmrl.database.entity.local.LocalModuleUpdatable
 import kotlinx.coroutines.flow.Flow
 
 @Dao

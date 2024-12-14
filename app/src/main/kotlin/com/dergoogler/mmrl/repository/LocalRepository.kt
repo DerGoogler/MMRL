@@ -5,11 +5,11 @@ import com.dergoogler.mmrl.database.dao.LocalDao
 import com.dergoogler.mmrl.database.dao.OnlineDao
 import com.dergoogler.mmrl.database.dao.RepoDao
 import com.dergoogler.mmrl.database.dao.VersionDao
-import com.dergoogler.mmrl.database.entity.LocalModuleEntity
-import com.dergoogler.mmrl.database.entity.LocalModuleUpdatable
-import com.dergoogler.mmrl.database.entity.OnlineModuleEntity
 import com.dergoogler.mmrl.database.entity.Repo
 import com.dergoogler.mmrl.database.entity.VersionItemEntity
+import com.dergoogler.mmrl.database.entity.local.LocalModuleEntity
+import com.dergoogler.mmrl.database.entity.local.LocalModuleUpdatable
+import com.dergoogler.mmrl.database.entity.online.OnlineModuleEntity
 import com.dergoogler.mmrl.model.local.LocalModule
 import com.dergoogler.mmrl.model.online.OnlineModule
 import dev.dergoogler.mmrl.compat.ext.merge

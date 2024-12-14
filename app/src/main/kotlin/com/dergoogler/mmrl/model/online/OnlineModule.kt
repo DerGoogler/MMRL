@@ -35,7 +35,7 @@ data class OnlineModule(
     val require: List<String>? = null,
     val verified: Boolean? = null,
 
-    val manager: Manager? = null,
+    val manager: ModuleManager? = null,
     val root: ModuleRoot? = null,
     val note: ModuleNote? = null,
     val features: ModuleFeatures? = null,

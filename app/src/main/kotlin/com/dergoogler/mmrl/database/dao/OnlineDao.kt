@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.dergoogler.mmrl.database.entity.OnlineModuleEntity
+import com.dergoogler.mmrl.database.entity.online.OnlineModuleEntity
 
 @Dao
 interface OnlineDao {

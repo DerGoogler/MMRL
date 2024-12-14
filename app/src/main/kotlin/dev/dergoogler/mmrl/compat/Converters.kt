@@ -1,8 +1,8 @@
 package dev.dergoogler.mmrl.compat
 
 import androidx.room.TypeConverter
-import com.dergoogler.mmrl.model.online.Manager
-import com.dergoogler.mmrl.model.online.RootManager
+import com.dergoogler.mmrl.model.online.ModuleManager
+import com.dergoogler.mmrl.model.online.ModuleManagerSolution
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
@@ -12,30 +12,30 @@ class Converters {
     private val moshi: Moshi = Moshi.Builder()
         .build()
 
-    private val managerEntityAdapter: JsonAdapter<Manager> = moshi.adapter(Manager::class.java)
-    private val rootManagerEntityAdapter: JsonAdapter<RootManager> = moshi.adapter(RootManager::class.java)
+    private val managerEntityAdapter: JsonAdapter<ModuleManager> = moshi.adapter(ModuleManager::class.java)
+    private val rootManagerEntityAdapter: JsonAdapter<ModuleManagerSolution> = moshi.adapter(ModuleManagerSolution::class.java)
 
     private val stringListAdapter: JsonAdapter<List<String>> = moshi.adapter(
         Types.newParameterizedType(List::class.java, String::class.java)
     )
 
     @TypeConverter
-    fun fromManager(entity: Manager?): String? {
+    fun fromManager(entity: ModuleManager?): String? {
         return entity?.let { managerEntityAdapter.toJson(it) }
     }
 
     @TypeConverter
-    fun toManager(data: String?): Manager? {
+    fun toManager(data: String?): ModuleManager? {
         return data?.let { managerEntityAdapter.fromJson(it) }
     }
 
     @TypeConverter
-    fun fromRootManager(entity: RootManager?): String? {
+    fun fromRootManager(entity: ModuleManagerSolution?): String? {
         return entity?.let { rootManagerEntityAdapter.toJson(it) }
     }
 
     @TypeConverter
-    fun toRootManager(data: String?): RootManager? {
+    fun toRootManager(data: String?): ModuleManagerSolution? {
         return data?.let { rootManagerEntityAdapter.fromJson(it) }
     }
 

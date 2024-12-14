@@ -2,8 +2,8 @@ package com.dergoogler.mmrl.database.dao
 
 import androidx.room.Dao
 import androidx.room.Query
-import com.dergoogler.mmrl.database.entity.OnlineModuleEntity
 import com.dergoogler.mmrl.database.entity.VersionItemEntity
+import com.dergoogler.mmrl.database.entity.online.OnlineModuleEntity
 import com.dergoogler.mmrl.model.online.ModulesJson
 import kotlinx.coroutines.flow.Flow
 
