@@ -1,4 +1,4 @@
-package com.dergoogler.mmrl.ui.activity.install
+package com.dergoogler.mmrl.ui.activity.terminal
 
 enum class Actions {
     CLEAR_TERMINAL,

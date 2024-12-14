@@ -8,8 +8,8 @@ import dev.dergoogler.mmrl.compat.content.LocalModule
 import dev.dergoogler.mmrl.compat.content.LocalModuleRunners
 import dev.dergoogler.mmrl.compat.content.ModuleInfo
 import dev.dergoogler.mmrl.compat.content.State
-import dev.dergoogler.mmrl.compat.stub.IInstallCallback
 import dev.dergoogler.mmrl.compat.stub.IModuleManager
+import dev.dergoogler.mmrl.compat.stub.IShellCallback
 import java.io.File
 import java.util.zip.ZipFile
 
@@ -208,7 +208,12 @@ internal abstract class BaseModuleManagerImpl(
 
     private fun String.exec() = ShellUtils.fastCmd(shell, this)
 
-    internal fun install(cmd: String, path: String, bulkModules: List<BulkModule>, callback: IInstallCallback) {
+    internal fun install(
+        cmd: String,
+        path: String,
+        bulkModules: List<BulkModule>,
+        callback: IShellCallback,
+    ) {
         val stdout = object : CallbackList<String?>() {
             override fun onAddElement(msg: String?) {
                 msg?.let(callback::onStdout)
@@ -224,12 +229,39 @@ internal abstract class BaseModuleManagerImpl(
         val cmds = arrayOf(
             "MMRL=true",
             "BULK_MODULES=\"${bulkModules.joinToString(" ") { it.id }}\"",
-            cmd)
+            cmd
+        )
 
         val result = shell.newJob().add(*cmds).to(stdout, stderr).exec()
         if (result.isSuccess) {
             val module = getModuleInfo(path)
             callback.onSuccess(module)
+        } else {
+            callback.onFailure()
+        }
+    }
+
+    internal fun action(cmd: Array<String>, callback: IShellCallback) {
+        val stdout = object : CallbackList<String?>() {
+            override fun onAddElement(msg: String?) {
+                msg?.let(callback::onStdout)
+            }
+        }
+
+        val stderr = object : CallbackList<String?>() {
+            override fun onAddElement(msg: String?) {
+                msg?.let(callback::onStderr)
+            }
+        }
+
+        val cmds = arrayOf(
+            "MMRL=true",
+            *cmd
+        )
+
+        val result = shell.newJob().add(*cmds).to(stdout, stderr).exec()
+        if (result.isSuccess) {
+            callback.onSuccess(null)
         } else {
             callback.onFailure()
         }

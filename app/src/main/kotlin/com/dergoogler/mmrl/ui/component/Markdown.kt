@@ -120,6 +120,7 @@ fun MarkdownText(
     text: String,
     modifier: Modifier = Modifier,
     style: TextStyle = LocalTextStyle.current,
+    clickTagColor: Color = MaterialTheme.colorScheme.surfaceTint,
     onTagClick: (String) -> Unit,
 ) {
     val boldPattern = """\*\*(.+?)\*\*""".toRegex() // Bold (double asterisks)
@@ -172,7 +173,7 @@ fun MarkdownText(
                 val id = matchResult.groupValues[1]
                 val displayText = matchResult.groupValues[2]
                 pushStringAnnotation(tag = "clickable", annotation = id)
-                withStyle(SpanStyle(color = MaterialTheme.colorScheme.primary)) {
+                withStyle(SpanStyle(color = clickTagColor)) {
                     append(displayText)
                 }
                 pop()

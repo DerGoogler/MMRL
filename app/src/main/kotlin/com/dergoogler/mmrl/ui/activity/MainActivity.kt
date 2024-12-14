@@ -22,7 +22,9 @@ import com.dergoogler.mmrl.datastore.UserPreferencesCompat.Companion.isRoot
 import com.dergoogler.mmrl.datastore.UserPreferencesCompat.Companion.isSetup
 import com.dergoogler.mmrl.datastore.WorkingMode
 import com.dergoogler.mmrl.network.NetworkUtils
-import com.dergoogler.mmrl.ui.activity.install.InstallActivity
+import com.dergoogler.mmrl.ui.activity.terminal.action.ActionActivity
+import com.dergoogler.mmrl.ui.activity.terminal.install.InstallActivity
+import com.dergoogler.mmrl.ui.activity.webui.WebUIActivity
 import dev.dergoogler.mmrl.compat.activity.MMRLComponentActivity
 import dev.dergoogler.mmrl.compat.activity.setBaseContent
 import kotlinx.coroutines.launch
@@ -72,6 +74,8 @@ class MainActivity : MMRLComponentActivity() {
                 Compat.init(preferences.workingMode)
                 NetworkUtils.setEnableDoh(preferences.useDoh)
                 setInstallActivityEnabled(preferences.workingMode.isRoot)
+                setWebUIActivityEnabled(preferences.workingMode.isRoot)
+                setActionActivityEnabled(preferences.workingMode.isRoot)
             }
 
             Crossfade(
@@ -93,6 +97,42 @@ class MainActivity : MMRLComponentActivity() {
         lifecycleScope.launch {
             userPreferencesRepository.setWorkingMode(value)
         }
+    }
+
+    private fun setWebUIActivityEnabled(enable: Boolean) {
+        val component = ComponentName(
+            this, WebUIActivity::class.java
+        )
+
+        val state = if (enable) {
+            PackageManager.COMPONENT_ENABLED_STATE_ENABLED
+        } else {
+            PackageManager.COMPONENT_ENABLED_STATE_DISABLED
+        }
+
+        packageManager.setComponentEnabledSetting(
+            component,
+            state,
+            PackageManager.DONT_KILL_APP
+        )
+    }
+
+    private fun setActionActivityEnabled(enable: Boolean) {
+        val component = ComponentName(
+            this, ActionActivity::class.java
+        )
+
+        val state = if (enable) {
+            PackageManager.COMPONENT_ENABLED_STATE_ENABLED
+        } else {
+            PackageManager.COMPONENT_ENABLED_STATE_DISABLED
+        }
+
+        packageManager.setComponentEnabledSetting(
+            component,
+            state,
+            PackageManager.DONT_KILL_APP
+        )
     }
 
     private fun setInstallActivityEnabled(enable: Boolean) {

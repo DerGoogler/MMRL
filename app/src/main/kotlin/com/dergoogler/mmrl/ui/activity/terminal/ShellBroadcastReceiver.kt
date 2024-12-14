@@ -1,4 +1,4 @@
-package com.dergoogler.mmrl.ui.activity.install
+package com.dergoogler.mmrl.ui.activity.terminal
 
 import android.content.BroadcastReceiver
 import android.content.Context

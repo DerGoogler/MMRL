@@ -96,7 +96,7 @@
         </activity>
 
         <activity
-            android:name=".ui.activity.install.InstallActivity"
+            android:name=".ui.activity.terminal.install.InstallActivity"
             android:excludeFromRecents="true"
             android:exported="true"
             android:label="@string/install_activity"
@@ -109,6 +109,19 @@
 
                 <data android:scheme="content" />
                 <data android:mimeType="application/zip" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.activity.terminal.action.ActionActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:label="@string/action_activity"
+            android:taskAffinity="${applicationId}.ACTION">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 

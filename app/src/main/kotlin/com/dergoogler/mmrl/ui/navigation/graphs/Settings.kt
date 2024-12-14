@@ -6,13 +6,13 @@ import androidx.compose.animation.scaleIn
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import androidx.navigation.navDeepLink
 import androidx.navigation.navigation
 import com.dergoogler.mmrl.ui.navigation.MainScreen
 import com.dergoogler.mmrl.ui.screens.settings.SettingsScreen
 import com.dergoogler.mmrl.ui.screens.settings.appearance.AppearanceScreen
 import com.dergoogler.mmrl.ui.screens.settings.blacklist.BlacklistScreen
 import com.dergoogler.mmrl.ui.screens.settings.changelogs.ChangelogScreen
+import com.dergoogler.mmrl.ui.screens.settings.modules.ModulesScreen
 import com.dergoogler.mmrl.ui.screens.settings.other.OtherScreen
 import com.dergoogler.mmrl.ui.screens.settings.recommendedRepos.RecommendedRepoScreen
 import com.dergoogler.mmrl.ui.screens.settings.repositories.RepositoriesScreen
@@ -27,6 +27,7 @@ enum class SettingsScreen(val route: String) {
     Appearance("Appearance"),
     Updates("Updates"),
     Security("Security"),
+    Modules("Modules"),
     Other("Other"),
     Blacklist("Blacklist"),
     WorkingMode("WorkingMode"),
@@ -96,6 +97,16 @@ fun NavGraphBuilder.settingsScreen(
         exitTransition = { fadeOut() }
     ) {
         SecurityScreen(
+            navController = navController
+        )
+    }
+
+    composable(
+        route = SettingsScreen.Modules.route,
+        enterTransition = { scaleIn() + fadeIn() },
+        exitTransition = { fadeOut() }
+    ) {
+        ModulesScreen(
             navController = navController
         )
     }

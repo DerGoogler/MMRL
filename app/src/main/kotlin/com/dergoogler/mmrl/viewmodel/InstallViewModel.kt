@@ -18,14 +18,14 @@ import com.dergoogler.mmrl.model.local.LocalModule
 import com.dergoogler.mmrl.repository.LocalRepository
 import com.dergoogler.mmrl.repository.ModulesRepository
 import com.dergoogler.mmrl.repository.UserPreferencesRepository
-import com.dergoogler.mmrl.ui.activity.install.Actions
-import com.dergoogler.mmrl.ui.activity.install.ShellBroadcastReceiver
+import com.dergoogler.mmrl.ui.activity.terminal.Actions
+import com.dergoogler.mmrl.ui.activity.terminal.ShellBroadcastReceiver
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.dergoogler.mmrl.compat.BuildCompat
 import dev.dergoogler.mmrl.compat.content.BulkModule
 import dev.dergoogler.mmrl.compat.content.State
 import dev.dergoogler.mmrl.compat.ext.tmpDir
-import dev.dergoogler.mmrl.compat.stub.IInstallCallback
+import dev.dergoogler.mmrl.compat.stub.IShellCallback
 import dev.dergoogler.mmrl.compat.viewmodel.MMRLViewModel
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
@@ -224,7 +224,7 @@ class InstallViewModel @Inject constructor(
 
             val installationResult = CompletableDeferred<Boolean>()
 
-            val callback = object : IInstallCallback.Stub() {
+            val callback = object : IShellCallback.Stub() {
                 override fun onStdout(msg: String) {
                     CoroutineScope(Dispatchers.Main).launch {
                         console.add(msg)

@@ -2,8 +2,8 @@ package dev.dergoogler.mmrl.compat.impl
 
 import com.topjohnwu.superuser.Shell
 import dev.dergoogler.mmrl.compat.content.BulkModule
-import dev.dergoogler.mmrl.compat.stub.IInstallCallback
 import dev.dergoogler.mmrl.compat.stub.IModuleOpsCallback
+import dev.dergoogler.mmrl.compat.stub.IShellCallback
 
 internal class MagiskModuleManagerImpl(
     private val shell: Shell,
@@ -55,7 +55,22 @@ internal class MagiskModuleManagerImpl(
         }
     }
 
-    override fun install(path: String, bulkModules: List<BulkModule>, callback: IInstallCallback) {
+    override fun action(modId: String, legacy: Boolean, callback: IShellCallback) {
+        val cmds = arrayOf(
+            "cd \"/data/adb/modules/$modId\"",
+            "sh ./action.sh",
+            "RES=$?",
+            "cd /",
+            "exit \$RES",
+        )
+
+        action(
+            cmd = cmds,
+            callback = callback
+        )
+    }
+
+    override fun install(path: String, bulkModules: List<BulkModule>, callback: IShellCallback) {
         install(
             cmd = "magisk --install-module '${path}'",
             path = path,

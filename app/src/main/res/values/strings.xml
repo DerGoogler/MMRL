@@ -83,6 +83,7 @@
     <string name="view_module_features_zygisk">Zygisk</string>
     <string name="view_module_features_apks">APKs</string>
     <string name="view_module_features_webui">WebUI</string>
+    <string name="view_module_features_action">Action</string>
     <string name="view_module_features_post_mount">Post Mount</string>
     <string name="view_module_features_boot_completed">Boot completed</string>
     <string name="view_module_features_service_sub">Runs code later during boot (more system initialized).</string>
@@ -92,6 +93,7 @@
     <string name="view_module_features_zygisk_sub">Allows modules to interact with the Zygisk framework, enabling system-level modifications and interactions.</string>
     <string name="view_module_features_apks_sub">Including additional APKs inside the module.</string>
     <string name="view_module_features_webui_sub">Web interface for managing modules</string>
+    <string name="view_module_features_action_sub">Allows the user executing a script via a button click</string>
     <string name="view_module_features_postmount_sub">Script execution after OverlayFS mounts</string>
     <string name="view_module_features_bootcompleted_sub">Script execution after boot completes</string>
     <string name="view_module_module_support">Module Support</string>
@@ -114,7 +116,13 @@
     <string name="view_module_install_confirm_confirm">Install</string>
     <string name="view_module_install_confirm_desc"><![CDATA[Are you sure that you want to install <font color=\"%1$s\">%2$s</font>?]]></string>
     <string name="view_module_install_confirm_desc_deps"><![CDATA[Are you sure that you want to install <font color=\"%1$s\">%2$s</font>? This module requires also:]]></string>
-
+    <string name="view_module_low_root_version">Root Version to low!</string>
+    <string name="view_module_low_root_version_desc">Seems like that you have a too old root provider version. Check if there are any updates for your root provider.</string>
+    <string name="view_module_required_root_version">Required Root Version</string>
+    <string name="view_module_unsupported_device">Unsupported Device</string>
+    <string name="view_module_unsupported_arch">Unsupported Architecture</string>
+    <string name="view_module_unsupported_arch_desc">Seems like that your device doesn\'t have the support for the required architecture declared by the developer.</string>
+    <string name="view_module_unsupported_device_desc">Seems like that your devices is not supported by this modules or has been excluded.</string>
 
     <!-- Modules -->
     <string name="modules_empty">No modules found</string>
@@ -200,7 +208,12 @@
     <string name="settings_clear_install_terminal_desc">Clear Install Terminal when installing more than one Module</string>
     <string name="settings_shell_module_state_change">Use Shell for States</string>
     <string name="settings_shell_module_state_change_desc">Uses shell instead of creating files in the module directory. Once enabled you won\'t able to use the restore button due limitations.</string>
-
+    <string name="settings_shell_module_action">Use Shell for Action</string>
+    <string name="settings_shell_module_action_desc">This is useful when your root provider doesn\'t support the action.sh file</string>
+    <string name="settings_modules">Modules &amp; Installer</string>
+    <string name="settings_modules_desc">Change the behavior of handlers for modules or many more about modules</string>
+    <string name="settings_modules_handlers">Handlers</string>
+    <string name="settings_modules_installer">Installer</string>
 
     <!-- App Theme -->
     <string name="app_theme_palette">Theme Palette</string>
@@ -303,6 +316,13 @@
     <string name="bulk_install_module_added">Module added</string>
     <string name="bulk_module_install">Bulk Module Install</string>
 
+    <string name="action_activity">Action</string>
+    <string name="action_failure">Action Failure</string>
+    <string name="action_executing">Executing…</string>
+
+    <string name="generic_disclaimer_title">You are responsible!</string>
+    <string name="generic_disclaimer_desc">**MMRL** is not responsible for any damage to your device, including but not limited to bricked devices, corrupted SD cards, thermonuclear wars, or you losing your job because an alarm app malfunctioned. Before proceeding, please thoroughly research the features and risks of using this module. *You are choosing to make these modifications at your own risk*.</string>
+
     <string name="has_a_new_update">%1$s has a new update!</string>
     <string name="update_available_from_to">Update available from %s (%d) to %s (%d).</string>
     <string name="events_birthday">%1$s years MMRL!</string>
@@ -318,11 +338,4 @@
     <string name="hidden">Hidden</string>
     <string name="pre_release">Pre-release</string>
     <string name="unsafe_url_redirecting">Unsafe URL: %1$s. Redirecting…</string>
-    <string name="view_module_low_root_version">Root Version to low!</string>
-    <string name="view_module_low_root_version_desc">Seems like that you have a too old root provider version. Check if there are any updates for your root provider.</string>
-    <string name="view_module_required_root_version">Required Root Version</string>
-    <string name="view_module_unsupported_device">Unsupported Device</string>
-    <string name="view_module_unsupported_arch">Unsupported Architecture</string>
-    <string name="view_module_unsupported_arch_desc">Seems like that your device doesn\'t have the support for the required architecture declared by the developer.</string>
-    <string name="view_module_unsupported_device_desc">Seems like that your devices is not supported by this modules or has been exluded.</string>
 </resources>

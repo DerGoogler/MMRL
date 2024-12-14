@@ -152,6 +152,12 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
+    fun setUseShellForModuleAction(value: Boolean) {
+        viewModelScope.launch {
+            userPreferencesRepository.setUseShellForModuleAction(value)
+        }
+    }
+
     fun setClearInstallTerminal(value: Boolean) {
         viewModelScope.launch {
             userPreferencesRepository.setClearInstallTerminal(value)

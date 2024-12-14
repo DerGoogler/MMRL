@@ -23,7 +23,8 @@ import com.dergoogler.mmrl.compat.PermissionCompat
 import com.dergoogler.mmrl.repository.LocalRepository
 import com.dergoogler.mmrl.repository.UserPreferencesRepository
 import com.dergoogler.mmrl.ui.activity.CrashHandlerActivity
-import com.dergoogler.mmrl.ui.activity.install.InstallActivity
+import com.dergoogler.mmrl.ui.activity.terminal.action.ActionActivity
+import com.dergoogler.mmrl.ui.activity.terminal.install.InstallActivity
 import com.dergoogler.mmrl.ui.activity.webui.WebUIActivity
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.theme.AppTheme
@@ -135,8 +136,17 @@ open class MMRLComponentActivity : ComponentActivity() {
     }
 
     companion object {
-        fun startModConfActivity(context: Context, modId: String) {
+        fun startWebUIActivity(context: Context, modId: String) {
             val intent = Intent(context, WebUIActivity::class.java)
+                .apply {
+                    putExtra("MOD_ID", modId)
+                }
+
+            context.startActivity(intent)
+        }
+
+        fun startActionActivity(context: Context, modId: String) {
+            val intent = Intent(context, ActionActivity::class.java)
                 .apply {
                     putExtra("MOD_ID", modId)
                 }
@@ -176,7 +186,7 @@ fun MMRLComponentActivity.setBaseContent(
     }
 
     val context = LocalContext.current
-    
+
     AppTheme(
         darkMode = preferences.isDarkMode(), themeColor = preferences.themeColor
     ) {

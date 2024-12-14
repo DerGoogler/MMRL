@@ -16,7 +16,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.dergoogler.mmrl.R
-import com.dergoogler.mmrl.datastore.UserPreferencesCompat.Companion.isRoot
 import com.dergoogler.mmrl.ui.component.ListSwitchItem
 import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
@@ -54,15 +53,6 @@ fun OtherScreen(
             )
 
             ListSwitchItem(
-                icon = R.drawable.file_type_zip,
-                title = stringResource(id = R.string.settings_delete_zip),
-                desc = stringResource(id = R.string.settings_delete_zip_desc),
-                checked = userPreferences.deleteZipFile,
-                onChange = viewModel::setDeleteZipFile,
-                enabled = userPreferences.workingMode.isRoot
-            )
-
-            ListSwitchItem(
                 icon = R.drawable.brand_cloudflare,
                 title = stringResource(id = R.string.settings_doh),
                 desc = stringResource(id = R.string.settings_doh_desc),
@@ -71,29 +61,11 @@ fun OtherScreen(
             )
 
             ListSwitchItem(
-                icon = R.drawable.clear_all,
-                title = stringResource(id = R.string.settings_clear_install_terminal),
-                desc = stringResource(id = R.string.settings_clear_install_terminal_desc),
-                checked = userPreferences.clearInstallTerminal,
-                onChange = viewModel::setClearInstallTerminal,
-            )
-
-            ListSwitchItem(
                 icon = R.drawable.bug,
                 title = stringResource(id = R.string.settings_developer_mode),
                 desc = stringResource(id = R.string.settings_developer_mode_desc),
                 checked = userPreferences.developerMode,
                 onChange = viewModel::setDeveloperMode,
-            )
-
-            ListSwitchItem(
-                enabled = viewModel.isProviderAlive && viewModel.managerName.lowercase() != "magisk",
-                icon = R.drawable.stars_outlined,
-                title = stringResource(id = R.string.settings_shell_module_state_change),
-                desc = stringResource(id = R.string.settings_shell_module_state_change_desc),
-                checked = userPreferences.useShellForModuleStateChange,
-                onChange = viewModel::setUseShellForModuleStateChange,
-                labels = listOf("KernelSU", "APatch")
             )
         }
     }

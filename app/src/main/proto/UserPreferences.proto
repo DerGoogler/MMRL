@@ -31,4 +31,5 @@ message UserPreferences {
   bool developerMode = 20;
   bool clearInstallTerminal = 21;
   bool useShellForModuleStateChange = 22;
+  bool useShellForModuleAction = 23;
 }

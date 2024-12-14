@@ -1,12 +1,8 @@
-package com.dergoogler.mmrl.ui.activity.install
+package com.dergoogler.mmrl.ui.activity.terminal.action
 
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.scaleIn
-import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,7 +12,6 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -30,12 +25,8 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -53,18 +44,15 @@ import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.app.Event
 import com.dergoogler.mmrl.app.Event.Companion.isFinished
 import com.dergoogler.mmrl.app.Event.Companion.isLoading
-import com.dergoogler.mmrl.app.Event.Companion.isSucceeded
-import com.dergoogler.mmrl.ui.component.ConfirmRebootDialog
 import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
-import com.dergoogler.mmrl.ui.utils.isScrollingUp
-import com.dergoogler.mmrl.viewmodel.InstallViewModel
+import com.dergoogler.mmrl.viewmodel.ActionViewModel
 import kotlinx.coroutines.launch
 
 
 @Composable
-fun InstallScreen(
-    viewModel: InstallViewModel = hiltViewModel()
+fun ActionScreen(
+    viewModel: ActionViewModel = hiltViewModel()
 ) {
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -74,12 +62,6 @@ fun InstallScreen(
 
     val focusRequester = remember { FocusRequester() }
     val listState = rememberLazyListState()
-    val isScrollingUp by listState.isScrollingUp()
-    val showFab by remember {
-        derivedStateOf {
-            isScrollingUp && viewModel.event.isSucceeded
-        }
-    }
 
     LaunchedEffect(focusRequester) {
         focusRequester.requestFocus()
@@ -125,15 +107,6 @@ fun InstallScreen(
         }
     }
 
-    var confirmReboot by remember { mutableStateOf(false) }
-    if (confirmReboot) ConfirmRebootDialog(
-        onClose = { confirmReboot = false },
-        onConfirm = {
-            confirmReboot = false
-            viewModel.reboot()
-        }
-    )
-
     Scaffold(
         modifier = Modifier
             .onKeyEvent {
@@ -152,29 +125,6 @@ fun InstallScreen(
                 event = viewModel.event,
                 scrollBehavior = scrollBehavior
             )
-        },
-        floatingActionButton = {
-            AnimatedVisibility(
-                visible = showFab,
-                enter = scaleIn(
-                    animationSpec = tween(100),
-                    initialScale = 0.8f
-                ),
-                exit = scaleOut(
-                    animationSpec = tween(100),
-                    targetScale = 0.8f
-                )
-            ) {
-                FloatingButton(
-                    reboot = {
-                        if (userPreferences.confirmReboot) {
-                            confirmReboot = true
-                        } else {
-                            viewModel.reboot()
-                        }
-                    }
-                )
-            }
         },
         snackbarHost = { SnackbarHost(snackbarHostState) }
     ) {
@@ -226,11 +176,11 @@ private fun TopBar(
     event: Event,
     scrollBehavior: TopAppBarScrollBehavior
 ) = NavigateUpTopBar(
-    title = stringResource(id = R.string.install_screen_title),
+    title = stringResource(id = R.string.action_activity),
     subtitle = stringResource(
         id = when (event) {
-            Event.LOADING -> R.string.install_flashing
-            Event.FAILED -> R.string.install_failure
+            Event.LOADING -> R.string.action_executing
+            Event.FAILED -> R.string.action_failure
             else -> R.string.install_done
         }
     ),
@@ -249,15 +199,3 @@ private fun TopBar(
         }
     }
 )
-
-@Composable
-private fun FloatingButton(
-    reboot: () -> Unit,
-) = FloatingActionButton(
-    onClick = reboot
-) {
-    Icon(
-        painter = painterResource(id = R.drawable.reload),
-        contentDescription = null
-    )
-}

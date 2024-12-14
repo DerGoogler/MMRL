@@ -80,6 +80,15 @@ fun SettingsScreen(
             )
 
             ListButtonItem(
+                icon = R.drawable.stack_middle,
+                title = stringResource(id = R.string.settings_modules),
+                desc = stringResource(id = R.string.settings_modules_desc),
+                onClick = {
+                    navController.navigateSingleTopTo(SettingsScreen.Modules.route)
+                }
+            )
+
+            ListButtonItem(
                 icon = R.drawable.tool,
                 title = stringResource(id = R.string.settings_other),
                 desc = stringResource(id = R.string.settings_other_desc),

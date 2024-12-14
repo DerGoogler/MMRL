@@ -838,6 +838,13 @@ fun NewViewScreen(
                         )
                         FeatureListItem(
                             itemTextStyle = subListItemStyle,
+                            feature = it.action,
+                            key = R.string.view_module_features_action,
+                            value = R.string.view_module_features_action_sub,
+                            rootSolutions = listOf("KernelSU", "APatch", "MMRL")
+                        )
+                        FeatureListItem(
+                            itemTextStyle = subListItemStyle,
                             feature = it.postMount,
                             key = R.string.view_module_features_post_mount,
                             value = R.string.view_module_features_postmount_sub,
