@@ -1,12 +1,15 @@
 package com.dergoogler.mmrl.database.entity
 
+import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.TypeConverters
+import com.dergoogler.mmrl.model.online.Manager
 import com.dergoogler.mmrl.model.online.ModuleFeatures
 import com.dergoogler.mmrl.model.online.ModuleNote
 import com.dergoogler.mmrl.model.online.ModuleRoot
 import com.dergoogler.mmrl.model.online.OnlineModule
+import com.dergoogler.mmrl.model.online.RootManager
 import com.dergoogler.mmrl.model.online.TrackJson
 import com.squareup.moshi.Json
 
@@ -36,14 +39,15 @@ data class OnlineModuleEntity(
     val require: List<String>? = null,
     val verified: Boolean? = null,
 
+    @Embedded val manager: ManagerEntity? = null,
     @Embedded val root: ModuleRootEntity? = null,
     @Embedded val note: ModuleNoteEntity? = null,
     @Embedded val features: ModuleFeaturesEntity? = null,
-    @Embedded val track: TrackJsonEntity
+    @Embedded val track: TrackJsonEntity,
 ) {
     constructor(
         original: OnlineModule,
-        repoUrl: String
+        repoUrl: String,
     ) : this(
         id = original.id,
         repoUrl = repoUrl,
@@ -69,7 +73,8 @@ data class OnlineModuleEntity(
         license = original.license,
         readme = original.readme,
         require = original.require,
-        verified = original.verified
+        verified = original.verified,
+        manager = ManagerEntity(original.manager),
     )
 
     fun toModule() = OnlineModule(
@@ -97,7 +102,8 @@ data class OnlineModuleEntity(
         license = license,
         readme = readme,
         require = require,
-        verified = verified
+        verified = verified,
+        manager = manager?.toManager(),
     )
 }
 
@@ -142,7 +148,6 @@ data class ModuleNoteEntity(
 }
 
 @Entity(tableName = "root")
-@TypeConverters
 data class ModuleRootEntity(
     val magisk: String? = null,
     val kernelsu: String? = null,
@@ -161,6 +166,48 @@ data class ModuleRootEntity(
     )
 }
 
+@Entity(tableName = "manager")
+data class ManagerEntity(
+    @ColumnInfo(name = "magiskManager") val magisk: RootManager? = null,
+    @ColumnInfo(name = "kernelsuManager") val kernelsu: RootManager? = null,
+    @ColumnInfo(name = "apatchManager") val apatch: RootManager? = null,
+) {
+    constructor(original: Manager?) : this(
+        magisk = original?.magisk,
+        kernelsu = original?.kernelsu,
+        apatch = original?.apatch,
+    )
+
+    fun toManager() = Manager(
+        magisk = magisk,
+        kernelsu = kernelsu,
+        apatch = apatch,
+    )
+}
+
+@Entity(tableName = "manager_root")
+@TypeConverters
+data class RootManagerEntity(
+    val min: Int? = null,
+    val devices: List<String>? = null,
+    val arch: List<String>? = null,
+    val require: List<String>? = null,
+) {
+    constructor(original: RootManager?) : this(
+        min = original?.min,
+        devices = original?.devices,
+        arch = original?.arch,
+        require = original?.require,
+    )
+
+    fun toRoot() = RootManager(
+        min = min,
+        devices = devices,
+        arch = arch,
+        require = require,
+    )
+}
+
 @Entity(tableName = "root")
 @TypeConverters
 data class ModuleFeaturesEntity(
@@ -173,7 +220,7 @@ data class ModuleFeaturesEntity(
     val webroot: Boolean? = false,
     @Json(name = "post_mount") val postMount: Boolean? = false,
     @Json(name = "boot_completed") val bootCompleted: Boolean? = false,
-//    val modconf: Boolean? = false,
+    val action: Boolean? = false,
 ) {
     constructor(original: ModuleFeatures?) : this(
         service = original?.service,
@@ -185,7 +232,7 @@ data class ModuleFeaturesEntity(
         webroot = original?.webroot,
         postMount = original?.postMount,
         bootCompleted = original?.bootCompleted,
-//        modconf = original?.modconf,
+        action = original?.action,
     )
 
     fun toFeatures() = ModuleFeatures(
@@ -198,6 +245,6 @@ data class ModuleFeaturesEntity(
         webroot = webroot,
         postMount = postMount,
         bootCompleted = bootCompleted,
-//        modconf = modconf,
+        action = action
     )
 }

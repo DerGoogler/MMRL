@@ -45,11 +45,11 @@ data class RootManager(
         }
     }
 
-    fun isNotSupportedRootVersion(
+    private fun isNotSupportedRootVersion(
         version: Int,
     ) = min != null && version < min || min == -1
 
-    fun isNotSupportedDevice() =
+    private fun isNotSupportedDevice() =
         devices.isNotNullOrEmpty() && !devices.map { it.lowercase() }.contains(Build.MODEL.lowercase())
 
     @SuppressLint("ComposableNaming")
@@ -62,7 +62,7 @@ data class RootManager(
         }
     }
 
-    fun isNotSupportedArch() = arch.isNotNullOrEmpty() && !arch.map { it.lowercase() }
+    private fun isNotSupportedArch() = arch.isNotNullOrEmpty() && !arch.map { it.lowercase() }
         .contains(Build.SUPPORTED_ABIS[0].lowercase())
 
     @SuppressLint("ComposableNaming")

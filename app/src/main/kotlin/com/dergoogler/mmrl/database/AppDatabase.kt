@@ -15,7 +15,7 @@ import com.dergoogler.mmrl.database.entity.LocalModuleUpdatable
 import com.dergoogler.mmrl.database.entity.OnlineModuleEntity
 import com.dergoogler.mmrl.database.entity.Repo
 import com.dergoogler.mmrl.database.entity.VersionItemEntity
-import com.dergoogler.mmrl.utils.StringListTypeConverter
+import dev.dergoogler.mmrl.compat.Converters
 
 @Database(
     entities = [
@@ -25,9 +25,9 @@ import com.dergoogler.mmrl.utils.StringListTypeConverter
         VersionItemEntity::class,
         LocalModuleEntity::class
     ],
-    version = 3,
+    version = 4,
 )
-@TypeConverters(StringListTypeConverter::class)
+@TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun repoDao(): RepoDao
     abstract fun onlineDao(): OnlineDao

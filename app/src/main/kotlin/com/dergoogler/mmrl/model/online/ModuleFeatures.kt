@@ -15,10 +15,10 @@ data class ModuleFeatures(
     val webroot: Boolean? = null,
     @Json(name = "post_mount") val postMount: Boolean? = null,
     @Json(name = "boot_completed") val bootCompleted: Boolean? = null,
-//    val modconf: Boolean? = false,
+    val action: Boolean? = false,
 ) {
     fun isNotEmpty() =
-        service != null || postFsData != null || resetprop != null || sepolicy != null || zygisk != null || apks != null || webroot != null || postMount != null || bootCompleted != null //|| modconf != null
+        service != null || postFsData != null || resetprop != null || sepolicy != null || zygisk != null || apks != null || webroot != null || postMount != null || bootCompleted != null || action != null
 
     val size = listOf(
         service,
@@ -29,7 +29,8 @@ data class ModuleFeatures(
         apks,
         webroot,
         postMount,
-        bootCompleted
+        bootCompleted,
+        action
     ).count { it != null }
 }
 
