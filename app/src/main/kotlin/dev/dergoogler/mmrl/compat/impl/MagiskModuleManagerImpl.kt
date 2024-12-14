@@ -57,11 +57,7 @@ internal class MagiskModuleManagerImpl(
 
     override fun action(modId: String, legacy: Boolean, callback: IShellCallback) {
         val cmds = arrayOf(
-            "cd \"/data/adb/modules/$modId\"",
-            "sh ./action.sh",
-            "RES=$?",
-            "cd /",
-            "exit \$RES",
+            "sh /data/adb/modules/$modId/action.sh"
         )
 
         action(
