@@ -1,6 +1,8 @@
 package com.dergoogler.mmrl.ui.activity.webui
 
 import android.webkit.WebResourceResponse
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.CardColors
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.Typography
 import androidx.compose.ui.graphics.Color
@@ -19,6 +21,8 @@ class MMRLWebUIHandler(
     private val bottomInset: Int,
     private val colorScheme: ColorScheme,
     private val typography: Typography,
+    private val filledTonalButtonColors: ButtonColors,
+    private val cardColors: CardColors,
 ) : PathHandler {
     override fun handle(path: String): WebResourceResponse? {
         Timber.d("Handling path: $path")
@@ -45,6 +49,7 @@ class MMRLWebUIHandler(
     private fun appColors(): WebResourceResponse {
         val cssContent = buildString {
             append(":root {\n")
+            append("    /* App Base Colors */\n")
             append("    --primary: ${colorScheme.primary.toCssValue()};\n")
             append("    --onPrimary: ${colorScheme.onPrimary.toCssValue()};\n")
             append("    --primaryContainer: ${colorScheme.primaryContainer.toCssValue()};\n")
@@ -81,6 +86,16 @@ class MMRLWebUIHandler(
             append("    --surfaceContainerHighest: ${colorScheme.surfaceContainerHighest.toCssValue()};\n")
             append("    --surfaceContainerLow: ${colorScheme.surfaceContainerLow.toCssValue()};\n")
             append("    --surfaceContainerLowest: ${colorScheme.surfaceContainerLowest.toCssValue()};\n")
+            append("    /* Filled Tonal Button Colors */\n")
+            append("    --filledTonalButtonContentColor: ${filledTonalButtonColors.contentColor.toCssValue()};\n")
+            append("    --filledTonalButtonContainerColor: ${filledTonalButtonColors.containerColor.toCssValue()};\n")
+            append("    --filledTonalButtonDisabledContentColor: ${filledTonalButtonColors.disabledContentColor.toCssValue()};\n")
+            append("    --filledTonalButtonDisabledContainerColor: ${filledTonalButtonColors.disabledContainerColor.toCssValue()};\n")
+            append("    /* Filled Card Colors */\n")
+            append("    --filledCardContentColor: ${cardColors.contentColor.toCssValue()};\n")
+            append("    --filledCardContentColor: ${cardColors.containerColor.toCssValue()};\n")
+            append("    --filledCardDisabledContentColor: ${cardColors.disabledContentColor.toCssValue()};\n")
+            append("    --filledCardDisabledContainerColor: ${cardColors.disabledContainerColor.toCssValue()};\n")
             append("}")
         }
         return style(cssContent)

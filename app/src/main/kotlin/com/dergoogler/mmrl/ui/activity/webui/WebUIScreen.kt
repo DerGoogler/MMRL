@@ -7,6 +7,9 @@ import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -41,6 +44,9 @@ fun WebUIScreen(
     val browser = LocalUriHandler.current as MMRLUriHandlerImpl
     val colorScheme = MaterialTheme.colorScheme
     val typography = MaterialTheme.typography
+    val filledTonalButtonColors = ButtonDefaults.filledTonalButtonColors()
+    val cardColors = CardDefaults.cardColors()
+    val cardColorsOutlined = CardDefaults.outlinedCardColors()
 
     val rootShell = viewModel.createRootShell(
         globalMnt = true,
@@ -66,7 +72,9 @@ fun WebUIScreen(
                 rootShell
             )
         )
+Card {
 
+}
     AndroidView(
         factory = {
             WebView(context).apply {
@@ -86,7 +94,9 @@ fun WebUIScreen(
                             topInset = topInset,
                             bottomInset = bottomInset,
                             colorScheme = colorScheme,
-                            typography = typography
+                            typography = typography,
+                            filledTonalButtonColors = filledTonalButtonColors,
+                            cardColors = cardColors
                         )
                     )
 
