@@ -269,4 +269,7 @@
     <string name="view_module_unsupported_arch">Niewspierana architektura</string>
     <string name="view_module_unsupported_device">Niewspierane urządzenie</string>
     <string name="view_module_low_root_version">Za stara wersja roota!</string>
+    <string name="view_module_unsupported_arch_desc">Wygląda na to, że twoje urządzenie nie posiada obsługi wymaganej architektury zadeklarowanej przez programistę.</string>
+    <string name="view_module_unsupported_device_desc">Wygląda na to, że twoje urządzenie nie jest wspierane przez te moduły lub zostało wykluczone.</string>
+    <string name="view_module_low_root_version_desc">Wygląda na to, że masz starego dostawcę uprawnień root. Sprawdź czy są dostępne jego uaktualnienia.</string>
 </resources>
