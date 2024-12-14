@@ -264,4 +264,13 @@
     <string name="unsafe_url_redirecting">URL insegura: %1$s. Redirecionando…</string>
     <string name="new_version_available">A nova versão %s está disponível, clique para atualizar.</string>
     <string name="open_source">Código aberto</string>
+    <string name="view_module_low_root_version">Versão root muito baixa!</string>
+    <string name="view_module_required_root_version">Versão root necessária</string>
+    <string name="view_module_unsupported_device">Dispositivo não suportado</string>
+    <string name="view_module_features_action_sub">Permite que o usuário execute um script por meio de um clique de botão</string>
+    <string name="view_module_unsupported_device_desc">Parece que seus dispositivos não são suportados por esses módulos ou foram excluídos.</string>
+    <string name="view_module_features_action">Ação</string>
+    <string name="view_module_low_root_version_desc">Parece que você tem uma versão de provedor de root muito antiga. Verifique se há alguma atualização para seu provedor de root</string>
+    <string name="view_module_unsupported_arch_desc">Parece que seu dispositivo não tem suporte para a arquitetura necessária declarada pelo desenvolvedor.</string>
+    <string name="view_module_unsupported_arch">Arquitetura sem suporte</string>
 </resources>
