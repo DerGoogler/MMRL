@@ -91,7 +91,7 @@
     <string name="view_module_provided_by">中介平臺</string>
     <string name="view_module_added_on">上架日期</string>
     <string name="view_module_about_this_module">關於模組</string>
-    <string name="view_module_mod_infos_disclaimer"><![CDATA[留有 <b>*</b> 標記的資訊，其內容在各中介平臺之間稍有不同。欲知詳情，請點選上方的<font color=\"%1$s\">中繼資料檢視</font>。]]></string>
+    <string name="view_module_mod_infos_disclaimer">留有 **** 標記的資訊，其內容在各中介平臺之間稍有不同。欲知詳情，請點選上方的@track(中繼資料檢視)。</string>
     <string name="view_module_section_count">%1$s+</string>
     <string name="view_module_donate">小額捐款</string>
     <string name="view_module_donate_desc">以一杯咖啡 ☕ 的錢，表達你對模組開發人員的大力支持！</string>
@@ -282,7 +282,7 @@
     <string name="view_module_install_confirm_confirm">安裝</string>
     <string name="view_module_install_confirm_desc"><![CDATA[你是否要安裝<font color=\"%1$s\">「%2$s」</font>？]]></string>
     <string name="view_module_install_confirm_confirm_deps">安裝（相依模組）</string>
-    <string name="settings_shell_module_state_change">套用系統外殼</string>
+    <string name="settings_shell_module_state_change">以系統外殼管理模組</string>
     <string name="settings_shell_module_state_change_desc">選擇以系統外殼進行模組管理，而非逕自在模組目錄建立檔案。選項啟用後，你將無法使用復原按鈕。</string>
     <string name="bulk_install_module_already_added">本模組已經新增進來了</string>
     <string name="bulk_install_module_added">已新增模組</string>
@@ -297,4 +297,18 @@
     <string name="view_module_low_root_version_desc">現有授權平臺的版本過於老舊，請為其檢查更新。</string>
     <string name="view_module_unsupported_device_desc">你的裝置不支援此模組。</string>
     <string name="view_module_required_root_version">所需授權版本</string>
+    <string name="view_module_features_action">腳本執行</string>
+    <string name="view_module_features_action_sub">准許使用者按下按鈕後執行腳本</string>
+    <string name="settings_shell_module_action">以系統外殼執行腳本</string>
+    <string name="settings_modules_desc">更改大量模組所遭遇的處置行為</string>
+    <string name="settings_modules_handlers">處置程序</string>
+    <string name="settings_modules">程序處置</string>
+    <string name="action_failure">無法執行腳本</string>
+    <string name="generic_disclaimer_title">請自行承擔風險！</string>
+    <string name="action_activity">執行</string>
+    <string name="action_executing">正在執行……</string>
+    <string name="settings_shell_module_action_desc">推薦在授權平臺不支援 action.sh 檔案的情況下啟用</string>
+    <string name="bulk_add_as_bulk">新增至模組安裝列表</string>
+    <string name="settings_modules_installer">安裝程序</string>
+    <string name="generic_disclaimer_desc">若以自身裝置變故而蒙受損失（如無法開機、SD 卡故障、引發熱核子戰爭，或是因鬧鐘應用程式秀逗而讓你被炒魷魚），**MMRL** 概不負責。執行之前，請確認好本功能之於模組的作用與風險。*在你同意進行模組修改過後，其風險責任應由你承擔*。</string>
 </resources>
