@@ -318,4 +318,11 @@
     <string name="hidden">Hidden</string>
     <string name="pre_release">Pre-release</string>
     <string name="unsafe_url_redirecting">Unsafe URL: %1$s. Redirecting…</string>
+    <string name="view_module_low_root_version">Root Version to low!</string>
+    <string name="view_module_low_root_version_desc">Seems like that you have a too old root provider version. Check if there are any updates for your root provider.</string>
+    <string name="view_module_required_root_version">Required Root Version</string>
+    <string name="view_module_unsupported_device">Unsupported Device</string>
+    <string name="view_module_unsupported_arch">Unsupported Architecture</string>
+    <string name="view_module_unsupported_arch_desc">Seems like that your device doesn\'t have the support for the required architecture declared by the developer.</string>
+    <string name="view_module_unsupported_device_desc">Seems like that your devices is not supported by this modules or has been exluded.</string>
 </resources>

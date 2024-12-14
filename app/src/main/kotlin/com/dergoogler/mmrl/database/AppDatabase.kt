@@ -25,7 +25,7 @@ import com.dergoogler.mmrl.utils.StringListTypeConverter
         VersionItemEntity::class,
         LocalModuleEntity::class
     ],
-    version = 2,
+    version = 3,
 )
 @TypeConverters(StringListTypeConverter::class)
 abstract class AppDatabase : RoomDatabase() {

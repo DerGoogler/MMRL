@@ -43,10 +43,19 @@ class ModuleViewModel @Inject constructor(
 ) : ViewModel() {
     val isProviderAlive get() = Compat.isAlive
 
-
     val version: String
         get() = Compat.get("") {
             with(moduleManager) { version }
+        }
+
+    val versionCode: Int
+        get() = Compat.get(0) {
+            with(moduleManager) { versionCode }
+        }
+
+    val rootManager: String
+        get() = Compat.get("") {
+            with(moduleManager) { managerName }
         }
 
     private val moduleId = getModuleId(savedStateHandle)

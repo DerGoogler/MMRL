@@ -233,8 +233,6 @@
     <string name="view_module_install_confirm_title">تود تثبيت هذه الإضافة ؟</string>
     <string name="view_module_install_confirm_confirm_deps">تثبيت (المتطلبات)</string>
     <string name="view_module_install_confirm_confirm">تثبيت</string>
-    <string name="view_module_install_confirm_desc"><![CDATA[هل انت متأكد من أنك تود تثبيت <font color=\"%1$s\">%2$s</font>?]]></string>
-    <string name="view_module_install_confirm_desc_deps">&lt;![CDATA[هل انت متأكد من أنك تود تثبيت &lt;font color=\\\"%1$s\\\"&gt;%2$s&lt;/font&gt;?]]&gt;هذه الإضافة تتطلب ايضا:]]&gt;</string>
     <string name="module_reinstall">إعادة تثبيت</string>
     <string name="module_id">المعرف: %1$s</string>
     <string name="settings_open_notification_settings">فتح إعدادات الاشعارات</string>
@@ -280,7 +278,6 @@
     <string name="reboot_userspace">إعادة تشغيل(خفيف)</string>
     <string name="view_module_dependencies">متطلبات</string>
     <string name="home_support_title">ادعمني</string>
-    <string name="view_module_mod_infos_disclaimer"><![CDATA[المعلومات ذات علامة <b>*</b> قد تختلف، تستطيع اظهار المعلومات الفعلية عن الطريق النقر على <font color=\"%1$s\">إظهار السجل</font> في الأعلى.]]></string>
     <string name="settings_homepage">الصفحة الرئيسية للتطبيق</string>
     <string name="settings_shell_module_state_change_desc">استخدام shell بدلا من إنشاء ملفات في مسار الإضافة. لا يمكنك استخدام زر الاستعادة بمجرد تفعيل هذه الميزة بسبب القيود</string>
     <string name="settings_check_app_updates_desc">يقوم تلقائيا بالتحقق من توافر تحديثات للتطبيق كلما فتحته</string>

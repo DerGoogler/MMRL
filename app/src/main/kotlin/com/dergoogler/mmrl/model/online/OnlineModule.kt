@@ -35,6 +35,7 @@ data class OnlineModule(
     val require: List<String>? = null,
     val verified: Boolean? = null,
 
+    val manager: Manager? = null,
     val root: ModuleRoot? = null,
     val note: ModuleNote? = null,
     val features: ModuleFeatures? = null,
@@ -62,6 +63,12 @@ data class OnlineModule(
 
     inline fun <R> hasScreenshots(block: (List<String>) -> R): R? {
         return if (!screenshots.isNullOrEmpty()) block(screenshots) else null
+    }
+
+    fun requires(solution: String) = when {
+        require.isNotNullOrEmpty() -> require
+        manager != null && manager[solution]?.require.isNotNullOrEmpty() -> manager[solution]?.require
+        else -> null
     }
 
     @Composable
