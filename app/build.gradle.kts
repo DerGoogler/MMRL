@@ -10,7 +10,7 @@ plugins {
     alias(libs.plugins.protobuf)
 }
 
-val baseVersionName = "5.29.39"
+val baseVersionName = "5.30.40"
 val baseAppName = "MMRL"
 val baseModConfName = "ModConf"
 

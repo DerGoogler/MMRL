@@ -8,7 +8,7 @@ Every repository that uses the [GR Repo Format](https://github.com/Googlers-Repo
 
 > [!TIP]
 > Non-array- and non-objects can also placed inside the `module.prop` file!
-> 
+>
 > To use this feature you need to create a file named `common/repo.json` in your module root folder
 
 ### support
@@ -91,8 +91,8 @@ Example:
 
 ```json
 "screenshots": [
-  "https://example.com/screenshot1.png",
-  "https://example.com/screenshot2.png"
+"https://example.com/screenshot1.png",
+"https://example.com/screenshot2.png"
 ]
 ```
 
@@ -122,7 +122,59 @@ Example:
 "categories": ["Utility", "Tools"]
 ```
 
+### devices
+
+<sup>(avaiable above v5.30.40)</sup>
+
+> [!NOTE]
+> This property overrides the following properties in MMRL
+> - `manager.magisk.devices`
+> - `manager.kernelsu.devices`
+> - `manager.apatch.devices`
+>
+> Once this property is set, the above will be ignored.
+
+An array of device model ID's which the module should work on. Get your model ID with `getprop ro.product.model`
+
+Example:
+
+```json
+"devices": [
+  "SM-A705FN" // will only work on the Samsung Galaxy A70
+]
+```
+
+### arch
+
+<sup>(avaiable above v5.30.40)</sup>
+
+> [!NOTE]
+> This property overrides the following properties in MMRL
+> - `manager.magisk.arch`
+> - `manager.kernelsu.arch`
+> - `manager.apatch.arch`
+>
+> Once this property is set, the above will be ignored.
+
+An array of device architectures which the module should work on. Get your supported archs with `getprop ro.product.cpu.abilist`
+
+Example:
+
+```json
+"arch": [
+  "arm64-v8a"
+]
+```
+
 ### require
+
+> [!NOTE]
+> This property overrides the following properties in MMRL
+> - `manager.magisk.require`
+> - `manager.kernelsu.require`
+> - `manager.apatch.require`
+>
+> Once this property is set, the above will be ignored.
 
 An array of `module_id`s this module depends on.
 
@@ -152,7 +204,36 @@ Example:
 }
 ```
 
+### manager
+
+<sup>(avaiable above v5.30.40)</sup>
+
+For the use if your module requires different modules on different root providers.
+
+Available namespaces for `manager`
+
+- `magisk`
+- `kernelsu`
+- `apatch`
+
+_<sub>See also [FILE>require](#require), [FILE>devices](#devices), [FILE>arch](#arch)</sub>_
+
+```jsonc
+"manager": {
+  "magisk": {
+    "min": 25200,
+    "devices": [].
+    "arch": [],
+    "require": []
+  }
+}
+```
+
 ### root
+
+
+> [!CAUTION]
+> The `root` property is depcreated in *v5.30.40* and above. Use `manager.{}.min` instead
 
 > [!NOTE]
 > If you want to implant this into your app, you should follow the [semver](https://www.npmjs.com/package/semver) syntax
@@ -163,7 +244,7 @@ Example:
 
 ```json
 "root": {
-  "kernelsu": ">= 1.0.0",
-  "magisk": ">= 24.0"
+"kernelsu": ">= 1.0.0",
+"magisk": ">= 24.0"
 }
 ```
