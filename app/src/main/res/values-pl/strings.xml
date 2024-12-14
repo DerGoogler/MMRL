@@ -265,4 +265,8 @@
     <string name="view_module_install_confirm_confirm">Instaluj</string>
     <string name="view_module_install_confirm_desc_deps"><![CDATA[Czy na pewno chcesz zainstalować <font color=\"%1$s\">%2$s</font>? Ten moduł wymaga także:]]></string>
     <string name="unsafe_url_redirecting">Niebezpieczny link: %1$s. Przekierowywanie…</string>
+    <string name="view_module_required_root_version">Wymagana wersja roota</string>
+    <string name="view_module_unsupported_arch">Niewspierana architektura</string>
+    <string name="view_module_unsupported_device">Niewspierane urządzenie</string>
+    <string name="view_module_low_root_version">Za stara wersja roota!</string>
 </resources>
