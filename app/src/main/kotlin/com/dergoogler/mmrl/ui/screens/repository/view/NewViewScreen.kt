@@ -81,18 +81,18 @@ import com.dergoogler.mmrl.model.local.State
 import com.dergoogler.mmrl.model.online.VersionItem
 import com.dergoogler.mmrl.ui.component.Alert
 import com.dergoogler.mmrl.ui.component.AntiFeaturesItem
-import com.dergoogler.mmrl.ui.component.HtmlText
 import com.dergoogler.mmrl.ui.component.ListButtonItem
 import com.dergoogler.mmrl.ui.component.ListCollapseItem
 import com.dergoogler.mmrl.ui.component.ListItem
 import com.dergoogler.mmrl.ui.component.ListItemTextStyle
 import com.dergoogler.mmrl.ui.component.Logo
+import com.dergoogler.mmrl.ui.component.MarkdownText
 import com.dergoogler.mmrl.ui.navigation.graphs.RepositoryScreen
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.screens.repository.view.items.InstallConfirmDialog
 import com.dergoogler.mmrl.ui.screens.repository.view.items.LicenseItem
-import com.dergoogler.mmrl.ui.screens.repository.view.items.TrackItem
 import com.dergoogler.mmrl.ui.screens.repository.view.items.VersionsItem
+import com.dergoogler.mmrl.ui.screens.repository.view.items.ViewTrackBottomSheet
 import com.dergoogler.mmrl.ui.utils.navigateSingleTopTo
 import com.dergoogler.mmrl.ui.utils.none
 import com.dergoogler.mmrl.viewmodel.BulkInstallViewModel
@@ -226,6 +226,12 @@ fun NewViewScreen(
         isProviderAlive = viewModel.isProviderAlive,
         getProgress = { viewModel.getProgress(it) },
         onDownload = download
+    )
+
+    var viewTrackBottomSheet by remember { mutableStateOf(false) }
+    if (viewTrackBottomSheet) ViewTrackBottomSheet(
+        onClose = { viewTrackBottomSheet = false },
+        tracks = viewModel.tracks
     )
 
     Scaffold(
@@ -959,7 +965,14 @@ fun NewViewScreen(
                     modifier = Modifier.weight(1f),
                     text = stringResource(id = R.string.view_module_provided_by)
                 )
-                TrackItem(tracks = viewModel.tracks)
+
+                Text(
+                    style = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.surfaceTint),
+                    modifier = Modifier.clickable(
+                        onClick = { viewTrackBottomSheet = true }
+                    ),
+                    text = stringResource(id = R.string.view_module_view_track),
+                )
             }
 
             manager.min?.let {
@@ -1031,15 +1044,21 @@ fun NewViewScreen(
                 }
             }
 
-            HtmlText(
+            MarkdownText(
                 modifier = Modifier.padding(16.dp),
                 style = MaterialTheme.typography.bodySmall,
                 text = stringResource(
                     R.string.view_module_mod_infos_disclaimer,
                     MaterialTheme.colorScheme.surfaceTint.toArgb()
-                )
+                ),
+                onTagClick = { id ->
+                    when (id) {
+                        "track" -> {
+                            viewTrackBottomSheet = true
+                        }
+                    }
+                }
             )
-
         }
     }
 }

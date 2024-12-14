@@ -97,7 +97,7 @@ private fun BaseListContent(
         )
         desc?.let {
             Text(
-                text = desc,
+                text = it,
                 style = itemTextStyle.descTextStyle,
                 color = itemTextStyle.descTextColor
             )

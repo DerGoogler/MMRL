@@ -98,7 +98,7 @@
     <string name="view_module_provided_by">Provided By</string>
     <string name="view_module_added_on">Added On</string>
     <string name="view_module_about_this_module">About This Module</string>
-    <string name="view_module_mod_infos_disclaimer"><![CDATA[Infos marked with a <b>*</b> can differ due to multiple added repos. You can view the actual information by clicking on <font color=\"%1$s\">View Track</font> above.]]></string>
+    <string name="view_module_mod_infos_disclaimer">Infos marked with a **\*** can differ due to multiple added repos. You can view the actual information by clicking on @track(View Track) above.</string>
     <string name="view_module_section_count">%1$s+</string>
     <string name="view_module_donate">Donate</string>
     <string name="view_module_donate_desc">Show some love to this module developer by donating the developer a coffee! ☕</string>
