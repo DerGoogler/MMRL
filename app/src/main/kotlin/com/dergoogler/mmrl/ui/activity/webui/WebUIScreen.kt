@@ -7,10 +7,17 @@ import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalUriHandler
@@ -21,9 +28,11 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.webkit.WebViewAssetLoader
 import com.dergoogler.mmrl.R
+import com.dergoogler.mmrl.ui.component.Loading
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.viewmodel.WebUIViewModel
 import dev.dergoogler.mmrl.compat.core.MMRLUriHandlerImpl
+import timber.log.Timber
 import java.io.File
 
 
@@ -54,47 +63,104 @@ fun WebUIScreen(
     val webRoot = File("$moduleDir/webroot")
     val domainSafeRegex = Regex("^https?://mui\\.kernelsu\\.org(/.*)?$")
 
+    var topInset by remember { mutableIntStateOf(0) }
+    var bottomInset by remember { mutableIntStateOf(0) }
 
-    val webViewAssetLoader = WebViewAssetLoader.Builder()
-        .setDomain("mui.kernelsu.org")
-        .addPathHandler(
-            "/",
-            SuFilePathHandler(
-                context,
-                webRoot,
-                rootShell
-            )
-        )
 
-    AndroidView(
-        factory = {
-            WebView(context).apply {
-                layoutParams = ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT
+    val insets = WindowInsets.systemBars
+    LaunchedEffect(Unit) {
+        topInset = (insets.getTop(density) / density.density).toInt()
+        bottomInset = (insets.getBottom(density) / density.density).toInt()
+
+        Timber.d("Insets calculated: top = $topInset, bottom = $bottomInset")
+    }
+
+    val webViewAssetLoader = remember(topInset, bottomInset) {
+        WebViewAssetLoader.Builder()
+            .setDomain("mui.kernelsu.org")
+            .addPathHandler(
+                "/",
+                SuFilePathHandler(
+                    context,
+                    webRoot,
+                    rootShell
                 )
+            )
+            .addPathHandler(
+                "/mmrl/",
+                MMRLWebUIHandler(
+                    topInset = topInset,
+                    bottomInset = bottomInset,
+                    colorScheme = colorScheme,
+                    typography = typography,
+                    filledTonalButtonColors = filledTonalButtonColors,
+                    cardColors = cardColors
+                )
+            )
+            .build()
+    }
 
-                ViewCompat.setOnApplyWindowInsetsListener(this) { _, insets ->
-                    val inset = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-                    val top = (inset.top / density.density).toInt()
-                    val bottom = (inset.bottom / density.density).toInt()
+    if (topInset != 0 && bottomInset != 0) {
+        AndroidView(
+            factory = {
+                WebView(context).apply {
+                    layoutParams = ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT
+                    )
 
-                    webViewAssetLoader.addPathHandler(
-                        "/mmrl/",
-                        MMRLWebUIHandler(
-                            topInset = top,
-                            bottomInset = bottom,
-                            colorScheme = colorScheme,
-                            typography = typography,
-                            filledTonalButtonColors = filledTonalButtonColors,
-                            cardColors = cardColors
-                        )
+                    ViewCompat.setOnApplyWindowInsetsListener(this) { _, _ ->
+                        WindowInsetsCompat.CONSUMED
+                    }
+
+                    webViewClient = object : WebViewClient() {
+                        override fun shouldOverrideUrlLoading(
+                            view: WebView,
+                            request: WebResourceRequest?,
+                        ): Boolean {
+                            val mUrl = request?.url?.toString() ?: return false
+
+                            return if (!domainSafeRegex.matches(mUrl)) {
+                                browser.openUri(
+                                    uri = mUrl,
+                                    onSuccess = { intent, uri ->
+                                        intent.launchUrl(context, uri.toUri())
+                                        Toast.makeText(
+                                            context,
+                                            context.getString(R.string.unsafe_url_redirecting, uri),
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                )
+                                true
+                            } else {
+                                view.loadUrl(mUrl)
+                                false
+                            }
+                        }
+
+                        override fun shouldInterceptRequest(
+                            view: WebView,
+                            request: WebResourceRequest,
+                        ): WebResourceResponse? {
+                            return webViewAssetLoader.shouldInterceptRequest(request.url)
+                        }
+                    }
+
+                    addJavascriptInterface(
+                        KernelSUInterface(
+                            context,
+                            this,
+                            moduleDir,
+                            viewModel,
+                            userPrefs
+                        ), "ksu"
                     )
 
                     addJavascriptInterface(
                         MMRLInterface(
-                            topInset = top,
-                            bottomInset = bottom,
+                            topInset = topInset,
+                            bottomInset = bottomInset,
                             context = context,
                             isDark = isDarkMode,
                             webview = this,
@@ -103,63 +169,19 @@ fun WebUIScreen(
                             managerVersionName = viewModel.versionName
                         ), "$${viewModel.sanitizeModId(modId)}"
                     )
-
-                    WindowInsetsCompat.CONSUMED
                 }
-
-                webViewClient = object : WebViewClient() {
-                    override fun shouldOverrideUrlLoading(
-                        view: WebView,
-                        request: WebResourceRequest?,
-                    ): Boolean {
-                        val mUrl = request?.url?.toString() ?: return false
-
-                        return if (!domainSafeRegex.matches(mUrl)) {
-                            browser.openUri(
-                                uri = mUrl,
-                                onSuccess = { intent, uri ->
-                                    intent.launchUrl(context, uri.toUri())
-                                    Toast.makeText(
-                                        context,
-                                        context.getString(R.string.unsafe_url_redirecting, uri),
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                            )
-                            true
-                        } else {
-                            view.loadUrl(mUrl)
-                            false
-                        }
-                    }
-
-                    override fun shouldInterceptRequest(
-                        view: WebView,
-                        request: WebResourceRequest,
-                    ): WebResourceResponse? {
-                        return webViewAssetLoader.build().shouldInterceptRequest(request.url)
-                    }
+            },
+            update = { webview ->
+                webview.settings.apply {
+                    javaScriptEnabled = true
+                    domStorageEnabled = true
+                    allowFileAccess = false
+                    userAgentString = "DON'T TRACK ME DOWN MOTHERFUCKER!"
                 }
-
-                addJavascriptInterface(
-                    KernelSUInterface(
-                        context,
-                        this,
-                        moduleDir,
-                        viewModel,
-                        userPrefs
-                    ), "ksu"
-                )
-
+                webview.loadUrl("https://mui.kernelsu.org/index.html")
             }
-        }, update = { webview ->
-            webview.settings.apply {
-                javaScriptEnabled = true
-                domStorageEnabled = true
-                allowFileAccess = false
-                userAgentString = "DON'T TRACK ME DOWN MOTHERFUCKER!"
-            }
-            webview.loadUrl("https://mui.kernelsu.org/index.html")
-        }
-    )
+        )
+    } else {
+        Loading()
+    }
 }
