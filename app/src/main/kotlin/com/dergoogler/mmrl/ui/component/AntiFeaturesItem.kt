@@ -38,7 +38,8 @@ private fun getAntifeatureDetails(id: String?): Pair<Int, Int>? {
         "tracking" to (R.string.tracking_name to R.string.tracking_desc),
         "upstreamnonfree" to (R.string.upstreamnonfree_name to R.string.upstreamnonfree_desc),
         "obfuscation" to (R.string.obfuscation_name to R.string.obfuscation_desc),
-        "unaskedremoval" to (R.string.unaskedremoval_name to R.string.unaskedremoval_desc)
+        "unaskedremoval" to (R.string.unaskedremoval_name to R.string.unaskedremoval_desc),
+        "llm" to (R.string.llm_name to R.string.llm_desc),
     )
 
     return id?.lowercase()?.let { antifeatureMap[it] }

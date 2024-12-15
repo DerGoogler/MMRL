@@ -11,7 +11,7 @@ Those Anti-Features can only be set from `track.json`.
 ## List
 
 | Name                      | ID                | Description                                                                                                                  |
-| ------------------------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+|---------------------------|-------------------|------------------------------------------------------------------------------------------------------------------------------|
 | Ads                       | `Ads`             | Advertising                                                                                                                  |
 | Tracking                  | `Tracking`        | Tracks and/or reports your activity to somewhere, even when it can be turned off                                             |
 | Non-Free Network Services | `NonFreeNet`      | Promotes or depends entirely on a non-changeable or non-free network service                                                 |
@@ -24,3 +24,4 @@ Those Anti-Features can only be set from `track.json`.
 | No Source Since           | `NoSourceSince`   | Source code no longer available, making new releases impossible                                                              |
 | Obfuscation               | `Obfuscation`     | Module includes obfuscated code                                                                                              |
 | Unasked removal           | `UnaskedRemoval`  | Module removes app, permissions and other modules without approval. This does not include modules that disable other modules |
+| Large Language Model      | `LLM`             | The module maybe written partially or fully by an LLM                                                                        |

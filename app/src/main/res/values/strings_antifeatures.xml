@@ -35,4 +35,7 @@
 
     <string name="unaskedremoval_name">Unasked Removal</string>
     <string name="unaskedremoval_desc">The module removes apps, files, or other modules without user consent.</string>
+
+    <string name="llm_name">Large Language Model</string>
+    <string name="llm_desc">The module maybe written partially or fully by an LLM</string>
 </resources>
