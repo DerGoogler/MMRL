@@ -1,6 +1,5 @@
 package com.dergoogler.mmrl.ui.screens.repository.view
 
-import android.R.attr.version
 import android.os.Build
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
@@ -1032,7 +1031,9 @@ fun NewViewScreen(
                             Build.VERSION_CODES.R -> "11"
                             Build.VERSION_CODES.S -> "12"
                             Build.VERSION_CODES.S_V2 -> "12"
-                            else -> "[Sdk: $version]"
+                            Build.VERSION_CODES.TIRAMISU -> "13"
+                            Build.VERSION_CODES.UPSIDE_DOWN_CAKE -> "14"
+                            else -> "[Sdk: $it]"
                         }
                     )
                 )
