@@ -24,4 +24,6 @@
     <string name="obfuscation_desc">モジュールのソースコードが難読化されており、解析や変更が困難になっています。</string>
     <string name="unaskedremoval_name">要求されていない削除</string>
     <string name="unaskedremoval_desc">このモジュールは、ユーザーの同意なしにアプリやファイルまたはその他のモジュールを削除します。</string>
+    <string name="llm_desc">モジュールは、部分的または完全に LLM によって書かれている可能性があります。</string>
+    <string name="llm_name">大規模言語モデル</string>
 </resources>
