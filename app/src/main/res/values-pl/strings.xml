@@ -272,5 +272,18 @@
     <string name="view_module_unsupported_arch_desc">Wygląda na to, że twoje urządzenie nie posiada obsługi wymaganej architektury zadeklarowanej przez programistę.</string>
     <string name="view_module_unsupported_device_desc">Wygląda na to, że twoje urządzenie nie jest wspierane przez te moduły lub zostało wykluczone.</string>
     <string name="view_module_low_root_version_desc">Wygląda na to, że masz starego dostawcę uprawnień root. Sprawdź czy są dostępne jego uaktualnienia.</string>
-    <string name="view_module_features_action">Działanie</string>
+    <string name="view_module_features_action">Akcja</string>
+    <string name="settings_shell_module_action_desc">Jest to przydatne, gdy dostawca root nie obsługuje pliku action.sh</string>
+    <string name="settings_modules">Moduły i instalator</string>
+    <string name="generic_disclaimer_desc">**MMRL** nie ponosi odpowiedzialności za jakiekolwiek uszkodzenia urządzenia, w tym uszkodzenie karty SD, wojnę termojądrową lub utratę pracy z powodu nieprawidłowego działania aplikacji budzika. Przed kontynuowaniem należy dokładnie zapoznać się z funkcjami i zagrożeniami związanymi z korzystaniem z tego modułu. *Dokonujesz tych modyfikacji na własne ryzyko*.</string>
+    <string name="settings_shell_module_action">Użyj powłoki dla akcji</string>
+    <string name="settings_modules_desc">Zmień zachowanie obsługi dla modułów lub wiele więcej na temat modułów</string>
+    <string name="settings_modules_handlers">Obsługa</string>
+    <string name="settings_modules_installer">Instalator</string>
+    <string name="action_activity">Akcja</string>
+    <string name="bulk_add_as_bulk">Dodaj zbiorczo</string>
+    <string name="action_failure">Błąd akcji</string>
+    <string name="action_executing">Wykonywanie…</string>
+    <string name="generic_disclaimer_title">Ponosisz pełną odpowiedzialność!</string>
+    <string name="view_module_features_action_sub">Umożliwia wykonanie skryptu poprzez kliknięcie przycisku</string>
 </resources>
