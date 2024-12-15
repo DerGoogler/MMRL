@@ -227,8 +227,8 @@ internal abstract class BaseModuleManagerImpl(
         }
 
         val cmds = arrayOf(
-            "MMRL=true",
-            "BULK_MODULES=\"${bulkModules.joinToString(" ") { it.id }}\"",
+            "export MMRL=true",
+            "export BULK_MODULES=\"${bulkModules.joinToString(" ") { it.id }}\"",
             cmd
         )
 
@@ -255,7 +255,7 @@ internal abstract class BaseModuleManagerImpl(
         }
 
         val cmds = arrayOf(
-            "MMRL=true",
+            "export MMRL=true",
             *cmd
         )
 
