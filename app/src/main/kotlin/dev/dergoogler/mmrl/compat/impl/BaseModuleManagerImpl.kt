@@ -1,5 +1,6 @@
 package dev.dergoogler.mmrl.compat.impl
 
+import android.os.Build
 import com.topjohnwu.superuser.CallbackList
 import com.topjohnwu.superuser.Shell
 import com.topjohnwu.superuser.ShellUtils
@@ -256,6 +257,10 @@ internal abstract class BaseModuleManagerImpl(
 
         val cmds = arrayOf(
             "export MMRL=true",
+            "export BOOTMODE=true",
+            "export ARCH=${Build.SUPPORTED_ABIS[0]}",
+            "export API=${Build.VERSION.SDK_INT}",
+            "export IS64BIT=${Build.SUPPORTED_64_BIT_ABIS.isNotEmpty()}",
             *cmd
         )
 

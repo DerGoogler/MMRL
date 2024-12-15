@@ -57,6 +57,9 @@ internal class MagiskModuleManagerImpl(
 
     override fun action(modId: String, legacy: Boolean, callback: IShellCallback) {
         val cmds = arrayOf(
+            "export MAGISK=true",
+            "export MAGISK_VER=${version}",
+            "export MAGISK_VER_CODE=${versionCode}",
             "sh /data/adb/modules/$modId/action.sh"
         )
 
