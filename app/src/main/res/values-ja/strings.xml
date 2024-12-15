@@ -3,10 +3,10 @@
     <!-- Setup -->
     <string name="setup_mode">動作モード</string>
     <string name="setup_root_title">Root</string>
-    <string name="setup_root_desc">Magisk または KernelSU による root 権限の許可が必要です。</string>
-    <string name="setup_shizuku_desc">Sui または Shizuku (root) による許可が必要です。</string>
+    <string name="setup_root_desc">Magisk または KernelSU による root 権限の許可が必要です</string>
+    <string name="setup_shizuku_desc">Sui または Shizuku (root) による許可が必要です</string>
     <string name="setup_non_root_title">Non-Root</string>
-    <string name="setup_non_root_desc">root 権限は不要で、モジュールのダウンロード機能のみが使用可能です。</string>
+    <string name="setup_non_root_desc">root 権限は不要で、モジュールのダウンロード機能のみが使用可能です</string>
     <!-- Install -->
     <string name="install_screen_title">インストール</string>
     <string name="install_flashing">フラッシュ中</string>
@@ -91,7 +91,7 @@
     <string name="view_module_provided_by">提供元</string>
     <string name="view_module_added_on">追加日</string>
     <string name="view_module_about_this_module">このモジュールについて</string>
-    <string name="view_module_mod_infos_disclaimer"><![CDATA[<b>*</b> でマークされた情報は、複数のリポジトリが追加されているため異なる場合があります。実際の情報を表示するには、上記の<font color=\"%1$s\">トラックを表示</font>をタップしてください。]]></string>
+    <string name="view_module_mod_infos_disclaimer">**** のマークの付いた情報は、複数のリポジトリが追加されているため異なる場合があります。実際の情報は、上記の @track(トラックを表示) をタップで表示されます。</string>
     <string name="view_module_section_count">%1$s+</string>
     <string name="view_module_donate">寄付</string>
     <string name="view_module_donate_desc">このモジュールの開発者にコーヒーをご馳走して愛を伝えましょう！ ☕</string>
@@ -133,7 +133,7 @@
     <string name="settings_other">その他</string>
     <string name="settings_other_desc">DoH、ダウンロードパスなど</string>
     <string name="settings_text_wrap">テキストの折り返し</string>
-    <string name="settings_text_wrap_desc">インストールターミナル内でのテキストの折り返しを有効化します。</string>
+    <string name="settings_text_wrap_desc">インストールターミナル内でのテキストの折り返しを有効化します</string>
     <string name="settings_changelog">更新履歴</string>
     <string name="settings_changelo_desc">MMRL の変更点を表示します</string>
     <string name="settings_open_notification_settings">通知設定を開く</string>
@@ -147,44 +147,44 @@
     <string name="settings_non_root_desc">機能が制限されています</string>
     <!-- App -->
     <string name="settings_app_theme">アプリテーマ</string>
-    <string name="settings_app_theme_desc">カラースキームとナイトモードを変更します。</string>
+    <string name="settings_app_theme_desc">カラースキームとナイトモードを変更します</string>
     <string name="settings_download_path">ダウンロードのパス</string>
     <string name="settings_delete_zip">Zip ファイルの削除</string>
-    <string name="settings_delete_zip_desc">インストールの成功後にモジュールの Zip ファイルを削除します。これはスーパーユーザーで実行されます。</string>
+    <string name="settings_delete_zip_desc">インストールの成功後にモジュールの Zip ファイルを削除します (スーパーユーザー権限必須)</string>
     <string name="settings_doh">DNS over HTTPS</string>
-    <string name="settings_doh_desc">一部の国での DNS ポイズニングを回避します。</string>
+    <string name="settings_doh_desc">一部の国での DNS ポイズニングを回避します</string>
     <string name="settings_reboot_protection">再起動の保護</string>
-    <string name="settings_reboot_protection_desc">有効化すると再起動のたびに許可が必要になります。</string>
+    <string name="settings_reboot_protection_desc">有効化すると再起動のたびに許可が必要になります</string>
     <string name="settings_blacklist">ブラックリスト</string>
     <string name="settings_blacklist_desc">クローズドソースまたは危険な可能性のあるモジュールの一覧</string>
     <string name="settings_date_pattern">日付のパターン</string>
-    <string name="settings_date_pattern_desc">日付形式を変更します。</string>
+    <string name="settings_date_pattern_desc">日付形式を変更します</string>
     <string name="settings_recommended_repos">おすすめのリポジトリ</string>
     <string name="settings_recommended_repos_desc">新しいリポジトリを探して追加します</string>
     <string name="settings_updates">更新</string>
     <string name="settings_updates_desc">更新プロセスに関する設定を管理します</string>
     <string name="settings_homepage">アプリホームページ</string>
-    <string name="settings_homepage_desc">アプリの開始時に開く画面を設定します。</string>
+    <string name="settings_homepage_desc">アプリの開始時に開く画面を設定します</string>
     <string name="settings_auto_update_repos">リポジトリの自動更新</string>
-    <string name="settings_auto_update_repos_desc">バックグラウンドでリポジトリの自動更新をします。</string>
+    <string name="settings_auto_update_repos_desc">バックグラウンドでリポジトリの自動更新をします</string>
     <string name="settings_repo_update_interval">リポジトリ更新の間隔</string>
-    <string name="settings_repo_update_interval_suffix">\u0020 時間ごと</string>
-    <string name="settings_repo_update_interval_desc">リポジトリを自動更新する間隔を設定します。</string>
+    <string name="settings_repo_update_interval_suffix">" 時間ごと"</string>
+    <string name="settings_repo_update_interval_desc">リポジトリを自動更新する間隔を設定します</string>
     <string name="settings_check_app_updates">アプリの更新を確認</string>
-    <string name="settings_check_app_updates_desc">アプリを開いたときに自動でアプリの更新を確認します。</string>
+    <string name="settings_check_app_updates_desc">アプリを開いたときに自動でアプリの更新を確認します</string>
     <string name="settings_hide_fingerprint">フィンガープリントを隠す</string>
-    <string name="settings_hide_fingerprint_desc">ホームのフィンガープリントを隠します。本物か偽物かは関係ありません。</string>
+    <string name="settings_hide_fingerprint_desc">ホームのフィンガープリントを隠します (本物か偽物かは関係ありません)</string>
     <string name="settings_check_modules_update">モジュールの更新を確認する</string>
-    <string name="settings_check_modules_update_desc">インストールされているモジュールの更新を自動で確認します。</string>
-    <string name="settings_check_modules_update_interval_suffix">\u0020 時間ごと</string>
+    <string name="settings_check_modules_update_desc">インストールされているモジュールの更新を自動で確認します</string>
+    <string name="settings_check_modules_update_interval_suffix">" 時間ごと"</string>
     <string name="settings_check_modules_update_interval">モジュールの更新を確認する間隔</string>
-    <string name="settings_check_modules_update_interval_desc">インストールされたモジュールを自動で確認する間隔を設定します。</string>
+    <string name="settings_check_modules_update_interval_desc">インストールされたモジュールを自動で確認する間隔を設定します</string>
     <string name="settings_include_preleases">プレリリースを含める</string>
     <string name="settings_developer_mode">開発者モード</string>
-    <string name="settings_developer_mode_desc">モジュール ID などを表示します。</string>
+    <string name="settings_developer_mode_desc">モジュール ID などを表示します</string>
     <string name="settings_privacy_policy">プライバシーポリシー</string>
     <string name="settings_clear_install_terminal">ターミナルログを消去</string>
-    <string name="settings_clear_install_terminal_desc">複数のモジュールをインストール時にインストールターミナルのログを消去します。</string>
+    <string name="settings_clear_install_terminal_desc">複数のモジュールをインストール時にインストールターミナルのログを消去します</string>
     <string name="settings_shell_module_state_change">状態にシェルを使用</string>
     <string name="settings_shell_module_state_change_desc">モジュールディレクトリにファイルを作成する代わりにシェルを使用します。一度有効化すると復元ボタンが使用不可能になります。</string>
     <!-- App Theme -->
@@ -278,7 +278,7 @@
     <string name="has_a_new_update">%1$s に新しい更新があります！</string>
     <string name="update_available_from_to">%s (%d) から %s (%d) への更新が利用可能です。</string>
     <string name="events_birthday">MMRL は %1$s 周年です！</string>
-    <string name="events_halloween">ばぁー！… アッー！</string>
+    <string name="events_halloween">ばぁー！… アッー</string>
     <string name="events_christmas">← ツリー。</string>
     <string name="events_new_years_eve">大晦日です！</string>
     <string name="open_source">ソースを開く</string>
@@ -290,4 +290,25 @@
     <string name="hidden">非表示</string>
     <string name="pre_release">プレリリース</string>
     <string name="unsafe_url_redirecting">安全でない URL: %1$s にリダイレクト中…</string>
+    <string name="view_module_unsupported_device">非対応のデバイス</string>
+    <string name="view_module_features_action">アクション</string>
+    <string name="view_module_features_action_sub">ボタンクリックによるスクリプトの実行を許可します</string>
+    <string name="view_module_low_root_version">root バージョンが低いです！</string>
+    <string name="view_module_low_root_version_desc">root プロバイダーのバージョンが古すぎるようです。root プロバイダーの更新があるかどうかを確認してください。</string>
+    <string name="view_module_required_root_version">必要な root バージョン</string>
+    <string name="view_module_unsupported_arch">非対応のアーキテクチャ</string>
+    <string name="settings_modules_handlers">ハンドラ</string>
+    <string name="settings_modules_installer">インストーラー</string>
+    <string name="bulk_add_as_bulk">一括インストールに追加</string>
+    <string name="action_failure">アクションに失敗しました</string>
+    <string name="action_executing">実行中…</string>
+    <string name="generic_disclaimer_title">自己責任です！</string>
+    <string name="settings_modules_desc">モジュールのハンドラの動作を変更、モジュールに関するその他の情報を変更します</string>
+    <string name="settings_shell_module_action_desc">この機能は、root プロバイダーが action.sh ファイルをサポートしていない場合に役立ちます</string>
+    <string name="view_module_unsupported_device_desc">使用しているデバイスは、このモジュールに対応していないか除外されているようです。</string>
+    <string name="settings_shell_module_action">アクションにシェルを使用</string>
+    <string name="generic_disclaimer_desc">**MMRL** は、デバイスや SD カードの破損やアラームアプリの誤動作による失業、熱核戦争などのデバイスに生じた損害については一切責任を負いません。続行をする前に、このモジュールの機能と使用時のリスクを徹底的に調べてください。*これらの変更は自己責任で行ってください*。</string>
+    <string name="view_module_unsupported_arch_desc">使用しているデバイスは、開発者が宣言した必要なアーキテクチャに対応していないようです。</string>
+    <string name="settings_modules">モジュールとインストーラー</string>
+    <string name="action_activity">アクション</string>
 </resources>
