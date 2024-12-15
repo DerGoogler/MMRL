@@ -21,7 +21,7 @@ import org.json.JSONObject
 import java.io.File
 import java.util.concurrent.CompletableFuture
 
-class WebViewInterface(
+class KernelSUInterface(
     val context: Context,
     private val webView: WebView,
     private val modDir: String,

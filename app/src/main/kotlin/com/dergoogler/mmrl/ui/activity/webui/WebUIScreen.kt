@@ -8,14 +8,9 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalUriHandler
@@ -46,7 +41,7 @@ fun WebUIScreen(
     val typography = MaterialTheme.typography
     val filledTonalButtonColors = ButtonDefaults.filledTonalButtonColors()
     val cardColors = CardDefaults.cardColors()
-    val cardColorsOutlined = CardDefaults.outlinedCardColors()
+    val isDarkMode = userPrefs.isDarkMode()
 
     val rootShell = viewModel.createRootShell(
         globalMnt = true,
@@ -59,8 +54,6 @@ fun WebUIScreen(
     val webRoot = File("$moduleDir/webroot")
     val domainSafeRegex = Regex("^https?://mui\\.kernelsu\\.org(/.*)?$")
 
-    var topInset by remember { mutableIntStateOf(0) }
-    var bottomInset by remember { mutableIntStateOf(0) }
 
     val webViewAssetLoader = WebViewAssetLoader.Builder()
         .setDomain("mui.kernelsu.org")
@@ -72,9 +65,7 @@ fun WebUIScreen(
                 rootShell
             )
         )
-Card {
 
-}
     AndroidView(
         factory = {
             WebView(context).apply {
@@ -85,14 +76,14 @@ Card {
 
                 ViewCompat.setOnApplyWindowInsetsListener(this) { _, insets ->
                     val inset = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-                    topInset = (inset.top / density.density).toInt()
-                    bottomInset = (inset.bottom / density.density).toInt()
+                    val top = (inset.top / density.density).toInt()
+                    val bottom = (inset.bottom / density.density).toInt()
 
                     webViewAssetLoader.addPathHandler(
                         "/mmrl/",
                         MMRLWebUIHandler(
-                            topInset = topInset,
-                            bottomInset = bottomInset,
+                            topInset = top,
+                            bottomInset = bottom,
                             colorScheme = colorScheme,
                             typography = typography,
                             filledTonalButtonColors = filledTonalButtonColors,
@@ -100,7 +91,20 @@ Card {
                         )
                     )
 
-                    WindowInsetsCompat.CONSUMED;
+                    addJavascriptInterface(
+                        MMRLInterface(
+                            topInset = top,
+                            bottomInset = bottom,
+                            context = context,
+                            isDark = isDarkMode,
+                            webview = this,
+                            managerName = viewModel.managerName,
+                            managerVersionCode = viewModel.versionCode,
+                            managerVersionName = viewModel.versionName
+                        ), "$${viewModel.sanitizeModId(modId)}"
+                    )
+
+                    WindowInsetsCompat.CONSUMED
                 }
 
                 webViewClient = object : WebViewClient() {
@@ -137,16 +141,8 @@ Card {
                     }
                 }
 
-            }
-        }, update = { webview ->
-            webview.settings.apply {
-                javaScriptEnabled = true
-                domStorageEnabled = true
-                allowFileAccess = false
-            }
-            webview.apply {
                 addJavascriptInterface(
-                    WebViewInterface(
+                    KernelSUInterface(
                         context,
                         this,
                         moduleDir,
@@ -154,8 +150,16 @@ Card {
                         userPrefs
                     ), "ksu"
                 )
-                loadUrl("https://mui.kernelsu.org/index.html")
+
             }
+        }, update = { webview ->
+            webview.settings.apply {
+                javaScriptEnabled = true
+                domStorageEnabled = true
+                allowFileAccess = false
+                userAgentString = "DON'T TRACK ME DOWN MOTHERFUCKER!"
+            }
+            webview.loadUrl("https://mui.kernelsu.org/index.html")
         }
     )
 }

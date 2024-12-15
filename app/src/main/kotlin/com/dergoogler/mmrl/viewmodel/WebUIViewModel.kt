@@ -19,7 +19,7 @@ class WebUIViewModel @Inject constructor(
         }
 
     val versionCode
-        get() = Compat.get("") {
+        get() = Compat.get(-1) {
             with(moduleManager) { versionCode }
         }
 
@@ -36,6 +36,10 @@ class WebUIViewModel @Inject constructor(
         return createRootShell(globalMnt, devMode).use(block)
     }
 
+    fun sanitizeModId(id: String): String {
+        return id.replace(Regex("[^a-zA-Z0-9._-]"), "_")
+    }
+
     fun createRootShell(globalMnt: Boolean = false, devMode: Boolean = false): Shell {
         Shell.enableVerboseLogging = devMode
         val builder = Shell.Builder.create()
@@ -44,5 +48,4 @@ class WebUIViewModel @Inject constructor(
         }
         return builder.build()
     }
-
 }

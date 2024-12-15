@@ -14,9 +14,9 @@ val Context.tmpDir
             if (!exists()) mkdirs()
         }
 
-fun Context.shareText(text: String) {
+fun Context.shareText(text: String, type: String = "text/plain") {
     ShareCompat.IntentBuilder(this)
-        .setType("text/plain")
+        .setType(type)
         .setText(text)
         .startChooser()
 }
