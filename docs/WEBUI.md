@@ -61,6 +61,20 @@ To use window safe area insets which you basiclly need here, otherwise your conf
 
 You can check if the config runs in MMRL
 
+Above v5.30.40
+
+> `$mmrl_wpd` should be replaced with your module ID
+
+```js
+if (typeof $mmrl_wpd != "undefined") {
+  console.log("Running in MMRL");
+} else {
+  console.log("Running not in MMRL");
+}
+```
+
+Below v5.30.40
+
 ```js
 if (ksu["mmrl"]) {
   console.log("Running in MMRL");
@@ -72,13 +86,73 @@ if (ksu["mmrl"]) {
 Typing
 
 ```ts
+declare const $mmrl_wpd: MMRL;
+
+interface MMRL {
+  /**
+   * Returns a JSON string object about the used root solution in MMRL
+   * @returns '{"name":"KernelSU","versionName":"1.0.0:KernelSU","versionCode":11874}'
+   */
+  getManager(): string;
+
+  /**
+   * Returns the window top inset. Is the same as CSS 'var(--window-inset-top)'
+   */
+  getWindowTopInset(): number;
+
+  /**
+   * Returns the window bottom inset. Is the same as CSS 'var(--window-inset-bottom)'
+   */
+  getWindowTopInset(): number;
+
+  /**
+   * Returns a boolean to check if the navigation bar is in light
+   */
+  isLightNavigationBars(): boolean;
+
+  /**
+   * Returns a boolean
+   */
+  isDarkMode(): boolean;
+
+  /**
+   * Allows the developer to change the navigation bar icons between light and dark. Runs on activity ui thread
+   * @param isLight Change between light and dark
+   */
+  setLightNavigationBars(isLight: boolean): void;
+
+  /**
+   * Returns a boolean to check if the status bar is in light
+   */
+  isLightStatusBars(): boolean;
+
+  /**
+   * Allows the developer to change the status bar icons between light and dark. Runs on activity ui thread
+   * @param isLight Change between light and dark
+   */
+  setLightStatusBars(isLight: boolean): void;
+
+  /**
+   * Returns the current platform API of the device
+   */
+  getSdk(): number;
+
+  /**
+   * Allows the developer to share some text
+   * @param text Text you wanna share
+   */
+  shareText(text: string): void;
+  /* overload */ shareText(text: string, type: string): void;
+}
+
 declare var ksu: ksu;
 
 interface ksu {
+  /**
+   * @deprecated
+   */
   mmrl(): boolean;
 }
-
-console.log(ksu.mmrl()); // true or false
 ```
 
 
