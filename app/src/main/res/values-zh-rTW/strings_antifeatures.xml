@@ -2,37 +2,28 @@
 <resources>
     <string name="ads_name">廣告投放</string>
     <string name="ads_desc">模組含有廣告內容。</string>
-
     <string name="knownvuln_name">安全漏洞</string>
     <string name="knownvuln_desc">此模組含有安全性漏洞。</string>
-
     <string name="nsfw_name">公共場所不宜</string>
     <string name="nsfw_desc">此模組含有不應在公共場所展示的內容。</string>
-
     <string name="nosourcesince_name">非公開原始碼</string>
     <string name="nosourcesince_desc">模組原始碼已無法檢閱。</string>
-
     <string name="nonfreeadd_name">專有附加元件</string>
     <string name="nonfreeadd_desc">此模組含有非屬自由軟體的專有附加元件。</string>
-
     <string name="nonfreeassets_name">專有素材</string>
     <string name="nonfreeassets_desc">此模組含有非屬自由軟體的專有素材。</string>
-
     <string name="nonfreedep_name">專有相依模組</string>
     <string name="nonfreedep_desc">此模組需以其他非屬自由軟體的專有相依模組才能運作。</string>
-
     <string name="nonfreenet_name">專有網路服務</string>
     <string name="nonfreenet_desc">此模組需以其他非屬自由軟體的網路服務才能運作。</string>
-
     <string name="tracking_name">足跡追蹤</string>
     <string name="tracking_desc">此模組可供追蹤與回報你的使用足跡。</string>
-
     <string name="upstreamnonfree_name">專有上游</string>
     <string name="upstreamnonfree_desc">上游原始碼非屬自由軟體。</string>
-
     <string name="obfuscation_name">程式混淆</string>
     <string name="obfuscation_desc">模組原始碼已遭混淆。程式結構難以解讀、檢閱以及修改。</string>
-
     <string name="unaskedremoval_name">未准移除</string>
     <string name="unaskedremoval_desc">模組會在未經使用者許可的情況下，擅自移除應用程式、檔案以及其他模組。</string>
+    <string name="llm_name">巨量語文模型</string>
+    <string name="llm_desc">模組部分或完全以 AI 編寫而成</string>
 </resources>
