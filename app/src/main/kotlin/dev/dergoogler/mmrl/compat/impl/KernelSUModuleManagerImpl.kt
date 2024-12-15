@@ -90,7 +90,7 @@ internal class KernelSUModuleManagerImpl(
                 "export KSU=true",
                 "export KSU_VER=${version}",
                 "export KSU_VER_CODE=${versionCode}",
-                "sh /data/adb/modules/$modId/action.sh"
+                "busybox sh /data/adb/modules/$modId/action.sh"
             )
 
             action(

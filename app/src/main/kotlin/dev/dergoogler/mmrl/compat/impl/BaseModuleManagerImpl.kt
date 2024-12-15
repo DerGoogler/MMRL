@@ -256,6 +256,7 @@ internal abstract class BaseModuleManagerImpl(
         }
 
         val cmds = arrayOf(
+            "export PATH=/data/adb/ap/bin:/data/adb/ksu/bin:/data/adb/magisk:\$PATH",
             "export MMRL=true",
             "export BOOTMODE=true",
             "export ARCH=${Build.SUPPORTED_ABIS[0]}",

@@ -60,7 +60,7 @@ internal class MagiskModuleManagerImpl(
             "export MAGISK=true",
             "export MAGISK_VER=${version}",
             "export MAGISK_VER_CODE=${versionCode}",
-            "sh /data/adb/modules/$modId/action.sh"
+            "busybox sh /data/adb/modules/$modId/action.sh"
         )
 
         action(

@@ -90,7 +90,7 @@ internal class APatchModuleManagerImpl(
                 "export APATCH=true",
                 "export APATCH_VER=${version}",
                 "export APATCH_VER_CODE=${versionCode}",
-                "sh /data/adb/modules/$modId/action.sh"
+                "busybox sh /data/adb/modules/$modId/action.sh"
             )
 
             action(
