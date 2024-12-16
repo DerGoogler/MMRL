@@ -273,4 +273,16 @@
     <string name="view_module_low_root_version_desc">Parece que você tem uma versão de provedor de root muito antiga. Verifique se há alguma atualização para seu provedor de root</string>
     <string name="view_module_unsupported_arch_desc">Parece que seu dispositivo não tem suporte para a arquitetura necessária declarada pelo desenvolvedor.</string>
     <string name="view_module_unsupported_arch">Arquitetura sem suporte</string>
+    <string name="generic_disclaimer_title">Você é responsável!</string>
+    <string name="settings_modules_installer">Instalador</string>
+    <string name="bulk_add_as_bulk">Adicionar em massa</string>
+    <string name="settings_shell_module_action_desc">Isso é útil quando seu provedor raiz não suporta o arquivo action.sh</string>
+    <string name="action_failure">Falha de ação</string>
+    <string name="settings_shell_module_action">Use Shell para Ação</string>
+    <string name="action_executing">Executando…</string>
+    <string name="settings_modules">Módulos e Instalador</string>
+    <string name="settings_modules_handlers">Manipuladores</string>
+    <string name="action_activity">Ação</string>
+    <string name="settings_modules_desc">Alterar o comportamento dos manipuladores para módulos ou muito mais sobre módulos</string>
+    <string name="generic_disclaimer_desc">**MMRL** não é responsável por nenhum dano ao seu dispositivo, incluindo, mas não se limitando a dispositivos brickados, cartões SD corrompidos, guerras termonucleares ou você perder seu emprego porque um aplicativo de alarme não funcionou corretamente. Antes de prosseguir, pesquise cuidadosamente os recursos e riscos de usar este módulo. *Você está escolhendo fazer essas modificações por sua conta e risco*.</string>
 </resources>
