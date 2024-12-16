@@ -311,4 +311,6 @@
     <string name="bulk_add_as_bulk">新增至模組安裝列表</string>
     <string name="settings_modules_installer">安裝程序</string>
     <string name="generic_disclaimer_desc">若因自身裝置變故而蒙受損失（不限於無法開機、SD 卡故障、引發熱核子戰爭，或是鬧鐘應用程式秀逗而讓你被炒魷魚），**MMRL** 概不負責。執行之前，請確認好本功能之於模組的作用與風險。*在你同意進行模組修改過後，其風險責任應由你承擔*。</string>
+    <string name="settings_webui_allow_restricted_paths_desc">准許 WebUI 開發人員存取 /data/data/{套裝軟體名稱} 、/sdcard/Android/obb 等位置。謹慎使用，風險自負！</string>
+    <string name="settings_webui_allow_restricted_paths">准許受限制路徑</string>
 </resources>
