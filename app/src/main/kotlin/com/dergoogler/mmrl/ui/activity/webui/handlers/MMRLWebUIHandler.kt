@@ -93,7 +93,7 @@ class MMRLWebUIHandler(
             append("    --filledTonalButtonDisabledContainerColor: ${filledTonalButtonColors.disabledContainerColor.toCssValue()};\n")
             append("    /* Filled Card Colors */\n")
             append("    --filledCardContentColor: ${cardColors.contentColor.toCssValue()};\n")
-            append("    --filledCardContentColor: ${cardColors.containerColor.toCssValue()};\n")
+            append("    --filledCardContainerColor: ${cardColors.containerColor.toCssValue()};\n")
             append("    --filledCardDisabledContentColor: ${cardColors.disabledContentColor.toCssValue()};\n")
             append("    --filledCardDisabledContainerColor: ${cardColors.disabledContainerColor.toCssValue()};\n")
             append("}")

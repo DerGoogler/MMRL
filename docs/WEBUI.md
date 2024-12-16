@@ -64,6 +64,7 @@ You can check if the config runs in MMRL
 Above v5.30.40
 
 > `$mmrl_wpd` should be replaced with your module ID
+> To access the filesystem API you'll have to take the first two letters of your mod ID. `Mmrl_wpd` => `$MmFile` (automatically uppercases)
 
 ```js
 if (typeof $mmrl_wpd != "undefined") {
@@ -87,6 +88,7 @@ Typing
 
 ```ts
 declare const $mmrl_wpd: MMRL;
+declare const $MmFile: SuFile;
 
 interface MMRL {
   /**
@@ -145,6 +147,30 @@ interface MMRL {
   /* overload */ shareText(text: string, type: string): void;
 }
 
+interface SuFile {
+  /**
+   * Checks if the given path is accessible. Always true if the user disabled "Allow Restricted Paths"
+   */
+  isAccessRestricted(path: string): boolean;
+
+  read(path: string): string | null;
+
+  write(path: string, data: string): void;
+  /**
+   * Useful for loading images from the internal storage
+   */
+  readAsBase64(path: string): string | null;
+
+  list(path: string): string | null;
+  /* overload */ list(path: string, delimiter: string): string | null;
+
+  stat(path: string): number;
+
+  delete(path: string): boolean;
+
+  exists(path: string): boolean
+}
+
 declare var ksu: ksu;
 
 interface ksu {
@@ -153,6 +179,7 @@ interface ksu {
    */
   mmrl(): boolean;
 }
+
 ```
 
 
