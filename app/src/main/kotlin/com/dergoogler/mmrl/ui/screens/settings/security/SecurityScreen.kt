@@ -16,8 +16,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.dergoogler.mmrl.R
-import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
 import com.dergoogler.mmrl.ui.component.ListSwitchItem
+import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.utils.none
 import com.dergoogler.mmrl.viewmodel.SettingsViewModel
@@ -25,7 +25,7 @@ import com.dergoogler.mmrl.viewmodel.SettingsViewModel
 @Composable
 fun SecurityScreen(
     navController: NavController,
-    viewModel: SettingsViewModel = hiltViewModel()
+    viewModel: SettingsViewModel = hiltViewModel(),
 ) {
     val userPreferences = LocalUserPreferences.current
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
@@ -61,6 +61,15 @@ fun SecurityScreen(
                 checked = userPreferences.hideFingerprintInHome,
                 onChange = viewModel::setHideFingerprintInHome
             )
+
+            ListSwitchItem(
+                icon = R.drawable.file_dislike,
+                title = stringResource(id = R.string.settings_webui_allow_restricted_paths),
+                desc = stringResource(id = R.string.settings_webui_allow_restricted_paths_desc),
+                checked = userPreferences.webuiAllowRestrictedPaths,
+                onChange = viewModel::setWebuiAllowRestrictedPaths,
+                labels = listOf(stringResource(id = R.string.view_module_features_webui))
+            )
         }
     }
 }
@@ -68,7 +77,7 @@ fun SecurityScreen(
 @Composable
 private fun TopBar(
     scrollBehavior: TopAppBarScrollBehavior,
-    navController: NavController
+    navController: NavController,
 ) = NavigateUpTopBar(
     title = stringResource(id = R.string.settings_security),
     scrollBehavior = scrollBehavior,

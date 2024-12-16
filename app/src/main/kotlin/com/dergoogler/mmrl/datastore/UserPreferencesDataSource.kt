@@ -173,6 +173,14 @@ class UserPreferencesDataSource @Inject constructor(
         }
     }
 
+    suspend fun setWebuiAllowRestrictedPaths(value: Boolean) = withContext(Dispatchers.IO) {
+        userPreferences.updateData {
+            it.copy(
+                webuiAllowRestrictedPaths = value
+            )
+        }
+    }
+
     suspend fun setClearInstallTerminal(value: Boolean) = withContext(Dispatchers.IO) {
         userPreferences.updateData {
             it.copy(

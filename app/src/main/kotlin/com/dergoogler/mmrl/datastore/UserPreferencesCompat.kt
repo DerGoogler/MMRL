@@ -31,6 +31,7 @@ data class UserPreferencesCompat(
     val developerMode: Boolean,
     val useShellForModuleStateChange: Boolean,
     val useShellForModuleAction: Boolean,
+    val webuiAllowRestrictedPaths: Boolean,
     val clearInstallTerminal: Boolean,
     val repositoryMenu: RepositoryMenuCompat,
     val modulesMenu: ModulesMenuCompat,
@@ -57,6 +58,7 @@ data class UserPreferencesCompat(
         developerMode = original.developerMode,
         useShellForModuleStateChange = original.useShellForModuleStateChange,
         useShellForModuleAction = original.useShellForModuleAction,
+        webuiAllowRestrictedPaths = original.webuiAllowRestrictedPaths,
         clearInstallTerminal = original.clearInstallTerminal,
         repositoryMenu = when {
             original.hasRepositoryMenu() -> RepositoryMenuCompat(original.repositoryMenu)
@@ -95,6 +97,7 @@ data class UserPreferencesCompat(
         .setDeveloperMode(developerMode)
         .setUseShellForModuleStateChange(useShellForModuleStateChange)
         .setUseShellForModuleAction(useShellForModuleAction)
+        .setWebuiAllowRestrictedPaths(webuiAllowRestrictedPaths)
         .setClearInstallTerminal(clearInstallTerminal)
         .setRepositoryMenu(repositoryMenu.toProto())
         .setModulesMenu(modulesMenu.toProto())
@@ -122,6 +125,7 @@ data class UserPreferencesCompat(
             clearInstallTerminal = true,
             useShellForModuleStateChange = true,
             useShellForModuleAction = true,
+            webuiAllowRestrictedPaths = false,
             repositoryMenu = RepositoryMenuCompat.default(),
             modulesMenu = ModulesMenuCompat.default()
         )

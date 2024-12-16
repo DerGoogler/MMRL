@@ -158,6 +158,12 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
+    fun setWebuiAllowRestrictedPaths(value: Boolean) {
+        viewModelScope.launch {
+            userPreferencesRepository.setWebuiAllowRestrictedPaths(value)
+        }
+    }
+
     fun setClearInstallTerminal(value: Boolean) {
         viewModelScope.launch {
             userPreferencesRepository.setClearInstallTerminal(value)

@@ -28,6 +28,11 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.webkit.WebViewAssetLoader
 import com.dergoogler.mmrl.R
+import com.dergoogler.mmrl.ui.activity.webui.handlers.MMRLWebUIHandler
+import com.dergoogler.mmrl.ui.activity.webui.handlers.SuFilePathHandler
+import com.dergoogler.mmrl.ui.activity.webui.interfaces.FileInterface
+import com.dergoogler.mmrl.ui.activity.webui.interfaces.KernelSUInterface
+import com.dergoogler.mmrl.ui.activity.webui.interfaces.MMRLInterface
 import com.dergoogler.mmrl.ui.component.Loading
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.viewmodel.WebUIViewModel
@@ -168,6 +173,15 @@ fun WebUIScreen(
                             managerVersionCode = viewModel.versionCode,
                             managerVersionName = viewModel.versionName
                         ), "$${viewModel.sanitizeModId(modId)}"
+                    )
+
+                    addJavascriptInterface(
+                        FileInterface(
+                            context = context,
+                            allowRestrictedPaths = userPrefs.webuiAllowRestrictedPaths,
+                            webView = this
+                        ),
+                        "$${viewModel.sanitizeModIdWithFile(modId)}File"
                     )
                 }
             },

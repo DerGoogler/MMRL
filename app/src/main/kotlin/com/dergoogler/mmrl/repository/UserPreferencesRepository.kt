@@ -67,6 +67,9 @@ class UserPreferencesRepository @Inject constructor(
     suspend fun setUseShellForModuleAction(value: Boolean) =
         userPreferencesDataSource.setUseShellForModuleAction(value)
 
+    suspend fun setWebuiAllowRestrictedPaths(value: Boolean) =
+        userPreferencesDataSource.setWebuiAllowRestrictedPaths(value)
+
     suspend fun setClearInstallTerminal(value: Boolean) =
         userPreferencesDataSource.setClearInstallTerminal(value)
 

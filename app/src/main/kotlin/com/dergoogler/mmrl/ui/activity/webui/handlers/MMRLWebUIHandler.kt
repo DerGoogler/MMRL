@@ -1,4 +1,4 @@
-package com.dergoogler.mmrl.ui.activity.webui
+package com.dergoogler.mmrl.ui.activity.webui.handlers
 
 import android.webkit.WebResourceResponse
 import androidx.compose.material3.ButtonColors

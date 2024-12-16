@@ -40,6 +40,16 @@ class WebUIViewModel @Inject constructor(
         return id.replace(Regex("[^a-zA-Z0-9._-]"), "_")
     }
 
+    fun sanitizeModIdWithFile(input: String): String {
+        return if (input.length >= 2) {
+            input[0].uppercase() + input[1].toString()
+        } else if (input.isNotEmpty()) {
+            input[0].uppercase()
+        } else {
+            ""
+        }
+    }
+
     fun createRootShell(globalMnt: Boolean = false, devMode: Boolean = false): Shell {
         Shell.enableVerboseLogging = devMode
         val builder = Shell.Builder.create()

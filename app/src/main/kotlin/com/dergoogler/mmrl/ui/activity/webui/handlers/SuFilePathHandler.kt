@@ -1,4 +1,4 @@
-package com.dergoogler.mmrl.ui.activity.webui
+package com.dergoogler.mmrl.ui.activity.webui.handlers
 
 import android.content.Context
 import android.webkit.WebResourceResponse

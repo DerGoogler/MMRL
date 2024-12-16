@@ -32,4 +32,5 @@ message UserPreferences {
   bool clearInstallTerminal = 21;
   bool useShellForModuleStateChange = 22;
   bool useShellForModuleAction = 23;
+  bool webuiAllowRestrictedPaths = 24;
 }
