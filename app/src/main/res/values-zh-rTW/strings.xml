@@ -91,7 +91,7 @@
     <string name="view_module_provided_by">中介平臺</string>
     <string name="view_module_added_on">上架日期</string>
     <string name="view_module_about_this_module">關於模組</string>
-    <string name="view_module_mod_infos_disclaimer">留有 **** 標記的資訊，其內容在各中介平臺之間稍有不同。欲知詳情，請點選上方的@track(中繼資料檢視)。</string>
+    <string name="view_module_mod_infos_disclaimer">留有 * 標記的資訊，其內容在各中介平臺之間稍有不同。欲知詳情，請點選上方的@track(中繼資料檢視)。</string>
     <string name="view_module_section_count">%1$s+</string>
     <string name="view_module_donate">小額捐款</string>
     <string name="view_module_donate_desc">以一杯咖啡 ☕ 的錢，表達你對模組開發人員的大力支持！</string>
@@ -310,5 +310,5 @@
     <string name="settings_shell_module_action_desc">推薦在授權平臺不支援 action.sh 檔案的情況下啟用</string>
     <string name="bulk_add_as_bulk">新增至模組安裝列表</string>
     <string name="settings_modules_installer">安裝程序</string>
-    <string name="generic_disclaimer_desc">若以自身裝置變故而蒙受損失（如無法開機、SD 卡故障、引發熱核子戰爭，或是因鬧鐘應用程式秀逗而讓你被炒魷魚），**MMRL** 概不負責。執行之前，請確認好本功能之於模組的作用與風險。*在你同意進行模組修改過後，其風險責任應由你承擔*。</string>
+    <string name="generic_disclaimer_desc">若因自身裝置變故而蒙受損失（不限於無法開機、SD 卡故障、引發熱核子戰爭，或是鬧鐘應用程式秀逗而讓你被炒魷魚），**MMRL** 概不負責。執行之前，請確認好本功能之於模組的作用與風險。*在你同意進行模組修改過後，其風險責任應由你承擔*。</string>
 </resources>
