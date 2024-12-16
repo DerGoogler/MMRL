@@ -59,6 +59,7 @@ internal class MagiskModuleManagerImpl(
         val cmds = arrayOf(
             "export MAGISK=true",
             "export MAGISK_VER=${version}",
+            "export MAGISKTMP=$(magisk --path)",
             "export MAGISK_VER_CODE=${versionCode}",
             "busybox sh /data/adb/modules/$modId/action.sh"
         )
