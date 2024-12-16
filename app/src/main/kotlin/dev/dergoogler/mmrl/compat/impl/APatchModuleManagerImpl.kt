@@ -87,6 +87,7 @@ internal class APatchModuleManagerImpl(
     override fun action(modId: String, legacy: Boolean, callback: IShellCallback) {
         if (legacy) {
             val cmds = arrayOf(
+                "export ASH_STANDALONE=1",
                 "export APATCH=true",
                 "export APATCH_VER=${version}",
                 "export APATCH_VER_CODE=${versionCode}",

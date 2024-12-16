@@ -57,6 +57,7 @@ internal class MagiskModuleManagerImpl(
 
     override fun action(modId: String, legacy: Boolean, callback: IShellCallback) {
         val cmds = arrayOf(
+            "export ASH_STANDALONE=1",
             "export MAGISK=true",
             "export MAGISK_VER=${version}",
             "export MAGISKTMP=$(magisk --path)",

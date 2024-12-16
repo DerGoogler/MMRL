@@ -87,6 +87,7 @@ internal class KernelSUModuleManagerImpl(
     override fun action(modId: String, legacy: Boolean, callback: IShellCallback) {
         if (legacy) {
             val cmds = arrayOf(
+                "export ASH_STANDALONE=1",
                 "export KSU=true",
                 "export KSU_VER=${version}",
                 "export KSU_VER_CODE=${versionCode}",
