@@ -91,7 +91,7 @@
     <string name="view_module_provided_by">提供者</string>
     <string name="view_module_added_on">额外的</string>
     <string name="view_module_about_this_module">关于此模块</string>
-    <string name="view_module_mod_infos_disclaimer"><![CDATA[ <b>*</b> 由于添加多个仓库产生了不同的描述,点击链接了解详情 <font color=\"%1$s\">View Track</font>]]></string>
+    <string name="view_module_mod_infos_disclaimer">标有 **** 的信息可能会因添加了多个仓库而有所不同。您可以点击上面的 @track查看实际信息。</string>
     <string name="view_module_section_count">%1$s+</string>
     <string name="view_module_donate">捐赠</string>
     <string name="view_module_donate_desc">通过捐赠一杯咖啡表达对开发者的支持 ☕</string>
@@ -290,4 +290,25 @@
     <string name="unsafe_url_redirecting">危险的URL：%1$s。正在进行重定向…</string>
     <string name="settings_shell_module_state_change_desc">使用shell操作而并非在模块目录下直接创建文件,但是由于限制,模块恢复按钮将不再可用</string>
     <string name="settings_shell_module_state_change">使用shell操作</string>
+    <string name="view_module_required_root_version">所需的ROOT方案版本</string>
+    <string name="view_module_unsupported_device">不支持的设备</string>
+    <string name="view_module_features_action">Action</string>
+    <string name="view_module_unsupported_arch_desc">似乎您的设备不支持开发者声明的所需架构</string>
+    <string name="settings_shell_module_action">使用shell执行Action</string>
+    <string name="settings_shell_module_action_desc">当您的ROOT方案不支持action.sh时，这将很有用</string>
+    <string name="settings_modules">模块操作&amp; 安装</string>
+    <string name="settings_modules_desc">修改模块处理流程或更多关于模块的内容</string>
+    <string name="settings_modules_installer">安装</string>
+    <string name="settings_modules_handlers">处理程序</string>
+    <string name="action_executing">执行中.…</string>
+    <string name="bulk_add_as_bulk">批量添加</string>
+    <string name="action_activity">Action</string>
+    <string name="action_failure">Action执行失败！</string>
+    <string name="generic_disclaimer_title">你有责任！</string>
+    <string name="view_module_low_root_version_desc">看起来你的 root 方案版本过旧。检查是否有更新的 root 方案。</string>
+    <string name="view_module_features_action_sub">允许用户通过点击按钮来执行脚本</string>
+    <string name="view_module_unsupported_arch">不支持的处理器架构</string>
+    <string name="view_module_unsupported_device_desc">您的设备似乎不受此模块支持或已被排除</string>
+    <string name="view_module_low_root_version">Root方案版本太低！</string>
+    <string name="generic_disclaimer_desc">**MMRL** 对执行这些选项所造成的您的设备任何损坏不承担责任，包括但不限于设备变砖、设备硬件损坏，或因为应用故障导致的部分系统功能损坏。在继续操作之前，请彻底研究使用此模块的功能和风险。*您选择进行这些操作的风险由您自行承担*</string>
 </resources>
