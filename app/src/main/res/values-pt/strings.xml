@@ -127,7 +127,7 @@
     <string name="view_module_module_support">Suporte de módulo</string>
     <string name="view_module_provided_by">Fornecido por</string>
     <string name="view_module_about_this_module">Sobre este módulo</string>
-    <string name="view_module_mod_infos_disclaimer"><![CDATA[Informações marcadas com um <b>* pode diferir devido a múltiplos repositórios adicionados. Você pode visualizar as informações reais clicando em <font color=\"%1$s\">Ver trilha</font> acima.]]></string>
+    <string name="view_module_mod_infos_disclaimer">Infos marcados com **** podem diferir devido a múltiplos repositórios adicionados. Você pode visualizar as informações reais clicando em @track(View Track) acima.</string>
     <string name="view_module_section_count">%1$s+</string>
     <string name="view_module_donate">Doar</string>
     <string name="view_module_donate_desc">Mostre um pouco de amor a este desenvolvedor de módulo doando um café a ele! ☕</string>
@@ -285,4 +285,6 @@
     <string name="action_activity">Ação</string>
     <string name="settings_modules_desc">Alterar o comportamento dos manipuladores para módulos ou muito mais sobre módulos</string>
     <string name="generic_disclaimer_desc">**MMRL** não é responsável por nenhum dano ao seu dispositivo, incluindo, mas não se limitando a dispositivos brickados, cartões SD corrompidos, guerras termonucleares ou você perder seu emprego porque um aplicativo de alarme não funcionou corretamente. Antes de prosseguir, pesquise cuidadosamente os recursos e riscos de usar este módulo. *Você está escolhendo fazer essas modificações por sua conta e risco*.</string>
+    <string name="settings_webui_allow_restricted_paths">Permitir caminhos restritos</string>
+    <string name="settings_webui_allow_restricted_paths_desc">Permite que desenvolvedores WebUI acessem caminhos como /data/data/{package} ou /sdcard/Android/obb. Use por sua conta e risco!</string>
 </resources>
