@@ -121,7 +121,7 @@ data class UserPreferencesCompat(
             developerMode = false,
             clearInstallTerminal = true,
             useShellForModuleStateChange = true,
-            useShellForModuleAction = false,
+            useShellForModuleAction = true,
             repositoryMenu = RepositoryMenuCompat.default(),
             modulesMenu = ModulesMenuCompat.default()
         )
