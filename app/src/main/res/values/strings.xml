@@ -214,6 +214,9 @@
     <string name="settings_modules_desc">Change the behavior of handlers for modules or many more about modules</string>
     <string name="settings_modules_handlers">Handlers</string>
     <string name="settings_modules_installer">Installer</string>
+    <string name="settings_webui_allow_restricted_paths">Allow Restricted Paths</string>
+    <string name="settings_webui_allow_restricted_paths_desc">Allows WebUI developers to access paths like /data/data/{package} or /sdcard/Android/obb. Use at your own risk!</string>
+
 
     <!-- App Theme -->
     <string name="app_theme_palette">Theme Palette</string>
@@ -339,6 +342,4 @@
     <string name="hidden">Hidden</string>
     <string name="pre_release">Pre-release</string>
     <string name="unsafe_url_redirecting">Unsafe URL: %1$s. Redirecting…</string>
-    <string name="settings_webui_allow_restricted_paths">Allow Restricted Paths</string>
-    <string name="settings_webui_allow_restricted_paths_desc"><![CDATA[Allows WebUI developers to access paths like /data/data/<package> or /sdcard/Android/obb. Use at your own risk!]]></string>
-</resources>
+   </resources>
