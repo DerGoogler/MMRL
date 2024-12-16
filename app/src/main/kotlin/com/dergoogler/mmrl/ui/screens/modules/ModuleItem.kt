@@ -2,6 +2,7 @@ package com.dergoogler.mmrl.ui.screens.modules
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -13,9 +14,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -26,6 +31,8 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -34,8 +41,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.model.local.LocalModule
+import com.dergoogler.mmrl.model.local.State
 import com.dergoogler.mmrl.model.local.versionDisplay
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
+import dev.dergoogler.mmrl.compat.activity.MMRLComponentActivity
 import dev.dergoogler.mmrl.compat.ext.takeTrue
 import dev.dergoogler.mmrl.compat.ext.toFormattedDateSafely
 
@@ -57,9 +66,20 @@ fun ModuleItem(
 ) {
     val userPreferences = LocalUserPreferences.current
     val menu = userPreferences.modulesMenu
+    val context = LocalContext.current
+    val openWebUi = Modifier.clickable(
+        onClick = {
+            MMRLComponentActivity.startWebUIActivity(
+                context = context,
+                modId = module.id
+            )
+        }
+    )
 
     Box(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .then(if (module.runners.webui && module.state != State.REMOVE) openWebUi else Modifier),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -75,18 +95,40 @@ fun ModuleItem(
                         .weight(1f),
                     verticalArrangement = Arrangement.spacedBy(2.dp)
                 ) {
-                    Text(
-                        text = module.name,
-                        style = MaterialTheme.typography.titleSmall
-                            .copy(fontWeight = FontWeight.Bold),
-                        maxLines = 2,
-                        textDecoration = decoration,
-                        overflow = TextOverflow.Ellipsis
-                    )
+                    val style = MaterialTheme.typography.titleSmall
+                    val iconSize =
+                        with(LocalDensity.current) { style.fontSize.toDp() * 1.0f }
+
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        module.runners.webui.takeTrue {
+                            Icon(
+                                modifier = Modifier.size(iconSize),
+                                painter = painterResource(id = if (module.state != State.REMOVE) R.drawable.world_code else R.drawable.world_off),
+                                contentDescription = null,
+                                tint = LocalContentColor.current
+                            )
+
+                            Spacer(modifier = Modifier.width(8.dp))
+                        }
+
+                        Text(
+                            text = module.name,
+                            style = style.copy(fontWeight = FontWeight.Bold),
+                            maxLines = 2,
+                            textDecoration = decoration,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
+
+
 
                     Text(
-                        text = stringResource(id = R.string.module_version_author,
-                            module.versionDisplay, module.author),
+                        text = stringResource(
+                            id = R.string.module_version_author,
+                            module.versionDisplay, module.author
+                        ),
                         style = MaterialTheme.typography.bodySmall,
                         textDecoration = decoration,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -94,7 +136,8 @@ fun ModuleItem(
 
                     if (module.lastUpdated != 0L && menu.showUpdatedTime) {
                         Text(
-                            text = stringResource(id = R.string.module_update_at,
+                            text = stringResource(
+                                id = R.string.module_update_at,
                                 module.lastUpdated.toFormattedDateSafely
                             ),
                             style = MaterialTheme.typography.bodySmall,
@@ -134,6 +177,7 @@ fun ModuleItem(
                         .height(2.dp)
                         .fillMaxWidth()
                 )
+
                 progress != 0f -> LinearProgressIndicator(
                     progress = { progress },
                     strokeCap = StrokeCap.Round,
@@ -142,6 +186,7 @@ fun ModuleItem(
                         .height(1.5.dp)
                         .fillMaxWidth()
                 )
+
                 else -> HorizontalDivider(
                     thickness = 1.5.dp,
                     color = MaterialTheme.colorScheme.surface,
@@ -168,7 +213,7 @@ fun ModuleItem(
 @Composable
 fun StateIndicator(
     @DrawableRes icon: Int,
-    color: Color = MaterialTheme.colorScheme.outline
+    color: Color = MaterialTheme.colorScheme.outline,
 ) = Image(
     modifier = Modifier.requiredSize(150.dp),
     painter = painterResource(id = icon),

@@ -30,13 +30,13 @@ import androidx.compose.ui.unit.dp
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.model.local.LocalModule
 import com.dergoogler.mmrl.model.local.State
-import com.dergoogler.mmrl.model.local.hasRunners
 import com.dergoogler.mmrl.model.online.VersionItem
 import com.dergoogler.mmrl.ui.component.VersionItemBottomSheet
 import com.dergoogler.mmrl.ui.component.scrollbar.VerticalFastScrollbar
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.screens.modules.items.RunnerBottomSheet
 import com.dergoogler.mmrl.viewmodel.ModulesViewModel
+import dev.dergoogler.mmrl.compat.activity.MMRLComponentActivity
 import dev.dergoogler.mmrl.compat.ext.takeTrue
 
 @Composable
@@ -150,11 +150,14 @@ fun ModuleItem(
             }
         },
         startTrailingButton = {
-            module.runners.hasRunners.takeTrue {
-                RunnerButton(
+            module.runners.action.takeTrue {
+                ActionButton(
                     enabled = isProviderAlive && module.state != State.REMOVE,
                     onClick = {
-                        runnerSheetOpen = true
+                        MMRLComponentActivity.startActionActivity(
+                            context = context,
+                            modId = module.id
+                        )
                     }
                 )
             }
@@ -235,7 +238,7 @@ private fun RemoveOrRestore(
 }
 
 @Composable
-private fun RunnerButton(
+private fun ActionButton(
     enabled: Boolean,
     onClick: () -> Unit,
 ) = FilledTonalButton(
@@ -245,7 +248,7 @@ private fun RunnerButton(
 ) {
     Icon(
         modifier = Modifier.size(20.dp),
-        painter = painterResource(id = R.drawable.settings),
+        painter = painterResource(id = R.drawable.player_play),
         contentDescription = null
     )
 }
