@@ -57,7 +57,7 @@ fun ModulesScreen(
                 icon = R.drawable.stars_outlined,
                 title = stringResource(id = R.string.settings_shell_module_state_change),
                 desc = stringResource(id = R.string.settings_shell_module_state_change_desc),
-                checked = userPreferences.useShellForModuleStateChange,
+                checked = userPreferences.useShellForModuleStateChange || viewModel.managerName.lowercase() != "magisk",
                 onChange = viewModel::setUseShellForModuleStateChange,
                 labels = listOf("KernelSU", "APatch")
             )
@@ -67,7 +67,7 @@ fun ModulesScreen(
                 icon = R.drawable.device_mobile_code,
                 title = stringResource(id = R.string.settings_shell_module_action),
                 desc = stringResource(id = R.string.settings_shell_module_action_desc),
-                checked = userPreferences.useShellForModuleAction,
+                checked = userPreferences.useShellForModuleAction || viewModel.managerName.lowercase() != "magisk",
                 onChange = viewModel::setUseShellForModuleAction,
                 labels = listOf("KernelSU", "APatch")
             )
