@@ -1,2 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="nonfreeassets_name">Ativos não livres</string>
+    <string name="nsfw_name">NSFW</string>
+    <string name="nsfw_desc">Este módulo contém conteúdo que não deve ser divulgado ou visível em todos os lugares.</string>
+    <string name="knownvuln_desc">Este módulo contém uma vulnerabilidade de segurança conhecida.</string>
+    <string name="nonfreenet_desc">Este módulo promove ou depende inteiramente de um serviço de rede não alterável ou não livre.</string>
+    <string name="tracking_name">Monitorando</string>
+    <string name="nonfreedep_name">Dependências não livres</string>
+    <string name="obfuscation_desc">O código-fonte do módulo pode estar ofuscado, dificultando sua compreensão, auditoria ou modificação.</string>
+    <string name="nonfreeadd_name">Complementos não gratuitos</string>
+    <string name="nonfreenet_name">Serviços de rede não livres</string>
+    <string name="ads_desc">O módulo contém anúncios.</string>
+    <string name="knownvuln_name">Vulnerabilidade conhecida</string>
+    <string name="nosourcesince_name">Nenhuma fonte desde</string>
+    <string name="nosourcesince_desc">O código-fonte não está mais disponível e não há atualizações possíveis.</string>
+    <string name="nonfreeadd_desc">Este módulo promove complementos não gratuitos.</string>
+    <string name="nonfreeassets_desc">Este módulo contém ativos não livres.</string>
+    <string name="tracking_desc">Este módulo rastreia e relata sua atividade.</string>
+    <string name="upstreamnonfree_name">Upstream não livre</string>
+    <string name="upstreamnonfree_desc">O código-fonte upstream não é totalmente gratuito.</string>
+    <string name="obfuscation_name">Ofuscação</string>
+    <string name="unaskedremoval_name">Remoção não solicitada</string>
+    <string name="unaskedremoval_desc">O módulo remove aplicativos, arquivos ou outros módulos sem o consentimento do usuário.</string>
+    <string name="llm_name">Modelo de Linguagem Grande</string>
+    <string name="ads_name">Anúncio</string>
+    <string name="nonfreedep_desc">Este módulo depende de outros módulos não livres.</string>
+    <string name="llm_desc">O módulo pode ser escrito parcial ou totalmente por um LLM</string>
+</resources>
