@@ -256,7 +256,7 @@
     <string name="view_module_features_system_properties">Propiedades del sistema</string>
     <string name="view_module_features_selinux_policy">Política de SELinux</string>
     <string name="view_module_features_zygisk">Zygisk</string>
-    <string name="view_module_features_apks">APKs</string>
+    <string name="view_module_features_apks">Archivos APK</string>
     <string name="view_module_features_webui">WebUI</string>
     <string name="view_module_features_boot_completed">Arranque completado</string>
     <string name="view_module_features_service_sub">Ejecuta el código más tarde durante el arranque (se inicializa más el sistema).</string>
@@ -285,4 +285,5 @@
     <string name="settings_include_preleases">Incluir prelanzamientos</string>
     <string name="verified">Verificado</string>
     <string name="settings_repo_update_interval_suffix">" hora/s"</string>
+    <string name="settings_check_modules_update_interval_suffix">" hora/s"</string>
 </resources>
