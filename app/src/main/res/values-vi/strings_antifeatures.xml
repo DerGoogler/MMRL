@@ -1,2 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="nsfw_desc">Mô-đun này chứa nội dung không nên được công khai hoặc hiển thị ở mọi nơi.</string>
+    <string name="tracking_desc">Mô-đun này theo dõi và báo cáo hoạt động của bạn.</string>
+    <string name="nonfreeadd_desc">Mô-đun này quảng bá các tiện ích bổ sung không miễn phí.</string>
+    <string name="ads_name">Quảng cáo</string>
+    <string name="ads_desc">Mô-đun này có chứa quảng cáo.</string>
+    <string name="knownvuln_desc">Mô-đun này chứa lỗ hổng bảo mật.</string>
+    <string name="nosourcesince_desc">Mã nguồn không còn nữa, không thể cập nhật được.</string>
+    <string name="nonfreeadd_name">Addons không miễn phí</string>
+</resources>
