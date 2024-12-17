@@ -284,4 +284,5 @@
     <string name="settings_auto_update_repos_desc">Actualizar repositorios automáticamente en segundo plano</string>
     <string name="settings_include_preleases">Incluir prelanzamientos</string>
     <string name="verified">Verificado</string>
+    <string name="settings_repo_update_interval_suffix">" hora/s"</string>
 </resources>
