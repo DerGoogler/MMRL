@@ -1,2 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="nonfreenet_desc">Modul ini mempromosikan atau bergantung sepenuhnya pada layanan jaringan yang tidak dapat diubah atau berbayar.</string>
+    <string name="nonfreeassets_desc">Modul ini berisi aset yang berbayar.</string>
+    <string name="nsfw_desc">Modul ini berisi konten yang tidak boleh dipublikasikan atau dilihat di mana pun.</string>
+    <string name="ads_desc">Modul ini berisi iklan.</string>
+    <string name="knownvuln_name">Kerentanan yang Diketahui</string>
+    <string name="knownvuln_desc">Modul ini berisi kerentanan keamanan yang diketahui.</string>
+    <string name="nsfw_name">NSFW</string>
+    <string name="nosourcesince_name">Tidak Ada Sumber Sejak</string>
+    <string name="nonfreeadd_name">Add-on Berbayar</string>
+    <string name="nonfreeadd_desc">Modul ini mempromosikan add-on berbayar.</string>
+    <string name="nonfreeassets_name">Asset Berbayar</string>
+    <string name="nonfreedep_name">Dependensi Berbayar</string>
+    <string name="nonfreedep_desc">Modul ini bergantung pada modul berbayar lainnya.</string>
+    <string name="nonfreenet_name">Layanan Jaringan Berbayar</string>
+    <string name="tracking_name">Pelacakan</string>
+    <string name="tracking_desc">Modul ini melacak dan mengumpulkan aktivitas Anda.</string>
+    <string name="upstreamnonfree_desc">Kode sumber upstream tidak sepenuhnya Gratis.</string>
+    <string name="unaskedremoval_name">Penghapusan Tanpa Diminta</string>
+    <string name="unaskedremoval_desc">Modul ini menghapus aplikasi, file, atau modul lain tanpa izin pengguna.</string>
+    <string name="llm_name">Model Bahasa Besar (LLM)</string>
+    <string name="llm_desc">Modul ini mungkin ditulis sebagian atau seluruhnya oleh LLM</string>
+    <string name="nosourcesince_desc">Kode sumber tidak lagi tersedia, pembaruan tidak dapat dilakukan.</string>
+    <string name="ads_name">Periklanan</string>
+    <string name="upstreamnonfree_name">Upstream Berbayar</string>
+    <string name="obfuscation_desc">Kode sumber modul mungkin dikaburkan, sehingga sulit untuk dipahami, diaudit, atau dimodifikasi.</string>
+</resources>
