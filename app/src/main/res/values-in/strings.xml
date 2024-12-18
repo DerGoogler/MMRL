@@ -30,8 +30,8 @@
     <string name="module_download">Download</string>
     <string name="settings_repo">Repositori</string>
     <string name="settings_repo_desc">Kelola repositori modul Magisk</string>
-    <string name="settings_app">App</string>
-    <string name="settings_about">Mengenai</string>
+    <string name="settings_app">Aplikasi</string>
+    <string name="settings_about">Tentang MMRL</string>
     <string name="settings_root_access">Akses Root: %s</string>
     <string name="settings_root_provider">Penyedia: %s</string>
     <string name="settings_root_granted">Diberikan</string>
@@ -50,8 +50,8 @@
     <string name="repo_modules">%d modul</string>
     <string name="repo_options_update">Perbarui</string>
     <string name="repo_options_delete">Hapus</string>
-    <string name="repo_delete_dialog_desc">Apakah Anda yakin akan menghapus %s\?</string>
-    <string name="view_module_version_dialog_desc">Apakah Anda ingin memasang atau men-download modul versi ini\?</string>
+    <string name="repo_delete_dialog_desc">Apakah Kamu yakin ingin menghapus %s?</string>
+    <string name="view_module_version_dialog_desc">Apakah Anda ingin memasang atau mengunduh versi modul ini?</string>
     <string name="app_theme_palette">Palet Tema</string>
     <string name="repo_add_dialog_title">Tambah repositori</string>
     <string name="repo_add_dialog_add">Tambah</string>
@@ -69,9 +69,9 @@
     <string name="unknown_error">Kesalahan tidak diketahui</string>
     <string name="view_module_cloud">Cloud</string>
     <string name="view_module_last_updated">Terakhir diperbarui</string>
-    <string name="view_module_homepage">Homepage</string>
-    <string name="view_module_source">Source Code</string>
-    <string name="view_module_support">Dukungan</string>
+    <string name="view_module_homepage">Halaman</string>
+    <string name="view_module_source">Kode Sumber</string>
+    <string name="view_module_support">Dukung</string>
     <string name="view_module_view_track">Lihat Track</string>
     <string name="view_module_type">Jenis: %s</string>
     <string name="view_module_added">Ditambahkan pada: %s</string>
@@ -100,8 +100,8 @@
     <string name="setup_root_desc">Membutuhkan izin Root yang diberikan oleh Magisk atau KernelSU</string>
     <string name="setup_shizuku_desc">Membutuhkan izin yang diberikan oleh Sui atau Shizuku (root)</string>
     <string name="setup_non_root_desc">Tidak membutuhkan izin Root, hanya menyediakan fitur men-download modul</string>
-    <string name="view_module_unsupported_desc">Sepertinya perangkat Anda tidak mendukung versi modul ini. Meng-Instal module ini dapat membahayakan perangkat anda!</string>
-    <string name="view_module_install_confirm_desc_deps"><![CDATA[Apakah Anda yakin ingin menginstal <font color=\"%1$s\">%2$s</font>? Modul ini juga memerlukan:]]></string>
+    <string name="view_module_unsupported_desc">Sepertinya perangkat Anda tidak mendukung versi modul ini. Memasang modul ini dapat membahayakan perangkat anda!</string>
+    <string name="view_module_install_confirm_desc_deps"><![CDATA[Apakah Anda yakin ingin memasang <font color=\"%1$s\">%2$s</font>? Modul ini juga memerlukan:]]></string>
     <string name="settings_changelo_desc">Semua perubahan terkini dalam MMRL</string>
     <string name="menu_sort_repolistmode_compact">Susun Rapat</string>
     <string name="view_module_dependencies_not_found">Dependensi yang Diperlukan Tidak Ditemukan</string>
@@ -135,15 +135,15 @@
     <string name="manager_version">Versi Manager</string>
     <string name="fingerprint">Fingerprint</string>
     <string name="open_source">Sumber Terbuka</string>
-    <string name="view_module_features_post_fs_data_sub">Menjalankan kode lebih awal setelah boot (sistem yang di-boot sebagian).</string>
+    <string name="view_module_features_post_fs_data_sub">Menjalankan kode lebih awal setelah boot (ketika sistem di-boot sebagian).</string>
     <string name="view_module_features_resetprop_sub">Atur properti sistem yang dimuat oleh Magisk resetprop.</string>
     <string name="view_module_features_sepolicy_sub">Menambahkan aturan keamanan khusus (aturan SEPolicy).</string>
-    <string name="view_module_features_zygisk_sub">Mengizinkan module untuk berinteraksi dengan framework Zygisk, memungkinkan modifikasi dan interaksi tingkat sistem.</string>
+    <string name="view_module_features_zygisk_sub">Mengizinkan modul untuk berinteraksi dengan framework Zygisk, memungkinkan modifikasi dan interaksi tingkat sistem.</string>
     <string name="view_module_features_apks_sub">Menyertakan APK tambahan di dalam modul.</string>
     <string name="view_module_features_webui_sub">Antarmuka web untuk mengelola modul</string>
     <string name="view_module_features_action_sub">Memungkinkan pengguna menjalankan skrip melalui tombol Action</string>
     <string name="view_module_features_postmount_sub">Eksekusi skrip setelah OverlayFS mount</string>
-    <string name="view_module_features_bootcompleted_sub">Eksekusi skrip setelah boot selesai</string>
+    <string name="view_module_features_bootcompleted_sub">Menjalankan skrip setelah boot selesai</string>
     <string name="view_module_module_support">Dukungan module</string>
     <string name="view_module_provided_by">Disediakan Oleh</string>
     <string name="view_module_added_on">Ditambahkan pada</string>
@@ -239,7 +239,7 @@
     <string name="view_module_share">Bagikan</string>
     <string name="view_module_not_found">Modul Tidak Ditemukan</string>
     <string name="view_module_install_confirm_title">Install Modul Ini?</string>
-    <string name="view_module_install_confirm_desc"><![CDATA[Apakah Anda yakin ingin menginstall <font color=\"%1$s\">%2$s</font>?]]></string>
+    <string name="view_module_install_confirm_desc"><![CDATA[Apakah Anda yakin ingin memasang <font color=\"%1$s\">%2$s</font>?]]></string>
     <string name="view_module_dependencies">Dependensi</string>
     <string name="view_module_required_os">OS yang diperlukan</string>
     <string name="module_reinstall">Install Ulang</string>
@@ -247,4 +247,44 @@
     <string name="settings_blacklist_desc">Modul yang mungkin memiliki sumber yang tertutup atau berbahaya</string>
     <string name="settings_updates">Pembaruan</string>
     <string name="home_disabled_modules">Modul yang Dinonaktifkan</string>
+    <string name="settings_shell_module_state_change_desc">Menggunakan shell alih-alih membuat file di direktori modul. Setelah diaktifkan, Anda tidak akan dapat menggunakan tombol pemulihan karena limitasi.</string>
+    <string name="repo_options_support">Dukung</string>
+    <string name="repo_options_website">Situs Web</string>
+    <string name="repo_options_donate">Donasi</string>
+    <string name="repo_options_submission">Pengajuan</string>
+    <string name="verified">Terverifikasi</string>
+    <string name="stack_trace_truncated">%s\n… %d lihat selengkapnya</string>
+    <string name="report_to_issues">Laporkan ke issue</string>
+    <string name="we_hit_a_brick_crash">Ada yang salah ~</string>
+    <string name="reboot_userspace">Soft Reboot</string>
+    <string name="reboot_recovery">Reboot ke Recovery</string>
+    <string name="selinux_status_enforcing">Enforcing</string>
+    <string name="view_module_features_action">Action</string>
+    <string name="view_module_features_service_sub">Menjalankan kode saat boot (setelah sistem diinisialisasi).</string>
+    <string name="view_module_section_count">%1$s+</string>
+    <string name="settings_text_wrap">Bungkus Teks</string>
+    <string name="settings_changelog">Catatan Perubahan</string>
+    <string name="settings_text_wrap_desc">Mengaktifkan pembungkusan teks di dalam terminal instalasi</string>
+    <string name="settings_shell_module_action">Gunakan Shell untuk Action</string>
+    <string name="settings_shell_module_action_desc">Ini akan berguna jika penyedia root Anda tidak mendukung file action.sh</string>
+    <string name="settings_modules">Modul &amp; Pemasang</string>
+    <string name="settings_modules_desc">Ubah perilaku penangan untuk modul atau lebih banyak lagi tentang modul</string>
+    <string name="settings_modules_handlers">Penangan</string>
+    <string name="settings_shell_module_state_change">Gunakan Shell untuk State</string>
+    <string name="settings_modules_installer">Pemasang</string>
+    <string name="events_christmas">← Pohon Natal.</string>
+    <string name="events_birthday">%1$s tahun bersama MMRL!</string>
+    <string name="events_halloween">BWA! … AHH</string>
+    <string name="view_module_features_selinux_policy">Aturan SELinux</string>
+    <string name="view_module_features_zygisk">Zygisk</string>
+    <string name="view_module_features_apks">APK</string>
+    <string name="view_module_features_webui">WebUI</string>
+    <string name="view_module_features_post_mount">Post Mount</string>
+    <string name="view_module_features_boot_completed">Boot completed</string>
+    <string name="view_module_install_confirm_confirm_deps">Pasang (deps)</string>
+    <string name="view_module_install_confirm_confirm">Pasang</string>
+    <string name="module_id">ID: %1$s</string>
+    <string name="settings_resources_desc">Dokumentasi, Repo yang Didukung, dan lainnya</string>
+    <string name="settings_resources">Sumber Informasi</string>
+    <string name="repo_options">Opsi</string>
 </resources>
