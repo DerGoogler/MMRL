@@ -132,4 +132,8 @@
     <string name="view_module_added_on">Hinzugefügt am</string>
     <string name="view_module_about_this_module">Über dieses Modul</string>
     <string name="view_module_donate">Spende</string>
+    <string name="view_module_features_action">Aktion</string>
+    <string name="view_module_features_post_fs_data">Post FS Daten</string>
+    <string name="view_module_features_webui">WebUI</string>
+    <string name="view_module_features_service_sub">Führt Code später während dem Starten aus (System weiter initialisiert).</string>
 </resources>
