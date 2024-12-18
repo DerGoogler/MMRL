@@ -87,7 +87,7 @@ private fun BaseListContent(
     title: String,
     desc: String? = null,
     itemTextStyle: ListItemTextStyle = ListItemDefaults.itemStyle(),
-    labels: List<String>? = null,
+    labels: List<@Composable () -> Unit>? = null,
 ) {
     Column(
         modifier = modifier.fillMaxWidth(), verticalArrangement = Arrangement.Center
@@ -109,14 +109,13 @@ private fun BaseListContent(
                 horizontalArrangement = Arrangement.spacedBy(2.dp)
             ) {
                 it.forEach { label ->
-                    LabelItem(
-                        text = label,
-                    )
+                    label()
                 }
             }
         }
     }
 }
+
 
 @Composable
 fun ListItem(
@@ -127,7 +126,7 @@ fun ListItem(
     itemTextStyle: ListItemTextStyle = ListItemDefaults.itemStyle(),
     @DrawableRes icon: Int? = null,
     enabled: Boolean = true,
-    labels: List<String>? = null,
+    labels: List<@Composable () -> Unit>? = null,
 ) {
     val layoutDirection = LocalLayoutDirection.current
     val start by remember {
@@ -171,7 +170,7 @@ fun ListButtonItem(
     @DrawableRes icon: Int? = null,
     iconToRight: Boolean = false,
     enabled: Boolean = true,
-    labels: List<String>? = null,
+    labels: List<@Composable () -> Unit>? = null,
 ) {
     val layoutDirection = LocalLayoutDirection.current
     val start by remember {
@@ -242,7 +241,7 @@ fun ListCollapseItem(
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     iconToRight: Boolean = false,
     enabled: Boolean = true,
-    labels: List<String>? = null,
+    labels: List<@Composable () -> Unit>? = null,
     isInitiallyExpanded: Boolean = false,
     content: @Composable () -> Unit,
 ) {
@@ -340,7 +339,7 @@ fun ListSwitchItem(
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     @DrawableRes icon: Int? = null,
     enabled: Boolean = true,
-    labels: List<String>? = null,
+    labels: List<@Composable () -> Unit>? = null,
 ) {
     val layoutDirection = LocalLayoutDirection.current
     val start by remember {
@@ -403,7 +402,7 @@ fun ListEditTextItem(
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     @DrawableRes icon: Int? = null,
     enabled: Boolean = true,
-    labels: List<String>? = null,
+    labels: List<@Composable () -> Unit>? = null,
 ) {
     var open by remember { mutableStateOf(false) }
     if (open) EditTextDialog(
@@ -492,7 +491,7 @@ fun <T> ListRadioCheckItem(
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     @DrawableRes icon: Int? = null,
     enabled: Boolean = true,
-    labels: List<String>? = null,
+    labels: List<@Composable () -> Unit>? = null,
 ) {
     var open by remember { mutableStateOf(false) }
     if (open) RadioCheckDialog(

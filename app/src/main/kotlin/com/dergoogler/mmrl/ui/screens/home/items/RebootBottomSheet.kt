@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.ui.component.ConfirmRebootDialog
+import com.dergoogler.mmrl.ui.component.LabelItem
 import com.dergoogler.mmrl.ui.component.ListButtonItem
 import com.dergoogler.mmrl.ui.component.NavigationBarsSpacer
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
@@ -52,7 +53,7 @@ fun RebootBottomSheet(
         RebootItem(
             enabled = hasSoftReboot,
             title = R.string.reboot_userspace,
-            labels = !hasSoftReboot then listOf("Android +11"),
+            labels = !hasSoftReboot then listOf { LabelItem("Android +11") },
             reason = "userspace"
         )
 
@@ -68,7 +69,7 @@ fun RebootBottomSheet(
 @Composable
 private fun RebootItem(
     enabled: Boolean = true,
-    labels: List<String>? = null,
+    labels: List<@Composable () -> Unit>? = null,
     viewModel: HomeViewModel = hiltViewModel(),
     @StringRes title: Int, reason: String = "",
 ) {

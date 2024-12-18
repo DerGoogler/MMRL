@@ -78,13 +78,17 @@ import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.model.local.BulkModule
 import com.dergoogler.mmrl.model.local.State
 import com.dergoogler.mmrl.model.online.VersionItem
+import com.dergoogler.mmrl.ui.component.APatchLabel
 import com.dergoogler.mmrl.ui.component.Alert
 import com.dergoogler.mmrl.ui.component.AntiFeaturesItem
+import com.dergoogler.mmrl.ui.component.KernelSuLabel
+import com.dergoogler.mmrl.ui.component.LabelItem
 import com.dergoogler.mmrl.ui.component.ListButtonItem
 import com.dergoogler.mmrl.ui.component.ListCollapseItem
 import com.dergoogler.mmrl.ui.component.ListItem
 import com.dergoogler.mmrl.ui.component.ListItemTextStyle
 import com.dergoogler.mmrl.ui.component.Logo
+import com.dergoogler.mmrl.ui.component.MMRLLabel
 import com.dergoogler.mmrl.ui.component.MarkdownText
 import com.dergoogler.mmrl.ui.navigation.graphs.RepositoryScreen
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
@@ -805,12 +809,14 @@ fun NewViewScreen(
                         contentPaddingValues = listItemContentPaddingValues,
                         iconToRight = true,
                         title = stringResource(R.string.view_module_features),
-                        labels = listOf(
-                            stringResource(
-                                R.string.view_module_section_count,
-                                it.size
+                        labels = listOf {
+                            LabelItem(
+                                text = stringResource(
+                                    R.string.view_module_section_count,
+                                    it.size
+                                )
                             )
-                        )
+                        }
                     ) {
                         FeatureListItem(
                             itemTextStyle = subListItemStyle,
@@ -853,28 +859,28 @@ fun NewViewScreen(
                             feature = it.webroot,
                             key = R.string.view_module_features_webui,
                             value = R.string.view_module_features_webui_sub,
-                            rootSolutions = listOf("KernelSU", "APatch", "MMRL")
+                            rootSolutions = listOf { KernelSuLabel(); APatchLabel(); MMRLLabel() }
                         )
                         FeatureListItem(
                             itemTextStyle = subListItemStyle,
                             feature = it.action,
                             key = R.string.view_module_features_action,
                             value = R.string.view_module_features_action_sub,
-                            rootSolutions = listOf("KernelSU", "APatch", "MMRL")
+                            rootSolutions = listOf { KernelSuLabel(); APatchLabel() }
                         )
                         FeatureListItem(
                             itemTextStyle = subListItemStyle,
                             feature = it.postMount,
                             key = R.string.view_module_features_post_mount,
                             value = R.string.view_module_features_postmount_sub,
-                            rootSolutions = listOf("KernelSU", "APatch")
+                            rootSolutions = listOf { KernelSuLabel(); APatchLabel() }
                         )
                         FeatureListItem(
                             itemTextStyle = subListItemStyle,
                             feature = it.bootCompleted,
                             key = R.string.view_module_features_boot_completed,
                             value = R.string.view_module_features_bootcompleted_sub,
-                            rootSolutions = listOf("KernelSU", "APatch")
+                            rootSolutions = listOf { KernelSuLabel(); APatchLabel() }
                         )
                     }
                 }
@@ -885,7 +891,14 @@ fun NewViewScreen(
                     contentPaddingValues = listItemContentPaddingValues,
                     iconToRight = true,
                     title = stringResource(R.string.view_module_antifeatures),
-                    labels = listOf(stringResource(R.string.view_module_section_count, it.size))
+                    labels = listOf {
+                        LabelItem(
+                            text = stringResource(
+                                R.string.view_module_section_count,
+                                it.size
+                            )
+                        )
+                    }
                 ) {
                     AntiFeaturesItem(
                         itemTextStyle = subListItemStyle,
@@ -903,12 +916,14 @@ fun NewViewScreen(
                     contentPaddingValues = listItemContentPaddingValues,
                     iconToRight = true,
                     title = stringResource(R.string.view_module_dependencies),
-                    labels = listOf(
-                        stringResource(
-                            R.string.view_module_section_count,
-                            requiredIds.size
+                    labels = listOf {
+                        LabelItem(
+                            text = stringResource(
+                                R.string.view_module_section_count,
+                                requiredIds.size
+                            )
                         )
-                    )
+                    }
                 ) {
                     requiredIds.forEach { onlineModule ->
                         // val parts = requiredId.split("@")
@@ -1120,7 +1135,7 @@ private fun FeatureListItem(
     feature: Boolean?,
     @StringRes key: Int,
     @StringRes value: Int,
-    rootSolutions: List<String>? = null,
+    rootSolutions: List<@Composable () -> Unit>? = null,
     itemTextStyle: ListItemTextStyle,
 ) {
     if (feature == null) return

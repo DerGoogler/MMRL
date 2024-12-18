@@ -17,6 +17,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.datastore.UserPreferencesCompat.Companion.isRoot
+import com.dergoogler.mmrl.ui.component.APatchLabel
+import com.dergoogler.mmrl.ui.component.KernelSuLabel
 import com.dergoogler.mmrl.ui.component.ListHeader
 import com.dergoogler.mmrl.ui.component.ListSwitchItem
 import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
@@ -59,7 +61,7 @@ fun ModulesScreen(
                 desc = stringResource(id = R.string.settings_shell_module_state_change_desc),
                 checked = userPreferences.useShellForModuleStateChange || viewModel.platform.isMagisk,
                 onChange = viewModel::setUseShellForModuleStateChange,
-                labels = listOf("KernelSU", "APatch")
+                labels = listOf { KernelSuLabel(); APatchLabel() }
             )
 
             ListSwitchItem(
@@ -69,7 +71,7 @@ fun ModulesScreen(
                 desc = stringResource(id = R.string.settings_shell_module_action_desc),
                 checked = userPreferences.useShellForModuleAction || viewModel.platform.isMagisk,
                 onChange = viewModel::setUseShellForModuleAction,
-                labels = listOf("KernelSU", "APatch")
+                labels = listOf { KernelSuLabel(); APatchLabel() }
             )
 
             ListHeader(

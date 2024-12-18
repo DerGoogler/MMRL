@@ -101,6 +101,7 @@ fun TextWithIcon(
     text: @Composable (TextStyle) -> Unit,
     icon: (@Composable (Dp) -> Unit)? = null,
     style: TextStyle = LocalTextStyle.current,
+    @SuppressLint("ModifierParameter") rowModifier: Modifier = Modifier,
     iconScalingFactor: Float = 1.4285715f,
     spacingDp: Float = 11.428572f,
 ) {
@@ -109,6 +110,7 @@ fun TextWithIcon(
     val spacer = with(LocalDensity.current) { spacingDp.toDp() }
 
     Row(
+        modifier = rowModifier,
         verticalAlignment = Alignment.CenterVertically
     ) {
         if (icon != null) {
@@ -123,6 +125,7 @@ fun TextWithIcon(
 fun TextWithIcon(
     text: String,
     @SuppressLint("ModifierParameter") iconModifier: Modifier = Modifier,
+    @SuppressLint("ModifierParameter") rowModifier: Modifier = Modifier,
     textModifier: Modifier = Modifier,
     @DrawableRes icon: Int? = null,
     style: TextStyle = LocalTextStyle.current,
@@ -131,6 +134,7 @@ fun TextWithIcon(
     iconScalingFactor: Float = 1.4285715f,
     spacingDp: Float = 11.428572f,
 ) = TextWithIcon(
+    rowModifier = rowModifier,
     style = style,
     iconScalingFactor = iconScalingFactor,
     spacingDp = spacingDp,

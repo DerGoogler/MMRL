@@ -34,7 +34,6 @@ import com.dergoogler.mmrl.model.online.VersionItem
 import com.dergoogler.mmrl.ui.component.VersionItemBottomSheet
 import com.dergoogler.mmrl.ui.component.scrollbar.VerticalFastScrollbar
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
-import com.dergoogler.mmrl.ui.screens.modules.items.RunnerBottomSheet
 import com.dergoogler.mmrl.viewmodel.ModulesViewModel
 import dev.dergoogler.mmrl.compat.activity.MMRLComponentActivity
 import dev.dergoogler.mmrl.compat.ext.takeTrue
@@ -111,12 +110,6 @@ fun ModuleItem(
             onDownload = { onDownload(module, item, it) }
         )
     }
-
-    var runnerSheetOpen by remember { mutableStateOf(false) }
-    if (runnerSheetOpen) RunnerBottomSheet(
-        module = module,
-        onClose = { runnerSheetOpen = false },
-    )
 
     ModuleItem(
         module = module,

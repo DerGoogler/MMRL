@@ -22,6 +22,7 @@ import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.app.Const
 import com.dergoogler.mmrl.model.online.Changelog
 import com.dergoogler.mmrl.ui.component.BottomSheet
+import com.dergoogler.mmrl.ui.component.LabelItem
 import com.dergoogler.mmrl.ui.component.ListButtonItem
 import com.dergoogler.mmrl.ui.component.MarkdownText
 import dev.dergoogler.mmrl.compat.then
@@ -40,7 +41,13 @@ fun ChangelogItem(
         title = changelog.versionName,
         desc = "${changelog.versionCode}",
         onClick = { open = true },
-        labels = changelog.preRelease then listOf(stringResource(id = R.string.pre_release))
+        labels = changelog.preRelease then listOf {
+            LabelItem(
+                text = stringResource(
+                    id = R.string.pre_release
+                )
+            )
+        }
     )
 }
 
