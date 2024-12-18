@@ -7,6 +7,7 @@ import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import com.dergoogler.mmrl.BuildConfig
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.JsonClass
 import com.squareup.moshi.Moshi
@@ -28,6 +29,10 @@ class MMRLInterface(
     private val managerName: String,
     private val managerVersionCode: Int,
     private val managerVersionName: String,
+    private val allowedFsApi: Boolean,
+    private val allowedKsuApi: Boolean,
+    private val mmrlVersion: String,
+    private val mmrlVersionCode: Int,
 ) {
     private val activity = context as Activity
     private var windowInsetsController: WindowInsetsControllerCompat =
@@ -54,6 +59,24 @@ class MMRLInterface(
                 versionCode = managerVersionCode
             )
         )
+
+    @get:JavascriptInterface
+    val mmrl: String
+        get() = managerAdapter.toJson(
+            Manager(
+                name = BuildConfig.APPLICATION_ID,
+                versionName = mmrlVersion,
+                versionCode = mmrlVersionCode
+            )
+        )
+
+    @get:JavascriptInterface
+    val hasAccessToFileSystem: Boolean
+        get() = allowedFsApi
+
+    @get:JavascriptInterface
+    val hasAccessToAdvancedKernelSuAPI: Boolean
+        get() = allowedKsuApi
 
     @get:JavascriptInterface
     val windowTopInset: Int

@@ -27,6 +27,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.webkit.WebViewAssetLoader
+import com.dergoogler.mmrl.BuildConfig
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.ui.activity.webui.handlers.MMRLWebUIHandler
 import com.dergoogler.mmrl.ui.activity.webui.handlers.SuFilePathHandler
@@ -162,13 +163,13 @@ fun WebUIScreen(
                                 this,
                                 moduleDir,
                                 viewModel,
-                                userPrefs
+                                userPrefs,
                             )
                         } else {
                             BaseKernelSUAPI(
                                 context,
                                 this,
-                                moduleDir
+                                moduleDir,
                             )
                         }, "ksu"
                     )
@@ -182,7 +183,11 @@ fun WebUIScreen(
                             webview = this,
                             managerName = viewModel.managerName,
                             managerVersionCode = viewModel.versionCode,
-                            managerVersionName = viewModel.versionName
+                            managerVersionName = viewModel.versionName,
+                            mmrlVersion = BuildConfig.VERSION_NAME,
+                            mmrlVersionCode = BuildConfig.VERSION_CODE,
+                            allowedKsuApi = allowedKsuApi,
+                            allowedFsApi = allowedFsApi,
                         ), "$${viewModel.sanitizeModId(modId)}"
                     )
 
