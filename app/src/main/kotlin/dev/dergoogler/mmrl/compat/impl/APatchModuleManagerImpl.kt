@@ -6,11 +6,17 @@ import dev.dergoogler.mmrl.compat.stub.IModuleOpsCallback
 import dev.dergoogler.mmrl.compat.stub.IShellCallback
 
 internal class APatchModuleManagerImpl(
-    private val shell: Shell,
+    shell: Shell,
+    private val fileManager: FileManagerImpl,
 ) : BaseModuleManagerImpl(shell) {
     override fun getManagerName(): String {
         return "APatch"
     }
+
+    override fun hasMagicMount(): Boolean =
+        fileManager.exists("/data/adb/.bind_mount_enable") && (versionCode >= 11011 && !fileManager.exists(
+            "/data/adb/.overlay_enable"
+        ))
 
     override fun enable(id: String, useShell: Boolean, callback: IModuleOpsCallback) {
         val dir = modulesDir.resolve(id)

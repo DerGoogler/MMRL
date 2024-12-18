@@ -6,12 +6,14 @@ import dev.dergoogler.mmrl.compat.stub.IModuleOpsCallback
 import dev.dergoogler.mmrl.compat.stub.IShellCallback
 
 internal class KernelSUModuleManagerImpl(
-    private val shell: Shell,
+    shell: Shell,
 ) : BaseModuleManagerImpl(shell) {
     override fun getManagerName(): String {
         return "KernelSU"
     }
 
+    override fun hasMagicMount(): Boolean = false
+    
     override fun enable(id: String, useShell: Boolean, callback: IModuleOpsCallback) {
         val dir = modulesDir.resolve(id)
         if (!dir.exists()) callback.onFailure(id, null)

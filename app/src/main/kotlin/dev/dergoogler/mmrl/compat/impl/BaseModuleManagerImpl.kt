@@ -43,6 +43,8 @@ internal abstract class BaseModuleManagerImpl(
         return mVersionCode
     }
 
+    override fun hasMagicMount(): Boolean = false
+
     override fun reboot(reason: String) {
         if (reason == "recovery") {
             "/system/bin/input keyevent 26".exec()

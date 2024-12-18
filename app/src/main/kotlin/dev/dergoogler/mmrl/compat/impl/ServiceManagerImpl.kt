@@ -25,16 +25,16 @@ internal class ServiceManagerImpl : IServiceManager.Stub() {
         }
     }
 
+    private val fileManager by lazy {
+        FileManagerImpl()
+    }
+
     private val moduleManager by lazy {
         when (platform) {
             Platform.Magisk -> MagiskModuleManagerImpl(main)
             Platform.KernelSU -> KernelSUModuleManagerImpl(main)
-            Platform.APatch -> APatchModuleManagerImpl(main)
+            Platform.APatch -> APatchModuleManagerImpl(main, fileManager)
         }
-    }
-
-    private val fileManager by lazy {
-        FileManagerImpl()
     }
 
     override fun getUid(): Int {

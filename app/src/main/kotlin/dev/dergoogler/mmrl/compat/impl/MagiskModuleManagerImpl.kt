@@ -6,12 +6,13 @@ import dev.dergoogler.mmrl.compat.stub.IModuleOpsCallback
 import dev.dergoogler.mmrl.compat.stub.IShellCallback
 
 internal class MagiskModuleManagerImpl(
-    private val shell: Shell,
+    shell: Shell,
 ) : BaseModuleManagerImpl(shell) {
     override fun getManagerName(): String {
         return "Magisk"
     }
 
+    override fun hasMagicMount(): Boolean = true
 
     override fun enable(id: String, useShell: Boolean, callback: IModuleOpsCallback) {
         val dir = modulesDir.resolve(id)
