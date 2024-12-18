@@ -15,6 +15,7 @@ val baseAppName = "MMRL"
 val baseModConfName = "ModConf"
 
 android {
+    compileSdk = 35
     namespace = "com.dergoogler.mmrl"
 
     defaultConfig {

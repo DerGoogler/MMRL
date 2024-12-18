@@ -5,11 +5,7 @@ import android.os.Build
 import android.os.PowerManager
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.BottomSheetDefaults
-import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -21,24 +17,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.dergoogler.mmrl.R
+import com.dergoogler.mmrl.ui.component.BottomSheet
 import com.dergoogler.mmrl.ui.component.ConfirmRebootDialog
 import com.dergoogler.mmrl.ui.component.LabelItem
 import com.dergoogler.mmrl.ui.component.ListButtonItem
-import com.dergoogler.mmrl.ui.component.NavigationBarsSpacer
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
-import com.dergoogler.mmrl.ui.utils.expandedShape
 import com.dergoogler.mmrl.viewmodel.HomeViewModel
 import dev.dergoogler.mmrl.compat.then
 
 @Composable
 fun RebootBottomSheet(
     onClose: () -> Unit,
-) = ModalBottomSheet(
-    onDismissRequest = onClose,
-    sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
-    shape = BottomSheetDefaults.expandedShape(15.dp),
-    windowInsets = WindowInsets(0),
-) {
+) = BottomSheet(onDismissRequest = onClose) {
     Column(
         modifier = Modifier.padding(bottom = 18.dp),
     ) {
@@ -61,8 +51,6 @@ fun RebootBottomSheet(
         RebootItem(title = R.string.reboot_bootloader, reason = "bootloader")
         RebootItem(title = R.string.reboot_download, reason = "download")
         RebootItem(title = R.string.reboot_edl, reason = "edl")
-
-        NavigationBarsSpacer()
     }
 }
 

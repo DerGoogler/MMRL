@@ -26,7 +26,7 @@ val Context.managerVersion
         return try {
             val packageInfo = this.packageManager.getPackageInfo(this.packageName, 0)
             val versionCode = PackageInfoCompat.getLongVersionCode(packageInfo)
-            val versionName = packageInfo.versionName
+            val versionName = packageInfo.versionName ?: "Unknown"
             Pair(versionName, versionCode)
         } catch (e: Exception) {
             Pair("Unknown", 0)

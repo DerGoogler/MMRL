@@ -23,7 +23,6 @@ import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
@@ -33,6 +32,7 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.derivedStateOf
@@ -189,7 +189,7 @@ fun ListButtonItem(
                 onClick = onClick,
                 onLongClick = onLongClick,
                 interactionSource = interactionSource,
-                indication = rememberRipple()
+                indication = ripple()
             )
             .padding(contentPaddingValues)
             .fillMaxWidth(),
@@ -278,7 +278,7 @@ fun ListCollapseItem(
                     enabled = enabled,
                     onClick = onClick,
                     interactionSource = interactionSource,
-                    indication = rememberRipple()
+                    indication = ripple()
                 )
                 .padding(contentPaddingValues)
                 .fillMaxWidth(),
@@ -355,7 +355,7 @@ fun ListSwitchItem(
                 onValueChange = onChange,
                 role = Role.Switch,
                 interactionSource = interactionSource,
-                indication = rememberRipple()
+                indication = ripple()
             )
             .padding(contentPaddingValues)
             .fillMaxWidth(),
@@ -556,7 +556,7 @@ fun <T> RadioCheckDialog(
                                 },
                                 role = Role.RadioButton,
                                 interactionSource = interactionSource,
-                                indication = rememberRipple()
+                                indication = ripple()
                             )
                             .fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically,

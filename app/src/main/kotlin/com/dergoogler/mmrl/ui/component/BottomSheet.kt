@@ -53,7 +53,7 @@ fun BottomSheet(
         tonalElevation,
         scrimColor,
         dragHandle,
-        windowInsets,
+        { windowInsets },
         properties,
     ) {
         val statusBarHeight =

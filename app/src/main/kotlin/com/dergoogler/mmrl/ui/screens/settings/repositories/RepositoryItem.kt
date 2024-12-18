@@ -10,23 +10,19 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ripple.rememberRipple
-import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -46,10 +42,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.model.state.RepoState
+import com.dergoogler.mmrl.ui.component.BottomSheet
 import com.dergoogler.mmrl.ui.component.LabelItem
-import com.dergoogler.mmrl.ui.component.NavigationBarsSpacer
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
-import com.dergoogler.mmrl.ui.utils.expandedShape
 import dev.dergoogler.mmrl.compat.ext.shareText
 import dev.dergoogler.mmrl.compat.ext.toFormattedDateSafely
 
@@ -150,7 +145,7 @@ fun RepositoryItem(
         ) {
             var open by remember { mutableStateOf(false) }
             if (open) {
-                BottomSheet(
+                BottomSheetForItem(
                     repo = repo,
                     onDelete = delete,
                     onClose = { open = false }
@@ -180,14 +175,9 @@ fun RepositoryItem(
 }
 
 @Composable
-private fun BottomSheet(
-    repo: RepoState, onDelete: () -> Unit, onClose: () -> Unit
-) = ModalBottomSheet(
-    onDismissRequest = onClose,
-    sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
-    shape = BottomSheetDefaults.expandedShape(15.dp),
-    windowInsets = WindowInsets(0)
-) {
+private fun BottomSheetForItem(
+    repo: RepoState, onDelete: () -> Unit, onClose: () -> Unit,
+) = BottomSheet(onDismissRequest = onClose) {
     val browser = LocalUriHandler.current
     val userPreferences = LocalUserPreferences.current
 
@@ -280,8 +270,6 @@ private fun BottomSheet(
             onClick = onDelete
         )
     }
-
-    NavigationBarsSpacer()
 }
 
 @Composable
@@ -289,12 +277,12 @@ private fun ValueItem(
     modifier: Modifier = Modifier,
     @DrawableRes icon: Int? = null,
     @StringRes label: Int,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) = Row(
     modifier = modifier
         .clickable(
             interactionSource = remember { MutableInteractionSource() },
-            indication = rememberRipple(bounded = true),
+            indication = ripple(bounded = true),
             onClick = onClick
         )
         .height(56.dp)
@@ -328,7 +316,7 @@ private fun ValueItem(
 private fun ButtonItem(
     @DrawableRes icon: Int,
     @StringRes label: Int? = null,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) = FilledTonalButton(
     onClick = onClick,
     contentPadding = PaddingValues(horizontal = 12.dp)
