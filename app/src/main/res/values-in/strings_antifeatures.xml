@@ -25,4 +25,5 @@
     <string name="ads_name">Periklanan</string>
     <string name="upstreamnonfree_name">Upstream Berbayar</string>
     <string name="obfuscation_desc">Kode sumber modul mungkin dikaburkan, sehingga sulit untuk dipahami, diaudit, atau dimodifikasi.</string>
+    <string name="obfuscation_name">Obfuscation</string>
 </resources>
