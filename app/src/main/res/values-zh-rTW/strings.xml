@@ -316,4 +316,5 @@
     <string name="settings_security_allow_advanced_kernelsu_api">准許 KernelSU 存取</string>
     <string name="settings_allow_javascript_api">准許 JavaScript 程式碼</string>
     <string name="settings_security_allow_filesystem_api">准許檔案系統存取</string>
+    <string name="menu_export_modules_as_text">匯出模組為文字檔</string>
 </resources>
