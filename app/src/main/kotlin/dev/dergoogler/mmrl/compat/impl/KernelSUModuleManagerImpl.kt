@@ -13,7 +13,7 @@ internal class KernelSUModuleManagerImpl(
     }
 
     override fun hasMagicMount(): Boolean = false
-    
+
     override fun enable(id: String, useShell: Boolean, callback: IModuleOpsCallback) {
         val dir = modulesDir.resolve(id)
         if (!dir.exists()) callback.onFailure(id, null)

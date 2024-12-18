@@ -259,6 +259,7 @@
     <string name="menu_pin_enabled">Pin Enabled</string>
     <string name="menu_show_updated">Show Updated Time</string>
     <string name="menu_show_antifeatures">Show Anti-Features</string>
+    <string name="menu_export_modules_as_text">Export Modules as Text</string>
 
     <!-- Message -->
     <string name="message_download_success">Download successful</string>
