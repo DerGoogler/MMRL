@@ -24,4 +24,6 @@
     <string name="unaskedremoval_desc">Das Modul entfernt Apps, Dateien oder andere Module ohne Zustimmung des Benutzers.</string>
     <string name="nonfreeadd_desc">Dieses Modul fördert nicht kostenlose Add-ons.</string>
     <string name="nonfreeassets_desc">Dieses Modul enthält unfreie Assets.</string>
+    <string name="llm_name">Large Language Model</string>
+    <string name="llm_desc">Modul vielleicht teilweise oder komplett von LLM geschrieben</string>
 </resources>
