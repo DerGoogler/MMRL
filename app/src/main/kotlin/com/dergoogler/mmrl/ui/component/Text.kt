@@ -1,19 +1,26 @@
 package com.dergoogler.mmrl.ui.component
 
+import android.annotation.SuppressLint
 import android.text.SpannableStringBuilder
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
@@ -88,3 +95,60 @@ fun BulletList(
         }
     }
 }
+
+@Composable
+fun TextWithIcon(
+    text: @Composable (TextStyle) -> Unit,
+    icon: (@Composable (Dp) -> Unit)? = null,
+    style: TextStyle = LocalTextStyle.current,
+    iconScalingFactor: Float = 1.4285715f,
+    spacingDp: Float = 11.428572f,
+) {
+
+    val iconSize = with(LocalDensity.current) { style.fontSize.toDp() * iconScalingFactor }
+    val spacer = with(LocalDensity.current) { spacingDp.toDp() }
+
+    Row(
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        if (icon != null) {
+            icon(iconSize)
+            Spacer(modifier = Modifier.width(spacer))
+        }
+        text(style)
+    }
+}
+
+@Composable
+fun TextWithIcon(
+    text: String,
+    @SuppressLint("ModifierParameter") iconModifier: Modifier = Modifier,
+    textModifier: Modifier = Modifier,
+    @DrawableRes icon: Int? = null,
+    style: TextStyle = LocalTextStyle.current,
+    contentDescription: String? = null,
+    tint: Color = LocalContentColor.current,
+    iconScalingFactor: Float = 1.4285715f,
+    spacingDp: Float = 11.428572f,
+) = TextWithIcon(
+    style = style,
+    iconScalingFactor = iconScalingFactor,
+    spacingDp = spacingDp,
+    text = { stl ->
+        Text(
+            text = text,
+            style = stl,
+            modifier = textModifier
+        )
+    },
+    icon = if (icon != null) { size ->
+        Icon(
+            painter = painterResource(id = icon),
+            contentDescription = contentDescription,
+            tint = tint,
+            modifier = Modifier
+                .size(size)
+                .then(iconModifier)
+        )
+    } else null
+)

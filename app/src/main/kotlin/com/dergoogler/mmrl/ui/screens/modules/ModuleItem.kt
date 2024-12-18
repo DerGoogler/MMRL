@@ -14,13 +14,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
-import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -32,17 +28,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.model.local.LocalModule
 import com.dergoogler.mmrl.model.local.State
 import com.dergoogler.mmrl.model.local.versionDisplay
+import com.dergoogler.mmrl.ui.component.TextWithIcon
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import dev.dergoogler.mmrl.compat.activity.MMRLComponentActivity
 import dev.dergoogler.mmrl.compat.ext.takeTrue
@@ -95,34 +89,15 @@ fun ModuleItem(
                         .weight(1f),
                     verticalArrangement = Arrangement.spacedBy(2.dp)
                 ) {
-                    val style = MaterialTheme.typography.titleSmall
-                    val iconSize =
-                        with(LocalDensity.current) { style.fontSize.toDp() * 1.0f }
 
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        module.runners.webui.takeTrue {
-                            Icon(
-                                modifier = Modifier.size(iconSize),
-                                painter = painterResource(id = if (module.state != State.REMOVE) R.drawable.world_code else R.drawable.world_off),
-                                contentDescription = null,
-                                tint = LocalContentColor.current
-                            )
+                    val icon =
+                        if (module.state != State.REMOVE) R.drawable.world_code else R.drawable.world_off
 
-                            Spacer(modifier = Modifier.width(8.dp))
-                        }
-
-                        Text(
-                            text = module.name,
-                            style = style.copy(fontWeight = FontWeight.Bold),
-                            maxLines = 2,
-                            textDecoration = decoration,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                    }
-
-
+                    TextWithIcon(
+                        text = module.name,
+                        icon = if (module.runners.webui) icon else null,
+                        style = MaterialTheme.typography.titleSmall
+                    )
 
                     Text(
                         text = stringResource(
