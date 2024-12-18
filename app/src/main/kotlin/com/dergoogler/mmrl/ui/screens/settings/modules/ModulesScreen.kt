@@ -53,21 +53,21 @@ fun ModulesScreen(
             )
 
             ListSwitchItem(
-                enabled = viewModel.isProviderAlive && viewModel.managerName.lowercase() != "magisk",
+                enabled = viewModel.isProviderAlive && viewModel.platform.isNotMagisk,
                 icon = R.drawable.stars_outlined,
                 title = stringResource(id = R.string.settings_shell_module_state_change),
                 desc = stringResource(id = R.string.settings_shell_module_state_change_desc),
-                checked = userPreferences.useShellForModuleStateChange || viewModel.managerName.lowercase() != "magisk",
+                checked = userPreferences.useShellForModuleStateChange || viewModel.platform.isMagisk,
                 onChange = viewModel::setUseShellForModuleStateChange,
                 labels = listOf("KernelSU", "APatch")
             )
 
             ListSwitchItem(
-                enabled = viewModel.isProviderAlive && viewModel.managerName.lowercase() != "magisk",
+                enabled = viewModel.isProviderAlive && viewModel.platform.isNotMagisk,
                 icon = R.drawable.device_mobile_code,
                 title = stringResource(id = R.string.settings_shell_module_action),
                 desc = stringResource(id = R.string.settings_shell_module_action_desc),
-                checked = userPreferences.useShellForModuleAction || viewModel.managerName.lowercase() != "magisk",
+                checked = userPreferences.useShellForModuleAction || viewModel.platform.isMagisk,
                 onChange = viewModel::setUseShellForModuleAction,
                 labels = listOf("KernelSU", "APatch")
             )

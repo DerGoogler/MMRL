@@ -20,6 +20,7 @@ class HomeViewModel @Inject constructor(
     userPreferencesRepository: UserPreferencesRepository,
 ) : MMRLViewModel(application, localRepository, modulesRepository, userPreferencesRepository) {
     val isProviderAlive get() = Compat.isAlive
+    val platform get() = Compat.platform
 
     val version
         get() = Compat.get("") {

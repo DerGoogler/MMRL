@@ -16,16 +16,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.RemeasurementModifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.dergoogler.mmrl.Platform
 import com.dergoogler.mmrl.R
 
 @Composable
 internal fun RootItem(
     modifier: Modifier = Modifier,
     isAlive: Boolean,
+    platform: Platform,
     version: String,
 ) = Surface(
     modifier = modifier,
@@ -42,7 +43,12 @@ internal fun RootItem(
             modifier = Modifier.size(30.dp),
             painter = painterResource(
                 id = if (isAlive) {
-                    R.drawable.circle_check_filled
+                    when {
+                        platform.isMagisk -> R.drawable.magisk_logo
+                        platform.isKernelSU -> R.drawable.kernelsu_logo
+                        else -> R.drawable.circle_check_filled
+                    }
+//                    R.drawable.circle_check_filled
                 } else {
                     R.drawable.alert_circle_filled
                 }

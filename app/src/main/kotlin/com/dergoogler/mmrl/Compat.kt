@@ -14,25 +14,16 @@ import timber.log.Timber
 
 object Compat {
     private var mServiceOrNull: IServiceManager? = null
-    private val mService get() = checkNotNull(mServiceOrNull) {
-        "IServiceManager haven't been received"
-    }
+    private val mService
+        get() = checkNotNull(mServiceOrNull) {
+            "IServiceManager haven't been received"
+        }
 
     var isAlive by mutableStateOf(false)
         private set
 
     private val _isAliveFlow = MutableStateFlow(false)
     val isAliveFlow get() = _isAliveFlow.asStateFlow()
-
-    val moduleManager: IModuleManager get() = mService.moduleManager
-    val fileManager: IFileManager get() = mService.fileManager
-
-    private fun state(): Boolean {
-        isAlive = mServiceOrNull != null
-        _isAliveFlow.value = isAlive
-
-        return isAlive
-    }
 
     suspend fun init(mode: WorkingMode) = when {
         isAlive -> true
@@ -50,6 +41,17 @@ object Compat {
             mServiceOrNull = null
             state()
         }
+    }
+
+    val moduleManager: IModuleManager get() = mService.moduleManager
+    val fileManager: IFileManager get() = mService.fileManager
+    val platform: Platform get() = if (mServiceOrNull != null) Platform(mService.currentPlatform()) else Platform("")
+
+    private fun state(): Boolean {
+        isAlive = mServiceOrNull != null
+        _isAliveFlow.value = isAlive
+
+        return isAlive
     }
 
     fun <T> get(fallback: T, block: Compat.() -> T): T {

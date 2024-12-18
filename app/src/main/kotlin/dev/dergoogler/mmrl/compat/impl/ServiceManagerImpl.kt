@@ -1,9 +1,7 @@
 package dev.dergoogler.mmrl.compat.impl
 
-import android.content.Context
 //import android.os.IPowerManager // what huh?
 import android.os.SELinux
-import android.os.ServiceManager
 import android.system.Os
 import com.topjohnwu.superuser.Shell
 import com.topjohnwu.superuser.ShellUtils
@@ -52,7 +50,7 @@ internal class ServiceManagerImpl : IServiceManager.Stub() {
     }
 
     override fun currentPlatform(): String {
-        return platform.name
+        return platform.name.lowercase()
     }
 
     override fun getModuleManager(): IModuleManager {

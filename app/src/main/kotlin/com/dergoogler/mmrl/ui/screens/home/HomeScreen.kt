@@ -105,7 +105,9 @@ fun HomeScreen(
 
             when {
                 userPreferences.workingMode.isRoot -> RootItem(
-                    isAlive = viewModel.isProviderAlive, version = viewModel.version
+                    isAlive = viewModel.isProviderAlive,
+                    version = viewModel.version,
+                    platform = viewModel.platform
                 )
 
                 userPreferences.workingMode.isNonRoot -> NonRootItem()
