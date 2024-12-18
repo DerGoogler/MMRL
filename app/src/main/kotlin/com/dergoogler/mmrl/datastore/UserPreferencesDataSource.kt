@@ -189,6 +189,22 @@ class UserPreferencesDataSource @Inject constructor(
         }
     }
 
+    suspend fun setAllowedFsModules(value: List<String>) = withContext(Dispatchers.IO) {
+        userPreferences.updateData {
+            it.copy(
+                allowedFsModules = value
+            )
+        }
+    }
+
+    suspend fun setAllowedKsuModules(value: List<String>) = withContext(Dispatchers.IO) {
+        userPreferences.updateData {
+            it.copy(
+                allowedKsuModules = value
+            )
+        }
+    }
+
 
     suspend fun setRepositoryMenu(value: RepositoryMenuCompat) = withContext(Dispatchers.IO) {
         userPreferences.updateData {

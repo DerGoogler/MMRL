@@ -169,4 +169,16 @@ class SettingsViewModel @Inject constructor(
             userPreferencesRepository.setClearInstallTerminal(value)
         }
     }
+
+    fun setAllowedFsModules(value: List<String>) {
+        viewModelScope.launch {
+            userPreferencesRepository.setAllowedFsModules(value)
+        }
+    }
+
+    fun setAllowedKsuModules(value: List<String>) {
+        viewModelScope.launch {
+            userPreferencesRepository.setAllowedKsuModules(value)
+        }
+    }
 }

@@ -16,9 +16,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.dergoogler.mmrl.R
+import com.dergoogler.mmrl.ui.component.ListButtonItem
+import com.dergoogler.mmrl.ui.component.ListHeader
 import com.dergoogler.mmrl.ui.component.ListSwitchItem
 import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
+import com.dergoogler.mmrl.ui.navigation.graphs.SettingsScreen
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
+import com.dergoogler.mmrl.ui.utils.navigateSingleTopTo
 import com.dergoogler.mmrl.ui.utils.none
 import com.dergoogler.mmrl.viewmodel.SettingsViewModel
 
@@ -62,14 +66,16 @@ fun SecurityScreen(
                 onChange = viewModel::setHideFingerprintInHome
             )
 
-            ListSwitchItem(
-                icon = R.drawable.file_dislike,
-                title = stringResource(id = R.string.settings_webui_allow_restricted_paths),
-                desc = stringResource(id = R.string.settings_webui_allow_restricted_paths_desc),
-                checked = userPreferences.webuiAllowRestrictedPaths,
-                onChange = viewModel::setWebuiAllowRestrictedPaths,
-                labels = listOf(stringResource(id = R.string.view_module_features_webui))
+            ListHeader(
+                title = stringResource(id = R.string.view_module_features_webui)
             )
+
+            ListButtonItem(
+                icon = R.drawable.file_dislike,
+                title = stringResource(id = R.string.settings_allow_javascript_api),
+                onClick = {
+                    navController.navigateSingleTopTo(SettingsScreen.SecurityWebUIAllowedApis.route)
+                })
         }
     }
 }

@@ -30,9 +30,10 @@ import androidx.webkit.WebViewAssetLoader
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.ui.activity.webui.handlers.MMRLWebUIHandler
 import com.dergoogler.mmrl.ui.activity.webui.handlers.SuFilePathHandler
-import com.dergoogler.mmrl.ui.activity.webui.interfaces.FileInterface
-import com.dergoogler.mmrl.ui.activity.webui.interfaces.KernelSUInterface
-import com.dergoogler.mmrl.ui.activity.webui.interfaces.MMRLInterface
+import com.dergoogler.mmrl.ui.activity.webui.interfaces.ksu.AdvancedKernelSUAPI
+import com.dergoogler.mmrl.ui.activity.webui.interfaces.ksu.BaseKernelSUAPI
+import com.dergoogler.mmrl.ui.activity.webui.interfaces.mmrl.FileInterface
+import com.dergoogler.mmrl.ui.activity.webui.interfaces.mmrl.MMRLInterface
 import com.dergoogler.mmrl.ui.component.Loading
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.viewmodel.WebUIViewModel
@@ -71,6 +72,8 @@ fun WebUIScreen(
     var topInset by remember { mutableIntStateOf(0) }
     var bottomInset by remember { mutableIntStateOf(0) }
 
+    val allowedFsApi = modId in userPrefs.allowedFsModules
+    val allowedKsuApi = modId in userPrefs.allowedKsuModules
 
     val insets = WindowInsets.systemBars
     LaunchedEffect(Unit) {
@@ -153,13 +156,21 @@ fun WebUIScreen(
                     }
 
                     addJavascriptInterface(
-                        KernelSUInterface(
-                            context,
-                            this,
-                            moduleDir,
-                            viewModel,
-                            userPrefs
-                        ), "ksu"
+                        if (allowedKsuApi) {
+                            AdvancedKernelSUAPI(
+                                context,
+                                this,
+                                moduleDir,
+                                viewModel,
+                                userPrefs
+                            )
+                        } else {
+                            BaseKernelSUAPI(
+                                context,
+                                this,
+                                moduleDir
+                            )
+                        }, "ksu"
                     )
 
                     addJavascriptInterface(
@@ -175,14 +186,16 @@ fun WebUIScreen(
                         ), "$${viewModel.sanitizeModId(modId)}"
                     )
 
-                    addJavascriptInterface(
-                        FileInterface(
-                            context = context,
-                            allowRestrictedPaths = userPrefs.webuiAllowRestrictedPaths,
-                            webView = this
-                        ),
-                        "$${viewModel.sanitizeModIdWithFile(modId)}File"
-                    )
+                    if (allowedFsApi) {
+                        addJavascriptInterface(
+                            FileInterface(
+                                context = context,
+                                allowRestrictedPaths = userPrefs.webuiAllowRestrictedPaths,
+                                webView = this
+                            ),
+                            "$${viewModel.sanitizeModIdWithFile(modId)}File"
+                        )
+                    }
                 }
             },
             update = { webview ->

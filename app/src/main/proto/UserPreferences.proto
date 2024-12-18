@@ -33,4 +33,6 @@ message UserPreferences {
   bool useShellForModuleStateChange = 22;
   bool useShellForModuleAction = 23;
   bool webuiAllowRestrictedPaths = 24;
+  string allowedFsModules = 25;
+  string allowedKsuModules = 26;
 }

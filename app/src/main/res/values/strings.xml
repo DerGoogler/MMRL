@@ -216,7 +216,9 @@
     <string name="settings_modules_installer">Installer</string>
     <string name="settings_webui_allow_restricted_paths">Allow Restricted Paths</string>
     <string name="settings_webui_allow_restricted_paths_desc">Allows WebUI developers to access paths like /data/data/{package} or /sdcard/Android/obb. Use at your own risk!</string>
-
+    <string name="settings_allow_javascript_api">Allow JavaScript API</string>
+    <string name="settings_security_allow_advanced_kernelsu_api">Allow Advanced KernelSU API</string>
+    <string name="settings_security_allow_filesystem_api">Allow FileSystem API</string>
 
     <!-- App Theme -->
     <string name="app_theme_palette">Theme Palette</string>
@@ -342,4 +344,4 @@
     <string name="hidden">Hidden</string>
     <string name="pre_release">Pre-release</string>
     <string name="unsafe_url_redirecting">Unsafe URL: %1$s. Redirecting…</string>
-   </resources>
+</resources>

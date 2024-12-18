@@ -1,16 +1,9 @@
-package com.dergoogler.mmrl.ui.activity.webui.interfaces
+package com.dergoogler.mmrl.ui.activity.webui.interfaces.ksu
 
-import android.app.Activity
 import android.content.Context
-import android.os.Handler
-import android.os.Looper
 import android.text.TextUtils
-import android.view.Window
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
-import android.widget.Toast
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import com.dergoogler.mmrl.datastore.UserPreferencesCompat
 import com.dergoogler.mmrl.viewmodel.WebUIViewModel
 import com.topjohnwu.superuser.CallbackList
@@ -18,21 +11,15 @@ import com.topjohnwu.superuser.ShellUtils
 import com.topjohnwu.superuser.internal.UiThreadHandler
 import org.json.JSONArray
 import org.json.JSONObject
-import java.io.File
 import java.util.concurrent.CompletableFuture
 
-class KernelSUInterface(
-    val context: Context,
-    private val webView: WebView,
-    private val modDir: String,
+class AdvancedKernelSUAPI(
+    context: Context,
+    webView: WebView,
+    modDir: String,
     private val viewModel: WebUIViewModel,
     private val userPrefs: UserPreferencesCompat,
-) {
-
-    @JavascriptInterface
-    fun mmrl(): Boolean {
-        return true
-    }
+) : BaseKernelSUAPI(context, webView, modDir) {
 
     @JavascriptInterface
     fun exec(cmd: String): String {
@@ -170,46 +157,4 @@ class KernelSUInterface(
             runCatching { shell.close() }
         }
     }
-
-    @JavascriptInterface
-    fun toast(msg: String) {
-        webView.post {
-            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    @JavascriptInterface
-    fun fullScreen(enable: Boolean) {
-        if (context is Activity) {
-            Handler(Looper.getMainLooper()).post {
-                if (enable) {
-                    hideSystemUI(context.window)
-                } else {
-                    showSystemUI(context.window)
-                }
-            }
-        }
-    }
-
-    @JavascriptInterface
-    fun moduleInfo(): String {
-        val currentModuleInfo = JSONObject()
-        currentModuleInfo.put("moduleDir", modDir)
-        val moduleId = File(modDir).getName()
-        currentModuleInfo.put("id", moduleId)
-        return currentModuleInfo.toString()
-    }
 }
-
-fun hideSystemUI(window: Window) =
-    WindowInsetsControllerCompat(window, window.decorView).let { controller ->
-        controller.hide(WindowInsetsCompat.Type.systemBars())
-        controller.systemBarsBehavior =
-            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-    }
-
-fun showSystemUI(window: Window) =
-    WindowInsetsControllerCompat(
-        window,
-        window.decorView
-    ).show(WindowInsetsCompat.Type.systemBars())

@@ -194,7 +194,6 @@
     <string name="generic_disclaimer_desc">**MMRL** không chịu trách nhiệm về bất kỳ hư hỏng nào đối với thiết bị của bạn, bao gồm nhưng không giới hạn ở thiết bị cục gạch, thẻ SD bị hỏng, chiến tranh nhiệt hạch hoặc bạn mất việc do ứng dụng báo động gặp trục trặc. Trước khi tiếp tục, vui lòng nghiên cứu kỹ các tính năng và rủi ro khi sử dụng mô-đun này. *Bạn tự chịu rủi ro khi chọn thực hiện những sửa đổi này*.</string>
     <string name="view_module_features_sepolicy_sub">Thêm chính sách bảo mật tùy chỉnh (quy tắc SEPolicy).</string>
     <string name="view_module_install_confirm_title">Cài đặt mô-đun này?</string>
-    <string name="view_module_install_confirm_desc_deps">&lt;![ CDATA[Bạn có chắc chắn muốn cài đặt\n&lt;font color=\\\"%1$s\\\"&gt;%2$s&lt;/font&gt; ? Mô-đun này cũng yêu cầu:]]&gt;</string>
     <string name="view_module_required_root_version">Yêu cầu phiên bản gốc</string>
     <string name="view_module_screenshots">Ảnh chụp màn hình</string>
     <string name="view_module_features_zygisk">Zygisk</string>

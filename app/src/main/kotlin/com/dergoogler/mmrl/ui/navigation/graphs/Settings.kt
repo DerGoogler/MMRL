@@ -17,6 +17,7 @@ import com.dergoogler.mmrl.ui.screens.settings.other.OtherScreen
 import com.dergoogler.mmrl.ui.screens.settings.recommendedRepos.RecommendedRepoScreen
 import com.dergoogler.mmrl.ui.screens.settings.repositories.RepositoriesScreen
 import com.dergoogler.mmrl.ui.screens.settings.security.SecurityScreen
+import com.dergoogler.mmrl.ui.screens.settings.security.screens.AllowJsApiScreen
 import com.dergoogler.mmrl.ui.screens.settings.updates.UpdatesScreen
 import com.dergoogler.mmrl.ui.screens.settings.workingmode.WorkingModeScreen
 
@@ -27,6 +28,7 @@ enum class SettingsScreen(val route: String) {
     Appearance("Appearance"),
     Updates("Updates"),
     Security("Security"),
+    SecurityWebUIAllowedApis("SecurityWebUIAllowedApis"),
     Modules("Modules"),
     Other("Other"),
     Blacklist("Blacklist"),
@@ -35,7 +37,7 @@ enum class SettingsScreen(val route: String) {
 }
 
 fun NavGraphBuilder.settingsScreen(
-    navController: NavController
+    navController: NavController,
 ) = navigation(
     startDestination = SettingsScreen.Home.route,
     route = MainScreen.Settings.route
@@ -97,6 +99,16 @@ fun NavGraphBuilder.settingsScreen(
         exitTransition = { fadeOut() }
     ) {
         SecurityScreen(
+            navController = navController
+        )
+    }
+
+    composable(
+        route = SettingsScreen.SecurityWebUIAllowedApis.route,
+        enterTransition = { scaleIn() + fadeIn() },
+        exitTransition = { fadeOut() }
+    ) {
+        AllowJsApiScreen(
             navController = navController
         )
     }

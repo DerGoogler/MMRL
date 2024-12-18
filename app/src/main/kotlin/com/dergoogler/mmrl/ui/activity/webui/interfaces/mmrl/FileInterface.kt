@@ -1,4 +1,4 @@
-package com.dergoogler.mmrl.ui.activity.webui.interfaces
+package com.dergoogler.mmrl.ui.activity.webui.interfaces.mmrl
 
 import android.app.Activity
 import android.content.Context

@@ -73,6 +73,12 @@ class UserPreferencesRepository @Inject constructor(
     suspend fun setClearInstallTerminal(value: Boolean) =
         userPreferencesDataSource.setClearInstallTerminal(value)
 
+    suspend fun setAllowedFsModules(value: List<String>) =
+        userPreferencesDataSource.setAllowedFsModules(value)
+
+    suspend fun setAllowedKsuModules(value: List<String>) =
+        userPreferencesDataSource.setAllowedKsuModules(value)
+
     suspend fun setRepositoryMenu(value: RepositoryMenuCompat) =
         userPreferencesDataSource.setRepositoryMenu(value)
 
