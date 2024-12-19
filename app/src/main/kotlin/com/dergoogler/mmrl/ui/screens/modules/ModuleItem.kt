@@ -41,6 +41,7 @@ import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import dev.dergoogler.mmrl.compat.activity.MMRLComponentActivity
 import dev.dergoogler.mmrl.compat.ext.takeTrue
 import dev.dergoogler.mmrl.compat.ext.toFormattedDateSafely
+import dev.dergoogler.mmrl.compat.then
 
 @Composable
 fun ModuleItem(
@@ -95,7 +96,7 @@ fun ModuleItem(
 
                     TextWithIcon(
                         text = module.name,
-                        icon = if (module.runners.webui) icon else null,
+                        icon = module.runners.webui then icon,
                         style = MaterialTheme.typography.titleSmall
                     )
 

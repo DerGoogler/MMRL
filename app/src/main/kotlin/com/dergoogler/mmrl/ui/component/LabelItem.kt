@@ -2,6 +2,7 @@ package com.dergoogler.mmrl.ui.component
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -39,7 +40,8 @@ fun LabelItem(
         val fontStyle = MaterialTheme.typography.labelSmall.copy(fontSize = 8.sp)
 
         TextWithIcon(
-            spacingDp = 4f,
+            horizontalArrangement = Arrangement.Center,
+            spacing = 4f,
             rowModifier = Modifier.padding(horizontal = 4.dp),
             text = when {
                 upperCase -> text.toUpperCase(Locale.current)

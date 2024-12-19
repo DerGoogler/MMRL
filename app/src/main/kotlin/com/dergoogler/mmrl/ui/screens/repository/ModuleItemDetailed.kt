@@ -9,10 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -22,10 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -38,8 +32,10 @@ import com.dergoogler.mmrl.model.online.OnlineModule
 import com.dergoogler.mmrl.model.state.OnlineState
 import com.dergoogler.mmrl.ui.component.LabelItem
 import com.dergoogler.mmrl.ui.component.Logo
+import com.dergoogler.mmrl.ui.component.TextWithIcon
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import dev.dergoogler.mmrl.compat.ext.toFormattedDateSafely
+import dev.dergoogler.mmrl.compat.then
 
 @Composable
 fun ModuleItemDetailed(
@@ -110,33 +106,18 @@ fun ModuleItemDetailed(
                         .weight(1f),
                     verticalArrangement = Arrangement.spacedBy(2.dp)
                 ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-
-                        val fontStyle =
-                            MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold)
-                        Text(
-                            text = module.name,
-                            style = fontStyle,
-                            maxLines = 2,
-                            textDecoration = decoration,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                        if (isVerified) {
-                            Spacer(modifier = Modifier.width(4.dp))
-
-                            val iconSize =
-                                with(LocalDensity.current) { fontStyle.fontSize.toDp() * 1.0f }
-
-                            Icon(
-                                modifier = Modifier.size(iconSize),
-                                painter = painterResource(id = R.drawable.rosette_discount_check),
-                                contentDescription = null,
-                                tint = MaterialTheme.colorScheme.onPrimaryContainer
-                            )
-                        }
-                    }
+                    TextWithIcon(
+                        style = MaterialTheme.typography.titleSmall,
+                        text = module.name,
+                        textDecoration = decoration,
+                        icon = module.isVerified then R.drawable.rosette_discount_check,
+                        tint = MaterialTheme.colorScheme.surfaceTint,
+                        rightIcon = true,
+                        iconScalingFactor = 1.0f,
+                        spacing = 8f,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis
+                    )
 
                     Text(
                         text = stringResource(

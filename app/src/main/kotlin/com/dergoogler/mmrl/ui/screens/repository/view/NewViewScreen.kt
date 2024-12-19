@@ -90,6 +90,7 @@ import com.dergoogler.mmrl.ui.component.ListItemTextStyle
 import com.dergoogler.mmrl.ui.component.Logo
 import com.dergoogler.mmrl.ui.component.MMRLLabel
 import com.dergoogler.mmrl.ui.component.MarkdownText
+import com.dergoogler.mmrl.ui.component.TextWithIcon
 import com.dergoogler.mmrl.ui.navigation.graphs.RepositoryScreen
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.screens.repository.view.items.InstallConfirmDialog
@@ -110,6 +111,7 @@ import dev.dergoogler.mmrl.compat.ext.shareText
 import dev.dergoogler.mmrl.compat.ext.takeTrue
 import dev.dergoogler.mmrl.compat.ext.toFormatedFileSize
 import dev.dergoogler.mmrl.compat.ext.toFormattedDateSafely
+import dev.dergoogler.mmrl.compat.then
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -417,30 +419,18 @@ fun NewViewScreen(
                 Column(
                     modifier = Modifier.weight(1f)
                 ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = module.name,
-                            style = MaterialTheme.typography.titleLarge,
-                            maxLines = 2,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                        if (module.isVerified) {
-                            Spacer(modifier = Modifier.width(4.dp))
 
-                            val iconSize =
-                                with(density) { MaterialTheme.typography.titleMedium.fontSize.toDp() * 1.0f }
-
-                            Icon(
-                                modifier = Modifier.size(iconSize),
-                                painter = painterResource(id = R.drawable.rosette_discount_check),
-                                contentDescription = null,
-                                tint = MaterialTheme.colorScheme.onPrimaryContainer
-                            )
-                        }
-                    }
-
+                    TextWithIcon(
+                        style = MaterialTheme.typography.titleLarge,
+                        text = module.name,
+                        icon = module.isVerified then R.drawable.rosette_discount_check,
+                        tint = MaterialTheme.colorScheme.surfaceTint,
+                        rightIcon = true,
+                        iconScalingFactor = 1.0f,
+                        spacing = 8f,
+                                maxLines = 2,
+                        overflow = TextOverflow.Ellipsis
+                    )
 
                     Spacer(modifier = Modifier.height(4.dp))
 

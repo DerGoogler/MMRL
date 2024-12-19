@@ -25,6 +25,8 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.text.HtmlCompat
@@ -105,23 +107,31 @@ fun TextWithIcon(
     style: TextStyle = LocalTextStyle.current,
     @SuppressLint("ModifierParameter") rowModifier: Modifier = Modifier,
     iconScalingFactor: Float = 1.4285715f,
-    spacingDp: Float = 11.428572f,
+    spacing: Float = 11.428572f,
+    /**
+     * Moved the icon to the right of the text.
+     */
+    rightIcon: Boolean = false,
     horizontalArrangement: Arrangement.Horizontal = Arrangement.Center,
     verticalAlignment: Alignment.Vertical = Alignment.CenterVertically,
 ) {
     val iconSize = with(LocalDensity.current) { style.fontSize.toDp() * iconScalingFactor }
-    val spacer = with(LocalDensity.current) { spacingDp.toDp() }
+    val spacer = with(LocalDensity.current) { spacing.toDp() }
 
     Row(
         modifier = rowModifier,
         verticalAlignment = verticalAlignment,
         horizontalArrangement = horizontalArrangement
     ) {
-        if (icon != null) {
+        if (icon != null && !rightIcon) {
             icon(iconSize)
             Spacer(modifier = Modifier.width(spacer))
         }
         text(style)
+        if (icon != null && rightIcon) {
+            Spacer(modifier = Modifier.width(spacer))
+            icon(iconSize)
+        }
     }
 }
 
@@ -136,19 +146,30 @@ fun TextWithIcon(
     contentDescription: String? = null,
     tint: Color = LocalContentColor.current,
     iconScalingFactor: Float = 1.4285715f,
-    spacingDp: Float = 11.428572f,
-    horizontalArrangement: Arrangement.Horizontal = Arrangement.Center,
+    spacing: Float = 11.428572f,
+    maxLines: Int = Int.MAX_VALUE,
+    overflow: TextOverflow = TextOverflow.Clip,
+    /**
+     * Moved the icon to the right of the text.
+     */
+    rightIcon: Boolean = false,
+    textDecoration: TextDecoration? = null,
+    horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
     verticalAlignment: Alignment.Vertical = Alignment.CenterVertically,
 ) = TextWithIcon(
     rowModifier = rowModifier,
     style = style,
     iconScalingFactor = iconScalingFactor,
-    spacingDp = spacingDp,
+    spacing = spacing,
+    rightIcon = rightIcon,
     text = { stl ->
         Text(
             text = text,
             style = stl,
-            modifier = textModifier
+            modifier = textModifier,
+            maxLines = maxLines,
+            overflow = overflow,
+            textDecoration = textDecoration,
         )
     },
     icon = if (icon != null) { size ->
