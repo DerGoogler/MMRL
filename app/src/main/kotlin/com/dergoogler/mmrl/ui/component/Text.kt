@@ -25,7 +25,6 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -153,7 +152,6 @@ fun TextWithIcon(
      * Moved the icon to the right of the text.
      */
     rightIcon: Boolean = false,
-    textDecoration: TextDecoration? = null,
     horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
     verticalAlignment: Alignment.Vertical = Alignment.CenterVertically,
 ) = TextWithIcon(
@@ -169,7 +167,6 @@ fun TextWithIcon(
             modifier = textModifier,
             maxLines = maxLines,
             overflow = overflow,
-            textDecoration = textDecoration,
         )
     },
     icon = if (icon != null) { size ->

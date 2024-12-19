@@ -107,9 +107,10 @@ fun ModuleItemDetailed(
                     verticalArrangement = Arrangement.spacedBy(2.dp)
                 ) {
                     TextWithIcon(
-                        style = MaterialTheme.typography.titleSmall,
+                        style = MaterialTheme.typography.titleSmall.copy(
+                            textDecoration = decoration
+                        ),
                         text = module.name,
-                        textDecoration = decoration,
                         icon = module.isVerified then R.drawable.rosette_discount_check,
                         tint = MaterialTheme.colorScheme.surfaceTint,
                         rightIcon = true,

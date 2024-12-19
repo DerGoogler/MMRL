@@ -594,6 +594,7 @@ fun NewViewScreen(
             if (module.note?.message != null) {
                 if (module.note.title != null && module.note.title.lowercase() == "deprecated") {
                     Alert(
+                        icon = R.drawable.alert_triangle,
                         backgroundColor = MaterialTheme.colorScheme.errorContainer,
                         textColor = MaterialTheme.colorScheme.onErrorContainer,
                         title = module.note.title,

@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -19,8 +18,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -31,8 +28,10 @@ import com.dergoogler.mmrl.model.online.OnlineModule
 import com.dergoogler.mmrl.model.state.OnlineState
 import com.dergoogler.mmrl.ui.component.LabelItem
 import com.dergoogler.mmrl.ui.component.Logo
+import com.dergoogler.mmrl.ui.component.TextWithIcon
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import dev.dergoogler.mmrl.compat.ext.toFormattedDateSafely
+import dev.dergoogler.mmrl.compat.then
 
 @Composable
 fun ModuleItemCompact(
@@ -40,7 +39,7 @@ fun ModuleItemCompact(
     state: OnlineState,
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
-    enabled: Boolean = true
+    enabled: Boolean = true,
 ) = Surface(
     onClick = onClick,
     modifier = modifier.fillMaxWidth(),
@@ -82,31 +81,19 @@ fun ModuleItemCompact(
         Column(
             modifier = Modifier.weight(1f)
         ) {
-
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = module.name,
-                    style = MaterialTheme.typography.titleSmall
-                        .copy(fontWeight = FontWeight.Bold),
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis
-                )
-                if (isVerified) {
-                    Spacer(modifier = Modifier.width(4.dp))
-
-                    val iconSize =
-                        with(LocalDensity.current) { MaterialTheme.typography.titleSmall.fontSize.toDp() * 1.0f }
-
-                    Icon(
-                        modifier = Modifier.size(iconSize),
-                        painter = painterResource(id = R.drawable.rosette_discount_check),
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onPrimaryContainer
-                    )
-                }
-            }
+            TextWithIcon(
+                style = MaterialTheme.typography.titleSmall.copy(
+                    fontWeight = FontWeight.Bold
+                ),
+                text = module.name,
+                icon = module.isVerified then R.drawable.rosette_discount_check,
+                tint = MaterialTheme.colorScheme.surfaceTint,
+                rightIcon = true,
+                iconScalingFactor = 1.0f,
+                spacing = 8f,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
+            )
 
             Spacer(modifier = Modifier.height(2.dp))
             Text(
