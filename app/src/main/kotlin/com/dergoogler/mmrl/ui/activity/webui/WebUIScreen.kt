@@ -15,7 +15,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
@@ -70,8 +70,8 @@ fun WebUIScreen(
     val webRoot = File("$moduleDir/webroot")
     val domainSafeRegex = Regex("^https?://mui\\.kernelsu\\.org(/.*)?$")
 
-    var topInset by remember { mutableIntStateOf(0) }
-    var bottomInset by remember { mutableIntStateOf(0) }
+    var topInset: Int? by remember { mutableStateOf(null) }
+    var bottomInset: Int? by remember { mutableStateOf(null) }
 
     val allowedFsApi = modId in userPrefs.allowedFsModules
     val allowedKsuApi = modId in userPrefs.allowedKsuModules
@@ -84,32 +84,32 @@ fun WebUIScreen(
         Timber.d("Insets calculated: top = $topInset, bottom = $bottomInset")
     }
 
-    val webViewAssetLoader = remember(topInset, bottomInset) {
-        WebViewAssetLoader.Builder()
-            .setDomain("mui.kernelsu.org")
-            .addPathHandler(
-                "/",
-                SuFilePathHandler(
-                    context,
-                    webRoot,
-                    rootShell
+    if (topInset != null && bottomInset != null) {
+        val webViewAssetLoader = remember(topInset, bottomInset) {
+            WebViewAssetLoader.Builder()
+                .setDomain("mui.kernelsu.org")
+                .addPathHandler(
+                    "/",
+                    SuFilePathHandler(
+                        context,
+                        webRoot,
+                        rootShell
+                    )
                 )
-            )
-            .addPathHandler(
-                "/mmrl/",
-                MMRLWebUIHandler(
-                    topInset = topInset,
-                    bottomInset = bottomInset,
-                    colorScheme = colorScheme,
-                    typography = typography,
-                    filledTonalButtonColors = filledTonalButtonColors,
-                    cardColors = cardColors
+                .addPathHandler(
+                    "/mmrl/",
+                    MMRLWebUIHandler(
+                        topInset = topInset!!,
+                        bottomInset = bottomInset!!,
+                        colorScheme = colorScheme,
+                        typography = typography,
+                        filledTonalButtonColors = filledTonalButtonColors,
+                        cardColors = cardColors
+                    )
                 )
-            )
-            .build()
-    }
+                .build()
+        }
 
-    if (topInset != 0 && bottomInset != 0) {
         AndroidView(
             factory = {
                 WebView(context).apply {
@@ -176,8 +176,8 @@ fun WebUIScreen(
 
                     addJavascriptInterface(
                         MMRLInterface(
-                            topInset = topInset,
-                            bottomInset = bottomInset,
+                            topInset = topInset!!,
+                            bottomInset = bottomInset!!,
                             context = context,
                             isDark = isDarkMode,
                             webview = this,
