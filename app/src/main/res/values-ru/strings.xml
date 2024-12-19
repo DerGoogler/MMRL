@@ -7,7 +7,6 @@
     <string name="setup_shizuku_desc">Требуются права, предоставляемые Sui или Shizuku (root)</string>
     <string name="setup_non_root_title">Без Root</string>
     <string name="setup_non_root_desc">Не требует Root прав, доступна только функция загрузки модулей</string>
-
     <!-- Install -->
     <string name="install_screen_title">Установка</string>
     <string name="install_flashing">Прошивка</string>
@@ -19,22 +18,18 @@
     <string name="install_screen_reboot_text">Вы уверены, что хотите перезагрузить устройство?</string>
     <string name="install_screen_reboot_confirm">Подтвердить</string>
     <string name="install_screen_reboot_dismiss">Отмена</string>
-
     <!-- License -->
     <string name="license_title">Просмотреть лицензию</string>
     <string name="license_osi_approved">Одобрено OSI</string>
     <string name="license_fsf_libre">FSF Libre</string>
-
     <!-- Page -->
     <string name="page_repository">Репозиторий</string>
     <string name="page_modules">Модули</string>
     <string name="page_settings">Настройки</string>
-
     <!-- Repository -->
     <string name="repository_empty">Репозиторий пуст</string>
     <string name="module_installed">Установлен</string>
     <string name="module_new">Новый</string>
-
     <!-- Advanced Menu -->
     <string name="menu_pin_installed">Закрепить установленные</string>
     <string name="menu_pin_updatable">Закрепить обновляемые</string>
@@ -44,7 +39,6 @@
     <string name="menu_show_verified">Показывать проверку</string>
     <string name="menu_sort_repolistmode_detailed">Подробный</string>
     <string name="menu_sort_repolistmode_compact">Компактный</string>
-
     <!-- View Module -->
     <string name="view_module_page_overview">Обзор</string>
     <string name="view_module_page_versions">Версии</string>
@@ -71,7 +65,6 @@
     <string name="view_module_antifeatures">Анти-функции</string>
     <string name="view_module_unsupported">Не поддерживается</string>
     <string name="view_module_unsupported_desc">Похоже, ваше устройство не поддерживает эту версию модуля. Устанавливайте на свой страх и риск!</string>
-
     <!-- View Module / Features -->
     <string name="view_module_features">Функции</string>
     <string name="view_module_features_service">Сервис</string>
@@ -92,8 +85,6 @@
     <string name="view_module_features_webui_sub">Веб-интерфейс для управления модулем (KernelSU и APatch, не Magisk).</string>
     <string name="view_module_features_postmount_sub">Выполнение скрипта после монтирования OverlayFS (KernelSU и APatch).</string>
     <string name="view_module_features_bootcompleted_sub">Выполнение скрипта после завершения загрузки (KernelSU и APatch).</string>
-
-
     <!-- Modules -->
     <string name="modules_empty">Модули не найдены</string>
     <!-- Module Item -->
@@ -103,7 +94,6 @@
     <string name="module_install">Установить</string>
     <string name="module_download">Скачать</string>
     <string name="module_update">Обновить</string>
-
     <!-- Settings -->
     <string name="settings_app">Приложение</string>
     <string name="settings_app_desc">Настройки приложения MMRL</string>
@@ -122,7 +112,6 @@
     <string name="settings_text_wrap_desc">Включает перенос текста внутри терминала установки</string>
     <string name="settings_changelog">Список изменений</string>
     <string name="settings_changelo_desc">Все текущие изменения в MMRL</string>
-
     <!-- Root Item -->
     <string name="settings_root_access">Root доступ: %s</string>
     <string name="settings_root_provider">Поставщик: %s</string>
@@ -151,20 +140,16 @@
     <string name="settings_updates_desc">Управляйте своими предпочтениями над процессом обновления</string>
     <string name="settings_homepage">Домашняя страница приложения</string>
     <string name="settings_homepage_desc">Выберите начальный экран приложения</string>
-
     <string name="settings_auto_update_repos">Автоматическое обновление репозиториев</string>
     <string name="settings_auto_update_repos_desc">Автоматически обновлять репозитории в фоновом режиме</string>
     <string name="settings_repo_update_interval">Интервал обновления репозиториев</string>
     <string name="settings_repo_update_interval_suffix">\u0020ч.</string>
     <string name="settings_repo_update_interval_desc">Выберите интервал времени для обновления репозиториев</string>
-
     <string name="settings_check_modules_update">Проверять наличие обновлений модулей</string>
     <string name="settings_check_modules_update_desc">Включает проверку обновлений для установленных модулей</string>
     <string name="settings_check_modules_update_interval_suffix">\u0020ч.</string>
     <string name="settings_check_modules_update_interval">Интервал проверки обновлений модулей</string>
     <string name="settings_check_modules_update_interval_desc">Выберите интервал времени для проверки установленных модулей</string>
-
-
     <!-- App Theme -->
     <string name="app_theme_palette">Палитра темы</string>
     <string name="app_theme_dark_theme">Темная тема</string>
@@ -189,12 +174,10 @@
     <string name="about_app_version">Версия %1$s (%2$s)</string>
     <string name="about_desc1">Предоставляет репозитории модулей и управляет модулями для Magisk и KernelSU.</string>
     <string name="about_desc2">Сделано с ❤️ от %s</string>
-
     <!-- Dialog -->
     <string name="dialog_attention">Внимание</string>
     <string name="dialog_cancel">Отмена</string>
     <string name="dialog_ok">OK</string>
-
     <!-- Menu -->
     <string name="menu_advanced_menu">Расширенное меню</string>
     <string name="menu_sort_mode">Режим сортировки</string>
@@ -204,18 +187,14 @@
     <string name="menu_pin_enabled">Закрепить включённые</string>
     <string name="menu_show_updated">Показывать время обновления</string>
     <string name="menu_show_antifeatures">Показывать анти-функции</string>
-
     <!-- Message -->
     <string name="message_download_success">Загрузка завершена</string>
     <string name="message_loading">Загрузка…</string>
-
     <!-- Notification -->
     <string name="notification_name_download">Служба загрузки</string>
-
     <!-- Search -->
     <string name="search_empty">Пустой список</string>
     <string name="search_placeholder">Поиск…</string>
-
     <!-- Other -->
     <string name="unknown_error">Неизвестная ошибка</string>
     <string name="verified">Проверено</string>
@@ -227,13 +206,11 @@
     <string name="stack_trace_truncated">%s\n… еще %d</string>
     <string name="additional_notes">Дополнительные примечания</string>
     <string name="repo_added">Репозиторий добавлен</string>
-
     <!-- Work Manager -->
     <string name="work_repository_updates">Обновления репозиториев</string>
     <string name="work_updates_for_repositories">Обновления для репозиториев</string>
     <string name="work_module_updates">Обновления модулей</string>
     <string name="work_update_checker_for_modules">Проверка обновлений для модулей</string>
-
     <!-- Repo Update Service -->
     <string name="repo_update_service">Репозитории успешно обновлены</string>
     <string name="repo_update_service_desc">Не волнуйтесь, MMRL обновил ваши установленные репозитории. 😋</string>
