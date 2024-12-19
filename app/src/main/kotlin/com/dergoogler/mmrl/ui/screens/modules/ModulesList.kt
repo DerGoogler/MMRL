@@ -27,6 +27,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import com.dergoogler.mmrl.Platform
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.model.local.LocalModule
 import com.dergoogler.mmrl.model.local.State
@@ -43,7 +44,7 @@ fun ModulesList(
     list: List<LocalModule>,
     state: LazyListState,
     isProviderAlive: Boolean,
-    managerName: String,
+    platform: Platform,
     getModuleOps: (Boolean, LocalModule) -> ModulesViewModel.ModuleOps,
     getVersionItem: @Composable (LocalModule) -> VersionItem?,
     getProgress: @Composable (VersionItem?) -> Float,
@@ -64,7 +65,7 @@ fun ModulesList(
             ModuleItem(
                 module = module,
                 isProviderAlive = isProviderAlive,
-                managerName = managerName,
+                platform = platform,
                 getModuleOps = getModuleOps,
                 getVersionItem = getVersionItem,
                 getProgress = getProgress,
@@ -83,7 +84,7 @@ fun ModulesList(
 fun ModuleItem(
     module: LocalModule,
     isProviderAlive: Boolean,
-    managerName: String,
+    platform: Platform,
     getModuleOps: (Boolean, LocalModule) -> ModulesViewModel.ModuleOps,
     getVersionItem: @Composable (LocalModule) -> VersionItem?,
     getProgress: @Composable (VersionItem?) -> Float,
@@ -124,9 +125,11 @@ fun ModuleItem(
             else -> TextDecoration.None
         },
         switch = {
-            val enabled = when (managerName.lowercase()) {
-                "kernelsu", "apatch" -> isProviderAlive && module.state != State.UPDATE
-                else -> isProviderAlive
+            val enabled = with(platform) {
+                when {
+                    isKernelSuNext || isKernelSU || isAPatch -> isProviderAlive && module.state != State.UPDATE
+                    else -> isProviderAlive
+                }
             }
 
             Switch(
