@@ -114,48 +114,51 @@ class InstallViewModel @Inject constructor(
         }
     }
 
-    suspend fun installModules(uris: List<Uri>) {
+    suspend fun installModules(uris: List<Uri>) = viewModelScope.launch {
         val userPreferences = userPreferencesRepository.data.first()
+        event = Event.LOADING
+        var allSucceeded = true
+
+        if (!Compat.init(userPreferences.workingMode)) {
+            event = Event.FAILED
+            console.add("! Service is not available")
+            return@launch
+        }
 
         val devLog = devLog(userPreferences.developerMode)
 
-        viewModelScope.launch {
-            event = Event.LOADING
-            var allSucceeded = true
+        val bulkModules = uris.mapNotNull { uri ->
+            val path = context.getPathForUri(uri)
+            val info = Compat.moduleManager.getModuleInfo(path)
 
-            val bulkModules = uris.mapNotNull { uri ->
-                val path = context.getPathForUri(uri)
-                val info = Compat.moduleManager.getModuleInfo(path)
-
-                if (info == null) {
-                    devLog("! Unable to gather module info of file: $path")
-                    return@mapNotNull null
-                }
-
-                BulkModule(
-                    id = info.id,
-                    name = info.name
-                )
+            if (info == null) {
+                devLog("! Unable to gather module info of file: $path")
+                return@mapNotNull null
             }
 
-            for (uri in uris) {
-                if (userPreferences.clearInstallTerminal && uris.size > 1) {
-                    console.clear()
-                }
+            BulkModule(
+                id = info.id,
+                name = info.name
+            )
+        }
 
-                val result = loadAndInstallModule(uri, bulkModules, devLog)
-                if (!result) {
-                    allSucceeded = false
-                    console.add("- Installation aborted due to an error")
-                    break
-                }
+        for (uri in uris) {
+            if (userPreferences.clearInstallTerminal && uris.size > 1) {
+                console.clear()
             }
 
-            event = if (allSucceeded) {
-                Event.SUCCEEDED
-            } else {
-                Event.FAILED
+            val result = loadAndInstallModule(uri, bulkModules, devLog)
+            if (!result) {
+                allSucceeded = false
+                console.add("! Installation aborted due to an error")
+                break
             }
+        }
+
+        event = if (allSucceeded) {
+            Event.SUCCEEDED
+        } else {
+            Event.FAILED
         }
     }
 
@@ -165,14 +168,6 @@ class InstallViewModel @Inject constructor(
         devLog: (String) -> Unit,
     ): Boolean =
         withContext(Dispatchers.IO) {
-            val userPreferences = userPreferencesRepository.data.first()
-
-            if (!Compat.init(userPreferences.workingMode)) {
-                event = Event.FAILED
-                console.add("- Service is not available")
-                return@withContext false
-            }
-
             val path = context.getPathForUri(uri)
 
             devLog("- Path: $path")
@@ -185,7 +180,7 @@ class InstallViewModel @Inject constructor(
             console.add("- Copying zip to temp directory")
             val tmpFile = context.copyToDir(uri, context.tmpDir) ?: run {
                 event = Event.FAILED
-                console.add("- Copying failed")
+                console.add("! Copying failed")
                 return@withContext false
             }
 
@@ -194,7 +189,7 @@ class InstallViewModel @Inject constructor(
 
             if (io == null) {
                 event = Event.FAILED
-                console.add("- Copying failed")
+                console.add("! Copying failed")
                 return@withContext false
             }
 
@@ -208,7 +203,7 @@ class InstallViewModel @Inject constructor(
 
             if (moduleInfo == null) {
                 event = Event.FAILED
-                console.add("- Unable to gather module info")
+                console.add("! Unable to gather module info")
                 return@withContext false
             } else {
                 devLog("- Module info: $moduleInfo")
@@ -220,7 +215,7 @@ class InstallViewModel @Inject constructor(
     private suspend fun install(zipPath: String, bulkModules: List<BulkModule>): Boolean =
         withContext(Dispatchers.IO) {
             val zipFile = File(zipPath)
-            val deleteZipFile = userPreferencesRepository.data.first().deleteZipFile
+            val userPreferences = userPreferencesRepository.data.first()
 
             val installationResult = CompletableDeferred<Boolean>()
 
@@ -234,13 +229,14 @@ class InstallViewModel @Inject constructor(
 
                 override fun onStderr(msg: String) {
                     CoroutineScope(Dispatchers.Main).launch {
+                        if (userPreferences.developerMode) console.add(msg)
                         logs.add(msg)
                     }
                 }
 
                 override fun onSuccess(module: LocalModule?) {
                     module?.let(::insertLocal)
-                    if (deleteZipFile) {
+                    if (userPreferences.deleteZipFile) {
                         deleteBySu(zipPath)
                     }
                     installationResult.complete(true)
