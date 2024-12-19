@@ -311,6 +311,5 @@
     <string name="view_module_unsupported_arch_desc">使用しているデバイスは、開発者が宣言した必要なアーキテクチャに対応していないようです。</string>
     <string name="settings_modules">モジュールとインストーラー</string>
     <string name="action_activity">アクション</string>
-    <string name="settings_webui_allow_restricted_paths">制限されたパスを許可</string>
     <string name="settings_webui_allow_restricted_paths_desc">WebUI の開発者が /data/data/{package} または /sdcard/Android/obb などのパスにアクセスできるように許可します。自己責任で使用してください！</string>
 </resources>
