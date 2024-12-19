@@ -84,7 +84,7 @@
     <string name="view_module_features_sepolicy_sub">將 SEPolicy 規則改制為自訂的安全性政策。</string>
     <string name="view_module_features_zygisk_sub">准許模組存取 Zygisk 框架，達致系統層級的修改與關連。</string>
     <string name="view_module_features_apks_sub">模組另有附隨安裝的 APK 程式。</string>
-    <string name="view_module_features_webui_sub">含有可供管理模組的網頁介面</string>
+    <string name="view_module_features_webui_sub">含有可供管理模組的網頁介面。使用者需手動為各種 JavaScript 程式權限進行授權。</string>
     <string name="view_module_features_postmount_sub">始於 OverlayFS 掛載而後置執行的腳本</string>
     <string name="view_module_features_bootcompleted_sub">系統初始化後，待機期間執行的腳本</string>
     <string name="view_module_module_support">關連頁面</string>
@@ -312,7 +312,7 @@
     <string name="settings_modules_installer">安裝程序</string>
     <string name="generic_disclaimer_desc">若因自身裝置變故而蒙受損失（不限於無法開機、SD 卡故障、引發熱核子戰爭，或是鬧鐘應用程式秀逗而讓你被炒魷魚），**MMRL** 概不負責。執行之前，請確認好本功能之於模組的作用與風險。*在你同意進行模組修改過後，其風險責任應由你承擔*。</string>
     <string name="settings_security_allow_advanced_kernelsu_api">准許 KernelSU 存取</string>
-    <string name="settings_allow_javascript_api">准許 JavaScript 程式碼</string>
+    <string name="settings_allow_javascript_api">准許 JavaScript 程式權限</string>
     <string name="settings_security_allow_filesystem_api">准許檔案系統存取</string>
     <string name="menu_export_modules_as_text">匯出模組為文字檔</string>
 </resources>
