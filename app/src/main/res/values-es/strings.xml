@@ -130,7 +130,6 @@
     <string name="new_version_available">La nueva versión %s está disponible, haga clic para actualizar.</string>
     <string name="hidden">Oculto</string>
     <string name="pre_release">Prelanzamiento</string>
-    <string name="settings_webui_allow_restricted_paths">Permitir rutas restringidas</string>
     <string name="settings_webui_allow_restricted_paths_desc">Permite a los desarrolladores de WebUI acceder a rutas como /data/data/{package} o /sdcard/Android/obb. ¡Úselo bajo su propio riesgo!</string>
     <string name="repo_options">Opciones</string>
     <string name="repo_options_support">Soporte</string>
