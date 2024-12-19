@@ -286,7 +286,6 @@
     <string name="action_executing">Wykonywanie…</string>
     <string name="generic_disclaimer_title">Ponosisz pełną odpowiedzialność!</string>
     <string name="view_module_features_action_sub">Umożliwia wykonanie skryptu poprzez kliknięcie przycisku</string>
-    <string name="settings_webui_allow_restricted_paths">Zezwalaj na ścieżki z ograniczeniami</string>
     <string name="settings_webui_allow_restricted_paths_desc">Umożliwia programistom WebUI dostęp do ścieżek takich jak /data/data/{package} lub /sdcard/Android/obb. Używaj na własne ryzyko!</string>
     <string name="settings_allow_javascript_api">Zezwól na API JavaScript</string>
     <string name="settings_security_allow_advanced_kernelsu_api">Zezwól na zaawansowane API KernelSU</string>
