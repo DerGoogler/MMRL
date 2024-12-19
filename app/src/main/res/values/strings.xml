@@ -202,7 +202,6 @@
     <string name="settings_modules_desc">Change the behavior of handlers for modules or many more about modules</string>
     <string name="settings_modules_handlers">Handlers</string>
     <string name="settings_modules_installer">Installer</string>
-    <string name="settings_webui_allow_restricted_paths_desc">Allows WebUI developers to access paths like /data/data/{package} or /sdcard/Android/obb. Use at your own risk!</string>
     <string name="settings_allow_javascript_api">Allow JavaScript API</string>
     <string name="settings_security_allow_advanced_kernelsu_api">Allow Advanced KernelSU API</string>
     <string name="settings_security_allow_filesystem_api">Allow FileSystem API</string>
