@@ -109,7 +109,6 @@
     <string name="settings_open_notification_settings">Buka Pengaturan Notifikasi</string>
     <string name="settings_reboot_protection">Proteksi Reboot</string>
     <string name="settings_homepage_desc">Pilih halaman awal aplikasi</string>
-    <string name="settings_webui_allow_restricted_paths">Izinkan Direktori Terbatas</string>
     <string name="settings_webui_allow_restricted_paths_desc">Mengizinkan pengembang WebUI mengakses direktori seperti /data/data/{package} atau /sdcard/Android/obb. Gunakan dengan risiko Anda sendiri!</string>
     <string name="open">Buka</string>
     <string name="help">Bantuan</string>
