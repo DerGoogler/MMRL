@@ -46,9 +46,10 @@ internal fun RootItem(
                     when {
                         platform.isMagisk -> R.drawable.magisk_logo
                         platform.isKernelSU -> R.drawable.kernelsu_logo
+                        platform.isAPatch -> R.drawable.brand_android
                         else -> R.drawable.circle_check_filled
                     }
-//                    R.drawable.circle_check_filled
+
                 } else {
                     R.drawable.alert_circle_filled
                 }
