@@ -121,7 +121,7 @@
     <string name="view_module_features_sepolicy_sub">Adiciona políticas de segurança personalizadas (regras SEPolicy).</string>
     <string name="view_module_features_zygisk_sub">Permite que os módulos interajam com a estrutura do Zygisk, possibilitando modificações e interações no nível do sistema.</string>
     <string name="view_module_features_apks_sub">Incluindo APKs adicionais dentro do módulo.</string>
-    <string name="view_module_features_webui_sub">Interface web para gerenciamento de módulos</string>
+    <string name="view_module_features_webui_sub">Interface web para gerenciamento de módulos. O usuário tem que confirmar o uso de várias APIs JavaScript.</string>
     <string name="view_module_features_postmount_sub">Execução de script após montagens do OverlayFS</string>
     <string name="view_module_features_bootcompleted_sub">Execução do script após a conclusão da inicialização</string>
     <string name="view_module_module_support">Suporte de módulo</string>
