@@ -285,7 +285,6 @@
     <string name="action_activity">Ação</string>
     <string name="settings_modules_desc">Alterar o comportamento dos manipuladores para módulos ou muito mais sobre módulos</string>
     <string name="generic_disclaimer_desc">**MMRL** não é responsável por nenhum dano ao seu dispositivo, incluindo, mas não se limitando a dispositivos brickados, cartões SD corrompidos, guerras termonucleares ou você perder seu emprego porque um aplicativo de alarme não funcionou corretamente. Antes de prosseguir, pesquise cuidadosamente os recursos e riscos de usar este módulo. *Você está escolhendo fazer essas modificações por sua conta e risco*.</string>
-    <string name="settings_webui_allow_restricted_paths_desc">Permite que desenvolvedores WebUI acessem caminhos como /data/data/{package} ou /sdcard/Android/obb. Use por sua conta e risco!</string>
     <string name="settings_security_allow_filesystem_api">Permitir API do sistema de arquivos</string>
     <string name="settings_security_allow_advanced_kernelsu_api">Permitir API KernelSU avançada</string>
     <string name="menu_export_modules_as_text">Exportar módulos como texto</string>
