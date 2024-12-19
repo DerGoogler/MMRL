@@ -3,7 +3,7 @@
     <string name="module_remove">Hapus</string>
     <string name="install_flashing">Flashing</string>
     <string name="page_repository">Repositori</string>
-    <string name="settings_app_desc">Setelan seputar aplikasi MMRL ini sendiri</string>
+    <string name="settings_app_desc">Setelan seputar aplikasi MMRL</string>
     <string name="setup_mode">Mode Kerja</string>
     <string name="setup_root_title">Root</string>
     <string name="setup_non_root_title">Non-Root</string>
@@ -40,9 +40,9 @@
     <string name="settings_non_root_desc">Fungsionalitas terbatas</string>
     <string name="settings_app_theme">Tema Aplikasi</string>
     <string name="settings_app_theme_desc">Mengubah skema warna dan mode malam</string>
-    <string name="settings_download_path">Jalur Download</string>
+    <string name="settings_download_path">Direktori Download</string>
     <string name="settings_delete_zip">Hapus File Zip</string>
-    <string name="settings_delete_zip_desc">Hapus modul zip setelah pemasangan berhasil, ini akan dieksekusi dengan Superuser</string>
+    <string name="settings_delete_zip_desc">Hapus file modul setelah pemasangan berhasil, ini akan dieksekusi dengan Superuser</string>
     <string name="app_theme_dark_theme">Tema Gelap</string>
     <string name="app_theme_dark_theme_auto">Otomatis</string>
     <string name="app_theme_dark_theme_light">Terang</string>
@@ -78,7 +78,7 @@
     <string name="menu_show_icon">Tampilkan Ikon</string>
     <string name="repo_update_at">Diperbarui pada: %s</string>
     <string name="menu_advanced_menu">Menu Lanjutan</string>
-    <string name="menu_sort_mode">Mode Urutkan</string>
+    <string name="menu_sort_mode">Mode Urutan</string>
     <string name="menu_sort_option_name">Nama</string>
     <string name="menu_descending">Menurun</string>
     <string name="menu_pin_enabled">Pin Yang Aktif</string>
@@ -94,7 +94,7 @@
     <string name="install_screen_title">Pemasangan</string>
     <string name="module_update">Perbarui</string>
     <string name="settings_doh">DNS melalui HTTPS</string>
-    <string name="settings_doh_desc">Mengatasi masalah DNS di beberapa negara</string>
+    <string name="settings_doh_desc">Mengatasi masalah DNS poisoning di beberapa negara</string>
     <string name="view_module_update_ignore">Abaikan</string>
     <string name="view_module_update_notify">Beritahu</string>
     <string name="setup_root_desc">Membutuhkan izin Root yang diberikan oleh Magisk atau KernelSU</string>
@@ -144,7 +144,7 @@
     <string name="view_module_features_action_sub">Memungkinkan pengguna menjalankan skrip melalui tombol Action</string>
     <string name="view_module_features_postmount_sub">Eksekusi skrip setelah OverlayFS mount</string>
     <string name="view_module_features_bootcompleted_sub">Menjalankan skrip setelah boot selesai</string>
-    <string name="view_module_module_support">Dukungan module</string>
+    <string name="view_module_module_support">Dukungan Modul</string>
     <string name="view_module_provided_by">Disediakan Oleh</string>
     <string name="view_module_added_on">Ditambahkan pada</string>
     <string name="view_module_about_this_module">Tentang Modul Ini</string>
@@ -238,7 +238,7 @@
     <string name="view_module_required_os_value">Android %1$s atau lebih baru</string>
     <string name="view_module_share">Bagikan</string>
     <string name="view_module_not_found">Modul Tidak Ditemukan</string>
-    <string name="view_module_install_confirm_title">Install Modul Ini?</string>
+    <string name="view_module_install_confirm_title">Pasang Modul Ini?</string>
     <string name="view_module_install_confirm_desc"><![CDATA[Apakah Anda yakin ingin memasang <font color=\"%1$s\">%2$s</font>?]]></string>
     <string name="view_module_dependencies">Dependensi</string>
     <string name="view_module_required_os">OS yang diperlukan</string>
@@ -287,4 +287,8 @@
     <string name="settings_resources_desc">Dokumentasi, Repo yang Didukung, dan lainnya</string>
     <string name="settings_resources">Sumber Informasi</string>
     <string name="repo_options">Opsi</string>
+    <string name="settings_security_allow_advanced_kernelsu_api">Izinkan API KernelSU Tingkat Lanjut</string>
+    <string name="settings_security_allow_filesystem_api">Izinkan API FileSystem</string>
+    <string name="settings_allow_javascript_api">Izinkan API JavaScript</string>
+    <string name="menu_export_modules_as_text">Ekspor Modul sebagai Teks</string>
 </resources>
