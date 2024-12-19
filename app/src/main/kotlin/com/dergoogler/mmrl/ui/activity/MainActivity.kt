@@ -17,6 +17,7 @@ import androidx.lifecycle.lifecycleScope
 import com.dergoogler.mmrl.Compat
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.app.Const
+import com.dergoogler.mmrl.background.BootBroadcastReceiver
 import com.dergoogler.mmrl.database.entity.Repo.Companion.toRepo
 import com.dergoogler.mmrl.datastore.UserPreferencesCompat.Companion.isRoot
 import com.dergoogler.mmrl.datastore.UserPreferencesCompat.Companion.isSetup
@@ -72,6 +73,12 @@ class MainActivity : MMRLComponentActivity() {
                 }
 
                 Compat.init(preferences.workingMode)
+
+                if (!preferences.workingMode.isSetup) BootBroadcastReceiver.startWorkManagers(
+                    this@MainActivity,
+                    preferences
+                )
+
                 NetworkUtils.setEnableDoh(preferences.useDoh)
                 setInstallActivityEnabled(preferences.workingMode.isRoot)
                 setWebUIActivityEnabled(preferences.workingMode.isRoot)

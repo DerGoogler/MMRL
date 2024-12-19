@@ -6,7 +6,7 @@ import android.content.Intent
 import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.NetworkType
-import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
 import com.dergoogler.mmrl.repository.LocalRepository
 import com.dergoogler.mmrl.repository.UserPreferencesRepository
@@ -45,7 +45,8 @@ open class MMRLBroadcastReceiver : BroadcastReceiver() {
     companion object {
         val lock = Any()
 
-        inline fun <reified W : MMRLCoroutineWorker> startWorkTask(
+        fun startWorkTask(
+            workerClass: Class<out MMRLCoroutineWorker?>,
             context: Context,
             enabled: Boolean,
             repeatInterval: Int,
@@ -53,14 +54,12 @@ open class MMRLBroadcastReceiver : BroadcastReceiver() {
             existingPeriodicWorkPolicy: ExistingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.KEEP,
             workName: String,
         ) {
-            W::class.java
-
             val workManager = WorkManager.getInstance(context)
             if (enabled) {
-
                 Timber.d("Starting work task: $workName")
 
-                val updateRequest = PeriodicWorkRequestBuilder<W>(
+                val updateRequest = PeriodicWorkRequest.Builder(
+                    workerClass,
                     repeatInterval.toLong(),
                     repeatIntervalUnit
                 )

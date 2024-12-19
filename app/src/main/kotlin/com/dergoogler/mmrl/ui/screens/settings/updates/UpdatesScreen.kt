@@ -17,7 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.core.content.ContextCompat.startActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.dergoogler.mmrl.R
@@ -39,6 +38,7 @@ fun UpdatesScreen(
 ) {
     val userPreferences = LocalUserPreferences.current
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+    val context = LocalContext.current
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -56,9 +56,6 @@ fun UpdatesScreen(
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
-            val context = LocalContext.current
-
-
             ListButtonItem(
                 icon = R.drawable.notification,
                 title = stringResource(id = R.string.settings_open_notification_settings),
@@ -69,7 +66,7 @@ fun UpdatesScreen(
                         }
 
                     if (intent.resolveActivity(context.packageManager) != null) {
-                        startActivity(context, intent, null)
+                        context.startActivity(intent, null)
                     } else {
                         Toast.makeText(
                             context,
@@ -94,6 +91,7 @@ fun UpdatesScreen(
             ListSwitchItem(
                 icon = R.drawable.launcher_outline,
                 title = stringResource(id = R.string.settings_include_preleases),
+                enabled = userPreferences.checkAppUpdates,
                 checked = userPreferences.checkAppUpdatesPreReleases,
                 onChange = viewModel::setCheckAppUpdatesPreReleases
             )
@@ -103,7 +101,6 @@ fun UpdatesScreen(
             )
 
             ListSwitchItem(
-                enabled = false,
                 icon = R.drawable.refresh,
                 title = stringResource(id = R.string.settings_auto_update_repos),
                 desc = stringResource(id = R.string.settings_auto_update_repos_desc),
@@ -112,14 +109,13 @@ fun UpdatesScreen(
             )
 
             ListRadioCheckItem(
-                enabled = false,
                 title = stringResource(R.string.settings_repo_update_interval),
                 icon = R.drawable.clock_24,
                 desc = stringResource(
                     R.string.settings_repo_update_interval_desc,
                     userPreferences.autoUpdateReposInterval
                 ),
-//                enabled = userPreferences.autoUpdateRepos,
+                enabled = userPreferences.autoUpdateRepos,
                 suffix = stringResource(id = R.string.settings_repo_update_interval_suffix),
                 value = userPreferences.autoUpdateReposInterval,
                 options = optionsOfHours,
@@ -132,7 +128,6 @@ fun UpdatesScreen(
             )
 
             ListSwitchItem(
-                enabled = false,
                 icon = R.drawable.box,
                 title = stringResource(id = R.string.settings_check_modules_update),
                 desc = stringResource(id = R.string.settings_check_modules_update_desc),
@@ -141,20 +136,20 @@ fun UpdatesScreen(
             )
 
             ListRadioCheckItem(
-                enabled = false,
                 title = stringResource(R.string.settings_check_modules_update_interval),
                 icon = R.drawable.device_mobile_code,
                 desc = stringResource(
                     R.string.settings_check_modules_update_interval_desc,
                     userPreferences.checkModuleUpdatesInterval
                 ),
-//                enabled = userPreferences.checkModuleUpdates,
+                enabled = userPreferences.checkModuleUpdates,
                 suffix = stringResource(id = R.string.settings_check_modules_update_interval_suffix),
                 value = userPreferences.checkModuleUpdatesInterval,
                 options = optionsOfHours,
                 onConfirm = {
                     viewModel.setCheckModuleUpdatesInterval(it)
-                })
+                }
+            )
         }
     }
 }
