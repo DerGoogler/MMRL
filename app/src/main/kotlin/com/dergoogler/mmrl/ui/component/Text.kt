@@ -4,8 +4,10 @@ import android.annotation.SuppressLint
 import android.text.SpannableStringBuilder
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
@@ -98,20 +100,22 @@ fun BulletList(
 
 @Composable
 fun TextWithIcon(
-    text: @Composable (TextStyle) -> Unit,
-    icon: (@Composable (Dp) -> Unit)? = null,
+    text: @Composable RowScope.(TextStyle) -> Unit,
+    icon: (@Composable RowScope.(Dp) -> Unit)? = null,
     style: TextStyle = LocalTextStyle.current,
     @SuppressLint("ModifierParameter") rowModifier: Modifier = Modifier,
     iconScalingFactor: Float = 1.4285715f,
     spacingDp: Float = 11.428572f,
+    horizontalArrangement: Arrangement.Horizontal = Arrangement.Center,
+    verticalAlignment: Alignment.Vertical = Alignment.CenterVertically,
 ) {
-
     val iconSize = with(LocalDensity.current) { style.fontSize.toDp() * iconScalingFactor }
     val spacer = with(LocalDensity.current) { spacingDp.toDp() }
 
     Row(
         modifier = rowModifier,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = verticalAlignment,
+        horizontalArrangement = horizontalArrangement
     ) {
         if (icon != null) {
             icon(iconSize)
@@ -133,6 +137,8 @@ fun TextWithIcon(
     tint: Color = LocalContentColor.current,
     iconScalingFactor: Float = 1.4285715f,
     spacingDp: Float = 11.428572f,
+    horizontalArrangement: Arrangement.Horizontal = Arrangement.Center,
+    verticalAlignment: Alignment.Vertical = Alignment.CenterVertically,
 ) = TextWithIcon(
     rowModifier = rowModifier,
     style = style,
@@ -154,5 +160,7 @@ fun TextWithIcon(
                 .size(size)
                 .then(iconModifier)
         )
-    } else null
+    } else null,
+    verticalAlignment = verticalAlignment,
+    horizontalArrangement = horizontalArrangement
 )

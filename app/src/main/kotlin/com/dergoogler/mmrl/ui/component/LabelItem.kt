@@ -3,7 +3,6 @@ package com.dergoogler.mmrl.ui.component
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -37,20 +36,19 @@ fun LabelItem(
             ),
         contentAlignment = Alignment.Center
     ) {
-        Row {
-            val fontStyle = MaterialTheme.typography.labelSmall.copy(fontSize = 8.sp)
+        val fontStyle = MaterialTheme.typography.labelSmall.copy(fontSize = 8.sp)
 
-            TextWithIcon(
-                rowModifier = Modifier.padding(horizontal = 4.dp),
-                text = when {
-                    upperCase -> text.toUpperCase(Locale.current)
-                    else -> text
-                },
-                icon = icon,
-                style = fontStyle.copy(color = contentColor),
-                tint = contentColor
-            )
-        }
+        TextWithIcon(
+            spacingDp = 4f,
+            rowModifier = Modifier.padding(horizontal = 4.dp),
+            text = when {
+                upperCase -> text.toUpperCase(Locale.current)
+                else -> text
+            },
+            icon = icon,
+            style = fontStyle.copy(color = contentColor),
+            tint = contentColor
+        )
     }
 }
 
@@ -73,7 +71,7 @@ fun MagiskLabel() {
 @Composable
 fun APatchLabel() {
     LabelItem(
-//        icon = R.drawable.apatch_logo,
+        icon = R.drawable.brand_android,
         text = "APatch"
     )
 }
