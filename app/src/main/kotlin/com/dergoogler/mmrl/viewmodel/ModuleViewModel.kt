@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import com.dergoogler.mmrl.Compat
+import com.dergoogler.mmrl.Platform
 import com.dergoogler.mmrl.database.entity.Repo
 import com.dergoogler.mmrl.database.entity.Repo.Companion.toRepo
 import com.dergoogler.mmrl.model.json.UpdateJson
@@ -53,10 +54,8 @@ class ModuleViewModel @Inject constructor(
             with(moduleManager) { versionCode }
         }
 
-    val rootManager: String
-        get() = Compat.get("") {
-            with(moduleManager) { managerName }
-        }
+    val platform: Platform
+        get() = Compat.platform
 
     private val moduleId = getModuleId(savedStateHandle)
     var online: OnlineModule by mutableStateOf(OnlineModule.example())

@@ -13,6 +13,14 @@ class Platform(private val realPlatform: String) {
     val isNotKernelSU get() = realPlatform != kernelSU
     val isNotAPatch get() = realPlatform != apatch
 
+    val current: String
+        get() = when {
+            isMagisk -> magisk
+            isKernelSU -> kernelSU
+            isAPatch -> apatch
+            else -> ""
+        }
+
     fun only(platform: Boolean, block: Platform.() -> Unit) {
         if (platform) {
             block()
