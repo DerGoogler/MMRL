@@ -46,6 +46,8 @@ internal fun RootItem(
                     when {
                         platform.isMagisk -> R.drawable.magisk_logo
                         platform.isKernelSU -> R.drawable.kernelsu_logo
+                        // We'll never see this icon xD
+                        platform.isKernelSuNext -> R.drawable.kernelsu_next_logo
                         platform.isAPatch -> R.drawable.brand_android
                         else -> R.drawable.circle_check_filled
                     }

@@ -305,7 +305,7 @@ fun ListProgressBarItem(
                             color = itemTextStyle.descTextColor
                         )
 
-                        Spacer(modifier = Modifier.width(5.dp))
+                        Spacer(modifier = Modifier.width(8.dp))
                     }
 
                     LinearProgressIndicator(
@@ -318,7 +318,7 @@ fun ListProgressBarItem(
                     )
 
                     endDesc.thenCompose<String> {
-                        Spacer(modifier = Modifier.width(5.dp))
+                        Spacer(modifier = Modifier.width(8.dp))
 
                         Text(
                             text = it,
