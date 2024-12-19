@@ -2,18 +2,18 @@
 <resources>
     <string name="nonfreenet_desc">Modul ini mempromosikan atau bergantung sepenuhnya pada layanan jaringan yang tidak dapat diubah atau berbayar.</string>
     <string name="nonfreeassets_desc">Modul ini berisi aset yang berbayar.</string>
-    <string name="nsfw_desc">Modul ini berisi konten yang tidak boleh dipublikasikan atau dilihat di mana pun.</string>
+    <string name="nsfw_desc">Modul ini berisi konten negatif yang tidak boleh dipublikasikan atau dilihat di mana pun.</string>
     <string name="ads_desc">Modul ini berisi iklan.</string>
-    <string name="knownvuln_name">Kerentanan yang Diketahui</string>
-    <string name="knownvuln_desc">Modul ini berisi kerentanan keamanan yang diketahui.</string>
+    <string name="knownvuln_name">Berisi Celah Keamanan</string>
+    <string name="knownvuln_desc">Modul ini berisi celah keamanan yang telah diketahui.</string>
     <string name="nsfw_name">NSFW</string>
-    <string name="nosourcesince_name">Tidak Ada Sumber Sejak</string>
+    <string name="nosourcesince_name">Sumber Tertutup</string>
     <string name="nonfreeadd_name">Add-on Berbayar</string>
     <string name="nonfreeadd_desc">Modul ini mempromosikan add-on berbayar.</string>
     <string name="nonfreeassets_name">Asset Berbayar</string>
     <string name="nonfreedep_name">Dependensi Berbayar</string>
     <string name="nonfreedep_desc">Modul ini bergantung pada modul berbayar lainnya.</string>
-    <string name="nonfreenet_name">Layanan Jaringan Berbayar</string>
+    <string name="nonfreenet_name">Layanan Jaringan</string>
     <string name="tracking_name">Pelacakan</string>
     <string name="tracking_desc">Modul ini melacak dan mengumpulkan aktivitas Anda.</string>
     <string name="upstreamnonfree_desc">Kode sumber upstream tidak sepenuhnya Gratis.</string>
