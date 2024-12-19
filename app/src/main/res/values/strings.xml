@@ -7,7 +7,6 @@
     <string name="setup_shizuku_desc">Requires permission provided by Sui or Shizuku (root)</string>
     <string name="setup_non_root_title">Non-Root</string>
     <string name="setup_non_root_desc">Not require Root permissions, only the download module function is available</string>
-
     <!-- Install -->
     <string name="install_screen_title">Installation</string>
     <string name="install_flashing">Flashing</string>
@@ -19,23 +18,19 @@
     <string name="install_screen_reboot_text">Are you sure that you want reboot your device?</string>
     <string name="install_screen_reboot_confirm">Confirm</string>
     <string name="install_screen_reboot_dismiss">Dismiss</string>
-
     <!-- License -->
     <string name="license_title">View License</string>
     <string name="license_osi_approved">OSI Approved</string>
     <string name="license_fsf_libre">FSF Libre</string>
-
     <!-- Page -->
     <string name="page_home">Home</string>
     <string name="page_repository">Repository</string>
     <string name="page_modules">Modules</string>
     <string name="page_settings">Settings</string>
-
     <!-- Repository -->
     <string name="repository_empty">Repository is empty</string>
     <string name="module_installed">Installed</string>
     <string name="module_new">New</string>
-
     <!-- Advanced Menu -->
     <string name="menu_pin_installed">Pin Installed</string>
     <string name="menu_pin_updatable">Pin Updatable</string>
@@ -45,7 +40,6 @@
     <string name="menu_show_verified">Show Verified</string>
     <string name="menu_sort_repolistmode_detailed">Detailed</string>
     <string name="menu_sort_repolistmode_compact">Compact</string>
-
     <!-- View Module -->
     <string name="view_module_page_overview">Overview</string>
     <string name="view_module_page_versions">Versions</string>
@@ -73,7 +67,6 @@
     <string name="view_module_unsupported">Unsupported</string>
     <string name="view_module_unsupported_desc">Seems like that you device doesn\'t support this module version. Install at your own risk!</string>
     <string name="view_module_license">License</string>
-
     <!-- View Module / Features -->
     <string name="view_module_features">Features</string>
     <string name="view_module_features_service">Service</string>
@@ -123,7 +116,6 @@
     <string name="view_module_unsupported_arch">Unsupported Architecture</string>
     <string name="view_module_unsupported_arch_desc">Seems like that your device doesn\'t have the support for the required architecture declared by the developer.</string>
     <string name="view_module_unsupported_device_desc">Seems like that your devices is not supported by this modules or has been excluded.</string>
-
     <!-- Modules -->
     <string name="modules_empty">No modules found</string>
     <!-- Module Item -->
@@ -135,7 +127,6 @@
     <string name="module_download">Download</string>
     <string name="module_update">Update</string>
     <string name="module_id">ID: %1$s</string>
-
     <!-- Settings -->
     <string name="settings_app">App</string>
     <string name="settings_app_desc">Settings about MMRL app itself</string>
@@ -155,7 +146,6 @@
     <string name="settings_changelog">Changelog</string>
     <string name="settings_changelo_desc">All current changes within MMRL</string>
     <string name="settings_open_notification_settings">Open Notification Settings</string>
-
     <!-- Root Item -->
     <string name="settings_root_access">Root Access: %s</string>
     <string name="settings_root_provider">Provider: %s</string>
@@ -184,13 +174,11 @@
     <string name="settings_updates_desc">Manage your preferences on the updating process</string>
     <string name="settings_homepage">App homepage</string>
     <string name="settings_homepage_desc">Select the start screen of the app</string>
-
     <string name="settings_auto_update_repos">Auto Update Repo</string>
     <string name="settings_auto_update_repos_desc">Automatically update repos in the background</string>
     <string name="settings_repo_update_interval">Repo Update Interval</string>
     <string name="settings_repo_update_interval_suffix">\u0020hour/s</string>
     <string name="settings_repo_update_interval_desc">Select the time interval for updating the repositories</string>
-
     <string name="settings_check_app_updates">Check for App Updates</string>
     <string name="settings_check_app_updates_desc">Automatically checks for App Updates every time you open the app</string>
     <string name="settings_hide_fingerprint">Hide Fingerprint in Home</string>
@@ -214,12 +202,10 @@
     <string name="settings_modules_desc">Change the behavior of handlers for modules or many more about modules</string>
     <string name="settings_modules_handlers">Handlers</string>
     <string name="settings_modules_installer">Installer</string>
-    <string name="settings_webui_allow_restricted_paths">Allow Restricted Paths</string>
     <string name="settings_webui_allow_restricted_paths_desc">Allows WebUI developers to access paths like /data/data/{package} or /sdcard/Android/obb. Use at your own risk!</string>
     <string name="settings_allow_javascript_api">Allow JavaScript API</string>
     <string name="settings_security_allow_advanced_kernelsu_api">Allow Advanced KernelSU API</string>
     <string name="settings_security_allow_filesystem_api">Allow FileSystem API</string>
-
     <!-- App Theme -->
     <string name="app_theme_palette">Theme Palette</string>
     <string name="app_theme_dark_theme">Dark Theme</string>
@@ -244,12 +230,10 @@
     <string name="about_app_version">Version %1$s (%2$s)</string>
     <string name="about_desc1">Provide modules repositories and Manage modules for Magisk and KernelSU.</string>
     <string name="about_desc2">Made with ❤️ by %s</string>
-
     <!-- Dialog -->
     <string name="dialog_attention">Attention</string>
     <string name="dialog_cancel">Cancel</string>
     <string name="dialog_ok">OK</string>
-
     <!-- Menu -->
     <string name="menu_advanced_menu">Advanced Menu</string>
     <string name="menu_sort_mode">Sort Mode</string>
@@ -260,18 +244,14 @@
     <string name="menu_show_updated">Show Updated Time</string>
     <string name="menu_show_antifeatures">Show Anti-Features</string>
     <string name="menu_export_modules_as_text">Export Modules as Text</string>
-
     <!-- Message -->
     <string name="message_download_success">Download successful</string>
     <string name="message_loading">Loading…</string>
-
     <!-- Notification -->
     <string name="notification_name_download">Download Service</string>
-
     <!-- Search -->
     <string name="search_empty">Empty list</string>
     <string name="search_placeholder">Search…</string>
-
     <!-- Other -->
     <string name="unknown_error">Unknown error</string>
     <string name="verified">Verified</string>
@@ -283,33 +263,28 @@
     <string name="stack_trace_truncated">%s\n… %d more</string>
     <string name="additional_notes">Additional Notes</string>
     <string name="repo_added">Repo added</string>
-
     <!-- Work Manager -->
     <string name="work_repository_updates">Repository Updates</string>
     <string name="work_updates_for_repositories">Updates for repositories</string>
     <string name="work_module_updates">Module Updates</string>
     <string name="work_update_checker_for_modules">Update Checker for Modules</string>
-
     <!-- Repo Update Service -->
     <string name="repo_update_service">Repositories updated successfully</string>
     <string name="repo_update_service_desc">Don\'t worry, MMRL updated your installed repos for you. 😋</string>
     <string name="repo_update_service_failed">No updates found for repositories</string>
     <string name="repo_update_service_failed_desc">There are no updates for repositories</string>
-
     <!-- SELinux -->
     <string name="selinux_status">SELinux status</string>
     <string name="selinux_status_disabled">Disabled</string>
     <string name="selinux_status_enforcing">Enforcing</string>
     <string name="selinux_status_permissive">Permissive</string>
     <string name="selinux_status_unknown">Unknown</string>
-
     <string name="reboot">Reboot</string>
     <string name="reboot_userspace">Soft Reboot</string>
     <string name="reboot_recovery">Reboot to Recovery</string>
     <string name="reboot_bootloader">Reboot to Bootloader</string>
     <string name="reboot_download">Reboot to Download</string>
     <string name="reboot_edl">Reboot to EDL</string>
-
     <string name="home_support_title">Support Me</string>
     <string name="home_support_content">MMRL is, and always will be, free, and open source. You can however show me that you care by making a donation.</string>
     <string name="home_installed_modules">Installed Modules</string>
@@ -317,19 +292,15 @@
     <string name="home_installed_modules_with_service_files">Installed Modules With Service Files</string>
     <string name="home_disabled_modules">Disabled Modules</string>
     <string name="home_updated_modules">Updated Modules</string>
-
     <string name="bulk_install_module_already_added">Module already added</string>
     <string name="bulk_install_module_added">Module added</string>
     <string name="bulk_module_install">Bulk Module Install</string>
     <string name="bulk_add_as_bulk">Add as Bulk</string>
-
     <string name="action_activity">Action</string>
     <string name="action_failure">Action Failure</string>
     <string name="action_executing">Executing…</string>
-
     <string name="generic_disclaimer_title">You are responsible!</string>
     <string name="generic_disclaimer_desc">**MMRL** is not responsible for any damage to your device, including but not limited to bricked devices, corrupted SD cards, thermonuclear wars, or you losing your job because an alarm app malfunctioned. Before proceeding, please thoroughly research the features and risks of using this module. *You are choosing to make these modifications at your own risk*.</string>
-
     <string name="has_a_new_update">%1$s has a new update!</string>
     <string name="update_available_from_to">Update available from %s (%d) to %s (%d).</string>
     <string name="events_birthday">%1$s years MMRL!</string>
