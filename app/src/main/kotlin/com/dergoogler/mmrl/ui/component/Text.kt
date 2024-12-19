@@ -29,6 +29,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.text.HtmlCompat
+import dev.dergoogler.mmrl.compat.ext.thenComposeInvoke
 import dev.dergoogler.mmrl.compat.ext.toAnnotatedString
 
 @Composable
@@ -169,16 +170,16 @@ fun TextWithIcon(
             overflow = overflow,
         )
     },
-    icon = if (icon != null) { size ->
+    icon = icon.thenComposeInvoke<Int, RowScope, Dp> { it, size ->
         Icon(
-            painter = painterResource(id = icon),
+            painter = painterResource(id = it),
             contentDescription = contentDescription,
             tint = tint,
             modifier = Modifier
                 .size(size)
                 .then(iconModifier)
         )
-    } else null,
+    },
     verticalAlignment = verticalAlignment,
     horizontalArrangement = horizontalArrangement
 )
