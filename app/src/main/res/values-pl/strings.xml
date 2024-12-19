@@ -155,7 +155,7 @@
     <string name="setup_shizuku_desc">Wymaga uprawnienia udzielonego przez Sui lub Shizuku (root)</string>
     <string name="view_module_features_resetprop_sub">Ustawia właściwości systemu załadowane przez resetprop Magiska.</string>
     <string name="view_module_features_sepolicy_sub">Dodaje niestandardowe zasady bezpieczeństwa (reguły SEPolicy).</string>
-    <string name="view_module_features_webui_sub">Interfejs sieciowy do zarządzania modułami</string>
+    <string name="view_module_features_webui_sub">Interfejs sieciowy do zarządzania modułami. Użytkownik musi potwierdzić użycie różnych interfejsów API JavaScript.</string>
     <string name="settings_appearance_desc">Dostosuj aplikację do swoich potrzeb</string>
     <string name="settings_blacklist">Czarna lista</string>
     <string name="settings_blacklist_desc">Wymienione moduły mogą być zamknięte lub niebezpieczne</string>
