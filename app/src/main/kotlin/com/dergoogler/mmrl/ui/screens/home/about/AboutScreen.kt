@@ -110,17 +110,18 @@ fun AboutScreen(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-//                    FilledTonalButton(
-//                        onClick = { context.launchCustomTab(Const.TRANSLATE_URL) }
-//                    ) {
-//                        Icon(
-//                            painter = painterResource(id = R.drawable.weblate),
-//                            contentDescription = null,
-//                            modifier = Modifier.size(ButtonDefaults.IconSize)
-//                        )
-//                        Spacer(modifier = Modifier.width(ButtonDefaults.IconSpacing))
-//                        Text(text = stringResource(id = R.string.about_weblate))
-//                    }
+
+                    FilledTonalButton(
+                        onClick = { browser.openUri(Const.TRANSLATE_URL) }
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.weblate),
+                            contentDescription = null,
+                            modifier = Modifier.size(ButtonDefaults.IconSize)
+                        )
+                        Spacer(modifier = Modifier.width(ButtonDefaults.IconSpacing))
+                        Text(text = stringResource(id = R.string.about_weblate))
+                    }
 
                     FilledTonalButton(
                         onClick = { browser.openUri(Const.TELEGRAM_URL) }
