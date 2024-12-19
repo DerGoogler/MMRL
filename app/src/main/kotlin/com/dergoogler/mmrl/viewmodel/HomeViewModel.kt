@@ -1,6 +1,8 @@
 package com.dergoogler.mmrl.viewmodel
 
 import android.app.Application
+import android.os.Environment
+import android.os.StatFs
 import com.dergoogler.mmrl.Compat
 import com.dergoogler.mmrl.Compat.moduleManager
 import com.dergoogler.mmrl.repository.LocalRepository
@@ -39,4 +41,11 @@ class HomeViewModel @Inject constructor(
             reboot(reason)
         }
     }
+
+    val totalStorageGB: Long
+        get() {
+            val statFs = StatFs(Environment.getExternalStorageDirectory().absolutePath)
+            val totalBytes = statFs.blockSizeLong * statFs.blockCountLong
+            return totalBytes / (1024 * 1024 * 1024)
+        }
 }

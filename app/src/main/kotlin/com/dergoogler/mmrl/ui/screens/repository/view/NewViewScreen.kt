@@ -1126,7 +1126,7 @@ private fun FeatureListItem(
     feature: Boolean?,
     @StringRes key: Int,
     @StringRes value: Int,
-    rootSolutions: List<@Composable () -> Unit>? = null,
+    rootSolutions: List<@Composable RowScope.() -> Unit>? = null,
     itemTextStyle: ListItemTextStyle,
 ) {
     if (feature == null) return

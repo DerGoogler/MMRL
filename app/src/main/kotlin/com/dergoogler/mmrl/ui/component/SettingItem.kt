@@ -8,12 +8,15 @@ import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -25,6 +28,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -56,6 +60,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.dergoogler.mmrl.R
+import dev.dergoogler.mmrl.compat.ext.thenCompose
+import dev.dergoogler.mmrl.compat.ext.thenComposeInvoke
 
 @Composable
 fun ListHeader(
@@ -85,9 +91,9 @@ fun ListHeader(
 private fun BaseListContent(
     modifier: Modifier = Modifier,
     title: String,
-    desc: String? = null,
+    desc: (@Composable ColumnScope.() -> Unit)? = null,
     itemTextStyle: ListItemTextStyle = ListItemDefaults.itemStyle(),
-    labels: List<@Composable () -> Unit>? = null,
+    labels: List<@Composable RowScope.() -> Unit>? = null,
 ) {
     Column(
         modifier = modifier.fillMaxWidth(), verticalArrangement = Arrangement.Center
@@ -96,11 +102,7 @@ private fun BaseListContent(
             text = title, style = itemTextStyle.titleTextStyle, color = itemTextStyle.titleTextColor
         )
         desc?.let {
-            Text(
-                text = it,
-                style = itemTextStyle.descTextStyle,
-                color = itemTextStyle.descTextColor
-            )
+            it()
         }
         labels?.let {
             Row(
@@ -116,6 +118,26 @@ private fun BaseListContent(
     }
 }
 
+@Composable
+private fun BaseListContent(
+    modifier: Modifier = Modifier,
+    title: String,
+    desc: String? = null,
+    itemTextStyle: ListItemTextStyle = ListItemDefaults.itemStyle(),
+    labels: List<@Composable RowScope.() -> Unit>? = null,
+) = BaseListContent(
+    modifier = modifier,
+    title = title,
+    desc = desc.thenComposeInvoke<String, ColumnScope> {
+        Text(
+            text = it,
+            style = itemTextStyle.descTextStyle,
+            color = itemTextStyle.descTextColor
+        )
+    },
+    itemTextStyle = itemTextStyle,
+    labels = labels
+)
 
 @Composable
 fun ListItem(
@@ -126,7 +148,7 @@ fun ListItem(
     itemTextStyle: ListItemTextStyle = ListItemDefaults.itemStyle(),
     @DrawableRes icon: Int? = null,
     enabled: Boolean = true,
-    labels: List<@Composable () -> Unit>? = null,
+    labels: List<@Composable RowScope.() -> Unit>? = null,
 ) {
     val layoutDirection = LocalLayoutDirection.current
     val start by remember {
@@ -170,7 +192,7 @@ fun ListButtonItem(
     @DrawableRes icon: Int? = null,
     iconToRight: Boolean = false,
     enabled: Boolean = true,
-    labels: List<@Composable () -> Unit>? = null,
+    labels: List<@Composable RowScope.() -> Unit>? = null,
 ) {
     val layoutDirection = LocalLayoutDirection.current
     val start by remember {
@@ -230,6 +252,88 @@ fun ListButtonItem(
     }
 }
 
+@Composable
+fun ListProgressBarItem(
+    modifier: Modifier = Modifier,
+    title: String,
+    startDesc: String? = null,
+    endDesc: String? = null,
+    progress: Float,
+    progressBarHeight: Dp = 10.dp,
+    progressBarModifier: Modifier = Modifier,
+    contentPaddingValues: PaddingValues = PaddingValues(vertical = 16.dp, horizontal = 25.dp),
+    itemTextStyle: ListItemTextStyle = ListItemDefaults.itemStyle(),
+    @DrawableRes icon: Int? = null,
+    enabled: Boolean = true,
+    labels: List<@Composable RowScope.() -> Unit>? = null,
+) {
+    val layoutDirection = LocalLayoutDirection.current
+    val start by remember {
+        derivedStateOf { contentPaddingValues.calculateStartPadding(layoutDirection) }
+    }
+
+    Row(
+        modifier = modifier
+            .alpha(alpha = if (enabled) 1f else 0.5f)
+            .padding(contentPaddingValues)
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        icon?.let {
+            Icon(
+                modifier = Modifier.size(itemTextStyle.iconSize),
+                painter = painterResource(id = icon),
+                contentDescription = null,
+                tint = LocalContentColor.current
+            )
+
+            Spacer(modifier = Modifier.width(start))
+        }
+
+        BaseListContent(
+            title = title,
+            desc = {
+                Row(
+                    modifier = Modifier
+                        .padding(top = 5.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    startDesc.thenCompose<String> {
+                        Text(
+                            text = it,
+                            style = itemTextStyle.descTextStyle,
+                            color = itemTextStyle.descTextColor
+                        )
+
+                        Spacer(modifier = Modifier.width(5.dp))
+                    }
+
+                    LinearProgressIndicator(
+                        progress = {
+                            progress
+                        },
+                        modifier = Modifier
+                            .height(progressBarHeight)
+                            .then(progressBarModifier),
+                    )
+
+                    endDesc.thenCompose<String> {
+                        Spacer(modifier = Modifier.width(5.dp))
+
+                        Text(
+                            text = it,
+                            style = itemTextStyle.descTextStyle,
+                            color = itemTextStyle.descTextColor
+                        )
+                    }
+                }
+            },
+            itemTextStyle = itemTextStyle,
+            labels = labels
+        )
+    }
+}
+
 
 @Composable
 fun ListCollapseItem(
@@ -241,7 +345,7 @@ fun ListCollapseItem(
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     iconToRight: Boolean = false,
     enabled: Boolean = true,
-    labels: List<@Composable () -> Unit>? = null,
+    labels: List<@Composable RowScope.() -> Unit>? = null,
     isInitiallyExpanded: Boolean = false,
     content: @Composable () -> Unit,
 ) {
@@ -339,7 +443,7 @@ fun ListSwitchItem(
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     @DrawableRes icon: Int? = null,
     enabled: Boolean = true,
-    labels: List<@Composable () -> Unit>? = null,
+    labels: List<@Composable RowScope.() -> Unit>? = null,
 ) {
     val layoutDirection = LocalLayoutDirection.current
     val start by remember {
@@ -402,7 +506,7 @@ fun ListEditTextItem(
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     @DrawableRes icon: Int? = null,
     enabled: Boolean = true,
-    labels: List<@Composable () -> Unit>? = null,
+    labels: List<@Composable RowScope.() -> Unit>? = null,
 ) {
     var open by remember { mutableStateOf(false) }
     if (open) EditTextDialog(
@@ -491,7 +595,7 @@ fun <T> ListRadioCheckItem(
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     @DrawableRes icon: Int? = null,
     enabled: Boolean = true,
-    labels: List<@Composable () -> Unit>? = null,
+    labels: List<@Composable RowScope.() -> Unit>? = null,
 ) {
     var open by remember { mutableStateOf(false) }
     if (open) RadioCheckDialog(

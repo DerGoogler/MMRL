@@ -195,8 +195,6 @@ fun WebUIScreen(
                         addJavascriptInterface(
                             FileInterface(
                                 context = context,
-                                allowRestrictedPaths = userPrefs.webuiAllowRestrictedPaths,
-                                webView = this
                             ),
                             "$${viewModel.sanitizeModIdWithFile(modId)}File"
                         )

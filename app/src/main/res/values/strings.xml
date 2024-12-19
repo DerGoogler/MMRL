@@ -291,6 +291,7 @@
     <string name="home_installed_modules_with_service_files">Installed Modules With Service Files</string>
     <string name="home_disabled_modules">Disabled Modules</string>
     <string name="home_updated_modules">Updated Modules</string>
+    <string name="home_enabled_disabled_modules_ratio">Enabled / Disabled Ratio</string>
     <string name="bulk_install_module_already_added">Module already added</string>
     <string name="bulk_install_module_added">Module added</string>
     <string name="bulk_module_install">Bulk Module Install</string>

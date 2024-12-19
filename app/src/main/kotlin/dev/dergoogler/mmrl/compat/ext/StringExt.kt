@@ -49,3 +49,5 @@ fun CharSequence?.isNotNullOrBlank(): Boolean {
 
     return !this.isNullOrBlank()
 }
+
+fun <T, R> String?.nullable(param: T, block: (T) -> R): R? = if (this != null) block(param) else null

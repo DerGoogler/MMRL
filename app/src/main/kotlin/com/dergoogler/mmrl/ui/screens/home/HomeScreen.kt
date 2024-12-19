@@ -34,6 +34,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
@@ -49,6 +50,7 @@ import com.dergoogler.mmrl.model.online.Changelog
 import com.dergoogler.mmrl.network.runRequest
 import com.dergoogler.mmrl.stub.IMMRLApiManager
 import com.dergoogler.mmrl.ui.component.ListItem
+import com.dergoogler.mmrl.ui.component.ListProgressBarItem
 import com.dergoogler.mmrl.ui.component.TopAppBarIcon
 import com.dergoogler.mmrl.ui.navigation.graphs.HomeScreen
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
@@ -235,21 +237,39 @@ fun HomeScreen(
                             title = stringResource(R.string.home_installed_modules),
                             desc = stats.totalModules.toString()
                         )
+
                         ListItem(
                             contentPaddingValues = listItemContentPaddingValues,
                             title = stringResource(R.string.home_enabled_modules),
                             desc = stats.enabledModules.toString()
                         )
+
                         ListItem(
                             contentPaddingValues = listItemContentPaddingValues,
                             title = stringResource(R.string.home_installed_modules_with_service_files),
                             desc = stats.modulesWithServiceFiles.toString()
                         )
+
                         ListItem(
                             contentPaddingValues = listItemContentPaddingValues,
                             title = stringResource(R.string.home_disabled_modules),
                             desc = stats.disabledModules.toString()
                         )
+
+                        val ratio =
+                            (stats.enabledModules.toFloat() / stats.disabledModules.toFloat()) / 10
+
+                        Timber.d("$ratio")
+
+                        ListProgressBarItem(
+                            progressBarModifier = Modifier.graphicsLayer(rotationZ = 180f).weight(1f),
+                            contentPaddingValues = listItemContentPaddingValues,
+                            startDesc = stats.enabledModules.toString(),
+                            endDesc = stats.disabledModules.toString(),
+                            title = stringResource(R.string.home_enabled_disabled_modules_ratio),
+                            progress = ratio,
+                        )
+
                         ListItem(
                             contentPaddingValues = listItemContentPaddingValues,
                             title = stringResource(R.string.home_updated_modules),

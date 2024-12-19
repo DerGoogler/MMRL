@@ -5,6 +5,7 @@ import android.os.Build
 import android.os.PowerManager
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -57,7 +58,7 @@ fun RebootBottomSheet(
 @Composable
 private fun RebootItem(
     enabled: Boolean = true,
-    labels: List<@Composable () -> Unit>? = null,
+    labels: List<@Composable RowScope.() -> Unit>? = null,
     viewModel: HomeViewModel = hiltViewModel(),
     @StringRes title: Int, reason: String = "",
 ) {
