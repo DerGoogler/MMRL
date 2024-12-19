@@ -857,7 +857,7 @@ fun NewViewScreen(
                             feature = it.action,
                             key = R.string.view_module_features_action,
                             value = R.string.view_module_features_action_sub,
-                            rootSolutions = listOf { KernelSuLabel(); APatchLabel() }
+                            rootSolutions = listOf { KernelSuLabel(); APatchLabel(); MMRLLabel() }
                         )
                         FeatureListItem(
                             itemTextStyle = subListItemStyle,
