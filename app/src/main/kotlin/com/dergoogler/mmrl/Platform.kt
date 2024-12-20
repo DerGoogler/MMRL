@@ -3,7 +3,7 @@ package com.dergoogler.mmrl
 class Platform(private val realPlatform: String) {
     private val magisk = "magisk"
     private val kernelSU = "kernelsu"
-    private val kernelSuNext = "kernelsunext"
+    private val kernelSuNext = "ksunext"
     private val apatch = "apatch"
 
     val isMagisk get() = realPlatform == magisk

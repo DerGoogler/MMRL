@@ -259,8 +259,6 @@ fun HomeScreen(
                         val ratio =
                             (stats.enabledModules.toFloat() / stats.disabledModules.toFloat()) / 10
 
-                        Timber.d("$ratio")
-
                         ListProgressBarItem(
                             progressBarModifier = Modifier.graphicsLayer(rotationZ = 180f).weight(1f),
                             contentPaddingValues = listItemContentPaddingValues,

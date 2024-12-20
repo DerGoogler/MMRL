@@ -130,6 +130,7 @@ Example:
 > This property overrides the following properties in MMRL
 > - `manager.magisk.devices`
 > - `manager.kernelsu.devices`
+> - `manager.ksunext.devices`
 > - `manager.apatch.devices`
 >
 > Once this property is set, the above will be ignored.
@@ -152,6 +153,7 @@ Example:
 > This property overrides the following properties in MMRL
 > - `manager.magisk.arch`
 > - `manager.kernelsu.arch`
+> - `manager.ksunext.arch`
 > - `manager.apatch.arch`
 >
 > Once this property is set, the above will be ignored.
@@ -172,6 +174,7 @@ Example:
 > This property overrides the following properties in MMRL
 > - `manager.magisk.require`
 > - `manager.kernelsu.require`
+> - `manager.ksunext.require`
 > - `manager.apatch.require`
 >
 > Once this property is set, the above will be ignored.
@@ -214,6 +217,7 @@ Available namespaces for `manager`
 
 - `magisk`
 - `kernelsu`
+- `ksunext`
 - `apatch`
 
 _<sub>See also [FILE>require](#require), [FILE>devices](#devices), [FILE>arch](#arch)</sub>_

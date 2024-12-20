@@ -5,7 +5,7 @@ import dev.dergoogler.mmrl.compat.content.BulkModule
 import dev.dergoogler.mmrl.compat.stub.IModuleOpsCallback
 import dev.dergoogler.mmrl.compat.stub.IShellCallback
 
-internal class KernelSUModuleManagerImpl(
+internal open class KernelSUModuleManagerImpl(
     shell: Shell,
 ) : BaseModuleManagerImpl(shell) {
     override fun getManagerName(): String {

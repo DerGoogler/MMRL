@@ -3,6 +3,7 @@ package com.dergoogler.mmrl.model.online
 import android.annotation.SuppressLint
 import android.os.Build
 import androidx.compose.runtime.Composable
+import com.dergoogler.mmrl.Platform
 import com.squareup.moshi.JsonClass
 import dev.dergoogler.mmrl.compat.ext.isNotNullOrEmpty
 
@@ -10,19 +11,24 @@ import dev.dergoogler.mmrl.compat.ext.isNotNullOrEmpty
 data class ModuleManager(
     val magisk: ModuleManagerSolution? = null,
     val kernelsu: ModuleManagerSolution? = null,
+    val ksunext: ModuleManagerSolution? = null,
     val apatch: ModuleManagerSolution? = null,
 ) {
-    operator fun get(solution: String) = when (solution.lowercase()) {
-        "magisk" -> magisk
-        "kernelsu" -> kernelsu
-        "apatch" -> apatch
-        else -> ModuleManagerSolution()
+    operator fun get(platform: Platform) = with(platform) {
+        when {
+            isMagisk -> magisk
+            isKernelSU -> kernelsu
+            isKernelSuNext -> ksunext
+            isAPatch -> apatch
+            else -> ModuleManagerSolution()
+        }
     }
 
     val all: List<ModuleManagerSolution>
         get() = listOfNotNull(
             magisk,
             kernelsu,
+            ksunext,
             apatch,
         )
 }
@@ -50,7 +56,8 @@ data class ModuleManagerSolution(
     ) = min != null && version < min || min == -1
 
     private fun isNotSupportedDevice() =
-        devices.isNotNullOrEmpty() && !devices.map { it.lowercase() }.contains(Build.MODEL.lowercase())
+        devices.isNotNullOrEmpty() && !devices.map { it.lowercase() }
+            .contains(Build.MODEL.lowercase())
 
     @SuppressLint("ComposableNaming")
     @Composable

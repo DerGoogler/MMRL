@@ -2,6 +2,7 @@ package com.dergoogler.mmrl.model.online
 
 import android.annotation.SuppressLint
 import androidx.compose.runtime.Composable
+import com.dergoogler.mmrl.Platform
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.utils.Utils
 import com.squareup.moshi.JsonClass
@@ -70,26 +71,27 @@ data class OnlineModule(
 
     private fun <T : List<String>> getFromModuleManagerOrDefault(
         default: T?,
-        solution: String,
+        platform: Platform,
         extractor: (ModuleManagerSolution?) -> T?,
     ): T? {
         return default.takeIf { it.isNotNullOrEmpty() }
-            ?: manager?.let { extractor(it[solution]) }.takeIf { it.isNotNullOrEmpty() }
+            ?: manager?.let { extractor(it[platform]) }.takeIf { it.isNotNullOrEmpty() }
     }
 
-    private fun requires(solution: String) =
-        getFromModuleManagerOrDefault(require, solution) { it?.require }
+    private fun requires(platform: Platform) =
+        getFromModuleManagerOrDefault(require, platform) { it?.require }
 
-    private fun devices(solution: String) =
-        getFromModuleManagerOrDefault(devices, solution) { it?.devices }
+    private fun devices(platform: Platform) =
+        getFromModuleManagerOrDefault(devices, platform) { it?.devices }
 
-    private fun arch(solution: String) = getFromModuleManagerOrDefault(arch, solution) { it?.arch }
+    private fun arch(platform: Platform) =
+        getFromModuleManagerOrDefault(arch, platform) { it?.arch }
 
-    fun manager(solution: String) = ModuleManagerSolution(
-        min = manager?.get(solution)?.min,
-        devices = devices(solution),
-        arch = arch(solution),
-        require = requires(solution)
+    fun manager(platform: Platform) = ModuleManagerSolution(
+        min = manager?.get(platform)?.min,
+        devices = devices(platform),
+        arch = arch(platform),
+        require = requires(platform)
     )
 
     @Composable

@@ -169,7 +169,7 @@ fun NewViewScreen(
 
     var menuExpanded by remember { mutableStateOf(false) }
 
-    val manager = module.manager(viewModel.platform.current)
+    val manager = module.manager(viewModel.platform)
     val requires = manager.require?.let {
         repositoryList.filter { onlineModules ->
             onlineModules.second.id in it
