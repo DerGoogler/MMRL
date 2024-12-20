@@ -20,7 +20,7 @@ internal class ServiceManagerImpl : IServiceManager.Stub() {
         when {
             "which magisk".execResult() -> Platform.Magisk
             "which ksud".execResult() -> Platform.KernelSU
-            "`which kusd` | grep -qE \"KernelSU-Next|KernelSU Next\" && exit 0 || exit 1".execResult() -> Platform.KsuNext
+            "(`which ksud` | grep -qE \"KernelSU-Next|KernelSU Next\") && (pm list packages | grep -q \"com.rifsxd.ksunext\") && exit 0 || exit 1".execResult() -> Platform.KsuNext
             "which apd".execResult() -> Platform.APatch
             else -> throw IllegalArgumentException("unsupported platform: $seLinuxContext")
         }
