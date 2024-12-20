@@ -290,4 +290,5 @@
     <string name="menu_export_modules_as_text">Exportar módulos como texto</string>
     <string name="settings_allow_javascript_api">Permitir API JavaScript</string>
     <string name="home_enabled_disabled_modules_ratio">Proporção de Habilitados/Desabilitados</string>
+    <string name="copy_logs">Copiar Logs</string>
 </resources>
