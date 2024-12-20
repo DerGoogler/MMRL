@@ -315,5 +315,5 @@
     <string name="settings_allow_javascript_api">准許 JavaScript 程式權限</string>
     <string name="settings_security_allow_filesystem_api">准許檔案系統存取</string>
     <string name="menu_export_modules_as_text">匯出模組為文字檔</string>
-    <string name="home_enabled_disabled_modules_ratio">已啟用/已停用比率</string>
+    <string name="home_enabled_disabled_modules_ratio">已啟用/已停用占比</string>
 </resources>
