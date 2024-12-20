@@ -84,7 +84,7 @@
     <string name="view_module_features_sepolicy_sub">カスタムセキュリティポリシーを追加します (SE ポリシールール)。</string>
     <string name="view_module_features_zygisk_sub">モジュールが Zygisk フレームワークと対話可能にして、システムレベルの変更と対話ができる状態にします。</string>
     <string name="view_module_features_apks_sub">モジュール内に追加の APK が含まれています。</string>
-    <string name="view_module_features_webui_sub">Web インターフェースの管理モジュール</string>
+    <string name="view_module_features_webui_sub">モジュールを管理するための Web インターフェースです。ユーザーは様々な JavaScript API の使用を確認する必要があります。</string>
     <string name="view_module_features_postmount_sub">OverlayFS マウント後にスクリプトを実行</string>
     <string name="view_module_features_bootcompleted_sub">ブート完了後にスクリプトを実行</string>
     <string name="view_module_module_support">モジュールのサポート</string>
@@ -311,4 +311,10 @@
     <string name="view_module_unsupported_arch_desc">使用しているデバイスは、開発者が宣言した必要なアーキテクチャに対応していないようです。</string>
     <string name="settings_modules">モジュールとインストーラー</string>
     <string name="action_activity">アクション</string>
+    <string name="settings_security_allow_filesystem_api">ファイルシステム API を許可</string>
+    <string name="settings_security_allow_advanced_kernelsu_api">高度な KernelSU API を許可</string>
+    <string name="menu_export_modules_as_text">モジュールをテキストでエクスポート</string>
+    <string name="home_enabled_disabled_modules_ratio">比率を有効化または無効化</string>
+    <string name="copy_logs">ログをコピー</string>
+    <string name="settings_allow_javascript_api">JavaScript API を許可</string>
 </resources>
