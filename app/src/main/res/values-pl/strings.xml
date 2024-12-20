@@ -290,4 +290,5 @@
     <string name="settings_security_allow_advanced_kernelsu_api">Zezwól na zaawansowane API KernelSU</string>
     <string name="settings_security_allow_filesystem_api">Zezwól na API FileSystem</string>
     <string name="menu_export_modules_as_text">Eksportuj moduły jako tekst</string>
+    <string name="home_enabled_disabled_modules_ratio">Współczynnik włączeń / wyłączeń</string>
 </resources>
