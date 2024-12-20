@@ -24,7 +24,7 @@ import com.dergoogler.mmrl.ui.component.LabelItem
 import com.dergoogler.mmrl.ui.component.ListButtonItem
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.viewmodel.HomeViewModel
-import dev.dergoogler.mmrl.compat.then
+import dev.dergoogler.mmrl.compat.ext.nullable
 
 @Composable
 fun RebootBottomSheet(
@@ -44,7 +44,7 @@ fun RebootBottomSheet(
         RebootItem(
             enabled = hasSoftReboot,
             title = R.string.reboot_userspace,
-            labels = !hasSoftReboot then listOf { LabelItem("Android +11") },
+            labels = !hasSoftReboot nullable listOf { LabelItem("Android +11") },
             reason = "userspace"
         )
 

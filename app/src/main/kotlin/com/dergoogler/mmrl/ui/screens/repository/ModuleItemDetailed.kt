@@ -34,8 +34,8 @@ import com.dergoogler.mmrl.ui.component.LabelItem
 import com.dergoogler.mmrl.ui.component.Logo
 import com.dergoogler.mmrl.ui.component.TextWithIcon
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
+import dev.dergoogler.mmrl.compat.ext.nullable
 import dev.dergoogler.mmrl.compat.ext.toFormattedDateSafely
-import dev.dergoogler.mmrl.compat.then
 
 @Composable
 fun ModuleItemDetailed(
@@ -111,7 +111,7 @@ fun ModuleItemDetailed(
                             textDecoration = decoration
                         ),
                         text = module.name,
-                        icon = module.isVerified then R.drawable.rosette_discount_check,
+                        icon = module.isVerified nullable R.drawable.rosette_discount_check,
                         tint = MaterialTheme.colorScheme.surfaceTint,
                         rightIcon = true,
                         iconScalingFactor = 1.0f,

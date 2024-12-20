@@ -39,9 +39,9 @@ import com.dergoogler.mmrl.model.local.versionDisplay
 import com.dergoogler.mmrl.ui.component.TextWithIcon
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import dev.dergoogler.mmrl.compat.activity.MMRLComponentActivity
+import dev.dergoogler.mmrl.compat.ext.nullable
 import dev.dergoogler.mmrl.compat.ext.takeTrue
 import dev.dergoogler.mmrl.compat.ext.toFormattedDateSafely
-import dev.dergoogler.mmrl.compat.then
 
 @Composable
 fun ModuleItem(
@@ -62,19 +62,23 @@ fun ModuleItem(
     val userPreferences = LocalUserPreferences.current
     val menu = userPreferences.modulesMenu
     val context = LocalContext.current
-    val openWebUi = Modifier.clickable(
-        onClick = {
-            MMRLComponentActivity.startWebUIActivity(
-                context = context,
-                modId = module.id
-            )
-        }
-    )
+
+    val canWenUIAccessed = module.runners.webui && module.state != State.REMOVE
+    val openWebUi = Modifier
+        .clickable(
+            onClick = {
+                MMRLComponentActivity.startWebUIActivity(
+                    context = context,
+                    modId = module.id
+                )
+            }
+        )
+        .nullable(canWenUIAccessed, Modifier) { it }
 
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .then(if (module.runners.webui && module.state != State.REMOVE) openWebUi else Modifier),
+            .then(openWebUi),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -96,7 +100,7 @@ fun ModuleItem(
 
                     TextWithIcon(
                         text = module.name,
-                        icon = module.runners.webui then icon,
+                        icon = module.runners.webui nullable icon,
                         style = MaterialTheme.typography.titleSmall
                     )
 

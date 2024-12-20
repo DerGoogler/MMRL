@@ -25,7 +25,7 @@ import com.dergoogler.mmrl.ui.component.BottomSheet
 import com.dergoogler.mmrl.ui.component.LabelItem
 import com.dergoogler.mmrl.ui.component.ListButtonItem
 import com.dergoogler.mmrl.ui.component.MarkdownText
-import dev.dergoogler.mmrl.compat.then
+import dev.dergoogler.mmrl.compat.ext.nullable
 
 
 @Composable
@@ -41,7 +41,7 @@ fun ChangelogItem(
         title = changelog.versionName,
         desc = "${changelog.versionCode}",
         onClick = { open = true },
-        labels = changelog.preRelease then listOf {
+        labels = changelog.preRelease nullable listOf {
             LabelItem(
                 text = stringResource(
                     id = R.string.pre_release

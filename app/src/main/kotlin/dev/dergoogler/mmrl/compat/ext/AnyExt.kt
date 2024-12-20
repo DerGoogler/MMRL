@@ -2,58 +2,6 @@ package dev.dergoogler.mmrl.compat.ext
 
 import android.annotation.SuppressLint
 import androidx.compose.runtime.Composable
-import kotlin.contracts.ExperimentalContracts
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
-
-/**
- * An infix function that returns the provided parameter if the current object is non-null; otherwise, returns null.
- *
- * @param param The value to return if the receiver is non-null.
- * @return The parameter value if the receiver is non-null, or null otherwise.
- */
-infix fun <T> Any?.nullable(param: T): T? = if (this != null) param else null
-
-/**
- * Executes a block of code if the receiver is non-null and returns its result; otherwise, returns null.
- *
- * @param block The lambda function to execute if the receiver is non-null.
- * @return The result of the block if the receiver is non-null, or null otherwise.
- */
-@OptIn(ExperimentalContracts::class)
-inline fun <T, R> T?.nullable(block: (T) -> R): R? {
-    contract {
-        callsInPlace(block, InvocationKind.EXACTLY_ONCE)
-    }
-
-    return if (this != null) {
-        block(this)
-    } else {
-        null
-    }
-}
-
-/**
- * Executes a block of code if the receiver is non-null and returns its result;
- * otherwise, returns the provided default value.
- *
- * @param default The value to return if the receiver is null.
- * @param block The lambda function to execute if the receiver is non-null.
- * @return The result of the block if the receiver is non-null, or the default value otherwise.
- */
-@OptIn(ExperimentalContracts::class)
-inline fun <T, R> T?.nullable(default: R, block: (T) -> R): R {
-    contract {
-        callsInPlace(block, InvocationKind.EXACTLY_ONCE)
-    }
-
-    return if (this != null) {
-        block(this)
-    } else {
-        default
-    }
-}
-
 
 @SuppressLint("ComposableNaming")
 @Composable

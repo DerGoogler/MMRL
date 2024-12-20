@@ -107,11 +107,11 @@ import dev.dergoogler.mmrl.compat.activity.MMRLComponentActivity
 import dev.dergoogler.mmrl.compat.ext.ifNotEmpty
 import dev.dergoogler.mmrl.compat.ext.ifNotNullOrBlank
 import dev.dergoogler.mmrl.compat.ext.isNotNullOrBlank
+import dev.dergoogler.mmrl.compat.ext.nullable
 import dev.dergoogler.mmrl.compat.ext.shareText
 import dev.dergoogler.mmrl.compat.ext.takeTrue
 import dev.dergoogler.mmrl.compat.ext.toFormatedFileSize
 import dev.dergoogler.mmrl.compat.ext.toFormattedDateSafely
-import dev.dergoogler.mmrl.compat.then
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -423,7 +423,7 @@ fun NewViewScreen(
                     TextWithIcon(
                         style = MaterialTheme.typography.titleLarge,
                         text = module.name,
-                        icon = module.isVerified then R.drawable.rosette_discount_check,
+                        icon = module.isVerified nullable R.drawable.rosette_discount_check,
                         tint = MaterialTheme.colorScheme.surfaceTint,
                         rightIcon = true,
                         iconScalingFactor = 1.0f,
