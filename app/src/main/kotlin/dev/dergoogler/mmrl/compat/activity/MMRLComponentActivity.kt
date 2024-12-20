@@ -30,6 +30,7 @@ import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import dev.dergoogler.mmrl.compat.BuildCompat
+import dev.dergoogler.mmrl.compat.core.BrickException
 import dev.dergoogler.mmrl.compat.core.MMRLUriHandler
 import timber.log.Timber
 import javax.inject.Inject
@@ -83,6 +84,9 @@ open class MMRLComponentActivity : ComponentActivity() {
     private fun startCrashActivity(thread: Thread, throwable: Throwable) {
         val intent = Intent(this, CrashHandlerActivity::class.java).apply {
             putExtra("message", throwable.message)
+            if (throwable is BrickException) {
+                putExtra("helpMessage", throwable.helpMessage)
+            }
             putExtra("stacktrace", formatStackTrace(throwable))
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }

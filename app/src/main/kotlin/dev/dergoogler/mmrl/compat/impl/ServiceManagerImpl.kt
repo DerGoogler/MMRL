@@ -3,8 +3,10 @@ package dev.dergoogler.mmrl.compat.impl
 //import android.os.IPowerManager // what huh?
 import android.os.SELinux
 import android.system.Os
+import com.dergoogler.mmrl.app.Const
 import com.topjohnwu.superuser.Shell
 import com.topjohnwu.superuser.ShellUtils
+import dev.dergoogler.mmrl.compat.core.BrickException
 import dev.dergoogler.mmrl.compat.stub.IFileManager
 import dev.dergoogler.mmrl.compat.stub.IModuleManager
 import dev.dergoogler.mmrl.compat.stub.IServiceManager
@@ -22,7 +24,15 @@ internal class ServiceManagerImpl : IServiceManager.Stub() {
             "which ksud".execResult() -> Platform.KernelSU
             "(`which ksud` | grep -qE \"KernelSU-Next|KernelSU Next\") && (pm list packages | grep -q \"com.rifsxd.ksunext\") && exit 0 || exit 1".execResult() -> Platform.KsuNext
             "which apd".execResult() -> Platform.APatch
-            else -> throw IllegalArgumentException("unsupported platform: $seLinuxContext")
+            else -> throw BrickException(
+                "unsupported platform: $seLinuxContext",
+                """Try to remove root permission from MMRL, close MMRL, give again permissions and try again. If this issue persists please report this to our GitHub [issues](${Const.GITHUB_ISSUES_URL}) not on Google Play reviews!
+**Required is following**
+- Device specs
+- Root provider
+- Logs *(you can press the button at the end of the page to copy)*
+- A way to reproduce the issue""".trimIndent()
+            )
         }
     }
 

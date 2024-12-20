@@ -16,6 +16,7 @@ object Const {
     const val RESOURCES_URL = "https://github.com/DerGoogler/MMRL/wiki"
     const val TRANSLATE_URL = "https://hosted.weblate.org/projects/mmrl/"
     const val GITHUB_URL = "https://github.com/DerGoogler/MMRL"
+    const val GITHUB_ISSUES_URL = "https://github.com/DerGoogler/MMRL"
     const val TELEGRAM_URL = "https://t.me/GooglersRepo"
     const val DEMO_REPO_URL = "https://gr.dergoogler.com/gmr/"
     const val SPDX_URL = "https://spdx.org/licenses/%s.json"

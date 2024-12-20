@@ -11,11 +11,13 @@ class CrashHandlerActivity : MMRLComponentActivity() {
 
         val message = intent.getStringExtra("message") ?: "Unknown Message"
         val stacktrace = intent.getStringExtra("stacktrace") ?: "Unknown Stacktrace"
+        val helpMessage = intent.getStringExtra("helpMessage")
 
         setBaseContent {
             CrashHandlerScreen(
                 message = message,
-                stacktrace = stacktrace
+                stacktrace = stacktrace,
+                helpMessage = helpMessage
             )
         }
     }
