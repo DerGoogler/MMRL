@@ -18,9 +18,22 @@ inline fun <reified T, reified S> Any?.thenComposeInvoke(crossinline block: @Com
 @SuppressLint("ComposableNaming")
 @Composable
 inline fun <reified T, reified S, reified A> Any?.thenComposeInvoke(
-    crossinline block: @Composable S.(T, A) -> Unit
+    crossinline block: @Composable S.(T, A) -> Unit,
 ): (@Composable S.(A) -> Unit)? {
     return if (this != null) {
+        { arg: A -> block(this, this@thenComposeInvoke as T, arg) }
+    } else {
+        null
+    }
+}
+
+@SuppressLint("ComposableNaming")
+@Composable
+inline fun <reified T, reified S, reified A> Any?.thenComposeInvoke(
+    statement: Boolean,
+    crossinline block: @Composable S.(T, A) -> Unit,
+): (@Composable S.(A) -> Unit)? {
+    return if (statement && this != null) {
         { arg: A -> block(this, this@thenComposeInvoke as T, arg) }
     } else {
         null
@@ -39,7 +52,21 @@ inline fun <reified T> Any?.thenComposeInvoke(crossinline block: @Composable (T)
 
 @SuppressLint("ComposableNaming")
 @Composable
-inline fun <reified T> Any?.thenCompose(crossinline block: @Composable (T) -> Unit): Unit? = this.thenComposeInvoke<T>(block)?.invoke()
+inline fun <reified T> Any?.thenComposeInvoke(
+    statement: Boolean,
+    crossinline block: @Composable (T) -> Unit,
+): (@Composable () -> Unit)? {
+    return if (statement && this != null) {
+        { block(this@thenComposeInvoke as T) }
+    } else {
+        null
+    }
+}
+
+@SuppressLint("ComposableNaming")
+@Composable
+inline fun <reified T> Any?.thenCompose(crossinline block: @Composable (T) -> Unit): Unit? =
+    this.thenComposeInvoke<T>(block)?.invoke()
 //
 //@SuppressLint("ComposableNaming")
 //@Composable

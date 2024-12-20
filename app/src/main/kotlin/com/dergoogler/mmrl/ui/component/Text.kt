@@ -102,7 +102,7 @@ fun BulletList(
 
 @Composable
 fun TextWithIcon(
-    text: @Composable RowScope.(TextStyle) -> Unit,
+    text: (@Composable RowScope.(TextStyle) -> Unit)? = null,
     icon: (@Composable RowScope.(Dp) -> Unit)? = null,
     style: TextStyle = LocalTextStyle.current,
     @SuppressLint("ModifierParameter") rowModifier: Modifier = Modifier,
@@ -115,6 +115,8 @@ fun TextWithIcon(
     horizontalArrangement: Arrangement.Horizontal = Arrangement.Center,
     verticalAlignment: Alignment.Vertical = Alignment.CenterVertically,
 ) {
+    if (text == null && icon == null) return
+
     val iconSize = with(LocalDensity.current) { style.fontSize.toDp() * iconScalingFactor }
     val spacer = with(LocalDensity.current) { spacing.toDp() }
 
@@ -127,7 +129,9 @@ fun TextWithIcon(
             icon(iconSize)
             Spacer(modifier = Modifier.width(spacer))
         }
-        text(style)
+        if (text != null) {
+            text(style)
+        }
         if (icon != null && rightIcon) {
             Spacer(modifier = Modifier.width(spacer))
             icon(iconSize)
@@ -149,6 +153,7 @@ fun TextWithIcon(
     spacing: Float = 11.428572f,
     maxLines: Int = Int.MAX_VALUE,
     overflow: TextOverflow = TextOverflow.Clip,
+    showText: Boolean = true,
     /**
      * Moved the icon to the right of the text.
      */
@@ -161,9 +166,9 @@ fun TextWithIcon(
     iconScalingFactor = iconScalingFactor,
     spacing = spacing,
     rightIcon = rightIcon,
-    text = { stl ->
+    text = text.thenComposeInvoke<String, RowScope, TextStyle>(showText) { it, stl ->
         Text(
-            text = text,
+            text = it,
             style = stl,
             modifier = textModifier,
             maxLines = maxLines,

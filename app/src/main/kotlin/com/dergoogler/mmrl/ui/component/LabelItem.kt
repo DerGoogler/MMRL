@@ -25,6 +25,7 @@ fun LabelItem(
     containerColor: Color = MaterialTheme.colorScheme.primary,
     contentColor: Color = MaterialTheme.colorScheme.onPrimary,
     shape: Shape = RoundedCornerShape(3.dp),
+    showText: Boolean = true,
     upperCase: Boolean = true,
 ) {
     if (text.isBlank()) return
@@ -47,6 +48,7 @@ fun LabelItem(
                 upperCase -> text.toUpperCase(Locale.current)
                 else -> text
             },
+            showText = showText,
             icon = icon,
             style = fontStyle.copy(color = contentColor),
             tint = contentColor
