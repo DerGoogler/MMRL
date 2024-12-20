@@ -67,5 +67,10 @@ internal class ServiceManagerImpl : IServiceManager.Stub() {
         exitProcess(0)
     }
 
-    private fun String.execResult() = ShellUtils.fastCmdResult(main, this)
+    private fun String.execResult() = ShellUtils.fastCmdResult(
+        main, *arrayOf(
+            "export PATH=/data/adb/ksu/bin:/data/adb/ap/bin:/data/adb/magisk:\$PATH",
+            this
+        )
+    )
 }
