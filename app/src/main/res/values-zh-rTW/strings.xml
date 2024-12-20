@@ -311,9 +311,9 @@
     <string name="bulk_add_as_bulk">新增至模組安裝列表</string>
     <string name="settings_modules_installer">安裝程序</string>
     <string name="generic_disclaimer_desc">若因自身裝置變故而蒙受損失（不限於無法開機、SD 卡故障、引發熱核子戰爭，或是鬧鐘應用程式秀逗而讓你被炒魷魚），**MMRL** 概不負責。執行之前，請確認好本功能之於模組的作用與風險。*在你同意進行模組修改過後，其風險責任應由你承擔*。</string>
-    <string name="settings_security_allow_advanced_kernelsu_api">准許 KernelSU 存取</string>
-    <string name="settings_allow_javascript_api">准許 JavaScript 程式權限</string>
-    <string name="settings_security_allow_filesystem_api">准許檔案系統存取</string>
+    <string name="settings_security_allow_advanced_kernelsu_api">KernelSU 進階存取權</string>
+    <string name="settings_allow_javascript_api">為 JavaScript 程式授予權限</string>
+    <string name="settings_security_allow_filesystem_api">檔案系統存取權</string>
     <string name="menu_export_modules_as_text">匯出模組為文字檔</string>
     <string name="home_enabled_disabled_modules_ratio">已啟用/已停用占比</string>
 </resources>
