@@ -5,7 +5,9 @@ option java_multiple_files = true;
 
 enum WorkingMode {
   FIRST_SETUP = 0;
-  MODE_ROOT = 1;
-  MODE_NON_ROOT = 2;
-  MODE_SHIZUKU = 3;
+  MODE_MAGISK = 1;
+  MODE_KERNEL_SU = 2;
+  MODE_KERNEL_SU_NEXT = 3;
+  MODE_APATCH = 4;
+  MODE_NON_ROOT = 5;
 }

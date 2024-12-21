@@ -5,7 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.IBinder
+import com.dergoogler.mmrl.datastore.WorkingMode
 import com.topjohnwu.superuser.Shell
 import com.topjohnwu.superuser.ipc.RootService
 import dev.dergoogler.mmrl.compat.delegate.ContextDelegate
@@ -41,7 +43,7 @@ object ServiceManagerCompat {
     }
 
     private suspend fun get(
-        provider: IProvider
+        provider: IProvider,
     ) = withTimeout(TIMEOUT_MILLIS) {
         suspendCancellableCoroutine { continuation ->
             val connection = object : ServiceConnection {
@@ -105,7 +107,7 @@ object ServiceManagerCompat {
                 val listener = object : Shizuku.OnRequestPermissionResultListener {
                     override fun onRequestPermissionResult(
                         requestCode: Int,
-                        grantResult: Int
+                        grantResult: Int,
                     ) {
                         Shizuku.removeRequestPermissionResultListener(this)
                         continuation.resume(isGranted)
@@ -135,20 +137,40 @@ object ServiceManagerCompat {
 
     private class SuService : RootService() {
         override fun onBind(intent: Intent): IBinder {
-            return ServiceManagerImpl()
+            val mode = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                intent.getSerializableExtra(WORKING_MODE_KEY, WorkingMode::class.java)
+                    ?: WorkingMode.MODE_NON_ROOT
+            } else {
+                @Suppress("DEPRECATION")
+                intent.getSerializableExtra(WORKING_MODE_KEY) as WorkingMode
+            }
+
+            return ServiceManagerImpl(mode)
         }
 
         companion object {
-            val intent get() = Intent().apply {
+            val intent
+                get() = Intent().apply {
+                    component = ComponentName(
+                        context.packageName,
+                        SuService::class.java.name
+                    )
+                }
+            private const val WORKING_MODE_KEY = "WORKING_MODE"
+
+            fun getIntent(context: Context, mode: WorkingMode) = Intent().apply {
                 component = ComponentName(
                     context.packageName,
                     SuService::class.java.name
                 )
+                putExtra(WORKING_MODE_KEY, mode)
             }
         }
     }
 
-    private class LibSuProvider : IProvider {
+    private class LibSuProvider(
+        private val mode: WorkingMode
+    ) : IProvider {
         override val name = "LibSu"
 
         init {
@@ -175,11 +197,11 @@ object ServiceManagerCompat {
         }
 
         override fun bind(connection: ServiceConnection) {
-            RootService.bind(SuService.intent, connection)
+            RootService.bind(SuService.getIntent(context, mode), connection)
         }
 
         override fun unbind(connection: ServiceConnection) {
-            RootService.stop(SuService.intent)
+            RootService.stop(SuService.getIntent(context, mode))
         }
 
         private class SuShellInitializer : Shell.Initializer() {
@@ -187,5 +209,5 @@ object ServiceManagerCompat {
         }
     }
 
-    suspend fun fromLibSu() = from(LibSuProvider())
+    suspend fun fromLibSu(mode: WorkingMode) = from(LibSuProvider(mode))
 }

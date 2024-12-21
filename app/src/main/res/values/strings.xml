@@ -7,6 +7,15 @@
     <string name="setup_shizuku_desc">Requires permission provided by Sui or Shizuku (root)</string>
     <string name="setup_non_root_title">Non-Root</string>
     <string name="setup_non_root_desc">Not require Root permissions, only the download module function is available</string>
+    <string name="working_mode_magisk_title">Magisk</string>
+    <string name="working_mode_kernelsu_title">KernelSU</string>
+    <string name="working_mode_kernelsu_next_title">KernelSU Next</string>
+    <string name="working_mode_apatch_title">APatch</string>
+    <string name="working_mode_apatch_desc">Patching Android kernel and system. A new kernel-based root solution with support for modules similar to Magisk and kernel function injection (requires inline-hook and syscall-table-hook). Derived and modified from KernelSU.</string>
+    <string name="working_mode_kernelsu_next_desc">An advanced kernel-based root solution with Magic Mount support, enhanced control over userspace apps, and customizable root privileges.</string>
+    <string name="working_mode_kernelsu_desc">A kernel-based root solution offering enhanced control over userspace apps, customizable root privileges, and systemless module support using OverlayFS.</string>
+    <string name="working_mode_magisk_desc">A suite of tools for Android customization, offering root access, module support, boot image modification, and process-level code execution with Zygisk.</string>
+
     <!-- Install -->
     <string name="install_screen_title">Installation</string>
     <string name="install_flashing">Flashing</string>
@@ -317,4 +326,5 @@
     <string name="pre_release">Pre-release</string>
     <string name="unsafe_url_redirecting">Unsafe URL: %1$s. Redirecting…</string>
     <string name="copy_logs">Copy Logs</string>
+    <string name="selected">Selected</string>
 </resources>

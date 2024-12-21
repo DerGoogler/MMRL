@@ -29,8 +29,12 @@ object Compat {
         isAlive -> true
         else -> try {
             mServiceOrNull = when (mode) {
-                WorkingMode.MODE_SHIZUKU -> ServiceManagerCompat.fromShizuku()
-                WorkingMode.MODE_ROOT -> ServiceManagerCompat.fromLibSu()
+                WorkingMode.MODE_MAGISK,
+                WorkingMode.MODE_KERNEL_SU,
+                WorkingMode.MODE_KERNEL_SU_NEXT,
+                WorkingMode.MODE_APATCH,
+                -> ServiceManagerCompat.fromLibSu(mode)
+
                 else -> null
             }
 
@@ -45,7 +49,10 @@ object Compat {
 
     val moduleManager: IModuleManager get() = mService.moduleManager
     val fileManager: IFileManager get() = mService.fileManager
-    val platform: Platform get() = if (mServiceOrNull != null) Platform(mService.currentPlatform()) else Platform("")
+    val platform: Platform
+        get() = if (mServiceOrNull != null) Platform(mService.currentPlatform()) else Platform(
+            ""
+        )
 
     private fun state(): Boolean {
         isAlive = mServiceOrNull != null

@@ -48,11 +48,6 @@ class ModulesViewModel @Inject constructor(
     val isProviderAlive get() = Compat.isAlive
     val platform get() = Compat.platform
 
-    val managerName: String
-        get() = Compat.get("") {
-            with(moduleManager) { managerName }
-        }
-
     private val modulesMenu
         get() = userPreferencesRepository.data
             .map { it.modulesMenu }

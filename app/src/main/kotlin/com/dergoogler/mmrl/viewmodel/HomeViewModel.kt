@@ -29,11 +29,14 @@ class HomeViewModel @Inject constructor(
             with(moduleManager) { "$version (${versionCode})" }
         }
 
-    val stats: ModuleInfo get() = moduleManager.fetchModuleInfo()
-
+    val stats: ModuleInfo
+        get() = Compat.get(ModuleInfo.EMPTY) {
+            with(moduleManager) { fetchModuleInfo() }
+        }
 
     init {
         Timber.d("HomeViewModel init")
+        Timber.d("${Compat.isAlive}")
     }
 
     fun reboot(reason: String = "") {

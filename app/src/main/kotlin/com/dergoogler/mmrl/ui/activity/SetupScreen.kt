@@ -3,54 +3,71 @@ package com.dergoogler.mmrl.ui.activity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.datastore.WorkingMode
 import com.dergoogler.mmrl.ui.screens.settings.workingmode.WorkingModeItem
 
 @Composable
 fun SetupScreen(
-    setMode: (WorkingMode) -> Unit
-) = Column(
-    modifier = Modifier
-        .background(color = MaterialTheme.colorScheme.background)
-        .fillMaxSize(),
-    verticalArrangement = Arrangement.Center,
-    horizontalAlignment = Alignment.CenterHorizontally
-) {
-    Text(
-        text = stringResource(id = R.string.setup_mode),
-        style = MaterialTheme.typography.titleLarge,
-        color = MaterialTheme.colorScheme.onBackground
-    )
+    setMode: (WorkingMode) -> Unit,
+) =
+    Scaffold { innerPadding ->
+        Column(
+            modifier = Modifier
+                .padding(innerPadding)
+                .background(color = MaterialTheme.colorScheme.background)
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = stringResource(id = R.string.setup_mode),
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.onBackground
+            )
 
-    Spacer(modifier = Modifier.height(30.dp))
-    WorkingModeItem(
-        title = stringResource(id = R.string.setup_root_title),
-        desc = stringResource(id = R.string.setup_root_desc),
-        onClick = { setMode(WorkingMode.MODE_ROOT) }
-    )
+            WorkingModeItem(
+                icon = R.drawable.magisk_logo,
+                title = stringResource(R.string.working_mode_magisk_title),
+                desc = stringResource(R.string.working_mode_magisk_desc),
+                onClick = { setMode(WorkingMode.MODE_MAGISK) }
+            )
 
-    Spacer(modifier = Modifier.height(20.dp))
-    WorkingModeItem(
-        title = stringResource(id = R.string.setup_shizuku_title),
-        desc = stringResource(id = R.string.setup_shizuku_desc),
-        onClick = { setMode(WorkingMode.MODE_SHIZUKU) }
-    )
+            WorkingModeItem(
+                icon = R.drawable.kernelsu_logo,
+                title = stringResource(R.string.working_mode_kernelsu_title),
+                desc = stringResource(R.string.working_mode_kernelsu_desc),
+                onClick = { setMode(WorkingMode.MODE_KERNEL_SU) }
+            )
 
-    Spacer(modifier = Modifier.height(20.dp))
-    WorkingModeItem(
-        title = stringResource(id = R.string.setup_non_root_title),
-        desc = stringResource(id = R.string.setup_non_root_desc),
-        onClick = { setMode(WorkingMode.MODE_NON_ROOT) }
-    )
-}
+            WorkingModeItem(
+                icon = R.drawable.kernelsu_next_logo,
+                title = stringResource(R.string.working_mode_kernelsu_next_title),
+                desc = stringResource(R.string.working_mode_kernelsu_next_desc),
+                onClick = { setMode(WorkingMode.MODE_KERNEL_SU_NEXT) }
+            )
+
+            WorkingModeItem(
+                icon = R.drawable.brand_android,
+                title = stringResource(R.string.working_mode_apatch_title),
+                desc = stringResource(R.string.working_mode_apatch_desc),
+                onClick = { setMode(WorkingMode.MODE_APATCH) }
+            )
+
+            WorkingModeItem(
+                icon = R.drawable.shield_lock,
+                title = stringResource(id = R.string.setup_non_root_title),
+                desc = stringResource(id = R.string.setup_non_root_desc),
+                onClick = { setMode(WorkingMode.MODE_NON_ROOT) }
+            )
+        }
+    }

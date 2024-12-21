@@ -4,5 +4,6 @@ enum class Platform {
     Magisk,
     KernelSU,
     KsuNext,
-    APatch
+    APatch,
+    NonRoot
 }

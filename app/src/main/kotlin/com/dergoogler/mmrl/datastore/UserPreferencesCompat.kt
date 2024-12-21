@@ -38,8 +38,7 @@ data class UserPreferencesCompat(
     val repositoryMenu: RepositoryMenuCompat,
     val modulesMenu: ModulesMenuCompat,
 ) {
-    constructor(original: UserPreferences) : this(
-        workingMode = original.workingMode,
+    constructor(original: UserPreferences) : this(workingMode = original.workingMode,
         darkMode = original.darkMode,
         themeColor = original.themeColor,
         deleteZipFile = original.deleteZipFile,
@@ -71,8 +70,7 @@ data class UserPreferencesCompat(
         modulesMenu = when {
             original.hasModulesMenu() -> ModulesMenuCompat(original.modulesMenu)
             else -> ModulesMenuCompat.default()
-        }
-    )
+        })
 
     @Composable
     fun isDarkMode() = when (darkMode) {
@@ -81,33 +79,34 @@ data class UserPreferencesCompat(
         else -> isSystemInDarkTheme()
     }
 
-    fun toProto(): UserPreferences = UserPreferences.newBuilder()
-        .setWorkingMode(workingMode)
-        .setDarkMode(darkMode)
-        .setThemeColor(themeColor)
-        .setDeleteZipFile(deleteZipFile)
-        .setUseDoh(useDoh)
-        .setDownloadPath(downloadPath.path)
-        .setConfirmReboot(confirmReboot).setTerminalTextWrap(terminalTextWrap)
-        .setDatePattern(datePattern)
-        .setAutoUpdateRepos(autoUpdateRepos)
-        .setAutoUpdateReposInterval(autoUpdateReposInterval)
-        .setCheckModuleUpdates(checkModuleUpdates)
-        .setCheckModuleUpdatesInterval(checkModuleUpdatesInterval)
-        .setCheckAppUpdates(checkAppUpdates)
-        .setCheckAppUpdatesPreReleases(checkAppUpdatesPreReleases)
-        .setHideFingerprintInHome(hideFingerprintInHome)
-        .setHomepage(homepage)
-        .setDeveloperMode(developerMode)
-        .setUseShellForModuleStateChange(useShellForModuleStateChange)
-        .setUseShellForModuleAction(useShellForModuleAction)
-        .setWebuiAllowRestrictedPaths(webuiAllowRestrictedPaths)
-        .setClearInstallTerminal(clearInstallTerminal)
-        .setAllowedFsModules(allowedFsModules.joinToString(","))
-        .setAllowedKsuModules(allowedKsuModules.joinToString(","))
-        .setRepositoryMenu(repositoryMenu.toProto())
-        .setModulesMenu(modulesMenu.toProto())
-        .build()
+    fun toProto(): UserPreferences =
+        UserPreferences.newBuilder()
+            .setWorkingMode(workingMode)
+            .setDarkMode(darkMode)
+            .setThemeColor(themeColor).setDeleteZipFile(deleteZipFile)
+            .setUseDoh(useDoh)
+            .setDownloadPath(downloadPath.path)
+            .setConfirmReboot(confirmReboot)
+            .setTerminalTextWrap(terminalTextWrap)
+            .setDatePattern(datePattern)
+            .setAutoUpdateRepos(autoUpdateRepos)
+            .setAutoUpdateReposInterval(autoUpdateReposInterval)
+            .setCheckModuleUpdates(checkModuleUpdates)
+            .setCheckModuleUpdatesInterval(checkModuleUpdatesInterval)
+            .setCheckAppUpdates(checkAppUpdates)
+            .setCheckAppUpdatesPreReleases(checkAppUpdatesPreReleases)
+            .setHideFingerprintInHome(hideFingerprintInHome)
+            .setHomepage(homepage)
+            .setDeveloperMode(developerMode)
+            .setUseShellForModuleStateChange(useShellForModuleStateChange)
+            .setUseShellForModuleAction(useShellForModuleAction)
+            .setWebuiAllowRestrictedPaths(webuiAllowRestrictedPaths)
+            .setClearInstallTerminal(clearInstallTerminal)
+            .setAllowedFsModules(allowedFsModules.joinToString(","))
+            .setAllowedKsuModules(allowedKsuModules.joinToString(","))
+            .setRepositoryMenu(repositoryMenu.toProto())
+            .setModulesMenu(modulesMenu.toProto())
+            .build()
 
     companion object {
         fun default() = UserPreferencesCompat(
@@ -117,7 +116,8 @@ data class UserPreferencesCompat(
             deleteZipFile = false,
             useDoh = false,
             downloadPath = Const.PUBLIC_DOWNLOADS,
-            confirmReboot = true, terminalTextWrap = false,
+            confirmReboot = true,
+            terminalTextWrap = false,
             datePattern = "d MMMM yyyy",
             autoUpdateRepos = true,
             autoUpdateReposInterval = 6,
@@ -140,7 +140,7 @@ data class UserPreferencesCompat(
 
         val WorkingMode.isRoot: Boolean
             get() {
-                return this == WorkingMode.MODE_ROOT || this == WorkingMode.MODE_SHIZUKU
+                return this == WorkingMode.MODE_MAGISK || this == WorkingMode.MODE_KERNEL_SU || this == WorkingMode.MODE_KERNEL_SU_NEXT || this == WorkingMode.MODE_APATCH
             }
 
         val WorkingMode.isNonRoot: Boolean

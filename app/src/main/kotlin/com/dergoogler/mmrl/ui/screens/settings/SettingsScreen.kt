@@ -124,16 +124,29 @@ fun SettingsScreen(
                 }
             )
 
+            val workingModeIcon = when (userPreferences.workingMode) {
+                WorkingMode.MODE_MAGISK -> R.drawable.magisk_logo
+                WorkingMode.MODE_KERNEL_SU -> R.drawable.kernelsu_logo
+                WorkingMode.MODE_KERNEL_SU_NEXT -> R.drawable.kernelsu_next_logo
+                WorkingMode.MODE_APATCH -> R.drawable.brand_android
+                WorkingMode.MODE_NON_ROOT -> R.drawable.shield_lock
+                else -> R.drawable.components
+            }
+
+            val workingModeText = when (userPreferences.workingMode) {
+                WorkingMode.MODE_MAGISK -> R.string.working_mode_magisk_title
+                WorkingMode.MODE_KERNEL_SU -> R.string.working_mode_kernelsu_title
+                WorkingMode.MODE_KERNEL_SU_NEXT -> R.string.working_mode_kernelsu_next_title
+                WorkingMode.MODE_APATCH -> R.string.working_mode_apatch_title
+                WorkingMode.MODE_NON_ROOT -> R.string.setup_non_root_title
+                else -> R.string.settings_root_none
+            }
+
             ListButtonItem(
-                icon = R.drawable.components,
+                icon = workingModeIcon,
                 title = stringResource(id = R.string.setup_mode),
                 desc = stringResource(
-                    id = when (userPreferences.workingMode) {
-                        WorkingMode.MODE_ROOT -> R.string.setup_root_title
-                        WorkingMode.MODE_SHIZUKU -> R.string.setup_shizuku_title
-                        WorkingMode.MODE_NON_ROOT -> R.string.setup_non_root_title
-                        else -> R.string.settings_root_none
-                    }
+                    id = workingModeText
                 ),
                 onClick = {
                     navController.navigateSingleTopTo(SettingsScreen.WorkingMode.route)

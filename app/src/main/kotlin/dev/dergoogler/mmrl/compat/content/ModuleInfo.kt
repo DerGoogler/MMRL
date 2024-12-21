@@ -12,7 +12,17 @@ data class ModuleInfo(
     val updatableModules: Int,
     val enabledModules: Int,
     val disabledModulesList: List<String>,
-    val updatedModulesList: List<String>
+    val updatedModulesList: List<String>,
 ) : Parcelable {
-    companion object
+    companion object {
+        val EMPTY = ModuleInfo(
+            totalModules = 0,
+            modulesWithServiceFiles = 0,
+            disabledModules = 0,
+            updatableModules = 0,
+            enabledModules = 0,
+            disabledModulesList = emptyList(),
+            updatedModulesList = emptyList()
+        )
+    }
 }

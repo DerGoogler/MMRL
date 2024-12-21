@@ -136,8 +136,6 @@ fun HomeScreen(
                 changelog?.let {
                     val latest = it.first()
 
-                    Timber.d("changelog: $latest")
-
                     var changelogSheet by remember { mutableStateOf(false) }
                     if (changelogSheet) {
                         ChangelogBottomSheet(
