@@ -292,4 +292,13 @@
     <string name="menu_export_modules_as_text">Eksportuj moduły jako tekst</string>
     <string name="home_enabled_disabled_modules_ratio">Współczynnik włączeń / wyłączeń</string>
     <string name="copy_logs">Kopiuj logi</string>
+    <string name="working_mode_kernelsu_next_title">KernelSU Next</string>
+    <string name="working_mode_apatch_desc">Łatanie jądra Androida i systemu. Nowe rozwiązanie root oparte na jądrze z obsługą modułów podobną do Magiska oraz wstrzykiwania funkcji jądra (wymaga inline-hook i syscall-table-hook). Opracowane i zmodyfikowane na podstawie KernelSU.</string>
+    <string name="working_mode_kernelsu_next_desc">Zaawansowane rozwiązanie root oparte na jądrze z obsługą Magic Mount, ulepszoną kontrolą nad aplikacjami w przestrzeni użytkownika oraz możliwością dostosowywania uprawnień root.</string>
+    <string name="selected">Wybrano</string>
+    <string name="working_mode_kernelsu_title">KernelSU</string>
+    <string name="working_mode_kernelsu_desc">Rozwiązanie root oparte na jądrze, oferujące ulepszoną kontrolę nad aplikacjami w przestrzeni użytkownika, możliwość dostosowywania uprawnień root oraz obsługę modułów systemless przy użyciu OverlayFS.</string>
+    <string name="working_mode_magisk_title">Magisk</string>
+    <string name="working_mode_apatch_title">APatch</string>
+    <string name="working_mode_magisk_desc">Pakiet narzędzi do personalizacji Androida, zapewniający dostęp root, obsługę modułów, modyfikację obrazu rozruchowego oraz wykonywanie kodu na poziomie procesów za pomocą Zygisk.</string>
 </resources>
