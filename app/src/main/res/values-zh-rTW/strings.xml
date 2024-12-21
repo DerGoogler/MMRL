@@ -317,4 +317,13 @@
     <string name="menu_export_modules_as_text">匯出模組為文字檔</string>
     <string name="home_enabled_disabled_modules_ratio">已啟用/已停用占比</string>
     <string name="copy_logs">複製運作日誌</string>
+    <string name="working_mode_apatch_title">APatch</string>
+    <string name="working_mode_kernelsu_next_desc">一套基於裝置核心的進階式 Root 解決方案：以支援 Magic Mount 為特色，授權掌控空間擴大到使用者以外的地方，更能自訂授予給程式的具體權限。</string>
+    <string name="selected">已選定</string>
+    <string name="working_mode_kernelsu_desc">一套基於裝置核心的 Root 解決方案：授權掌控空間擴大到使用者應用程式以外的地方、可供自訂授予給程式的具體權限，更以 OverlayFS 來提供安全可靠的模組功能。</string>
+    <string name="working_mode_apatch_desc">用於修補 Android 核心與其系統。一套基於裝置核心的新型態 Root 解決方案：有著與 Magisk 相似的模組系統以及核心注入功能（需以 inline-hook、syscall-table-hook 的形式運作），有著承襲自 KernelSU 的 Root 授權模式。</string>
+    <string name="working_mode_magisk_desc">一套用於 Android 客製化的工具套件，旨在為裝置提供 Root 授權、模組功能支援、boot 鏡像檔改造，更以 Zygisk 來讓程式可供運行在系統層級。</string>
+    <string name="working_mode_kernelsu_next_title">KernelSU Next</string>
+    <string name="working_mode_kernelsu_title">KernelSU</string>
+    <string name="working_mode_magisk_title">Magisk</string>
 </resources>
