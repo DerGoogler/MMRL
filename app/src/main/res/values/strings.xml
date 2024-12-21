@@ -283,7 +283,7 @@
     <string name="repo_update_service_failed">No updates found for repositories</string>
     <string name="repo_update_service_failed_desc">There are no updates for repositories</string>
     <!-- SELinux -->
-    <string name="selinux_status">SELinux status</string>
+    <string name="selinux_status">SELinux Status</string>
     <string name="selinux_status_disabled">Disabled</string>
     <string name="selinux_status_enforcing">Enforcing</string>
     <string name="selinux_status_permissive">Permissive</string>
@@ -294,6 +294,7 @@
     <string name="reboot_bootloader">Reboot to Bootloader</string>
     <string name="reboot_download">Reboot to Download</string>
     <string name="reboot_edl">Reboot to EDL</string>
+
     <string name="home_support_title">Support Me</string>
     <string name="home_support_content">MMRL is, and always will be, free, and open source. You can however show me that you care by making a donation.</string>
     <string name="home_installed_modules">Installed Modules</string>
@@ -302,6 +303,9 @@
     <string name="home_disabled_modules">Disabled Modules</string>
     <string name="home_updated_modules">Updated Modules</string>
     <string name="home_enabled_disabled_modules_ratio">Enabled / Disabled Ratio</string>
+    <string name="home_root_provider_version_name">Root Provider Version Name</string>
+    <string name="home_root_provider_se_linux_context">SELinux Context</string>
+
     <string name="bulk_install_module_already_added">Module already added</string>
     <string name="bulk_install_module_added">Module added</string>
     <string name="bulk_module_install">Bulk Module Install</string>

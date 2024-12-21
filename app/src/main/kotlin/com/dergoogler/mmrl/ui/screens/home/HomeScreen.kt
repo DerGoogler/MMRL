@@ -114,6 +114,7 @@ fun HomeScreen(
 
             when {
                 userPreferences.workingMode.isRoot -> RootItem(
+                    developerMode = userPreferences.developerMode,
                     isAlive = viewModel.isProviderAlive,
                     platform = viewModel.platform,
                     versionCode = viewModel.versionCode,
@@ -123,6 +124,7 @@ fun HomeScreen(
                 )
 
                 userPreferences.workingMode.isNonRoot -> NonRootItem(
+                    developerMode = userPreferences.developerMode,
                     onClick = {
                         workingModeBottomSheet = true
                     }
@@ -230,6 +232,32 @@ fun HomeScreen(
             Spacer(Modifier.height(16.dp))
 
             viewModel.isProviderAlive.takeTrue {
+                userPreferences.developerMode.takeTrue {
+                    Surface(
+                        color = MaterialTheme.colorScheme.surface,
+                        tonalElevation = 1.dp,
+                        shape = RoundedCornerShape(20.dp)
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 8.dp)
+                        ) {
+                            ListItem(
+                                title = stringResource(R.string.home_root_provider_version_name),
+                                desc = viewModel.versionName
+                            )
+
+                            ListItem(
+                                title = stringResource(R.string.home_root_provider_se_linux_context),
+                                desc = viewModel.seLinuxContext
+                            )
+                        }
+                    }
+
+                    Spacer(Modifier.height(16.dp))
+                }
+
                 Surface(
                     color = MaterialTheme.colorScheme.surface,
                     tonalElevation = 1.dp,

@@ -8,6 +8,8 @@ import com.dergoogler.mmrl.datastore.repository.RepositoryMenuCompat
 import com.dergoogler.mmrl.ui.navigation.MainScreen
 import com.dergoogler.mmrl.ui.theme.Colors
 import dev.dergoogler.mmrl.compat.BuildCompat
+import dev.dergoogler.mmrl.compat.ext.nullable
+import dev.dergoogler.mmrl.compat.ext.thenComposeInvoke
 import java.io.File
 
 data class UserPreferencesCompat(
@@ -107,6 +109,22 @@ data class UserPreferencesCompat(
             .setRepositoryMenu(repositoryMenu.toProto())
             .setModulesMenu(modulesMenu.toProto())
             .build()
+
+    /**
+     * A generic Composable function to execute a given block based on a provided type parameter [T].
+     *
+     * @param block A composable lambda that receives a value of type [T].
+     *              The block will be invoked with the value determined by the `developerMode` state.
+     * @return Unit? Returns the result of invoking the block or `null` if no invocation occurred.
+     *
+     * This function allows flexibility by using a reified type parameter [T], making it possible to
+     * perform type-specific operations at runtime without requiring explicit casting.
+     *
+     * @see thenComposeInvoke For handling the invocation of the block with the provided developerMode state.
+     */
+    @Composable
+    inline fun <reified T> developerMode(crossinline block: @Composable (T) -> Unit): Unit? =
+        this.thenComposeInvoke<T>(developerMode, block)?.invoke()
 
     companion object {
         fun default() = UserPreferencesCompat(
