@@ -317,4 +317,9 @@
     <string name="home_enabled_disabled_modules_ratio">比率を有効化または無効化</string>
     <string name="copy_logs">ログをコピー</string>
     <string name="settings_allow_javascript_api">JavaScript API を許可</string>
+    <string name="working_mode_magisk_title">Magisk</string>
+    <string name="working_mode_kernelsu_next_title">KernelSU Next</string>
+    <string name="settings_root_version">バージョン: %s</string>
+    <string name="working_mode_apatch_title">APatch</string>
+    <string name="working_mode_kernelsu_title">KernelSU</string>
 </resources>
