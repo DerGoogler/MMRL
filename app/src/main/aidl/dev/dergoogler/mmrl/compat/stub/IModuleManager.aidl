@@ -12,6 +12,7 @@ interface IModuleManager {
     int getVersionCode();
     List<LocalModule> getModules();
     boolean hasMagicMount();
+    String getSeLinuxContext();
     LocalModule getModuleById(String id);
     LocalModule getModuleInfo(String zipPath);
     oneway void reboot(String reason);

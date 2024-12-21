@@ -16,6 +16,7 @@ import java.util.zip.ZipFile
 
 internal abstract class BaseModuleManagerImpl(
     private val shell: Shell,
+    private val seLinuxContext: String,
 ) : IModuleManager.Stub() {
     internal val modulesDir = File(MODULES_PATH)
 
@@ -44,6 +45,8 @@ internal abstract class BaseModuleManagerImpl(
     }
 
     override fun hasMagicMount(): Boolean = false
+
+    override fun getSeLinuxContext(): String = seLinuxContext
 
     override fun reboot(reason: String) {
         if (reason == "recovery") {

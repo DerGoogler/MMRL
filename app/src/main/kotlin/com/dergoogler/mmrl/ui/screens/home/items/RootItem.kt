@@ -1,5 +1,6 @@
 package com.dergoogler.mmrl.ui.screens.home.items
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -27,7 +28,8 @@ internal fun RootItem(
     modifier: Modifier = Modifier,
     isAlive: Boolean,
     platform: Platform,
-    version: String,
+    versionCode: Int,
+    onClick: () -> Unit = {},
 ) = Surface(
     modifier = modifier,
     shape = RoundedCornerShape(15.dp),
@@ -35,8 +37,9 @@ internal fun RootItem(
 ) {
     Row(
         modifier = Modifier
-            .padding(all = 20.dp)
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+            .padding(all = 20.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
@@ -46,7 +49,6 @@ internal fun RootItem(
                     when {
                         platform.isMagisk -> R.drawable.magisk_logo
                         platform.isKernelSU -> R.drawable.kernelsu_logo
-                        // We'll never see this icon xD
                         platform.isKernelSuNext -> R.drawable.kernelsu_next_logo
                         platform.isAPatch -> R.drawable.brand_android
                         else -> R.drawable.circle_check_filled
@@ -85,12 +87,36 @@ internal fun RootItem(
                 text = if (isAlive) {
                     stringResource(
                         id = R.string.settings_root_provider,
-                        version
+                        stringResource(
+                            id = when {
+                                platform.isMagisk -> R.string.working_mode_magisk_title
+                                platform.isKernelSU -> R.string.working_mode_kernelsu_title
+                                platform.isKernelSuNext -> R.string.working_mode_kernelsu_next_title
+                                platform.isAPatch -> R.string.working_mode_apatch_title
+                                else -> R.string.settings_root_none
+                            }
+                        )
                     )
                 } else {
                     stringResource(
                         id = R.string.settings_root_provider,
                         stringResource(id = R.string.settings_root_not_available)
+                    )
+                },
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSecondaryContainer
+            )
+
+            Text(
+                text = if (isAlive) {
+                    stringResource(
+                        id = R.string.settings_root_version,
+                        versionCode
+                    )
+                } else {
+                    stringResource(
+                        id = R.string.settings_root_version,
+                        stringResource(id = R.string.settings_root_none)
                     )
                 },
                 style = MaterialTheme.typography.bodyMedium,

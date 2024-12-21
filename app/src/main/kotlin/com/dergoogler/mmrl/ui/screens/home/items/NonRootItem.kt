@@ -1,5 +1,6 @@
 package com.dergoogler.mmrl.ui.screens.home.items
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,15 +23,19 @@ import androidx.compose.ui.unit.dp
 import com.dergoogler.mmrl.R
 
 @Composable
-internal fun NonRootItem(modifier: Modifier = Modifier) = Surface(
+internal fun NonRootItem(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit = {},
+) = Surface(
     modifier = modifier,
     shape = RoundedCornerShape(15.dp),
     color = MaterialTheme.colorScheme.secondaryContainer
 ) {
     Row(
         modifier = Modifier
-            .padding(all = 20.dp)
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+            .padding(all = 20.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(

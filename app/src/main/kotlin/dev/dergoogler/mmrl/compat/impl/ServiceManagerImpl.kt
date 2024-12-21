@@ -22,7 +22,7 @@ const val HELP_MESSAGE =
 - A way to reproduce the issue"""
 
 internal class ServiceManagerImpl(
-    private val mode: WorkingMode
+    private val mode: WorkingMode,
 ) : IServiceManager.Stub() {
     private val main by lazy {
         Shell.Builder.create()
@@ -49,10 +49,27 @@ internal class ServiceManagerImpl(
 
     private val moduleManager by lazy {
         when (platform) {
-            Platform.Magisk -> MagiskModuleManagerImpl(main)
-            Platform.KernelSU -> KernelSUModuleManagerImpl(main)
-            Platform.KsuNext -> KsuNextModuleManagerImpl(main)
-            Platform.APatch -> APatchModuleManagerImpl(main, fileManager)
+            Platform.Magisk -> MagiskModuleManagerImpl(
+                shell = main,
+                seLinuxContext = seLinuxContext
+            )
+
+            Platform.KernelSU -> KernelSUModuleManagerImpl(
+                shell = main,
+                seLinuxContext = seLinuxContext
+            )
+
+            Platform.KsuNext -> KsuNextModuleManagerImpl(
+                shell = main,
+                seLinuxContext = seLinuxContext
+            )
+
+            Platform.APatch -> APatchModuleManagerImpl(
+                shell = main,
+                seLinuxContext = seLinuxContext,
+                fileManager = fileManager
+            )
+
             else -> throw BrickException(
                 "unsupported platform: $seLinuxContext",
                 HELP_MESSAGE.trimIndent()
@@ -76,7 +93,7 @@ internal class ServiceManagerImpl(
         return platform.name.lowercase()
     }
 
-    override fun getModuleManager(): IModuleManager? {
+    override fun getModuleManager(): IModuleManager {
         return moduleManager
     }
 

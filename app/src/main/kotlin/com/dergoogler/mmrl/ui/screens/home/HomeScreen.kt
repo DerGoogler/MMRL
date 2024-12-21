@@ -9,7 +9,6 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -52,6 +51,7 @@ import com.dergoogler.mmrl.stub.IMMRLApiManager
 import com.dergoogler.mmrl.ui.component.ListItem
 import com.dergoogler.mmrl.ui.component.ListProgressBarItem
 import com.dergoogler.mmrl.ui.component.TopAppBarIcon
+import com.dergoogler.mmrl.ui.component.WorkingModeBottomSheet
 import com.dergoogler.mmrl.ui.navigation.graphs.HomeScreen
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.screens.home.items.NonRootItem
@@ -85,6 +85,13 @@ fun HomeScreen(
             onClose = { openRebootSheet = false })
     }
 
+    var workingModeBottomSheet by remember { mutableStateOf(false) }
+    if (workingModeBottomSheet) WorkingModeBottomSheet(
+        onClose = {
+            workingModeBottomSheet = false
+        }
+    )
+
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection), topBar = {
             TopBar(
@@ -108,11 +115,18 @@ fun HomeScreen(
             when {
                 userPreferences.workingMode.isRoot -> RootItem(
                     isAlive = viewModel.isProviderAlive,
-                    version = viewModel.version,
-                    platform = viewModel.platform
+                    platform = viewModel.platform,
+                    versionCode = viewModel.versionCode,
+                    onClick = {
+                        workingModeBottomSheet = true
+                    }
                 )
 
-                userPreferences.workingMode.isNonRoot -> NonRootItem()
+                userPreferences.workingMode.isNonRoot -> NonRootItem(
+                    onClick = {
+                        workingModeBottomSheet = true
+                    }
+                )
             }
 
             Spacer(Modifier.height(16.dp))
@@ -227,29 +241,23 @@ fun HomeScreen(
                             .padding(vertical = 8.dp)
                     ) {
                         val stats = viewModel.stats
-                        val listItemContentPaddingValues =
-                            PaddingValues(vertical = 8.dp, horizontal = 25.dp)
 
                         ListItem(
-                            contentPaddingValues = listItemContentPaddingValues,
                             title = stringResource(R.string.home_installed_modules),
                             desc = stats.totalModules.toString()
                         )
 
                         ListItem(
-                            contentPaddingValues = listItemContentPaddingValues,
                             title = stringResource(R.string.home_enabled_modules),
                             desc = stats.enabledModules.toString()
                         )
 
                         ListItem(
-                            contentPaddingValues = listItemContentPaddingValues,
                             title = stringResource(R.string.home_installed_modules_with_service_files),
                             desc = stats.modulesWithServiceFiles.toString()
                         )
 
                         ListItem(
-                            contentPaddingValues = listItemContentPaddingValues,
                             title = stringResource(R.string.home_disabled_modules),
                             desc = stats.disabledModules.toString()
                         )
@@ -258,8 +266,9 @@ fun HomeScreen(
                             (stats.enabledModules.toFloat() / stats.disabledModules.toFloat()) / 10
 
                         ListProgressBarItem(
-                            progressBarModifier = Modifier.graphicsLayer(rotationZ = 180f).weight(1f),
-                            contentPaddingValues = listItemContentPaddingValues,
+                            progressBarModifier = Modifier
+                                .graphicsLayer(rotationZ = 180f)
+                                .weight(1f),
                             startDesc = stats.enabledModules.toString(),
                             endDesc = stats.disabledModules.toString(),
                             title = stringResource(R.string.home_enabled_disabled_modules_ratio),
@@ -267,7 +276,6 @@ fun HomeScreen(
                         )
 
                         ListItem(
-                            contentPaddingValues = listItemContentPaddingValues,
                             title = stringResource(R.string.home_updated_modules),
                             desc = stats.updatableModules.toString()
                         )

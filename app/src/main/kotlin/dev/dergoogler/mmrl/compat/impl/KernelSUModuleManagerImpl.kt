@@ -7,7 +7,10 @@ import dev.dergoogler.mmrl.compat.stub.IShellCallback
 
 internal open class KernelSUModuleManagerImpl(
     shell: Shell,
-) : BaseModuleManagerImpl(shell) {
+    seLinuxContext: String,
+) : BaseModuleManagerImpl(
+    shell, seLinuxContext
+) {
     override fun getManagerName(): String {
         return "KernelSU"
     }

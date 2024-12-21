@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.datastore.WorkingMode
-import com.dergoogler.mmrl.ui.screens.settings.workingmode.WorkingModeItem
+import com.dergoogler.mmrl.ui.component.WorkingModeItem
 
 @Composable
 fun SetupScreen(

@@ -7,7 +7,10 @@ import dev.dergoogler.mmrl.compat.stub.IShellCallback
 
 internal class MagiskModuleManagerImpl(
     shell: Shell,
-) : BaseModuleManagerImpl(shell) {
+    seLinuxContext: String,
+) : BaseModuleManagerImpl(
+    shell, seLinuxContext
+) {
     override fun getManagerName(): String {
         return "Magisk"
     }

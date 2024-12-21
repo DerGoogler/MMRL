@@ -4,6 +4,9 @@ import com.topjohnwu.superuser.Shell
 
 internal class KsuNextModuleManagerImpl(
     shell: Shell,
-) : KernelSUModuleManagerImpl(shell) {
+    seLinuxContext: String,
+) : KernelSUModuleManagerImpl(
+    shell, seLinuxContext
+) {
     override fun hasMagicMount(): Boolean = true
 }

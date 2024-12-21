@@ -19,7 +19,6 @@ import com.dergoogler.mmrl.ui.screens.settings.repositories.RepositoriesScreen
 import com.dergoogler.mmrl.ui.screens.settings.security.SecurityScreen
 import com.dergoogler.mmrl.ui.screens.settings.security.screens.AllowJsApiScreen
 import com.dergoogler.mmrl.ui.screens.settings.updates.UpdatesScreen
-import com.dergoogler.mmrl.ui.screens.settings.workingmode.WorkingModeScreen
 
 enum class SettingsScreen(val route: String) {
     Home("Settings"),
@@ -32,7 +31,6 @@ enum class SettingsScreen(val route: String) {
     Modules("Modules"),
     Other("Other"),
     Blacklist("Blacklist"),
-    WorkingMode("WorkingMode"),
     Changelog("Changelog"),
 }
 
@@ -139,16 +137,6 @@ fun NavGraphBuilder.settingsScreen(
         exitTransition = { fadeOut() }
     ) {
         BlacklistScreen(
-            navController = navController
-        )
-    }
-
-    composable(
-        route = SettingsScreen.WorkingMode.route,
-        enterTransition = { scaleIn() + fadeIn() },
-        exitTransition = { fadeOut() }
-    ) {
-        WorkingModeScreen(
             navController = navController
         )
     }

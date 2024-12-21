@@ -24,9 +24,19 @@ class HomeViewModel @Inject constructor(
     val isProviderAlive get() = Compat.isAlive
     val platform get() = Compat.platform
 
-    val version
+    val versionName
         get() = Compat.get("") {
-            with(moduleManager) { "$version (${versionCode})" }
+            with(moduleManager) { version }
+        }
+
+    val versionCode
+        get() = Compat.get(0) {
+            with(moduleManager) { versionCode }
+        }
+
+    val seLinuxContext
+        get() = Compat.get("Failed") {
+            with(moduleManager) { seLinuxContext }
         }
 
     val stats: ModuleInfo

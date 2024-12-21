@@ -158,6 +158,7 @@
     <!-- Root Item -->
     <string name="settings_root_access">Root Access: %s</string>
     <string name="settings_root_provider">Provider: %s</string>
+    <string name="settings_root_version">Version: %s</string>
     <string name="settings_root_granted">Granted</string>
     <string name="settings_root_not_available">Not available</string>
     <string name="settings_root_none">None</string>

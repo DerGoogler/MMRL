@@ -11,6 +11,10 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalUriHandler
@@ -22,6 +26,7 @@ import com.dergoogler.mmrl.app.Const
 import com.dergoogler.mmrl.datastore.WorkingMode
 import com.dergoogler.mmrl.ui.component.ListButtonItem
 import com.dergoogler.mmrl.ui.component.TopAppBarTitle
+import com.dergoogler.mmrl.ui.component.WorkingModeBottomSheet
 import com.dergoogler.mmrl.ui.navigation.graphs.SettingsScreen
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.utils.navigateSingleTopTo
@@ -36,6 +41,13 @@ fun SettingsScreen(
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
     val browser = LocalUriHandler.current
+
+    var workingModeBottomSheet by remember { mutableStateOf(false) }
+    if (workingModeBottomSheet) WorkingModeBottomSheet(
+        onClose = {
+            workingModeBottomSheet = false
+        }
+    )
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -149,7 +161,7 @@ fun SettingsScreen(
                     id = workingModeText
                 ),
                 onClick = {
-                    navController.navigateSingleTopTo(SettingsScreen.WorkingMode.route)
+                    workingModeBottomSheet = true
                 }
             )
 
