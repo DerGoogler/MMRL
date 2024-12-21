@@ -291,4 +291,13 @@
     <string name="settings_allow_javascript_api">Permitir API JavaScript</string>
     <string name="home_enabled_disabled_modules_ratio">Proporção de Habilitados/Desabilitados</string>
     <string name="copy_logs">Copiar Logs</string>
+    <string name="working_mode_kernelsu_title">KernelSU</string>
+    <string name="working_mode_magisk_title">Magisk</string>
+    <string name="working_mode_kernelsu_next_title">KernelSU Next</string>
+    <string name="working_mode_kernelsu_desc">Uma solução raiz baseada em kernel que oferece controle aprimorado sobre aplicativos de espaço do usuário, privilégios de raiz personalizáveis e suporte a módulos sem sistema usando OverlayFS.</string>
+    <string name="working_mode_apatch_title">APatch</string>
+    <string name="working_mode_apatch_desc">Aplicação de patches no kernel e no sistema Android. Uma nova solução de root baseada em kernel com suporte para módulos similares ao Magisk e injeção de função do kernel (requer inline-hook e syscall-table-hook). Derivado e modificado do KernelSU.</string>
+    <string name="working_mode_kernelsu_next_desc">Uma solução de root avançada baseada em kernel com suporte ao Magic Mount, controle aprimorado sobre aplicativos de espaço do usuário e privilégios de root personalizáveis.</string>
+    <string name="working_mode_magisk_desc">Um conjunto de ferramentas para personalização do Android, oferecendo acesso root, suporte a módulos, modificação de imagem de inicialização e execução de código em nível de processo com Zygisk.</string>
+    <string name="selected">Selecionado</string>
 </resources>
