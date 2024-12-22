@@ -326,4 +326,7 @@
     <string name="working_mode_kernelsu_next_title">KernelSU Next</string>
     <string name="working_mode_kernelsu_title">KernelSU</string>
     <string name="working_mode_magisk_title">Magisk</string>
+    <string name="home_root_provider_version_name">授權平臺版本名稱</string>
+    <string name="home_root_provider_se_linux_context">SELinux 資訊</string>
+    <string name="settings_root_version">版本：%s</string>
 </resources>
