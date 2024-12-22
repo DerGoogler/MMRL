@@ -301,4 +301,7 @@
     <string name="working_mode_magisk_title">Magisk</string>
     <string name="working_mode_apatch_title">APatch</string>
     <string name="working_mode_magisk_desc">Pakiet narzędzi do personalizacji Androida, zapewniający dostęp root, obsługę modułów, modyfikację obrazu rozruchowego oraz wykonywanie kodu na poziomie procesów za pomocą Zygisk.</string>
+    <string name="home_root_provider_se_linux_context">Kontekst SELinux</string>
+    <string name="home_root_provider_version_name">Nazwa wersji dostawcy root</string>
+    <string name="settings_root_version">Wersja: %s</string>
 </resources>
