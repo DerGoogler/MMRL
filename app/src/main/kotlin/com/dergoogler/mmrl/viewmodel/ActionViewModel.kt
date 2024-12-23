@@ -45,10 +45,10 @@ class ActionViewModel @Inject constructor(
     var event by mutableStateOf(Event.LOADING)
         private set
 
-    val logfile get() = "Install_${LocalDateTime.now()}.log"
+    val logfile get() = "Action_${LocalDateTime.now()}.log"
 
     init {
-        Timber.d("InstallViewModel initialized")
+        Timber.d("ActionViewModel initialized")
     }
 
     private var receiver: BroadcastReceiver? = null
