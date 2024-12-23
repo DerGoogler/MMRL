@@ -37,6 +37,7 @@ import com.dergoogler.mmrl.ui.component.scrollbar.VerticalFastScrollbar
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.viewmodel.ModulesViewModel
 import dev.dergoogler.mmrl.compat.activity.MMRLComponentActivity
+import dev.dergoogler.mmrl.compat.content.ModuleCompatibility
 import dev.dergoogler.mmrl.compat.ext.takeTrue
 
 @Composable
@@ -49,6 +50,7 @@ fun ModulesList(
     getVersionItem: @Composable (LocalModule) -> VersionItem?,
     getProgress: @Composable (VersionItem?) -> Float,
     onDownload: (LocalModule, VersionItem, Boolean) -> Unit,
+    moduleCompatibility: ModuleCompatibility,
 ) = Box(
     modifier = Modifier.fillMaxSize()
 ) {
@@ -69,7 +71,8 @@ fun ModulesList(
                 getModuleOps = getModuleOps,
                 getVersionItem = getVersionItem,
                 getProgress = getProgress,
-                onDownload = onDownload
+                onDownload = onDownload,
+                moduleCompatibility = moduleCompatibility
             )
         }
     }
@@ -89,6 +92,7 @@ fun ModuleItem(
     getVersionItem: @Composable (LocalModule) -> VersionItem?,
     getProgress: @Composable (VersionItem?) -> Float,
     onDownload: (LocalModule, VersionItem, Boolean) -> Unit,
+    moduleCompatibility: ModuleCompatibility,
 ) {
     val userPreferences = LocalUserPreferences.current
 
@@ -170,7 +174,7 @@ fun ModuleItem(
 
             RemoveOrRestore(
                 module = module,
-                enabled = isProviderAlive && (!userPreferences.useShellForModuleStateChange || module.state != State.REMOVE),
+                enabled = isProviderAlive && (!(moduleCompatibility.canRestoreModules && userPreferences.useShellForModuleStateChange) || module.state != State.REMOVE),
                 onClick = ops.change
             )
 

@@ -2,6 +2,7 @@ package dev.dergoogler.mmrl.compat.impl
 
 import com.topjohnwu.superuser.Shell
 import dev.dergoogler.mmrl.compat.content.BulkModule
+import dev.dergoogler.mmrl.compat.content.ModuleCompatibility
 import dev.dergoogler.mmrl.compat.stub.IModuleOpsCallback
 import dev.dergoogler.mmrl.compat.stub.IShellCallback
 
@@ -16,10 +17,12 @@ internal class APatchModuleManagerImpl(
         return "APatch"
     }
 
-    override fun hasMagicMount(): Boolean =
-        fileManager.exists("/data/adb/.bind_mount_enable") && (versionCode >= 11011 && !fileManager.exists(
+    override fun getModuleCompatibility() = ModuleCompatibility(
+        hasMagicMount = fileManager.exists("/data/adb/.bind_mount_enable") && (versionCode >= 11011 && !fileManager.exists(
             "/data/adb/.overlay_enable"
-        ))
+        )),
+        canRestoreModules = false
+    )
 
     override fun enable(id: String, useShell: Boolean, callback: IModuleOpsCallback) {
         val dir = modulesDir.resolve(id)

@@ -26,6 +26,7 @@ import com.dergoogler.mmrl.repository.UserPreferencesRepository
 import com.dergoogler.mmrl.service.DownloadService
 import com.dergoogler.mmrl.utils.Utils
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.dergoogler.mmrl.compat.content.ModuleCompatibility
 import dev.dergoogler.mmrl.compat.stub.IModuleOpsCallback
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -47,6 +48,18 @@ class ModulesViewModel @Inject constructor(
 ) : ViewModel() {
     val isProviderAlive get() = Compat.isAlive
     val platform get() = Compat.platform
+
+    val moduleCompatibility
+        get() = Compat.get(
+            ModuleCompatibility(
+                hasMagicMount = false,
+                canRestoreModules = false
+            )
+        ) {
+            with(moduleManager) {
+                moduleCompatibility
+            }
+        }
 
     private val modulesMenu
         get() = userPreferencesRepository.data

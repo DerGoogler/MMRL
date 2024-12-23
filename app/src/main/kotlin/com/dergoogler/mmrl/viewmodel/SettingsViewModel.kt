@@ -30,11 +30,6 @@ class SettingsViewModel @Inject constructor(
             with(moduleManager) { "$version (${versionCode})" }
         }
 
-    val managerName
-        get() = Compat.get("") {
-            with(moduleManager) { managerName }
-        }
-
     init {
         Timber.d("SettingsViewModel init")
     }

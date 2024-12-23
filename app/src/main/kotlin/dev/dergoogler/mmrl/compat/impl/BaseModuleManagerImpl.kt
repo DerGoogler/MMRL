@@ -7,6 +7,7 @@ import com.topjohnwu.superuser.ShellUtils
 import dev.dergoogler.mmrl.compat.content.BulkModule
 import dev.dergoogler.mmrl.compat.content.LocalModule
 import dev.dergoogler.mmrl.compat.content.LocalModuleRunners
+import dev.dergoogler.mmrl.compat.content.ModuleCompatibility
 import dev.dergoogler.mmrl.compat.content.ModuleInfo
 import dev.dergoogler.mmrl.compat.content.State
 import dev.dergoogler.mmrl.compat.stub.IModuleManager
@@ -44,7 +45,10 @@ internal abstract class BaseModuleManagerImpl(
         return mVersionCode
     }
 
-    override fun hasMagicMount(): Boolean = false
+    override fun getModuleCompatibility() = ModuleCompatibility(
+        hasMagicMount = false,
+        canRestoreModules = true
+    )
 
     override fun getSeLinuxContext(): String = seLinuxContext
 

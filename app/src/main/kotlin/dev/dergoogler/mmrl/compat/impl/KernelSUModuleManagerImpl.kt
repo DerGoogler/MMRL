@@ -2,6 +2,7 @@ package dev.dergoogler.mmrl.compat.impl
 
 import com.topjohnwu.superuser.Shell
 import dev.dergoogler.mmrl.compat.content.BulkModule
+import dev.dergoogler.mmrl.compat.content.ModuleCompatibility
 import dev.dergoogler.mmrl.compat.stub.IModuleOpsCallback
 import dev.dergoogler.mmrl.compat.stub.IShellCallback
 
@@ -15,7 +16,10 @@ internal open class KernelSUModuleManagerImpl(
         return "KernelSU"
     }
 
-    override fun hasMagicMount(): Boolean = false
+    override fun getModuleCompatibility() = ModuleCompatibility(
+        hasMagicMount = false,
+        canRestoreModules = false
+    )
 
     override fun enable(id: String, useShell: Boolean, callback: IModuleOpsCallback) {
         val dir = modulesDir.resolve(id)

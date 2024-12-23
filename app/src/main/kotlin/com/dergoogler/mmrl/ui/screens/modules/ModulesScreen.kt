@@ -138,7 +138,8 @@ fun ModulesScreen(
                 getModuleOps = viewModel::createModuleOps,
                 getVersionItem = { viewModel.getVersionItem(it) },
                 getProgress = { viewModel.getProgress(it) },
-                onDownload = download
+                onDownload = download,
+                moduleCompatibility = viewModel.moduleCompatibility
             )
         }
     }

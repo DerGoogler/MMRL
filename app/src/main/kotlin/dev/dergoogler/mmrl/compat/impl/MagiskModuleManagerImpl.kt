@@ -2,6 +2,7 @@ package dev.dergoogler.mmrl.compat.impl
 
 import com.topjohnwu.superuser.Shell
 import dev.dergoogler.mmrl.compat.content.BulkModule
+import dev.dergoogler.mmrl.compat.content.ModuleCompatibility
 import dev.dergoogler.mmrl.compat.stub.IModuleOpsCallback
 import dev.dergoogler.mmrl.compat.stub.IShellCallback
 
@@ -15,7 +16,10 @@ internal class MagiskModuleManagerImpl(
         return "Magisk"
     }
 
-    override fun hasMagicMount(): Boolean = true
+    override fun getModuleCompatibility() = ModuleCompatibility(
+        hasMagicMount = true,
+        canRestoreModules = true
+    )
 
     override fun enable(id: String, useShell: Boolean, callback: IModuleOpsCallback) {
         val dir = modulesDir.resolve(id)

@@ -2,6 +2,7 @@ package dev.dergoogler.mmrl.compat.stub;
 
 import dev.dergoogler.mmrl.compat.content.LocalModule;
 import dev.dergoogler.mmrl.compat.content.ModuleInfo;
+import dev.dergoogler.mmrl.compat.content.ModuleCompatibility;
 import dev.dergoogler.mmrl.compat.content.BulkModule;
 import dev.dergoogler.mmrl.compat.stub.IShellCallback;
 import dev.dergoogler.mmrl.compat.stub.IModuleOpsCallback;
