@@ -35,12 +35,12 @@ internal fun NonRootItem(
     color = MaterialTheme.colorScheme.secondaryContainer
 ) {
     Box(
-        Modifier.fillMaxWidth()
+        Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
     ) {
         Row(
             modifier = Modifier
-                .fillMaxWidth()
-                .clickable(onClick = onClick)
                 .padding(all = 20.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {

@@ -34,6 +34,7 @@ import com.dergoogler.mmrl.ui.component.LabelItem
 import com.dergoogler.mmrl.ui.component.Logo
 import com.dergoogler.mmrl.ui.component.TextWithIcon
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
+import dev.dergoogler.mmrl.compat.ext.isNotNullOrEmpty
 import dev.dergoogler.mmrl.compat.ext.nullable
 import dev.dergoogler.mmrl.compat.ext.toFormattedDateSafely
 
@@ -59,7 +60,8 @@ fun ModuleItemDetailed(
     val isVerified = module.isVerified && menu.showVerified
 
     Box(
-        modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center
+        modifier = Modifier.fillMaxWidth(),
+        contentAlignment = Alignment.Center
     ) {
         Column(
             modifier = Modifier.fillMaxWidth()
@@ -167,19 +169,32 @@ fun ModuleItemDetailed(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
-                    if (menu.showLicense && module.hasLicense) {
-                        module.license?.let { LabelItem(text = it) }
+                    module.categories.nullable {
+                        if (it.isNotNullOrEmpty()) {
+                            LabelItem(
+                                icon = R.drawable.category,
+                                text = it.first(),
+                                containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                                contentColor = MaterialTheme.colorScheme.onSecondaryContainer
+                            )
+                        }
                     }
 
-                    if (menu.showAntiFeatures) {
-                        module.track.antifeatures?.let {
-                            if (it.isNotEmpty()) {
-                                LabelItem(
-                                    containerColor = MaterialTheme.colorScheme.onTertiary,
-                                    contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
-                                    text = stringResource(id = R.string.view_module_antifeatures)
-                                )
-                            }
+                    module.license.nullable(menu.showLicense) {
+                        LabelItem(
+                            icon = R.drawable.tag,
+                            text = it
+                        )
+                    }
+
+                    module.track.antifeatures.nullable(menu.showAntiFeatures) {
+                        if (it.isNotEmpty()) {
+                            LabelItem(
+                                icon = R.drawable.alert_triangle,
+                                containerColor = MaterialTheme.colorScheme.onTertiary,
+                                contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
+                                text = stringResource(id = R.string.view_module_antifeatures)
+                            )
                         }
                     }
 
