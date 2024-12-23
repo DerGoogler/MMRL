@@ -23,6 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.dergoogler.mmrl.Platform
 import com.dergoogler.mmrl.R
+import dev.dergoogler.mmrl.compat.ext.nullable
 import dev.dergoogler.mmrl.compat.ext.takeTrue
 
 @Composable
@@ -38,10 +39,16 @@ internal fun RootItem(
     shape = RoundedCornerShape(15.dp),
     color = MaterialTheme.colorScheme.secondaryContainer
 ) {
+    val openWorkingModeBS = Modifier
+        .clickable(
+            onClick = onClick
+        )
+        .nullable(developerMode, Modifier) { it }
+
     Box(
         Modifier
             .fillMaxWidth()
-            .clickable(onClick = onClick)
+            .then(openWorkingModeBS)
     ) {
         Row(
             modifier = Modifier
