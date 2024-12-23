@@ -9,6 +9,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -67,6 +68,9 @@ import dev.dergoogler.mmrl.compat.ext.takeTrue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber
+
+
+val listItemContentPaddingValues: PaddingValues = PaddingValues(vertical = 8.dp, horizontal = 25.dp)
 
 @Composable
 fun HomeScreen(
@@ -201,19 +205,28 @@ fun HomeScreen(
                 val uname = Os.uname()
 
                 Column(
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 16.dp)
                 ) {
 
                     ListItem(
-                        title = stringResource(R.string.kernel), desc = uname.release
+                        contentPaddingValues = listItemContentPaddingValues,
+                        icon = R.drawable.cookie_man,
+                        title = stringResource(R.string.kernel),
+                        desc = uname.release
                     )
 
                     ListItem(
+                        contentPaddingValues = listItemContentPaddingValues,
+                        icon = R.drawable.launcher_outline,
                         title = stringResource(R.string.manager_version),
                         desc = "${context.managerVersion.first} (${context.managerVersion.second})"
                     )
 
                     ListItem(
+                        contentPaddingValues = listItemContentPaddingValues,
+                        icon = R.drawable.fingerprint,
                         title = stringResource(R.string.fingerprint),
                         desc = if (userPreferences.hideFingerprintInHome) {
                             stringResource(id = R.string.hidden)
@@ -223,6 +236,8 @@ fun HomeScreen(
                     )
 
                     ListItem(
+                        contentPaddingValues = listItemContentPaddingValues,
+                        icon = R.drawable.shield_bolt,
                         title = stringResource(id = R.string.selinux_status),
                         desc = context.seLinuxStatus
                     )
@@ -241,14 +256,16 @@ fun HomeScreen(
                         Column(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(vertical = 8.dp)
+                                .padding(vertical = 16.dp)
                         ) {
                             ListItem(
+                                contentPaddingValues = listItemContentPaddingValues,
                                 title = stringResource(R.string.home_root_provider_version_name),
                                 desc = viewModel.versionName
                             )
 
                             ListItem(
+                                contentPaddingValues = listItemContentPaddingValues,
                                 title = stringResource(R.string.home_root_provider_se_linux_context),
                                 desc = viewModel.seLinuxContext
                             )
@@ -266,26 +283,30 @@ fun HomeScreen(
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = 8.dp)
+                            .padding(vertical = 16.dp)
                     ) {
                         val stats = viewModel.stats
 
                         ListItem(
+                            contentPaddingValues = listItemContentPaddingValues,
                             title = stringResource(R.string.home_installed_modules),
                             desc = stats.totalModules.toString()
                         )
 
                         ListItem(
+                            contentPaddingValues = listItemContentPaddingValues,
                             title = stringResource(R.string.home_enabled_modules),
                             desc = stats.enabledModules.toString()
                         )
 
                         ListItem(
+                            contentPaddingValues = listItemContentPaddingValues,
                             title = stringResource(R.string.home_installed_modules_with_service_files),
                             desc = stats.modulesWithServiceFiles.toString()
                         )
 
                         ListItem(
+                            contentPaddingValues = listItemContentPaddingValues,
                             title = stringResource(R.string.home_disabled_modules),
                             desc = stats.disabledModules.toString()
                         )
@@ -294,6 +315,7 @@ fun HomeScreen(
                             (stats.enabledModules.toFloat() / stats.disabledModules.toFloat()) / 10
 
                         ListProgressBarItem(
+                            contentPaddingValues = listItemContentPaddingValues,
                             progressBarModifier = Modifier
                                 .graphicsLayer(rotationZ = 180f)
                                 .weight(1f),
@@ -304,6 +326,7 @@ fun HomeScreen(
                         )
 
                         ListItem(
+                            contentPaddingValues = listItemContentPaddingValues,
                             title = stringResource(R.string.home_updated_modules),
                             desc = stats.updatableModules.toString()
                         )
