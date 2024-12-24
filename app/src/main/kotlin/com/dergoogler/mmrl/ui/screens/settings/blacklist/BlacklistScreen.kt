@@ -28,6 +28,7 @@ import com.dergoogler.mmrl.network.runRequest
 import com.dergoogler.mmrl.stub.IMMRLApiManager
 import com.dergoogler.mmrl.ui.component.Loading
 import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
+import com.dergoogler.mmrl.ui.providable.LocalNavController
 import com.dergoogler.mmrl.ui.screens.settings.blacklist.items.ModuleItem
 import com.dergoogler.mmrl.ui.utils.none
 import kotlinx.coroutines.Dispatchers
@@ -36,12 +37,12 @@ import timber.log.Timber
 
 
 @Composable
-fun BlacklistScreen(
-    navController: NavController
-) {
+fun BlacklistScreen() {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
     var blacklist by remember { mutableStateOf<List<Blacklist>?>(null) }
+
+    val navController = LocalNavController.current
 
 
     LaunchedEffect(Unit) {

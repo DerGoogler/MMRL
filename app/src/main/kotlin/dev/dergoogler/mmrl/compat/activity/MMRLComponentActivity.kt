@@ -18,6 +18,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.compose.rememberNavController
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.compat.PermissionCompat
 import com.dergoogler.mmrl.repository.LocalRepository
@@ -26,6 +27,7 @@ import com.dergoogler.mmrl.ui.activity.CrashHandlerActivity
 import com.dergoogler.mmrl.ui.activity.terminal.action.ActionActivity
 import com.dergoogler.mmrl.ui.activity.terminal.install.InstallActivity
 import com.dergoogler.mmrl.ui.activity.webui.WebUIActivity
+import com.dergoogler.mmrl.ui.providable.LocalNavController
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -182,6 +184,7 @@ fun MMRLComponentActivity.setBaseContent(
     val userPreferences by userPreferencesRepository.data.collectAsStateWithLifecycle(
         initialValue = null
     )
+    val navController = rememberNavController()
 
     val preferences = if (userPreferences == null) {
         return@setContent
@@ -198,7 +201,8 @@ fun MMRLComponentActivity.setBaseContent(
 
         CompositionLocalProvider(
             LocalUserPreferences provides preferences,
-            LocalUriHandler provides MMRLUriHandler(context, toolbarColor)
+            LocalUriHandler provides MMRLUriHandler(context, toolbarColor),
+            LocalNavController provides navController
         ) {
             content()
         }

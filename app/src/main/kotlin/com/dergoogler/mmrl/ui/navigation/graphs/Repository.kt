@@ -3,7 +3,6 @@ package com.dergoogler.mmrl.ui.navigation.graphs
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
-import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
@@ -25,7 +24,6 @@ enum class RepositoryScreen(val route: String) {
 }
 
 fun NavGraphBuilder.repositoryScreen(
-    navController: NavController,
     bulkInstallViewModel: BulkInstallViewModel
 ) = navigation(
     startDestination = RepositoryScreen.Home.route,
@@ -37,7 +35,6 @@ fun NavGraphBuilder.repositoryScreen(
         exitTransition = { fadeOut() }
     ) {
         RepositoryScreen(
-            navController = navController,
             bulkInstallViewModel = bulkInstallViewModel
         )
     }
@@ -52,7 +49,6 @@ fun NavGraphBuilder.repositoryScreen(
         exitTransition = { fadeOut() }
     ) {
         NewViewScreen(
-            navController = navController,
             bulkInstallViewModel = bulkInstallViewModel
         )
     }
@@ -66,9 +62,7 @@ fun NavGraphBuilder.repositoryScreen(
         enterTransition = { scaleIn() + fadeIn() },
         exitTransition = { fadeOut() }
     ) {
-        ViewDescriptionScreen(
-            navController = navController
-        )
+        ViewDescriptionScreen()
     }
 
     composable(
@@ -87,7 +81,6 @@ fun NavGraphBuilder.repositoryScreen(
             FilteredSearchScreen(
                 type = type,
                 value = value,
-                navController = navController
             )
         }
     }

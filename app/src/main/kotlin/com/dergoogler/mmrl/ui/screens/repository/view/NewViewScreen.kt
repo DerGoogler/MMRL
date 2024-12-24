@@ -92,6 +92,7 @@ import com.dergoogler.mmrl.ui.component.MMRLLabel
 import com.dergoogler.mmrl.ui.component.MarkdownText
 import com.dergoogler.mmrl.ui.component.TextWithIcon
 import com.dergoogler.mmrl.ui.navigation.graphs.RepositoryScreen
+import com.dergoogler.mmrl.ui.providable.LocalNavController
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.screens.repository.view.items.InstallConfirmDialog
 import com.dergoogler.mmrl.ui.screens.repository.view.items.LicenseItem
@@ -118,7 +119,6 @@ import timber.log.Timber
 
 @Composable
 fun NewViewScreen(
-    navController: NavController,
     viewModel: ModuleViewModel = hiltViewModel(),
     repositoryViewModel: RepositoryViewModel = hiltViewModel(),
     modulesViewModel: ModulesViewModel = hiltViewModel(),
@@ -131,6 +131,8 @@ fun NewViewScreen(
     val local = viewModel.local
 
     val repositoryList by repositoryViewModel.online.collectAsStateWithLifecycle()
+
+    val navController = LocalNavController.current
 
     val lastVersionItem = viewModel.lastVersionItem
     val context = LocalContext.current

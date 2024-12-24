@@ -28,6 +28,7 @@ import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.ui.component.HtmlText
 import com.dergoogler.mmrl.ui.component.Loading
 import com.dergoogler.mmrl.ui.component.PageIndicator
+import com.dergoogler.mmrl.ui.providable.LocalNavController
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.screens.repository.ModulesList
 import com.dergoogler.mmrl.ui.utils.none
@@ -41,7 +42,6 @@ import java.net.URLEncoder
 fun FilteredSearchScreen(
     type: String?,
     value: String?,
-    navController: NavController,
     viewModel: RepositoryViewModel = hiltViewModel(),
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
@@ -49,6 +49,8 @@ fun FilteredSearchScreen(
     val listState = rememberLazyListState()
     val userPrefs = LocalUserPreferences.current
     val context = LocalContext.current
+
+    val navController = LocalNavController.current
 
     LaunchedEffect(list, value) {
         if (!value.isNullOrBlank() && !type.isNullOrBlank()) {

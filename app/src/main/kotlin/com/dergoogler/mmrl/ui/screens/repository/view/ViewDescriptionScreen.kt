@@ -37,15 +37,17 @@ import com.dergoogler.mmrl.network.compose.requestString
 import com.dergoogler.mmrl.ui.component.Failed
 import com.dergoogler.mmrl.ui.component.Loading
 import com.dergoogler.mmrl.ui.component.MarkdownText
+import com.dergoogler.mmrl.ui.providable.LocalNavController
 import com.dergoogler.mmrl.ui.utils.none
 import com.dergoogler.mmrl.viewmodel.ModuleViewModel
 
 @Composable
 fun ViewDescriptionScreen(
-    navController: NavController,
     viewModel: ModuleViewModel = hiltViewModel(),
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+
+    val navController = LocalNavController.current
 
     var readme by remember { mutableStateOf("") }
     val event = requestString(

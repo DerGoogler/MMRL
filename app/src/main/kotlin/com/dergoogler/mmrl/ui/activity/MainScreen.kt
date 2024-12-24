@@ -28,6 +28,7 @@ import com.dergoogler.mmrl.ui.navigation.graphs.homeScreen
 import com.dergoogler.mmrl.ui.navigation.graphs.modulesScreen
 import com.dergoogler.mmrl.ui.navigation.graphs.repositoryScreen
 import com.dergoogler.mmrl.ui.navigation.graphs.settingsScreen
+import com.dergoogler.mmrl.ui.providable.LocalNavController
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.utils.navigatePopUpTo
 import com.dergoogler.mmrl.viewmodel.BulkInstallViewModel
@@ -36,8 +37,9 @@ import com.dergoogler.mmrl.viewmodel.BulkInstallViewModel
 fun MainScreen() {
     val context = LocalContext.current
     val userPreferences = LocalUserPreferences.current
-    val navController = rememberNavController()
     val bulkInstallViewModel: BulkInstallViewModel = hiltViewModel()
+
+    val navController = LocalNavController.current
 
     Scaffold(
         bottomBar = {
@@ -49,26 +51,20 @@ fun MainScreen() {
     ) {
         NavHost(
             modifier = Modifier.padding(bottom = it.calculateBottomPadding()),
-            navController = navController, startDestination = when (userPreferences.homepage) {
+            navController = navController,
+            startDestination = when (userPreferences.homepage) {
                 context.getString(MainScreen.Home.label) -> MainScreen.Home.route
                 context.getString(MainScreen.Repository.label) -> MainScreen.Repository.route
                 context.getString(MainScreen.Modules.label) -> MainScreen.Modules.route
                 else -> MainScreen.Home.route
             }
         ) {
-            homeScreen(
-                navController = navController
-            )
+            homeScreen()
             repositoryScreen(
-                navController = navController,
                 bulkInstallViewModel = bulkInstallViewModel
             )
-            modulesScreen(
-                navController = navController
-            )
-            settingsScreen(
-                navController = navController
-            )
+            modulesScreen()
+            settingsScreen()
         }
     }
 }

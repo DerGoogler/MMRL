@@ -38,6 +38,7 @@ import com.dergoogler.mmrl.ui.component.Loading
 import com.dergoogler.mmrl.ui.component.PageIndicator
 import com.dergoogler.mmrl.ui.component.SearchTopBar
 import com.dergoogler.mmrl.ui.component.TopAppBarIcon
+import com.dergoogler.mmrl.ui.providable.LocalNavController
 import com.dergoogler.mmrl.ui.screens.repository.items.BulkBottomSheet
 import com.dergoogler.mmrl.ui.utils.isScrollingUp
 import com.dergoogler.mmrl.ui.utils.none
@@ -48,13 +49,14 @@ import timber.log.Timber
 
 @Composable
 fun RepositoryScreen(
-    navController: NavController,
     viewModel: RepositoryViewModel = hiltViewModel(),
     bulkInstallViewModel: BulkInstallViewModel,
 ) {
     val list by viewModel.online.collectAsStateWithLifecycle()
     val query by viewModel.query.collectAsStateWithLifecycle()
     val bulkModules by bulkInstallViewModel.bulkModules.collectAsStateWithLifecycle()
+
+    val navController = LocalNavController.current
 
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val listState = rememberLazyListState()

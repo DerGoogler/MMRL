@@ -14,6 +14,7 @@ import androidx.compose.runtime.setValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.compose.rememberNavController
 import com.dergoogler.mmrl.Compat
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.app.Const
@@ -65,6 +66,7 @@ class MainActivity : MMRLComponentActivity() {
                 isLoading = false
                 checkNotNull(userPreferences)
             }
+
 
             LaunchedEffect(userPreferences) {
                 if (preferences.workingMode.isSetup) {

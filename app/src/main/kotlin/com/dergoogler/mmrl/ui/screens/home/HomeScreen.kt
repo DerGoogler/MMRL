@@ -54,6 +54,7 @@ import com.dergoogler.mmrl.ui.component.ListProgressBarItem
 import com.dergoogler.mmrl.ui.component.TopAppBarIcon
 import com.dergoogler.mmrl.ui.component.WorkingModeBottomSheet
 import com.dergoogler.mmrl.ui.navigation.graphs.HomeScreen
+import com.dergoogler.mmrl.ui.providable.LocalNavController
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.screens.home.items.NonRootItem
 import com.dergoogler.mmrl.ui.screens.home.items.RebootBottomSheet
@@ -75,11 +76,12 @@ val listItemContentPaddingValues: PaddingValues = PaddingValues(vertical = 8.dp,
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
-    navController: NavController,
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val context = LocalContext.current
     val userPreferences = LocalUserPreferences.current
+
+    val navController = LocalNavController.current
 
     val browser = LocalUriHandler.current
 

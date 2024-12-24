@@ -28,6 +28,7 @@ import com.dergoogler.mmrl.network.runRequest
 import com.dergoogler.mmrl.stub.IMMRLApiManager
 import com.dergoogler.mmrl.ui.component.Loading
 import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
+import com.dergoogler.mmrl.ui.providable.LocalNavController
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.screens.settings.changelogs.items.ChangelogItem
 import com.dergoogler.mmrl.ui.utils.none
@@ -36,12 +37,12 @@ import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 @Composable
-fun ChangelogScreen(
-    navController: NavController,
-) {
+fun ChangelogScreen() {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val userPreferences = LocalUserPreferences.current
     var changelog by remember { mutableStateOf<List<Changelog>?>(null) }
+
+    val navController = LocalNavController.current
 
     LaunchedEffect(Unit) {
         runRequest {

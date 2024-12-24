@@ -35,7 +35,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.datastore.modules.ModulesMenuCompat
 import com.dergoogler.mmrl.model.local.LocalModule
@@ -51,8 +50,6 @@ import dev.dergoogler.mmrl.compat.activity.MMRLComponentActivity
 
 @Composable
 fun ModulesScreen(
-    @Suppress("UNUSED_PARAMETER")
-    navController: NavController,
     viewModel: ModulesViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current

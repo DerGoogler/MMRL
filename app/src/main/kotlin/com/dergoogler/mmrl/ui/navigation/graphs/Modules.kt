@@ -2,7 +2,6 @@ package com.dergoogler.mmrl.ui.navigation.graphs
 
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
@@ -13,9 +12,7 @@ enum class ModulesScreen(val route: String) {
     Home("Modules"),
 }
 
-fun NavGraphBuilder.modulesScreen(
-    navController: NavController
-) = navigation(
+fun NavGraphBuilder.modulesScreen() = navigation(
     startDestination = ModulesScreen.Home.route,
     route = MainScreen.Modules.route
 ) {
@@ -24,8 +21,6 @@ fun NavGraphBuilder.modulesScreen(
         enterTransition = { fadeIn() },
         exitTransition = { fadeOut() }
     ) {
-        ModulesScreen(
-            navController = navController
-        )
+        ModulesScreen()
     }
 }

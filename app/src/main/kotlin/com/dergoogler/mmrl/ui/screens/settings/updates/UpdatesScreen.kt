@@ -25,6 +25,7 @@ import com.dergoogler.mmrl.ui.component.ListHeader
 import com.dergoogler.mmrl.ui.component.ListRadioCheckItem
 import com.dergoogler.mmrl.ui.component.ListSwitchItem
 import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
+import com.dergoogler.mmrl.ui.providable.LocalNavController
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.utils.none
 import com.dergoogler.mmrl.viewmodel.SettingsViewModel
@@ -33,12 +34,13 @@ private val optionsOfHours = listOf(1, 2, 3, 4, 5, 10, 12, 16, 24, 48, 72)
 
 @Composable
 fun UpdatesScreen(
-    navController: NavController,
     viewModel: SettingsViewModel = hiltViewModel(),
 ) {
     val userPreferences = LocalUserPreferences.current
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val context = LocalContext.current
+
+    val navController = LocalNavController.current
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),

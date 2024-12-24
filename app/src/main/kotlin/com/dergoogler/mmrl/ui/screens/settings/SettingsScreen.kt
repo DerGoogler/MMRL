@@ -19,7 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavController
 import com.dergoogler.mmrl.BuildConfig
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.app.Const
@@ -28,17 +27,18 @@ import com.dergoogler.mmrl.ui.component.ListButtonItem
 import com.dergoogler.mmrl.ui.component.TopAppBarTitle
 import com.dergoogler.mmrl.ui.component.WorkingModeBottomSheet
 import com.dergoogler.mmrl.ui.navigation.graphs.SettingsScreen
+import com.dergoogler.mmrl.ui.providable.LocalNavController
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.utils.navigateSingleTopTo
 import com.dergoogler.mmrl.ui.utils.none
 import dev.dergoogler.mmrl.compat.ext.takeTrue
 
 @Composable
-fun SettingsScreen(
-    navController: NavController,
-) {
+fun SettingsScreen() {
     val userPreferences = LocalUserPreferences.current
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+
+    val navController = LocalNavController.current
 
     val browser = LocalUriHandler.current
 

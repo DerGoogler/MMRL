@@ -47,15 +47,17 @@ import com.dergoogler.mmrl.ui.component.Loading
 import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
 import com.dergoogler.mmrl.ui.component.PageIndicator
 import com.dergoogler.mmrl.ui.component.TextFieldDialog
+import com.dergoogler.mmrl.ui.providable.LocalNavController
 import com.dergoogler.mmrl.ui.utils.isScrollingUp
 import com.dergoogler.mmrl.ui.utils.none
 import com.dergoogler.mmrl.viewmodel.RepositoriesViewModel
 
 @Composable
 fun RepositoriesScreen(
-    navController: NavController,
     viewModel: RepositoriesViewModel = hiltViewModel(),
 ) {
+    val navController = LocalNavController.current
+
     val list by viewModel.repos.collectAsStateWithLifecycle()
 
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()

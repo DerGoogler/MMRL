@@ -17,11 +17,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.dergoogler.mmrl.R
-import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
 import com.dergoogler.mmrl.ui.component.ListEditTextItem
 import com.dergoogler.mmrl.ui.component.ListRadioCheckItem
 import com.dergoogler.mmrl.ui.component.ListSwitchItem
+import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
 import com.dergoogler.mmrl.ui.navigation.MainScreen
+import com.dergoogler.mmrl.ui.providable.LocalNavController
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.screens.settings.appearance.items.AppThemeItem
 import com.dergoogler.mmrl.ui.utils.none
@@ -29,12 +30,13 @@ import com.dergoogler.mmrl.viewmodel.SettingsViewModel
 
 @Composable
 fun AppearanceScreen(
-    navController: NavController,
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
     val userPreferences = LocalUserPreferences.current
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+
+    val navController = LocalNavController.current
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),

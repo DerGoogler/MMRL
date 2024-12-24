@@ -21,6 +21,7 @@ import com.dergoogler.mmrl.ui.component.ListHeader
 import com.dergoogler.mmrl.ui.component.ListSwitchItem
 import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
 import com.dergoogler.mmrl.ui.navigation.graphs.SettingsScreen
+import com.dergoogler.mmrl.ui.providable.LocalNavController
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.utils.navigateSingleTopTo
 import com.dergoogler.mmrl.ui.utils.none
@@ -28,11 +29,12 @@ import com.dergoogler.mmrl.viewmodel.SettingsViewModel
 
 @Composable
 fun SecurityScreen(
-    navController: NavController,
     viewModel: SettingsViewModel = hiltViewModel(),
 ) {
     val userPreferences = LocalUserPreferences.current
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+
+    val navController = LocalNavController.current
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),

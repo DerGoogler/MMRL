@@ -3,7 +3,6 @@ package com.dergoogler.mmrl.ui.navigation.graphs
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
-import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
@@ -34,9 +33,7 @@ enum class SettingsScreen(val route: String) {
     Changelog("Changelog"),
 }
 
-fun NavGraphBuilder.settingsScreen(
-    navController: NavController,
-) = navigation(
+fun NavGraphBuilder.settingsScreen() = navigation(
     startDestination = SettingsScreen.Home.route,
     route = MainScreen.Settings.route
 ) {
@@ -45,9 +42,7 @@ fun NavGraphBuilder.settingsScreen(
         enterTransition = { fadeIn() },
         exitTransition = { fadeOut() }
     ) {
-        SettingsScreen(
-            navController = navController
-        )
+        SettingsScreen()
     }
 
     composable(
@@ -56,9 +51,7 @@ fun NavGraphBuilder.settingsScreen(
         enterTransition = { scaleIn() + fadeIn() },
         exitTransition = { fadeOut() }
     ) {
-        RepositoriesScreen(
-            navController = navController
-        )
+        RepositoriesScreen()
     }
 
     composable(
@@ -66,9 +59,7 @@ fun NavGraphBuilder.settingsScreen(
         enterTransition = { scaleIn() + fadeIn() },
         exitTransition = { fadeOut() }
     ) {
-        UpdatesScreen(
-            navController = navController
-        )
+        UpdatesScreen()
     }
 
     composable(
@@ -76,9 +67,7 @@ fun NavGraphBuilder.settingsScreen(
         enterTransition = { scaleIn() + fadeIn() },
         exitTransition = { fadeOut() }
     ) {
-        RecommendedRepoScreen(
-            navController = navController
-        )
+        RecommendedRepoScreen()
     }
 
     composable(
@@ -86,9 +75,7 @@ fun NavGraphBuilder.settingsScreen(
         enterTransition = { scaleIn() + fadeIn() },
         exitTransition = { fadeOut() }
     ) {
-        AppearanceScreen(
-            navController = navController
-        )
+        AppearanceScreen()
     }
 
     composable(
@@ -96,9 +83,7 @@ fun NavGraphBuilder.settingsScreen(
         enterTransition = { scaleIn() + fadeIn() },
         exitTransition = { fadeOut() }
     ) {
-        SecurityScreen(
-            navController = navController
-        )
+        SecurityScreen()
     }
 
     composable(
@@ -106,9 +91,7 @@ fun NavGraphBuilder.settingsScreen(
         enterTransition = { scaleIn() + fadeIn() },
         exitTransition = { fadeOut() }
     ) {
-        AllowJsApiScreen(
-            navController = navController
-        )
+        AllowJsApiScreen()
     }
 
     composable(
@@ -116,9 +99,7 @@ fun NavGraphBuilder.settingsScreen(
         enterTransition = { scaleIn() + fadeIn() },
         exitTransition = { fadeOut() }
     ) {
-        ModulesScreen(
-            navController = navController
-        )
+        ModulesScreen()
     }
 
     composable(
@@ -126,9 +107,7 @@ fun NavGraphBuilder.settingsScreen(
         enterTransition = { scaleIn() + fadeIn() },
         exitTransition = { fadeOut() }
     ) {
-        OtherScreen(
-            navController = navController
-        )
+        OtherScreen()
     }
 
     composable(
@@ -136,16 +115,14 @@ fun NavGraphBuilder.settingsScreen(
         enterTransition = { scaleIn() + fadeIn() },
         exitTransition = { fadeOut() }
     ) {
-        BlacklistScreen(
-            navController = navController
-        )
+        BlacklistScreen()
     }
 
-    composable(route = SettingsScreen.Changelog.route,
+    composable(
+        route = SettingsScreen.Changelog.route,
         enterTransition = { scaleIn() + fadeIn() },
-        exitTransition = { fadeOut() }) {
-        ChangelogScreen(
-            navController = navController
-        )
+        exitTransition = { fadeOut() }
+    ) {
+        ChangelogScreen()
     }
 }

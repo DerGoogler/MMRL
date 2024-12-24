@@ -33,6 +33,7 @@ import com.dergoogler.mmrl.network.runRequest
 import com.dergoogler.mmrl.stub.IMMRLApiManager
 import com.dergoogler.mmrl.ui.component.Loading
 import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
+import com.dergoogler.mmrl.ui.providable.LocalNavController
 import com.dergoogler.mmrl.ui.screens.settings.recommendedRepos.items.RepoItem
 import com.dergoogler.mmrl.ui.utils.none
 import com.dergoogler.mmrl.viewmodel.RepositoriesViewModel
@@ -43,7 +44,6 @@ import timber.log.Timber
 
 @Composable
 fun RecommendedRepoScreen(
-    navController: NavController,
     viewModel: RepositoriesViewModel = hiltViewModel(),
 ) {
     val scope = rememberCoroutineScope()
@@ -51,6 +51,8 @@ fun RecommendedRepoScreen(
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
     var recommendedRepos by remember { mutableStateOf<List<RecommendedRepo>?>(null) }
+
+    val navController = LocalNavController.current
 
     LaunchedEffect(Unit) {
         runRequest {

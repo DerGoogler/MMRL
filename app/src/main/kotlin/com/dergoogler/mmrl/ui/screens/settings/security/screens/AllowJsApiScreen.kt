@@ -20,6 +20,7 @@ import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.ui.component.ListCollapseItem
 import com.dergoogler.mmrl.ui.component.ListSwitchItem
 import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
+import com.dergoogler.mmrl.ui.providable.LocalNavController
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.utils.none
 import com.dergoogler.mmrl.viewmodel.ModulesViewModel
@@ -28,10 +29,10 @@ import com.dergoogler.mmrl.viewmodel.SettingsViewModel
 
 @Composable
 fun AllowJsApiScreen(
-    navController: NavController,
     viewModel: SettingsViewModel = hiltViewModel(),
     mViewModel: ModulesViewModel = hiltViewModel(),
 ) {
+    val navController = LocalNavController.current
 
     val userPreferences = LocalUserPreferences.current
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()

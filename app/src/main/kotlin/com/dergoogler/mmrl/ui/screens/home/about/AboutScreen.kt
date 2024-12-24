@@ -37,13 +37,15 @@ import com.dergoogler.mmrl.app.Const
 import com.dergoogler.mmrl.ui.component.HtmlText
 import com.dergoogler.mmrl.ui.component.Logo
 import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
+import com.dergoogler.mmrl.ui.providable.LocalNavController
 
 @Composable
-fun AboutScreen(
-    navController: NavController,
-) {
+fun AboutScreen() {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val browser = LocalUriHandler.current
+
+    val navController = LocalNavController.current
+
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
