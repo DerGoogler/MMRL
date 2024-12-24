@@ -3,7 +3,9 @@ package com.dergoogler.mmrl
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import com.dergoogler.mmrl.Compat.createRootShell
 import com.dergoogler.mmrl.datastore.WorkingMode
+import com.topjohnwu.superuser.Shell
 import dev.dergoogler.mmrl.compat.ServiceManagerCompat
 import dev.dergoogler.mmrl.compat.stub.IFileManager
 import dev.dergoogler.mmrl.compat.stub.IModuleManager
@@ -66,5 +68,30 @@ object Compat {
             isAlive -> block(this)
             else -> fallback
         }
+    }
+
+    val ServiceShell: Shell = createRootShell(commands = arrayOf("sh"))
+    val RootShell: Shell = createRootShell(commands = arrayOf("su"))
+
+    inline fun <T> withNewRootShell(
+        globalMnt: Boolean = false,
+        devMode: Boolean = BuildConfig.IS_DEV_VERSION,
+        commands: Array<String> = arrayOf("su"),
+        block: Shell.() -> T,
+    ): T {
+        return createRootShell(globalMnt, devMode, commands).use(block)
+    }
+
+    fun createRootShell(
+        globalMnt: Boolean = false,
+        devMode: Boolean = BuildConfig.IS_DEV_VERSION,
+        commands: Array<String> = arrayOf("su"),
+    ): Shell {
+        Shell.enableVerboseLogging = devMode
+        val builder = Shell.Builder.create()
+        if (globalMnt) {
+            builder.setFlags(Shell.FLAG_MOUNT_MASTER)
+        }
+        return builder.build(*commands)
     }
 }

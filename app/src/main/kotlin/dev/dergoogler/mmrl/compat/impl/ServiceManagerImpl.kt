@@ -3,9 +3,9 @@ package dev.dergoogler.mmrl.compat.impl
 //import android.os.IPowerManager // what huh?
 import android.os.SELinux
 import android.system.Os
+import com.dergoogler.mmrl.Compat
 import com.dergoogler.mmrl.app.Const
 import com.dergoogler.mmrl.datastore.WorkingMode
-import com.topjohnwu.superuser.Shell
 import com.topjohnwu.superuser.ShellUtils
 import dev.dergoogler.mmrl.compat.core.BrickException
 import dev.dergoogler.mmrl.compat.stub.IFileManager
@@ -24,10 +24,7 @@ const val HELP_MESSAGE =
 internal class ServiceManagerImpl(
     private val mode: WorkingMode,
 ) : IServiceManager.Stub() {
-    private val main by lazy {
-        Shell.Builder.create()
-            .build("sh")
-    }
+    private val main by lazy { Compat.ServiceShell }
 
     private val platform by lazy {
         when (mode) {

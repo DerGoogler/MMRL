@@ -28,6 +28,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.webkit.WebViewAssetLoader
 import com.dergoogler.mmrl.BuildConfig
+import com.dergoogler.mmrl.Compat
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.ui.activity.webui.handlers.MMRLWebUIHandler
 import com.dergoogler.mmrl.ui.activity.webui.handlers.SuFilePathHandler
@@ -59,7 +60,7 @@ fun WebUIScreen(
     val cardColors = CardDefaults.cardColors()
     val isDarkMode = userPrefs.isDarkMode()
 
-    val rootShell = viewModel.createRootShell(
+    val rootShell = Compat.createRootShell(
         globalMnt = true,
         devMode = userPrefs.developerMode
     )
@@ -162,7 +163,6 @@ fun WebUIScreen(
                                 context,
                                 this,
                                 moduleDir,
-                                viewModel,
                                 userPrefs,
                             )
                         } else {

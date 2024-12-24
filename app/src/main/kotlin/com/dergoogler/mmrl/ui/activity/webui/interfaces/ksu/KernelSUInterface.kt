@@ -4,8 +4,8 @@ import android.content.Context
 import android.text.TextUtils
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
+import com.dergoogler.mmrl.Compat
 import com.dergoogler.mmrl.datastore.UserPreferencesCompat
-import com.dergoogler.mmrl.viewmodel.WebUIViewModel
 import com.topjohnwu.superuser.CallbackList
 import com.topjohnwu.superuser.ShellUtils
 import com.topjohnwu.superuser.internal.UiThreadHandler
@@ -17,13 +17,12 @@ class AdvancedKernelSUAPI(
     context: Context,
     webView: WebView,
     modDir: String,
-    private val viewModel: WebUIViewModel,
     private val userPrefs: UserPreferencesCompat,
 ) : BaseKernelSUAPI(context, webView, modDir) {
 
     @JavascriptInterface
     fun exec(cmd: String): String {
-        return viewModel.withNewRootShell(
+        return Compat.withNewRootShell(
             globalMnt = true,
             devMode = userPrefs.developerMode
         ) { ShellUtils.fastCmd(this, cmd) }
@@ -61,7 +60,7 @@ class AdvancedKernelSUAPI(
         processOptions(finalCommand, options)
         finalCommand.append(cmd)
 
-        val result = viewModel.withNewRootShell(
+        val result = Compat.withNewRootShell(
             globalMnt = true,
             devMode = userPrefs.developerMode
         ) {
@@ -99,7 +98,7 @@ class AdvancedKernelSUAPI(
             finalCommand.append(command)
         }
 
-        val shell = viewModel.createRootShell(
+        val shell = Compat.createRootShell(
             globalMnt = true,
             devMode = userPrefs.developerMode
         )
