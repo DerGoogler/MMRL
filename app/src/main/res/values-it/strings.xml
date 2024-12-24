@@ -100,4 +100,14 @@
     <string name="about_desc1">Fornire e gestire repository di moduli per Magisk e KernelSU.</string>
     <string name="notification_name_download">Servizio di Download</string>
     <string name="settings_app_theme_desc">Cambia la combinazione di colori e la modalità notturna</string>
+    <string name="view_module_file_size">Dimensione file</string>
+    <string name="view_module_help">Aiuto</string>
+    <string name="view_module_unsupported">Non supportato</string>
+    <string name="view_module_license">Licenza</string>
+    <string name="view_module_unsupported_desc">Sembra che questa versione del modulo non sia supportata dal dispositivo. Installarla potrebbe comportare dei rischi!</string>
+    <string name="view_module_features">Caratteristiche</string>
+    <string name="install_screen_reboot_title">Riavviare?</string>
+    <string name="install_screen_reboot_text">Confermi di voler riavviare il dispositivo?</string>
+    <string name="install_screen_reboot_confirm">Conferma</string>
+    <string name="install_screen_reboot_dismiss">Annulla</string>
 </resources>
