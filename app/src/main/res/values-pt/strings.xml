@@ -300,4 +300,7 @@
     <string name="working_mode_kernelsu_next_desc">Uma solução de root avançada baseada em kernel com suporte ao Magic Mount, controle aprimorado sobre aplicativos de espaço do usuário e privilégios de root personalizáveis.</string>
     <string name="working_mode_magisk_desc">Um conjunto de ferramentas para personalização do Android, oferecendo acesso root, suporte a módulos, modificação de imagem de inicialização e execução de código em nível de processo com Zygisk.</string>
     <string name="selected">Selecionado</string>
+    <string name="settings_root_version">Versão: %s</string>
+    <string name="home_root_provider_version_name">Nome da versão do provedor raiz</string>
+    <string name="home_root_provider_se_linux_context">Contexto SELinux</string>
 </resources>
