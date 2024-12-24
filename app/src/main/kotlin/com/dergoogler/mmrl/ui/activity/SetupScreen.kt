@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.datastore.WorkingMode
-import com.dergoogler.mmrl.ui.component.WorkingModeItem
+import com.dergoogler.mmrl.ui.component.WorkingModeItems
 
 @Composable
 fun SetupScreen(
@@ -35,39 +35,9 @@ fun SetupScreen(
                 color = MaterialTheme.colorScheme.onBackground
             )
 
-            WorkingModeItem(
-                icon = R.drawable.magisk_logo,
-                title = stringResource(R.string.working_mode_magisk_title),
-                desc = stringResource(R.string.working_mode_magisk_desc),
-                onClick = { setMode(WorkingMode.MODE_MAGISK) }
-            )
-
-            WorkingModeItem(
-                icon = R.drawable.kernelsu_logo,
-                title = stringResource(R.string.working_mode_kernelsu_title),
-                desc = stringResource(R.string.working_mode_kernelsu_desc),
-                onClick = { setMode(WorkingMode.MODE_KERNEL_SU) }
-            )
-
-            WorkingModeItem(
-                icon = R.drawable.kernelsu_next_logo,
-                title = stringResource(R.string.working_mode_kernelsu_next_title),
-                desc = stringResource(R.string.working_mode_kernelsu_next_desc),
-                onClick = { setMode(WorkingMode.MODE_KERNEL_SU_NEXT) }
-            )
-
-            WorkingModeItem(
-                icon = R.drawable.brand_android,
-                title = stringResource(R.string.working_mode_apatch_title),
-                desc = stringResource(R.string.working_mode_apatch_desc),
-                onClick = { setMode(WorkingMode.MODE_APATCH) }
-            )
-
-            WorkingModeItem(
-                icon = R.drawable.shield_lock,
-                title = stringResource(id = R.string.setup_non_root_title),
-                desc = stringResource(id = R.string.setup_non_root_desc),
-                onClick = { setMode(WorkingMode.MODE_NON_ROOT) }
+            WorkingModeItems(
+                isSetup = true,
+                setMode = setMode,
             )
         }
     }

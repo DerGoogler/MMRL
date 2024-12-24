@@ -23,54 +23,64 @@ fun WorkingModeBottomSheet(
     onDismissRequest = onClose,
     enabledNavigationSpacer = false
 ) {
-    val userPreferences = LocalUserPreferences.current
-
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState()),
+            .verticalScroll(rememberScrollState())
     ) {
-        WorkingModeItem(
-            icon = R.drawable.magisk_logo,
-            title = stringResource(R.string.working_mode_magisk_title),
-            desc = stringResource(R.string.working_mode_magisk_desc),
-            selected = userPreferences.workingMode == WorkingMode.MODE_MAGISK,
-            onClick = { viewModel.setWorkingMode(WorkingMode.MODE_MAGISK) }
-        )
-
-
-        WorkingModeItem(
-            icon = R.drawable.kernelsu_logo,
-            title = stringResource(R.string.working_mode_kernelsu_title),
-            desc = stringResource(R.string.working_mode_kernelsu_desc),
-            selected = userPreferences.workingMode == WorkingMode.MODE_KERNEL_SU,
-            onClick = { viewModel.setWorkingMode(WorkingMode.MODE_KERNEL_SU) }
-        )
-
-        WorkingModeItem(
-            icon = R.drawable.kernelsu_next_logo,
-            title = stringResource(R.string.working_mode_kernelsu_next_title),
-            desc = stringResource(R.string.working_mode_kernelsu_next_desc),
-            selected = userPreferences.workingMode == WorkingMode.MODE_KERNEL_SU_NEXT,
-            onClick = { viewModel.setWorkingMode(WorkingMode.MODE_KERNEL_SU_NEXT) }
-        )
-
-        WorkingModeItem(
-            icon = R.drawable.brand_android,
-            title = stringResource(R.string.working_mode_apatch_title),
-            desc = stringResource(R.string.working_mode_apatch_desc),
-            selected = userPreferences.workingMode == WorkingMode.MODE_APATCH,
-            onClick = { viewModel.setWorkingMode(WorkingMode.MODE_APATCH) }
-        )
-
-        WorkingModeItem(
-            icon = R.drawable.shield_lock,
-            title = stringResource(id = R.string.setup_non_root_title),
-            desc = stringResource(id = R.string.setup_non_root_desc),
-            selected = userPreferences.workingMode == WorkingMode.MODE_NON_ROOT,
-            onClick = { viewModel.setWorkingMode(WorkingMode.MODE_NON_ROOT) }
+        WorkingModeItems(
+            isSetup = false,
+            setMode = viewModel::setWorkingMode,
         )
     }
+}
+
+@Composable
+fun WorkingModeItems(
+    isSetup: Boolean,
+    setMode: (WorkingMode) -> Unit,
+) {
+    val userPreferences = LocalUserPreferences.current
+
+    WorkingModeItem(
+        icon = R.drawable.magisk_logo,
+        title = stringResource(R.string.working_mode_magisk_title),
+        desc = stringResource(R.string.working_mode_magisk_desc),
+        selected = !isSetup && (userPreferences.workingMode == WorkingMode.MODE_MAGISK),
+        onClick = { setMode(WorkingMode.MODE_MAGISK) }
+    )
+
+    WorkingModeItem(
+        icon = R.drawable.kernelsu_logo,
+        title = stringResource(R.string.working_mode_kernelsu_title),
+        desc = stringResource(R.string.working_mode_kernelsu_desc),
+        selected = !isSetup && (userPreferences.workingMode == WorkingMode.MODE_KERNEL_SU),
+        onClick = { setMode(WorkingMode.MODE_KERNEL_SU) }
+    )
+
+    WorkingModeItem(
+        icon = R.drawable.kernelsu_next_logo,
+        title = stringResource(R.string.working_mode_kernelsu_next_title),
+        desc = stringResource(R.string.working_mode_kernelsu_next_desc),
+        selected = !isSetup && (userPreferences.workingMode == WorkingMode.MODE_KERNEL_SU_NEXT),
+        onClick = { setMode(WorkingMode.MODE_KERNEL_SU_NEXT) }
+    )
+
+    WorkingModeItem(
+        icon = R.drawable.brand_android,
+        title = stringResource(R.string.working_mode_apatch_title),
+        desc = stringResource(R.string.working_mode_apatch_desc),
+        selected = !isSetup && (userPreferences.workingMode == WorkingMode.MODE_APATCH),
+        onClick = { setMode(WorkingMode.MODE_APATCH) }
+    )
+
+    WorkingModeItem(
+        icon = R.drawable.shield_lock,
+        title = stringResource(id = R.string.setup_non_root_title),
+        desc = stringResource(id = R.string.setup_non_root_desc),
+        selected = !isSetup && (userPreferences.workingMode == WorkingMode.MODE_NON_ROOT),
+        onClick = { setMode(WorkingMode.MODE_NON_ROOT) }
+    )
 }
 
 @Composable

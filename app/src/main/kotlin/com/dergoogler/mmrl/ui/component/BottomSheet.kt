@@ -41,35 +41,33 @@ fun BottomSheet(
     properties: ModalBottomSheetProperties = ModalBottomSheetDefaults.properties(),
     enabledNavigationSpacer: Boolean = true,
     content: @Composable ColumnScope.() -> Unit,
+) = ModalBottomSheet(
+    onDismissRequest,
+    modifier,
+    sheetState,
+    sheetMaxWidth,
+    shape,
+    containerColor,
+    contentColor,
+    tonalElevation,
+    scrimColor,
+    dragHandle,
+    { windowInsets },
+    properties,
 ) {
-    ModalBottomSheet(
-        onDismissRequest,
-        modifier,
-        sheetState,
-        sheetMaxWidth,
-        shape,
-        containerColor,
-        contentColor,
-        tonalElevation,
-        scrimColor,
-        dragHandle,
-        { windowInsets },
-        properties,
-    ) {
-        val statusBarHeight =
-            WindowInsets.statusBars.asPaddingValues().calculateTopPadding() + 28.dp
-        val maxHeight = LocalConfiguration.current.screenHeightDp.dp - statusBarHeight
+    val statusBarHeight =
+        WindowInsets.statusBars.asPaddingValues().calculateTopPadding() + 28.dp
+    val maxHeight = LocalConfiguration.current.screenHeightDp.dp - statusBarHeight
 
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight(unbounded = true)
-                .heightIn(max = maxHeight)
-        ) {
-            content()
-            enabledNavigationSpacer.takeTrue {
-                NavigationBarsSpacer()
-            }
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight(unbounded = true)
+            .heightIn(max = maxHeight)
+    ) {
+        content()
+        enabledNavigationSpacer.takeTrue {
+            NavigationBarsSpacer()
         }
     }
 }
