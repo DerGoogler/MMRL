@@ -36,7 +36,7 @@ internal fun RootItem(
     onClick: () -> Unit = {},
 ) = Surface(
     modifier = modifier,
-    shape = RoundedCornerShape(15.dp),
+    shape = RoundedCornerShape(20.dp),
     color = MaterialTheme.colorScheme.secondaryContainer
 ) {
     val openWorkingModeBS = Modifier

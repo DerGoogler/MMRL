@@ -32,7 +32,7 @@ internal fun NonRootItem(
     developerMode: Boolean = false,
 ) = Surface(
     modifier = modifier,
-    shape = RoundedCornerShape(15.dp),
+    shape = RoundedCornerShape(20.dp),
     color = MaterialTheme.colorScheme.secondaryContainer
 ) {
     val openWorkingModeBS = Modifier
