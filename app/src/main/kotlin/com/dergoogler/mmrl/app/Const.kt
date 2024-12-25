@@ -20,4 +20,9 @@ object Const {
     const val TELEGRAM_URL = "https://t.me/GooglersRepo"
     const val DEMO_REPO_URL = "https://gr.dergoogler.com/gmr/"
     const val SPDX_URL = "https://spdx.org/licenses/%s.json"
+
+    val WEBUI_DOMAIN_SAFE_REGEX = Regex("^https?://mui\\.kernelsu\\.org(/.*)?$")
+    val WEBUI_DOMAIN_REMOTE_SAFE_REGEX = Regex(
+        "^(https?://)?(localhost|127\\.0\\.0\\.1|::1|10(?:\\.\\d{1,3}){3}|172\\.(?:1[6-9]|2\\d|3[01])(?:\\.\\d{1,3}){2}|192\\.168(?:\\.\\d{1,3}){2})(?::([0-9]{1,5}))?$"
+    )
 }

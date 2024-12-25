@@ -136,9 +136,21 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
+    fun setWebUiDevUrl(value: String) {
+        viewModelScope.launch {
+            userPreferencesRepository.setWebUiDevUrl(value)
+        }
+    }
+
     fun setDeveloperMode(value: Boolean) {
         viewModelScope.launch {
             userPreferencesRepository.setDeveloperMode(value)
+        }
+    }
+
+    fun setUseWebUiDevUrl(value: Boolean) {
+        viewModelScope.launch {
+            userPreferencesRepository.setUseWebUiDevUrl(value)
         }
     }
 

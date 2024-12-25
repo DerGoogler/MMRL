@@ -183,6 +183,15 @@ fun SettingsScreen() {
                 }
             )
 
+            ListButtonItem(
+                icon = R.drawable.bug,
+                title = stringResource(id = R.string.settings_developer),
+                desc = stringResource(id = R.string.settings_developer_desc),
+                onClick = {
+                    navController.navigateSingleTopTo(SettingsScreen.Developer.route)
+                }
+            )
+
             BuildConfig.IS_GOOGLE_PLAY_BUILD.takeTrue {
                 ListButtonItem(
                     icon = R.drawable.spy,

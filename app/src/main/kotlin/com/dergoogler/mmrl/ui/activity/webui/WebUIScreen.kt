@@ -1,7 +1,9 @@
 package com.dergoogler.mmrl.ui.activity.webui
 
 import android.annotation.SuppressLint
+import android.net.http.SslError
 import android.view.ViewGroup
+import android.webkit.SslErrorHandler
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
@@ -30,6 +32,7 @@ import androidx.webkit.WebViewAssetLoader
 import com.dergoogler.mmrl.BuildConfig
 import com.dergoogler.mmrl.Compat
 import com.dergoogler.mmrl.R
+import com.dergoogler.mmrl.datastore.developerMode
 import com.dergoogler.mmrl.ui.activity.webui.handlers.MMRLWebUIHandler
 import com.dergoogler.mmrl.ui.activity.webui.handlers.SuFilePathHandler
 import com.dergoogler.mmrl.ui.activity.webui.interfaces.ksu.AdvancedKernelSUAPI
@@ -69,7 +72,6 @@ fun WebUIScreen(
 
     val moduleDir = "/data/adb/modules/$modId"
     val webRoot = File("$moduleDir/webroot")
-    val domainSafeRegex = Regex("^https?://mui\\.kernelsu\\.org(/.*)?$")
 
     var topInset: Int? by remember { mutableStateOf(null) }
     var bottomInset: Int? by remember { mutableStateOf(null) }
@@ -110,7 +112,6 @@ fun WebUIScreen(
                 )
                 .build()
         }
-
         AndroidView(
             factory = {
                 WebView(context).apply {
@@ -130,14 +131,17 @@ fun WebUIScreen(
                         ): Boolean {
                             val mUrl = request?.url?.toString() ?: return false
 
-                            return if (!domainSafeRegex.matches(mUrl)) {
+                            return if (!viewModel.isDomainSafe(userPrefs, mUrl)) {
                                 browser.openUri(
                                     uri = mUrl,
                                     onSuccess = { intent, uri ->
                                         intent.launchUrl(context, uri.toUri())
                                         Toast.makeText(
                                             context,
-                                            context.getString(R.string.unsafe_url_redirecting, uri),
+                                            context.getString(
+                                                R.string.unsafe_url_redirecting,
+                                                uri
+                                            ),
                                             Toast.LENGTH_SHORT
                                         ).show()
                                     }
@@ -149,11 +153,28 @@ fun WebUIScreen(
                             }
                         }
 
+                        @SuppressLint("WebViewClientOnReceivedSslError")
+                        override fun onReceivedSslError(
+                            view: WebView?,
+                            handler: SslErrorHandler?,
+                            error: SslError?,
+                        ) {
+                            if (userPrefs.developerMode && userPrefs.useWebUiDevUrl) {
+                                handler?.proceed()
+                            } else {
+                                handler?.cancel()
+                            }
+                        }
+
                         override fun shouldInterceptRequest(
                             view: WebView,
                             request: WebResourceRequest,
                         ): WebResourceResponse? {
-                            return webViewAssetLoader.shouldInterceptRequest(request.url)
+                            val default = webViewAssetLoader.shouldInterceptRequest(request.url)
+
+                            return userPrefs.developerMode({ useWebUiDevUrl }, default) {
+                                super.shouldInterceptRequest(view, request)
+                            }
                         }
                     }
 
@@ -206,9 +227,13 @@ fun WebUIScreen(
                     javaScriptEnabled = true
                     domStorageEnabled = true
                     allowFileAccess = false
+                    userPrefs.developerMode({ useWebUiDevUrl }) {
+                        mixedContentMode =
+                            android.webkit.WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
+                    }
                     userAgentString = "DON'T TRACK ME DOWN MOTHERFUCKER!"
                 }
-                webview.loadUrl("https://mui.kernelsu.org/index.html")
+                webview.loadUrl(viewModel.domainUrl(userPrefs))
             }
         )
     } else {

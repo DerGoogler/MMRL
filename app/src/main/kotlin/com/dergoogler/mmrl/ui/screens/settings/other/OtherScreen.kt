@@ -62,14 +62,6 @@ fun OtherScreen(
                 checked = userPreferences.useDoh,
                 onChange = viewModel::setUseDoh
             )
-
-            ListSwitchItem(
-                icon = R.drawable.bug,
-                title = stringResource(id = R.string.settings_developer_mode),
-                desc = stringResource(id = R.string.settings_developer_mode_desc),
-                checked = userPreferences.developerMode,
-                onChange = viewModel::setDeveloperMode,
-            )
         }
     }
 }

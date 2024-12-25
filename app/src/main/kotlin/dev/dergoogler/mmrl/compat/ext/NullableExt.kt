@@ -29,7 +29,7 @@ infix fun <T> Boolean?.nullable(param: T): T? = if (this != null && this) param 
 @OptIn(ExperimentalContracts::class)
 inline fun <T, R> T?.nullable(block: (T) -> R): R? {
     contract {
-        callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+        callsInPlace(block, InvocationKind.AT_MOST_ONCE)
     }
 
     return if (this != null) block(this) else null
@@ -45,7 +45,7 @@ inline fun <T, R> T?.nullable(block: (T) -> R): R? {
 @OptIn(ExperimentalContracts::class)
 inline fun <T, R> T?.nullable(default: R, block: (T) -> R): R {
     contract {
-        callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+        callsInPlace(block, InvocationKind.AT_MOST_ONCE)
     }
 
     return if (this != null) block(this) else default
@@ -61,7 +61,7 @@ inline fun <T, R> T?.nullable(default: R, block: (T) -> R): R {
 @OptIn(ExperimentalContracts::class)
 inline fun <T, R> T?.nullable(condition: Boolean, block: (T) -> R): R? {
     contract {
-        callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+        callsInPlace(block, InvocationKind.AT_MOST_ONCE)
     }
 
     return if (condition && this != null) block(this) else null
@@ -77,7 +77,7 @@ inline fun <T, R> T?.nullable(condition: Boolean, block: (T) -> R): R? {
 @OptIn(ExperimentalContracts::class)
 inline fun <T, R> T?.nullable(condition: (T) -> Boolean, block: (T) -> R): R? {
     contract {
-        callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+        callsInPlace(block, InvocationKind.AT_MOST_ONCE)
     }
 
     return if (this != null && condition(this)) block(this) else null
@@ -94,7 +94,7 @@ inline fun <T, R> T?.nullable(condition: (T) -> Boolean, block: (T) -> R): R? {
 @OptIn(ExperimentalContracts::class)
 inline fun <T, R> T?.nullable(condition: Boolean, default: R, block: (T) -> R): R {
     contract {
-        callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+        callsInPlace(block, InvocationKind.AT_MOST_ONCE)
     }
 
     return if (condition && this != null) block(this) else default
@@ -111,7 +111,7 @@ inline fun <T, R> T?.nullable(condition: Boolean, default: R, block: (T) -> R): 
 @OptIn(ExperimentalContracts::class)
 inline fun <T, R> T?.nullable(condition: (T) -> Boolean, default: R, block: (T) -> R): R {
     contract {
-        callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+        callsInPlace(block, InvocationKind.AT_MOST_ONCE)
     }
 
     return if (this != null && condition(this)) block(this) else default

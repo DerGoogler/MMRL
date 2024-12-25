@@ -58,8 +58,14 @@ class UserPreferencesRepository @Inject constructor(
     suspend fun setHomepage(value: String) =
         userPreferencesDataSource.setHomepage(value)
 
+    suspend fun setWebUiDevUrl(value: String) =
+        userPreferencesDataSource.setWebUiDevUrl(value)
+
     suspend fun setDeveloperMode(value: Boolean) =
         userPreferencesDataSource.setDeveloperMode(value)
+
+    suspend fun setUseWebUiDevUrl(value: Boolean) =
+        userPreferencesDataSource.setUseWebUiDevUrl(value)
 
     suspend fun setUseShellForModuleStateChange(value: Boolean) =
         userPreferencesDataSource.setUseShellForModuleStateChange(value)

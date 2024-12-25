@@ -35,4 +35,6 @@ message UserPreferences {
   bool webuiAllowRestrictedPaths = 24;
   string allowedFsModules = 25;
   string allowedKsuModules = 26;
+  string webUiDevUrl = 27;
+  bool useWebUiDevUrl = 28;
 }

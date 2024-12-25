@@ -8,9 +8,10 @@ import com.dergoogler.mmrl.datastore.repository.RepositoryMenuCompat
 import com.dergoogler.mmrl.ui.navigation.MainScreen
 import com.dergoogler.mmrl.ui.theme.Colors
 import dev.dergoogler.mmrl.compat.BuildCompat
-import dev.dergoogler.mmrl.compat.ext.nullable
-import dev.dergoogler.mmrl.compat.ext.thenComposeInvoke
 import java.io.File
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 data class UserPreferencesCompat(
     val workingMode: WorkingMode,
@@ -30,7 +31,9 @@ data class UserPreferencesCompat(
     val checkAppUpdatesPreReleases: Boolean,
     val hideFingerprintInHome: Boolean,
     val homepage: String,
+    val webUiDevUrl: String,
     val developerMode: Boolean,
+    val useWebUiDevUrl: Boolean,
     val useShellForModuleStateChange: Boolean,
     val useShellForModuleAction: Boolean,
     val webuiAllowRestrictedPaths: Boolean,
@@ -58,7 +61,9 @@ data class UserPreferencesCompat(
         checkAppUpdatesPreReleases = original.checkAppUpdatesPreReleases,
         hideFingerprintInHome = original.hideFingerprintInHome,
         homepage = original.homepage,
+        webUiDevUrl = original.webUiDevUrl,
         developerMode = original.developerMode,
+        useWebUiDevUrl = original.useWebUiDevUrl,
         useShellForModuleStateChange = original.useShellForModuleStateChange,
         useShellForModuleAction = original.useShellForModuleAction,
         webuiAllowRestrictedPaths = original.webuiAllowRestrictedPaths,
@@ -99,7 +104,9 @@ data class UserPreferencesCompat(
             .setCheckAppUpdatesPreReleases(checkAppUpdatesPreReleases)
             .setHideFingerprintInHome(hideFingerprintInHome)
             .setHomepage(homepage)
+            .setWebUiDevUrl(webUiDevUrl)
             .setDeveloperMode(developerMode)
+            .setUseWebUiDevUrl(useWebUiDevUrl)
             .setUseShellForModuleStateChange(useShellForModuleStateChange)
             .setUseShellForModuleAction(useShellForModuleAction)
             .setWebuiAllowRestrictedPaths(webuiAllowRestrictedPaths)
@@ -109,22 +116,6 @@ data class UserPreferencesCompat(
             .setRepositoryMenu(repositoryMenu.toProto())
             .setModulesMenu(modulesMenu.toProto())
             .build()
-
-    /**
-     * A generic Composable function to execute a given block based on a provided type parameter [T].
-     *
-     * @param block A composable lambda that receives a value of type [T].
-     *              The block will be invoked with the value determined by the `developerMode` state.
-     * @return Unit? Returns the result of invoking the block or `null` if no invocation occurred.
-     *
-     * This function allows flexibility by using a reified type parameter [T], making it possible to
-     * perform type-specific operations at runtime without requiring explicit casting.
-     *
-     * @see thenComposeInvoke For handling the invocation of the block with the provided developerMode state.
-     */
-    @Composable
-    inline fun <reified T> developerMode(crossinline block: @Composable (T) -> Unit): Unit? =
-        this.thenComposeInvoke<T>(developerMode, block)?.invoke()
 
     companion object {
         fun default() = UserPreferencesCompat(
@@ -145,7 +136,9 @@ data class UserPreferencesCompat(
             checkAppUpdatesPreReleases = false,
             hideFingerprintInHome = true,
             homepage = MainScreen.Home.route,
+            webUiDevUrl = "http://0.0.0.0:8080",
             developerMode = false,
+            useWebUiDevUrl = false,
             clearInstallTerminal = true,
             useShellForModuleStateChange = true,
             useShellForModuleAction = true,
@@ -171,4 +164,56 @@ data class UserPreferencesCompat(
                 return this == WorkingMode.FIRST_SETUP
             }
     }
+}
+
+
+@OptIn(ExperimentalContracts::class)
+/**
+ * Executes the given block only if the `developerMode` is enabled.
+ *
+ * @param R The return type of the block.
+ * @param block A lambda to be executed if `developerMode` is enabled.
+ * @return The result of the block execution if `developerMode` is enabled, otherwise `null`.
+ */
+inline fun <R> UserPreferencesCompat.developerMode(block: UserPreferencesCompat.() -> R): R? {
+    contract {
+        callsInPlace(block, InvocationKind.AT_MOST_ONCE)
+    }
+
+    return if (developerMode) block() else null
+}
+
+@OptIn(ExperimentalContracts::class)
+/**
+ * Executes the given block only if the `developerMode` is enabled and the specified condition is true.
+ *
+ * @param R The return type of the block.
+ * @param also A lambda returning a boolean that acts as an additional condition for executing the block.
+ * @param block A lambda to be executed if `developerMode` and the `also` condition are true.
+ * @return The result of the block execution if the conditions are met, otherwise `null`.
+ */
+inline fun <R> UserPreferencesCompat.developerMode(also: UserPreferencesCompat.() -> Boolean, block: UserPreferencesCompat.() -> R): R? {
+    contract {
+        callsInPlace(block, InvocationKind.AT_MOST_ONCE)
+    }
+
+    return if (developerMode && also()) block() else null
+}
+
+@OptIn(ExperimentalContracts::class)
+/**
+ * Executes the given block only if the `developerMode` is enabled and the specified condition is true, otherwise returns the default value.
+ *
+ * @param R The return type of the block and default value.
+ * @param also A lambda returning a boolean that acts as an additional condition for executing the block.
+ * @param default The value to return if the conditions are not met.
+ * @param block A lambda to be executed if `developerMode` and the `also` condition are true.
+ * @return The result of the block execution if the conditions are met, otherwise the default value.
+ */
+inline fun <R> UserPreferencesCompat.developerMode(also: UserPreferencesCompat.() -> Boolean, default: R, block: UserPreferencesCompat.() -> R): R {
+    contract {
+        callsInPlace(block, InvocationKind.AT_MOST_ONCE)
+    }
+
+    return if (developerMode && also()) block() else default
 }

@@ -1,5 +1,7 @@
 package dev.dergoogler.mmrl.compat.ext
 
+import com.dergoogler.mmrl.app.Const
+import java.net.URI
 import java.nio.file.FileSystems
 import java.nio.file.Files
 import java.nio.file.Path
@@ -48,4 +50,16 @@ fun CharSequence?.isNotNullOrBlank(): Boolean {
     }
 
     return !this.isNullOrBlank()
+}
+
+fun String.isLocalWifiUrl(): Boolean {
+    return try {
+        val uri = URI(this)
+        val host = uri.host ?: return false
+        val port = uri.port
+
+        host.matches(Const.WEBUI_DOMAIN_REMOTE_SAFE_REGEX) && (port == -1 || port in 1..65535)
+    } catch (e: Exception) {
+        false
+    }
 }

@@ -2,7 +2,11 @@ package com.dergoogler.mmrl.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.dergoogler.mmrl.Compat
+import com.dergoogler.mmrl.app.Const
+import com.dergoogler.mmrl.datastore.UserPreferencesCompat
+import com.dergoogler.mmrl.datastore.developerMode
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.dergoogler.mmrl.compat.ext.isLocalWifiUrl
 import javax.inject.Inject
 
 
@@ -38,6 +42,22 @@ class WebUIViewModel @Inject constructor(
             input[0].uppercase()
         } else {
             ""
+        }
+    }
+
+    fun isDomainSafe(userPrefs: UserPreferencesCompat, domain: String): Boolean {
+        val default = Const.WEBUI_DOMAIN_SAFE_REGEX.matches(domain)
+
+        return userPrefs.developerMode({ useWebUiDevUrl }, default) {
+            webUiDevUrl.isLocalWifiUrl()
+        }
+    }
+
+    fun domainUrl(userPrefs: UserPreferencesCompat): String {
+        val default = "https://mui.kernelsu.org/index.html"
+
+        return userPrefs.developerMode({ useWebUiDevUrl }, default) {
+            webUiDevUrl
         }
     }
 }

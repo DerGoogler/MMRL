@@ -149,10 +149,26 @@ class UserPreferencesDataSource @Inject constructor(
         }
     }
 
+    suspend fun setWebUiDevUrl(value: String) = withContext(Dispatchers.IO) {
+        userPreferences.updateData {
+            it.copy(
+                webUiDevUrl = value
+            )
+        }
+    }
+
     suspend fun setDeveloperMode(value: Boolean) = withContext(Dispatchers.IO) {
         userPreferences.updateData {
             it.copy(
                 developerMode = value
+            )
+        }
+    }
+
+    suspend fun setUseWebUiDevUrl(value: Boolean) = withContext(Dispatchers.IO) {
+        userPreferences.updateData {
+            it.copy(
+                useWebUiDevUrl = value
             )
         }
     }

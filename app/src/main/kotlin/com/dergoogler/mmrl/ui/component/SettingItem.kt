@@ -39,6 +39,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -60,6 +61,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.dergoogler.mmrl.R
+import dev.dergoogler.mmrl.compat.ext.nullable
 import dev.dergoogler.mmrl.compat.ext.thenCompose
 import dev.dergoogler.mmrl.compat.ext.thenComposeInvoke
 
@@ -506,6 +508,8 @@ fun ListEditTextItem(
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     @DrawableRes icon: Int? = null,
     enabled: Boolean = true,
+    onValid: ((String) -> Boolean)? = null,
+    supportingText: @Composable ((Boolean) -> Unit)? = null,
     labels: List<@Composable RowScope.() -> Unit>? = null,
 ) {
     var open by remember { mutableStateOf(false) }
@@ -513,7 +517,9 @@ fun ListEditTextItem(
         value = value,
         title = title,
         onClose = { open = false },
-        onConfirm = onConfirm
+        onConfirm = onConfirm,
+        onValid = onValid,
+        supportingText = supportingText
     )
 
     ListButtonItem(
@@ -532,14 +538,23 @@ fun ListEditTextItem(
 private fun EditTextDialog(
     title: String,
     value: String,
+    onValid: ((String) -> Boolean)? = null,
+    supportingText: @Composable ((Boolean) -> Unit)? = null,
     onClose: () -> Unit,
     onConfirm: (String) -> Unit,
 ) {
     var text by remember { mutableStateOf(value) }
+    var isError by remember { mutableStateOf(false) }
 
     val onDone: () -> Unit = {
         onConfirm(text)
         onClose()
+    }
+
+    onValid.nullable { c ->
+        LaunchedEffect(c) {
+            isError = c(value)
+        }
     }
 
     TextFieldDialog(
@@ -549,7 +564,7 @@ private fun EditTextDialog(
         confirmButton = {
             TextButton(
                 onClick = onDone,
-                enabled = text.isNotBlank()
+                enabled = !isError && text.isNotBlank()
             ) {
                 Text(text = stringResource(id = R.string.install_screen_reboot_confirm))
             }
@@ -566,8 +581,19 @@ private fun EditTextDialog(
             modifier = Modifier.focusRequester(focusRequester),
             textStyle = MaterialTheme.typography.bodyLarge,
             value = text,
-            onValueChange = { text = it },
+            onValueChange = {
+                onValid.nullable { c ->
+                    isError = c(it)
+                }
+                text = it
+            },
             singleLine = false,
+            supportingText = {
+                supportingText.nullable {
+                    it(isError)
+                }
+            },
+            isError = isError,
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Text,
                 imeAction = ImeAction.Done
