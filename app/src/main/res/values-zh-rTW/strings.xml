@@ -333,7 +333,7 @@
     <string name="settings_webui_remote_url_desc">為簡化偵錯流程，開放存取 http://localhost 等指定網路位址。欲知詳情，請見上方注意事項。</string>
     <string name="settings_developer_desc">可供開發人員調用的偵錯工具</string>
     <string name="settings_webui_remote_url">遠端連線超連結</string>
-    <string name="invalid_ip">此串不為有效的 IP 位址！</string>
+    <string name="invalid_ip">此串不為有效的網域！</string>
     <string name="settings_enable_webui_remote_url">啟用 WebUI 介面遠端連線</string>
     <string name="settings_webui_remote_url_alert_desc">WebUI 介面得以指定的網路位址，為所有模組忽略與安全通訊層（SSL）的連線問題，以及收回對 /data/adb/modules/{代號}/webroot 的存取權。謹記：以個人名義簽署的本機網站伺服器才需要開啟此功能。謹慎偵錯，風險自負。</string>
 </resources>
