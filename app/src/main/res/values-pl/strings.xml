@@ -304,4 +304,11 @@
     <string name="home_root_provider_se_linux_context">Kontekst SELinux</string>
     <string name="home_root_provider_version_name">Nazwa wersji dostawcy root</string>
     <string name="settings_root_version">Wersja: %s</string>
+    <string name="invalid_ip">To nie jest prawidłowy lokalny adres!</string>
+    <string name="settings_webui_remote_url">Zdalny adres WebUI</string>
+    <string name="settings_developer">Programista</string>
+    <string name="settings_webui_remote_url_desc">Aby ułatwić debugowanie, podaj lokalny adres, dla przykładu http://localhost. Zobacz powyższy alert, aby zobaczyć więcej.</string>
+    <string name="settings_enable_webui_remote_url">Włącz zdalny adres WebUI</string>
+    <string name="settings_developer_desc">Narzędzia debugowania dla programistów</string>
+    <string name="settings_webui_remote_url_alert_desc">WebUI będzie teraz konsekwentnie używać podanego adresu dla wszystkich modułów, omijać błędy SSL i wyłączać dostęp do /data/adb/modules/{ID}/webroot. Należy pamiętać, że do korzystania z tej funkcji wymagany jest lokalny serwer WWW z własnym podpisem, który jest przeznaczony wyłącznie do celów debugowania, nie jest przeznaczony do codziennego użytku i jest używany na własne ryzyko.</string>
 </resources>
