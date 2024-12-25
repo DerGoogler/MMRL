@@ -84,7 +84,7 @@
     <string name="view_module_features_sepolicy_sub">將 SEPolicy 規則改制為自訂的安全性政策。</string>
     <string name="view_module_features_zygisk_sub">准許模組存取 Zygisk 框架，達致系統層級的修改與關連。</string>
     <string name="view_module_features_apks_sub">模組另有附隨安裝的 APK 程式。</string>
-    <string name="view_module_features_webui_sub">含有可供管理模組的網頁介面。使用者需手動為各種 JavaScript 程式權限進行授權。</string>
+    <string name="view_module_features_webui_sub">含有可供管理模組的網頁介面。使用者需手動為各種 JavaScript 程式權限進行授予。</string>
     <string name="view_module_features_postmount_sub">始於 OverlayFS 掛載而後置執行的腳本</string>
     <string name="view_module_features_bootcompleted_sub">系統初始化後，待機期間執行的腳本</string>
     <string name="view_module_module_support">關連頁面</string>
@@ -237,10 +237,10 @@
     <string name="additional_notes">附加提示</string>
     <string name="repo_added">已新增中介平臺</string>
     <!-- 即時管理工具 -->
-    <string name="work_repository_updates">中介平臺更新</string>
-    <string name="work_updates_for_repositories">檢查中介平臺更新</string>
-    <string name="work_module_updates">模組更新</string>
-    <string name="work_update_checker_for_modules">用於檢查模組更新的工具</string>
+    <string name="work_repository_updates">中介平臺更新服務</string>
+    <string name="work_updates_for_repositories">用於檢查中介平臺更新</string>
+    <string name="work_module_updates">模組更新服務</string>
+    <string name="work_update_checker_for_modules">用於檢查模組更新</string>
     <!-- 中介平臺更新背景服務 -->
     <string name="repo_update_service">已成功更新所有中介平臺</string>
     <string name="repo_update_service_desc">MMRL 已為你更新了所有中介平臺。😋</string>
@@ -286,7 +286,7 @@
     <string name="settings_shell_module_state_change_desc">選擇以系統外殼進行模組管理，而非逕自在模組目錄建立檔案。選項啟用後，你將無法使用復原按鈕。</string>
     <string name="bulk_install_module_already_added">本模組已經新增進來了</string>
     <string name="bulk_install_module_added">已新增模組</string>
-    <string name="bulk_module_install">成批式模組安裝</string>
+    <string name="bulk_module_install">成批型模組安裝</string>
     <string name="unsafe_url_redirecting">截獲不安全超連結：%1$s。正在進行重新導向⋯⋯</string>
     <string name="view_module_install_confirm_title">是否安裝模組？</string>
     <string name="view_module_install_confirm_desc_deps"><![CDATA[你是否要安裝<font color=\"%1$s\">「%2$s」</font>？本模組另需使用的相依部分：]]></string>
@@ -318,9 +318,9 @@
     <string name="home_enabled_disabled_modules_ratio">已啟用／已停用占比</string>
     <string name="copy_logs">複製運作日誌</string>
     <string name="working_mode_apatch_title">APatch</string>
-    <string name="working_mode_kernelsu_next_desc">一套基於裝置核心的進階式 Root 解決方案：以支援 Magic Mount 為特色，授權所掌控的地域不限於使用者空間，更能自訂授予給程式的具體權限。</string>
+    <string name="working_mode_kernelsu_next_desc">一套基於裝置核心的進階型 Root 解決方案：以支援 Magic Mount 為特色，不僅更強大地掌控使用者應用程式，更能自訂授予給程式的具體權限。</string>
     <string name="selected">已選定</string>
-    <string name="working_mode_kernelsu_desc">一套基於裝置核心的 Root 解決方案：不僅授權掌控的地域不限於使用者空間以及可為程式自訂授予的具體權限，更以 OverlayFS 防止系統損壞，提供安全可靠的模組系統環境。</string>
+    <string name="working_mode_kernelsu_desc">一套基於裝置核心的 Root 解決方案：不僅更強大地掌控使用者應用程式，以及可為程式自訂授予的具體權限，更以 OverlayFS 防止系統損壞，提供安全可靠的模組系統環境。</string>
     <string name="working_mode_apatch_desc">用於修補 Android 核心與其系統。一套基於裝置核心的新型態 Root 解決方案：既有與 Magisk 相似的模組系統以及核心注入功能（需以 inline-hook、syscall-table-hook 的形式運作），又有承襲自 KernelSU 的 Root 授權模式。</string>
     <string name="working_mode_magisk_desc">一套用於 Android 客製化的工具套件：提供裝置 Root 授權、模組系統、boot 鏡像檔改造等功能，外加 Zygisk 來讓指定程式運作於系統層級上。</string>
     <string name="working_mode_kernelsu_next_title">KernelSU Next</string>
