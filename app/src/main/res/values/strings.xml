@@ -217,7 +217,7 @@
     <string name="settings_developer">Developer</string>
     <string name="settings_developer_desc">Debugging tools for developers</string>
     <string name="settings_webui_remote_url">WebUI Remote URL</string>
-    <string name="settings_webui_remote_url_desc">To simplify debugging, provide a local IP address such as http://localhost. See the alert above for more.</string>
+    <string name="settings_webui_remote_url_desc">To simplify debugging, provide a local domain such as http://localhost. See the alert above for more.</string>
     <string name="settings_webui_remote_url_alert_desc">WebUI will now consistently use your provided address for all modules, bypass SSL errors, and disable the access to /data/adb/modules/{ID}/webroot. Note that a self-signed local web server is required to use this feature, which is intended for debugging purposes only, is not meant for everyday use, and is used at your own risk.</string>
     <!-- App Theme -->
     <string name="app_theme_palette">Theme Palette</string>
