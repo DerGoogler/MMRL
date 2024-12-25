@@ -3,6 +3,7 @@ package dev.dergoogler.mmrl.compat.impl
 import com.topjohnwu.superuser.Shell
 import dev.dergoogler.mmrl.compat.content.ModuleCompatibility
 import dev.dergoogler.mmrl.compat.stub.IModuleOpsCallback
+import dev.dergoogler.mmrl.compat.stub.IShellCallback
 
 internal class KsuNextModuleManagerImpl(
     shell: Shell,
@@ -36,6 +37,30 @@ internal class KsuNextModuleManagerImpl(
             }.onFailure {
                 callback.onFailure(id, it.message)
             }
+        }
+    }
+
+
+    override fun action(modId: String, legacy: Boolean, callback: IShellCallback) {
+        if (legacy) {
+            val cmds = arrayOf(
+                "export ASH_STANDALONE=1",
+                "export KSU=true",
+                "export KSU_NEXT=true",
+                "export KSU_VER=${version}",
+                "export KSU_VER_CODE=${versionCode}",
+                "busybox sh /data/adb/modules/$modId/action.sh"
+            )
+
+            action(
+                cmd = cmds,
+                callback = callback
+            )
+        } else {
+            action(
+                cmd = arrayOf("ksud module action $modId"),
+                callback = callback
+            )
         }
     }
 }
