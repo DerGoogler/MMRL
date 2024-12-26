@@ -32,8 +32,8 @@ import androidx.navigation.NavController
 import com.dergoogler.mmrl.BuildConfig
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.app.Const
-import com.dergoogler.mmrl.ui.component.HtmlText
 import com.dergoogler.mmrl.ui.component.Logo
+import com.dergoogler.mmrl.ui.component.MarkdownText
 import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
 import com.dergoogler.mmrl.ui.component.OutlinedCard
 import com.dergoogler.mmrl.ui.providable.LocalNavController
@@ -138,21 +138,29 @@ fun AboutScreen() {
             }
 
             OutlinedCard {
+                val style = MaterialTheme.typography.bodyMedium.copy(
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+
                 Text(
                     text = stringResource(id = R.string.about_desc1),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    style = style
                 )
 
                 Spacer(modifier = Modifier.height(15.dp))
 
-                HtmlText(
+                MarkdownText(
                     text = stringResource(
                         id = R.string.about_desc2,
-                        "<a href=\"${Const.SANMER_GITHUB_URL}\">Sanmer</a> & <a href=\"${Const.GOOGLER_GITHUB_URL}\">Der_Googler</a>"
+                        "@sanmer(Sanmer) & @googler(Der_Googler)"
                     ),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    style = style,
+                    onTagClick = {
+                        when (it) {
+                            "sanmer" -> browser.openUri(Const.SANMER_GITHUB_URL)
+                            "googler" -> browser.openUri(Const.GOOGLER_GITHUB_URL)
+                        }
+                    }
                 )
             }
         }
