@@ -1,6 +1,5 @@
 package com.dergoogler.mmrl.ui.screens.home.about
 
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,7 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FilledTonalButton
@@ -37,6 +35,7 @@ import com.dergoogler.mmrl.app.Const
 import com.dergoogler.mmrl.ui.component.HtmlText
 import com.dergoogler.mmrl.ui.component.Logo
 import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
+import com.dergoogler.mmrl.ui.component.OutlinedCard
 import com.dergoogler.mmrl.ui.providable.LocalNavController
 
 @Composable
@@ -138,16 +137,7 @@ fun AboutScreen() {
                 }
             }
 
-            Column(
-                modifier = Modifier
-                    .border(
-                        width = 1.dp,
-                        color = MaterialTheme.colorScheme.outline,
-                        shape = RoundedCornerShape(15.dp)
-                    )
-                    .fillMaxWidth()
-                    .padding(all = 15.dp)
-            ) {
+            OutlinedCard {
                 Text(
                     text = stringResource(id = R.string.about_desc1),
                     style = MaterialTheme.typography.bodyMedium,

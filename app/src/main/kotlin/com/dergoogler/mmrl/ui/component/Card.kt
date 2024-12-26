@@ -1,5 +1,6 @@
 package com.dergoogler.mmrl.ui.component
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -74,6 +75,31 @@ fun Card(
         }
     }
 }
+
+@Composable
+fun OutlinedCard(
+    modifier: CardModifier = CardDefaults.outlinedCardModifier,
+    style: CardStyle = CardDefaults.outlinedCardStyle,
+    enabled: Boolean = true,
+    onClick: (() -> Unit)? = null,
+    /**
+     * Only works if [onClick] is not null.
+     */
+    onLongClick: () -> Unit = {},
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    absolute: @Composable (BoxScope.() -> Unit) = {},
+    relative: @Composable (ColumnScope.() -> Unit),
+) = Card(
+    modifier = modifier,
+    style = style,
+    enabled = enabled,
+    onClick = onClick,
+    onLongClick = onLongClick,
+    interactionSource = interactionSource,
+    absolute = absolute,
+    relative = relative
+)
+
 
 @Immutable
 class CardStyle internal constructor(
@@ -177,5 +203,21 @@ object CardDefaults {
             shape = RoundedCornerShape(20.dp),
             boxContentAlignment = Alignment.TopStart,
             columnVerticalArrangement = Arrangement.Top
+        )
+
+    val outlinedCardStyle: CardStyle
+        @Composable get() = cardStyle.copy(
+            containerColor = Color.Unspecified,
+            contentColor = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+
+    val outlinedCardModifier: CardModifier
+        @Composable get() = cardModifier.copy(
+            surface = Modifier
+                .border(
+                    width = 1.dp,
+                    color = MaterialTheme.colorScheme.outline,
+                    shape = cardStyle.shape
+                )
         )
 }
