@@ -11,6 +11,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.dergoogler.mmrl.Compat
+import com.dergoogler.mmrl.app.Const.CLEAR_CMD
 import com.dergoogler.mmrl.app.Event
 import com.dergoogler.mmrl.compat.MediaStoreCompat.copyToDir
 import com.dergoogler.mmrl.compat.MediaStoreCompat.getPathForUri
@@ -28,7 +29,6 @@ import dev.dergoogler.mmrl.compat.ext.tmpDir
 import dev.dergoogler.mmrl.compat.stub.IShellCallback
 import dev.dergoogler.mmrl.compat.viewmodel.MMRLViewModel
 import kotlinx.coroutines.CompletableDeferred
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -221,14 +221,18 @@ class InstallViewModel @Inject constructor(
 
             val callback = object : IShellCallback.Stub() {
                 override fun onStdout(msg: String) {
-                    CoroutineScope(Dispatchers.Main).launch {
-                        console.add(msg)
-                        logs.add(msg)
+                    viewModelScope.launch {
+                        if (msg.startsWith(CLEAR_CMD)) {
+                            console.clear()
+                        } else {
+                            console.add(msg)
+                            logs.add(msg)
+                        }
                     }
                 }
 
                 override fun onStderr(msg: String) {
-                    CoroutineScope(Dispatchers.Main).launch {
+                    viewModelScope.launch {
                         if (userPreferences.developerMode) console.add(msg)
                         logs.add(msg)
                     }

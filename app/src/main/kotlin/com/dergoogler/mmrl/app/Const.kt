@@ -25,4 +25,6 @@ object Const {
     val WEBUI_DOMAIN_REMOTE_SAFE_REGEX = Regex(
         "^(https?://)?(localhost|127\\.0\\.0\\.1|::1|10(?:\\.\\d{1,3}){3}|172\\.(?:1[6-9]|2\\d|3[01])(?:\\.\\d{1,3}){2}|192\\.168(?:\\.\\d{1,3}){2})(?::([0-9]{1,5}))?$"
     )
+
+    const val CLEAR_CMD = "[H[J"
 }

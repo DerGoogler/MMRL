@@ -28,29 +28,24 @@ fun Console(
     ),
 ) {
     LaunchedEffect(list.size) {
-        state.animateScrollToItem(list.size)
+        if (list.isNotEmpty()) {
+            state.animateScrollToItem(list.size - 1)
+        }
     }
 
     LazyColumn(
         state = state,
         modifier = modifier.let {
-            if (breakList) it else it.horizontalScroll(
-                rememberScrollState()
-            )
+            if (breakList) it else it.horizontalScroll(rememberScrollState())
         }
     ) {
-        items(list) {
-            when {
-                it.startsWith("[H[J") -> list.clear()
-                else -> {
-                    Text(
-                        text = it,
-                        color = style.color,
-                        modifier = Modifier.padding(horizontal = 8.dp),
-                        style = style
-                    )
-                }
-            }
+        items(list) { item ->
+            Text(
+                text = item,
+                color = style.color,
+                modifier = Modifier.padding(horizontal = 8.dp),
+                style = style
+            )
         }
     }
 }
