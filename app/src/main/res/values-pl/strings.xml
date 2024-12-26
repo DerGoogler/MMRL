@@ -311,4 +311,8 @@
     <string name="settings_enable_webui_remote_url">Włącz zdalny adres WebUI</string>
     <string name="settings_developer_desc">Narzędzia debugowania dla programistów</string>
     <string name="settings_webui_remote_url_alert_desc">WebUI będzie teraz konsekwentnie używać podanego adresu dla wszystkich modułów, omijać błędy SSL i wyłączać dostęp do /data/adb/modules/{ID}/webroot. Należy pamiętać, że do korzystania z tej funkcji wymagany jest lokalny serwer WWW z własnym podpisem, który jest przeznaczony wyłącznie do celów debugowania, nie jest przeznaczony do codziennego użytku i jest używany na własne ryzyko.</string>
+    <string name="action_screen_cancel_title">Przerwać akcję?</string>
+    <string name="install_screen_cancel_text">Czy na pewno chcesz przerwać instalację?</string>
+    <string name="action_screen_cancel_text">Czy na pewno chcesz przerwać tę akcję?</string>
+    <string name="install_screen_cancel_title">Przerwać instalację?</string>
 </resources>
