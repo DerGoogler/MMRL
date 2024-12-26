@@ -20,7 +20,6 @@ import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
@@ -43,6 +42,7 @@ import androidx.compose.ui.unit.dp
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.model.state.RepoState
 import com.dergoogler.mmrl.ui.component.BottomSheet
+import com.dergoogler.mmrl.ui.component.Card
 import com.dergoogler.mmrl.ui.component.LabelItem
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import dev.dergoogler.mmrl.compat.ext.shareText
@@ -54,12 +54,10 @@ fun RepositoryItem(
     toggle: (Boolean) -> Unit,
     update: () -> Unit,
     delete: () -> Unit,
-) = Surface(
-    shape = RoundedCornerShape(15.dp),
-    color = MaterialTheme.colorScheme.surface,
-    tonalElevation = 1.dp,
-    onClick = { toggle(!repo.enable) },
+) = Card(
+    onClick = { toggle(!repo.enable) }
 ) {
+
     val userPreferences = LocalUserPreferences.current
     val context = LocalContext.current
     val (alpha, textDecoration) = when {
@@ -68,110 +66,105 @@ fun RepositoryItem(
         else -> 1f to TextDecoration.None
     }
 
-    Column(
-        modifier = Modifier
-            .padding(all = 15.dp)
-            .fillMaxWidth()
+    Row(
+        verticalAlignment = Alignment.Top
     ) {
-        Row(
-            verticalAlignment = Alignment.Top
+        Crossfade(
+            targetState = repo.enable,
+            label = "RepositoryItem"
         ) {
-            Crossfade(
-                targetState = repo.enable,
-                label = "RepositoryItem"
-            ) {
-                if (it) {
-                    Icon(
-                        modifier = Modifier.size(32.dp),
-                        painter = painterResource(id = R.drawable.circle_check_filled),
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.secondary
-                    )
-                } else {
-                    Icon(
-                        modifier = Modifier.size(32.dp),
-                        painter = painterResource(id = R.drawable.circle_x_filled),
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.secondary
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.width(12.dp))
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .alpha(alpha),
-                verticalArrangement = Arrangement.spacedBy(2.dp)
-            ) {
-                Text(
-                    text = repo.name,
-                    style = MaterialTheme.typography.titleSmall
-                        .copy(fontWeight = FontWeight.Bold),
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis,
-                    textDecoration = textDecoration
-                )
-
-                Text(
-                    text = stringResource(
-                        id = R.string.module_update_at,
-                        repo.timestamp.toFormattedDateSafely(userPreferences.datePattern)
-                    ),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.outline,
-                    textDecoration = textDecoration
-                )
-            }
-
-            if (repo.compatible) {
-                LabelItem(
-                    text = stringResource(id = R.string.repo_modules, repo.size),
-                    upperCase = false
+            if (it) {
+                Icon(
+                    modifier = Modifier.size(32.dp),
+                    painter = painterResource(id = R.drawable.circle_check_filled),
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.secondary
                 )
             } else {
-                LabelItem(
-                    text = stringResource(id = R.string.repo_incompatible),
-                    containerColor = MaterialTheme.colorScheme.error,
-                    contentColor = MaterialTheme.colorScheme.onError
+                Icon(
+                    modifier = Modifier.size(32.dp),
+                    painter = painterResource(id = R.drawable.circle_x_filled),
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.secondary
                 )
             }
         }
 
-        Row(
-            modifier = Modifier.padding(top = 12.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalAlignment = Alignment.CenterVertically
+        Spacer(modifier = Modifier.width(12.dp))
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .alpha(alpha),
+            verticalArrangement = Arrangement.spacedBy(2.dp)
         ) {
-            var open by remember { mutableStateOf(false) }
-            if (open) {
-                BottomSheetForItem(
-                    repo = repo,
-                    onDelete = delete,
-                    onClose = { open = false }
-                )
-            }
-
-            ButtonItem(
-                icon = R.drawable.share,
-                onClick = { context.shareText(repo.url) }
+            Text(
+                text = repo.name,
+                style = MaterialTheme.typography.titleSmall
+                    .copy(fontWeight = FontWeight.Bold),
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+                textDecoration = textDecoration
             )
 
-            Spacer(Modifier.weight(1f))
-
-            ButtonItem(
-                icon = R.drawable.at,
-                label = R.string.repo_options,
-                onClick = { open = true }
+            Text(
+                text = stringResource(
+                    id = R.string.module_update_at,
+                    repo.timestamp.toFormattedDateSafely(userPreferences.datePattern)
+                ),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.outline,
+                textDecoration = textDecoration
             )
+        }
 
-            ButtonItem(
-                icon = R.drawable.cloud_download,
-                label = R.string.repo_options_update,
-                onClick = update
+        if (repo.compatible) {
+            LabelItem(
+                text = stringResource(id = R.string.repo_modules, repo.size),
+                upperCase = false
+            )
+        } else {
+            LabelItem(
+                text = stringResource(id = R.string.repo_incompatible),
+                containerColor = MaterialTheme.colorScheme.error,
+                contentColor = MaterialTheme.colorScheme.onError
             )
         }
     }
+
+    Row(
+        modifier = Modifier.padding(top = 12.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        var open by remember { mutableStateOf(false) }
+        if (open) {
+            BottomSheetForItem(
+                repo = repo,
+                onDelete = delete,
+                onClose = { open = false }
+            )
+        }
+
+        ButtonItem(
+            icon = R.drawable.share,
+            onClick = { context.shareText(repo.url) }
+        )
+
+        Spacer(Modifier.weight(1f))
+
+        ButtonItem(
+            icon = R.drawable.at,
+            label = R.string.repo_options,
+            onClick = { open = true }
+        )
+
+        ButtonItem(
+            icon = R.drawable.cloud_download,
+            label = R.string.repo_options_update,
+            onClick = update
+        )
+    }
+
 }
 
 @Composable

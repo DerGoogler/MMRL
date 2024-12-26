@@ -23,7 +23,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
@@ -34,6 +33,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
@@ -42,14 +42,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.datastore.UserPreferencesCompat.Companion.isNonRoot
 import com.dergoogler.mmrl.datastore.UserPreferencesCompat.Companion.isRoot
 import com.dergoogler.mmrl.model.online.Changelog
 import com.dergoogler.mmrl.network.runRequest
 import com.dergoogler.mmrl.stub.IMMRLApiManager
+import com.dergoogler.mmrl.ui.component.Card
+import com.dergoogler.mmrl.ui.component.CardDefaults
 import com.dergoogler.mmrl.ui.component.ListItem
+import com.dergoogler.mmrl.ui.component.ListItemDefaults
 import com.dergoogler.mmrl.ui.component.ListProgressBarItem
 import com.dergoogler.mmrl.ui.component.TopAppBarIcon
 import com.dergoogler.mmrl.ui.component.WorkingModeBottomSheet
@@ -97,6 +99,9 @@ fun HomeScreen(
             workingModeBottomSheet = false
         }
     )
+
+    val compressedCardModifier = CardDefaults.cardModifier
+        .copy(column = Modifier.padding(vertical = 16.dp))
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection), topBar = {
@@ -199,169 +204,137 @@ fun HomeScreen(
                 }
             }
 
-            Surface(
-                color = MaterialTheme.colorScheme.surface,
-                tonalElevation = 1.dp,
-                shape = RoundedCornerShape(20.dp)
+            Card(
+                modifier = compressedCardModifier
             ) {
                 val uname = Os.uname()
 
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 16.dp)
-                ) {
+                ListItem(
+                    contentPaddingValues = listItemContentPaddingValues,
+                    icon = R.drawable.cookie_man,
+                    title = stringResource(R.string.kernel),
+                    desc = uname.release
+                )
 
-                    ListItem(
-                        contentPaddingValues = listItemContentPaddingValues,
-                        icon = R.drawable.cookie_man,
-                        title = stringResource(R.string.kernel),
-                        desc = uname.release
-                    )
+                ListItem(
+                    contentPaddingValues = listItemContentPaddingValues,
+                    icon = R.drawable.launcher_outline,
+                    title = stringResource(R.string.manager_version),
+                    desc = "${context.managerVersion.first} (${context.managerVersion.second})"
+                )
 
-                    ListItem(
-                        contentPaddingValues = listItemContentPaddingValues,
-                        icon = R.drawable.launcher_outline,
-                        title = stringResource(R.string.manager_version),
-                        desc = "${context.managerVersion.first} (${context.managerVersion.second})"
-                    )
+                ListItem(
+                    contentPaddingValues = listItemContentPaddingValues,
+                    icon = R.drawable.fingerprint,
+                    title = stringResource(R.string.fingerprint),
+                    desc = if (userPreferences.hideFingerprintInHome) {
+                        stringResource(id = R.string.hidden)
+                    } else {
+                        Build.FINGERPRINT
+                    }
+                )
 
-                    ListItem(
-                        contentPaddingValues = listItemContentPaddingValues,
-                        icon = R.drawable.fingerprint,
-                        title = stringResource(R.string.fingerprint),
-                        desc = if (userPreferences.hideFingerprintInHome) {
-                            stringResource(id = R.string.hidden)
-                        } else {
-                            Build.FINGERPRINT
-                        }
-                    )
-
-                    ListItem(
-                        contentPaddingValues = listItemContentPaddingValues,
-                        icon = R.drawable.shield_bolt,
-                        title = stringResource(id = R.string.selinux_status),
-                        desc = context.seLinuxStatus
-                    )
-                }
+                ListItem(
+                    contentPaddingValues = listItemContentPaddingValues,
+                    icon = R.drawable.shield_bolt,
+                    title = stringResource(id = R.string.selinux_status),
+                    desc = context.seLinuxStatus
+                )
             }
 
             Spacer(Modifier.height(16.dp))
 
             viewModel.isProviderAlive.takeTrue {
                 userPreferences.developerMode.takeTrue {
-                    Surface(
-                        color = MaterialTheme.colorScheme.surface,
-                        tonalElevation = 1.dp,
-                        shape = RoundedCornerShape(20.dp)
+                    Card(
+                        modifier = compressedCardModifier
                     ) {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 16.dp)
-                        ) {
-                            ListItem(
-                                contentPaddingValues = listItemContentPaddingValues,
-                                title = stringResource(R.string.home_root_provider_version_name),
-                                desc = viewModel.versionName
-                            )
+                        ListItem(
+                            contentPaddingValues = listItemContentPaddingValues,
+                            title = stringResource(R.string.home_root_provider_version_name),
+                            desc = viewModel.versionName
+                        )
 
-                            ListItem(
-                                contentPaddingValues = listItemContentPaddingValues,
-                                title = stringResource(R.string.home_root_provider_se_linux_context),
-                                desc = viewModel.seLinuxContext
-                            )
-                        }
+                        ListItem(
+                            contentPaddingValues = listItemContentPaddingValues,
+                            title = stringResource(R.string.home_root_provider_se_linux_context),
+                            desc = viewModel.seLinuxContext
+                        )
                     }
 
                     Spacer(Modifier.height(16.dp))
                 }
 
-                Surface(
-                    color = MaterialTheme.colorScheme.surface,
-                    tonalElevation = 1.dp,
-                    shape = RoundedCornerShape(20.dp)
+                Card(
+                    modifier = compressedCardModifier
                 ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 16.dp)
-                    ) {
-                        val stats = viewModel.stats
+                    val stats = viewModel.stats
 
-                        ListItem(
-                            contentPaddingValues = listItemContentPaddingValues,
-                            title = stringResource(R.string.home_installed_modules),
-                            desc = stats.totalModules.toString()
-                        )
+                    ListItem(
+                        contentPaddingValues = listItemContentPaddingValues,
+                        title = stringResource(R.string.home_installed_modules),
+                        desc = stats.totalModules.toString()
+                    )
 
-                        ListItem(
-                            contentPaddingValues = listItemContentPaddingValues,
-                            title = stringResource(R.string.home_enabled_modules),
-                            desc = stats.enabledModules.toString()
-                        )
+                    ListItem(
+                        contentPaddingValues = listItemContentPaddingValues,
+                        title = stringResource(R.string.home_enabled_modules),
+                        desc = stats.enabledModules.toString()
+                    )
 
-                        ListItem(
-                            contentPaddingValues = listItemContentPaddingValues,
-                            title = stringResource(R.string.home_installed_modules_with_service_files),
-                            desc = stats.modulesWithServiceFiles.toString()
-                        )
+                    ListItem(
+                        contentPaddingValues = listItemContentPaddingValues,
+                        title = stringResource(R.string.home_installed_modules_with_service_files),
+                        desc = stats.modulesWithServiceFiles.toString()
+                    )
 
-                        ListItem(
-                            contentPaddingValues = listItemContentPaddingValues,
-                            title = stringResource(R.string.home_disabled_modules),
-                            desc = stats.disabledModules.toString()
-                        )
+                    ListItem(
+                        contentPaddingValues = listItemContentPaddingValues,
+                        title = stringResource(R.string.home_disabled_modules),
+                        desc = stats.disabledModules.toString()
+                    )
 
-                        val ratio =
-                            (stats.enabledModules.toFloat() / stats.disabledModules.toFloat()) / 10
+                    val ratio =
+                        (stats.enabledModules.toFloat() / stats.disabledModules.toFloat()) / 10
 
-                        ListProgressBarItem(
-                            contentPaddingValues = listItemContentPaddingValues,
-                            progressBarModifier = Modifier
-                                .graphicsLayer(rotationZ = 180f)
-                                .weight(1f),
-                            startDesc = stats.enabledModules.toString(),
-                            endDesc = stats.disabledModules.toString(),
-                            title = stringResource(R.string.home_enabled_disabled_modules_ratio),
-                            progress = ratio,
-                        )
+                    ListProgressBarItem(
+                        contentPaddingValues = listItemContentPaddingValues,
+                        progressBarModifier = Modifier
+                            .graphicsLayer(rotationZ = 180f)
+                            .weight(1f),
+                        startDesc = stats.enabledModules.toString(),
+                        endDesc = stats.disabledModules.toString(),
+                        title = stringResource(R.string.home_enabled_disabled_modules_ratio),
+                        progress = ratio,
+                    )
 
-                        ListItem(
-                            contentPaddingValues = listItemContentPaddingValues,
-                            title = stringResource(R.string.home_updated_modules),
-                            desc = stats.updatableModules.toString()
-                        )
-                    }
+                    ListItem(
+                        contentPaddingValues = listItemContentPaddingValues,
+                        title = stringResource(R.string.home_updated_modules),
+                        desc = stats.updatableModules.toString()
+                    )
                 }
 
                 Spacer(Modifier.height(16.dp))
             }
 
-
-            Surface(
-                color = MaterialTheme.colorScheme.surface,
-                tonalElevation = 1.dp,
-                shape = RoundedCornerShape(20.dp)
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable {
-                            browser.openUri("https://github.com/sponsors/DerGoogler")
-                        }
-                        .padding(24.dp),
-                ) {
-                    Text(
-                        text = stringResource(R.string.home_support_title),
-                        style = MaterialTheme.typography.bodyLarge
-                    )
-                    Spacer(Modifier.height(4.dp))
-                    Text(
-                        text = stringResource(R.string.home_support_content),
-                        style = MaterialTheme.typography.bodyMedium
-                    )
+            Card(
+                modifier = compressedCardModifier,
+                onClick = {
+                    browser.openUri("https://github.com/sponsors/DerGoogler")
                 }
+            ) {
+                ListItem(
+                    contentPaddingValues = listItemContentPaddingValues,
+                    itemTextStyle = ListItemDefaults.itemStyle().copy(
+                        titleTextColor = Color.Unspecified,
+                        descTextColor = Color.Unspecified,
+                        titleTextStyle = MaterialTheme.typography.bodyLarge,
+                        descTextStyle = MaterialTheme.typography.bodyMedium
+                    ),
+                    title = stringResource(R.string.home_support_title),
+                    desc = stringResource(R.string.home_support_content)
+                )
             }
         }
     }
