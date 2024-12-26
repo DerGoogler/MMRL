@@ -5,7 +5,7 @@
     <string name="setup_root_title">Root</string>
     <string name="setup_root_desc">需經 Magisk 或 KernelSU 授權 Root 存取</string>
     <string name="setup_shizuku_desc">需經 Sui 或 Shizuku（Root 模式）授權</string>
-    <string name="setup_non_root_title">無 Root</string>
+    <string name="setup_non_root_title">無授權</string>
     <string name="setup_non_root_desc">不以 Root 存取權執行本應用程式。僅可使用模組下載功能</string>
     <!-- 安裝介面 -->
     <string name="install_screen_title">安裝</string>
@@ -85,8 +85,8 @@
     <string name="view_module_features_zygisk_sub">准許模組存取 Zygisk 框架，達致系統層級的修改與關連。</string>
     <string name="view_module_features_apks_sub">模組另有附隨安裝的 APK 程式。</string>
     <string name="view_module_features_webui_sub">含有可供管理模組的網頁介面。使用者需手動為各種 JavaScript 程式權限進行授予。</string>
-    <string name="view_module_features_postmount_sub">始於 OverlayFS 掛載而後置執行的腳本</string>
-    <string name="view_module_features_bootcompleted_sub">系統初始化後，待機期間執行的腳本</string>
+    <string name="view_module_features_postmount_sub">始於 OverlayFS 掛載而後置執行的指令碼</string>
+    <string name="view_module_features_bootcompleted_sub">系統初始化後，待機期間執行的指令碼</string>
     <string name="view_module_module_support">關連頁面</string>
     <string name="view_module_provided_by">中介平臺</string>
     <string name="view_module_added_on">上架日期</string>
@@ -115,7 +115,7 @@
     <string name="module_id">模組代號：%1$s</string>
     <!-- 設定 -->
     <string name="settings_app">應用程式</string>
-    <string name="settings_app_desc">有關 MMRL 應用程式自身的設定項目</string>
+    <string name="settings_app_desc">有關《MMRL》應用程式自身的設定項目</string>
     <string name="settings_repo">中介平臺</string>
     <string name="settings_repo_desc">管理 Magisk 模組中介平臺</string>
     <string name="settings_about">本體資訊</string>
@@ -130,7 +130,7 @@
     <string name="settings_text_wrap">文繞圖格式</string>
     <string name="settings_text_wrap_desc">為終端機介面啟用文繞圖格式</string>
     <string name="settings_changelog">更新說明</string>
-    <string name="settings_changelo_desc">有關目前 MMRL 所更動的內容</string>
+    <string name="settings_changelo_desc">有關目前《MMRL》所更動的內容</string>
     <string name="settings_open_notification_settings">開啟通知設定</string>
     <!-- Root 相關 -->
     <string name="settings_root_access">Root 存取：%s</string>
@@ -243,7 +243,7 @@
     <string name="work_update_checker_for_modules">用於檢查模組更新</string>
     <!-- 中介平臺更新背景服務 -->
     <string name="repo_update_service">已成功更新所有中介平臺</string>
-    <string name="repo_update_service_desc">MMRL 已為你更新了所有中介平臺。😋</string>
+    <string name="repo_update_service_desc">《MMRL》已為你更新了所有中介平臺。😋</string>
     <string name="repo_update_service_failed">無需更新中介平臺</string>
     <string name="repo_update_service_failed_desc">查無可更新的中介平臺</string>
     <!-- SELinux -->
@@ -259,7 +259,7 @@
     <string name="reboot_download">重新開機至傳輸模式（Download）</string>
     <string name="reboot_edl">重新開機至救援型傳輸模式（EDL）</string>
     <string name="home_support_title">協助發展</string>
-    <string name="home_support_content">MMRL 一向以免費製品與開放原始碼自居，矢志不渝。若想協助本人進行開發，請以小額捐款表達你對專案發展的大力支持。</string>
+    <string name="home_support_content">《MMRL》一向以免費製品與開放原始碼自居，矢志不渝。若想協助本人進行開發，請以小額捐款表達你對專案發展的大力支持。</string>
     <string name="home_installed_modules">已安裝模組</string>
     <string name="home_enabled_modules">已啟用模組</string>
     <string name="home_installed_modules_with_service_files">已安裝模組（背景服務）</string>
@@ -267,7 +267,7 @@
     <string name="home_updated_modules">已更新模組</string>
     <string name="has_a_new_update">%1$s 已可更新！</string>
     <string name="update_available_from_to">將版本 %s（%d）更新至 %s（%d）。</string>
-    <string name="events_birthday">祝 MMRL %1$s 歲生日快樂！</string>
+    <string name="events_birthday">祝《MMRL》%1$s 歲生日快樂！</string>
     <string name="events_halloween">不給糖！……就搗蛋</string>
     <string name="events_christmas">← 聖誕樹。</string>
     <string name="events_new_years_eve">祝跨年愉快！</string>
@@ -298,7 +298,7 @@
     <string name="view_module_unsupported_device_desc">你的裝置不支援此模組。</string>
     <string name="view_module_required_root_version">所需授權版本</string>
     <string name="view_module_features_action">腳本執行</string>
-    <string name="view_module_features_action_sub">准許使用者按下按鈕後執行腳本</string>
+    <string name="view_module_features_action_sub">准許使用者按下按鈕後執行指令碼</string>
     <string name="settings_shell_module_action">以系統外殼執行腳本</string>
     <string name="settings_modules_desc">更改大量模組所遭遇的處置行為</string>
     <string name="settings_modules_handlers">處置程序</string>
@@ -310,7 +310,7 @@
     <string name="settings_shell_module_action_desc">推薦在授權平臺不支援 action.sh 檔案的情況下啟用</string>
     <string name="bulk_add_as_bulk">新增至模組安裝列表</string>
     <string name="settings_modules_installer">安裝程序</string>
-    <string name="generic_disclaimer_desc">若因自身裝置變故而蒙受損失（不限於無法開機、SD 記憶卡故障、引發熱核子戰爭，或是鬧鐘應用程式秀逗而讓你被炒魷魚），**MMRL** 概不負責。執行之前，請確認好本功能之於模組的作用與風險。*在你同意進行模組修改過後，其風險責任應由你承擔*。</string>
+    <string name="generic_disclaimer_desc">若因自身裝置變故而蒙受損失（不限於無法開機、SD 記憶卡故障、引發熱核子戰爭，或是鬧鐘應用程式秀逗而讓你被炒魷魚），**《MMRL》**概不負責。執行之前，請確認好本功能之於模組的作用與風險。*在你同意進行模組修改過後，其風險責任應由你承擔*。</string>
     <string name="settings_security_allow_advanced_kernelsu_api">KernelSU 進階資料存取權</string>
     <string name="settings_allow_javascript_api">為 JavaScript 程式授予權限</string>
     <string name="settings_security_allow_filesystem_api">檔案系統存取權</string>
@@ -336,4 +336,8 @@
     <string name="invalid_ip">此串不為有效的本機網域！</string>
     <string name="settings_enable_webui_remote_url">啟用 WebUI 介面遠端連線</string>
     <string name="settings_webui_remote_url_alert_desc">WebUI 介面得以指定的網路位址，為所有模組忽略與安全通訊層（SSL）的連線問題，以及收回對 /data/adb/modules/{代號}/webroot 的存取權。謹記：以個人名義簽署的本機網站伺服器才需要開啟此功能。謹慎偵錯，風險自負。</string>
+    <string name="install_screen_cancel_title">取消安裝？</string>
+    <string name="action_screen_cancel_title">取消腳本執行？</string>
+    <string name="action_screen_cancel_text">你是否要取消腳本執行程序？</string>
+    <string name="install_screen_cancel_text">你是否要取消安裝程序？</string>
 </resources>
