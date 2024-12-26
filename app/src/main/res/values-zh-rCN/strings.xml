@@ -329,4 +329,11 @@
     <string name="working_mode_apatch_desc">APatch可以修补Android内核和系统，是基于内核的Root新解决方案，兼容Magisk模块并允许将任何代码注入内核 (提供内核函数 inline-hook 和 syscall-table-hook）。APatch派生和修改自KernelSU。</string>
     <string name="working_mode_kernelsu_next_desc">支持 Magic Mount 的高级 Root 解决方案，增强了对于用户空间内软件的管理，可以自定义 Root 权限。</string>
     <string name="working_mode_magisk_desc">Android 自定义工具，提供 Root 权限管理，模块挂载，boot 镜像修补，并通过 Zygisk 执行进程级别的代码。</string>
+    <string name="settings_developer">开发者</string>
+    <string name="settings_developer_desc">开发者调试工具</string>
+    <string name="settings_webui_remote_url">WebUI远程链接</string>
+    <string name="invalid_ip">本地地址不可用！</string>
+    <string name="settings_enable_webui_remote_url">启用WebUI远程链接</string>
+    <string name="settings_webui_remote_url_alert_desc">WebUI指定一个网络地址，使所有模块可以忽略SSL错误，并阻止对于 /data/adb/modules/{ID}/webroot 的访问。注意以个人名义签署本地网页服务才需要使用此功能，仅用于调试，风险自负。</string>
+    <string name="settings_webui_remote_url_desc">启动一个localhost页面以便于调试。参见上方的注意事项了解更多信息。</string>
 </resources>
