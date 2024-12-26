@@ -8,23 +8,16 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.focusable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
@@ -46,8 +39,6 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.app.Event
@@ -55,6 +46,7 @@ import com.dergoogler.mmrl.app.Event.Companion.isFinished
 import com.dergoogler.mmrl.app.Event.Companion.isLoading
 import com.dergoogler.mmrl.app.Event.Companion.isSucceeded
 import com.dergoogler.mmrl.ui.component.ConfirmRebootDialog
+import com.dergoogler.mmrl.ui.component.Console
 import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.utils.isScrollingUp
@@ -64,7 +56,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun InstallScreen(
-    viewModel: InstallViewModel = hiltViewModel()
+    viewModel: InstallViewModel = hiltViewModel(),
 ) {
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -181,42 +173,11 @@ fun InstallScreen(
         Console(
             list = viewModel.console,
             state = listState,
+            breakList = userPreferences.terminalTextWrap,
             modifier = Modifier
                 .padding(it)
                 .fillMaxWidth()
-                .then(
-                    if (userPreferences.terminalTextWrap) Modifier else Modifier.horizontalScroll(
-                        rememberScrollState()
-                    )
-                )
         )
-    }
-}
-
-@Composable
-private fun Console(
-    list: List<String>,
-    state: LazyListState,
-    modifier: Modifier = Modifier,
-) {
-    LaunchedEffect(list.size) {
-        state.animateScrollToItem(list.size)
-    }
-
-    LazyColumn(
-        state = state,
-        modifier = modifier
-    ) {
-        items(list) {
-            Text(
-                text = it,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(horizontal = 8.dp),
-                style = MaterialTheme.typography.bodySmall.copy(
-                    fontFamily = FontFamily.Monospace
-                )
-            )
-        }
     }
 }
 
@@ -224,7 +185,7 @@ private fun Console(
 private fun TopBar(
     exportLog: () -> Unit,
     event: Event,
-    scrollBehavior: TopAppBarScrollBehavior
+    scrollBehavior: TopAppBarScrollBehavior,
 ) = NavigateUpTopBar(
     title = stringResource(id = R.string.install_screen_title),
     subtitle = stringResource(
