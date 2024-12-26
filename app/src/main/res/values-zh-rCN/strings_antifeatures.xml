@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ads_name">广告</string>
+    <string name="ads_desc">此模块包含广告。</string>
+    <string name="knownvuln_name">不稳定因素</string>
+    <string name="nsfw_name">工作场所不宜</string>
+    <string name="nosourcesince_name">源码问题</string>
+    <string name="nonfreeadd_name">非自由组件</string>
+    <string name="nonfreeassets_name">非自由资源</string>
+    <string name="nonfreeassets_desc">此模块推广非自由资源。</string>
+    <string name="nonfreedep_name">非自由依赖项</string>
+    <string name="nonfreedep_desc">此模块依赖于其他非自由模块。</string>
+    <string name="nonfreenet_name">非自由网络服务</string>
+    <string name="nonfreenet_desc">此模块推广或完全依赖于不可替代的或非自由的网络服务。</string>
+    <string name="upstreamnonfree_name">非自由上游</string>
+    <string name="obfuscation_name">代码混淆</string>
+    <string name="obfuscation_desc">此模块的源代码可能经过混淆，从而难以理解, 审计, 和修改。</string>
+    <string name="llm_desc">此模块可能部分或完全由人工智能编写。</string>
+    <string name="unaskedremoval_desc">此模块会在未经用户批准的情况下删除应用，文件或其他模块。</string>
+    <string name="upstreamnonfree_desc">此模块的上游源代码并非完全免费。</string>
+    <string name="tracking_desc">此模块会跟踪和报告你的使用记录。</string>
+    <string name="knownvuln_desc">此模块包含已知的不稳定安全问题。</string>
+    <string name="nosourcesince_desc">此模块的源代码不可用或不再更新。</string>
+    <string name="tracking_name">跟踪</string>
+    <string name="nsfw_desc">此模块包含已知的不适宜工作场所的内容。</string>
+    <string name="unaskedremoval_name">未经许可删除</string>
+    <string name="nonfreeadd_desc">此模块推广非自由组件。</string>
+    <string name="llm_name">由人工智能编写</string>
+</resources>
