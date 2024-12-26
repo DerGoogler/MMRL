@@ -4,10 +4,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -18,11 +15,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -31,7 +25,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -39,28 +32,22 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.ui.animate.slideInTopToBottom
 import com.dergoogler.mmrl.ui.animate.slideOutBottomToTop
 import com.dergoogler.mmrl.ui.component.Loading
-import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
 import com.dergoogler.mmrl.ui.component.PageIndicator
+import com.dergoogler.mmrl.ui.component.SettingsScaffold
 import com.dergoogler.mmrl.ui.component.TextFieldDialog
-import com.dergoogler.mmrl.ui.providable.LocalNavController
 import com.dergoogler.mmrl.ui.utils.isScrollingUp
-import com.dergoogler.mmrl.ui.utils.none
 import com.dergoogler.mmrl.viewmodel.RepositoriesViewModel
 
 @Composable
 fun RepositoriesScreen(
     viewModel: RepositoriesViewModel = hiltViewModel(),
 ) {
-    val navController = LocalNavController.current
-
     val list by viewModel.repos.collectAsStateWithLifecycle()
 
-    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val listSate = rememberLazyListState()
     val showFab by listSate.isScrollingUp()
 
@@ -96,14 +83,18 @@ fun RepositoriesScreen(
         }
     )
 
-    Scaffold(
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-        topBar = {
-            TopBar(
-                scrollBehavior = scrollBehavior,
-                navController = navController,
-                onRefresh = viewModel::getRepoAll
-            )
+
+    SettingsScaffold(
+        title = R.string.settings_repo,
+        actions = {
+            IconButton(
+                onClick = viewModel::getRepoAll
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.refresh),
+                    contentDescription = null
+                )
+            }
         },
         floatingActionButton = {
             AnimatedVisibility(
@@ -120,30 +111,7 @@ fun RepositoriesScreen(
                 FloatingButton { add = true }
             }
         },
-        contentWindowInsets = WindowInsets.none
-    ) { innerPadding ->
-        Box(
-            modifier = Modifier.padding(innerPadding)
-        ) {
-            if (viewModel.isLoading) {
-                Loading()
-            }
-
-            if (list.isEmpty() && !viewModel.isLoading) {
-                PageIndicator(
-                    icon = R.drawable.git_pull_request,
-                    text = R.string.repo_empty
-                )
-            }
-
-            RepositoriesList(
-                list = list,
-                state = listSate,
-                update = viewModel::update,
-                delete = viewModel::delete,
-                getUpdate = viewModel::getUpdate
-            )
-
+        absolute = {
             AnimatedVisibility(
                 visible = viewModel.progress,
                 enter = slideInTopToBottom(),
@@ -155,6 +123,25 @@ fun RepositoriesScreen(
                 )
             }
         }
+    ) {
+        if (viewModel.isLoading) {
+            Loading()
+        }
+
+        if (list.isEmpty() && !viewModel.isLoading) {
+            PageIndicator(
+                icon = R.drawable.git_pull_request,
+                text = R.string.repo_empty
+            )
+        }
+
+        RepositoriesList(
+            list = list,
+            state = listSate,
+            update = viewModel::update,
+            delete = viewModel::delete,
+            getUpdate = viewModel::getUpdate
+        )
     }
 }
 
@@ -208,27 +195,6 @@ private fun AddDialog(
         )
     }
 }
-
-@Composable
-private fun TopBar(
-    scrollBehavior: TopAppBarScrollBehavior,
-    navController: NavController,
-    onRefresh: () -> Unit,
-) = NavigateUpTopBar(
-    title = stringResource(id = R.string.settings_repo),
-    actions = {
-        IconButton(
-            onClick = onRefresh
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.refresh),
-                contentDescription = null
-            )
-        }
-    },
-    scrollBehavior = scrollBehavior,
-    navController = navController
-)
 
 @Composable
 private fun FloatingButton(
