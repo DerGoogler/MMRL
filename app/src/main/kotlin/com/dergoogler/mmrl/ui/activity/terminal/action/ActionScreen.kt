@@ -18,8 +18,11 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -35,16 +38,18 @@ import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.app.Event
 import com.dergoogler.mmrl.app.Event.Companion.isFinished
 import com.dergoogler.mmrl.app.Event.Companion.isLoading
+import com.dergoogler.mmrl.ui.component.ConfirmDialog
 import com.dergoogler.mmrl.ui.component.Console
 import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.viewmodel.ActionViewModel
+import dev.dergoogler.mmrl.compat.activity.MMRLComponentActivity
 import kotlinx.coroutines.launch
 
 
 @Composable
 fun ActionScreen(
-    viewModel: ActionViewModel = hiltViewModel()
+    viewModel: ActionViewModel = hiltViewModel(),
 ) {
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -99,6 +104,17 @@ fun ActionScreen(
         }
     }
 
+    var cancelAction by remember { mutableStateOf(false) }
+    if (cancelAction) ConfirmDialog(
+        title = R.string.action_screen_cancel_title,
+        description = R.string.action_screen_cancel_text,
+        onClose = { cancelAction = false },
+        onConfirm = {
+            cancelAction = false
+            viewModel.shell.value?.close()
+        }
+    )
+
     Scaffold(
         modifier = Modifier
             .onKeyEvent {
@@ -115,7 +131,13 @@ fun ActionScreen(
             TopBar(
                 exportLog = { launcher.launch(viewModel.logfile) },
                 event = viewModel.event,
-                scrollBehavior = scrollBehavior
+                scrollBehavior = scrollBehavior,
+                onBack = {
+                    when {
+                        viewModel.shell.value?.isAlive == true -> cancelAction = true
+                        viewModel.event.isFinished -> (context as MMRLComponentActivity).finish()
+                    }
+                }
             )
         },
         snackbarHost = { SnackbarHost(snackbarHostState) }
@@ -135,7 +157,8 @@ fun ActionScreen(
 private fun TopBar(
     exportLog: () -> Unit,
     event: Event,
-    scrollBehavior: TopAppBarScrollBehavior
+    onBack: () -> Unit,
+    scrollBehavior: TopAppBarScrollBehavior,
 ) = NavigateUpTopBar(
     title = stringResource(id = R.string.action_activity),
     subtitle = stringResource(
@@ -146,7 +169,7 @@ private fun TopBar(
         }
     ),
     scrollBehavior = scrollBehavior,
-    enable = event.isFinished,
+    onBack = onBack,
     actions = {
         if (event.isFinished) {
             IconButton(

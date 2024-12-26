@@ -21,6 +21,7 @@ import com.dergoogler.mmrl.ui.activity.terminal.Actions
 import com.dergoogler.mmrl.ui.activity.terminal.ShellBroadcastReceiver
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.dergoogler.mmrl.compat.BuildCompat
+import dev.dergoogler.mmrl.compat.stub.IShell
 import dev.dergoogler.mmrl.compat.stub.IShellCallback
 import dev.dergoogler.mmrl.compat.viewmodel.MMRLViewModel
 import kotlinx.coroutines.CompletableDeferred
@@ -42,6 +43,8 @@ class ActionViewModel @Inject constructor(
 
     val logs = mutableListOf<String>()
     val console = mutableStateListOf<String>()
+    var shell = mutableStateOf<IShell?>(null)
+        private set
     var event by mutableStateOf(Event.LOADING)
         private set
 
@@ -151,7 +154,9 @@ class ActionViewModel @Inject constructor(
                 }
             }
 
-            Compat.moduleManager.action(modId, legacy, callback)
+            val action = Compat.moduleManager.action(modId, legacy, callback)
+            shell.value = action
+            action.exec()
 
             return@withContext actionResult.await()
         }

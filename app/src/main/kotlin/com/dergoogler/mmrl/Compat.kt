@@ -3,7 +3,6 @@ package com.dergoogler.mmrl
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import com.dergoogler.mmrl.Compat.createRootShell
 import com.dergoogler.mmrl.datastore.WorkingMode
 import com.topjohnwu.superuser.Shell
 import dev.dergoogler.mmrl.compat.ServiceManagerCompat
@@ -71,7 +70,7 @@ object Compat {
     }
 
     val ServiceShell: Shell = createRootShell(commands = arrayOf("sh"))
-    val RootShell: Shell = createRootShell(commands = arrayOf("su"))
+//    val RootShell: Shell = createRootShell(commands = arrayOf("su"))
 
     inline fun <T> withNewRootShell(
         globalMnt: Boolean = false,

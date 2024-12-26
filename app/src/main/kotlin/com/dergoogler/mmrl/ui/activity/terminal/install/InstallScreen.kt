@@ -45,12 +45,13 @@ import com.dergoogler.mmrl.app.Event
 import com.dergoogler.mmrl.app.Event.Companion.isFinished
 import com.dergoogler.mmrl.app.Event.Companion.isLoading
 import com.dergoogler.mmrl.app.Event.Companion.isSucceeded
-import com.dergoogler.mmrl.ui.component.ConfirmRebootDialog
+import com.dergoogler.mmrl.ui.component.ConfirmDialog
 import com.dergoogler.mmrl.ui.component.Console
 import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.utils.isScrollingUp
 import com.dergoogler.mmrl.viewmodel.InstallViewModel
+import dev.dergoogler.mmrl.compat.activity.MMRLComponentActivity
 import kotlinx.coroutines.launch
 
 
@@ -118,11 +119,24 @@ fun InstallScreen(
     }
 
     var confirmReboot by remember { mutableStateOf(false) }
-    if (confirmReboot) ConfirmRebootDialog(
+    if (confirmReboot) ConfirmDialog(
+        title = R.string.install_screen_reboot_title,
+        description = R.string.install_screen_reboot_text,
         onClose = { confirmReboot = false },
         onConfirm = {
             confirmReboot = false
             viewModel.reboot()
+        }
+    )
+
+    var cancelInstall by remember { mutableStateOf(false) }
+    if (cancelInstall) ConfirmDialog(
+        title = R.string.install_screen_cancel_title,
+        description = R.string.install_screen_cancel_text,
+        onClose = { cancelInstall = false },
+        onConfirm = {
+            cancelInstall = false
+            viewModel.shell.value?.close()
         }
     )
 
@@ -142,7 +156,13 @@ fun InstallScreen(
             TopBar(
                 exportLog = { launcher.launch(viewModel.logfile) },
                 event = viewModel.event,
-                scrollBehavior = scrollBehavior
+                scrollBehavior = scrollBehavior,
+                onBack = {
+                    when {
+                        viewModel.shell.value?.isAlive == true -> cancelInstall = true
+                        viewModel.event.isFinished -> (context as MMRLComponentActivity).finish()
+                    }
+                }
             )
         },
         floatingActionButton = {
@@ -185,6 +205,7 @@ fun InstallScreen(
 private fun TopBar(
     exportLog: () -> Unit,
     event: Event,
+    onBack: () -> Unit,
     scrollBehavior: TopAppBarScrollBehavior,
 ) = NavigateUpTopBar(
     title = stringResource(id = R.string.install_screen_title),
@@ -195,8 +216,8 @@ private fun TopBar(
             else -> R.string.install_done
         }
     ),
+    onBack = onBack,
     scrollBehavior = scrollBehavior,
-    enable = event.isFinished,
     actions = {
         if (event.isFinished) {
             IconButton(
@@ -208,6 +229,7 @@ private fun TopBar(
                 )
             }
         }
+
     }
 )
 

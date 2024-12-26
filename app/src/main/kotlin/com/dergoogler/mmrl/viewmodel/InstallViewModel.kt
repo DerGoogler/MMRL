@@ -26,6 +26,7 @@ import dev.dergoogler.mmrl.compat.BuildCompat
 import dev.dergoogler.mmrl.compat.content.BulkModule
 import dev.dergoogler.mmrl.compat.content.State
 import dev.dergoogler.mmrl.compat.ext.tmpDir
+import dev.dergoogler.mmrl.compat.stub.IShell
 import dev.dergoogler.mmrl.compat.stub.IShellCallback
 import dev.dergoogler.mmrl.compat.viewmodel.MMRLViewModel
 import kotlinx.coroutines.CompletableDeferred
@@ -48,6 +49,8 @@ class InstallViewModel @Inject constructor(
 
     val logs = mutableListOf<String>()
     val console = mutableStateListOf<String>()
+    var shell = mutableStateOf<IShell?>(null)
+        private set
     var event by mutableStateOf(Event.LOADING)
         private set
 
@@ -252,7 +255,10 @@ class InstallViewModel @Inject constructor(
             }
 
             console.add("- Installing ${zipFile.name}")
-            Compat.moduleManager.install(zipPath, bulkModules, callback)
+
+            val installer = Compat.moduleManager.install(zipPath, bulkModules, callback)
+            shell.value = installer
+            installer.exec()
 
             return@withContext installationResult.await()
         }

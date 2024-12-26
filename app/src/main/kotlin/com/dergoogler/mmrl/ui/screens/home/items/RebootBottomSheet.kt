@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.ui.component.BottomSheet
-import com.dergoogler.mmrl.ui.component.ConfirmRebootDialog
+import com.dergoogler.mmrl.ui.component.ConfirmDialog
 import com.dergoogler.mmrl.ui.component.LabelItem
 import com.dergoogler.mmrl.ui.component.ListButtonItem
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
@@ -65,11 +65,13 @@ private fun RebootItem(
     val userPreferences = LocalUserPreferences.current
 
     var confirmReboot by remember { mutableStateOf(false) }
-    if (confirmReboot) ConfirmRebootDialog(
+    if (confirmReboot) ConfirmDialog(
+        title = R.string.install_screen_reboot_title,
+        description = R.string.install_screen_reboot_text,
         onClose = { confirmReboot = false },
         onConfirm = {
             confirmReboot = false
-            viewModel.reboot(reason)
+            viewModel.reboot()
         }
     )
 

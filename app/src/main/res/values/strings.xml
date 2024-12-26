@@ -340,4 +340,8 @@
     <string name="selected">Selected</string>
     <string name="invalid_ip">This is not a valid local IP address!</string>
     <string name="settings_enable_webui_remote_url">Enable WebUI Remote URL</string>
+    <string name="install_screen_cancel_title">Cancel installation?</string>
+    <string name="install_screen_cancel_text">Are you sure that you wanna cancel the installation?</string>
+    <string name="action_screen_cancel_title">Cancel action?</string>
+    <string name="action_screen_cancel_text">Are you sure that you wanna cancel this action?</string>
 </resources>

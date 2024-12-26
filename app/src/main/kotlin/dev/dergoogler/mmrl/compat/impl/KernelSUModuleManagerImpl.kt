@@ -4,6 +4,7 @@ import com.topjohnwu.superuser.Shell
 import dev.dergoogler.mmrl.compat.content.BulkModule
 import dev.dergoogler.mmrl.compat.content.ModuleCompatibility
 import dev.dergoogler.mmrl.compat.stub.IModuleOpsCallback
+import dev.dergoogler.mmrl.compat.stub.IShell
 import dev.dergoogler.mmrl.compat.stub.IShellCallback
 
 internal open class KernelSUModuleManagerImpl(
@@ -93,7 +94,7 @@ internal open class KernelSUModuleManagerImpl(
         }
     }
 
-    override fun action(modId: String, legacy: Boolean, callback: IShellCallback) {
+    override fun action(modId: String, legacy: Boolean, callback: IShellCallback): IShell =
         if (legacy) {
             val cmds = arrayOf(
                 "export ASH_STANDALONE=1",
@@ -113,14 +114,16 @@ internal open class KernelSUModuleManagerImpl(
                 callback = callback
             )
         }
-    }
 
-    override fun install(path: String, bulkModules: List<BulkModule>, callback: IShellCallback) {
-        install(
-            cmd = "ksud module install '${path}'",
-            path = path,
-            bulkModules = bulkModules,
-            callback = callback
-        )
-    }
+
+    override fun install(
+        path: String,
+        bulkModules: List<BulkModule>,
+        callback: IShellCallback,
+    ): IShell = install(
+        cmd = "ksud module install '${path}'",
+        path = path,
+        bulkModules = bulkModules,
+        callback = callback
+    )
 }

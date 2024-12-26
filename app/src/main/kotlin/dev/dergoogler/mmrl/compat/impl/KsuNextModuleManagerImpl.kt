@@ -3,6 +3,7 @@ package dev.dergoogler.mmrl.compat.impl
 import com.topjohnwu.superuser.Shell
 import dev.dergoogler.mmrl.compat.content.ModuleCompatibility
 import dev.dergoogler.mmrl.compat.stub.IModuleOpsCallback
+import dev.dergoogler.mmrl.compat.stub.IShell
 import dev.dergoogler.mmrl.compat.stub.IShellCallback
 
 internal class KsuNextModuleManagerImpl(
@@ -41,7 +42,7 @@ internal class KsuNextModuleManagerImpl(
     }
 
 
-    override fun action(modId: String, legacy: Boolean, callback: IShellCallback) {
+    override fun action(modId: String, legacy: Boolean, callback: IShellCallback): IShell =
         if (legacy) {
             val cmds = arrayOf(
                 "export ASH_STANDALONE=1",
@@ -62,5 +63,4 @@ internal class KsuNextModuleManagerImpl(
                 callback = callback
             )
         }
-    }
 }

@@ -57,10 +57,10 @@ open class MMRLComponentActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
-        Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
-            startCrashActivity(thread, throwable)
-        }
+//
+//        Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
+//            startCrashActivity(thread, throwable)
+//        }
 
         if (windowFlags != 0) {
             Timber.d("Setting window flags")

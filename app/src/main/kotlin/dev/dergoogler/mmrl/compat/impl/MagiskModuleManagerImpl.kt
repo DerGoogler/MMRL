@@ -4,6 +4,7 @@ import com.topjohnwu.superuser.Shell
 import dev.dergoogler.mmrl.compat.content.BulkModule
 import dev.dergoogler.mmrl.compat.content.ModuleCompatibility
 import dev.dergoogler.mmrl.compat.stub.IModuleOpsCallback
+import dev.dergoogler.mmrl.compat.stub.IShell
 import dev.dergoogler.mmrl.compat.stub.IShellCallback
 
 internal class MagiskModuleManagerImpl(
@@ -63,7 +64,7 @@ internal class MagiskModuleManagerImpl(
         }
     }
 
-    override fun action(modId: String, legacy: Boolean, callback: IShellCallback) {
+    override fun action(modId: String, legacy: Boolean, callback: IShellCallback): IShell {
         val cmds = arrayOf(
             "export ASH_STANDALONE=1",
             "export MAGISK=true",
@@ -73,18 +74,21 @@ internal class MagiskModuleManagerImpl(
             "busybox sh /data/adb/modules/$modId/action.sh"
         )
 
-        action(
+        return action(
             cmd = cmds,
             callback = callback
         )
     }
 
-    override fun install(path: String, bulkModules: List<BulkModule>, callback: IShellCallback) {
+    override fun install(
+        path: String,
+        bulkModules: List<BulkModule>,
+        callback: IShellCallback,
+    ): IShell =
         install(
             cmd = "magisk --install-module '${path}'",
             path = path,
             bulkModules = bulkModules,
             callback = callback
         )
-    }
 }

@@ -1,6 +1,7 @@
 package dev.dergoogler.mmrl.compat.impl
 
 import android.os.Build
+import com.dergoogler.mmrl.Compat
 import com.topjohnwu.superuser.CallbackList
 import com.topjohnwu.superuser.Shell
 import com.topjohnwu.superuser.ShellUtils
@@ -11,6 +12,7 @@ import dev.dergoogler.mmrl.compat.content.ModuleCompatibility
 import dev.dergoogler.mmrl.compat.content.ModuleInfo
 import dev.dergoogler.mmrl.compat.content.State
 import dev.dergoogler.mmrl.compat.stub.IModuleManager
+import dev.dergoogler.mmrl.compat.stub.IShell
 import dev.dergoogler.mmrl.compat.stub.IShellCallback
 import java.io.File
 import java.util.zip.ZipFile
@@ -223,48 +225,20 @@ internal abstract class BaseModuleManagerImpl(
         path: String,
         bulkModules: List<BulkModule>,
         callback: IShellCallback,
-    ) {
-        val stdout = object : CallbackList<String?>() {
-            override fun onAddElement(msg: String?) {
-                msg?.let(callback::onStdout)
-            }
-        }
-
-        val stderr = object : CallbackList<String?>() {
-            override fun onAddElement(msg: String?) {
-                msg?.let(callback::onStderr)
-            }
-        }
-
-        val cmds = arrayOf(
+    ): IShell {
+        val cmds = listOf(
             "export MMRL=true",
             "export BULK_MODULES=\"${bulkModules.joinToString(" ") { it.id }}\"",
             cmd
         )
 
-        val result = shell.newJob().add(*cmds).to(stdout, stderr).exec()
-        if (result.isSuccess) {
-            val module = getModuleInfo(path)
-            callback.onSuccess(module)
-        } else {
-            callback.onFailure()
-        }
+        val module = getModuleInfo(path)
+
+        return getShell(cmds, module, callback)
     }
 
-    internal fun action(cmd: Array<String>, callback: IShellCallback) {
-        val stdout = object : CallbackList<String?>() {
-            override fun onAddElement(msg: String?) {
-                msg?.let(callback::onStdout)
-            }
-        }
-
-        val stderr = object : CallbackList<String?>() {
-            override fun onAddElement(msg: String?) {
-                msg?.let(callback::onStderr)
-            }
-        }
-
-        val cmds = arrayOf(
+    internal fun action(cmd: Array<String>, callback: IShellCallback): IShell {
+        val cmds = listOf(
             "export PATH=/data/adb/ap/bin:/data/adb/ksu/bin:/data/adb/magisk:\$PATH",
             "export MMRL=true",
             "export BOOTMODE=true",
@@ -274,13 +248,46 @@ internal abstract class BaseModuleManagerImpl(
             *cmd
         )
 
-        val result = shell.newJob().add(*cmds).to(stdout, stderr).exec()
-        if (result.isSuccess) {
-            callback.onSuccess(null)
-        } else {
-            callback.onFailure()
-        }
+        return this.getShell(cmds, null, callback)
     }
+
+    override fun getShell(
+        command: List<String>,
+        module: LocalModule?,
+        callback: IShellCallback,
+    ): IShell =
+        object : IShell.Stub() {
+            val main = Compat.createRootShell()
+
+            override fun isAlive(): Boolean = main.isAlive
+
+            override fun exec() {
+                val stdout = object : CallbackList<String?>() {
+                    override fun onAddElement(msg: String?) {
+                        msg?.let(callback::onStdout)
+                    }
+                }
+
+                val stderr = object : CallbackList<String?>() {
+                    override fun onAddElement(msg: String?) {
+                        msg?.let(callback::onStderr)
+                    }
+                }
+
+                val result = main.newJob().add(*command.toTypedArray()).to(stdout, stderr).exec()
+                if (result.isSuccess) {
+                    callback.onSuccess(module)
+                } else {
+                    callback.onFailure()
+                }
+            }
+
+            override fun close() {
+                if (main.isAlive) {
+                    main.close()
+                }
+            }
+        }
 
     internal fun String.submit(cb: Shell.ResultCallback) = shell
         .newJob().add(this).to(ArrayList(), null)
