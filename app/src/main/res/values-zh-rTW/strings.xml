@@ -348,4 +348,6 @@
     <string name="settings_use_generic_action_desc">大多數授權平臺仍未支援以腳本形式執行指令介面：此時改採通用格式的指令碼，便可解決相容性問題</string>
     <string name="sponsors">贊助人員</string>
     <string name="all_the_sponsors_of_the_project_click_on_learn_more_to_get_included">本專案的所有贊助人員。點選「深入瞭解」即可羅列。</string>
+    <string name="settings_use_shell_webui_assets">以系統外殼載入 WebUI 資源</string>
+    <string name="settings_use_shell_webui_assets_desc">功能啟用後，便准許處置程序調用系統外殼來讀取檔案；功能停用時，僅開放處置程序逕自讀取 2 GB 以內的資源檔案。請注意：後者由處置程序逕自讀取檔案的速度會比前者更加快速。</string>
 </resources>
