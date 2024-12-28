@@ -38,6 +38,7 @@ import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.app.Event
 import com.dergoogler.mmrl.app.Event.Companion.isFinished
 import com.dergoogler.mmrl.app.Event.Companion.isLoading
+import com.dergoogler.mmrl.datastore.developerMode
 import com.dergoogler.mmrl.ui.component.ConfirmDialog
 import com.dergoogler.mmrl.ui.component.Console
 import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
@@ -56,6 +57,7 @@ fun ActionScreen(
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
     val userPreferences = LocalUserPreferences.current
+    val context = LocalContext.current
 
     val focusRequester = remember { FocusRequester() }
     val listState = rememberLazyListState()
@@ -72,12 +74,30 @@ fun ActionScreen(
         }
     }
 
-    BackHandler(
-        enabled = viewModel.event.isLoading,
-        onBack = {}
-    )
+    var cancelAction by remember { mutableStateOf(false) }
 
-    val context = LocalContext.current
+    val shell = viewModel.shell
+    val event = viewModel.event
+
+    val allowCancel = userPreferences.developerMode { allowCancelAction }
+
+    val backHandler = {
+        if (allowCancel) {
+            when {
+                event.isLoading && shell.isAlive -> cancelAction = true
+                event.isFinished -> (context as MMRLComponentActivity).finish()
+            }
+        } else {
+            if (event.isFinished) {
+                (context as MMRLComponentActivity).finish()
+            }
+        }
+    }
+
+    BackHandler(
+        enabled = if (!allowCancel) event.isLoading else true,
+        onBack = backHandler
+    )
     val launcher = rememberLauncherForActivityResult(
         ActivityResultContracts.CreateDocument("*/*")
     ) { uri ->
@@ -104,14 +124,13 @@ fun ActionScreen(
         }
     }
 
-    var cancelAction by remember { mutableStateOf(false) }
     if (cancelAction) ConfirmDialog(
         title = R.string.action_screen_cancel_title,
         description = R.string.action_screen_cancel_text,
         onClose = { cancelAction = false },
         onConfirm = {
             cancelAction = false
-            viewModel.shell.value?.close()
+            viewModel.shell.close()
         }
     )
 
@@ -119,7 +138,7 @@ fun ActionScreen(
         modifier = Modifier
             .onKeyEvent {
                 when (it.key) {
-                    Key.VolumeUp, Key.VolumeDown -> viewModel.event.isLoading
+                    Key.VolumeUp, Key.VolumeDown -> event.isLoading
 
                     else -> false
                 }
@@ -130,14 +149,10 @@ fun ActionScreen(
         topBar = {
             TopBar(
                 exportLog = { launcher.launch(viewModel.logfile) },
-                event = viewModel.event,
+                event = event,
+                enable = if (!allowCancel) event.isFinished else true,
                 scrollBehavior = scrollBehavior,
-                onBack = {
-                    when {
-                        viewModel.shell.value?.isAlive == true -> cancelAction = true
-                        viewModel.event.isFinished -> (context as MMRLComponentActivity).finish()
-                    }
-                }
+                onBack = backHandler
             )
         },
         snackbarHost = { SnackbarHost(snackbarHostState) }
@@ -159,6 +174,7 @@ private fun TopBar(
     event: Event,
     onBack: () -> Unit,
     scrollBehavior: TopAppBarScrollBehavior,
+    enable: Boolean,
 ) = NavigateUpTopBar(
     title = stringResource(id = R.string.action_activity),
     subtitle = stringResource(
@@ -168,6 +184,7 @@ private fun TopBar(
             else -> R.string.install_done
         }
     ),
+    enable = enable,
     scrollBehavior = scrollBehavior,
     onBack = onBack,
     actions = {

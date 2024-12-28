@@ -30,7 +30,6 @@ fun DeveloperScreen(
         title = R.string.settings_developer
     ) {
         ListSwitchItem(
-            icon = R.drawable.bug,
             title = stringResource(id = R.string.settings_developer_mode),
             desc = stringResource(id = R.string.settings_developer_mode_desc),
             checked = userPreferences.developerMode,
@@ -51,7 +50,6 @@ fun DeveloperScreen(
 
         ListSwitchItem(
             enabled = userPreferences.developerMode,
-            icon = R.drawable.shield_off,
             title = stringResource(id = R.string.settings_enable_webui_remote_url),
             checked = userPreferences.useWebUiDevUrl,
             onChange = viewModel::setUseWebUiDevUrl,
@@ -59,7 +57,6 @@ fun DeveloperScreen(
 
         ListEditTextItem(
             enabled = userPreferences.developerMode && userPreferences.useWebUiDevUrl,
-            icon = R.drawable.unlink,
             title = stringResource(id = R.string.settings_webui_remote_url),
             desc = stringResource(id = R.string.settings_webui_remote_url_desc),
             value = userPreferences.webUiDevUrl,
@@ -77,5 +74,24 @@ fun DeveloperScreen(
                 }
             }
         )
+
+
+        ListHeader(title = stringResource(id = R.string.page_modules))
+
+
+        ListSwitchItem(
+            enabled = userPreferences.developerMode,
+            title = "Allow Cancel Install",
+            checked = userPreferences.allowCancelInstall,
+            onChange = viewModel::setAllowCancelInstall,
+        )
+
+        ListSwitchItem(
+            enabled = userPreferences.developerMode,
+            title = "Allow Cancel Action",
+            checked = userPreferences.allowCancelAction,
+            onChange = viewModel::setAllowCancelAction,
+        )
+
     }
 }

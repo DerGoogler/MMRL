@@ -38,6 +38,8 @@ data class UserPreferencesCompat(
     val useShellForModuleAction: Boolean,
     val webuiAllowRestrictedPaths: Boolean,
     val clearInstallTerminal: Boolean,
+    val allowCancelInstall: Boolean,
+    val allowCancelAction: Boolean,
     val allowedFsModules: List<String>,
     val allowedKsuModules: List<String>,
     val repositoryMenu: RepositoryMenuCompat,
@@ -68,6 +70,8 @@ data class UserPreferencesCompat(
         useShellForModuleAction = original.useShellForModuleAction,
         webuiAllowRestrictedPaths = original.webuiAllowRestrictedPaths,
         clearInstallTerminal = original.clearInstallTerminal,
+        allowCancelInstall = original.allowCancelInstall,
+        allowCancelAction = original.allowCancelAction,
         allowedFsModules = original.allowedFsModules.split(","),
         allowedKsuModules = original.allowedKsuModules.split(","),
         repositoryMenu = when {
@@ -111,6 +115,8 @@ data class UserPreferencesCompat(
             .setUseShellForModuleAction(useShellForModuleAction)
             .setWebuiAllowRestrictedPaths(webuiAllowRestrictedPaths)
             .setClearInstallTerminal(clearInstallTerminal)
+            .setAllowCancelInstall(allowCancelInstall)
+            .setAllowCancelAction(allowCancelAction)
             .setAllowedFsModules(allowedFsModules.joinToString(","))
             .setAllowedKsuModules(allowedKsuModules.joinToString(","))
             .setRepositoryMenu(repositoryMenu.toProto())
@@ -140,6 +146,8 @@ data class UserPreferencesCompat(
             developerMode = false,
             useWebUiDevUrl = false,
             clearInstallTerminal = true,
+            allowCancelInstall = false,
+            allowCancelAction = false,
             useShellForModuleStateChange = true,
             useShellForModuleAction = true,
             webuiAllowRestrictedPaths = false,
@@ -168,13 +176,6 @@ data class UserPreferencesCompat(
 
 
 @OptIn(ExperimentalContracts::class)
-/**
- * Executes the given block only if the `developerMode` is enabled.
- *
- * @param R The return type of the block.
- * @param block A lambda to be executed if `developerMode` is enabled.
- * @return The result of the block execution if `developerMode` is enabled, otherwise `null`.
- */
 inline fun <R> UserPreferencesCompat.developerMode(block: UserPreferencesCompat.() -> R): R? {
     contract {
         callsInPlace(block, InvocationKind.AT_MOST_ONCE)
@@ -184,15 +185,10 @@ inline fun <R> UserPreferencesCompat.developerMode(block: UserPreferencesCompat.
 }
 
 @OptIn(ExperimentalContracts::class)
-/**
- * Executes the given block only if the `developerMode` is enabled and the specified condition is true.
- *
- * @param R The return type of the block.
- * @param also A lambda returning a boolean that acts as an additional condition for executing the block.
- * @param block A lambda to be executed if `developerMode` and the `also` condition are true.
- * @return The result of the block execution if the conditions are met, otherwise `null`.
- */
-inline fun <R> UserPreferencesCompat.developerMode(also: UserPreferencesCompat.() -> Boolean, block: UserPreferencesCompat.() -> R): R? {
+inline fun <R> UserPreferencesCompat.developerMode(
+    also: UserPreferencesCompat.() -> Boolean,
+    block: UserPreferencesCompat.() -> R,
+): R? {
     contract {
         callsInPlace(block, InvocationKind.AT_MOST_ONCE)
     }
@@ -201,16 +197,22 @@ inline fun <R> UserPreferencesCompat.developerMode(also: UserPreferencesCompat.(
 }
 
 @OptIn(ExperimentalContracts::class)
-/**
- * Executes the given block only if the `developerMode` is enabled and the specified condition is true, otherwise returns the default value.
- *
- * @param R The return type of the block and default value.
- * @param also A lambda returning a boolean that acts as an additional condition for executing the block.
- * @param default The value to return if the conditions are not met.
- * @param block A lambda to be executed if `developerMode` and the `also` condition are true.
- * @return The result of the block execution if the conditions are met, otherwise the default value.
- */
-inline fun <R> UserPreferencesCompat.developerMode(also: UserPreferencesCompat.() -> Boolean, default: R, block: UserPreferencesCompat.() -> R): R {
+inline fun UserPreferencesCompat.developerMode(
+    also: UserPreferencesCompat.() -> Boolean
+): Boolean {
+    contract {
+        callsInPlace(also, InvocationKind.AT_MOST_ONCE)
+    }
+
+    return developerMode && also()
+}
+
+@OptIn(ExperimentalContracts::class)
+inline fun <R> UserPreferencesCompat.developerMode(
+    also: UserPreferencesCompat.() -> Boolean,
+    default: R,
+    block: UserPreferencesCompat.() -> R,
+): R {
     contract {
         callsInPlace(block, InvocationKind.AT_MOST_ONCE)
     }

@@ -283,9 +283,7 @@ internal abstract class BaseModuleManagerImpl(
             }
 
             override fun close() {
-                if (main.isAlive) {
-                    main.close()
-                }
+                main.close()
             }
         }
 

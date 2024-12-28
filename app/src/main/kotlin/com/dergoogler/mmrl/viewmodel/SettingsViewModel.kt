@@ -178,6 +178,18 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
+    fun setAllowCancelInstall(value: Boolean) {
+        viewModelScope.launch {
+            userPreferencesRepository.setAllowCancelInstall(value)
+        }
+    }
+
+    fun setAllowCancelAction(value: Boolean) {
+        viewModelScope.launch {
+            userPreferencesRepository.setAllowCancelAction(value)
+        }
+    }
+
     fun setAllowedFsModules(value: List<String>) {
         viewModelScope.launch {
             userPreferencesRepository.setAllowedFsModules(value)

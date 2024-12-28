@@ -205,6 +205,22 @@ class UserPreferencesDataSource @Inject constructor(
         }
     }
 
+    suspend fun setAllowCancelInstall(value: Boolean) = withContext(Dispatchers.IO) {
+        userPreferences.updateData {
+            it.copy(
+                allowCancelInstall = value
+            )
+        }
+    }
+
+    suspend fun setAllowCancelAction(value: Boolean) = withContext(Dispatchers.IO) {
+        userPreferences.updateData {
+            it.copy(
+                allowCancelAction = value
+            )
+        }
+    }
+
     suspend fun setAllowedFsModules(value: List<String>) = withContext(Dispatchers.IO) {
         userPreferences.updateData {
             it.copy(

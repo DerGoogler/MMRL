@@ -45,6 +45,7 @@ import com.dergoogler.mmrl.app.Event
 import com.dergoogler.mmrl.app.Event.Companion.isFinished
 import com.dergoogler.mmrl.app.Event.Companion.isLoading
 import com.dergoogler.mmrl.app.Event.Companion.isSucceeded
+import com.dergoogler.mmrl.datastore.developerMode
 import com.dergoogler.mmrl.ui.component.ConfirmDialog
 import com.dergoogler.mmrl.ui.component.Console
 import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
@@ -64,6 +65,7 @@ fun InstallScreen(
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
     val userPreferences = LocalUserPreferences.current
+    val context = LocalContext.current
 
     val focusRequester = remember { FocusRequester() }
     val listState = rememberLazyListState()
@@ -73,6 +75,14 @@ fun InstallScreen(
             isScrollingUp && viewModel.event.isSucceeded
         }
     }
+
+    var confirmReboot by remember { mutableStateOf(false) }
+    var cancelInstall by remember { mutableStateOf(false) }
+
+    val shell = viewModel.shell
+    val event = viewModel.event
+
+    val allowCancel = userPreferences.developerMode { allowCancelInstall }
 
     LaunchedEffect(focusRequester) {
         focusRequester.requestFocus()
@@ -86,12 +96,24 @@ fun InstallScreen(
         }
     }
 
+    val backHandler = {
+        if (allowCancel) {
+            when {
+                event.isLoading && shell.isAlive -> cancelInstall = true
+                event.isFinished -> (context as MMRLComponentActivity).finish()
+            }
+        } else {
+            if (event.isFinished) {
+                (context as MMRLComponentActivity).finish()
+            }
+        }
+    }
+
     BackHandler(
-        enabled = viewModel.event.isLoading,
-        onBack = {}
+        enabled = if (!allowCancel) event.isLoading else true,
+        onBack = backHandler
     )
 
-    val context = LocalContext.current
     val launcher = rememberLauncherForActivityResult(
         ActivityResultContracts.CreateDocument("*/*")
     ) { uri ->
@@ -118,7 +140,6 @@ fun InstallScreen(
         }
     }
 
-    var confirmReboot by remember { mutableStateOf(false) }
     if (confirmReboot) ConfirmDialog(
         title = R.string.install_screen_reboot_title,
         description = R.string.install_screen_reboot_text,
@@ -129,14 +150,13 @@ fun InstallScreen(
         }
     )
 
-    var cancelInstall by remember { mutableStateOf(false) }
     if (cancelInstall) ConfirmDialog(
         title = R.string.install_screen_cancel_title,
         description = R.string.install_screen_cancel_text,
         onClose = { cancelInstall = false },
         onConfirm = {
             cancelInstall = false
-            viewModel.shell.value?.close()
+            shell.close()
         }
     )
 
@@ -144,7 +164,7 @@ fun InstallScreen(
         modifier = Modifier
             .onKeyEvent {
                 when (it.key) {
-                    Key.VolumeUp, Key.VolumeDown -> viewModel.event.isLoading
+                    Key.VolumeUp, Key.VolumeDown -> event.isLoading
 
                     else -> false
                 }
@@ -155,14 +175,10 @@ fun InstallScreen(
         topBar = {
             TopBar(
                 exportLog = { launcher.launch(viewModel.logfile) },
-                event = viewModel.event,
+                event = event,
+                enable = if (!allowCancel) event.isFinished else true,
                 scrollBehavior = scrollBehavior,
-                onBack = {
-                    when {
-                        viewModel.shell.value?.isAlive == true -> cancelInstall = true
-                        viewModel.event.isFinished -> (context as MMRLComponentActivity).finish()
-                    }
-                }
+                onBack = backHandler
             )
         },
         floatingActionButton = {
@@ -207,6 +223,7 @@ private fun TopBar(
     event: Event,
     onBack: () -> Unit,
     scrollBehavior: TopAppBarScrollBehavior,
+    enable: Boolean,
 ) = NavigateUpTopBar(
     title = stringResource(id = R.string.install_screen_title),
     subtitle = stringResource(
@@ -216,6 +233,7 @@ private fun TopBar(
             else -> R.string.install_done
         }
     ),
+    enable = enable,
     onBack = onBack,
     scrollBehavior = scrollBehavior,
     actions = {

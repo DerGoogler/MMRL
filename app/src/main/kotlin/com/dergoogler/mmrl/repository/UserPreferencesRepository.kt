@@ -79,6 +79,12 @@ class UserPreferencesRepository @Inject constructor(
     suspend fun setClearInstallTerminal(value: Boolean) =
         userPreferencesDataSource.setClearInstallTerminal(value)
 
+    suspend fun setAllowCancelInstall(value: Boolean) =
+        userPreferencesDataSource.setAllowCancelInstall(value)
+
+    suspend fun setAllowCancelAction(value: Boolean) =
+        userPreferencesDataSource.setAllowCancelAction(value)
+
     suspend fun setAllowedFsModules(value: List<String>) =
         userPreferencesDataSource.setAllowedFsModules(value)
 

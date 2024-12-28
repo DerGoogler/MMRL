@@ -37,4 +37,6 @@ message UserPreferences {
   string allowedKsuModules = 26;
   string webUiDevUrl = 27;
   bool useWebUiDevUrl = 28;
+  bool allowCancelInstall = 29;
+  bool allowCancelAction = 30;
 }

@@ -21,6 +21,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.navigation.NavController
 import com.dergoogler.mmrl.R
+import dev.dergoogler.mmrl.compat.ext.takeTrue
 
 @Composable
 fun NavigateUpTopBar(
@@ -32,7 +33,7 @@ fun NavigateUpTopBar(
     actions: @Composable RowScope.() -> Unit = {},
     windowInsets: WindowInsets = TopAppBarDefaults.windowInsets,
     colors: TopAppBarColors = TopAppBarDefaults.topAppBarColors(),
-    scrollBehavior: TopAppBarScrollBehavior? = null
+    scrollBehavior: TopAppBarScrollBehavior? = null,
 ) = NavigateUpTopBar(
     modifier = modifier,
     title = title,
@@ -55,7 +56,7 @@ fun NavigateUpTopBar(
     actions: @Composable RowScope.() -> Unit = {},
     windowInsets: WindowInsets = TopAppBarDefaults.windowInsets,
     colors: TopAppBarColors = TopAppBarDefaults.topAppBarColors(),
-    scrollBehavior: TopAppBarScrollBehavior? = null
+    scrollBehavior: TopAppBarScrollBehavior? = null,
 ) = NavigateUpTopBar(
     modifier = modifier,
     title = title,
@@ -78,7 +79,7 @@ fun NavigateUpTopBar(
     actions: @Composable RowScope.() -> Unit = {},
     windowInsets: WindowInsets = TopAppBarDefaults.windowInsets,
     colors: TopAppBarColors = TopAppBarDefaults.topAppBarColors(),
-    scrollBehavior: TopAppBarScrollBehavior? = null
+    scrollBehavior: TopAppBarScrollBehavior? = null,
 ) = NavigateUpTopBar(
     modifier = modifier,
     title = {
@@ -119,18 +120,20 @@ fun NavigateUpTopBar(
     actions: @Composable RowScope.() -> Unit = {},
     windowInsets: WindowInsets = TopAppBarDefaults.windowInsets,
     colors: TopAppBarColors = TopAppBarDefaults.topAppBarColors(),
-    scrollBehavior: TopAppBarScrollBehavior? = null
+    scrollBehavior: TopAppBarScrollBehavior? = null,
 ) = TopAppBar(
     title = title,
     modifier = modifier,
     navigationIcon = {
-        IconButton(
-            onClick = { if (enable) onBack() }
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.arrow_left),
-                contentDescription = null
-            )
+        enable.takeTrue {
+            IconButton(
+                onClick = { if (it) onBack() }
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.arrow_left),
+                    contentDescription = null
+                )
+            }
         }
     },
     actions = actions,

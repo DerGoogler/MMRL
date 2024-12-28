@@ -1055,7 +1055,7 @@ fun NewViewScreen(
                 )
             }
 
-            local?.let {
+            local?.let { loc ->
                 ListCollapseItem(
                     contentPaddingValues = PaddingValues(vertical = 8.dp, horizontal = 16.dp),
                     iconToRight = true,
@@ -1065,17 +1065,17 @@ fun NewViewScreen(
                     userPreferences.developerMode.takeTrue {
                         ModuleInfoListItem(
                             title = R.string.view_module_module_id,
-                            desc = it.id
+                            desc = loc.id
                         )
                     }
 
                     ModuleInfoListItem(
                         title = R.string.view_module_version,
-                        desc = "${it.version} (${it.versionCode})"
+                        desc = "${loc.version} (${loc.versionCode})"
                     )
                     ModuleInfoListItem(
                         title = R.string.view_module_last_updated,
-                        desc = it.lastUpdated.toFormattedDateSafely
+                        desc = loc.lastUpdated.toFormattedDateSafely
                     )
                 }
             }
