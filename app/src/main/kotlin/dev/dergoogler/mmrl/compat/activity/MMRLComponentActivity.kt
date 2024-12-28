@@ -21,6 +21,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.rememberNavController
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.compat.PermissionCompat
+import com.dergoogler.mmrl.model.local.LocalModule
 import com.dergoogler.mmrl.repository.LocalRepository
 import com.dergoogler.mmrl.repository.UserPreferencesRepository
 import com.dergoogler.mmrl.ui.activity.CrashHandlerActivity
@@ -151,10 +152,10 @@ open class MMRLComponentActivity : ComponentActivity() {
             context.startActivity(intent)
         }
 
-        fun startActionActivity(context: Context, modId: String) {
+        fun startActionActivity(context: Context, module: LocalModule) {
             val intent = Intent(context, ActionActivity::class.java)
                 .apply {
-                    putExtra("MOD_ID", modId)
+                    putExtra("MOD_ID", module.id)
                 }
 
             context.startActivity(intent)

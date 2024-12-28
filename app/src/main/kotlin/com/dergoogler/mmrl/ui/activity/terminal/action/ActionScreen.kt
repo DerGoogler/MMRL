@@ -82,7 +82,7 @@ fun ActionScreen(
     val allowCancel = userPreferences.developerMode { allowCancelAction }
 
     val backHandler = {
-        if (allowCancel) {
+        if (allowCancel && shell != null) {
             when {
                 event.isLoading && shell.isAlive -> cancelAction = true
                 event.isFinished -> (context as MMRLComponentActivity).finish()
@@ -130,7 +130,7 @@ fun ActionScreen(
         onClose = { cancelAction = false },
         onConfirm = {
             cancelAction = false
-            viewModel.shell.close()
+            shell?.close()
         }
     )
 

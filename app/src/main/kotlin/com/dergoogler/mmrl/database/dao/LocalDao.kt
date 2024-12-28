@@ -20,6 +20,9 @@ interface LocalDao {
     @Query("SELECT * FROM localModules WHERE id = :id LIMIT 1")
     suspend fun getByIdOrNull(id: String): LocalModuleEntity?
 
+    @Query("SELECT * FROM localModules WHERE id = :id LIMIT 1")
+    fun getByIdOrNullAsFlow(id: String): Flow<LocalModuleEntity?>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(value: LocalModuleEntity)
 

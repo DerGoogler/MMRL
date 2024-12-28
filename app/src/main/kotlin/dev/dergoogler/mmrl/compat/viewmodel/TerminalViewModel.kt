@@ -11,6 +11,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.dergoogler.mmrl.app.Const.CLEAR_CMD
 import com.dergoogler.mmrl.app.Event
+import com.dergoogler.mmrl.model.local.LocalModule
 import com.dergoogler.mmrl.repository.LocalRepository
 import com.dergoogler.mmrl.repository.ModulesRepository
 import com.dergoogler.mmrl.repository.UserPreferencesRepository
@@ -19,6 +20,10 @@ import com.dergoogler.mmrl.ui.activity.terminal.ShellBroadcastReceiver
 import dev.dergoogler.mmrl.compat.BuildCompat
 import dev.dergoogler.mmrl.compat.stub.IShell
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 import javax.inject.Inject
@@ -33,8 +38,15 @@ open class TerminalViewModel @Inject constructor(
     internal val console = mutableStateListOf<String>()
     var event by mutableStateOf(Event.LOADING)
         internal set
-    var shell by mutableStateOf<IShell>(IShell.Stub.asInterface(null))
+    var shell by mutableStateOf<IShell?>(null)
         internal set
+
+    private val localFlow = MutableStateFlow<LocalModule?>(null)
+    val local get() = localFlow.asStateFlow()
+
+    internal suspend fun initModule(id: String): LocalModule? {
+        return localRepository.getLocalByIdOrNullAsFlow(id).map { it }.first()
+    }
 
     private var receiver: BroadcastReceiver? = null
 

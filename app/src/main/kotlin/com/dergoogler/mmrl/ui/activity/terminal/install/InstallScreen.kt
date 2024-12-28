@@ -97,7 +97,7 @@ fun InstallScreen(
     }
 
     val backHandler = {
-        if (allowCancel) {
+        if (allowCancel && shell != null) {
             when {
                 event.isLoading && shell.isAlive -> cancelInstall = true
                 event.isFinished -> (context as MMRLComponentActivity).finish()
@@ -156,7 +156,7 @@ fun InstallScreen(
         onClose = { cancelInstall = false },
         onConfirm = {
             cancelInstall = false
-            shell.close()
+            shell?.close()
         }
     )
 

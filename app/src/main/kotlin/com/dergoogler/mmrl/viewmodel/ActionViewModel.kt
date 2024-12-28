@@ -9,6 +9,7 @@ import com.dergoogler.mmrl.repository.LocalRepository
 import com.dergoogler.mmrl.repository.ModulesRepository
 import com.dergoogler.mmrl.repository.UserPreferencesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.dergoogler.mmrl.compat.content.State
 import dev.dergoogler.mmrl.compat.stub.IShellCallback
 import dev.dergoogler.mmrl.compat.viewmodel.TerminalViewModel
 import kotlinx.coroutines.CompletableDeferred
@@ -34,14 +35,33 @@ class ActionViewModel @Inject constructor(
     }
 
     suspend fun runAction(modId: String) {
+        val module = initModule(modId)
         val userPreferences = userPreferencesRepository.data.first()
 
         viewModelScope.launch {
             event = Event.LOADING
 
+            if (module == null) {
+                event = Event.FAILED
+                log("! Module not found.")
+                return@launch
+            }
+
+            if (!module.runners.action) {
+                event = Event.FAILED
+                log("! This module don't have an action.")
+                return@launch
+            }
+
+            if (module.state == State.DISABLE || module.state == State.REMOVE) {
+                event = Event.FAILED
+                log("! Module is disabled or removed. Unable to execute action.")
+                return@launch
+            }
+
             if (!Compat.init(userPreferences.workingMode)) {
                 event = Event.FAILED
-                log("- Service is not available")
+                log("! Service is not available.")
                 return@launch
             }
 
@@ -77,7 +97,7 @@ class ActionViewModel @Inject constructor(
                 }
 
                 override fun onFailure() {
-                    log("- Execution failed. Try to use Shell for the Action execution, Settings > Module > Use Shell for Module Action")
+                    log("- Execution failed. Try to use Shell for the Action execution, Settings > Module > Use Shell for Module Action.")
                     actionResult.complete(false)
                 }
             }

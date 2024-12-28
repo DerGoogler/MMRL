@@ -31,6 +31,10 @@ class LocalRepository @Inject constructor(
         list.map { it.toModule() }
     }
 
+    fun getLocalByIdOrNullAsFlow(id: String) = localDao.getByIdOrNullAsFlow(id).map {
+        it?.toModule()
+    }
+
     suspend fun getLocalByIdOrNull(id: String) = withContext(Dispatchers.IO) {
         localDao.getByIdOrNull(id)?.toModule()
     }

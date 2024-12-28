@@ -152,11 +152,11 @@ fun ModuleItem(
         startTrailingButton = {
             module.runners.action.takeTrue {
                 ActionButton(
-                    enabled = isProviderAlive && module.state != State.REMOVE,
+                    enabled = isProviderAlive && module.state != State.REMOVE && module.state != State.DISABLE,
                     onClick = {
                         MMRLComponentActivity.startActionActivity(
                             context = context,
-                            modId = module.id
+                            module = module
                         )
                     }
                 )
