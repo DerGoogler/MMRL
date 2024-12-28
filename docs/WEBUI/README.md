@@ -6,7 +6,7 @@ You can use the app theme with automatic dark mode support. Also it supports win
 
 | Dark                                                       | Light                                                       |
 |------------------------------------------------------------|-------------------------------------------------------------|
-| <img src="./../assets/webui/webui-dark.png" width="32%" /> | <img src="./../assets/webui/webui-light.png" width="32%" /> |
+| <img src="../../assets/webui/webui-dark.png" width="32%" /> | <img src="../../assets/webui/webui-light.png" width="32%" /> |
 
 ## Setup
 
