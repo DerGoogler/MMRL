@@ -2,6 +2,7 @@ package com.dergoogler.mmrl.ui.screens.home.about
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
@@ -43,6 +44,7 @@ import com.dergoogler.mmrl.stub.IRepoManager
 import com.dergoogler.mmrl.ui.component.CardDefaults
 import com.dergoogler.mmrl.ui.component.ListButtonItem
 import com.dergoogler.mmrl.ui.component.ListCollapseItem
+import com.dergoogler.mmrl.ui.component.ListItemDefaults
 import com.dergoogler.mmrl.ui.component.Logo
 import com.dergoogler.mmrl.ui.component.MarkdownText
 import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
@@ -52,6 +54,8 @@ import dev.dergoogler.mmrl.compat.ext.nullable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber
+
+val listItemContentPaddingValues = PaddingValues(vertical = 16.dp, horizontal = 16.dp)
 
 @Composable
 fun AboutScreen() {
@@ -165,10 +169,15 @@ fun AboutScreen() {
                 }
             }
 
+            val style = MaterialTheme.typography.bodyMedium.copy(
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+            val itemTextStyle = ListItemDefaults.itemStyle.copy(
+                titleTextStyle = style,
+                descTextStyle = style
+            )
+
             OutlinedCard {
-                val style = MaterialTheme.typography.bodyMedium.copy(
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
 
                 Text(
                     text = stringResource(id = R.string.about_desc1),
@@ -197,8 +206,10 @@ fun AboutScreen() {
                     modifier = CardDefaults.outlinedCardModifier.copy(column = Modifier)
                 ) {
                     ListCollapseItem(
-                        title = "Sponsors",
-                        desc = "All the sponsors of the project. Click on \"Learn more\" to get included.",
+                        itemTextStyle = itemTextStyle,
+                        contentPaddingValues = listItemContentPaddingValues,
+                        title = stringResource(R.string.sponsors),
+                        desc = stringResource(R.string.all_the_sponsors_of_the_project_click_on_learn_more_to_get_included),
                         learnMore = {
                             browser.openUri(Const.SPONSORS_URL)
                         },
@@ -206,6 +217,8 @@ fun AboutScreen() {
                     ) {
                         sponsors.forEach {
                             ListButtonItem(
+                                itemTextStyle = itemTextStyle,
+                                contentPaddingValues = listItemContentPaddingValues,
                                 title = it.login,
                                 onClick = {
                                     browser.openUri(it.url)

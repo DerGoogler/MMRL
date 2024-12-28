@@ -71,7 +71,7 @@ fun ListHeader(
     modifier: Modifier = Modifier,
     title: String,
     contentPaddingValues: PaddingValues = PaddingValues(vertical = 8.dp, horizontal = 25.dp),
-    itemTextStyle: ListItemTextStyle = ListItemDefaults.itemStyle(),
+    itemTextStyle: ListItemTextStyle = ListItemDefaults.itemStyle,
     enabled: Boolean = true,
 ) {
     Row(
@@ -95,7 +95,7 @@ private fun BaseListContent(
     modifier: Modifier = Modifier,
     title: String,
     desc: (@Composable ColumnScope.() -> Unit)? = null,
-    itemTextStyle: ListItemTextStyle = ListItemDefaults.itemStyle(),
+    itemTextStyle: ListItemTextStyle = ListItemDefaults.itemStyle,
     labels: List<@Composable RowScope.() -> Unit>? = null,
 ) {
     Column(
@@ -126,7 +126,7 @@ private fun BaseListContent(
     modifier: Modifier = Modifier,
     title: String,
     desc: String? = null,
-    itemTextStyle: ListItemTextStyle = ListItemDefaults.itemStyle(),
+    itemTextStyle: ListItemTextStyle = ListItemDefaults.itemStyle,
     learnMore: (() -> Unit)? = null,
     labels: List<@Composable RowScope.() -> Unit>? = null,
 ) = BaseListContent(
@@ -159,7 +159,7 @@ fun ListItem(
     title: String,
     desc: String? = null,
     contentPaddingValues: PaddingValues = PaddingValues(vertical = 16.dp, horizontal = 25.dp),
-    itemTextStyle: ListItemTextStyle = ListItemDefaults.itemStyle(),
+    itemTextStyle: ListItemTextStyle = ListItemDefaults.itemStyle,
     @DrawableRes icon: Int? = null,
     enabled: Boolean = true,
     learnMore: (() -> Unit)? = null,
@@ -206,7 +206,7 @@ fun ListButtonItem(
     onClick: () -> Unit,
     onLongClick: () -> Unit = {},
     contentPaddingValues: PaddingValues = PaddingValues(vertical = 16.dp, horizontal = 25.dp),
-    itemTextStyle: ListItemTextStyle = ListItemDefaults.itemStyle(),
+    itemTextStyle: ListItemTextStyle = ListItemDefaults.itemStyle,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     @DrawableRes icon: Int? = null,
     iconToRight: Boolean = false,
@@ -283,7 +283,7 @@ fun ListProgressBarItem(
     progressBarHeight: Dp = 10.dp,
     progressBarModifier: Modifier = Modifier,
     contentPaddingValues: PaddingValues = PaddingValues(vertical = 16.dp, horizontal = 25.dp),
-    itemTextStyle: ListItemTextStyle = ListItemDefaults.itemStyle(),
+    itemTextStyle: ListItemTextStyle = ListItemDefaults.itemStyle,
     @DrawableRes icon: Int? = null,
     enabled: Boolean = true,
     labels: List<@Composable RowScope.() -> Unit>? = null,
@@ -363,7 +363,7 @@ fun ListCollapseItem(
     title: String,
     desc: String? = null,
     contentPaddingValues: PaddingValues = PaddingValues(vertical = 16.dp, horizontal = 25.dp),
-    itemTextStyle: ListItemTextStyle = ListItemDefaults.itemStyle(),
+    itemTextStyle: ListItemTextStyle = ListItemDefaults.itemStyle,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     iconToRight: Boolean = false,
     enabled: Boolean = true,
@@ -463,7 +463,7 @@ fun ListSwitchItem(
     checked: Boolean,
     onChange: (Boolean) -> Unit,
     contentPaddingValues: PaddingValues = PaddingValues(vertical = 16.dp, horizontal = 25.dp),
-    itemTextStyle: ListItemTextStyle = ListItemDefaults.itemStyle(),
+    itemTextStyle: ListItemTextStyle = ListItemDefaults.itemStyle,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     @DrawableRes icon: Int? = null,
     enabled: Boolean = true,
@@ -528,7 +528,7 @@ fun ListEditTextItem(
     value: String,
     onConfirm: (String) -> Unit,
     contentPaddingValues: PaddingValues = PaddingValues(vertical = 16.dp, horizontal = 25.dp),
-    itemTextStyle: ListItemTextStyle = ListItemDefaults.itemStyle(),
+    itemTextStyle: ListItemTextStyle = ListItemDefaults.itemStyle,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     @DrawableRes icon: Int? = null,
     enabled: Boolean = true,
@@ -645,7 +645,7 @@ fun <T> ListRadioCheckItem(
     prefix: String? = null,
     onConfirm: (T) -> Unit,
     contentPaddingValues: PaddingValues = PaddingValues(vertical = 16.dp, horizontal = 25.dp),
-    itemTextStyle: ListItemTextStyle = ListItemDefaults.itemStyle(),
+    itemTextStyle: ListItemTextStyle = ListItemDefaults.itemStyle,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     @DrawableRes icon: Int? = null,
     enabled: Boolean = true,
@@ -805,21 +805,13 @@ class ListItemTextStyle internal constructor(
 }
 
 object ListItemDefaults {
-
-    @Composable
-    fun itemStyle(
-        titleTextColor: Color = LocalContentColor.current,
-        descTextColor: Color = MaterialTheme.colorScheme.outline,
-        titleTextStyle: TextStyle = MaterialTheme.typography.bodyLarge,
-        descTextStyle: TextStyle = MaterialTheme.typography.bodyMedium,
-        iconSize: Dp = 24.dp,
-        textSwitchPadding: Dp = 16.dp,
-    ) = ListItemTextStyle(
-        titleTextColor = titleTextColor,
-        descTextColor = descTextColor,
-        titleTextStyle = titleTextStyle,
-        descTextStyle = descTextStyle,
-        iconSize = iconSize,
-        textSwitchPadding = textSwitchPadding
-    )
+    val itemStyle
+        @Composable get() = ListItemTextStyle(
+            titleTextColor = LocalContentColor.current,
+            descTextColor = MaterialTheme.colorScheme.outline,
+            titleTextStyle = MaterialTheme.typography.bodyLarge,
+            descTextStyle = MaterialTheme.typography.bodyMedium,
+            iconSize = 24.dp,
+            textSwitchPadding = 16.dp
+        )
 }

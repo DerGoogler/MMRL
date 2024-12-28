@@ -10,7 +10,7 @@ import com.dergoogler.mmrl.R
 fun AntiFeaturesItem(
     antifeatures: List<String>,
     contentPaddingValues: PaddingValues = PaddingValues(vertical = 16.dp, horizontal = 25.dp),
-    itemTextStyle: ListItemTextStyle = ListItemDefaults.itemStyle(),
+    itemTextStyle: ListItemTextStyle = ListItemDefaults.itemStyle,
 ) = antifeatures.forEach {
     val result = getAntifeatureDetails(it)
     result?.let {

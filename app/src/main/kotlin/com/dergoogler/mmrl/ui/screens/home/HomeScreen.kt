@@ -318,7 +318,7 @@ fun HomeScreen(
             ) {
                 ListItem(
                     contentPaddingValues = listItemContentPaddingValues,
-                    itemTextStyle = ListItemDefaults.itemStyle().copy(
+                    itemTextStyle = ListItemDefaults.itemStyle.copy(
                         titleTextColor = Color.Unspecified,
                         descTextColor = Color.Unspecified,
                         titleTextStyle = MaterialTheme.typography.bodyLarge,

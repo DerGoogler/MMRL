@@ -350,4 +350,6 @@
     <string name="settings_use_generic_action">Use Generic Action</string>
     <string name="settings_use_generic_action_desc">Most root providers do not support an action CLI command. Instead, you can use a generic script</string>
     <string name="learn_more">Learn more</string>
+    <string name="sponsors">Sponsors</string>
+    <string name="all_the_sponsors_of_the_project_click_on_learn_more_to_get_included">All the sponsors of the project. Click on \"Learn more\" to get included.</string>
 </resources>
