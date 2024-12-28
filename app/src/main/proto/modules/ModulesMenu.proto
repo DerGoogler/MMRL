@@ -10,4 +10,6 @@ message ModulesMenu {
   bool descending = 2;
   bool pinEnabled = 3;
   bool showUpdatedTime = 4;
+  bool pinAction = 5;
+  bool pinWebUI = 6;
 }

@@ -131,6 +131,18 @@ private fun MenuBottomSheet(
             )
 
             MenuChip(
+                selected = menu.pinAction,
+                onClick = { setMenu(menu.copy(pinAction = !menu.pinAction)) },
+                label = { Text(text = stringResource(id = R.string.menu_pin_action)) }
+            )
+
+            MenuChip(
+                selected = menu.pinWebUI,
+                onClick = { setMenu(menu.copy(pinWebUI = !menu.pinWebUI)) },
+                label = { Text(text = stringResource(id = R.string.menu_pin_webui)) }
+            )
+
+            MenuChip(
                 selected = menu.showUpdatedTime,
                 onClick = { setMenu(menu.copy(showUpdatedTime = !menu.showUpdatedTime)) },
                 label = { Text(text = stringResource(id = R.string.menu_show_updated)) }

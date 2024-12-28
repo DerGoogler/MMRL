@@ -119,10 +119,22 @@ class ModulesViewModel @Inject constructor(
             cacheFlow.value = list.sortedWith(
                 comparator(menu.option, menu.descending)
             ).let { v ->
-                if (menu.pinEnabled) {
+                val a = if (menu.pinEnabled) {
                     v.sortedByDescending { it.state == State.ENABLE }
                 } else {
                     v
+                }
+
+                val b = if (menu.pinAction) {
+                    a.sortedByDescending { it.runners.action }
+                } else {
+                    a
+                }
+
+                if (menu.pinWebUI) {
+                    b.sortedByDescending { it.runners.webui }
+                } else {
+                    b
                 }
             }
 
