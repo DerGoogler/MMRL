@@ -346,4 +346,6 @@
     <string name="settings_use_generic_action">採用通用型腳本</string>
     <string name="learn_more">深入瞭解</string>
     <string name="settings_use_generic_action_desc">大多數授權平臺仍未支援以腳本形式執行指令介面：此時改採通用格式的指令碼，便可解決相容性問題</string>
+    <string name="sponsors">贊助人員</string>
+    <string name="all_the_sponsors_of_the_project_click_on_learn_more_to_get_included">本專案的所有贊助人員。點選「深入瞭解」即可羅列。</string>
 </resources>
