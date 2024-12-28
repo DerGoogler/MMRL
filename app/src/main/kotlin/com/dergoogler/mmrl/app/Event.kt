@@ -58,7 +58,7 @@ enum class Event {
         val isChristmas
             get() = checkDateRange(
                 startDate = "12-01 00:00",
-                endDate = "12-28 00:00"
+                endDate = "12-27 00:00"
             )
 
         val isNewYearsEve
