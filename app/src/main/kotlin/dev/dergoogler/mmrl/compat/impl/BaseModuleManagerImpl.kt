@@ -9,7 +9,6 @@ import dev.dergoogler.mmrl.compat.content.BulkModule
 import dev.dergoogler.mmrl.compat.content.LocalModule
 import dev.dergoogler.mmrl.compat.content.LocalModuleRunners
 import dev.dergoogler.mmrl.compat.content.ModuleCompatibility
-import dev.dergoogler.mmrl.compat.content.ModuleInfo
 import dev.dergoogler.mmrl.compat.content.State
 import dev.dergoogler.mmrl.compat.stub.IModuleManager
 import dev.dergoogler.mmrl.compat.stub.IShell
@@ -95,44 +94,6 @@ internal abstract class BaseModuleManagerImpl(
                 .let(::readProps)
                 .toModule()
         }
-    }
-
-    override fun fetchModuleInfo(): ModuleInfo {
-        val folders = modulesDir.listFiles()?.filter { it.isDirectory } ?: emptyList()
-
-        var total = 0
-        var withServiceFiles = 0
-        var disabled = 0
-        var updatable = 0
-        val disabledList = mutableListOf<String>()
-        val updatedList = mutableListOf<String>()
-
-        for (folder in folders) {
-            total++
-
-            val serviceFileExists = MODULE_SERVICE_FILES.any { File(folder, it).exists() }
-            if (serviceFileExists) withServiceFiles++
-
-            if (File(folder, "disable").exists()) {
-                disabled++
-                disabledList.add(folder.name)
-            }
-
-            if (File(folder, "update").exists()) {
-                updatable++
-                updatedList.add(folder.name)
-            }
-        }
-
-        return ModuleInfo(
-            totalModules = total,
-            modulesWithServiceFiles = withServiceFiles,
-            disabledModules = disabled,
-            updatableModules = updatable,
-            enabledModules = total.minus(disabled),
-            disabledModulesList = disabledList,
-            updatedModulesList = updatedList
-        )
     }
 
     private fun readProps(props: String) = props.lines()

@@ -7,9 +7,13 @@ interface IFileManager {
     void write(String path, String data);
     String read(String path);
     String readAsBase64(String path);
-    String list(String path, String delimiter);
+    List<String> list(String path);
     long stat(String path);
+    long size(String path);
+    long totalStat(String path);
     boolean delete(String path);
     boolean exists(String path);
+    boolean isDirectory(String path);
+    boolean isFile(String path);
     boolean isAccessRestricted(String path, boolean disable);
 }

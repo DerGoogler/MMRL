@@ -309,6 +309,7 @@
     <string name="home_disabled_modules">Disabled Modules</string>
     <string name="home_updated_modules">Updated Modules</string>
     <string name="home_enabled_disabled_modules_ratio">Enabled / Disabled Ratio</string>
+    <string name="home_storage_usage">Storage Usage</string>
     <string name="home_root_provider_version_name">Root Provider Version Name</string>
     <string name="home_root_provider_se_linux_context">SELinux Context</string>
 

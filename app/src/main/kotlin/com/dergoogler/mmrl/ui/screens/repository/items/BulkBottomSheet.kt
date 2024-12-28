@@ -36,7 +36,7 @@ import com.dergoogler.mmrl.ui.component.PageIndicator
 import com.dergoogler.mmrl.viewmodel.BulkInstallViewModel
 import dev.dergoogler.mmrl.compat.ext.fadingEdge
 import dev.dergoogler.mmrl.compat.ext.ignoreParentPadding
-import dev.dergoogler.mmrl.compat.ext.toFormatedFileSize
+import dev.dergoogler.mmrl.compat.ext.toFormattedFileSize
 
 @Composable
 fun BulkBottomSheet(
@@ -146,7 +146,7 @@ fun BulkModuleItem(
 
                     module.versionItem.size?.let {
                         LabelItem(
-                            text = it.toFormatedFileSize(),
+                            text = it.toFormattedFileSize(),
                             containerColor = MaterialTheme.colorScheme.error,
                             contentColor = MaterialTheme.colorScheme.onError
                         )

@@ -34,7 +34,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
@@ -66,8 +65,10 @@ import com.dergoogler.mmrl.ui.utils.navigateSingleTopTo
 import com.dergoogler.mmrl.ui.utils.none
 import com.dergoogler.mmrl.viewmodel.HomeViewModel
 import dev.dergoogler.mmrl.compat.ext.managerVersion
+import dev.dergoogler.mmrl.compat.ext.nullable
 import dev.dergoogler.mmrl.compat.ext.seLinuxStatus
 import dev.dergoogler.mmrl.compat.ext.takeTrue
+import dev.dergoogler.mmrl.compat.ext.toFormattedFileSize
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -265,57 +266,48 @@ fun HomeScreen(
                     Spacer(Modifier.height(16.dp))
                 }
 
-                Card(
-                    modifier = compressedCardModifier
-                ) {
-                    val stats = viewModel.stats
+                viewModel.analytics.nullable {
+                    Card(
+                        modifier = compressedCardModifier
+                    ) {
 
-                    ListItem(
-                        contentPaddingValues = listItemContentPaddingValues,
-                        title = stringResource(R.string.home_installed_modules),
-                        desc = stats.totalModules.toString()
-                    )
+                        ListItem(
+                            contentPaddingValues = listItemContentPaddingValues,
+                            title = stringResource(R.string.home_installed_modules),
+                            desc = it.totalModules.toString()
+                        )
 
-                    ListItem(
-                        contentPaddingValues = listItemContentPaddingValues,
-                        title = stringResource(R.string.home_enabled_modules),
-                        desc = stats.enabledModules.toString()
-                    )
+                        ListItem(
+                            contentPaddingValues = listItemContentPaddingValues,
+                            title = stringResource(R.string.home_enabled_modules),
+                            desc = it.totalEnabled.toString()
+                        )
 
-                    ListItem(
-                        contentPaddingValues = listItemContentPaddingValues,
-                        title = stringResource(R.string.home_installed_modules_with_service_files),
-                        desc = stats.modulesWithServiceFiles.toString()
-                    )
+                        ListItem(
+                            contentPaddingValues = listItemContentPaddingValues,
+                            title = stringResource(R.string.home_disabled_modules),
+                            desc = it.totalDisabled.toString()
+                        )
 
-                    ListItem(
-                        contentPaddingValues = listItemContentPaddingValues,
-                        title = stringResource(R.string.home_disabled_modules),
-                        desc = stats.disabledModules.toString()
-                    )
+                        ListProgressBarItem(
+                            contentPaddingValues = listItemContentPaddingValues,
+                            progressBarModifier = Modifier
+                                .weight(1f),
+                            startDesc = it.totalModulesUsageBytes.toFormattedFileSize(),
+                            endDesc = it.totalDeviceStorageBytes.toFormattedFileSize(),
+                            title = stringResource(id = R.string.home_storage_usage),
+                            progress = it.totalStorageUsage,
+                        )
 
-                    val ratio =
-                        (stats.enabledModules.toFloat() / stats.disabledModules.toFloat()) / 10
+                        ListItem(
+                            contentPaddingValues = listItemContentPaddingValues,
+                            title = stringResource(R.string.home_updated_modules),
+                            desc = it.totalUpdated.toString()
+                        )
+                    }
 
-                    ListProgressBarItem(
-                        contentPaddingValues = listItemContentPaddingValues,
-                        progressBarModifier = Modifier
-                            .graphicsLayer(rotationZ = 180f)
-                            .weight(1f),
-                        startDesc = stats.enabledModules.toString(),
-                        endDesc = stats.disabledModules.toString(),
-                        title = stringResource(R.string.home_enabled_disabled_modules_ratio),
-                        progress = ratio,
-                    )
-
-                    ListItem(
-                        contentPaddingValues = listItemContentPaddingValues,
-                        title = stringResource(R.string.home_updated_modules),
-                        desc = stats.updatableModules.toString()
-                    )
+                    Spacer(Modifier.height(16.dp))
                 }
-
-                Spacer(Modifier.height(16.dp))
             }
 
             Card(

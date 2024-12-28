@@ -5,12 +5,14 @@ import android.os.Environment
 import android.os.StatFs
 import com.dergoogler.mmrl.Compat
 import com.dergoogler.mmrl.Compat.moduleManager
+import com.dergoogler.mmrl.model.local.ModuleAnalytics
 import com.dergoogler.mmrl.repository.LocalRepository
 import com.dergoogler.mmrl.repository.ModulesRepository
 import com.dergoogler.mmrl.repository.UserPreferencesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.dergoogler.mmrl.compat.content.ModuleInfo
 import dev.dergoogler.mmrl.compat.viewmodel.MMRLViewModel
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -24,7 +26,7 @@ class HomeViewModel @Inject constructor(
     val isProviderAlive get() = Compat.isAlive
     val platform get() = Compat.platform
 
-    val versionName
+    val versionName: String
         get() = Compat.get("") {
             with(moduleManager) { version }
         }
@@ -34,14 +36,22 @@ class HomeViewModel @Inject constructor(
             with(moduleManager) { versionCode }
         }
 
-    val seLinuxContext
+    val seLinuxContext: String
         get() = Compat.get("Failed") {
-            with(moduleManager) { seLinuxContext }
+            with(moduleManager) {
+                seLinuxContext
+            }
         }
 
-    val stats: ModuleInfo
-        get() = Compat.get(ModuleInfo.EMPTY) {
-            with(moduleManager) { fetchModuleInfo() }
+    val analytics: ModuleAnalytics?
+        get() = Compat.get(null) {
+            with(moduleManager) {
+                val local = runBlocking { localRepository.getLocalAllAsFlow().first() }
+                return@get ModuleAnalytics(
+                    local = local,
+                    fileManager = fileManager
+                )
+            }
         }
 
     init {

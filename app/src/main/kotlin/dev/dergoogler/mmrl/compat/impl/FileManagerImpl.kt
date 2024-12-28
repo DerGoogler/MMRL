@@ -91,16 +91,24 @@ internal class FileManagerImpl : IFileManager.Stub() {
         }
     }
 
-    override fun list(path: String, delimiter: String): String? = with(File(path)) {
+    override fun list(path: String): List<String>? = with(File(path)) {
         val files: Array<out String>? = list()
 
         if (files == null || files.isEmpty()) return null
 
-        return files.joinToString(delimiter)
+        return files.toList()
+    }
+
+    override fun size(path: String): Long = with(File(path)) {
+        return this.length();
     }
 
     override fun stat(path: String): Long = with(File(path)) {
         return this.lastModified();
+    }
+
+    override fun totalStat(path: String): Long = with(File(path)) {
+        return this.totalSpace
     }
 
     override fun delete(path: String): Boolean = with(File(path)) {
@@ -114,6 +122,14 @@ internal class FileManagerImpl : IFileManager.Stub() {
 
     override fun exists(path: String): Boolean = with(File(path)) {
         return this.exists();
+    }
+
+    override fun isDirectory(path: String): Boolean = with(File(path)) {
+        return this.isDirectory();
+    }
+
+    override fun isFile(path: String): Boolean = with(File(path)) {
+        return this.isFile();
     }
 
     override fun isAccessRestricted(path: String, disable: Boolean): Boolean = with(File(path)) {

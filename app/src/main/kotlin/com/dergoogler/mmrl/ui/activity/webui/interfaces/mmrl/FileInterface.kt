@@ -25,11 +25,11 @@ class FileInterface(
     }
 
     @JavascriptInterface
-    fun list(path: String): String? = this.list(path, ",")
+    fun list(path: String): String = this.list(path, ",")
 
     @JavascriptInterface
-    fun list(path: String, delimiter: String): String? = with(file) {
-        return list(path, delimiter)
+    fun list(path: String, delimiter: String): String = with(file) {
+        return list(path).joinToString(delimiter)
     }
 
     @JavascriptInterface

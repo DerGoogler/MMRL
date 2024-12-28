@@ -1,7 +1,6 @@
 package dev.dergoogler.mmrl.compat.stub;
 
 import dev.dergoogler.mmrl.compat.content.LocalModule;
-import dev.dergoogler.mmrl.compat.content.ModuleInfo;
 import dev.dergoogler.mmrl.compat.content.ModuleCompatibility;
 import dev.dergoogler.mmrl.compat.content.BulkModule;
 import dev.dergoogler.mmrl.compat.stub.IShellCallback;
@@ -24,5 +23,4 @@ interface IModuleManager {
     oneway void remove(String id, boolean useShell, IModuleOpsCallback callback);
     IShell install(String path, in List<BulkModule> bulkModule, IShellCallback callback);
     IShell action(String modId, boolean legacy, IShellCallback callback);
-    ModuleInfo fetchModuleInfo();
 }

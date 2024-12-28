@@ -317,6 +317,7 @@ fun ListProgressBarItem(
                         modifier = Modifier
                             .height(progressBarHeight)
                             .then(progressBarModifier),
+                        drawStopIndicator = {}
                     )
 
                     endDesc.thenCompose<String> {
