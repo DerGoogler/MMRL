@@ -13,7 +13,9 @@ signing.properties
 captures/
 release/
 app/debug/*
-# app/releaseCandidate/*
+app/releaseCandidate/*
+app/beta/*
+app/alpha/*
 app/playstore/*
 .externalNativeBuild/
 .cxx/
