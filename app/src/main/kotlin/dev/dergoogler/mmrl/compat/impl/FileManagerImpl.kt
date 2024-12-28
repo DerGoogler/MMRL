@@ -56,8 +56,13 @@ internal class FileManagerImpl : IFileManager.Stub() {
         }
     }
 
-    override fun readByte(path: String): ByteArray = with(File(path)) {
-        return Files.readAllBytes(toPath())
+    override fun readByte(path: String): ByteArray? = with(File(path)) {
+        try {
+            return Files.readAllBytes(toPath())
+        } catch (e: IOException) {
+            Timber.e("FileManagerImpl>readByte: $e")
+            return null
+        }
     }
 
     override fun readAsBase64(path: String): String? = with(File(path)) {

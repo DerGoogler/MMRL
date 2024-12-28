@@ -3,6 +3,10 @@ package com.dergoogler.mmrl.ui.activity.webui.interfaces.mmrl
 import android.content.Context
 import android.webkit.JavascriptInterface
 import com.dergoogler.mmrl.Compat
+import timber.log.Timber
+import java.io.IOException
+import java.util.Base64
+
 
 class FileInterface(
     val context: Context,
@@ -10,8 +14,18 @@ class FileInterface(
     private val file = Compat.fileManager
 
     @JavascriptInterface
-    fun read(path: String): String? = with(file) {
-        return read(path)
+    fun read(path: String): String? = this.read(path, false)
+
+    @JavascriptInterface
+    fun read(path: String, bytes: Boolean): String? = with(file) {
+        if (!bytes) return read(path)
+
+        try {
+            return Base64.getEncoder().encodeToString(readByte(path))
+        } catch (e: IOException) {
+            Timber.e("FileManagerImpl>read(bytes)1: $e")
+            return null
+        }
     }
 
     @JavascriptInterface
