@@ -21,7 +21,7 @@ import com.dergoogler.mmrl.ui.utils.none
 
 @Composable
 fun SettingsScaffold(
-    modifier: ScaffoldModifier = ScaffoldDefaults.settingsScaffoldModifier(),
+    modifier: ScaffoldModifier = ScaffoldDefaults.settingsScaffoldModifier,
     @StringRes title: Int,
     actions: @Composable (RowScope.() -> Unit) = {},
     floatingActionButton: @Composable () -> Unit = {},
@@ -62,9 +62,16 @@ fun SettingsScaffold(
 
 @Immutable
 class ScaffoldModifier internal constructor(
-    val box: Modifier,
-    val column: Modifier,
+    val all: Modifier = Modifier,
+    val box: Modifier = all,
+    val column: Modifier = all,
 ) {
+    constructor(
+        all: Modifier.() -> Modifier = { Modifier },
+        box: Modifier.() -> Modifier = all,
+        column: Modifier.() -> Modifier = all,
+    ) : this(all(Modifier), box(Modifier), column(Modifier))
+
     @Suppress("RedundantIf")
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -77,25 +84,24 @@ class ScaffoldModifier internal constructor(
     }
 
     fun copy(
+        all: Modifier = this.all,
         box: Modifier = this.box,
         column: Modifier = this.column,
     ): ScaffoldModifier = ScaffoldModifier(
-        box, column
+        all, box, column
     )
 
     override fun hashCode(): Int {
-        var result = box.hashCode()
+        var result = all.hashCode()
+        result = 31 * result + box.hashCode()
         result = 31 * result + column.hashCode()
         return result
     }
 }
 
 object ScaffoldDefaults {
-    @Composable
-    fun settingsScaffoldModifier(
-        box: Modifier = Modifier.fillMaxSize(),
-        column: Modifier = Modifier.fillMaxSize(),
-    ) = ScaffoldModifier(
-        box, column
-    )
+    val settingsScaffoldModifier
+        get() = ScaffoldModifier(
+            all = Modifier.fillMaxSize()
+        )
 }

@@ -40,12 +40,14 @@ data class UserPreferencesCompat(
     val clearInstallTerminal: Boolean,
     val allowCancelInstall: Boolean,
     val allowCancelAction: Boolean,
+    val useShellToLoadWebUIAssets: Boolean,
     val allowedFsModules: List<String>,
     val allowedKsuModules: List<String>,
     val repositoryMenu: RepositoryMenuCompat,
     val modulesMenu: ModulesMenuCompat,
 ) {
-    constructor(original: UserPreferences) : this(workingMode = original.workingMode,
+    constructor(original: UserPreferences) : this(
+        workingMode = original.workingMode,
         darkMode = original.darkMode,
         themeColor = original.themeColor,
         deleteZipFile = original.deleteZipFile,
@@ -72,6 +74,7 @@ data class UserPreferencesCompat(
         clearInstallTerminal = original.clearInstallTerminal,
         allowCancelInstall = original.allowCancelInstall,
         allowCancelAction = original.allowCancelAction,
+        useShellToLoadWebUIAssets = original.useShellToLoadWebUIAssets,
         allowedFsModules = original.allowedFsModules.split(","),
         allowedKsuModules = original.allowedKsuModules.split(","),
         repositoryMenu = when {
@@ -117,6 +120,7 @@ data class UserPreferencesCompat(
             .setClearInstallTerminal(clearInstallTerminal)
             .setAllowCancelInstall(allowCancelInstall)
             .setAllowCancelAction(allowCancelAction)
+            .setUseShellToLoadWebUIAssets(useShellToLoadWebUIAssets)
             .setAllowedFsModules(allowedFsModules.joinToString(","))
             .setAllowedKsuModules(allowedKsuModules.joinToString(","))
             .setRepositoryMenu(repositoryMenu.toProto())
@@ -148,6 +152,7 @@ data class UserPreferencesCompat(
             clearInstallTerminal = true,
             allowCancelInstall = false,
             allowCancelAction = false,
+            useShellToLoadWebUIAssets = false,
             useShellForModuleStateChange = true,
             useShellForModuleAction = true,
             webuiAllowRestrictedPaths = false,

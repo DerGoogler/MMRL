@@ -85,6 +85,9 @@ class UserPreferencesRepository @Inject constructor(
     suspend fun setAllowCancelAction(value: Boolean) =
         userPreferencesDataSource.setAllowCancelAction(value)
 
+    suspend fun setUseShellToLoadWebUIAssets(value: Boolean) =
+        userPreferencesDataSource.setUseShellToLoadWebUIAssets(value)
+
     suspend fun setAllowedFsModules(value: List<String>) =
         userPreferencesDataSource.setAllowedFsModules(value)
 

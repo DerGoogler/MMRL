@@ -221,6 +221,14 @@ class UserPreferencesDataSource @Inject constructor(
         }
     }
 
+    suspend fun setUseShellToLoadWebUIAssets(value: Boolean) = withContext(Dispatchers.IO) {
+        userPreferences.updateData {
+            it.copy(
+                useShellToLoadWebUIAssets = value
+            )
+        }
+    }
+
     suspend fun setAllowedFsModules(value: List<String>) = withContext(Dispatchers.IO) {
         userPreferences.updateData {
             it.copy(

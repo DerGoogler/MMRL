@@ -1,0 +1,37 @@
+{
+  "version": 3,
+  "artifactType": {
+    "type": "APK",
+    "kind": "Directory"
+  },
+  "applicationId": "com.dergoogler.mmrl",
+  "variantName": "releaseCandidate",
+  "elements": [
+    {
+      "type": "SINGLE",
+      "filters": [],
+      "attributes": [],
+      "versionCode": 32918,
+      "versionName": "5.30.40-rc",
+      "outputFile": "MMRL-5.30.40-rc-32918-releaseCandidate.apk"
+    }
+  ],
+  "elementType": "File",
+  "baselineProfiles": [
+    {
+      "minApi": 28,
+      "maxApi": 30,
+      "baselineProfiles": [
+        "baselineProfiles/1/MMRL-5.30.40-rc-32918-releaseCandidate.dm"
+      ]
+    },
+    {
+      "minApi": 31,
+      "maxApi": 2147483647,
+      "baselineProfiles": [
+        "baselineProfiles/0/MMRL-5.30.40-rc-32918-releaseCandidate.dm"
+      ]
+    }
+  ],
+  "minSdkVersionForDexing": 26
+}

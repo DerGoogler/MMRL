@@ -352,4 +352,6 @@
     <string name="learn_more">Learn more</string>
     <string name="sponsors">Sponsors</string>
     <string name="all_the_sponsors_of_the_project_click_on_learn_more_to_get_included">All the sponsors of the project. Click on \"Learn more\" to get included.</string>
+    <string name="settings_use_shell_webui_assets">Use Shell to Load WebUI Assets</string>
+    <string name="settings_use_shell_webui_assets_desc">Enabling this feature allows the path handler to use the shell instead of reading asset bytes directly, eliminating the 2 GB file size limit. Note that the direct byte-reading method is faster.</string>
 </resources>

@@ -1,6 +1,9 @@
 package com.dergoogler.mmrl.ui.screens.settings.modules
 
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.dergoogler.mmrl.R
@@ -9,6 +12,7 @@ import com.dergoogler.mmrl.ui.component.APatchLabel
 import com.dergoogler.mmrl.ui.component.KernelSuLabel
 import com.dergoogler.mmrl.ui.component.ListHeader
 import com.dergoogler.mmrl.ui.component.ListSwitchItem
+import com.dergoogler.mmrl.ui.component.ScaffoldModifier
 import com.dergoogler.mmrl.ui.component.SettingsScaffold
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.viewmodel.SettingsViewModel
@@ -20,7 +24,8 @@ fun ModulesScreen(
     val userPreferences = LocalUserPreferences.current
 
     SettingsScaffold(
-        title = R.string.settings_modules
+        modifier = ScaffoldModifier(column = Modifier.verticalScroll(rememberScrollState())),
+        title = R.string.settings_modules,
     ) {
         ListHeader(
             title = stringResource(id = R.string.settings_modules_handlers)
@@ -44,6 +49,20 @@ fun ModulesScreen(
             checked = userPreferences.useShellForModuleAction,
             onChange = viewModel::setUseShellForModuleAction,
             labels = listOf { KernelSuLabel(); APatchLabel() }
+        )
+
+
+        ListHeader(
+            title = stringResource(id = R.string.view_module_features_webui)
+        )
+
+        ListSwitchItem(
+            enabled = viewModel.isProviderAlive,
+            icon = R.drawable.world_code,
+            title = stringResource(id = R.string.settings_use_shell_webui_assets),
+            desc = stringResource(id = R.string.settings_use_shell_webui_assets_desc),
+            checked = userPreferences.useShellToLoadWebUIAssets,
+            onChange = viewModel::setUseShellToLoadWebUIAssets,
         )
 
         ListHeader(

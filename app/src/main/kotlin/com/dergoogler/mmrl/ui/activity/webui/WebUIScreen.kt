@@ -94,9 +94,9 @@ fun WebUIScreen(
                 .addPathHandler(
                     "/",
                     SuFilePathHandler(
-                        context,
-                        webRoot,
-                        rootShell
+                        directory = webRoot,
+                        useShell = userPrefs.useShellToLoadWebUIAssets,
+                        shell = rootShell,
                     )
                 )
                 .addPathHandler(

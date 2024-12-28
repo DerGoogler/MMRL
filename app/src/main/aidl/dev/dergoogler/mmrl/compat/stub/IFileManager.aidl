@@ -6,6 +6,7 @@ interface IFileManager {
     boolean deleteOnExit(String path);
     void write(String path, String data);
     String read(String path);
+    byte[] readByte(String path);
     String readAsBase64(String path);
     List<String> list(String path);
     long stat(String path);

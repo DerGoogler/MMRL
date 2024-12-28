@@ -39,4 +39,5 @@ message UserPreferences {
   bool useWebUiDevUrl = 28;
   bool allowCancelInstall = 29;
   bool allowCancelAction = 30;
+  bool useShellToLoadWebUIAssets = 31;
 }

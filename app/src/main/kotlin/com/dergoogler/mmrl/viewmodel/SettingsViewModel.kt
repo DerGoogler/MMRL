@@ -190,6 +190,12 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
+    fun setUseShellToLoadWebUIAssets(value: Boolean) {
+        viewModelScope.launch {
+            userPreferencesRepository.setUseShellToLoadWebUIAssets(value)
+        }
+    }
+
     fun setAllowedFsModules(value: List<String>) {
         viewModelScope.launch {
             userPreferencesRepository.setAllowedFsModules(value)

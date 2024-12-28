@@ -7,6 +7,7 @@ import com.dergoogler.mmrl.datastore.UserPreferencesCompat
 import com.dergoogler.mmrl.datastore.developerMode
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.dergoogler.mmrl.compat.ext.isLocalWifiUrl
+import dev.dergoogler.mmrl.compat.stub.IFileManager
 import javax.inject.Inject
 
 
@@ -14,7 +15,6 @@ import javax.inject.Inject
 class WebUIViewModel @Inject constructor(
 ) : ViewModel() {
     val isProviderAlive get() = Compat.isAlive
-    private lateinit var pluginClass: Class<*>
 
     val versionName: String
         get() = Compat.get("") {

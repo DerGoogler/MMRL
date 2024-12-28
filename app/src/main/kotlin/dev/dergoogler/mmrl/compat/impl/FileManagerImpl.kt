@@ -15,6 +15,7 @@ import java.io.IOException
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.io.OutputStream
+import java.nio.file.Files
 
 internal class FileManagerImpl : IFileManager.Stub() {
     override fun deleteOnExit(path: String) = with(File(path)) {
@@ -53,6 +54,10 @@ internal class FileManagerImpl : IFileManager.Stub() {
             Timber.e("FileManagerImpl>read: $e")
             return null
         }
+    }
+
+    override fun readByte(path: String): ByteArray = with(File(path)) {
+        return Files.readAllBytes(toPath())
     }
 
     override fun readAsBase64(path: String): String? = with(File(path)) {
