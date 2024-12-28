@@ -13,7 +13,7 @@ internal class KsuNextModuleManagerImpl(
     shell, seLinuxContext
 ) {
     override fun getModuleCompatibility() = ModuleCompatibility(
-        hasMagicMount = true,
+        hasMagicMount = false,
         canRestoreModules = true
     )
 
