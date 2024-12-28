@@ -341,4 +341,6 @@
     <string name="action_screen_cancel_text">你是否要取消腳本執行程序？</string>
     <string name="install_screen_cancel_text">你是否要取消安裝程序？</string>
     <string name="home_storage_usage">儲存體用量</string>
+    <string name="menu_pin_action">釘選具有腳本的模組</string>
+    <string name="menu_pin_webui">釘選具有 WebUI 介面的模組</string>
 </resources>
