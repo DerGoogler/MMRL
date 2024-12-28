@@ -11,7 +11,7 @@ android {
         create("playstore") {
             initWith(buildTypes.getByName("release"))
         }
-        create("release-candidate") {
+        create("releaseCandidate") {
             initWith(buildTypes.getByName("release"))
         }
         create("beta") {

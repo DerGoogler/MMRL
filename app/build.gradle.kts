@@ -81,7 +81,7 @@ android {
             versionNameSuffix = "-playstore"
         }
 
-        create("release-candidate") {
+        create("releaseCandidate") {
             initWith(buildTypes.getByName("release"))
             versionNameSuffix = "-rc"
         }
