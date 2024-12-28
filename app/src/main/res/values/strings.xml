@@ -347,4 +347,7 @@
     <string name="install_screen_cancel_text">Are you sure that you wanna cancel the installation?</string>
     <string name="action_screen_cancel_title">Cancel action?</string>
     <string name="action_screen_cancel_text">Are you sure that you wanna cancel this action?</string>
+    <string name="settings_use_generic_action">Use Generic Action</string>
+    <string name="settings_use_generic_action_desc">Most root providers do not support an action CLI command. Instead, you can use a generic script</string>
+    <string name="learn_more">Learn more</string>
 </resources>

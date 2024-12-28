@@ -4,6 +4,7 @@ import androidx.annotation.DrawableRes
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -126,16 +127,27 @@ private fun BaseListContent(
     title: String,
     desc: String? = null,
     itemTextStyle: ListItemTextStyle = ListItemDefaults.itemStyle(),
+    learnMore: (() -> Unit)? = null,
     labels: List<@Composable RowScope.() -> Unit>? = null,
 ) = BaseListContent(
     modifier = modifier,
     title = title,
-    desc = desc.thenComposeInvoke<String, ColumnScope> {
+    desc = desc.thenComposeInvoke<String, ColumnScope> { s ->
         Text(
-            text = it,
+            text = s,
             style = itemTextStyle.descTextStyle,
             color = itemTextStyle.descTextColor
         )
+        learnMore.nullable {
+            Text(
+                modifier = Modifier.clickable(
+                    onClick = it
+                ),
+                text = stringResource(R.string.learn_more),
+                style = itemTextStyle.descTextStyle,
+                color = MaterialTheme.colorScheme.primary
+            )
+        }
     },
     itemTextStyle = itemTextStyle,
     labels = labels
@@ -150,6 +162,7 @@ fun ListItem(
     itemTextStyle: ListItemTextStyle = ListItemDefaults.itemStyle(),
     @DrawableRes icon: Int? = null,
     enabled: Boolean = true,
+    learnMore: (() -> Unit)? = null,
     labels: List<@Composable RowScope.() -> Unit>? = null,
 ) {
     val layoutDirection = LocalLayoutDirection.current
@@ -176,7 +189,11 @@ fun ListItem(
         }
 
         BaseListContent(
-            title = title, desc = desc, itemTextStyle = itemTextStyle, labels = labels
+            title = title,
+            desc = desc,
+            itemTextStyle = itemTextStyle,
+            labels = labels,
+            learnMore = learnMore
         )
     }
 }
@@ -194,6 +211,7 @@ fun ListButtonItem(
     @DrawableRes icon: Int? = null,
     iconToRight: Boolean = false,
     enabled: Boolean = true,
+    learnMore: (() -> Unit)? = null,
     labels: List<@Composable RowScope.() -> Unit>? = null,
 ) {
     val layoutDirection = LocalLayoutDirection.current
@@ -237,7 +255,8 @@ fun ListButtonItem(
             title = title,
             desc = desc,
             itemTextStyle = itemTextStyle,
-            labels = labels
+            labels = labels,
+            learnMore = learnMore
         )
 
         if (iconToRight) {
@@ -348,6 +367,7 @@ fun ListCollapseItem(
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     iconToRight: Boolean = false,
     enabled: Boolean = true,
+    learnMore: (() -> Unit)? = null,
     labels: List<@Composable RowScope.() -> Unit>? = null,
     isInitiallyExpanded: Boolean = false,
     content: @Composable () -> Unit,
@@ -410,7 +430,8 @@ fun ListCollapseItem(
                 title = title,
                 desc = desc,
                 itemTextStyle = itemTextStyle,
-                labels = labels
+                labels = labels,
+                learnMore = learnMore
             )
 
             if (iconToRight) {
@@ -446,6 +467,7 @@ fun ListSwitchItem(
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     @DrawableRes icon: Int? = null,
     enabled: Boolean = true,
+    learnMore: (() -> Unit)? = null,
     labels: List<@Composable RowScope.() -> Unit>? = null,
 ) {
     val layoutDirection = LocalLayoutDirection.current
@@ -486,6 +508,7 @@ fun ListSwitchItem(
             title = title,
             desc = desc,
             itemTextStyle = itemTextStyle,
+            learnMore = learnMore,
             labels = labels
         )
 
@@ -509,6 +532,7 @@ fun ListEditTextItem(
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     @DrawableRes icon: Int? = null,
     enabled: Boolean = true,
+    learnMore: (() -> Unit)? = null,
     onValid: ((String) -> Boolean)? = null,
     supportingText: @Composable ((Boolean) -> Unit)? = null,
     labels: List<@Composable RowScope.() -> Unit>? = null,
@@ -531,7 +555,10 @@ fun ListEditTextItem(
         onClick = { open = true },
         contentPaddingValues = contentPaddingValues,
         interactionSource = interactionSource,
-        enabled = enabled, itemTextStyle = itemTextStyle, labels = labels
+        learnMore = learnMore,
+        enabled = enabled,
+        itemTextStyle = itemTextStyle,
+        labels = labels
     )
 }
 
@@ -622,6 +649,7 @@ fun <T> ListRadioCheckItem(
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     @DrawableRes icon: Int? = null,
     enabled: Boolean = true,
+    learnMore: (() -> Unit)? = null,
     labels: List<@Composable RowScope.() -> Unit>? = null,
 ) {
     var open by remember { mutableStateOf(false) }
@@ -643,7 +671,10 @@ fun <T> ListRadioCheckItem(
         onClick = { open = true },
         contentPaddingValues = contentPaddingValues,
         interactionSource = interactionSource,
-        enabled = enabled, itemTextStyle = itemTextStyle, labels = labels
+        learnMore = learnMore,
+        enabled = enabled,
+        itemTextStyle = itemTextStyle,
+        labels = labels
     )
 }
 

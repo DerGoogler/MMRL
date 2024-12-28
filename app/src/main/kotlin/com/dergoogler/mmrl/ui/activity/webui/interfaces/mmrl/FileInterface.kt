@@ -5,7 +5,7 @@ import android.webkit.JavascriptInterface
 import com.dergoogler.mmrl.Compat
 
 class FileInterface(
-    val context: Context
+    val context: Context,
 ) {
     private val file = Compat.fileManager
 
@@ -33,7 +33,22 @@ class FileInterface(
     }
 
     @JavascriptInterface
-    fun stat(path: String): Long = with(file) {
+    fun size(path: String): Long = this.size(path, false)
+
+    @JavascriptInterface
+    fun size(path: String, recursive: Boolean): Long = with(file) {
+        if (recursive) return sizeRecursive(path)
+
+        return size(path)
+    }
+
+    @JavascriptInterface
+    fun stat(path: String): Long = this.stat(path, false)
+
+    @JavascriptInterface
+    fun stat(path: String, total: Boolean): Long = with(file) {
+        if (total) return totalStat(path)
+
         return stat(path)
     }
 

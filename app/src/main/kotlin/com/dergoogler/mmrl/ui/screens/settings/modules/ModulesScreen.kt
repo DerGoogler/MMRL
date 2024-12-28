@@ -39,8 +39,8 @@ fun ModulesScreen(
         ListSwitchItem(
             enabled = viewModel.isProviderAlive && viewModel.platform.isNotMagisk,
             icon = R.drawable.device_mobile_code,
-            title = stringResource(id = R.string.settings_shell_module_action),
-            desc = stringResource(id = R.string.settings_shell_module_action_desc),
+            title = stringResource(id = R.string.settings_use_generic_action),
+            desc = stringResource(id = R.string.settings_use_generic_action_desc),
             checked = userPreferences.useShellForModuleAction,
             onChange = viewModel::setUseShellForModuleAction,
             labels = listOf { KernelSuLabel(); APatchLabel() }

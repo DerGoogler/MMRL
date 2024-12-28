@@ -10,6 +10,7 @@ interface IFileManager {
     List<String> list(String path);
     long stat(String path);
     long size(String path);
+    long sizeRecursive(String path);
     long totalStat(String path);
     boolean delete(String path);
     boolean exists(String path);

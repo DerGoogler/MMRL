@@ -16,7 +16,6 @@ import java.io.InputStream
 import java.io.InputStreamReader
 import java.io.OutputStream
 
-
 internal class FileManagerImpl : IFileManager.Stub() {
     override fun deleteOnExit(path: String) = with(File(path)) {
         when {
@@ -101,6 +100,18 @@ internal class FileManagerImpl : IFileManager.Stub() {
 
     override fun size(path: String): Long = with(File(path)) {
         return this.length();
+    }
+
+    override fun sizeRecursive(path: String): Long {
+        val items = list(path) ?: return 0
+        return items.sumOf { item ->
+            val fullPath = "$path/$item"
+            if (isDirectory(fullPath)) {
+                sizeRecursive(fullPath)
+            } else {
+                size(fullPath)
+            }
+        }
     }
 
     override fun stat(path: String): Long = with(File(path)) {

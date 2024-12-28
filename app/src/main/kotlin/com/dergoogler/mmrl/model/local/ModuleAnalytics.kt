@@ -14,7 +14,7 @@ data class ModuleAnalytics(
     val totalDisabled = getTotalByState(State.DISABLE)
     val totalUpdated = getTotalByState(State.UPDATE)
 
-    val totalModulesUsageBytes = getFolderSize("/data/adb/modules")
+    val totalModulesUsageBytes = fileManager.sizeRecursive("/data/adb/modules")
     val totalDeviceStorageBytes: Long
         get() = with(fileManager) {
             val paths = listOf(
@@ -28,19 +28,6 @@ data class ModuleAnalytics(
 
             return paths.sumOf { totalStat(it) }
         }
-
-
-    private fun getFolderSize(path: String): Long = with(fileManager) {
-        val items = list(path) ?: return 0
-        return items.sumOf { item ->
-            val fullPath = "$path/$item"
-            if (isDirectory(fullPath)) {
-                getFolderSize(fullPath)
-            } else {
-                size(fullPath)
-            }
-        }
-    }
 
     val totalStorageUsage = (totalModulesUsageBytes.toFloat() / totalDeviceStorageBytes.toFloat()) * 1000
 }
