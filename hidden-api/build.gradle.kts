@@ -6,10 +6,18 @@ android {
     namespace = "com.dergoogler.mmrl.hidden_api"
 }
 
-
 android {
     buildTypes {
         create("playstore") {
+            initWith(buildTypes.getByName("release"))
+        }
+        create("release-candidate") {
+            initWith(buildTypes.getByName("release"))
+        }
+        create("beta") {
+            initWith(buildTypes.getByName("release"))
+        }
+        create("alpha") {
             initWith(buildTypes.getByName("release"))
         }
     }
