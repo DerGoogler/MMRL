@@ -18,6 +18,7 @@ object Const {
     const val GITHUB_URL = "https://github.com/DerGoogler/MMRL"
     const val GITHUB_ISSUES_URL = "https://github.com/DerGoogler/MMRL"
     const val TELEGRAM_URL = "https://t.me/GooglersRepo"
+    const val SPONSORS_URL = "https://github.com/sponsors/DerGoogler"
     const val DEMO_REPO_URL = "https://gr.dergoogler.com/gmr/"
     const val SPDX_URL = "https://spdx.org/licenses/%s.json"
 

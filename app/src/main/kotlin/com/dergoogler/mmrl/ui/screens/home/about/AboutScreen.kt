@@ -21,6 +21,11 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -32,11 +37,21 @@ import androidx.navigation.NavController
 import com.dergoogler.mmrl.BuildConfig
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.app.Const
+import com.dergoogler.mmrl.model.online.Sponsor
+import com.dergoogler.mmrl.network.runRequest
+import com.dergoogler.mmrl.stub.IRepoManager
+import com.dergoogler.mmrl.ui.component.CardDefaults
+import com.dergoogler.mmrl.ui.component.ListButtonItem
+import com.dergoogler.mmrl.ui.component.ListCollapseItem
 import com.dergoogler.mmrl.ui.component.Logo
 import com.dergoogler.mmrl.ui.component.MarkdownText
 import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
 import com.dergoogler.mmrl.ui.component.OutlinedCard
 import com.dergoogler.mmrl.ui.providable.LocalNavController
+import dev.dergoogler.mmrl.compat.ext.nullable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 @Composable
 fun AboutScreen() {
@@ -45,6 +60,19 @@ fun AboutScreen() {
 
     val navController = LocalNavController.current
 
+    var sponsors by remember { mutableStateOf<List<Sponsor>?>(null) }
+
+    LaunchedEffect(Unit) {
+        runRequest {
+            withContext(Dispatchers.IO) {
+                return@withContext IRepoManager.gmr.sponsors.execute()
+            }
+        }.onSuccess { list ->
+            sponsors = list
+        }.onFailure {
+            Timber.e(it, "unable to get sponsors")
+        }
+    }
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -162,6 +190,30 @@ fun AboutScreen() {
                         }
                     }
                 )
+            }
+
+            sponsors.nullable { sponsors ->
+                OutlinedCard(
+                    modifier = CardDefaults.outlinedCardModifier.copy(column = Modifier)
+                ) {
+                    ListCollapseItem(
+                        title = "Sponsors",
+                        desc = "All the sponsors of the project. Click on \"Learn more\" to get included.",
+                        learnMore = {
+                            browser.openUri(Const.SPONSORS_URL)
+                        },
+                        iconToRight = true
+                    ) {
+                        sponsors.forEach {
+                            ListButtonItem(
+                                title = it.login,
+                                onClick = {
+                                    browser.openUri(it.url)
+                                }
+                            )
+                        }
+                    }
+                }
             }
         }
     }
