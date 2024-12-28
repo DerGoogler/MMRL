@@ -35,11 +35,17 @@ class ActionViewModel @Inject constructor(
     }
 
     suspend fun runAction(modId: String) {
-        val module = initModule(modId)
+        val module = localModule(modId)
         val userPreferences = userPreferencesRepository.data.first()
 
         viewModelScope.launch {
             event = Event.LOADING
+
+            if (!Compat.init(userPreferences.workingMode)) {
+                event = Event.FAILED
+                log("! Service is not available.")
+                return@launch
+            }
 
             if (module == null) {
                 event = Event.FAILED
@@ -56,12 +62,6 @@ class ActionViewModel @Inject constructor(
             if (module.state == State.DISABLE || module.state == State.REMOVE) {
                 event = Event.FAILED
                 log("! Module is disabled or removed. Unable to execute action.")
-                return@launch
-            }
-
-            if (!Compat.init(userPreferences.workingMode)) {
-                event = Event.FAILED
-                log("! Service is not available.")
                 return@launch
             }
 
