@@ -323,4 +323,5 @@
     <string name="menu_pin_webui">Pin WebUI</string>
     <string name="working_mode_apatch_desc">Menambal kernel dan sistem Android. Solusi root berbasis kernel baru dengan dukungan untuk modul yang mirip dengan Magisk dan injeksi fungsi kernel (memerlukan inline-hook dan syscall-table-hook). Berasal dan dimodifikasi dari KernelSU.</string>
     <string name="action_screen_cancel_title">Batalkan action?</string>
+    <string name="home_root_provider_version_name">Nama Versi Penyedia Root</string>
 </resources>
