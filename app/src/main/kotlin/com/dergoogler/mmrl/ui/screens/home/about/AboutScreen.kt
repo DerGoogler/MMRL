@@ -94,9 +94,9 @@ fun AboutScreen() {
                 .padding(innerPadding)
                 .fillMaxWidth()
                 .verticalScroll(rememberScrollState())
-                .padding(all = 20.dp),
+                .padding(all = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(20.dp)
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Logo(
                 icon = R.drawable.launcher_outline,

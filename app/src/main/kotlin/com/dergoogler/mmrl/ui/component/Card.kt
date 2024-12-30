@@ -52,7 +52,6 @@ fun Card(
 
     Surface(
         modifier = modifier.surface
-            .fillMaxWidth()
             .alpha(alpha = if (enabled) 1f else 0.5f),
         shape = style.shape,
         color = style.containerColor,
@@ -60,13 +59,11 @@ fun Card(
         tonalElevation = style.tonalElevation,
     ) {
         Box(
-            modifier = boxModifier
-                .fillMaxWidth(),
+            modifier = boxModifier,
             contentAlignment = style.boxContentAlignment
         ) {
             Column(
                 modifier = modifier.column
-                    .fillMaxWidth()
             ) {
                 relative()
             }
@@ -190,9 +187,13 @@ class CardModifier internal constructor(
 object CardDefaults {
     val cardModifier: CardModifier
         @Composable get() = CardModifier(
-            surface = Modifier,
-            box = Modifier,
-            column = Modifier.padding(16.dp)
+            surface = Modifier
+                .fillMaxWidth(),
+            box = Modifier
+                .fillMaxWidth(),
+            column = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
         )
 
     val cardStyle: CardStyle

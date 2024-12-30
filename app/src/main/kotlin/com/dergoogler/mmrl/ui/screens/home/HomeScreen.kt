@@ -8,12 +8,12 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -101,9 +101,6 @@ fun HomeScreen(
         }
     )
 
-    val compressedCardModifier = CardDefaults.cardModifier
-        .copy(column = Modifier.padding(vertical = 16.dp))
-
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection), topBar = {
             TopBar(
@@ -121,8 +118,15 @@ fun HomeScreen(
                 .padding(innerPadding)
                 .fillMaxWidth()
                 .verticalScroll(rememberScrollState())
-                .padding(16.dp)
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+            val compressedCardModifier = CardDefaults.cardModifier
+                .copy(column = Modifier.padding(vertical = 16.dp))
+            val compressedCardModifierRow = compressedCardModifier.copy(
+                surface = Modifier.weight(1f),
+                column = Modifier.padding(vertical = 16.dp)
+            )
 
             when {
                 userPreferences.workingMode.isRoot -> RootItem(
@@ -142,8 +146,6 @@ fun HomeScreen(
                     }
                 )
             }
-
-            Spacer(Modifier.height(16.dp))
 
             if (userPreferences.checkAppUpdates) {
                 var changelog by remember { mutableStateOf<List<Changelog>?>(null) }
@@ -243,8 +245,6 @@ fun HomeScreen(
                 )
             }
 
-            Spacer(Modifier.height(16.dp))
-
             viewModel.isProviderAlive.takeTrue {
                 userPreferences.developerMode.takeTrue {
                     Card(
@@ -262,33 +262,38 @@ fun HomeScreen(
                             desc = viewModel.seLinuxContext
                         )
                     }
-
-                    Spacer(Modifier.height(16.dp))
                 }
 
                 viewModel.analytics.nullable {
+
+
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(16.dp)
+                    ) {
+                        Card(
+                            modifier = compressedCardModifierRow
+                        ) {
+                            ListItem(
+                                contentPaddingValues = listItemContentPaddingValues,
+                                desc = stringResource(R.string.home_installed_modules),
+                                title = it.totalModules.toString()
+                            )
+                        }
+
+                        Card(
+                            modifier = compressedCardModifierRow
+                        ) {
+                            ListItem(
+                                contentPaddingValues = listItemContentPaddingValues,
+                                desc = stringResource(R.string.home_updated_modules),
+                                title = it.totalUpdated.toString()
+                            )
+                        }
+                    }
+
                     Card(
                         modifier = compressedCardModifier
                     ) {
-
-                        ListItem(
-                            contentPaddingValues = listItemContentPaddingValues,
-                            title = stringResource(R.string.home_installed_modules),
-                            desc = it.totalModules.toString()
-                        )
-
-                        ListItem(
-                            contentPaddingValues = listItemContentPaddingValues,
-                            title = stringResource(R.string.home_enabled_modules),
-                            desc = it.totalEnabled.toString()
-                        )
-
-                        ListItem(
-                            contentPaddingValues = listItemContentPaddingValues,
-                            title = stringResource(R.string.home_disabled_modules),
-                            desc = it.totalDisabled.toString()
-                        )
-
                         ListProgressBarItem(
                             contentPaddingValues = listItemContentPaddingValues,
                             progressBarModifier = Modifier
@@ -298,15 +303,32 @@ fun HomeScreen(
                             title = stringResource(id = R.string.home_storage_usage),
                             progress = it.totalStorageUsage,
                         )
-
-                        ListItem(
-                            contentPaddingValues = listItemContentPaddingValues,
-                            title = stringResource(R.string.home_updated_modules),
-                            desc = it.totalUpdated.toString()
-                        )
                     }
 
-                    Spacer(Modifier.height(16.dp))
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(16.dp)
+                    ) {
+                        Card(
+                            modifier = compressedCardModifierRow
+                        ) {
+                            ListItem(
+                                contentPaddingValues = listItemContentPaddingValues,
+                                desc = stringResource(R.string.home_enabled_modules),
+                                title = it.totalEnabled.toString()
+                            )
+
+                        }
+
+                        Card(
+                            modifier = compressedCardModifierRow
+                        ) {
+                            ListItem(
+                                contentPaddingValues = listItemContentPaddingValues,
+                                desc = stringResource(R.string.home_disabled_modules),
+                                title = it.totalDisabled.toString()
+                            )
+                        }
+                    }
                 }
             }
 
