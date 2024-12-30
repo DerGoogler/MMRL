@@ -37,6 +37,7 @@ import dev.dergoogler.mmrl.compat.ext.toFormattedDateSafely
 @Composable
 fun VersionSelectBottomSheet(
     onClose: () -> Unit,
+    isBlacklisted: Boolean,
     versions: List<Pair<Repo, VersionItem>>,
     localVersionCode: Int,
     isProviderAlive: Boolean,
@@ -52,6 +53,7 @@ fun VersionSelectBottomSheet(
             key = { it.first.url + it.second.versionCode }
         ) { (repo, item) ->
             VersionItem(
+                isBlacklisted = isBlacklisted,
                 item = item,
                 repo = repo,
                 localVersionCode = localVersionCode,
@@ -82,9 +84,11 @@ private fun VersionItem(
     localVersionCode: Int,
     isProviderAlive: Boolean,
     onDownload: (Boolean) -> Unit,
+    isBlacklisted: Boolean,
 ) {
     var open by remember { mutableStateOf(false) }
     if (open) VersionItemBottomSheet(
+        isBlacklisted = isBlacklisted,
         isUpdate = false,
         item = item,
         isProviderAlive = isProviderAlive,

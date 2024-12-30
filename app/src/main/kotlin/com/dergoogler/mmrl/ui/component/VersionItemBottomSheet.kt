@@ -56,7 +56,8 @@ fun VersionItemBottomSheet(
     item: VersionItem,
     isProviderAlive: Boolean,
     onDownload: (Boolean) -> Unit,
-    onClose: () -> Unit
+    onClose: () -> Unit,
+    isBlacklisted: Boolean
 ) {
     val hasChangelog by remember {
         derivedStateOf { item.changelog.isNotBlank() }
@@ -84,7 +85,7 @@ fun VersionItemBottomSheet(
             hasChangelog -> {
                 ButtonRow(
                     isUpdate = isUpdate,
-                    enableInstall = isProviderAlive,
+                    enableInstall = isProviderAlive && !isBlacklisted,
                     state = state,
                     onDownload = onDownload,
                     onClose = onClose
@@ -95,7 +96,7 @@ fun VersionItemBottomSheet(
             else -> {
                 ButtonColumn(
                     isUpdate = isUpdate,
-                    enableInstall = isProviderAlive,
+                    enableInstall = isProviderAlive && !isBlacklisted,
                     state = state,
                     downloader = onDownload,
                     onClose = onClose
@@ -111,7 +112,7 @@ private fun ColumnScope.ButtonRow(
     enableInstall: Boolean,
     state: SheetState,
     onDownload: (Boolean) -> Unit,
-    onClose: () -> Unit
+    onClose: () -> Unit,
 ) = Row(
     modifier = Modifier
         .padding(horizontal = 18.dp)

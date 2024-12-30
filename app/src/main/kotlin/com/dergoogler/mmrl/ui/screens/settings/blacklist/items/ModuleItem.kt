@@ -45,7 +45,7 @@ fun ModuleItem(
 
 
 @Composable
-private fun BlacklistBottomSheet(
+fun BlacklistBottomSheet(
     module: Blacklist, onClose: () -> Unit,
 ) = BottomSheet(onDismissRequest = onClose) {
 //    val context = LocalContext.current

@@ -2,6 +2,7 @@ package com.dergoogler.mmrl.database.entity.online
 
 import androidx.room.Embedded
 import androidx.room.Entity
+import com.dergoogler.mmrl.model.online.Blacklist
 import com.dergoogler.mmrl.model.online.OnlineModule
 
 @Entity(tableName = "onlineModules", primaryKeys = ["id", "repoUrl"])
@@ -38,10 +39,12 @@ data class OnlineModuleEntity(
     @Embedded val note: ModuleNoteEntity? = null,
     @Embedded val features: ModuleFeaturesEntity? = null,
     @Embedded val track: TrackJsonEntity,
+    @Embedded val blacklist: BlacklistEntity?
 ) {
     constructor(
         original: OnlineModule,
         repoUrl: String,
+        blacklist: Blacklist
     ) : this(
         id = original.id,
         repoUrl = repoUrl,
@@ -72,6 +75,7 @@ data class OnlineModuleEntity(
         require = original.require,
         devices = original.devices,
         arch = original.arch,
+        blacklist = BlacklistEntity(blacklist)
     )
 
     fun toModule() = OnlineModule(
@@ -104,5 +108,6 @@ data class OnlineModuleEntity(
         require = require,
         devices = devices,
         arch = arch,
+        blacklist = blacklist?.toBlacklist()
     )
 }

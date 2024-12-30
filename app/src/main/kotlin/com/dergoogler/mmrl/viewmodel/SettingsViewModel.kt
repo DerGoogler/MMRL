@@ -5,12 +5,16 @@ import androidx.lifecycle.viewModelScope
 import com.dergoogler.mmrl.Compat
 import com.dergoogler.mmrl.datastore.DarkMode
 import com.dergoogler.mmrl.datastore.WorkingMode
+import com.dergoogler.mmrl.model.online.Blacklist
 import com.dergoogler.mmrl.repository.LocalRepository
 import com.dergoogler.mmrl.repository.ModulesRepository
 import com.dergoogler.mmrl.repository.UserPreferencesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.dergoogler.mmrl.compat.viewmodel.MMRLViewModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import java.io.File
 import javax.inject.Inject
@@ -33,6 +37,11 @@ class SettingsViewModel @Inject constructor(
     init {
         Timber.d("SettingsViewModel init")
     }
+
+    val allBlacklistEntriesAsFlow
+        get(): List<Blacklist> = runBlocking {
+            return@runBlocking localRepository.getAllBlacklistEntriesAsFlow().first()
+        }
 
     fun setWorkingMode(value: WorkingMode) {
         viewModelScope.launch {
@@ -193,6 +202,12 @@ class SettingsViewModel @Inject constructor(
     fun setUseShellToLoadWebUIAssets(value: Boolean) {
         viewModelScope.launch {
             userPreferencesRepository.setUseShellToLoadWebUIAssets(value)
+        }
+    }
+
+    fun setBlacklistAlerts(value: Boolean) {
+        viewModelScope.launch {
+            userPreferencesRepository.setBlacklistAlerts(value)
         }
     }
 

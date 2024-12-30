@@ -34,5 +34,5 @@ fun LocalModule.Companion.example() =
         state = State.ENABLE,
         features = LocalModuleFeatures.EMPTY,
         size = 0,
-        lastUpdated = 0L
+        lastUpdated = 0L,
     )

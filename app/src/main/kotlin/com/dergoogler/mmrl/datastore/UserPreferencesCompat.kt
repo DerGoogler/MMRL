@@ -41,6 +41,7 @@ data class UserPreferencesCompat(
     val allowCancelInstall: Boolean,
     val allowCancelAction: Boolean,
     val useShellToLoadWebUIAssets: Boolean,
+    val blacklistAlerts: Boolean,
     val allowedFsModules: List<String>,
     val allowedKsuModules: List<String>,
     val repositoryMenu: RepositoryMenuCompat,
@@ -75,6 +76,7 @@ data class UserPreferencesCompat(
         allowCancelInstall = original.allowCancelInstall,
         allowCancelAction = original.allowCancelAction,
         useShellToLoadWebUIAssets = original.useShellToLoadWebUIAssets,
+        blacklistAlerts = original.blacklistAlerts,
         allowedFsModules = original.allowedFsModules.split(","),
         allowedKsuModules = original.allowedKsuModules.split(","),
         repositoryMenu = when {
@@ -117,6 +119,7 @@ data class UserPreferencesCompat(
             .setUseShellForModuleStateChange(useShellForModuleStateChange)
             .setUseShellForModuleAction(useShellForModuleAction)
             .setWebuiAllowRestrictedPaths(webuiAllowRestrictedPaths)
+            .setBlacklistAlerts(blacklistAlerts)
             .setClearInstallTerminal(clearInstallTerminal)
             .setAllowCancelInstall(allowCancelInstall)
             .setAllowCancelAction(allowCancelAction)
@@ -156,6 +159,7 @@ data class UserPreferencesCompat(
             useShellForModuleStateChange = true,
             useShellForModuleAction = true,
             webuiAllowRestrictedPaths = false,
+            blacklistAlerts = true,
             allowedFsModules = emptyList(),
             allowedKsuModules = emptyList(),
             repositoryMenu = RepositoryMenuCompat.default(),

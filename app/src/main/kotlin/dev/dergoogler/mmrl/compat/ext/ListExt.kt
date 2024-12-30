@@ -26,4 +26,3 @@ fun <T> List<T>?.isNotNullOrEmpty(): Boolean {
 
     return !this.isNullOrEmpty()
 }
-

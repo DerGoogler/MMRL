@@ -75,9 +75,11 @@ import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.model.local.BulkModule
 import com.dergoogler.mmrl.model.local.State
 import com.dergoogler.mmrl.model.online.VersionItem
+import com.dergoogler.mmrl.model.online.hasBlacklist
 import com.dergoogler.mmrl.model.online.hasCategories
 import com.dergoogler.mmrl.model.online.hasScreenshots
 import com.dergoogler.mmrl.model.online.hasValidMessage
+import com.dergoogler.mmrl.model.online.isBlacklisted
 import com.dergoogler.mmrl.ui.component.APatchLabel
 import com.dergoogler.mmrl.ui.component.Alert
 import com.dergoogler.mmrl.ui.component.AntiFeaturesItem
@@ -100,6 +102,7 @@ import com.dergoogler.mmrl.ui.screens.repository.view.items.LicenseItem
 import com.dergoogler.mmrl.ui.screens.repository.view.items.ModuleCover
 import com.dergoogler.mmrl.ui.screens.repository.view.items.VersionsItem
 import com.dergoogler.mmrl.ui.screens.repository.view.items.ViewTrackBottomSheet
+import com.dergoogler.mmrl.ui.screens.settings.blacklist.items.BlacklistBottomSheet
 import com.dergoogler.mmrl.ui.utils.navigateSingleTopTo
 import com.dergoogler.mmrl.ui.utils.none
 import com.dergoogler.mmrl.viewmodel.BulkInstallViewModel
@@ -235,7 +238,8 @@ fun NewViewScreen(
         localVersionCode = viewModel.localVersionCode,
         isProviderAlive = viewModel.isProviderAlive,
         getProgress = { viewModel.getProgress(it) },
-        onDownload = download
+        onDownload = download,
+        isBlacklisted = module.isBlacklisted
     )
 
     var viewTrackBottomSheet by remember { mutableStateOf(false) }
@@ -532,7 +536,7 @@ fun NewViewScreen(
                 }
 
                 Button(
-                    enabled = viewModel.isProviderAlive && lastVersionItem != null,
+                    enabled = viewModel.isProviderAlive && lastVersionItem != null && !module.isBlacklisted,
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(1f),
@@ -564,6 +568,32 @@ fun NewViewScreen(
                 HorizontalDivider(
                     modifier = Modifier.padding(vertical = 16.dp),
                     thickness = 0.9.dp
+                )
+            }
+
+            module.hasBlacklist {
+                var open by remember { mutableStateOf(false) }
+                if (open) {
+                    BlacklistBottomSheet(
+                        module = it,
+                        onClose = { open = false })
+                }
+
+                Alert(
+                    icon = R.drawable.alert_circle_filled,
+                    title = stringResource(R.string.blacklisted),
+                    backgroundColor = MaterialTheme.colorScheme.errorContainer,
+                    textColor = MaterialTheme.colorScheme.onErrorContainer,
+                    clickTagColor = MaterialTheme.colorScheme.error,
+                    message = stringResource(R.string.blacklisted_desc),
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                    onDescTagClick = { tag ->
+                        when (tag) {
+                            "more" -> {
+                                open = true
+                            }
+                        }
+                    }
                 )
             }
 

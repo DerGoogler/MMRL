@@ -3,6 +3,7 @@ package com.dergoogler.mmrl.repository
 import com.dergoogler.mmrl.Compat
 import com.dergoogler.mmrl.database.entity.Repo
 import com.dergoogler.mmrl.network.runRequest
+import com.dergoogler.mmrl.stub.IMMRLApiManager
 import com.dergoogler.mmrl.stub.IRepoManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -47,6 +48,19 @@ class ModulesRepository @Inject constructor(
             )
         }.onFailure {
             Timber.e(it, "getRepo: ${repo.url}")
+        }
+    }
+
+    suspend fun getBlacklist() = withContext(Dispatchers.IO) {
+        runRequest {
+            val api = IMMRLApiManager.build()
+            return@runRequest api.blacklist.execute()
+        }.onSuccess { blacklist ->
+            blacklist.map {
+                localRepository.insertBlacklist(it)
+            }
+        }.onFailure {
+            Timber.e(it, "getBlacklist: Failed to get blacklist")
         }
     }
 }

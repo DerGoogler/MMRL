@@ -33,6 +33,13 @@ fun SecurityScreen(
         )
 
         ListSwitchItem(
+            title = stringResource(id = R.string.settings_blacklist_alerts),
+            desc = stringResource(id = R.string.settings_blacklist_alerts_desc),
+            checked = userPreferences.blacklistAlerts,
+            onChange = viewModel::setBlacklistAlerts
+        )
+
+        ListSwitchItem(
             title = stringResource(id = R.string.settings_hide_fingerprint),
             desc = stringResource(id = R.string.settings_hide_fingerprint_desc),
             checked = userPreferences.hideFingerprintInHome,

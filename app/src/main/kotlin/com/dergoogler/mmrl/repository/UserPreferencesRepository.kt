@@ -88,6 +88,9 @@ class UserPreferencesRepository @Inject constructor(
     suspend fun setUseShellToLoadWebUIAssets(value: Boolean) =
         userPreferencesDataSource.setUseShellToLoadWebUIAssets(value)
 
+    suspend fun setBlacklistAlerts(value: Boolean) =
+        userPreferencesDataSource.setBlacklistAlerts(value)
+
     suspend fun setAllowedFsModules(value: List<String>) =
         userPreferencesDataSource.setAllowedFsModules(value)
 

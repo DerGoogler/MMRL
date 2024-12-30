@@ -229,6 +229,14 @@ class UserPreferencesDataSource @Inject constructor(
         }
     }
 
+    suspend fun setBlacklistAlerts(value: Boolean) = withContext(Dispatchers.IO) {
+        userPreferences.updateData {
+            it.copy(
+                blacklistAlerts = value
+            )
+        }
+    }
+
     suspend fun setAllowedFsModules(value: List<String>) = withContext(Dispatchers.IO) {
         userPreferences.updateData {
             it.copy(

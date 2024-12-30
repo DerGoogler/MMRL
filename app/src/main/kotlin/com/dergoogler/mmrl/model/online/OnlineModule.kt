@@ -41,6 +41,7 @@ data class OnlineModule(
     val root: ModuleRoot? = null,
     val note: ModuleNote? = null,
     val features: ModuleFeatures? = null,
+    @Transient val blacklist: Blacklist? = null,
 ) {
     val versionDisplay get() = Utils.getVersionDisplay(version, versionCode)
     val hasLicense
@@ -143,3 +144,11 @@ inline fun <R> OnlineModule.hasScreenshots(block: (List<String>) -> R): R? {
 inline fun <R> OnlineModule.hasCategories(block: (List<String>) -> R): R? {
     return if (!categories.isNullOrEmpty()) block(categories) else null
 }
+
+@Composable
+inline fun <R> OnlineModule.hasBlacklist(block: (Blacklist) -> R): R? =
+    Blacklist.hasBlacklist(blacklist, block)
+
+val OnlineModule.isBlacklisted: Boolean
+    @Composable get() = Blacklist.isBlacklisted(blacklist)
+

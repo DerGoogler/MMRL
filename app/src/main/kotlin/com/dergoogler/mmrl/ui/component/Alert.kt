@@ -17,6 +17,7 @@ fun Alert(
     textColor: Color = MaterialTheme.colorScheme.onSecondaryContainer,
     title: String?,
     message: String,
+    clickTagColor: Color = MaterialTheme.colorScheme.surfaceTint,
     @DrawableRes icon: Int? = null,
     onDescTagClick: (String) -> Unit = {},
 ) = Card(
@@ -44,6 +45,7 @@ fun Alert(
     MarkdownText(
         text = message,
         style = MaterialTheme.typography.bodyMedium.copy(color = textColor),
+        clickTagColor = clickTagColor,
         onTagClick = onDescTagClick
     )
 }

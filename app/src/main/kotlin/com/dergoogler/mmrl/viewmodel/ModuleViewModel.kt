@@ -1,5 +1,6 @@
 package com.dergoogler.mmrl.viewmodel
 
+import android.app.Application
 import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
@@ -29,19 +30,27 @@ import com.dergoogler.mmrl.ui.navigation.graphs.RepositoryScreen
 import com.dergoogler.mmrl.utils.Utils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.dergoogler.mmrl.compat.stub.IModuleOpsCallback
+import dev.dergoogler.mmrl.compat.viewmodel.MMRLViewModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
 class ModuleViewModel @Inject constructor(
-    private val localRepository: LocalRepository,
-    private val modulesRepository: ModulesRepository,
-    private val userPreferencesRepository: UserPreferencesRepository,
+    localRepository: LocalRepository,
+    modulesRepository: ModulesRepository,
+    userPreferencesRepository: UserPreferencesRepository,
+    application: Application,
     savedStateHandle: SavedStateHandle,
-) : ViewModel() {
+) : MMRLViewModel(
+    localRepository = localRepository,
+    modulesRepository = modulesRepository,
+    userPreferencesRepository = userPreferencesRepository,
+    application = application,
+) {
     val isProviderAlive get() = Compat.isAlive
 
     val version: String
@@ -63,6 +72,9 @@ class ModuleViewModel @Inject constructor(
     val lastVersionItem by derivedStateOf {
         versions.firstOrNull()?.second
     }
+
+    val blacklisted get() = runBlocking { getBlacklistById(moduleId) }
+    val isBlacklisted get() = blacklisted != null
 
     val isEmptyAbout
         get() = online.homepage.orEmpty().isBlank()

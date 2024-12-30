@@ -23,6 +23,7 @@ import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.compat.PermissionCompat
 import com.dergoogler.mmrl.model.local.LocalModule
 import com.dergoogler.mmrl.repository.LocalRepository
+import com.dergoogler.mmrl.repository.ModulesRepository
 import com.dergoogler.mmrl.repository.UserPreferencesRepository
 import com.dergoogler.mmrl.ui.activity.CrashHandlerActivity
 import com.dergoogler.mmrl.ui.activity.terminal.action.ActionActivity
@@ -46,6 +47,9 @@ open class MMRLComponentActivity : ComponentActivity() {
 
     @Inject
     lateinit var localRepository: LocalRepository
+
+    @Inject
+    lateinit var modulesRepository: ModulesRepository
 
     open val requirePermissions = listOf<String>()
     var permissionsGranted = true

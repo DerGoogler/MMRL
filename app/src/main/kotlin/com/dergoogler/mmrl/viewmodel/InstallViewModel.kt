@@ -8,6 +8,7 @@ import com.dergoogler.mmrl.app.Event
 import com.dergoogler.mmrl.compat.MediaStoreCompat.copyToDir
 import com.dergoogler.mmrl.compat.MediaStoreCompat.getPathForUri
 import com.dergoogler.mmrl.model.local.LocalModule
+import com.dergoogler.mmrl.model.online.Blacklist
 import com.dergoogler.mmrl.repository.LocalRepository
 import com.dergoogler.mmrl.repository.ModulesRepository
 import com.dergoogler.mmrl.repository.UserPreferencesRepository
@@ -64,6 +65,15 @@ class InstallViewModel @Inject constructor(
             if (info == null) {
                 devLog("! Unable to gather module info of file: $path")
                 return@mapNotNull null
+            }
+
+            val blacklist = getBlacklistById(info.id)
+            val isBlacklisted = Blacklist.isBlacklisted(userPreferences.blacklistAlerts, blacklist)
+            if (isBlacklisted) {
+                event = Event.FAILED
+                allSucceeded = false
+                log("! Cannot install blacklisted modules.")
+                return@launch
             }
 
             BulkModule(
@@ -135,11 +145,12 @@ class InstallViewModel @Inject constructor(
                 event = Event.FAILED
                 log("! Unable to gather module info")
                 return@withContext false
-            } else {
-                devLog("- Module info: $moduleInfo")
-                return@withContext install(tmpFile.path, bulkModules)
-
             }
+
+            devLog("- Module info: $moduleInfo")
+            return@withContext install(tmpFile.path, bulkModules)
+
+
         }
 
     private suspend fun install(zipPath: String, bulkModules: List<BulkModule>): Boolean =

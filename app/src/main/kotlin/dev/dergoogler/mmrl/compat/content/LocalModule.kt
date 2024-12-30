@@ -30,7 +30,6 @@ data class LocalModuleFeatures(
             bootCompleted = false,
         )
     }
-
 }
 
 @Parcelize

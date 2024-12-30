@@ -7,6 +7,7 @@ import androidx.work.WorkerParameters
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.database.entity.local.LocalModuleEntity
 import com.dergoogler.mmrl.database.entity.online.OnlineModuleEntity
+import com.dergoogler.mmrl.model.online.Blacklist
 import com.dergoogler.mmrl.repository.ModulesRepository
 import com.dergoogler.mmrl.stub.IRepoManager
 import com.dergoogler.mmrl.ui.activity.MainActivity
@@ -68,7 +69,7 @@ class ModuleUpdateWorker(
                     val response = repoManager.modules.execute()
                     response.body()?.modules?.let { modulesJson ->
                         onlineModules.addAll(modulesJson.map { module ->
-                            OnlineModuleEntity(module, repo.url)
+                            OnlineModuleEntity(module, repo.url, Blacklist.EMPTY)
                         })
                     } ?: Timber.e("No data found for repo: ${repo.url}")
                 } catch (e: Exception) {

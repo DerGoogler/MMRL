@@ -31,6 +31,7 @@ import com.dergoogler.mmrl.Platform
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.model.local.LocalModule
 import com.dergoogler.mmrl.model.local.State
+import com.dergoogler.mmrl.model.online.Blacklist
 import com.dergoogler.mmrl.model.online.VersionItem
 import com.dergoogler.mmrl.ui.component.VersionItemBottomSheet
 import com.dergoogler.mmrl.ui.component.scrollbar.VerticalFastScrollbar
@@ -51,6 +52,7 @@ fun ModulesList(
     getProgress: @Composable (VersionItem?) -> Float,
     onDownload: (LocalModule, VersionItem, Boolean) -> Unit,
     moduleCompatibility: ModuleCompatibility,
+    getBlacklist: (String?) -> Blacklist?,
 ) = Box(
     modifier = Modifier.fillMaxSize()
 ) {
@@ -70,6 +72,7 @@ fun ModulesList(
                 platform = platform,
                 getModuleOps = getModuleOps,
                 getVersionItem = getVersionItem,
+                getBlacklist = getBlacklist,
                 getProgress = getProgress,
                 onDownload = onDownload,
                 moduleCompatibility = moduleCompatibility
@@ -90,6 +93,7 @@ fun ModuleItem(
     platform: Platform,
     getModuleOps: (Boolean, LocalModule) -> ModulesViewModel.ModuleOps,
     getVersionItem: @Composable (LocalModule) -> VersionItem?,
+    getBlacklist: (String?) -> Blacklist?,
     getProgress: @Composable (VersionItem?) -> Float,
     onDownload: (LocalModule, VersionItem, Boolean) -> Unit,
     moduleCompatibility: ModuleCompatibility,
@@ -99,6 +103,9 @@ fun ModuleItem(
     val ops by remember(userPreferences.useShellForModuleStateChange, module.state) {
         derivedStateOf { getModuleOps(userPreferences.useShellForModuleStateChange, module) }
     }
+
+    val blacklist = getBlacklist(module.id)
+    val isBlacklisted = Blacklist.isBlacklisted(blacklist)
 
     val context = LocalContext.current
 
@@ -111,8 +118,9 @@ fun ModuleItem(
             isUpdate = true,
             item = item,
             isProviderAlive = isProviderAlive,
+            onDownload = { onDownload(module, item, it) },
             onClose = { open = false },
-            onDownload = { onDownload(module, item, it) }
+            isBlacklisted = isBlacklisted
         )
     }
 

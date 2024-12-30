@@ -1,5 +1,6 @@
 package com.dergoogler.mmrl.repository
 
+import com.dergoogler.mmrl.database.dao.BlacklistDao
 import com.dergoogler.mmrl.database.dao.JoinDao
 import com.dergoogler.mmrl.database.dao.LocalDao
 import com.dergoogler.mmrl.database.dao.OnlineDao
@@ -9,8 +10,10 @@ import com.dergoogler.mmrl.database.entity.Repo
 import com.dergoogler.mmrl.database.entity.VersionItemEntity
 import com.dergoogler.mmrl.database.entity.local.LocalModuleEntity
 import com.dergoogler.mmrl.database.entity.local.LocalModuleUpdatable
+import com.dergoogler.mmrl.database.entity.online.BlacklistEntity
 import com.dergoogler.mmrl.database.entity.online.OnlineModuleEntity
 import com.dergoogler.mmrl.model.local.LocalModule
+import com.dergoogler.mmrl.model.online.Blacklist
 import com.dergoogler.mmrl.model.online.OnlineModule
 import dev.dergoogler.mmrl.compat.ext.merge
 import kotlinx.coroutines.Dispatchers
@@ -25,7 +28,8 @@ class LocalRepository @Inject constructor(
     private val onlineDao: OnlineDao,
     private val versionDao: VersionDao,
     private val localDao: LocalDao,
-    private val joinDao: JoinDao
+    private val joinDao: JoinDao,
+    private val blacklistDao: BlacklistDao,
 ) {
     fun getLocalAllAsFlow() = localDao.getAllAsFlow().map { list ->
         list.map { it.toModule() }
@@ -41,6 +45,22 @@ class LocalRepository @Inject constructor(
 
     suspend fun insertLocal(value: LocalModule) = withContext(Dispatchers.IO) {
         localDao.insert(LocalModuleEntity(value))
+    }
+
+    suspend fun insertBlacklist(value: Blacklist) = withContext(Dispatchers.IO) {
+        blacklistDao.insert(BlacklistEntity(value))
+    }
+
+    suspend fun getBlacklistById(id: String) = withContext(Dispatchers.IO) {
+        blacklistDao.getBlacklistEntry(id)?.toBlacklist()
+    }
+
+    fun getBlacklistByIdOrNullAsFlow(id: String) = blacklistDao.getBlacklistEntryAsFlow(id).map {
+        it?.toBlacklist()
+    }
+
+    fun getAllBlacklistEntriesAsFlow() = blacklistDao.getAllBlacklistEntriesAsFlow().map {
+        it.map { entity -> entity.toBlacklist() }
     }
 
     suspend fun insertLocal(list: List<LocalModule>) = withContext(Dispatchers.IO) {
@@ -116,27 +136,29 @@ class LocalRepository @Inject constructor(
         onlineDao.getAllById(id).map { it.toModule() }
     }
 
-    suspend fun insertOnline(list: List<OnlineModule>, repoUrl: String) = withContext(Dispatchers.IO) {
-        val versions = list.map { module ->
-            module.versions.map {
-                VersionItemEntity(
-                    original = it,
-                    id = module.id,
-                    repoUrl = repoUrl
-                )
-            }
-        }.merge()
+    suspend fun insertOnline(list: List<OnlineModule>, repoUrl: String) =
+        withContext(Dispatchers.IO) {
+            val versions = list.map { module ->
+                module.versions.map {
+                    VersionItemEntity(
+                        original = it,
+                        id = module.id,
+                        repoUrl = repoUrl
+                    )
+                }
+            }.merge()
 
-        versionDao.insert(versions)
-        onlineDao.insert(
-            list.map {
-                OnlineModuleEntity(
-                    original = it,
-                    repoUrl = repoUrl
-                )
-            }
-        )
-    }
+            versionDao.insert(versions)
+            onlineDao.insert(
+                list.map {
+                    OnlineModuleEntity(
+                        original = it,
+                        repoUrl = repoUrl,
+                        blacklist = getBlacklistById(it.id) ?: Blacklist.EMPTY
+                    )
+                }
+            )
+        }
 
     suspend fun deleteOnlineByUrl(repoUrl: String) = withContext(Dispatchers.IO) {
         versionDao.deleteByUrl(repoUrl)

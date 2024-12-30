@@ -14,7 +14,6 @@ import androidx.compose.runtime.setValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.compose.rememberNavController
 import com.dergoogler.mmrl.Compat
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.app.Const
@@ -41,6 +40,7 @@ class MainActivity : MMRLComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
+
 
         splashScreen.setKeepOnScreenCondition { isLoading }
 
@@ -73,6 +73,8 @@ class MainActivity : MMRLComponentActivity() {
                     Timber.d("add default repository")
                     localRepository.insertRepo(Const.DEMO_REPO_URL.toRepo())
                 }
+
+                modulesRepository.getBlacklist()
 
                 Compat.init(preferences.workingMode)
 

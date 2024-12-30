@@ -133,6 +133,7 @@ fun ModulesScreen(
                 isProviderAlive = viewModel.isProviderAlive,
                 platform = viewModel.platform,
                 getModuleOps = viewModel::createModuleOps,
+                getBlacklist = viewModel::getBlacklist,
                 getVersionItem = { viewModel.getVersionItem(it) },
                 getProgress = { viewModel.getProgress(it) },
                 onDownload = download,

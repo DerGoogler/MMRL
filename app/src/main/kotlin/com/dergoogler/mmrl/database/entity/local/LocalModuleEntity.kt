@@ -35,7 +35,7 @@ data class LocalModuleEntity(
         features = original.features,
         size = original.size,
         updateJson = original.updateJson,
-        lastUpdated = original.lastUpdated
+        lastUpdated = original.lastUpdated,
     )
 
     fun toModule() = LocalModule(
@@ -49,7 +49,7 @@ data class LocalModuleEntity(
         state = State.valueOf(state),
         features = features,
         size = size,
-        lastUpdated = lastUpdated
+        lastUpdated = lastUpdated,
     )
 }
 

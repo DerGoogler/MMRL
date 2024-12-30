@@ -1,5 +1,6 @@
 package com.dergoogler.mmrl.viewmodel
 
+import android.app.Application
 import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -10,7 +11,6 @@ import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import com.dergoogler.mmrl.Compat
@@ -28,6 +28,7 @@ import com.dergoogler.mmrl.utils.Utils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.dergoogler.mmrl.compat.content.ModuleCompatibility
 import dev.dergoogler.mmrl.compat.stub.IModuleOpsCallback
+import dev.dergoogler.mmrl.compat.viewmodel.MMRLViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
@@ -36,16 +37,23 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
 class ModulesViewModel @Inject constructor(
-    private val localRepository: LocalRepository,
-    private val modulesRepository: ModulesRepository,
-    private val userPreferencesRepository: UserPreferencesRepository,
-) : ViewModel() {
+    localRepository: LocalRepository,
+    modulesRepository: ModulesRepository,
+    userPreferencesRepository: UserPreferencesRepository,
+    application: Application,
+) : MMRLViewModel(
+    application = application,
+    localRepository = localRepository,
+    modulesRepository = modulesRepository,
+    userPreferencesRepository = userPreferencesRepository
+) {
     val isProviderAlive get() = Compat.isAlive
     val platform get() = Compat.platform
 
@@ -60,6 +68,8 @@ class ModulesViewModel @Inject constructor(
                 moduleCompatibility
             }
         }
+
+    fun getBlacklist(id: String?) = runBlocking { getBlacklistById(id) }
 
     private val modulesMenu
         get() = userPreferencesRepository.data

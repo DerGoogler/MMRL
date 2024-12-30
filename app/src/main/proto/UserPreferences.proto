@@ -40,4 +40,5 @@ message UserPreferences {
   bool allowCancelInstall = 29;
   bool allowCancelAction = 30;
   bool useShellToLoadWebUIAssets = 31;
+  bool blacklistAlerts = 32;
 }
