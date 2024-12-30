@@ -28,7 +28,7 @@
     <string name="page_modules">模組</string>
     <string name="page_settings">設定</string>
     <!-- 庫存介面 -->
-    <string name="repository_empty">查無中介平臺</string>
+    <string name="repository_empty">查無模組倉庫</string>
     <string name="module_installed">已安裝</string>
     <string name="module_new">新品上架</string>
     <!-- 進階選單 -->
@@ -52,7 +52,7 @@
     <string name="view_module_local">本機模組資訊</string>
     <string name="view_module_update_notify">通知</string>
     <string name="view_module_update_ignore">忽略</string>
-    <string name="view_module_provided">中介平臺：%s</string>
+    <string name="view_module_provided">模組倉庫：%s</string>
     <string name="view_module_version_dialog_desc">你是否要安裝或下載此版本的模組？</string>
     <string name="view_module_homepage">模組網站主頁</string>
     <string name="view_module_source">原始碼儲存庫</string>
@@ -88,10 +88,10 @@
     <string name="view_module_features_postmount_sub">始於 OverlayFS 掛載而後置執行的指令碼</string>
     <string name="view_module_features_bootcompleted_sub">系統初始化後，待機期間執行的指令碼</string>
     <string name="view_module_module_support">關連頁面</string>
-    <string name="view_module_provided_by">中介平臺</string>
+    <string name="view_module_provided_by">模組倉庫</string>
     <string name="view_module_added_on">上架日期</string>
     <string name="view_module_about_this_module">關於模組</string>
-    <string name="view_module_mod_infos_disclaimer">留有 * 標記的資訊，其內容在各中介平臺之間稍有不同。欲知詳情，請點選上方的@track(中繼資料檢視)。</string>
+    <string name="view_module_mod_infos_disclaimer">留有 * 標記的資訊，其內容在各模組倉庫之間稍有不同。欲知詳情，請點選上方的@track(中繼資料檢視)。</string>
     <string name="view_module_section_count">%1$s+</string>
     <string name="view_module_donate">小額捐款</string>
     <string name="view_module_donate_desc">以一杯咖啡 ☕ 的錢，表達你對模組開發人員的大力支持！</string>
@@ -116,11 +116,11 @@
     <!-- 設定 -->
     <string name="settings_app">應用程式</string>
     <string name="settings_app_desc">有關《MMRL》應用程式自身的設定項目</string>
-    <string name="settings_repo">中介平臺</string>
-    <string name="settings_repo_desc">管理 Magisk 模組中介平臺</string>
+    <string name="settings_repo">模組倉庫</string>
+    <string name="settings_repo_desc">管理 Magisk 模組倉庫</string>
     <string name="settings_about">本體資訊</string>
     <string name="settings_resources">線上資源</string>
-    <string name="settings_resources_desc">包含說明手冊、中介平臺支援列表等等，應有盡有</string>
+    <string name="settings_resources_desc">包含說明手冊、模組倉庫支援列表等等，應有盡有</string>
     <string name="settings_security">安全措施</string>
     <string name="settings_security_desc">有關本應用程式配備的安全措施</string>
     <string name="settings_appearance">介面外觀</string>
@@ -154,15 +154,15 @@
     <string name="settings_blacklist_desc">羅列封閉了原始碼以及尚有濫用風險的模組</string>
     <string name="settings_date_pattern">日期樣式</string>
     <string name="settings_date_pattern_desc">套上自己習慣書寫的日期格式</string>
-    <string name="settings_recommended_repos">中介名冊</string>
-    <string name="settings_recommended_repos_desc">瀏覽各家中介平臺，一指將其納入庫存</string>
+    <string name="settings_recommended_repos">倉庫名冊</string>
+    <string name="settings_recommended_repos_desc">瀏覽各家模組倉庫，一指將其納入庫存</string>
     <string name="settings_updates">更新檢查</string>
     <string name="settings_updates_desc">管理你的更新過程偏好</string>
     <string name="settings_homepage">應用程式主畫面</string>
     <string name="settings_homepage_desc">選擇在應用程式開啟後最先顯示的畫面</string>
-    <string name="settings_auto_update_repos">自動執行中介平臺更新</string>
-    <string name="settings_auto_update_repos_desc">自動在背景執行中介平臺更新</string>
-    <string name="settings_repo_update_interval">中介平臺更新間隔</string>
+    <string name="settings_auto_update_repos">自動執行模組倉庫更新</string>
+    <string name="settings_auto_update_repos_desc">自動在背景執行模組倉庫更新</string>
+    <string name="settings_repo_update_interval">模組倉庫更新間隔</string>
     <string name="settings_repo_update_interval_suffix">" 小時／次"</string>
     <string name="settings_repo_update_interval_desc">選擇每次更新之間相隔的時長</string>
     <string name="settings_check_app_updates">檢查應用程式更新</string>
@@ -198,11 +198,11 @@
     <string name="repo_options_website">網站</string>
     <string name="repo_options_donate">捐款</string>
     <string name="repo_delete_dialog_desc">你是否要刪除「%s」？</string>
-    <string name="repo_add_dialog_title">新增中介平臺</string>
+    <string name="repo_add_dialog_title">新增模組倉庫</string>
     <string name="repo_add_dialog_add">新增</string>
     <!-- 本體資訊 -->
     <string name="about_app_version">版本 %1$s（%2$s）</string>
-    <string name="about_desc1">整合各家中介平臺的 Magisk、KernelSU 模組管理工具。</string>
+    <string name="about_desc1">整合各家模組倉庫的 Magisk、KernelSU 模組管理工具。</string>
     <string name="about_desc2">由 %s 用 ❤️ 製作</string>
     <!-- 對話 -->
     <string name="dialog_attention">請注意</string>
@@ -235,17 +235,17 @@
     <string name="report_to_issues">提起錯誤回報</string>
     <string name="stack_trace_truncated">%s\n……尚有 %d 行</string>
     <string name="additional_notes">附加提示</string>
-    <string name="repo_added">已新增中介平臺</string>
+    <string name="repo_added">已新增模組倉庫</string>
     <!-- 即時管理工具 -->
-    <string name="work_repository_updates">中介平臺更新服務</string>
-    <string name="work_updates_for_repositories">用於檢查中介平臺更新</string>
+    <string name="work_repository_updates">模組倉庫更新服務</string>
+    <string name="work_updates_for_repositories">用於檢查模組倉庫更新</string>
     <string name="work_module_updates">模組更新服務</string>
     <string name="work_update_checker_for_modules">用於檢查模組更新</string>
     <!-- 中介平臺更新背景服務 -->
-    <string name="repo_update_service">已成功更新所有中介平臺</string>
-    <string name="repo_update_service_desc">《MMRL》已為你更新了所有中介平臺。😋</string>
-    <string name="repo_update_service_failed">無需更新中介平臺</string>
-    <string name="repo_update_service_failed_desc">查無可更新的中介平臺</string>
+    <string name="repo_update_service">已成功更新所有模組倉庫</string>
+    <string name="repo_update_service_desc">《MMRL》已為你更新了所有模組倉庫。😋</string>
+    <string name="repo_update_service_failed">無需更新模組倉庫</string>
+    <string name="repo_update_service_failed_desc">查無可更新的模組倉庫</string>
     <!-- SELinux -->
     <string name="selinux_status">SELinux 狀態</string>
     <string name="selinux_status_disabled">已停用</string>
@@ -347,7 +347,7 @@
     <string name="learn_more">深入瞭解</string>
     <string name="settings_use_generic_action_desc">大多數授權平臺仍未支援以腳本形式執行指令介面：此時改採通用格式的指令碼，便可解決相容性問題</string>
     <string name="sponsors">贊助人員</string>
-    <string name="all_the_sponsors_of_the_project_click_on_learn_more_to_get_included">本專案的所有贊助人員。點選「深入瞭解」即可羅列。</string>
+    <string name="all_the_sponsors_of_the_project_click_on_learn_more_to_get_included">本專案的所有贊助人員。點選「深入瞭解」便可得知成為贊助人員的方式。</string>
     <string name="settings_use_shell_webui_assets">以系統外殼載入 WebUI 資源</string>
     <string name="settings_use_shell_webui_assets_desc">功能啟用後，便准許處置程序調用系統外殼來讀取檔案；功能停用時，僅開放處置程序逕自讀取 2 GB 以內的資源檔案。請注意：後者由處置程序逕自讀取檔案的速度會比前者更加快速。</string>
 </resources>
