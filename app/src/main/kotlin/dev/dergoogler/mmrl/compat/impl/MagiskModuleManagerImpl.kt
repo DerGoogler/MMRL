@@ -10,8 +10,11 @@ import dev.dergoogler.mmrl.compat.stub.IShellCallback
 internal class MagiskModuleManagerImpl(
     shell: Shell,
     seLinuxContext: String,
+    fileManager: FileManagerImpl,
 ) : BaseModuleManagerImpl(
-    shell, seLinuxContext
+    shell=  shell,
+    seLinuxContext = seLinuxContext,
+    fileManager = fileManager
 ) {
     override fun getManagerName(): String {
         return "Magisk"

@@ -40,6 +40,7 @@ import dev.dergoogler.mmrl.compat.activity.MMRLComponentActivity
 import dev.dergoogler.mmrl.compat.ext.nullable
 import dev.dergoogler.mmrl.compat.ext.takeTrue
 import dev.dergoogler.mmrl.compat.ext.toFormattedDateSafely
+import dev.dergoogler.mmrl.compat.ext.toFormattedFileSize
 
 @Composable
 fun ModuleItem(
@@ -57,7 +58,7 @@ fun ModuleItem(
     val menu = userPreferences.modulesMenu
     val context = LocalContext.current
 
-    val canWenUIAccessed = module.runners.webui && module.state != State.REMOVE
+    val canWenUIAccessed = module.features.webui && module.state != State.REMOVE
     val clicker = if (canWenUIAccessed) {
         {
             MMRLComponentActivity.startWebUIActivity(
@@ -97,7 +98,7 @@ fun ModuleItem(
 
                 TextWithIcon(
                     text = module.name,
-                    icon = module.runners.webui nullable icon,
+                    icon = module.features.webui nullable icon,
                     style = MaterialTheme.typography.titleSmall
                 )
 
@@ -125,7 +126,7 @@ fun ModuleItem(
 
                 userPreferences.developerMode.takeTrue {
                     Text(
-                        text = stringResource(R.string.module_id, module.id),
+                        text = stringResource(R.string.module_id, module.id) + " | ${module.size.toFormattedFileSize()}",
                         style = MaterialTheme.typography.bodySmall,
                         textDecoration = decoration,
                         color = MaterialTheme.colorScheme.outline

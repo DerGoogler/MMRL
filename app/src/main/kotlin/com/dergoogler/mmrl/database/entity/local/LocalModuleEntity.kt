@@ -5,8 +5,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.dergoogler.mmrl.model.local.LocalModule
-import com.dergoogler.mmrl.model.local.LocalModuleRunners
 import com.dergoogler.mmrl.model.local.State
+import dev.dergoogler.mmrl.compat.content.LocalModuleFeatures
 
 
 @Entity(tableName = "localModules")
@@ -19,9 +19,10 @@ data class LocalModuleEntity(
     val author: String,
     val description: String,
     val state: String,
-    @Embedded val runners: LocalModuleRunners,
+    val size: Long,
+    @Embedded val features: LocalModuleFeatures,
     val updateJson: String,
-    val lastUpdated: Long
+    val lastUpdated: Long,
 ) {
     constructor(original: LocalModule) : this(
         id = original.id,
@@ -31,7 +32,8 @@ data class LocalModuleEntity(
         author = original.author,
         description = original.description,
         state = original.state.name,
-        runners = original.runners,
+        features = original.features,
+        size = original.size,
         updateJson = original.updateJson,
         lastUpdated = original.lastUpdated
     )
@@ -45,7 +47,8 @@ data class LocalModuleEntity(
         description = description,
         updateJson = updateJson,
         state = State.valueOf(state),
-        runners = runners,
+        features = features,
+        size = size,
         lastUpdated = lastUpdated
     )
 }
@@ -53,5 +56,5 @@ data class LocalModuleEntity(
 @Entity(tableName = "localModules_updatable")
 data class LocalModuleUpdatable(
     @PrimaryKey val id: String,
-    val updatable: Boolean
+    val updatable: Boolean,
 )

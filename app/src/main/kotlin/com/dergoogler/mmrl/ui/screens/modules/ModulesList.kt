@@ -150,7 +150,7 @@ fun ModuleItem(
             }
         },
         startTrailingButton = {
-            module.runners.action.takeTrue {
+            module.features.action.takeTrue {
                 ActionButton(
                     enabled = isProviderAlive && module.state != State.REMOVE && module.state != State.DISABLE,
                     onClick = {

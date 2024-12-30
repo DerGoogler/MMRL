@@ -9,8 +9,11 @@ import dev.dergoogler.mmrl.compat.stub.IShellCallback
 internal class KsuNextModuleManagerImpl(
     shell: Shell,
     seLinuxContext: String,
+    fileManager: FileManagerImpl,
 ) : KernelSUModuleManagerImpl(
-    shell, seLinuxContext
+    shell=  shell,
+    seLinuxContext = seLinuxContext,
+    fileManager = fileManager
 ) {
     override fun getModuleCompatibility() = ModuleCompatibility(
         hasMagicMount = false,

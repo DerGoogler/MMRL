@@ -126,13 +126,13 @@ class ModulesViewModel @Inject constructor(
                 }
 
                 val b = if (menu.pinAction) {
-                    a.sortedByDescending { it.runners.action }
+                    a.sortedByDescending { it.features.action }
                 } else {
                     a
                 }
 
                 if (menu.pinWebUI) {
-                    b.sortedByDescending { it.runners.webui }
+                    b.sortedByDescending { it.features.webui }
                 } else {
                     b
                 }

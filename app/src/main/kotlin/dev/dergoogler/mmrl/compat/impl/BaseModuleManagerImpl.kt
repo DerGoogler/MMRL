@@ -8,9 +8,10 @@ import com.topjohnwu.superuser.Shell
 import com.topjohnwu.superuser.ShellUtils
 import dev.dergoogler.mmrl.compat.content.BulkModule
 import dev.dergoogler.mmrl.compat.content.LocalModule
-import dev.dergoogler.mmrl.compat.content.LocalModuleRunners
+import dev.dergoogler.mmrl.compat.content.LocalModuleFeatures
 import dev.dergoogler.mmrl.compat.content.ModuleCompatibility
 import dev.dergoogler.mmrl.compat.content.State
+import dev.dergoogler.mmrl.compat.stub.IFileManager
 import dev.dergoogler.mmrl.compat.stub.IModuleManager
 import dev.dergoogler.mmrl.compat.stub.IShell
 import dev.dergoogler.mmrl.compat.stub.IShellCallback
@@ -20,6 +21,7 @@ import java.io.File
 internal abstract class BaseModuleManagerImpl(
     private val shell: Shell,
     private val seLinuxContext: String,
+    private val fileManager: IFileManager
 ) : IModuleManager.Stub() {
     internal val modulesDir = File(MODULES_PATH)
 
@@ -74,10 +76,10 @@ internal abstract class BaseModuleManagerImpl(
         return webroot.exists() && webroot.isDirectory
     }
 
-    private fun hasAction(id: String): Boolean {
+    private fun hasFeature(type: String, id: String): Boolean {
         val moduleDir = modulesDir.resolve(id)
-        val webroot = moduleDir.resolve(ACTION_FILE)
-        return webroot.exists() && webroot.isFile
+        val feature = moduleDir.resolve(type)
+        return feature.exists() && feature.isFile
     }
 
     override fun getModuleById(id: String): LocalModule? {
@@ -144,24 +146,35 @@ internal abstract class BaseModuleManagerImpl(
 
     private fun Map<String, String>.toModule(
         dir: File,
-    ) = toModule(
-        path = dir.name,
-        state = readState(dir),
-        runners = LocalModuleRunners(
-            webui = hasWebUI(getOrDefault("id", dir.name)),
-            action = hasAction(getOrDefault("id", dir.name)),
-        ),
-        lastUpdated = readLastUpdated(dir)
-    )
+    ): LocalModule {
+        val id = getOrDefault("id", dir.name)
+
+        return toModule(
+            path = dir.name,
+            state = readState(dir),
+            features = LocalModuleFeatures(
+                webui = hasWebUI(id),
+                action = hasFeature(ACTION_FILE, id),
+                service = hasFeature(SERVICE_FILE, id),
+                postFsData = hasFeature(POST_FS_DATA_FILE, id),
+                postMount = hasFeature(POST_MOUNT_FILE, id),
+                resetprop = hasFeature(SYSTEM_PROP_FILE, id),
+                bootCompleted = hasFeature(BOOT_COMPLETED_FILE, id),
+                sepolicy = hasFeature(SE_POLICY, id),
+                zygisk = false,
+                apks = false
+            ),
+            size = fileManager.sizeRecursive(dir.path),
+            lastUpdated = readLastUpdated(dir)
+        )
+    }
 
     private fun Map<String, String>.toModule(
         path: String = "unknown",
         state: State = State.ENABLE,
         lastUpdated: Long = 0L,
-        runners: LocalModuleRunners = LocalModuleRunners(
-            webui = false,
-            action = false
-        ),
+        size: Long = 0L,
+        features: LocalModuleFeatures = LocalModuleFeatures.EMPTY,
     ) = LocalModule(
         id = getOrDefault("id", path),
         name = getOrDefault("name", path),
@@ -171,7 +184,8 @@ internal abstract class BaseModuleManagerImpl(
         description = getOrDefault("description", ""),
         updateJson = getOrDefault("updateJson", ""),
         state = state,
-        runners = runners,
+        features = features,
+        size = size,
         lastUpdated = lastUpdated
     )
 
@@ -256,23 +270,30 @@ internal abstract class BaseModuleManagerImpl(
     companion object {
         const val PROP_FILE = "module.prop"
         const val WEBROOT_PATH = "webroot"
-        const val ACTION_FILE = "action.sh"
         const val MODULES_PATH = "/data/adb/modules"
 
+        const val ACTION_FILE = "action.sh"
+        const val BOOT_COMPLETED_FILE = "boot-completed.sh"
+        const val SERVICE_FILE = "service.sh"
+        const val POST_FS_DATA_FILE = "post-fs-data.sh"
+        const val POST_MOUNT_FILE = "post-mount.sh"
+        const val SYSTEM_PROP_FILE = "system.prop"
+        const val SE_POLICY = "sepolicy.rule"
+
+
         val MODULE_SERVICE_FILES = listOf(
-            "service.sh",
-            "post-fs-data.sh",
-            "action.sh",
-            "post-mount.sh",
-            "boot-completed.sh",
-            "webroot"
+            ACTION_FILE,
+            SERVICE_FILE,
+            POST_FS_DATA_FILE,
+            POST_MOUNT_FILE,
+            WEBROOT_PATH,
+            BOOT_COMPLETED_FILE
         )
         val MODULE_FILES = listOf(
-            "post-fs-data.sh", "service.sh", "uninstall.sh",
-            "system", "system.prop", "module.prop",
-            // KernelSU, APatch and MMRL related files
-            "action.sh", "post-mount.sh", "boot-completed.sh",
-            "webroot"
+            SE_POLICY,
+            *MODULE_SERVICE_FILES.toTypedArray(),
+            "uninstall.sh",
+            "system", "module.prop",
         )
     }
 }

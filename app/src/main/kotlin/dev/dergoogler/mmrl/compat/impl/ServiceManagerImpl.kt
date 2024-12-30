@@ -48,17 +48,20 @@ internal class ServiceManagerImpl(
         when (platform) {
             Platform.Magisk -> MagiskModuleManagerImpl(
                 shell = main,
-                seLinuxContext = seLinuxContext
+                seLinuxContext = seLinuxContext,
+                fileManager = fileManager
             )
 
             Platform.KernelSU -> KernelSUModuleManagerImpl(
                 shell = main,
-                seLinuxContext = seLinuxContext
+                seLinuxContext = seLinuxContext,
+                fileManager = fileManager
             )
 
             Platform.KsuNext -> KsuNextModuleManagerImpl(
                 shell = main,
-                seLinuxContext = seLinuxContext
+                seLinuxContext = seLinuxContext,
+                fileManager = fileManager
             )
 
             Platform.APatch -> APatchModuleManagerImpl(

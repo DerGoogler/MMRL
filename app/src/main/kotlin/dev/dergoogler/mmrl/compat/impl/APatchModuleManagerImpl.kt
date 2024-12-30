@@ -10,9 +10,11 @@ import dev.dergoogler.mmrl.compat.stub.IShellCallback
 internal class APatchModuleManagerImpl(
     shell: Shell,
     seLinuxContext: String,
-    private val fileManager: FileManagerImpl,
+    val fileManager: FileManagerImpl,
 ) : BaseModuleManagerImpl(
-    shell, seLinuxContext
+    shell=  shell,
+    seLinuxContext = seLinuxContext,
+    fileManager = fileManager
 ) {
     override fun getManagerName(): String {
         return "APatch"

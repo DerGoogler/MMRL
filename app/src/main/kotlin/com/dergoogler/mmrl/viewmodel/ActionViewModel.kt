@@ -53,7 +53,7 @@ class ActionViewModel @Inject constructor(
                 return@launch
             }
 
-            if (!module.runners.action) {
+            if (!module.features.action) {
                 event = Event.FAILED
                 log("! This module don't have an action.")
                 return@launch

@@ -37,6 +37,7 @@ import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import dev.dergoogler.mmrl.compat.ext.isNotNullOrBlank
 import dev.dergoogler.mmrl.compat.ext.shareText
 import dev.dergoogler.mmrl.compat.ext.toFormattedDateSafely
+import dev.dergoogler.mmrl.compat.ext.toFormattedFileSize
 
 @Composable
 fun ModulesMenu(
@@ -163,8 +164,7 @@ private fun MenuBottomSheet(
                         append("Version: ${it.version}\n")
                         append("VersionCode: ${it.versionCode}\n")
                         append("Stat: ${it.lastUpdated.toFormattedDateSafely()}\n")
-                        append("Action: ${it.runners.action}\n")
-                        append("WebUI: ${it.runners.webui}\n\n")
+                        append("Size: ${it.size.toFormattedFileSize()}\n\n")
                     }
                 }
 
