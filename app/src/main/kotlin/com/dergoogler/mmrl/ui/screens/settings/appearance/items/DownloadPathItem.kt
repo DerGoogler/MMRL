@@ -31,7 +31,6 @@ fun DownloadPathItem(
     )
 
     ListButtonItem(
-        icon = R.drawable.files,
         title = stringResource(id = R.string.settings_download_path),
         desc = downloadPath.absolutePath,
         onClick = { edit = true }

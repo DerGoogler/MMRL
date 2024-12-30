@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -21,7 +23,7 @@ import com.dergoogler.mmrl.ui.utils.none
 
 @Composable
 fun SettingsScaffold(
-    modifier: ScaffoldModifier = ScaffoldDefaults.settingsScaffoldModifier,
+    modifier: ScaffoldModifier = ScaffoldDefaults.settingsScaffoldScrollModifier,
     @StringRes title: Int,
     actions: @Composable (RowScope.() -> Unit) = {},
     floatingActionButton: @Composable () -> Unit = {},
@@ -62,16 +64,9 @@ fun SettingsScaffold(
 
 @Immutable
 class ScaffoldModifier internal constructor(
-    val all: Modifier = Modifier,
-    val box: Modifier = all,
-    val column: Modifier = all,
+    val box: Modifier,
+    val column: Modifier,
 ) {
-    constructor(
-        all: Modifier.() -> Modifier = { Modifier },
-        box: Modifier.() -> Modifier = all,
-        column: Modifier.() -> Modifier = all,
-    ) : this(all(Modifier), box(Modifier), column(Modifier))
-
     @Suppress("RedundantIf")
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -84,16 +79,14 @@ class ScaffoldModifier internal constructor(
     }
 
     fun copy(
-        all: Modifier = this.all,
         box: Modifier = this.box,
         column: Modifier = this.column,
     ): ScaffoldModifier = ScaffoldModifier(
-        all, box, column
+        box, column
     )
 
     override fun hashCode(): Int {
-        var result = all.hashCode()
-        result = 31 * result + box.hashCode()
+        var result = box.hashCode()
         result = 31 * result + column.hashCode()
         return result
     }
@@ -102,6 +95,15 @@ class ScaffoldModifier internal constructor(
 object ScaffoldDefaults {
     val settingsScaffoldModifier
         get() = ScaffoldModifier(
-            all = Modifier.fillMaxSize()
+            box = Modifier.fillMaxSize(),
+            column = Modifier.fillMaxSize()
+        )
+
+    val settingsScaffoldScrollModifier
+        @Composable get() = ScaffoldModifier(
+            box = Modifier.fillMaxSize(),
+            column = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
         )
 }

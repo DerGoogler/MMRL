@@ -33,7 +33,6 @@ fun AppearanceScreen(
         )
 
         ListSwitchItem(
-            icon = R.drawable.text_wrap_column,
             title = stringResource(id = R.string.settings_text_wrap),
             desc = stringResource(id = R.string.settings_text_wrap_desc),
             checked = userPreferences.terminalTextWrap,
@@ -41,7 +40,6 @@ fun AppearanceScreen(
         )
 
         ListEditTextItem(
-            icon = R.drawable.calendar_month,
             title = stringResource(id = R.string.settings_date_pattern),
             desc = stringResource(id = R.string.settings_date_pattern_desc),
             value = userPreferences.datePattern,
@@ -51,7 +49,6 @@ fun AppearanceScreen(
 
         ListRadioCheckItem(
             title = stringResource(R.string.settings_homepage),
-            icon = R.drawable.player_play,
             desc = stringResource(R.string.settings_homepage_desc),
             value = userPreferences.homepage,
             options = listOf(

@@ -16,6 +16,7 @@ import com.dergoogler.mmrl.model.online.Blacklist
 import com.dergoogler.mmrl.network.runRequest
 import com.dergoogler.mmrl.stub.IMMRLApiManager
 import com.dergoogler.mmrl.ui.component.Loading
+import com.dergoogler.mmrl.ui.component.ScaffoldDefaults
 import com.dergoogler.mmrl.ui.component.SettingsScaffold
 import com.dergoogler.mmrl.ui.screens.settings.blacklist.items.ModuleItem
 import kotlinx.coroutines.Dispatchers
@@ -42,6 +43,7 @@ fun BlacklistScreen() {
     }
 
     SettingsScaffold(
+        modifier = ScaffoldDefaults.settingsScaffoldModifier,
         title = R.string.settings_blacklist
     ) {
         AnimatedVisibility(

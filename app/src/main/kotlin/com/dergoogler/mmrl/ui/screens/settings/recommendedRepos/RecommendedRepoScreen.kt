@@ -19,6 +19,7 @@ import com.dergoogler.mmrl.model.online.RecommendedRepo
 import com.dergoogler.mmrl.network.runRequest
 import com.dergoogler.mmrl.stub.IMMRLApiManager
 import com.dergoogler.mmrl.ui.component.Loading
+import com.dergoogler.mmrl.ui.component.ScaffoldDefaults
 import com.dergoogler.mmrl.ui.component.SettingsScaffold
 import com.dergoogler.mmrl.ui.screens.settings.recommendedRepos.items.RepoItem
 import com.dergoogler.mmrl.viewmodel.RepositoriesViewModel
@@ -50,6 +51,7 @@ fun RecommendedRepoScreen(
     }
 
     SettingsScaffold(
+        modifier = ScaffoldDefaults.settingsScaffoldModifier,
         title = R.string.settings_recommended_repos
     ) {
         AnimatedVisibility(

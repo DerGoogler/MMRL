@@ -26,7 +26,6 @@ fun SecurityScreen(
         title = R.string.settings_security,
     ) {
         ListSwitchItem(
-            icon = R.drawable.power,
             title = stringResource(id = R.string.settings_reboot_protection),
             desc = stringResource(id = R.string.settings_reboot_protection_desc),
             checked = userPreferences.confirmReboot,
@@ -34,7 +33,6 @@ fun SecurityScreen(
         )
 
         ListSwitchItem(
-            icon = R.drawable.fingerprint,
             title = stringResource(id = R.string.settings_hide_fingerprint),
             desc = stringResource(id = R.string.settings_hide_fingerprint_desc),
             checked = userPreferences.hideFingerprintInHome,
@@ -46,7 +44,6 @@ fun SecurityScreen(
         )
 
         ListButtonItem(
-            icon = R.drawable.file_dislike,
             title = stringResource(id = R.string.settings_allow_javascript_api),
             onClick = {
                 navController.navigateSingleTopTo(SettingsScreen.SecurityWebUIAllowedApis.route)

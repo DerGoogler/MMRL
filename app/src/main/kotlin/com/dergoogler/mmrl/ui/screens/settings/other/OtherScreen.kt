@@ -25,7 +25,6 @@ fun OtherScreen(
         )
 
         ListSwitchItem(
-            icon = R.drawable.brand_cloudflare,
             title = stringResource(id = R.string.settings_doh),
             desc = stringResource(id = R.string.settings_doh_desc),
             checked = userPreferences.useDoh,

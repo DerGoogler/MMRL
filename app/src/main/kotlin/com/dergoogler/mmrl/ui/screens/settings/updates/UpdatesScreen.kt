@@ -29,7 +29,6 @@ fun UpdatesScreen(
         title = R.string.settings_updates,
     ) {
         ListButtonItem(
-            icon = R.drawable.notification,
             title = stringResource(id = R.string.settings_open_notification_settings),
             onClick = {
                 val intent =
@@ -53,7 +52,6 @@ fun UpdatesScreen(
         )
 
         ListSwitchItem(
-            icon = R.drawable.launcher_outline,
             title = stringResource(id = R.string.settings_check_app_updates),
             desc = stringResource(id = R.string.settings_check_app_updates_desc),
             checked = userPreferences.checkAppUpdates,
@@ -61,7 +59,6 @@ fun UpdatesScreen(
         )
 
         ListSwitchItem(
-            icon = R.drawable.launcher_outline,
             title = stringResource(id = R.string.settings_include_preleases),
             enabled = userPreferences.checkAppUpdates,
             checked = userPreferences.checkAppUpdatesPreReleases,
@@ -73,21 +70,21 @@ fun UpdatesScreen(
         )
 
         ListSwitchItem(
-            icon = R.drawable.refresh,
             title = stringResource(id = R.string.settings_auto_update_repos),
             desc = stringResource(id = R.string.settings_auto_update_repos_desc),
             checked = userPreferences.autoUpdateRepos,
+            enabled = false,
             onChange = viewModel::setAutoUpdateRepos
         )
 
         ListRadioCheckItem(
             title = stringResource(R.string.settings_repo_update_interval),
-            icon = R.drawable.clock_24,
             desc = stringResource(
                 R.string.settings_repo_update_interval_desc,
                 userPreferences.autoUpdateReposInterval
             ),
-            enabled = userPreferences.autoUpdateRepos,
+            // enabled = userPreferences.autoUpdateRepos,
+            enabled = false,
             suffix = stringResource(id = R.string.settings_repo_update_interval_suffix),
             value = userPreferences.autoUpdateReposInterval,
             options = optionsOfHours,
@@ -100,21 +97,21 @@ fun UpdatesScreen(
         )
 
         ListSwitchItem(
-            icon = R.drawable.box,
             title = stringResource(id = R.string.settings_check_modules_update),
             desc = stringResource(id = R.string.settings_check_modules_update_desc),
             checked = userPreferences.checkModuleUpdates,
+            enabled = false,
             onChange = viewModel::setCheckModuleUpdates
         )
 
         ListRadioCheckItem(
             title = stringResource(R.string.settings_check_modules_update_interval),
-            icon = R.drawable.device_mobile_code,
             desc = stringResource(
                 R.string.settings_check_modules_update_interval_desc,
                 userPreferences.checkModuleUpdatesInterval
             ),
-            enabled = userPreferences.checkModuleUpdates,
+            // enabled = userPreferences.checkModuleUpdates,
+            enabled = false,
             suffix = stringResource(id = R.string.settings_check_modules_update_interval_suffix),
             value = userPreferences.checkModuleUpdatesInterval,
             options = optionsOfHours,

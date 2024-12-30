@@ -16,6 +16,7 @@ import com.dergoogler.mmrl.model.online.Changelog
 import com.dergoogler.mmrl.network.runRequest
 import com.dergoogler.mmrl.stub.IMMRLApiManager
 import com.dergoogler.mmrl.ui.component.Loading
+import com.dergoogler.mmrl.ui.component.ScaffoldDefaults
 import com.dergoogler.mmrl.ui.component.SettingsScaffold
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.screens.settings.changelogs.items.ChangelogItem
@@ -44,6 +45,7 @@ fun ChangelogScreen() {
 
 
     SettingsScaffold(
+        modifier = ScaffoldDefaults.settingsScaffoldModifier,
         title = R.string.settings_changelog
     ) {
         AnimatedVisibility(

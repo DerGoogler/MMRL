@@ -37,6 +37,7 @@ import com.dergoogler.mmrl.ui.animate.slideInTopToBottom
 import com.dergoogler.mmrl.ui.animate.slideOutBottomToTop
 import com.dergoogler.mmrl.ui.component.Loading
 import com.dergoogler.mmrl.ui.component.PageIndicator
+import com.dergoogler.mmrl.ui.component.ScaffoldDefaults
 import com.dergoogler.mmrl.ui.component.SettingsScaffold
 import com.dergoogler.mmrl.ui.component.TextFieldDialog
 import com.dergoogler.mmrl.ui.utils.isScrollingUp
@@ -85,6 +86,7 @@ fun RepositoriesScreen(
 
 
     SettingsScaffold(
+        modifier = ScaffoldDefaults.settingsScaffoldModifier,
         title = R.string.settings_repo,
         actions = {
             IconButton(

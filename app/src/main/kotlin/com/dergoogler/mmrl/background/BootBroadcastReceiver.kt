@@ -2,9 +2,7 @@ package com.dergoogler.mmrl.background
 
 import android.content.Context
 import android.content.Intent
-import androidx.work.ExistingPeriodicWorkPolicy
 import com.dergoogler.mmrl.datastore.UserPreferencesCompat
-import com.dergoogler.mmrl.ui.activity.MainActivity
 import dev.dergoogler.mmrl.compat.worker.MMRLBroadcastReceiver
 import kotlinx.coroutines.flow.first
 import timber.log.Timber
@@ -20,23 +18,23 @@ class BootBroadcastReceiver : MMRLBroadcastReceiver() {
 
     companion object {
         fun startWorkManagers(context: Context, userPreferences: UserPreferencesCompat) {
-            startWorkTask(
-                workerClass = RepoUpdateWorker::class.java,
-                context = context,
-                enabled = userPreferences.autoUpdateRepos,
-                repeatInterval = userPreferences.autoUpdateReposInterval,
-                workName = MainActivity.REPO_UPDATE_WORK_NAME,
-                existingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.UPDATE
-            )
-
-            startWorkTask(
-                workerClass = ModuleUpdateWorker::class.java,
-                context = context,
-                enabled = userPreferences.checkModuleUpdates,
-                repeatInterval = userPreferences.checkModuleUpdatesInterval,
-                workName = MainActivity.MODULE_UPDATE_WORK_NAME,
-                existingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.UPDATE
-            )
+//            startWorkTask(
+//                workerClass = RepoUpdateWorker::class.java,
+//                context = context,
+//                enabled = userPreferences.autoUpdateRepos,
+//                repeatInterval = userPreferences.autoUpdateReposInterval,
+//                workName = MainActivity.REPO_UPDATE_WORK_NAME,
+//                existingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.UPDATE
+//            )
+//
+//            startWorkTask(
+//                workerClass = ModuleUpdateWorker::class.java,
+//                context = context,
+//                enabled = userPreferences.checkModuleUpdates,
+//                repeatInterval = userPreferences.checkModuleUpdatesInterval,
+//                workName = MainActivity.MODULE_UPDATE_WORK_NAME,
+//                existingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.UPDATE
+//            )
         }
     }
 }

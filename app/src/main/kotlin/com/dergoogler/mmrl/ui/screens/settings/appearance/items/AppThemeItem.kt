@@ -28,7 +28,6 @@ fun AppThemeItem(
     var open by rememberSaveable { mutableStateOf(false) }
 
     ListButtonItem(
-        icon = R.drawable.color_swatch,
         title = stringResource(id = R.string.settings_app_theme),
         desc = stringResource(id = R.string.settings_app_theme_desc),
         onClick = { open = true }

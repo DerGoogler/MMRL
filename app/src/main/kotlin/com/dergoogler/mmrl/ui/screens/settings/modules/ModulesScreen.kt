@@ -1,9 +1,6 @@
 package com.dergoogler.mmrl.ui.screens.settings.modules
 
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.dergoogler.mmrl.R
@@ -12,7 +9,6 @@ import com.dergoogler.mmrl.ui.component.APatchLabel
 import com.dergoogler.mmrl.ui.component.KernelSuLabel
 import com.dergoogler.mmrl.ui.component.ListHeader
 import com.dergoogler.mmrl.ui.component.ListSwitchItem
-import com.dergoogler.mmrl.ui.component.ScaffoldModifier
 import com.dergoogler.mmrl.ui.component.SettingsScaffold
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.viewmodel.SettingsViewModel
@@ -24,7 +20,6 @@ fun ModulesScreen(
     val userPreferences = LocalUserPreferences.current
 
     SettingsScaffold(
-        modifier = ScaffoldModifier(column = Modifier.verticalScroll(rememberScrollState())),
         title = R.string.settings_modules,
     ) {
         ListHeader(
@@ -33,7 +28,6 @@ fun ModulesScreen(
 
         ListSwitchItem(
             enabled = viewModel.isProviderAlive && viewModel.platform.isNotMagisk,
-            icon = R.drawable.stars_outlined,
             title = stringResource(id = R.string.settings_shell_module_state_change),
             desc = stringResource(id = R.string.settings_shell_module_state_change_desc),
             checked = userPreferences.useShellForModuleStateChange && viewModel.platform.isNotMagisk,
@@ -43,7 +37,6 @@ fun ModulesScreen(
 
         ListSwitchItem(
             enabled = viewModel.isProviderAlive && viewModel.platform.isNotMagisk,
-            icon = R.drawable.device_mobile_code,
             title = stringResource(id = R.string.settings_use_generic_action),
             desc = stringResource(id = R.string.settings_use_generic_action_desc),
             checked = userPreferences.useShellForModuleAction,
@@ -58,7 +51,6 @@ fun ModulesScreen(
 
         ListSwitchItem(
             enabled = viewModel.isProviderAlive,
-            icon = R.drawable.world_code,
             title = stringResource(id = R.string.settings_use_shell_webui_assets),
             desc = stringResource(id = R.string.settings_use_shell_webui_assets_desc),
             checked = userPreferences.useShellToLoadWebUIAssets,
@@ -70,7 +62,6 @@ fun ModulesScreen(
         )
 
         ListSwitchItem(
-            icon = R.drawable.clear_all,
             title = stringResource(id = R.string.settings_clear_install_terminal),
             desc = stringResource(id = R.string.settings_clear_install_terminal_desc),
             checked = userPreferences.clearInstallTerminal,
@@ -78,7 +69,6 @@ fun ModulesScreen(
         )
 
         ListSwitchItem(
-            icon = R.drawable.file_type_zip,
             title = stringResource(id = R.string.settings_delete_zip),
             desc = stringResource(id = R.string.settings_delete_zip_desc),
             checked = userPreferences.deleteZipFile,
