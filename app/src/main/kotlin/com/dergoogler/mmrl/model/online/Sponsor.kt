@@ -7,4 +7,5 @@ data class Sponsor(
     val login: String,
     val avatarUrl: String,
     val url: String,
+    val amount: Int,
 )

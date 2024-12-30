@@ -22,3 +22,7 @@ fun Double.toFormattedFileSize(): String {
 
     return String.format(Locale.getDefault(), "%.2f %s", size, units[unitIndex])
 }
+
+fun Int.toDollars(divideBy: Double = 100.0): String {
+    return "$%.2f".format(Locale.getDefault(), this / divideBy)
+}

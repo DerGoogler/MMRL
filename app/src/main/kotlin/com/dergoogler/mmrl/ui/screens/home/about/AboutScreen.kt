@@ -51,6 +51,7 @@ import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
 import com.dergoogler.mmrl.ui.component.OutlinedCard
 import com.dergoogler.mmrl.ui.providable.LocalNavController
 import dev.dergoogler.mmrl.compat.ext.nullable
+import dev.dergoogler.mmrl.compat.ext.toDollars
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -220,6 +221,7 @@ fun AboutScreen() {
                                 itemTextStyle = itemTextStyle,
                                 contentPaddingValues = listItemContentPaddingValues,
                                 title = it.login,
+                                desc = it.amount.toDollars(),
                                 onClick = {
                                     browser.openUri(it.url)
                                 }
