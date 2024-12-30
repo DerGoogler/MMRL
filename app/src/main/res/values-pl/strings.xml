@@ -325,4 +325,7 @@
     <string name="all_the_sponsors_of_the_project_click_on_learn_more_to_get_included">Wszyscy sponsorzy projektu. Kliknij „Dowiedz się więcej”, aby zostać uwzględnionym.</string>
     <string name="settings_use_shell_webui_assets">Użyj powłoki, aby wczytać zasoby WebUI</string>
     <string name="menu_pin_action">Przypnij akcję</string>
+    <string name="settings_blacklist_alerts_desc">Wyświetlaj alerty dotyczące modułów lokalnych i dostępnych online oraz dodatkowo blokuj instalację modułów znajdujących się na czarnej liście</string>
+    <string name="settings_blacklist_alerts">Alerty czarnej listy</string>
+    <string name="blacklisted">Na czarnej liście</string>
 </resources>
