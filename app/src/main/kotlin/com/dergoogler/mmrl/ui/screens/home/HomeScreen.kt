@@ -23,7 +23,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
@@ -52,6 +51,7 @@ import com.dergoogler.mmrl.ui.component.CardDefaults
 import com.dergoogler.mmrl.ui.component.ListItem
 import com.dergoogler.mmrl.ui.component.ListItemDefaults
 import com.dergoogler.mmrl.ui.component.ListProgressBarItem
+import com.dergoogler.mmrl.ui.component.TopAppBar
 import com.dergoogler.mmrl.ui.component.TopAppBarIcon
 import com.dergoogler.mmrl.ui.component.WorkingModeBottomSheet
 import com.dergoogler.mmrl.ui.navigation.graphs.HomeScreen
@@ -360,20 +360,23 @@ private fun TopBar(
     onRebootClick: () -> Unit = {},
     onInfoClick: () -> Unit = {},
     scrollBehavior: TopAppBarScrollBehavior,
-) = TopAppBar(title = {
-    TopAppBarIcon()
-}, scrollBehavior = scrollBehavior, actions = {
-    if (isProviderAlive) {
-        IconButton(onClick = onRebootClick) {
+) = TopAppBar(
+    title = {
+        TopAppBarIcon()
+    },
+    scrollBehavior = scrollBehavior,
+    actions = {
+        if (isProviderAlive) {
+            IconButton(onClick = onRebootClick) {
+                Icon(
+                    painter = painterResource(id = R.drawable.refresh), contentDescription = null
+                )
+            }
+        }
+
+        IconButton(onClick = onInfoClick) {
             Icon(
-                painter = painterResource(id = R.drawable.refresh), contentDescription = null
+                painter = painterResource(id = R.drawable.info_circle), contentDescription = null
             )
         }
-    }
-
-    IconButton(onClick = onInfoClick) {
-        Icon(
-            painter = painterResource(id = R.drawable.info_circle), contentDescription = null
-        )
-    }
-})
+    })
