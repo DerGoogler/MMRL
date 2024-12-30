@@ -40,8 +40,10 @@ squareMoshi = "1.15.1"
 runtimeAndroid = "1.7.6"
 workRuntimeKtx = "2.10.0"
 lifecycleProcess = "2.8.7"
+apacheCommons = "1.27.1"
 
 [libraries]
+apache-commons-compress = { group = "org.apache.commons", name = "commons-compress", version.ref = "apacheCommons" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidxActivity" }
 androidx-annotation = { group = "androidx.annotation", name = "annotation", version.ref = "androidxAnnotation" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidxAppCompat" }

@@ -1,5 +1,6 @@
 package dev.dergoogler.mmrl.compat.impl
 
+//import java.util.zip.ZipFile
 import android.os.Build
 import com.dergoogler.mmrl.Compat
 import com.topjohnwu.superuser.CallbackList
@@ -13,8 +14,8 @@ import dev.dergoogler.mmrl.compat.content.State
 import dev.dergoogler.mmrl.compat.stub.IModuleManager
 import dev.dergoogler.mmrl.compat.stub.IShell
 import dev.dergoogler.mmrl.compat.stub.IShellCallback
+import org.apache.commons.compress.archivers.zip.ZipFile
 import java.io.File
-import java.util.zip.ZipFile
 
 internal abstract class BaseModuleManagerImpl(
     private val shell: Shell,
@@ -85,7 +86,7 @@ internal abstract class BaseModuleManagerImpl(
     }
 
     override fun getModuleInfo(zipPath: String): LocalModule? {
-        val zipFile = ZipFile(zipPath)
+        val zipFile = ZipFile.Builder().setFile(zipPath).get()
         val entry = zipFile.getEntry(PROP_FILE) ?: return null
 
         return zipFile.getInputStream(entry).use {
