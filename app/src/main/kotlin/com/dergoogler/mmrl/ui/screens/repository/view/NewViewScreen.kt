@@ -2,7 +2,6 @@ package com.dergoogler.mmrl.ui.screens.repository.view
 
 import android.os.Build
 import androidx.annotation.StringRes
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -41,6 +40,7 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
@@ -53,6 +53,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -70,14 +72,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import coil.compose.AsyncImagePainter
-import coil.compose.rememberAsyncImagePainter
-import coil.request.CachePolicy
-import coil.request.ImageRequest
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.model.local.BulkModule
 import com.dergoogler.mmrl.model.local.State
 import com.dergoogler.mmrl.model.online.VersionItem
+import com.dergoogler.mmrl.model.online.hasCategories
+import com.dergoogler.mmrl.model.online.hasScreenshots
+import com.dergoogler.mmrl.model.online.hasValidMessage
 import com.dergoogler.mmrl.ui.component.APatchLabel
 import com.dergoogler.mmrl.ui.component.Alert
 import com.dergoogler.mmrl.ui.component.AntiFeaturesItem
@@ -96,6 +97,7 @@ import com.dergoogler.mmrl.ui.providable.LocalNavController
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.screens.repository.view.items.InstallConfirmDialog
 import com.dergoogler.mmrl.ui.screens.repository.view.items.LicenseItem
+import com.dergoogler.mmrl.ui.screens.repository.view.items.ModuleCover
 import com.dergoogler.mmrl.ui.screens.repository.view.items.VersionsItem
 import com.dergoogler.mmrl.ui.screens.repository.view.items.ViewTrackBottomSheet
 import com.dergoogler.mmrl.ui.utils.navigateSingleTopTo
@@ -105,6 +107,7 @@ import com.dergoogler.mmrl.viewmodel.ModuleViewModel
 import com.dergoogler.mmrl.viewmodel.ModulesViewModel
 import com.dergoogler.mmrl.viewmodel.RepositoryViewModel
 import dev.dergoogler.mmrl.compat.activity.MMRLComponentActivity
+import dev.dergoogler.mmrl.compat.ext.fadingEdge
 import dev.dergoogler.mmrl.compat.ext.ifNotEmpty
 import dev.dergoogler.mmrl.compat.ext.ifNotNullOrBlank
 import dev.dergoogler.mmrl.compat.ext.isNotNullOrBlank
@@ -245,6 +248,9 @@ fun NewViewScreen(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             TopBar(
+                colors = TopAppBarDefaults.topAppBarColors().copy(
+                    containerColor = Color.Transparent
+                ),
                 actions = {
                     VersionsItem(
                         count = viewModel.versions.size,
@@ -387,9 +393,24 @@ fun NewViewScreen(
     ) { innerPadding ->
         Column(
             modifier = Modifier
-                .padding(innerPadding)
+                .let {
+                    if (repositoryMenu.showCover && module.hasCover) {
+                        Modifier
+                    } else {
+                        it.padding(innerPadding)
+                    }
+                }
                 .verticalScroll(rememberScrollState())
         ) {
+
+            val topBottomFade =
+                Brush.verticalGradient(0.55555f to Color.Red, 1f to Color.Transparent)
+
+            ModuleCover(
+                modifier = Modifier.fadingEdge(topBottomFade),
+                module = module,
+            )
+
             Spacer(modifier = Modifier.height(16.dp))
 
             Row(
@@ -421,7 +442,6 @@ fun NewViewScreen(
                 Column(
                     modifier = Modifier.weight(1f)
                 ) {
-
                     TextWithIcon(
                         style = MaterialTheme.typography.titleLarge,
                         text = module.name,
@@ -430,7 +450,7 @@ fun NewViewScreen(
                         rightIcon = true,
                         iconScalingFactor = 1.0f,
                         spacing = 8f,
-                                maxLines = 2,
+                        maxLines = 2,
                         overflow = TextOverflow.Ellipsis
                     )
 
@@ -593,20 +613,20 @@ fun NewViewScreen(
                 Spacer(modifier = Modifier.height(16.dp))
             }
 
-            if (module.note?.message != null) {
-                if (module.note.title != null && module.note.title.lowercase() == "deprecated") {
+            module.note.hasValidMessage {
+                if (it.hasTitle && it.isDeprecated) {
                     Alert(
                         icon = R.drawable.alert_triangle,
                         backgroundColor = MaterialTheme.colorScheme.errorContainer,
                         textColor = MaterialTheme.colorScheme.onErrorContainer,
-                        title = module.note.title,
-                        message = module.note.message,
+                        title = it.title,
+                        message = it.message!!,
                         modifier = Modifier.padding(horizontal = 16.dp)
                     )
                 } else {
                     Alert(
-                        title = module.note.title,
-                        message = module.note.message,
+                        title = it.title,
+                        message = it.message!!,
                         modifier = Modifier.padding(horizontal = 16.dp)
                     )
                 }
@@ -644,7 +664,7 @@ fun NewViewScreen(
                 color = MaterialTheme.colorScheme.outline
             )
 
-            module.categories?.ifNotEmpty {
+            module.hasCategories {
                 Spacer(modifier = Modifier.height(8.dp))
 
                 LazyRow(
@@ -667,11 +687,7 @@ fun NewViewScreen(
                 }
             }
 
-            module.hasCoverOrScreenshots { cover, screenshots ->
-                val coverAspectRatio = 2.048f
-                val screenshotAspectRatio = 9f / 16f
-                val commonHeight = 160.dp
-
+            module.hasScreenshots {
                 Spacer(modifier = Modifier.height(16.dp))
 
                 LazyRow(
@@ -682,52 +698,16 @@ fun NewViewScreen(
                     contentPadding = PaddingValues(start = 16.dp, end = 16.dp)
 
                 ) {
-                    cover.ifNotNullOrBlank {
-                        if (repositoryMenu.showCover)
-                            item {
-                                val painter = rememberAsyncImagePainter(
-                                    model = ImageRequest.Builder(context).data(it)
-                                        .memoryCacheKey(it)
-                                        .diskCacheKey(it).diskCachePolicy(CachePolicy.ENABLED)
-                                        .memoryCachePolicy(CachePolicy.ENABLED).build(),
-                                )
-
-                                if (painter.state !is AsyncImagePainter.State.Error) {
-                                    Image(
-                                        painter = painter,
-                                        contentDescription = null,
-                                        contentScale = ContentScale.Crop,
-                                        modifier = Modifier
-                                            .height(commonHeight)
-                                            .aspectRatio(coverAspectRatio)
-                                            .clip(RoundedCornerShape(10.dp)),
-                                    )
-                                } else {
-                                    Logo(
-                                        icon = R.drawable.alert_triangle,
-                                        shape = RoundedCornerShape(0.dp),
-                                        modifier = Modifier
-                                            .height(commonHeight)
-                                            .aspectRatio(coverAspectRatio)
-                                            .clip(RoundedCornerShape(10.dp)),
-
-                                        )
-                                }
-                            }
-                    }
-
-                    screenshots.ifNotEmpty {
-                        items(it.size) { index ->
-                            AsyncImage(
-                                model = it[index],
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .height(commonHeight)
-                                    .aspectRatio(screenshotAspectRatio)
-                                    .clip(RoundedCornerShape(10.dp)),
-                                contentScale = ContentScale.Crop
-                            )
-                        }
+                    items(it.size) { index ->
+                        AsyncImage(
+                            model = it[index],
+                            contentDescription = null,
+                            modifier = Modifier
+                                .height(160.dp)
+                                .aspectRatio(9f / 16f)
+                                .clip(RoundedCornerShape(10.dp)),
+                            contentScale = ContentScale.Crop
+                        )
                     }
                 }
             }
@@ -1149,6 +1129,7 @@ private fun TopBar(
     navController: NavController,
     scrollBehavior: TopAppBarScrollBehavior,
     actions: @Composable RowScope.() -> Unit = {},
+    colors: TopAppBarColors = TopAppBarDefaults.topAppBarColors(),
 ) = TopAppBar(
     modifier = modifier,
     navigationIcon = {
@@ -1160,5 +1141,6 @@ private fun TopBar(
     },
     actions = actions,
     title = {},
+    colors = colors,
     scrollBehavior = scrollBehavior
 )

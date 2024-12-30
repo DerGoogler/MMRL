@@ -1,12 +1,10 @@
 package com.dergoogler.mmrl.model.online
 
-import android.annotation.SuppressLint
 import androidx.compose.runtime.Composable
 import com.dergoogler.mmrl.Platform
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.utils.Utils
 import com.squareup.moshi.JsonClass
-import dev.dergoogler.mmrl.compat.ext.isNotNullOrBlank
 import dev.dergoogler.mmrl.compat.ext.isNotNullOrEmpty
 
 @JsonClass(generateAdapter = true)
@@ -65,10 +63,6 @@ data class OnlineModule(
     val hasSize = size != null
     val isVerified = verified != null && verified
 
-    inline fun <R> hasScreenshots(block: (List<String>) -> R): R? {
-        return if (!screenshots.isNullOrEmpty()) block(screenshots) else null
-    }
-
     private fun <T : List<String>> getFromModuleManagerOrDefault(
         default: T?,
         platform: Platform,
@@ -93,35 +87,6 @@ data class OnlineModule(
         arch = arch(platform),
         require = requires(platform)
     )
-
-    @Composable
-    inline fun <R> hasIcon(block: (String?) -> R): R? {
-        val userPreferences = LocalUserPreferences.current
-        val menu = userPreferences.repositoryMenu
-
-        return if (menu.showIcon) block(icon) else null
-    }
-
-    @Composable
-    inline fun <R> hasCover(block: (String) -> R): R? {
-        val userPreferences = LocalUserPreferences.current
-        val menu = userPreferences.repositoryMenu
-
-        return if (!cover.isNullOrBlank() && menu.showCover) block(cover) else null
-    }
-
-    @SuppressLint("ComposableNaming")
-    @Composable
-    inline fun <R> hasCoverOrScreenshots(block: (String?, List<String>?) -> R): R? {
-        val userPreferences = LocalUserPreferences.current
-        val menu = userPreferences.repositoryMenu
-
-        return if ((cover.isNotNullOrBlank() && menu.showCover) || screenshots.isNotNullOrEmpty()) {
-            block(cover, screenshots)
-        } else {
-            null
-        }
-    }
 
     override fun equals(other: Any?): Boolean {
         return when (other) {
@@ -151,4 +116,30 @@ data class OnlineModule(
             versions = emptyList()
         )
     }
+}
+
+
+@Composable
+inline fun <R> OnlineModule.hasIcon(block: (String?) -> R): R? {
+    val userPreferences = LocalUserPreferences.current
+    val menu = userPreferences.repositoryMenu
+
+    return if (menu.showIcon) block(icon) else null
+}
+
+@Composable
+inline fun <R> OnlineModule.hasCover(block: (String) -> R): R? {
+    val userPreferences = LocalUserPreferences.current
+    val menu = userPreferences.repositoryMenu
+
+    return if (!cover.isNullOrBlank() && menu.showCover) block(cover) else null
+}
+
+inline fun <R> OnlineModule.hasScreenshots(block: (List<String>) -> R): R? {
+    return if (!screenshots.isNullOrEmpty()) block(screenshots) else null
+}
+
+
+inline fun <R> OnlineModule.hasCategories(block: (List<String>) -> R): R? {
+    return if (!categories.isNullOrEmpty()) block(categories) else null
 }
