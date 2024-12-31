@@ -125,6 +125,7 @@ fun ModuleItem(
     }
 
     ModuleItem(
+        isBlacklisted = Blacklist.isBlacklisted(getBlacklist(module.id)),
         module = module,
         progress = progress,
         indeterminate = ops.isOpsRunning,

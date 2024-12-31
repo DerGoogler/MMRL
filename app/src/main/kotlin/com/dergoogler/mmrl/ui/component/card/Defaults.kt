@@ -25,13 +25,15 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.dergoogler.mmrl.compat.ext.ModifierScope
 import dev.dergoogler.mmrl.compat.ext.ModifierScopeImpl
+import dev.dergoogler.mmrl.compat.ext.ModifierScopeUnit
 import dev.dergoogler.mmrl.compat.ext.applyAlpha
+import dev.dergoogler.mmrl.compat.ext.composeApply
 import dev.dergoogler.mmrl.compat.ext.isNotNull
 import dev.dergoogler.mmrl.compat.ext.nullable
 
 @Composable
 internal fun BaseCard(
-    modifier: ModifierScope.() -> Unit = {},
+    modifier: ModifierScopeUnit = {},
     modifierScope: ModifierScope,
     style: CardStyle = CardDefaults.cardStyle,
     enabled: Boolean = true,
@@ -41,7 +43,7 @@ internal fun BaseCard(
     absolute: @Composable (BoxScope.() -> Unit)? = null,
     relative: @Composable (ColumnScope.() -> Unit),
 ) {
-    val modifierParameters = remember { ModifierScopeImpl(modifierScope) }.apply(modifier)
+    val modifierParameters = remember { ModifierScopeImpl(modifierScope) }.composeApply(modifier)
 
     val boxModifier = when {
         onClick.isNotNull() -> {

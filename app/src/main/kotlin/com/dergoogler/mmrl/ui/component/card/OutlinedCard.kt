@@ -5,11 +5,11 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import dev.dergoogler.mmrl.compat.ext.ModifierScope
+import dev.dergoogler.mmrl.compat.ext.ModifierScopeUnit
 
 @Composable
 fun OutlinedCard(
-    modifier: ModifierScope.() -> Unit = {},
+    modifier: ModifierScopeUnit = {},
     style: CardStyle = CardDefaults.outlinedCardStyle,
     enabled: Boolean = true,
     onClick: (() -> Unit)? = null,

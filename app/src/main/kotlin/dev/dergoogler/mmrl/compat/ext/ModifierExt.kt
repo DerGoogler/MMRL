@@ -1,5 +1,6 @@
 package dev.dergoogler.mmrl.compat.ext
 
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -95,7 +96,7 @@ interface ModifierScope {
     override fun hashCode(): Int
 }
 
-typealias ModifierScopeUnit = ModifierScope.() -> Unit
+typealias ModifierScopeUnit = @Composable (ModifierScope.() -> Unit)
 
 @Immutable
 class ModifierScopeImpl internal constructor(

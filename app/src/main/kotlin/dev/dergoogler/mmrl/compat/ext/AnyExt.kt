@@ -84,3 +84,9 @@ fun Any?.isNotNull(): Boolean {
 
     return this != null
 }
+
+@Composable
+inline fun <T> T.composeApply(block: @Composable T.() -> Unit): T {
+    block()
+    return this
+}

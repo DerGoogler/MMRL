@@ -2,6 +2,7 @@ package com.dergoogler.mmrl.ui.screens.modules
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
@@ -34,7 +35,7 @@ import com.dergoogler.mmrl.model.local.State
 import com.dergoogler.mmrl.model.local.versionDisplay
 import com.dergoogler.mmrl.ui.component.TextWithIcon
 import com.dergoogler.mmrl.ui.component.card.Card
-import com.dergoogler.mmrl.ui.component.card.CardDefaults
+import com.dergoogler.mmrl.ui.component.card.CardDefaults.cardStyle
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import dev.dergoogler.mmrl.compat.activity.MMRLComponentActivity
 import dev.dergoogler.mmrl.compat.ext.nullable
@@ -49,10 +50,11 @@ fun ModuleItem(
     indeterminate: Boolean = false,
     alpha: Float = 1f,
     decoration: TextDecoration = TextDecoration.None,
-    switch: @Composable (() -> Unit?)? = null,
-    indicator: @Composable (BoxScope.() -> Unit?)? = null,
-    startTrailingButton: (@Composable RowScope.() -> Unit)? = null,
-    trailingButton: @Composable RowScope.() -> Unit,
+    switch: @Composable() (() -> Unit?)? = null,
+    indicator: @Composable() (BoxScope.() -> Unit?)? = null,
+    startTrailingButton: @Composable() (RowScope.() -> Unit)? = null,
+    trailingButton: @Composable() (RowScope.() -> Unit),
+    isBlacklisted: Boolean = false,
 ) {
     val userPreferences = LocalUserPreferences.current
     val menu = userPreferences.modulesMenu
@@ -72,9 +74,19 @@ fun ModuleItem(
 
     Card(
         modifier = {
+            if (isBlacklisted) {
+                surface = this.surface.then(
+                    Modifier.border(
+                        width = 1.dp,
+                        color = MaterialTheme.colorScheme.errorContainer,
+                        shape = cardStyle.shape
+                    )
+                )
+            }
+
             column = Modifier.padding(0.dp)
         },
-        style = CardDefaults.cardStyle.copy(
+        style = cardStyle.copy(
             boxContentAlignment = Alignment.Center,
         ),
         absolute = {
