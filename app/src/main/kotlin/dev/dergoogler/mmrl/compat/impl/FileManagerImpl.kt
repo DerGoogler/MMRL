@@ -16,6 +16,8 @@ import java.io.InputStream
 import java.io.InputStreamReader
 import java.io.OutputStream
 import java.nio.file.Files
+import kotlin.math.log
+import kotlin.math.pow
 
 internal class FileManagerImpl : IFileManager.Stub() {
     override fun deleteOnExit(path: String) = with(File(path)) {
@@ -168,4 +170,19 @@ internal class FileManagerImpl : IFileManager.Stub() {
             true
         }
     }
+}
+
+object FileManagerUtil {
+    fun getStorageSizeRepresentation(storageSizeInBytes: Double): SizeRepresentation {
+        return if (log(storageSizeInBytes / (1024.0.pow(3)), 2.0) % 1.0 == 0.0) {
+            SizeRepresentation.Binary
+        } else {
+            SizeRepresentation.Decimal
+        }
+    }
+}
+
+enum class SizeRepresentation(val base: Int) {
+    Binary(1024),
+    Decimal(1000)
 }

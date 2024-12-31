@@ -1,6 +1,7 @@
 package com.dergoogler.mmrl.viewmodel
 
 import android.app.Application
+import android.content.Context
 import android.os.Environment
 import android.os.StatFs
 import com.dergoogler.mmrl.Compat
@@ -43,16 +44,16 @@ class HomeViewModel @Inject constructor(
             }
         }
 
-    val analytics: ModuleAnalytics?
-        get() = Compat.get(null) {
-            with(moduleManager) {
-                val local = runBlocking { localRepository.getLocalAllAsFlow().first() }
-                return@get ModuleAnalytics(
-                    local = local,
-                    fileManager = fileManager
-                )
-            }
+    fun analytics(context: Context): ModuleAnalytics? = Compat.get(null) {
+        with(moduleManager) {
+            val local = runBlocking { localRepository.getLocalAllAsFlow().first() }
+            return@get ModuleAnalytics(
+                context = context,
+                local = local,
+                fileManager = fileManager
+            )
         }
+    }
 
     init {
         Timber.d("HomeViewModel init")

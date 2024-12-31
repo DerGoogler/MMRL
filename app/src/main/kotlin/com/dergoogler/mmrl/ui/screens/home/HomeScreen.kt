@@ -264,9 +264,7 @@ fun HomeScreen(
                     }
                 }
 
-                viewModel.analytics.nullable {
-
-
+                viewModel.analytics(context).nullable {
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
