@@ -186,7 +186,7 @@
     <string name="settings_clear_install_terminal">ターミナルログを消去</string>
     <string name="settings_clear_install_terminal_desc">複数のモジュールをインストール時にインストールターミナルのログを消去します</string>
     <string name="settings_shell_module_state_change">状態にシェルを使用</string>
-    <string name="settings_shell_module_state_change_desc">モジュールディレクトリにファイルを作成する代わりにシェルを使用します。一度有効化すると復元ボタンが使用不可能になります。</string>
+    <string name="settings_shell_module_state_change_desc">モジュールディレクトリにファイルを作成する代わりにシェルを使用します (一度有効化すると復元ボタンが使用不可能になります)</string>
     <!-- App Theme -->
     <string name="app_theme_palette">テーマパレット</string>
     <string name="app_theme_dark_theme">ダークテーマ</string>
@@ -325,4 +325,9 @@
     <string name="selected">選択済み</string>
     <string name="home_root_provider_version_name">Root プロバイダーバージョン名</string>
     <string name="home_root_provider_se_linux_context">SELinux コンテキスト</string>
+    <string name="settings_developer">開発者</string>
+    <string name="settings_webui_remote_url">WebUI リモート URL</string>
+    <string name="invalid_ip">有効なローカルドメインではありません！</string>
+    <string name="settings_enable_webui_remote_url">WebUI リモート URL を有効化</string>
+    <string name="settings_developer_desc">開発者向けデバッグツール</string>
 </resources>

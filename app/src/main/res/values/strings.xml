@@ -15,7 +15,6 @@
     <string name="working_mode_kernelsu_next_desc">An advanced kernel-based root solution with Magic Mount support, enhanced control over userspace apps, and customizable root privileges.</string>
     <string name="working_mode_kernelsu_desc">A kernel-based root solution offering enhanced control over userspace apps, customizable root privileges, and systemless module support using OverlayFS.</string>
     <string name="working_mode_magisk_desc">A suite of tools for Android customization, offering root access, module support, boot image modification, and process-level code execution with Zygisk.</string>
-
     <!-- Install -->
     <string name="install_screen_title">Installation</string>
     <string name="install_flashing">Flashing</string>
@@ -218,9 +217,8 @@
     <string name="settings_developer">Developer</string>
     <string name="settings_developer_desc">Debugging tools for developers</string>
     <string name="settings_webui_remote_url">WebUI Remote URL</string>
-    <string name="settings_webui_remote_url_desc">To simplify debugging, provide a local IP address such as http://localhost. See the alert above for more.</string>
+    <string name="settings_webui_remote_url_desc">To simplify debugging, provide a local domain such as http://localhost. See the alert above for more.</string>
     <string name="settings_webui_remote_url_alert_desc">WebUI will now consistently use your provided address for all modules, bypass SSL errors, and disable the access to /data/adb/modules/{ID}/webroot. Note that a self-signed local web server is required to use this feature, which is intended for debugging purposes only, is not meant for everyday use, and is used at your own risk.</string>
-
     <!-- App Theme -->
     <string name="app_theme_palette">Theme Palette</string>
     <string name="app_theme_dark_theme">Dark Theme</string>
@@ -302,7 +300,6 @@
     <string name="reboot_bootloader">Reboot to Bootloader</string>
     <string name="reboot_download">Reboot to Download</string>
     <string name="reboot_edl">Reboot to EDL</string>
-
     <string name="home_support_title">Support Me</string>
     <string name="home_support_content">MMRL is, and always will be, free, and open source. You can however show me that you care by making a donation.</string>
     <string name="home_installed_modules">Installed Modules</string>
@@ -314,7 +311,6 @@
     <string name="home_storage_usage">Storage Usage</string>
     <string name="home_root_provider_version_name">Root Provider Version Name</string>
     <string name="home_root_provider_se_linux_context">SELinux Context</string>
-
     <string name="bulk_install_module_already_added">Module already added</string>
     <string name="bulk_install_module_added">Module added</string>
     <string name="bulk_module_install">Bulk Module Install</string>
@@ -341,7 +337,7 @@
     <string name="unsafe_url_redirecting">Unsafe URL: %1$s. Redirecting…</string>
     <string name="copy_logs">Copy Logs</string>
     <string name="selected">Selected</string>
-    <string name="invalid_ip">This is not a valid local IP address!</string>
+    <string name="invalid_ip">This is not a valid local domain!</string>
     <string name="settings_enable_webui_remote_url">Enable WebUI Remote URL</string>
     <string name="install_screen_cancel_title">Cancel installation?</string>
     <string name="install_screen_cancel_text">Are you sure that you wanna cancel the installation?</string>

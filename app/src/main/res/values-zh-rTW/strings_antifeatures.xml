@@ -25,5 +25,5 @@
     <string name="unaskedremoval_name">未准移除</string>
     <string name="unaskedremoval_desc">模組會在未經使用者許可的情況下，擅自移除應用程式、檔案以及其他模組。</string>
     <string name="llm_name">巨量語文模型</string>
-    <string name="llm_desc">模組部分或完全以 AI 編寫而成</string>
+    <string name="llm_desc">模組部分或完全以人工智慧編寫而成</string>
 </resources>

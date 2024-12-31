@@ -303,4 +303,21 @@
     <string name="settings_root_version">Versão: %s</string>
     <string name="home_root_provider_version_name">Nome da versão do provedor raiz</string>
     <string name="home_root_provider_se_linux_context">Contexto SELinux</string>
+    <string name="settings_webui_remote_url">URL remoto da WebUI</string>
+    <string name="invalid_ip">Este não é um domínio local válido!</string>
+    <string name="settings_developer">Desenvolvedor</string>
+    <string name="settings_developer_desc">Ferramentas de depuração para desenvolvedores</string>
+    <string name="settings_webui_remote_url_desc">Para simplificar a depuração, forneça um domínio local como http://localhost. Veja o alerta acima para mais informações.</string>
+    <string name="settings_enable_webui_remote_url">Habilitar URL remoto da WebUI</string>
+    <string name="settings_webui_remote_url_alert_desc">O WebUI agora usará consistentemente o endereço fornecido para todos os módulos, ignorará erros de SSL e desabilitará o acesso a /data/adb/modules/{ID}/webroot. Observe que um servidor web local autoassinado é necessário para usar esse recurso, que se destina apenas a fins de depuração, não é destinado ao uso diário e é usado por sua conta e risco.</string>
+    <string name="install_screen_cancel_title">Cancelar instalação?</string>
+    <string name="action_screen_cancel_title">Cancelar ação?</string>
+    <string name="home_storage_usage">Uso de armazenamento</string>
+    <string name="learn_more">Saber mais</string>
+    <string name="settings_use_generic_action_desc">A maioria dos provedores raiz não suporta um comando CLI de ação. Em vez disso, você pode usar um script genérico</string>
+    <string name="settings_use_generic_action">Use ação genérica</string>
+    <string name="action_screen_cancel_text">Tem certeza de que deseja cancelar esta ação?</string>
+    <string name="menu_pin_webui">Fixar WebUI</string>
+    <string name="menu_pin_action">Ação de Pin</string>
+    <string name="install_screen_cancel_text">Tem certeza de que deseja cancelar a instalação?</string>
 </resources>
