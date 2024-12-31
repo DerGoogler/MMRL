@@ -5,6 +5,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.dergoogler.mmrl.R
+import com.dergoogler.mmrl.ui.component.listItem.ListItem
+import com.dergoogler.mmrl.ui.component.listItem.ListItemDefaults
+import com.dergoogler.mmrl.ui.component.listItem.ListItemTextStyle
 
 @Composable
 fun AntiFeaturesItem(

@@ -27,7 +27,7 @@ import com.dergoogler.mmrl.model.online.RecommendedRepo
 import com.dergoogler.mmrl.ui.component.BottomSheet
 import com.dergoogler.mmrl.ui.component.BulletList
 import com.dergoogler.mmrl.ui.component.HtmlText
-import com.dergoogler.mmrl.ui.component.ListButtonItem
+import com.dergoogler.mmrl.ui.component.listItem.ListButtonItem
 import com.dergoogler.mmrl.ui.screens.settings.repositories.FailureDialog
 import com.dergoogler.mmrl.viewmodel.RepositoriesViewModel
 import kotlinx.coroutines.CoroutineScope

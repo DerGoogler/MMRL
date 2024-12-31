@@ -11,10 +11,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dergoogler.mmrl.R
-import com.dergoogler.mmrl.ui.component.ListCollapseItem
-import com.dergoogler.mmrl.ui.component.ListSwitchItem
 import com.dergoogler.mmrl.ui.component.ScaffoldDefaults
 import com.dergoogler.mmrl.ui.component.SettingsScaffold
+import com.dergoogler.mmrl.ui.component.listItem.ListCollapseItem
+import com.dergoogler.mmrl.ui.component.listItem.ListSwitchItem
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.viewmodel.ModulesViewModel
 import com.dergoogler.mmrl.viewmodel.SettingsViewModel

@@ -1,18 +1,20 @@
 package com.dergoogler.mmrl.ui.screens.settings.appearance
 
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.dergoogler.mmrl.R
-import com.dergoogler.mmrl.ui.component.ListEditTextItem
-import com.dergoogler.mmrl.ui.component.ListRadioCheckItem
-import com.dergoogler.mmrl.ui.component.ListSwitchItem
 import com.dergoogler.mmrl.ui.component.SettingsScaffold
+import com.dergoogler.mmrl.ui.component.listItem.ListEditTextItem
+import com.dergoogler.mmrl.ui.component.listItem.ListRadioCheckItem
+import com.dergoogler.mmrl.ui.component.listItem.ListSwitchItem
 import com.dergoogler.mmrl.ui.navigation.MainScreen
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.screens.settings.appearance.items.AppThemeItem
 import com.dergoogler.mmrl.viewmodel.SettingsViewModel
+import dev.dergoogler.mmrl.compat.ext.toFormattedDateSafely
 
 @Composable
 fun AppearanceScreen(
@@ -42,6 +44,9 @@ fun AppearanceScreen(
         ListEditTextItem(
             title = stringResource(id = R.string.settings_date_pattern),
             desc = stringResource(id = R.string.settings_date_pattern_desc),
+            dialogDesc = {
+                Text(text = System.currentTimeMillis().toFormattedDateSafely(it))
+            },
             value = userPreferences.datePattern,
             onConfirm = {
                 viewModel.setDatePattern(it)

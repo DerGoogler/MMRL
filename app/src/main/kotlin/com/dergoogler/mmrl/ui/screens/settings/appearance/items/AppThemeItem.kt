@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.datastore.DarkMode
 import com.dergoogler.mmrl.ui.component.BottomSheet
-import com.dergoogler.mmrl.ui.component.ListButtonItem
+import com.dergoogler.mmrl.ui.component.listItem.ListButtonItem
 
 @Composable
 fun AppThemeItem(

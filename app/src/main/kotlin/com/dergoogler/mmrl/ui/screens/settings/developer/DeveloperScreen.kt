@@ -11,10 +11,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.datastore.developerMode
 import com.dergoogler.mmrl.ui.component.Alert
-import com.dergoogler.mmrl.ui.component.ListEditTextItem
-import com.dergoogler.mmrl.ui.component.ListHeader
-import com.dergoogler.mmrl.ui.component.ListSwitchItem
 import com.dergoogler.mmrl.ui.component.SettingsScaffold
+import com.dergoogler.mmrl.ui.component.listItem.ListEditTextItem
+import com.dergoogler.mmrl.ui.component.listItem.ListHeader
+import com.dergoogler.mmrl.ui.component.listItem.ListSwitchItem
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.viewmodel.SettingsViewModel
 import dev.dergoogler.mmrl.compat.ext.isLocalWifiUrl

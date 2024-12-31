@@ -21,7 +21,7 @@ import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.ui.component.BottomSheet
 import com.dergoogler.mmrl.ui.component.ConfirmDialog
 import com.dergoogler.mmrl.ui.component.LabelItem
-import com.dergoogler.mmrl.ui.component.ListButtonItem
+import com.dergoogler.mmrl.ui.component.listItem.ListButtonItem
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.viewmodel.HomeViewModel
 import dev.dergoogler.mmrl.compat.ext.nullable

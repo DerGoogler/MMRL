@@ -25,8 +25,8 @@ import com.dergoogler.mmrl.app.Const
 import com.dergoogler.mmrl.model.online.Changelog
 import com.dergoogler.mmrl.ui.component.BottomSheet
 import com.dergoogler.mmrl.ui.component.LabelItem
-import com.dergoogler.mmrl.ui.component.ListButtonItem
 import com.dergoogler.mmrl.ui.component.MarkdownText
+import com.dergoogler.mmrl.ui.component.listItem.ListButtonItem
 import dev.dergoogler.mmrl.compat.ext.fadingEdge
 import dev.dergoogler.mmrl.compat.ext.nullable
 

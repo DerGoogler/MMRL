@@ -42,13 +42,13 @@ import com.dergoogler.mmrl.model.online.Sponsor
 import com.dergoogler.mmrl.network.runRequest
 import com.dergoogler.mmrl.stub.IRepoManager
 import com.dergoogler.mmrl.ui.component.CardDefaults
-import com.dergoogler.mmrl.ui.component.ListButtonItem
-import com.dergoogler.mmrl.ui.component.ListCollapseItem
-import com.dergoogler.mmrl.ui.component.ListItemDefaults
 import com.dergoogler.mmrl.ui.component.Logo
 import com.dergoogler.mmrl.ui.component.MarkdownText
 import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
 import com.dergoogler.mmrl.ui.component.OutlinedCard
+import com.dergoogler.mmrl.ui.component.listItem.ListButtonItem
+import com.dergoogler.mmrl.ui.component.listItem.ListCollapseItem
+import com.dergoogler.mmrl.ui.component.listItem.ListItemDefaults
 import com.dergoogler.mmrl.ui.providable.LocalNavController
 import dev.dergoogler.mmrl.compat.ext.nullable
 import dev.dergoogler.mmrl.compat.ext.toDollars
