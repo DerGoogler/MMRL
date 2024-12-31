@@ -352,4 +352,6 @@
     <string name="settings_use_shell_webui_assets_desc">功能啟用後，便准許處置程序調用系統外殼來讀取檔案；功能停用時，僅開放處置程序逕自讀取 2 GB 以內的資源檔案。請注意：後者由處置程序逕自讀取檔案的速度會比前者更加快速。</string>
     <string name="blacklisted">已受封鎖</string>
     <string name="blacklisted_desc"><![CDATA[此模組已受《MMRL》封鎖。為保護你的安全，安裝程序無法進行。若仍執意安裝此模組，請停用**設定 > 安全措施 > 模組封鎖**選項。\n@more(深入了解)]]></string>
+    <string name="settings_blacklist_alerts">模組封鎖</string>
+    <string name="settings_blacklist_alerts_desc">為羅列於封鎖列表的本機、線上模組標記警示，防止安裝</string>
 </resources>
