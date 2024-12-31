@@ -19,6 +19,7 @@ import com.dergoogler.mmrl.repository.UserPreferencesRepository
 import com.dergoogler.mmrl.ui.navigation.graphs.RepositoriesScreen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.dergoogler.mmrl.compat.ext.toDecodedUrl
+import dev.dergoogler.mmrl.compat.ext.toEncodedUrl
 import dev.dergoogler.mmrl.compat.viewmodel.MMRLViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -27,7 +28,6 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import java.net.URLEncoder
 import javax.inject.Inject
 
 @HiltViewModel
@@ -84,8 +84,14 @@ class RepositoryViewModel @Inject constructor(
     }
 
     private fun dataObserver() {
+        val onlineModules = if (repoUrl != null) {
+            localRepository.getOnlineAllByUrlAsFlow(repoUrl)
+        } else {
+            localRepository.getOnlineAllAsFlow()
+        }
+
         combine(
-            localRepository.getOnlineAllByUrlAsFlow(repoUrl),
+            onlineModules,
             repositoryMenu
         ) { list, menu ->
             cacheFlow.value = list.map {
@@ -197,27 +203,30 @@ class RepositoryViewModel @Inject constructor(
     }
 
     companion object {
-        fun putSearch(type: String, value: String) =
+        fun putSearch(type: String, value: String, repoUrl: String) =
             RepositoriesScreen.RepoSearch.route
                 .replace(
-                    "{type}", type.replace("/", "\\/"),
+                    "{type}", type.toEncodedUrl(),
                     ignoreCase = true
                 )
                 .replace(
-                    "{value}", value.replace("/", "\\/"),
+                    "{value}", value.toEncodedUrl(),
+                    ignoreCase = true
+                )
+                .replace(
+                    "{repoUrl}", repoUrl.toEncodedUrl(),
                     ignoreCase = true
                 )
 
         fun putRepo(repo: RepoState, route: String = RepositoriesScreen.RepositoryView.route) =
             route.replace(
-                "{repoUrl}", URLEncoder.encode(repo.url, "utf-8")
+                "{repoUrl}", repo.url.toEncodedUrl()
             ).replace(
-                "{repoName}", URLEncoder.encode(repo.name, "utf-8")
+                "{repoName}", repo.name.toEncodedUrl()
             )
 
-
-        fun getRepoUrl(savedStateHandle: SavedStateHandle): String {
-            val url: String = checkNotNull(savedStateHandle["repoUrl"])
+        fun getRepoUrl(savedStateHandle: SavedStateHandle): String? {
+            val url: String = savedStateHandle["repoUrl"] ?: return null
             return url.toDecodedUrl()
         }
     }

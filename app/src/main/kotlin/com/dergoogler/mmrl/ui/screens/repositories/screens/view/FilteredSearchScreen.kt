@@ -28,19 +28,20 @@ import com.dergoogler.mmrl.ui.component.Loading
 import com.dergoogler.mmrl.ui.component.PageIndicator
 import com.dergoogler.mmrl.ui.component.TopAppBar
 import com.dergoogler.mmrl.ui.providable.LocalNavController
+import com.dergoogler.mmrl.ui.providable.LocalRepoArguments
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.screens.repositories.screens.repository.ModulesList
 import com.dergoogler.mmrl.ui.utils.none
 import com.dergoogler.mmrl.viewmodel.RepositoryViewModel
 import dev.dergoogler.mmrl.compat.ext.shareText
 import dev.dergoogler.mmrl.compat.ext.takeTrue
-import java.net.URLDecoder
-import java.net.URLEncoder
+import dev.dergoogler.mmrl.compat.ext.toDecodedUrl
+import dev.dergoogler.mmrl.compat.ext.toEncodedUrl
 
 @Composable
 fun FilteredSearchScreen(
-    type: String?,
-    value: String?,
+    type: String,
+    value: String,
     viewModel: RepositoryViewModel = hiltViewModel(),
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
@@ -50,11 +51,11 @@ fun FilteredSearchScreen(
     val context = LocalContext.current
 
     val navController = LocalNavController.current
+    val repoArgs = LocalRepoArguments.current
 
     LaunchedEffect(list, value) {
-        if (!value.isNullOrBlank() && !type.isNullOrBlank()) {
-            val decoded = URLDecoder.decode(value, "UTF-8")
-            viewModel.search("${type}:${decoded}")
+        if (value.isNotBlank() && type.isNotBlank()) {
+            viewModel.search("${type}:${value.toDecodedUrl(true)}")
         }
     }
 
@@ -72,13 +73,12 @@ fun FilteredSearchScreen(
                         )
                     }
                 },
-                title = { Text(text = value.orEmpty()) },
+                title = { Text(text = value.toDecodedUrl(true)) },
                 actions = {
-                    if (!value.isNullOrBlank() && !type.isNullOrBlank()) {
-                        val encoded = URLEncoder.encode(value, "UTF-8")
+                    if (value.isNotBlank() && type.isNotBlank()) {
                         IconButton(
                             onClick = {
-                                context.shareText("https://mmrl.dergoogler.com/search/${type}/${encoded}?utm_medium=share&utm_source=${context.packageName}")
+                                context.shareText("https://mmrl.dergoogler.com/search/${repoArgs.url.toEncodedUrl()}/$type/${value}?utm_medium=share&utm_source=${context.packageName}")
                             }
                         ) {
                             Icon(
@@ -100,7 +100,7 @@ fun FilteredSearchScreen(
                 Loading()
             }
 
-            if (list.isEmpty() && !viewModel.isLoading && !value.isNullOrBlank()) {
+            if (list.isEmpty() && !viewModel.isLoading && value.isNotBlank()) {
                 PageIndicator(
                     icon = R.drawable.cloud,
                     text = if (viewModel.isSearch) R.string.search_empty else R.string.repository_empty,

@@ -409,9 +409,11 @@ fun NewViewScreen(
                 .verticalScroll(rememberScrollState())
         ) {
 
-            val topBottomFade =
-                Brush.verticalGradient(0.55555f to Color.Red, 1f to Color.Transparent)
-
+            val topBottomFade = Brush.verticalGradient(
+                0.0f to Color.Red,
+                0.7f to Color.Red.copy(alpha = 0.5f),
+                1.0f to Color.Transparent
+            )
 
             module.cover.nullable(repositoryMenu.showCover) {
                 if (it.isNotEmpty()) {
@@ -471,7 +473,11 @@ fun NewViewScreen(
                         modifier = Modifier.clickable(
                             onClick = {
                                 navController.navigateSingleTopTo(
-                                    RepositoryViewModel.putSearch("author", module.author)
+                                    RepositoryViewModel.putSearch(
+                                        type = "author",
+                                        value = module.author,
+                                        repoUrl = moduleArgs.url
+                                    )
                                 )
                             }
                         ),
@@ -716,7 +722,11 @@ fun NewViewScreen(
                         AssistChip(
                             onClick = {
                                 navController.navigateSingleTopTo(
-                                    RepositoryViewModel.putSearch("category", it[category])
+                                    RepositoryViewModel.putSearch(
+                                        type = "category",
+                                        value = it[category],
+                                        repoUrl = moduleArgs.url
+                                    )
                                 )
                             },
                             label = { Text(it[category]) }

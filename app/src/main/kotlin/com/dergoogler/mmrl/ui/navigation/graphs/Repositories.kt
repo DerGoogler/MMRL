@@ -28,7 +28,7 @@ enum class RepositoriesScreen(val route: String) {
     View("View/{moduleId}/{repoUrl}"),
     RepositoryView("RepositoryView/{repoUrl}/{repoName}"),
     Description("Description/{moduleId}/{repoUrl}"),
-    RepoSearch("RepoSearch/{type}/{value}")
+    RepoSearch("RepoSearch/{repoUrl}/{type}/{value}")
 }
 
 fun NavGraphBuilder.repositoryScreen(
@@ -125,20 +125,36 @@ fun NavGraphBuilder.repositoryScreen(
         route = RepositoriesScreen.RepoSearch.route,
         arguments = listOf(
             navArgument("type") { type = NavType.StringType },
-            navArgument("value") { type = NavType.StringType }),
-        deepLinks = listOf(navDeepLink { uriPattern = "mmrl://search/{type}/{value}" },
-            navDeepLink { uriPattern = "https://mmrl.dergoogler.com/search/{type}/{value}" },
-            navDeepLink { uriPattern = "http://mmrl.dergoogler.com/search/{type}/{value}" }),
+            navArgument("repoUrl") { type = NavType.StringType },
+            navArgument("value") { type = NavType.StringType }
+        ),
+        deepLinks = listOf(navDeepLink { uriPattern = "mmrl://search/{repoUrl}/{type}/{value}" },
+            navDeepLink {
+                uriPattern = "https://mmrl.dergoogler.com/search/{repoUrl}/{type}/{value}"
+            },
+            navDeepLink {
+                uriPattern = "http://mmrl.dergoogler.com/search/{repoUrl}/{type}/{value}"
+            }),
         enterTransition = { scaleIn() + fadeIn() },
         exitTransition = { fadeOut() }
-    ) { nav ->
-        nav.arguments?.let {
-            val type = it.getString("type")
-            val value = it.getString("value")
+    ) {
+        val repoUrl = it.arguments?.getString("repoUrl")
+        val type = it.arguments?.getString("type")
+        val value = it.arguments?.getString("value")
 
+        if (repoUrl == null || type == null || value == null) throw NullPointerException(
+            "repoUrl, repoName, type or value is null"
+        )
+
+        CompositionLocalProvider(
+            LocalRepoArguments provides RepoArguments(
+                repoUrl.toEncodedUrl(),
+                "null",
+            )
+        ) {
             FilteredSearchScreen(
-                type = type,
-                value = value,
+                type = type.toEncodedUrl(),
+                value = value.toEncodedUrl(),
             )
         }
     }

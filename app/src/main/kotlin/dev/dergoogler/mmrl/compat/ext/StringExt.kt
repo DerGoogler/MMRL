@@ -76,7 +76,7 @@ private fun isUrlEncoded(url: String): Boolean {
     }
 }
 
-fun String.toDecodedUrl(): String = if (isUrlEncoded(this)) {
+fun String.toDecodedUrl(force: Boolean = false): String = if (force || isUrlEncoded(this)) {
     URLDecoder.decode(this, "UTF-8")
 } else {
     this
