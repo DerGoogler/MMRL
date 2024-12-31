@@ -37,7 +37,7 @@ enum class Event {
 
         private fun parseMonthDayTime(dateString: String): Pair<MonthDay, LocalTime> {
             val (monthDayPart, timePart) = dateString.split(" ")
-            val (month, day) = monthDayPart.split("-").map { it.toInt() }
+            val (day, month) = monthDayPart.split("-").map { it.toInt() }
             val monthDay = MonthDay.of(month, day)
             val time = LocalTime.parse(timePart)
             return monthDay to time
@@ -45,41 +45,41 @@ enum class Event {
 
         val isHalloween
             get() = checkDateRange(
-                startDate = "10-31 00:00",
-                endDate = "11-01 00:00"
+                startDate = "31-10 00:00",
+                endDate = "01-11 00:00"
             )
 
         val isMMRLBirthday
             get() = checkDateRange(
-                startDate = "04-25 00:00",
-                endDate = "04-26 00:00"
+                startDate = "25-04 00:00",
+                endDate = "26-04 00:00"
             )
 
         val isChristmas
             get() = checkDateRange(
-                startDate = "12-01 00:00",
-                endDate = "12-27 00:00"
+                startDate = "01-12 00:00",
+                endDate = "27-12 00:00"
             )
 
         val isNewYearsEve
             get() = checkDateRange(
-                startDate = "12-31 00:00",
-                endDate = "01-02 00:00"
+                startDate = "31-12 14:00",
+                endDate = "01-01 14:00"
             )
 
         val isSomeRandomDates
             get() = checkDateRange(
-                startDate = "10-28 00:00",
-                endDate = "10-29 00:00"
+                startDate = "28-10 00:00",
+                endDate = "29-10 00:00"
             ) || checkDateRange(
-                startDate = "10-05 00:00",
-                endDate = "10-06 00:00"
+                startDate = "05-10 00:00",
+                endDate = "06-10 00:00"
             ) || checkDateRange(
-                startDate = "11-18 00:00",
-                endDate = "11-19 00:00"
+                startDate = "18-11 00:00",
+                endDate = "19-11 00:00"
             ) || checkDateRange(
-                startDate = "11-20 00:00",
-                endDate = "11-21 00:00"
+                startDate = "20-11 00:00",
+                endDate = "21-11 00:00"
             )
     }
 }
