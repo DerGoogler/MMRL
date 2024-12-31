@@ -76,7 +76,7 @@ private fun RebootItem(
     )
 
     ListButtonItem(
-        labels = labels,
+        base = { this.labels = labels },
         enabled = enabled,
         title = stringResource(id = title), onClick = {
             if (userPreferences.confirmReboot) {

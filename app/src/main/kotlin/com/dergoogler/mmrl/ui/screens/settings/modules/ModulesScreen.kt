@@ -32,7 +32,9 @@ fun ModulesScreen(
             desc = stringResource(id = R.string.settings_shell_module_state_change_desc),
             checked = userPreferences.useShellForModuleStateChange && viewModel.platform.isNotMagisk,
             onChange = viewModel::setUseShellForModuleStateChange,
-            labels = listOf { KernelSuLabel(); APatchLabel() }
+            base = {
+                labels = listOf { KernelSuLabel(); APatchLabel() }
+            }
         )
 
         ListSwitchItem(
@@ -41,7 +43,9 @@ fun ModulesScreen(
             desc = stringResource(id = R.string.settings_use_generic_action_desc),
             checked = userPreferences.useShellForModuleAction,
             onChange = viewModel::setUseShellForModuleAction,
-            labels = listOf { KernelSuLabel(); APatchLabel() }
+            base = {
+                labels = listOf { KernelSuLabel(); APatchLabel() }
+            }
         )
 
 

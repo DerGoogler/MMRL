@@ -5,7 +5,6 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -29,12 +28,16 @@ import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.ui.component.TextFieldDialog
 import dev.dergoogler.mmrl.compat.ext.nullable
 
+data class DialogParameters(
+    var desc: @Composable ((String) -> Unit)? = null,
+    var supportingText: @Composable ((Boolean) -> Unit)? = null,
+)
+
 @Composable
 fun ListEditTextItem(
     modifier: Modifier = Modifier,
     title: String,
     desc: String? = null,
-    dialogDesc: @Composable ((String) -> Unit)? = null,
     value: String,
     onConfirm: (String) -> Unit,
     contentPaddingValues: PaddingValues = PaddingValues(vertical = 16.dp, horizontal = 25.dp),
@@ -42,11 +45,12 @@ fun ListEditTextItem(
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     @DrawableRes icon: Int? = null,
     enabled: Boolean = true,
-    learnMore: (() -> Unit)? = null,
     onValid: ((String) -> Boolean)? = null,
-    supportingText: @Composable ((Boolean) -> Unit)? = null,
-    labels: List<@Composable RowScope.() -> Unit>? = null,
+    dialog: DialogParameters.() -> Unit = {},
+    base: BaseParameters.() -> Unit = {},
 ) {
+    val dialogParameters = remember { DialogParameters() }.apply(dialog)
+
     var open by remember { mutableStateOf(false) }
     if (open) EditTextDialog(
         value = value,
@@ -54,8 +58,7 @@ fun ListEditTextItem(
         onClose = { open = false },
         onConfirm = onConfirm,
         onValid = onValid,
-        dialogDesc = dialogDesc,
-        supportingText = supportingText
+        dialogParameters = dialogParameters,
     )
 
     ListButtonItem(
@@ -66,10 +69,9 @@ fun ListEditTextItem(
         onClick = { open = true },
         contentPaddingValues = contentPaddingValues,
         interactionSource = interactionSource,
-        learnMore = learnMore,
         enabled = enabled,
         itemTextStyle = itemTextStyle,
-        labels = labels
+        base = base
     )
 }
 
@@ -77,11 +79,10 @@ fun ListEditTextItem(
 private fun EditTextDialog(
     title: String,
     value: String,
-    dialogDesc: @Composable ((String) -> Unit)? = null,
     onValid: ((String) -> Boolean)? = null,
-    supportingText: @Composable ((Boolean) -> Unit)? = null,
     onClose: () -> Unit,
     onConfirm: (String) -> Unit,
+    dialogParameters: DialogParameters,
 ) {
     var text by remember { mutableStateOf(value) }
     var isError by remember { mutableStateOf(false) }
@@ -120,7 +121,7 @@ private fun EditTextDialog(
         Column(
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            dialogDesc.nullable {
+            dialogParameters.desc.nullable {
                 it(text)
             }
 
@@ -136,7 +137,7 @@ private fun EditTextDialog(
                 },
                 singleLine = false,
                 supportingText = {
-                    supportingText.nullable {
+                    dialogParameters.supportingText.nullable {
                         it(isError)
                     }
                 },

@@ -812,13 +812,15 @@ fun NewViewScreen(
                         contentPaddingValues = listItemContentPaddingValues,
                         iconToRight = true,
                         title = stringResource(R.string.view_module_features),
-                        labels = listOf {
-                            LabelItem(
-                                text = stringResource(
-                                    R.string.view_module_section_count,
-                                    it.size
+                        base = {
+                            labels = listOf {
+                                LabelItem(
+                                    text = stringResource(
+                                        R.string.view_module_section_count,
+                                        it.size
+                                    )
                                 )
-                            )
+                            }
                         }
                     ) {
                         FeatureListItem(
@@ -894,13 +896,16 @@ fun NewViewScreen(
                     contentPaddingValues = listItemContentPaddingValues,
                     iconToRight = true,
                     title = stringResource(R.string.view_module_antifeatures),
-                    labels = listOf {
-                        LabelItem(
-                            text = stringResource(
-                                R.string.view_module_section_count,
-                                it.size
+                    base = {
+
+                        labels = listOf {
+                            LabelItem(
+                                text = stringResource(
+                                    R.string.view_module_section_count,
+                                    it.size
+                                )
                             )
-                        )
+                        }
                     }
                 ) {
                     AntiFeaturesItem(
@@ -919,13 +924,17 @@ fun NewViewScreen(
                     contentPaddingValues = listItemContentPaddingValues,
                     iconToRight = true,
                     title = stringResource(R.string.view_module_dependencies),
-                    labels = listOf {
-                        LabelItem(
-                            text = stringResource(
-                                R.string.view_module_section_count,
-                                requiredIds.size
+                    base = {
+
+
+                        labels = listOf {
+                            LabelItem(
+                                text = stringResource(
+                                    R.string.view_module_section_count,
+                                    requiredIds.size
+                                )
                             )
-                        )
+                        }
                     }
                 ) {
                     requiredIds.forEach { onlineModule ->
@@ -1148,7 +1157,7 @@ private fun FeatureListItem(
         itemTextStyle = itemTextStyle,
         title = stringResource(id = key),
         desc = stringResource(id = value),
-        labels = rootSolutions
+        base = { labels = rootSolutions }
     )
 }
 

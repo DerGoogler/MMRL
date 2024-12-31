@@ -3,7 +3,6 @@ package com.dergoogler.mmrl.ui.component.listItem
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -41,7 +40,7 @@ fun ListProgressBarItem(
     itemTextStyle: ListItemTextStyle = ListItemDefaults.itemStyle,
     @DrawableRes icon: Int? = null,
     enabled: Boolean = true,
-    labels: List<@Composable RowScope.() -> Unit>? = null,
+    base: BaseParameters.() -> Unit = {},
 ) {
     val layoutDirection = LocalLayoutDirection.current
     val start by remember {
@@ -106,7 +105,7 @@ fun ListProgressBarItem(
                 }
             },
             itemTextStyle = itemTextStyle,
-            labels = labels
+            base = base
         )
     }
 }

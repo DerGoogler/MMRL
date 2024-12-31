@@ -5,7 +5,6 @@ import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
@@ -40,8 +39,7 @@ fun ListButtonItem(
     @DrawableRes icon: Int? = null,
     iconToRight: Boolean = false,
     enabled: Boolean = true,
-    learnMore: (() -> Unit)? = null,
-    labels: List<@Composable RowScope.() -> Unit>? = null,
+    base: BaseParameters.() -> Unit = {},
 ) {
     val layoutDirection = LocalLayoutDirection.current
     val start by remember {
@@ -84,8 +82,7 @@ fun ListButtonItem(
             title = title,
             desc = desc,
             itemTextStyle = itemTextStyle,
-            labels = labels,
-            learnMore = learnMore
+            base = base
         )
 
         if (iconToRight) {

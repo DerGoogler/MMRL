@@ -44,13 +44,16 @@ fun AppearanceScreen(
         ListEditTextItem(
             title = stringResource(id = R.string.settings_date_pattern),
             desc = stringResource(id = R.string.settings_date_pattern_desc),
-            dialogDesc = {
-                Text(text = System.currentTimeMillis().toFormattedDateSafely(it))
+            dialog = {
+                desc = {
+                    Text(text = System.currentTimeMillis().toFormattedDateSafely(it))
+                }
             },
             value = userPreferences.datePattern,
             onConfirm = {
                 viewModel.setDatePattern(it)
-            })
+            }
+        )
 
         ListRadioCheckItem(
             title = stringResource(R.string.settings_homepage),

@@ -4,7 +4,6 @@ import androidx.annotation.DrawableRes
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -39,8 +38,7 @@ fun ListSwitchItem(
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     @DrawableRes icon: Int? = null,
     enabled: Boolean = true,
-    learnMore: (() -> Unit)? = null,
-    labels: List<@Composable RowScope.() -> Unit>? = null,
+    base: BaseParameters.() -> Unit = {},
 ) {
     val layoutDirection = LocalLayoutDirection.current
     val start by remember {
@@ -80,8 +78,7 @@ fun ListSwitchItem(
             title = title,
             desc = desc,
             itemTextStyle = itemTextStyle,
-            learnMore = learnMore,
-            labels = labels
+            base = base
         )
 
         Switch(

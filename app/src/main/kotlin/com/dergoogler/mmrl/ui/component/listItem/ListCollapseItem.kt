@@ -8,7 +8,6 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
@@ -44,9 +43,8 @@ fun ListCollapseItem(
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     iconToRight: Boolean = false,
     enabled: Boolean = true,
-    learnMore: (() -> Unit)? = null,
-    labels: List<@Composable RowScope.() -> Unit>? = null,
     isInitiallyExpanded: Boolean = false,
+    base: BaseParameters.() -> Unit = {},
     content: @Composable () -> Unit,
 ) {
     val layoutDirection = LocalLayoutDirection.current
@@ -107,8 +105,7 @@ fun ListCollapseItem(
                 title = title,
                 desc = desc,
                 itemTextStyle = itemTextStyle,
-                labels = labels,
-                learnMore = learnMore
+                base = base
             )
 
             if (iconToRight) {

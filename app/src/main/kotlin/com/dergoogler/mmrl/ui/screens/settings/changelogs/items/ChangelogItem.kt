@@ -44,12 +44,14 @@ fun ChangelogItem(
         title = changelog.versionName,
         desc = "${changelog.versionCode}",
         onClick = { open = true },
-        labels = changelog.preRelease nullable listOf {
-            LabelItem(
-                text = stringResource(
-                    id = R.string.pre_release
+        base = {
+            labels = changelog.preRelease nullable listOf {
+                LabelItem(
+                    text = stringResource(
+                        id = R.string.pre_release
+                    )
                 )
-            )
+            }
         }
     )
 }

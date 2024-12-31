@@ -5,7 +5,6 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
@@ -44,8 +43,7 @@ fun <T> ListRadioCheckItem(
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     @DrawableRes icon: Int? = null,
     enabled: Boolean = true,
-    learnMore: (() -> Unit)? = null,
-    labels: List<@Composable RowScope.() -> Unit>? = null,
+    base: BaseParameters.() -> Unit = {},
 ) {
     var open by remember { mutableStateOf(false) }
     if (open) RadioCheckDialog(
@@ -66,10 +64,9 @@ fun <T> ListRadioCheckItem(
         onClick = { open = true },
         contentPaddingValues = contentPaddingValues,
         interactionSource = interactionSource,
-        learnMore = learnMore,
         enabled = enabled,
         itemTextStyle = itemTextStyle,
-        labels = labels
+        base = base
     )
 }
 

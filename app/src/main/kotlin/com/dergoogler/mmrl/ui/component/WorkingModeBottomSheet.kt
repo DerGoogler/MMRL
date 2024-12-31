@@ -96,9 +96,11 @@ fun WorkingModeItem(
     title = title,
     desc = desc,
     onClick = onClick,
-    labels = selected nullable listOf {
-        LabelItem(
-            text = stringResource(id = R.string.selected)
-        )
+    base = {
+        labels = selected nullable listOf {
+            LabelItem(
+                text = stringResource(id = R.string.selected)
+            )
+        }
     }
 )

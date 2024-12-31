@@ -64,20 +64,20 @@ fun DeveloperScreen(
                 viewModel.setWebUiDevUrl(it)
             },
             onValid = { !it.isLocalWifiUrl() },
-            supportingText = { isError ->
-                isError.takeTrue {
-                    Text(
-                        text = stringResource(R.string.invalid_ip),
-                        color = MaterialTheme.colorScheme.error,
-                        style = MaterialTheme.typography.labelSmall
-                    )
+            dialog = {
+                supportingText = { isError ->
+                    isError.takeTrue {
+                        Text(
+                            text = stringResource(R.string.invalid_ip),
+                            color = MaterialTheme.colorScheme.error,
+                            style = MaterialTheme.typography.labelSmall
+                        )
+                    }
                 }
-            }
+            },
         )
 
-
         ListHeader(title = stringResource(id = R.string.page_modules))
-
 
         ListSwitchItem(
             enabled = userPreferences.developerMode,

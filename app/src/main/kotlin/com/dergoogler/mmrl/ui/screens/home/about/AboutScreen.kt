@@ -211,8 +211,10 @@ fun AboutScreen() {
                         contentPaddingValues = listItemContentPaddingValues,
                         title = stringResource(R.string.sponsors),
                         desc = stringResource(R.string.all_the_sponsors_of_the_project_click_on_learn_more_to_get_included),
-                        learnMore = {
-                            browser.openUri(Const.SPONSORS_URL)
+                        base = {
+                            learnMore = {
+                                browser.openUri(Const.SPONSORS_URL)
+                            }
                         },
                         iconToRight = true
                     ) {
