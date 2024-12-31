@@ -6,7 +6,7 @@
     <string name="setup_root_desc">Magisk または KernelSU による root 権限の許可が必要です</string>
     <string name="setup_shizuku_desc">Sui または Shizuku (root) による許可が必要です</string>
     <string name="setup_non_root_title">Non-Root</string>
-    <string name="setup_non_root_desc">root 権限は不要で、モジュールのダウンロード機能のみが使用可能です</string>
+    <string name="setup_non_root_desc">root 権限は不要で、モジュールのダウンロード機能のみが使用可能です。</string>
     <!-- Install -->
     <string name="install_screen_title">インストール</string>
     <string name="install_flashing">フラッシュ中</string>
@@ -330,4 +330,28 @@
     <string name="invalid_ip">有効なローカルドメインではありません！</string>
     <string name="settings_enable_webui_remote_url">WebUI リモート URL を有効化</string>
     <string name="settings_developer_desc">開発者向けデバッグツール</string>
+    <string name="working_mode_kernelsu_next_desc">Magic Mount のサポート、ユーザー空間アプリに対する強化された制御とカスタマイズ可能な root 権限を備えた、高度なカーネルベースの root ソリューションです。</string>
+    <string name="working_mode_magisk_desc">Android カスタマイズ用のツールスイートです。root アクセス、モジュールのサポートと boot イメージの変更、Zygisk によるプロセスレベルのコード実行を提供します。</string>
+    <string name="settings_webui_remote_url_desc">デバッグを簡素化するには、http://localhost などのローカルドメインを指定します。詳細については、上記のアラートを参照してください。</string>
+    <string name="install_screen_cancel_text">インストールをキャンセルしてもよろしいですか？</string>
+    <string name="action_screen_cancel_title">アクションをキャンセルしますか？</string>
+    <string name="menu_pin_action">アクションをピン留め</string>
+    <string name="menu_pin_webui">WebUI をピン留め</string>
+    <string name="home_storage_usage">ストレージ使用量</string>
+    <string name="action_screen_cancel_text">アクションをキャンセルしてもよろしいですか？</string>
+    <string name="learn_more">詳しく見る</string>
+    <string name="sponsors">スポンサー</string>
+    <string name="settings_use_shell_webui_assets">シェルを使用して WebUI アセットを読み込む</string>
+    <string name="settings_use_shell_webui_assets_desc">この機能を有効化すると、パスハンドラーはアセットバイトを直接読み取る代わりにシェルが使用できるようになり、2 GB のファイルサイズ制限がなくなります。直接なバイト読み取り方式が高速であることにご注意ください。</string>
+    <string name="blacklisted">ブラックリスト済み</string>
+    <string name="settings_blacklist_alerts">ブラックリストアラート</string>
+    <string name="settings_blacklist_alerts_desc">ローカルのモジュールとモジュールを探すでアラートを表示してブラックリストに登録済みのモジュールのインストールをブロックします</string>
+    <string name="install_screen_cancel_title">インストールをキャンセルしますか？</string>
+    <string name="settings_use_generic_action">一般的なアクションを使用する</string>
+    <string name="working_mode_apatch_desc">Android カーネルとシステムのパッチを適用します。Magisk やカーネル関数のインジェクションに類似したモジュールをサポートする新しい root ソリューション (inline-hook と syscall-table-hook が必要) です。KernelSU から派生および変更がされています。</string>
+    <string name="working_mode_kernelsu_desc">ユーザー空間アプリに対する強化された制御とカスタマイズ可能な root 権限、OverlayFS を使用した Systemless モジュールのサポートを提供するカーネルベースの root ソリューションです。</string>
+    <string name="settings_webui_remote_url_alert_desc">WebUI はすべてのモジュールに対して、提供されたアドレスを一貫して使用してSSL エラーをバイパスし、/data/adb/modules/{ID}/webroot へのアクセスを無効化するようになりました。この機能を使用するには、自己署名されたローカル Web サーバーが必要です。この機能はデバッグを目的としており、日常的な使用を意図した物ではありません。自己責任で使用してください。</string>
+    <string name="settings_use_generic_action_desc">ほとんどの root プロバイダーはアクション CLI コマンドをサポートしていません。代わりに汎用スクリプトを使用できます。</string>
+    <string name="all_the_sponsors_of_the_project_click_on_learn_more_to_get_included">プロジェクトのすべてのスポンサーです。参加するには「詳しく見る」をタップしてください。</string>
+    <string name="blacklisted_desc"><![CDATA[このモジュールは、MMRL によってブラックリストに登録されています。安全性を確保するためにインストールは無効化されています。それを無視してでもインストールするには **設定 > セキュリティ > ブラックリストアラート** からアラートを無効化できます。\n@more(詳細)]]></string>
 </resources>
