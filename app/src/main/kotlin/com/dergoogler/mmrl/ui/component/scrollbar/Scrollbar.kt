@@ -37,7 +37,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
@@ -88,7 +88,7 @@ private const val SCROLLBAR_PRESS_DELTA_PCT = 0.02f
 @Immutable
 @JvmInline
 value class ScrollbarState internal constructor(
-    internal val packedValue: Long
+    internal val packedValue: Long,
 ) {
     companion object {
         val FULL = ScrollbarState(
@@ -104,11 +104,11 @@ value class ScrollbarState internal constructor(
 @Immutable
 @JvmInline
 private value class ScrollbarTrack(
-    val packedValue: Long
+    val packedValue: Long,
 ) {
     constructor(
         max: Float,
-        min: Float
+        min: Float,
     ) : this(packFloats(max, min))
 }
 
@@ -122,7 +122,7 @@ private value class ScrollbarTrack(
  */
 fun ScrollbarState(
     thumbSizePercent: Float,
-    thumbMovedPercent: Float
+    thumbMovedPercent: Float,
 ) = ScrollbarState(
     packedValue = packFloats(
         val1 = thumbSizePercent,
@@ -152,7 +152,7 @@ private val ScrollbarTrack.size
  * Returns the position of the scrollbar thumb on the track as a percentage
  */
 private fun ScrollbarTrack.thumbPosition(
-    dimension: Float
+    dimension: Float,
 ): Float = max(
     a = min(
         a = dimension / size,
@@ -207,7 +207,8 @@ fun Scrollbar(
     interactionSource: MutableInteractionSource?,
     thumb: @Composable () -> Unit,
     onThumbMoved: ((Float) -> Unit)?,
-    reverseLayout: Boolean
+    shape: RoundedCornerShape = RoundedCornerShape(topStartPercent = 50, bottomStartPercent = 50),
+    reverseLayout: Boolean,
 ) {
     // Only displayed when thumb size > 0.50
     if (state.thumbSizePercent > 0.50) return
@@ -243,6 +244,7 @@ fun Scrollbar(
                 else -> thumbMovedPercent
             }
         }
+
         else -> interactionThumbTravelPercent
     }
 
@@ -353,7 +355,7 @@ fun Scrollbar(
             }
             .background(
                 color = backgroundColor,
-                shape = CircleShape
+                shape = shape
             ),
     ) {
         val scrollbarThumbMovedDp = max(

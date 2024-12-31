@@ -19,7 +19,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
@@ -40,7 +40,7 @@ import kotlinx.coroutines.delay
 fun VerticalFastScrollbar(
     state: LazyListState,
     modifier: Modifier = Modifier,
-    contentPadding: PaddingValues = PaddingValues(horizontal = 2.dp),
+    contentPadding: PaddingValues = PaddingValues(start = 2.dp),
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     colors: ScrollbarColors = ScrollbarDefaults.colors(),
     thumb: @Composable () -> Unit = {
@@ -219,7 +219,8 @@ object ScrollbarDefaults {
     fun Thumb(
         color: Color,
         orientation: Orientation,
-        size: Dp = 8.dp
+        size: Dp = 8.dp,
+        shape: RoundedCornerShape = RoundedCornerShape(topStartPercent = 50, bottomStartPercent = 50)
     ) = Box(
         modifier = Modifier
             .run {
@@ -230,7 +231,7 @@ object ScrollbarDefaults {
             }
             .background(
                 color = color,
-                shape = CircleShape
+                shape = shape
             )
     )
 }
