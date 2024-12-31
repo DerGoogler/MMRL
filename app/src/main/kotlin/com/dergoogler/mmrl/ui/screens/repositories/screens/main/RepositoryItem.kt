@@ -28,6 +28,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -44,6 +46,7 @@ import com.dergoogler.mmrl.ui.component.card.Card
 import com.dergoogler.mmrl.ui.component.listItem.ListButtonItem
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import dev.dergoogler.mmrl.compat.core.LocalUriHandler
+import dev.dergoogler.mmrl.compat.ext.fadingEdge
 import dev.dergoogler.mmrl.compat.ext.nullable
 import dev.dergoogler.mmrl.compat.ext.shareText
 import dev.dergoogler.mmrl.compat.ext.toFormattedDateSafely
@@ -75,6 +78,16 @@ fun RepositoryItem(
                     contentAlignment = Alignment.Center
                 ) {
                     Cover(
+                        modifier = Modifier.fadingEdge(
+                            brush = Brush.verticalGradient(
+                                colors = listOf(
+                                    Color.Transparent,
+                                    Color.Black,
+                                ),
+                                startY = Float.POSITIVE_INFINITY,
+                                endY = 0f
+                            ),
+                        ),
                         url = it,
                     )
 
@@ -122,9 +135,9 @@ fun RepositoryItem(
                 )
             }
 
-            if (repo.cover == null) {
-                ModuleCountLabelItem(repo)
-            }
+//            if (repo.cover == null) {
+//                ModuleCountLabelItem(repo)
+//            }
         }
 
         repo.description.nullable {

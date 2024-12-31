@@ -61,11 +61,20 @@ fun Modifier.ignoreParentPadding(
     }
 }
 
-fun Modifier.fadingEdge(brush: Brush) = this
+fun Modifier.fadingEdge(
+    brush: Brush,
+    height: Float? = null,
+    blendMode: BlendMode = BlendMode.DstIn,
+) = this
     .graphicsLayer(compositingStrategy = CompositingStrategy.Offscreen)
     .drawWithContent {
         drawContent()
-        drawRect(brush = brush, blendMode = BlendMode.DstIn)
+        val gradientHeight = if (height != null) size.height * height else size.height
+        drawRect(
+            brush = brush,
+            size = size.copy(height = gradientHeight),
+            blendMode = blendMode
+        )
     }
 
 fun Modifier.applyAlpha(enabled: Boolean): Modifier = this.alpha(if (enabled) 1f else 0.5f)

@@ -408,17 +408,19 @@ fun NewViewScreen(
                 }
                 .verticalScroll(rememberScrollState())
         ) {
-
-            val topBottomFade = Brush.verticalGradient(
-                0.0f to Color.Red,
-                0.7f to Color.Red.copy(alpha = 0.5f),
-                1.0f to Color.Transparent
-            )
-
             module.cover.nullable(repositoryMenu.showCover) {
                 if (it.isNotEmpty()) {
                     Cover(
-                        modifier = Modifier.fadingEdge(topBottomFade),
+                        modifier = Modifier.fadingEdge(
+                            Brush.verticalGradient(
+                                colors = listOf(
+                                    Color.Transparent,
+                                    Color.Black
+                                ),
+                                startY = Float.POSITIVE_INFINITY,
+                                endY = 0f
+                            )
+                        ),
                         url = it,
                     )
                 }
