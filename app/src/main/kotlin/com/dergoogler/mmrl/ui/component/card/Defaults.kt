@@ -1,6 +1,7 @@
-package com.dergoogler.mmrl.ui.component
+package com.dergoogler.mmrl.ui.component.card
 
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -19,40 +20,58 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.dergoogler.mmrl.compat.ext.ModifierScope
+import dev.dergoogler.mmrl.compat.ext.ModifierScopeImpl
+import dev.dergoogler.mmrl.compat.ext.applyAlpha
+import dev.dergoogler.mmrl.compat.ext.isNotNull
 import dev.dergoogler.mmrl.compat.ext.nullable
 
 @Composable
-fun Card(
-    modifier: CardModifier = CardDefaults.cardModifier,
+internal fun BaseCard(
+    modifier: ModifierScope.() -> Unit = {},
+    modifierScope: ModifierScope,
     style: CardStyle = CardDefaults.cardStyle,
     enabled: Boolean = true,
     onClick: (() -> Unit)? = null,
-    /**
-     * Only works if [onClick] is not null.
-     */
-    onLongClick: () -> Unit = {},
+    onLongClick: (() -> Unit)? = null,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    absolute: @Composable (BoxScope.() -> Unit) = {},
+    absolute: @Composable (BoxScope.() -> Unit)? = null,
     relative: @Composable (ColumnScope.() -> Unit),
 ) {
-    val boxModifier = onClick.nullable(modifier.box) {
-        modifier.box
-            .combinedClickable(
+    val modifierParameters = remember { ModifierScopeImpl(modifierScope) }.apply(modifier)
+
+    val boxModifier = when {
+        onClick.isNotNull() -> {
+            modifierParameters.box.clickable(
                 enabled = enabled,
-                onClick = it,
-                onLongClick = onLongClick,
+                onClick = onClick,
                 interactionSource = interactionSource,
                 indication = ripple()
             )
+        }
+
+        onClick.isNotNull() && onLongClick.isNotNull() -> {
+            modifierParameters.box
+                .combinedClickable(
+                    enabled = enabled,
+                    onClick = onClick,
+                    onLongClick = onLongClick,
+                    interactionSource = interactionSource,
+                    indication = ripple()
+                )
+        }
+
+        else -> {
+            modifierParameters.box
+        }
     }
 
     Surface(
-        modifier = modifier.surface
-            .alpha(alpha = if (enabled) 1f else 0.5f),
+        modifier = modifierParameters.surface
+            .applyAlpha(enabled),
         shape = style.shape,
         color = style.containerColor,
         contentColor = style.contentColor,
@@ -63,40 +82,15 @@ fun Card(
             contentAlignment = style.boxContentAlignment
         ) {
             Column(
-                modifier = modifier.column
+                modifier = modifierParameters.column
             ) {
                 relative()
             }
 
-            absolute()
+            absolute.nullable { it() }
         }
     }
 }
-
-@Composable
-fun OutlinedCard(
-    modifier: CardModifier = CardDefaults.outlinedCardModifier,
-    style: CardStyle = CardDefaults.outlinedCardStyle,
-    enabled: Boolean = true,
-    onClick: (() -> Unit)? = null,
-    /**
-     * Only works if [onClick] is not null.
-     */
-    onLongClick: () -> Unit = {},
-    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    absolute: @Composable (BoxScope.() -> Unit) = {},
-    relative: @Composable (ColumnScope.() -> Unit),
-) = Card(
-    modifier = modifier,
-    style = style,
-    enabled = enabled,
-    onClick = onClick,
-    onLongClick = onLongClick,
-    interactionSource = interactionSource,
-    absolute = absolute,
-    relative = relative
-)
-
 
 @Immutable
 class CardStyle internal constructor(
@@ -150,43 +144,9 @@ class CardStyle internal constructor(
 }
 
 
-@Immutable
-class CardModifier internal constructor(
-    val surface: Modifier,
-    val box: Modifier,
-    val column: Modifier,
-) {
-    @Suppress("RedundantIf")
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other == null || other !is CardModifier) return false
-
-        if (box != other.box) return false
-        if (column != other.column) return false
-        if (surface != other.surface) return false
-
-        return true
-    }
-
-    fun copy(
-        surface: Modifier = this.surface,
-        box: Modifier = this.box,
-        column: Modifier = this.column,
-    ): CardModifier = CardModifier(
-        surface, box, column
-    )
-
-    override fun hashCode(): Int {
-        var result = box.hashCode()
-        result = 31 * result + column.hashCode()
-        result = 31 * result + surface.hashCode()
-        return result
-    }
-}
-
 object CardDefaults {
-    val cardModifier: CardModifier
-        @Composable get() = CardModifier(
+    val cardModifier
+        get(): ModifierScope = ModifierScopeImpl(
             surface = Modifier
                 .fillMaxWidth(),
             box = Modifier
@@ -212,8 +172,9 @@ object CardDefaults {
             contentColor = MaterialTheme.colorScheme.onSurfaceVariant
         )
 
-    val outlinedCardModifier: CardModifier
-        @Composable get() = cardModifier.copy(
+
+    val outlinedCardModifier
+        @Composable get(): ModifierScope = cardModifier.copy(
             surface = Modifier
                 .border(
                     width = 1.dp,

@@ -28,11 +28,11 @@ import coil.request.ImageRequest
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.model.online.OnlineModule
 import com.dergoogler.mmrl.model.state.OnlineState
-import com.dergoogler.mmrl.ui.component.Card
-import com.dergoogler.mmrl.ui.component.CardDefaults
 import com.dergoogler.mmrl.ui.component.LabelItem
 import com.dergoogler.mmrl.ui.component.Logo
 import com.dergoogler.mmrl.ui.component.TextWithIcon
+import com.dergoogler.mmrl.ui.component.card.Card
+import com.dergoogler.mmrl.ui.component.card.CardDefaults
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import dev.dergoogler.mmrl.compat.ext.isNotNullOrEmpty
 import dev.dergoogler.mmrl.compat.ext.nullable
@@ -57,9 +57,9 @@ fun ModuleItemDetailed(
 
     Card(
         enabled = enabled,
-        modifier = CardDefaults.cardModifier.copy(
+        modifier = {
             column = Modifier.padding(0.dp)
-        ),
+        },
         style = CardDefaults.cardStyle.copy(
             boxContentAlignment = Alignment.Center,
         ),

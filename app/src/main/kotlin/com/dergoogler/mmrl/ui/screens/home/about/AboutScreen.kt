@@ -41,11 +41,10 @@ import com.dergoogler.mmrl.app.Const
 import com.dergoogler.mmrl.model.online.Sponsor
 import com.dergoogler.mmrl.network.runRequest
 import com.dergoogler.mmrl.stub.IRepoManager
-import com.dergoogler.mmrl.ui.component.CardDefaults
 import com.dergoogler.mmrl.ui.component.Logo
 import com.dergoogler.mmrl.ui.component.MarkdownText
 import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
-import com.dergoogler.mmrl.ui.component.OutlinedCard
+import com.dergoogler.mmrl.ui.component.card.OutlinedCard
 import com.dergoogler.mmrl.ui.component.listItem.ListButtonItem
 import com.dergoogler.mmrl.ui.component.listItem.ListCollapseItem
 import com.dergoogler.mmrl.ui.component.listItem.ListItemDefaults
@@ -204,7 +203,9 @@ fun AboutScreen() {
 
             sponsors.nullable { sponsors ->
                 OutlinedCard(
-                    modifier = CardDefaults.outlinedCardModifier.copy(column = Modifier)
+                    modifier = {
+                        column = Modifier
+                    }
                 ) {
                     ListCollapseItem(
                         itemTextStyle = itemTextStyle,

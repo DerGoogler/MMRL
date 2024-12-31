@@ -42,8 +42,8 @@ import androidx.compose.ui.unit.dp
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.model.state.RepoState
 import com.dergoogler.mmrl.ui.component.BottomSheet
-import com.dergoogler.mmrl.ui.component.Card
 import com.dergoogler.mmrl.ui.component.LabelItem
+import com.dergoogler.mmrl.ui.component.card.Card
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import dev.dergoogler.mmrl.compat.ext.shareText
 import dev.dergoogler.mmrl.compat.ext.toFormattedDateSafely

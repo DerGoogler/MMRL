@@ -46,11 +46,10 @@ import com.dergoogler.mmrl.datastore.UserPreferencesCompat.Companion.isRoot
 import com.dergoogler.mmrl.model.online.Changelog
 import com.dergoogler.mmrl.network.runRequest
 import com.dergoogler.mmrl.stub.IMMRLApiManager
-import com.dergoogler.mmrl.ui.component.Card
-import com.dergoogler.mmrl.ui.component.CardDefaults
 import com.dergoogler.mmrl.ui.component.TopAppBar
 import com.dergoogler.mmrl.ui.component.TopAppBarIcon
 import com.dergoogler.mmrl.ui.component.WorkingModeBottomSheet
+import com.dergoogler.mmrl.ui.component.card.Card
 import com.dergoogler.mmrl.ui.component.listItem.ListItem
 import com.dergoogler.mmrl.ui.component.listItem.ListItemDefaults
 import com.dergoogler.mmrl.ui.component.listItem.ListProgressBarItem
@@ -64,6 +63,7 @@ import com.dergoogler.mmrl.ui.screens.settings.changelogs.items.ChangelogBottomS
 import com.dergoogler.mmrl.ui.utils.navigateSingleTopTo
 import com.dergoogler.mmrl.ui.utils.none
 import com.dergoogler.mmrl.viewmodel.HomeViewModel
+import dev.dergoogler.mmrl.compat.ext.ModifierScopeUnit
 import dev.dergoogler.mmrl.compat.ext.managerVersion
 import dev.dergoogler.mmrl.compat.ext.nullable
 import dev.dergoogler.mmrl.compat.ext.seLinuxStatus
@@ -121,12 +121,15 @@ fun HomeScreen(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            val compressedCardModifier = CardDefaults.cardModifier
-                .copy(column = Modifier.padding(vertical = 16.dp))
-            val compressedCardModifierRow = compressedCardModifier.copy(
-                surface = Modifier.weight(1f),
+            val compressedCardModifier: ModifierScopeUnit = {
                 column = Modifier.padding(vertical = 16.dp)
-            )
+
+            }
+
+            val compressedCardModifierRow: ModifierScopeUnit = {
+                surface = Modifier.weight(1f)
+                column = Modifier.padding(vertical = 16.dp)
+            }
 
             when {
                 userPreferences.workingMode.isRoot -> RootItem(

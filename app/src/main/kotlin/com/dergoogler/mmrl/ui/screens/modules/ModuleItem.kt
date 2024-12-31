@@ -32,9 +32,9 @@ import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.model.local.LocalModule
 import com.dergoogler.mmrl.model.local.State
 import com.dergoogler.mmrl.model.local.versionDisplay
-import com.dergoogler.mmrl.ui.component.Card
-import com.dergoogler.mmrl.ui.component.CardDefaults
 import com.dergoogler.mmrl.ui.component.TextWithIcon
+import com.dergoogler.mmrl.ui.component.card.Card
+import com.dergoogler.mmrl.ui.component.card.CardDefaults
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import dev.dergoogler.mmrl.compat.activity.MMRLComponentActivity
 import dev.dergoogler.mmrl.compat.ext.nullable
@@ -71,9 +71,9 @@ fun ModuleItem(
     }
 
     Card(
-        modifier = CardDefaults.cardModifier.copy(
+        modifier = {
             column = Modifier.padding(0.dp)
-        ),
+        },
         style = CardDefaults.cardStyle.copy(
             boxContentAlignment = Alignment.Center,
         ),
@@ -126,7 +126,10 @@ fun ModuleItem(
 
                 userPreferences.developerMode.takeTrue {
                     Text(
-                        text = stringResource(R.string.module_id, module.id) + " | ${module.size.toFormattedFileSize()}",
+                        text = stringResource(
+                            R.string.module_id,
+                            module.id
+                        ) + " | ${module.size.toFormattedFileSize()}",
                         style = MaterialTheme.typography.bodySmall,
                         textDecoration = decoration,
                         color = MaterialTheme.colorScheme.outline

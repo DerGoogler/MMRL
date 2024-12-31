@@ -2,6 +2,8 @@ package dev.dergoogler.mmrl.compat.ext
 
 import android.annotation.SuppressLint
 import androidx.compose.runtime.Composable
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.contract
 
 @SuppressLint("ComposableNaming")
 @Composable
@@ -73,3 +75,12 @@ inline fun <reified T> Any?.thenCompose(crossinline block: @Composable (T) -> Un
 // @SuppressLint("ComposableNaming")
 // @Composable
 // inline fun <reified T, reified S> Any?.compose(crossinline block: @Composable S.(T) -> Unit): Unit? = this.composeInvoke<T, S>(block)?.invoke(this@compose as S)
+
+@OptIn(ExperimentalContracts::class)
+fun Any?.isNotNull(): Boolean {
+    contract {
+        returns(true) implies (this@isNotNull != null)
+    }
+
+    return this != null
+}

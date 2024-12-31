@@ -8,6 +8,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.dergoogler.mmrl.ui.component.card.Card
+import com.dergoogler.mmrl.ui.component.card.CardDefaults
 import dev.dergoogler.mmrl.compat.ext.nullable
 
 @Composable
@@ -21,7 +23,9 @@ fun Alert(
     @DrawableRes icon: Int? = null,
     onDescTagClick: (String) -> Unit = {},
 ) = Card(
-    modifier = CardDefaults.cardModifier.copy(surface = modifier),
+    modifier = {
+        surface = surface.then(modifier)
+    },
     style = CardDefaults.cardStyle.copy(
         containerColor = backgroundColor,
         contentColor = textColor,

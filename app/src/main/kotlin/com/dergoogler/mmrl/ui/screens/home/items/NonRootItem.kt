@@ -20,8 +20,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.dergoogler.mmrl.R
-import com.dergoogler.mmrl.ui.component.Card
-import com.dergoogler.mmrl.ui.component.CardDefaults
+import com.dergoogler.mmrl.ui.component.card.Card
+import com.dergoogler.mmrl.ui.component.card.CardDefaults
 import dev.dergoogler.mmrl.compat.ext.nullable
 import dev.dergoogler.mmrl.compat.ext.takeTrue
 
@@ -30,7 +30,9 @@ internal fun NonRootItem(
     onClick: () -> Unit = {},
     developerMode: Boolean = false,
 ) = Card(
-    modifier = CardDefaults.cardModifier.copy(column = Modifier.padding(20.dp)),
+    modifier = {
+        column = Modifier.padding(20.dp)
+    },
     style = CardDefaults.cardStyle.copy(
         containerColor = MaterialTheme.colorScheme.secondaryContainer
     ),
