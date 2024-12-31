@@ -1,4 +1,4 @@
-package com.dergoogler.mmrl.ui.screens.repository.items
+package com.dergoogler.mmrl.ui.screens.repositories.items
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement

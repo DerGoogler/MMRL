@@ -1,4 +1,4 @@
-package com.dergoogler.mmrl.ui.screens.settings.repositories
+package com.dergoogler.mmrl.ui.screens.repositories.screens.main
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -23,37 +23,47 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.model.state.RepoState
+import com.dergoogler.mmrl.ui.providable.LocalNavController
+import com.dergoogler.mmrl.ui.utils.navigateSingleTopTo
+import com.dergoogler.mmrl.viewmodel.RepositoryViewModel
 
 @Composable
 fun RepositoriesList(
     list: List<RepoState>,
     state: LazyListState,
-    update: (RepoState) -> Unit,
     delete: (RepoState) -> Unit,
-    getUpdate: (RepoState, (Throwable) -> Unit) -> Unit
-) = LazyColumn(
-    state = state,
-    modifier = Modifier.fillMaxSize(),
-    contentPadding = PaddingValues(10.dp),
-    verticalArrangement = Arrangement.spacedBy(10.dp),
+    getUpdate: (RepoState, (Throwable) -> Unit) -> Unit,
 ) {
-    items(
-        items = list,
-        key = { it.url }
-    ) { repo ->
-        RepositoryItem(
-            repo = repo,
-            toggle = { update(it) },
-            onUpdate = getUpdate,
-            onDelete = delete,
-        )
+    val navController = LocalNavController.current
+
+    LazyColumn(
+        state = state,
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(16.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+    ) {
+        items(
+            items = list,
+            key = { it.url }
+        ) { repo ->
+            RepositoryItem(
+                repo = repo,
+                onClick = {
+                    navController.navigateSingleTopTo(
+                        RepositoryViewModel.putRepo(repo)
+                    )
+                },
+                onUpdate = getUpdate,
+                onDelete = delete,
+            )
+        }
     }
 }
 
 @Composable
 private fun RepositoryItem(
     repo: RepoState,
-    toggle: (RepoState) -> Unit,
+    onClick: () -> Unit,
     onUpdate: (RepoState, (Throwable) -> Unit) -> Unit,
     onDelete: (RepoState) -> Unit,
 ) {
@@ -77,9 +87,7 @@ private fun RepositoryItem(
 
     RepositoryItem(
         repo = repo,
-        toggle = {
-            toggle(repo.copy(enable = it))
-        },
+        onClick = onClick,
         update = {
             onUpdate(repo) {
                 failure = true
@@ -94,7 +102,7 @@ private fun RepositoryItem(
 private fun DeleteDialog(
     repo: RepoState,
     onClose: () -> Unit,
-    onConfirm: () -> Unit
+    onConfirm: () -> Unit,
 ) = AlertDialog(
     shape = RoundedCornerShape(20.dp),
     onDismissRequest = onClose,
@@ -125,7 +133,7 @@ private fun DeleteDialog(
 fun FailureDialog(
     name: String,
     message: String,
-    onClose: () -> Unit
+    onClose: () -> Unit,
 ) = AlertDialog(
     shape = RoundedCornerShape(20.dp),
     onDismissRequest = onClose,

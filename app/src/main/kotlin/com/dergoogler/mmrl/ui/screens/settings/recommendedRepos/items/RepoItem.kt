@@ -28,7 +28,7 @@ import com.dergoogler.mmrl.ui.component.BottomSheet
 import com.dergoogler.mmrl.ui.component.BulletList
 import com.dergoogler.mmrl.ui.component.HtmlText
 import com.dergoogler.mmrl.ui.component.listItem.ListButtonItem
-import com.dergoogler.mmrl.ui.screens.settings.repositories.FailureDialog
+import com.dergoogler.mmrl.ui.screens.repositories.screens.main.FailureDialog
 import com.dergoogler.mmrl.viewmodel.RepositoriesViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch

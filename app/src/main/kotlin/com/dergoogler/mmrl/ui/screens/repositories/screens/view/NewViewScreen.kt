@@ -1,4 +1,4 @@
-package com.dergoogler.mmrl.ui.screens.repository.view
+package com.dergoogler.mmrl.ui.screens.repositories.screens.view
 
 import android.os.Build
 import androidx.annotation.StringRes
@@ -83,6 +83,7 @@ import com.dergoogler.mmrl.model.online.isBlacklisted
 import com.dergoogler.mmrl.ui.component.APatchLabel
 import com.dergoogler.mmrl.ui.component.Alert
 import com.dergoogler.mmrl.ui.component.AntiFeaturesItem
+import com.dergoogler.mmrl.ui.component.Cover
 import com.dergoogler.mmrl.ui.component.KernelSuLabel
 import com.dergoogler.mmrl.ui.component.LabelItem
 import com.dergoogler.mmrl.ui.component.Logo
@@ -94,14 +95,14 @@ import com.dergoogler.mmrl.ui.component.listItem.ListButtonItem
 import com.dergoogler.mmrl.ui.component.listItem.ListCollapseItem
 import com.dergoogler.mmrl.ui.component.listItem.ListItem
 import com.dergoogler.mmrl.ui.component.listItem.ListItemTextStyle
-import com.dergoogler.mmrl.ui.navigation.graphs.RepositoryScreen
+import com.dergoogler.mmrl.ui.navigation.graphs.RepositoriesScreen
+import com.dergoogler.mmrl.ui.providable.LocalModuleArguments
 import com.dergoogler.mmrl.ui.providable.LocalNavController
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
-import com.dergoogler.mmrl.ui.screens.repository.view.items.InstallConfirmDialog
-import com.dergoogler.mmrl.ui.screens.repository.view.items.LicenseItem
-import com.dergoogler.mmrl.ui.screens.repository.view.items.ModuleCover
-import com.dergoogler.mmrl.ui.screens.repository.view.items.VersionsItem
-import com.dergoogler.mmrl.ui.screens.repository.view.items.ViewTrackBottomSheet
+import com.dergoogler.mmrl.ui.screens.repositories.screens.view.items.InstallConfirmDialog
+import com.dergoogler.mmrl.ui.screens.repositories.screens.view.items.LicenseItem
+import com.dergoogler.mmrl.ui.screens.repositories.screens.view.items.VersionsItem
+import com.dergoogler.mmrl.ui.screens.repositories.screens.view.items.ViewTrackBottomSheet
 import com.dergoogler.mmrl.ui.screens.settings.blacklist.items.BlacklistBottomSheet
 import com.dergoogler.mmrl.ui.utils.navigateSingleTopTo
 import com.dergoogler.mmrl.ui.utils.none
@@ -136,7 +137,7 @@ fun NewViewScreen(
     val module = viewModel.online
     val local = viewModel.local
 
-    val repositoryList by repositoryViewModel.online.collectAsStateWithLifecycle()
+    val repositoryList by repositoryViewModel.onlineAll.collectAsStateWithLifecycle()
 
     val navController = LocalNavController.current
 
@@ -144,6 +145,7 @@ fun NewViewScreen(
     val context = LocalContext.current
     val density = LocalDensity.current
     val browser = LocalUriHandler.current
+    val moduleArgs = LocalModuleArguments.current
 
     val listItemContentPaddingValues = PaddingValues(vertical = 16.dp, horizontal = 16.dp)
 
@@ -410,7 +412,7 @@ fun NewViewScreen(
             val topBottomFade =
                 Brush.verticalGradient(0.55555f to Color.Red, 1f to Color.Transparent)
 
-            ModuleCover(
+            Cover(
                 modifier = Modifier.fadingEdge(topBottomFade),
                 module = module,
             )
@@ -672,9 +674,10 @@ fun NewViewScreen(
                     title = stringResource(R.string.view_module_about_this_module),
                     onClick = {
                         navController.navigateSingleTopTo(
-                            ModuleViewModel.putModuleId(
-                                module,
-                                RepositoryScreen.Description.route
+                            ModuleViewModel.putModule(
+                                module= module,
+                                repoUrl = moduleArgs.url,
+                                route = RepositoriesScreen.Description.route
                             )
                         )
                     }
@@ -925,8 +928,6 @@ fun NewViewScreen(
                     iconToRight = true,
                     title = stringResource(R.string.view_module_dependencies),
                     base = {
-
-
                         labels = listOf {
                             LabelItem(
                                 text = stringResource(
@@ -952,10 +953,10 @@ fun NewViewScreen(
                             title = onlineModule.name,
                             desc = onlineModule.versionCode.toString(),
                             onClick = {
-                                navController.navigateSingleTopTo(
-                                    ModuleViewModel.putModuleId(onlineModule),
-                                    launchSingleTop = false
-                                )
+//                                navController.navigateSingleTopTo(
+//                                    ModuleViewModel.putModule(onlineModule, moduleArgs.url),
+//                                    launchSingleTop = false
+//                                )
                             }
                         )
                     }

@@ -1,4 +1,4 @@
-package com.dergoogler.mmrl.ui.screens.repository.view.items
+package com.dergoogler.mmrl.ui.screens.repositories.screens.view.items
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box

@@ -1,4 +1,4 @@
-package com.dergoogler.mmrl.ui.screens.repository.view
+package com.dergoogler.mmrl.ui.screens.repositories.screens.view
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
@@ -24,12 +24,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.ui.component.HtmlText
-import com.dergoogler.mmrl.ui.component.TopAppBar
 import com.dergoogler.mmrl.ui.component.Loading
 import com.dergoogler.mmrl.ui.component.PageIndicator
+import com.dergoogler.mmrl.ui.component.TopAppBar
 import com.dergoogler.mmrl.ui.providable.LocalNavController
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
-import com.dergoogler.mmrl.ui.screens.repository.ModulesList
+import com.dergoogler.mmrl.ui.screens.repositories.screens.repository.ModulesList
 import com.dergoogler.mmrl.ui.utils.none
 import com.dergoogler.mmrl.viewmodel.RepositoryViewModel
 import dev.dergoogler.mmrl.compat.ext.shareText
@@ -128,7 +128,7 @@ fun FilteredSearchScreen(
                 },
                 list = list,
                 state = listState,
-                navController = navController
+                navController = navController,
             )
         }
     }

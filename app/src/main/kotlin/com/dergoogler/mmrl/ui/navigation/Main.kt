@@ -16,9 +16,10 @@ enum class MainScreen(
         icon = R.drawable.home,
         iconFilled = R.drawable.home_filled
     ),
+    
     Repository(
-        route = "RepositoryScreen",
-        label = R.string.page_repository,
+        route = "RepositoriesScreen",
+        label = R.string.page_repositorys,
         icon = R.drawable.cloud,
         iconFilled = R.drawable.cloud_filled
     ),

@@ -15,14 +15,12 @@ import com.dergoogler.mmrl.ui.screens.settings.developer.DeveloperScreen
 import com.dergoogler.mmrl.ui.screens.settings.modules.ModulesScreen
 import com.dergoogler.mmrl.ui.screens.settings.other.OtherScreen
 import com.dergoogler.mmrl.ui.screens.settings.recommendedRepos.RecommendedRepoScreen
-import com.dergoogler.mmrl.ui.screens.settings.repositories.RepositoriesScreen
 import com.dergoogler.mmrl.ui.screens.settings.security.SecurityScreen
 import com.dergoogler.mmrl.ui.screens.settings.security.screens.AllowJsApiScreen
 import com.dergoogler.mmrl.ui.screens.settings.updates.UpdatesScreen
 
 enum class SettingsScreen(val route: String) {
     Home("Settings"),
-    Repositories("Repositories"),
     RecommendedRepos("RecommendedRepos"),
     Appearance("Appearance"),
     Updates("Updates"),
@@ -45,15 +43,6 @@ fun NavGraphBuilder.settingsScreen() = navigation(
         exitTransition = { fadeOut() }
     ) {
         SettingsScreen()
-    }
-
-    composable(
-        route = SettingsScreen.Repositories.route,
-        // deepLinks = listOf(navDeepLink { uriPattern = "mmrl://add-repo/{repoUrl}" }),
-        enterTransition = { scaleIn() + fadeIn() },
-        exitTransition = { fadeOut() }
-    ) {
-        RepositoriesScreen()
     }
 
     composable(

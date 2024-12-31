@@ -1,4 +1,4 @@
-package com.dergoogler.mmrl.ui.screens.repository
+package com.dergoogler.mmrl.ui.screens.repositories.screens.repository
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement

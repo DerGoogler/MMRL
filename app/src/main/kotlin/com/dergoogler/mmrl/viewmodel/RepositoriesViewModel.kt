@@ -3,6 +3,7 @@ package com.dergoogler.mmrl.viewmodel
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dergoogler.mmrl.database.entity.Repo.Companion.toRepo
@@ -22,7 +23,7 @@ import javax.inject.Inject
 class RepositoriesViewModel @Inject constructor(
     private val localRepository: LocalRepository,
     private val modulesRepository: ModulesRepository,
-//    savedStateHandle: SavedStateHandle,
+    savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
     private val reposFlow = MutableStateFlow(listOf<RepoState>())
     val repos get() = reposFlow.asStateFlow()
@@ -47,7 +48,7 @@ class RepositoriesViewModel @Inject constructor(
     }
 
     init {
-        Timber.d("RepositoriesViewModel init")
+        Timber.d("CustomRepositoriesViewModel init")
         dataObserver()
     }
 

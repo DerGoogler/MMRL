@@ -354,4 +354,5 @@
     <string name="blacklisted_desc"><![CDATA[This module has been blacklisted by MMRL. Installation is disabled to ensure your security. If you still want to install this module, you can disable blacklist alerts in the settings by navigating to **Settings > Security > Blacklist Alerts**.\n@more(Learn more)]]></string>
     <string name="settings_blacklist_alerts">Blacklist Alerts</string>
     <string name="settings_blacklist_alerts_desc">Display an alert for local and explore modules, and additionally block the installation of any blacklisted modules</string>
+    <string name="page_repositorys">Repositories</string>
 </resources>

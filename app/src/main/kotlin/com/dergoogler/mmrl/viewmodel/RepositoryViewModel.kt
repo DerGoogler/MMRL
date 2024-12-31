@@ -12,11 +12,13 @@ import com.dergoogler.mmrl.datastore.repository.RepositoryMenuCompat
 import com.dergoogler.mmrl.model.online.OnlineModule
 import com.dergoogler.mmrl.model.state.OnlineState
 import com.dergoogler.mmrl.model.state.OnlineState.Companion.createState
+import com.dergoogler.mmrl.model.state.RepoState
 import com.dergoogler.mmrl.repository.LocalRepository
 import com.dergoogler.mmrl.repository.ModulesRepository
 import com.dergoogler.mmrl.repository.UserPreferencesRepository
-import com.dergoogler.mmrl.ui.navigation.graphs.RepositoryScreen
+import com.dergoogler.mmrl.ui.navigation.graphs.RepositoriesScreen
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.dergoogler.mmrl.compat.ext.toDecodedUrl
 import dev.dergoogler.mmrl.compat.viewmodel.MMRLViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -25,6 +27,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.net.URLEncoder
 import javax.inject.Inject
 
 @HiltViewModel
@@ -46,22 +49,43 @@ class RepositoryViewModel @Inject constructor(
     private val keyFlow = MutableStateFlow("")
     val query get() = keyFlow.asStateFlow()
 
+    private val repoUrl = getRepoUrl(savedStateHandle)
+
     private val cacheFlow = MutableStateFlow(listOf<Pair<OnlineState, OnlineModule>>())
     private val onlineFlow = MutableStateFlow(listOf<Pair<OnlineState, OnlineModule>>())
     val online get() = onlineFlow.asStateFlow()
+
+    private val onlineAllFlow = MutableStateFlow(listOf<Pair<OnlineState, OnlineModule>>())
+    val onlineAll get() = onlineAllFlow.asStateFlow()
 
     var isLoading by mutableStateOf(true)
         private set
 
     init {
         Timber.d("RepositoryViewModel init")
+        dataObserverAll()
         dataObserver()
         keyObserver()
     }
 
+    private fun dataObserverAll() {
+        combine(
+            localRepository.getOnlineAllAsFlow()
+        ) { list ->
+            onlineAllFlow.value = list.first().map {
+                it.createState(
+                    local = localRepository.getLocalByIdOrNull(it.id),
+                    hasUpdatableTag = localRepository.hasUpdatableTag(it.id)
+                ) to it
+            }
+
+            isLoading = false
+        }.launchIn(viewModelScope)
+    }
+
     private fun dataObserver() {
         combine(
-            localRepository.getOnlineAllAsFlow(),
+            localRepository.getOnlineAllByUrlAsFlow(repoUrl),
             repositoryMenu
         ) { list, menu ->
             cacheFlow.value = list.map {
@@ -174,7 +198,7 @@ class RepositoryViewModel @Inject constructor(
 
     companion object {
         fun putSearch(type: String, value: String) =
-            RepositoryScreen.RepoSearch.route
+            RepositoriesScreen.RepoSearch.route
                 .replace(
                     "{type}", type.replace("/", "\\/"),
                     ignoreCase = true
@@ -183,5 +207,18 @@ class RepositoryViewModel @Inject constructor(
                     "{value}", value.replace("/", "\\/"),
                     ignoreCase = true
                 )
+
+        fun putRepo(repo: RepoState, route: String = RepositoriesScreen.RepositoryView.route) =
+            route.replace(
+                "{repoUrl}", URLEncoder.encode(repo.url, "utf-8")
+            ).replace(
+                "{repoName}", URLEncoder.encode(repo.name, "utf-8")
+            )
+
+
+        fun getRepoUrl(savedStateHandle: SavedStateHandle): String {
+            val url: String = checkNotNull(savedStateHandle["repoUrl"])
+            return url.toDecodedUrl()
+        }
     }
 }

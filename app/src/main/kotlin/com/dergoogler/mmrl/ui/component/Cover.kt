@@ -1,4 +1,4 @@
-package com.dergoogler.mmrl.ui.screens.repository.view.items
+package com.dergoogler.mmrl.ui.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.aspectRatio
@@ -16,12 +16,11 @@ import coil.request.CachePolicy
 import coil.request.ImageRequest
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.model.online.OnlineModule
-import com.dergoogler.mmrl.ui.component.Logo
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import dev.dergoogler.mmrl.compat.ext.nullable
 
 @Composable
-fun ModuleCover(
+fun Cover(
     modifier: Modifier = Modifier,
     module: OnlineModule,
     shape: RoundedCornerShape = RoundedCornerShape(0.dp),

@@ -1,4 +1,4 @@
-package com.dergoogler.mmrl.ui.screens.repository.view.items
+package com.dergoogler.mmrl.ui.screens.repositories.screens.view.items
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.size

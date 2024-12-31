@@ -1,4 +1,4 @@
-package com.dergoogler.mmrl.ui.screens.repository.view
+package com.dergoogler.mmrl.ui.screens.repositories.screens.view
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn

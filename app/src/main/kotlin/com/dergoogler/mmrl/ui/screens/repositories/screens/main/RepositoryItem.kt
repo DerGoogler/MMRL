@@ -1,8 +1,8 @@
-package com.dergoogler.mmrl.ui.screens.settings.repositories
+package com.dergoogler.mmrl.ui.screens.repositories.screens.main
+
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -51,120 +51,99 @@ import dev.dergoogler.mmrl.compat.ext.toFormattedDateSafely
 @Composable
 fun RepositoryItem(
     repo: RepoState,
-    toggle: (Boolean) -> Unit,
+    onClick: () -> Unit,
     update: () -> Unit,
     delete: () -> Unit,
-) = Card(
-    onClick = { toggle(!repo.enable) }
 ) {
-
     val userPreferences = LocalUserPreferences.current
     val context = LocalContext.current
     val (alpha, textDecoration) = when {
         !repo.compatible -> 0.5f to TextDecoration.LineThrough
-        !repo.enable -> 0.5f to TextDecoration.None
         else -> 1f to TextDecoration.None
     }
 
-    Row(
-        verticalAlignment = Alignment.Top
+    Card(
+        enabled = repo.compatible,
+        onClick = onClick
     ) {
-        Crossfade(
-            targetState = repo.enable,
-            label = "RepositoryItem"
+        Row(
+            verticalAlignment = Alignment.Top
         ) {
-            if (it) {
-                Icon(
-                    modifier = Modifier.size(32.dp),
-                    painter = painterResource(id = R.drawable.circle_check_filled),
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.secondary
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .alpha(alpha),
+                verticalArrangement = Arrangement.spacedBy(2.dp)
+            ) {
+                Text(
+                    text = repo.name,
+                    style = MaterialTheme.typography.titleSmall
+                        .copy(fontWeight = FontWeight.Bold),
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
+                    textDecoration = textDecoration
+                )
+
+                Text(
+                    text = stringResource(
+                        id = R.string.module_update_at,
+                        repo.timestamp.toFormattedDateSafely(userPreferences.datePattern)
+                    ),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.outline,
+                    textDecoration = textDecoration
+                )
+            }
+
+            if (repo.compatible) {
+                LabelItem(
+                    text = stringResource(id = R.string.repo_modules, repo.size),
+                    upperCase = false
                 )
             } else {
-                Icon(
-                    modifier = Modifier.size(32.dp),
-                    painter = painterResource(id = R.drawable.circle_x_filled),
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.secondary
+                LabelItem(
+                    text = stringResource(id = R.string.repo_incompatible),
+                    containerColor = MaterialTheme.colorScheme.error,
+                    contentColor = MaterialTheme.colorScheme.onError
                 )
             }
         }
 
-        Spacer(modifier = Modifier.width(12.dp))
-        Column(
-            modifier = Modifier
-                .weight(1f)
-                .alpha(alpha),
-            verticalArrangement = Arrangement.spacedBy(2.dp)
+        Row(
+            modifier = Modifier.padding(top = 12.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = repo.name,
-                style = MaterialTheme.typography.titleSmall
-                    .copy(fontWeight = FontWeight.Bold),
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis,
-                textDecoration = textDecoration
+            var open by remember { mutableStateOf(false) }
+            if (open) {
+                BottomSheetForItem(
+                    repo = repo,
+                    onDelete = delete,
+                    onClose = { open = false }
+                )
+            }
+
+            ButtonItem(
+                icon = R.drawable.share,
+                onClick = { context.shareText(repo.url) }
             )
 
-            Text(
-                text = stringResource(
-                    id = R.string.module_update_at,
-                    repo.timestamp.toFormattedDateSafely(userPreferences.datePattern)
-                ),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.outline,
-                textDecoration = textDecoration
+            Spacer(Modifier.weight(1f))
+
+            ButtonItem(
+                icon = R.drawable.at,
+                label = R.string.repo_options,
+                onClick = { open = true }
+            )
+
+            ButtonItem(
+                icon = R.drawable.cloud_download,
+                label = R.string.repo_options_update,
+                onClick = update
             )
         }
 
-        if (repo.compatible) {
-            LabelItem(
-                text = stringResource(id = R.string.repo_modules, repo.size),
-                upperCase = false
-            )
-        } else {
-            LabelItem(
-                text = stringResource(id = R.string.repo_incompatible),
-                containerColor = MaterialTheme.colorScheme.error,
-                contentColor = MaterialTheme.colorScheme.onError
-            )
-        }
     }
-
-    Row(
-        modifier = Modifier.padding(top = 12.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        var open by remember { mutableStateOf(false) }
-        if (open) {
-            BottomSheetForItem(
-                repo = repo,
-                onDelete = delete,
-                onClose = { open = false }
-            )
-        }
-
-        ButtonItem(
-            icon = R.drawable.share,
-            onClick = { context.shareText(repo.url) }
-        )
-
-        Spacer(Modifier.weight(1f))
-
-        ButtonItem(
-            icon = R.drawable.at,
-            label = R.string.repo_options,
-            onClick = { open = true }
-        )
-
-        ButtonItem(
-            icon = R.drawable.cloud_download,
-            label = R.string.repo_options_update,
-            onClick = update
-        )
-    }
-
 }
 
 @Composable

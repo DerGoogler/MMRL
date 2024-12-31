@@ -128,12 +128,38 @@ class LocalRepository @Inject constructor(
         return@map values
     }
 
+    fun getOnlineAllByUrlAsFlow(repoUrl: String) =
+        joinDao.getOnlineAllByUrlAsFlow(repoUrl).map { list ->
+            val values = mutableListOf<OnlineModule>()
+            list.forEach { entity ->
+                val new = entity.toModule()
+
+                if (new in values) {
+                    val old = values.first { it.id == new.id }
+                    if (new.versionCode > old.versionCode) {
+                        values.remove(old)
+                        values.add(new.copy(versions = old.versions))
+                    }
+                } else {
+                    values.add(
+                        new.copy(versions = getVersionById(new.id))
+                    )
+                }
+            }
+
+            return@map values
+        }
+
     suspend fun getOnlineByIdAndUrl(id: String, repoUrl: String) = withContext(Dispatchers.IO) {
         joinDao.getOnlineByIdAndUrl(id, repoUrl).toModule()
     }
 
     suspend fun getOnlineAllById(id: String) = withContext(Dispatchers.IO) {
         onlineDao.getAllById(id).map { it.toModule() }
+    }
+
+    suspend fun getOnlineAllByIdAndUrl(id: String, repoUrl: String) = withContext(Dispatchers.IO) {
+        onlineDao.getAllByIdAndUrl(id, repoUrl).map { it.toModule() }
     }
 
     suspend fun insertOnline(list: List<OnlineModule>, repoUrl: String) =
@@ -167,5 +193,9 @@ class LocalRepository @Inject constructor(
 
     suspend fun getVersionById(id: String) = withContext(Dispatchers.IO) {
         joinDao.getVersionById(id).map { it.toItem() }
+    }
+
+    suspend fun getVersionByIdAndUrl(id: String, repoUrl: String) = withContext(Dispatchers.IO) {
+        joinDao.getVersionByIdAndUrl(id, repoUrl).map { it.toItem() }
     }
 }

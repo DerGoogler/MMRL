@@ -1,4 +1,4 @@
-package com.dergoogler.mmrl.ui.screens.repository.view.items
+package com.dergoogler.mmrl.ui.screens.repositories.screens.view.items
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
