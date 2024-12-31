@@ -1,27 +1,25 @@
 package com.dergoogler.mmrl.ui.screens.repositories.screens.main
 
-
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.absolutePadding
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -31,8 +29,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -42,9 +38,13 @@ import androidx.compose.ui.unit.dp
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.model.state.RepoState
 import com.dergoogler.mmrl.ui.component.BottomSheet
+import com.dergoogler.mmrl.ui.component.Cover
 import com.dergoogler.mmrl.ui.component.LabelItem
 import com.dergoogler.mmrl.ui.component.card.Card
+import com.dergoogler.mmrl.ui.component.listItem.ListButtonItem
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
+import dev.dergoogler.mmrl.compat.core.LocalUriHandler
+import dev.dergoogler.mmrl.compat.ext.nullable
 import dev.dergoogler.mmrl.compat.ext.shareText
 import dev.dergoogler.mmrl.compat.ext.toFormattedDateSafely
 
@@ -63,10 +63,37 @@ fun RepositoryItem(
     }
 
     Card(
+        modifier = {
+            column = Modifier.padding(0.dp)
+        },
         enabled = repo.compatible,
         onClick = onClick
     ) {
+        repo.cover.nullable {
+            if (it.isNotEmpty()) {
+                Box(
+                    contentAlignment = Alignment.Center
+                ) {
+                    Cover(
+                        url = it,
+                    )
+
+                    Box(
+                        modifier = Modifier
+                            .absolutePadding(
+                                top = 16.dp,
+                                right = 16.dp
+                            )
+                            .align(Alignment.TopEnd),
+                    ) {
+                        ModuleCountLabelItem(repo)
+                    }
+                }
+            }
+        }
+
         Row(
+            modifier = Modifier.padding(top = 16.dp, start = 16.dp, end = 16.dp),
             verticalAlignment = Alignment.Top
         ) {
             Column(
@@ -95,22 +122,32 @@ fun RepositoryItem(
                 )
             }
 
-            if (repo.compatible) {
-                LabelItem(
-                    text = stringResource(id = R.string.repo_modules, repo.size),
-                    upperCase = false
-                )
-            } else {
-                LabelItem(
-                    text = stringResource(id = R.string.repo_incompatible),
-                    containerColor = MaterialTheme.colorScheme.error,
-                    contentColor = MaterialTheme.colorScheme.onError
-                )
+            if (repo.cover == null) {
+                ModuleCountLabelItem(repo)
             }
         }
 
+        repo.description.nullable {
+            Text(
+                modifier = Modifier
+                    .alpha(alpha = alpha)
+                    .padding(top = 16.dp)
+                    .padding(horizontal = 16.dp),
+                text = it,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.outline
+            )
+        }
+
+        HorizontalDivider(
+            thickness = 1.5.dp,
+            color = MaterialTheme.colorScheme.surface,
+            modifier = Modifier.padding(top = 8.dp)
+        )
+
         Row(
-            modifier = Modifier.padding(top = 12.dp),
+            modifier = Modifier
+                .padding(horizontal = 16.dp, vertical = 8.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -142,7 +179,6 @@ fun RepositoryItem(
                 onClick = update
             )
         }
-
     }
 }
 
@@ -205,84 +241,44 @@ private fun BottomSheetForItem(
         modifier = Modifier
             .padding(bottom = 18.dp),
     ) {
-        repo.support?.let {
-            ValueItem(
+        repo.support.nullable {
+            ListButtonItem(
                 icon = R.drawable.brand_git,
-                label = R.string.repo_options_support,
+                title = stringResource(id = R.string.repo_options_support),
                 onClick = { browser.openUri(it) })
         }
 
-        repo.donate?.let {
-            ValueItem(
+        repo.donate.nullable {
+            ListButtonItem(
                 icon = R.drawable.heart_handshake,
-                label = R.string.repo_options_donate,
+                title = stringResource(id = R.string.repo_options_donate),
                 onClick = { browser.openUri(it) }
             )
         }
 
-        repo.website?.let {
-            ValueItem(
+        repo.website.nullable {
+            ListButtonItem(
                 icon = R.drawable.world_www,
-                label = R.string.repo_options_website,
+                title = stringResource(id = R.string.repo_options_website),
                 onClick = { browser.openUri(it) }
             )
         }
 
-        repo.submission?.let {
-            ValueItem(
+        repo.submission.nullable {
+            ListButtonItem(
                 icon = R.drawable.cloud_upload,
-                label = R.string.repo_options_submission,
+                title = stringResource(id = R.string.repo_options_submission),
                 onClick = { browser.openUri(it) }
             )
         }
 
-        ValueItem(
+        ListButtonItem(
             icon = R.drawable.trash,
-            label = R.string.repo_options_delete,
+            title = stringResource(id = R.string.repo_options_delete),
             onClick = onDelete
         )
     }
 }
-
-@Composable
-private fun ValueItem(
-    modifier: Modifier = Modifier,
-    @DrawableRes icon: Int? = null,
-    @StringRes label: Int,
-    onClick: () -> Unit,
-) = Row(
-    modifier = modifier
-        .clickable(
-            interactionSource = remember { MutableInteractionSource() },
-            indication = ripple(bounded = true),
-            onClick = onClick
-        )
-        .height(56.dp)
-        .fillMaxWidth()
-        .padding(horizontal = 16.dp),
-    verticalAlignment = Alignment.CenterVertically,
-    horizontalArrangement = Arrangement.spacedBy(4.dp)
-) {
-    val titleStyle = MaterialTheme.typography.titleMedium
-    val iconSize =
-        with(LocalDensity.current) { titleStyle.fontSize.toDp() * 1.0f }
-
-    icon?.let {
-        Icon(
-            modifier = Modifier.size(iconSize * 1.5f),
-            painter = painterResource(id = icon),
-            contentDescription = null
-        )
-
-        Spacer(modifier = Modifier.width(6.dp))
-    }
-    Text(
-        text = stringResource(id = label),
-        style = titleStyle,
-        color = MaterialTheme.colorScheme.onSurfaceVariant
-    )
-}
-
 
 @Composable
 private fun ButtonItem(
@@ -303,6 +299,22 @@ private fun ButtonItem(
         Spacer(modifier = Modifier.width(6.dp))
         Text(
             text = stringResource(id = label)
+        )
+    }
+}
+
+@Composable
+fun ModuleCountLabelItem(repo: RepoState) {
+    if (repo.compatible) {
+        LabelItem(
+            text = stringResource(id = R.string.repo_modules, repo.size),
+            upperCase = false
+        )
+    } else {
+        LabelItem(
+            text = stringResource(id = R.string.repo_incompatible),
+            containerColor = MaterialTheme.colorScheme.error,
+            contentColor = MaterialTheme.colorScheme.onError
         )
     }
 }

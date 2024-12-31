@@ -412,10 +412,15 @@ fun NewViewScreen(
             val topBottomFade =
                 Brush.verticalGradient(0.55555f to Color.Red, 1f to Color.Transparent)
 
-            Cover(
-                modifier = Modifier.fadingEdge(topBottomFade),
-                module = module,
-            )
+
+            module.cover.nullable(repositoryMenu.showCover) {
+                if (it.isNotEmpty()) {
+                    Cover(
+                        modifier = Modifier.fadingEdge(topBottomFade),
+                        url = it,
+                    )
+                }
+            }
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -675,7 +680,7 @@ fun NewViewScreen(
                     onClick = {
                         navController.navigateSingleTopTo(
                             ModuleViewModel.putModule(
-                                module= module,
+                                module = module,
                                 repoUrl = moduleArgs.url,
                                 route = RepositoriesScreen.Description.route
                             )

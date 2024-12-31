@@ -21,6 +21,7 @@ import com.dergoogler.mmrl.R
 @Composable
 fun LabelItem(
     text: String,
+    modifier: Modifier = Modifier,
     @DrawableRes icon: Int? = null,
     containerColor: Color = MaterialTheme.colorScheme.primary,
     contentColor: Color = MaterialTheme.colorScheme.onPrimary,
@@ -35,7 +36,7 @@ fun LabelItem(
             .background(
                 color = containerColor,
                 shape = shape
-            ),
+            ).then(modifier),
         contentAlignment = Alignment.Center
     ) {
         val fontStyle = MaterialTheme.typography.labelSmall.copy(fontSize = 8.sp)

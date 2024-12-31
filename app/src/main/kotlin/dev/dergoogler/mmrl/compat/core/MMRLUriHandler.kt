@@ -5,13 +5,14 @@ import android.content.Intent
 import android.widget.Toast
 import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.UriHandler
 import androidx.core.net.toUri
 import timber.log.Timber
 
-internal interface MMRLUriHandlerImpl : UriHandler {
+interface MMRLUriHandler : UriHandler {
     fun openUri(
         uri: String,
         onSuccess: ((customTabsIntent: CustomTabsIntent, url: String) -> Unit)? = null,
@@ -21,10 +22,10 @@ internal interface MMRLUriHandlerImpl : UriHandler {
     override fun openUri(uri: String)
 }
 
-class MMRLUriHandler(
+class MMRLUriHandlerImpl(
     private val context: Context,
     private val color: Color,
-) : MMRLUriHandlerImpl {
+) : MMRLUriHandler {
     override fun openUri(
         uri: String,
         onSuccess: ((customTabsIntent: CustomTabsIntent, url: String) -> Unit)?,
@@ -67,4 +68,8 @@ class MMRLUriHandler(
             }
         )
     }
+}
+
+val LocalUriHandler = staticCompositionLocalOf<MMRLUriHandler> {
+    error("CompositionLocal MMRLUriHandlerImpl not present")
 }

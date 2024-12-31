@@ -12,6 +12,8 @@ data class Repo(
     val enable: Boolean = true,
     val submission: String? = null,
     val website: String? = null,
+    val cover: String? = null,
+    val description: String? = null,
     val donate: String? = null,
     val support: String? = null,
     @Embedded val metadata: RepoMetadata = RepoMetadata.default()
@@ -35,6 +37,8 @@ data class Repo(
         support = modulesJson.support,
         donate = modulesJson.donate,
         submission = modulesJson.submission,
+        cover = modulesJson.cover,
+        description = modulesJson.description,
         metadata = RepoMetadata(
             version = modulesJson.metadata.version,
             timestamp = modulesJson.metadata.timestamp,

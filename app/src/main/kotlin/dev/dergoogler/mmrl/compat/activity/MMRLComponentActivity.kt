@@ -35,7 +35,7 @@ import com.dergoogler.mmrl.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import dev.dergoogler.mmrl.compat.BuildCompat
 import dev.dergoogler.mmrl.compat.core.BrickException
-import dev.dergoogler.mmrl.compat.core.MMRLUriHandler
+import dev.dergoogler.mmrl.compat.core.MMRLUriHandlerImpl
 import timber.log.Timber
 import javax.inject.Inject
 import kotlin.system.exitProcess
@@ -206,7 +206,11 @@ fun MMRLComponentActivity.setBaseContent(
 
         CompositionLocalProvider(
             LocalUserPreferences provides preferences,
-            LocalUriHandler provides MMRLUriHandler(context, toolbarColor),
+            dev.dergoogler.mmrl.compat.core.LocalUriHandler provides MMRLUriHandlerImpl(
+                context,
+                toolbarColor
+            ),
+            LocalUriHandler provides MMRLUriHandlerImpl(context, toolbarColor),
             LocalNavController provides navController
         ) {
             content()

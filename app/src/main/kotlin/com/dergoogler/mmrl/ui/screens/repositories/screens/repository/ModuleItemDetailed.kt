@@ -1,35 +1,27 @@
 package com.dergoogler.mmrl.ui.screens.repositories.screens.repository
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImagePainter
-import coil.compose.rememberAsyncImagePainter
-import coil.request.CachePolicy
-import coil.request.ImageRequest
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.model.online.OnlineModule
 import com.dergoogler.mmrl.model.state.OnlineState
+import com.dergoogler.mmrl.ui.component.Cover
 import com.dergoogler.mmrl.ui.component.LabelItem
-import com.dergoogler.mmrl.ui.component.Logo
 import com.dergoogler.mmrl.ui.component.TextWithIcon
 import com.dergoogler.mmrl.ui.component.card.Card
 import com.dergoogler.mmrl.ui.component.card.CardDefaults
@@ -65,35 +57,11 @@ fun ModuleItemDetailed(
         ),
         onClick = onClick
     ) {
-        if (menu.showCover) {
-            module.cover?.let {
-                if (it.isNotEmpty()) {
-                    val painter = rememberAsyncImagePainter(
-                        model = ImageRequest.Builder(context).data(it).memoryCacheKey(it)
-                            .diskCacheKey(it).diskCachePolicy(CachePolicy.ENABLED)
-                            .memoryCachePolicy(CachePolicy.ENABLED).build(),
-                    )
-
-                    if (painter.state !is AsyncImagePainter.State.Error) {
-                        Image(
-                            painter = painter,
-                            contentDescription = null,
-                            contentScale = ContentScale.Crop,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .aspectRatio(2.048f)
-                        )
-                    } else {
-                        Logo(
-                            icon = R.drawable.alert_triangle,
-                            shape = RoundedCornerShape(0.dp),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .aspectRatio(2.048f)
-
-                        )
-                    }
-                }
+        module.cover.nullable(menu.showCover) {
+            if (it.isNotEmpty()) {
+                Cover(
+                    url = it,
+                )
             }
         }
 

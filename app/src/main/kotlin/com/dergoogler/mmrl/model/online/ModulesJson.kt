@@ -9,6 +9,8 @@ data class ModulesJson(
     val website: String? = null,
     val donate: String? = null,
     val support: String? = null,
+    val cover: String? = null,
+    val description: String? = null,
     val metadata: ModulesJsonMetadata = ModulesJsonMetadata.default(),
     val modules: List<OnlineModule>
 ) {

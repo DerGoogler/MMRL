@@ -28,7 +28,7 @@ import dev.dergoogler.mmrl.compat.Converters
         LocalModuleEntity::class,
         BlacklistEntity::class
     ],
-    version = 9,
+    version = 10,
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {

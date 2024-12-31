@@ -15,51 +15,40 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.CachePolicy
 import coil.request.ImageRequest
 import com.dergoogler.mmrl.R
-import com.dergoogler.mmrl.model.online.OnlineModule
-import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
-import dev.dergoogler.mmrl.compat.ext.nullable
 
 @Composable
 fun Cover(
     modifier: Modifier = Modifier,
-    module: OnlineModule,
+    url: String,
     shape: RoundedCornerShape = RoundedCornerShape(0.dp),
     aspectRatio: Float = 2.048f,
 ) {
     val context = LocalContext.current
-    val userPreferences = LocalUserPreferences.current
-    val menu = userPreferences.repositoryMenu
 
-    module.cover.nullable(menu.showCover) {
-        if (it.isNotEmpty()) {
-            val painter = rememberAsyncImagePainter(
-                model = ImageRequest.Builder(context).data(it).memoryCacheKey(it)
-                    .diskCacheKey(it).diskCachePolicy(CachePolicy.ENABLED)
-                    .memoryCachePolicy(CachePolicy.ENABLED).build(),
-            )
+    val painter = rememberAsyncImagePainter(
+        model = ImageRequest.Builder(context).data(url).memoryCacheKey(url).diskCacheKey(url)
+            .diskCachePolicy(CachePolicy.ENABLED).memoryCachePolicy(CachePolicy.ENABLED).build(),
+    )
 
-            if (painter.state !is AsyncImagePainter.State.Error) {
-                Image(
-                    painter = painter,
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clip(shape)
-                        .aspectRatio(aspectRatio)
-                        .then(modifier)
-                )
-            } else {
-                Logo(
-                    icon = R.drawable.alert_triangle,
-                    shape = shape,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .aspectRatio(2.048f)
-                        .then(modifier)
-                )
-            }
-        }
+    if (painter.state !is AsyncImagePainter.State.Error) {
+        Image(
+            painter = painter,
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(shape)
+                .aspectRatio(aspectRatio)
+                .then(modifier)
+        )
+    } else {
+        Logo(
+            icon = R.drawable.alert_triangle,
+            shape = shape,
+            modifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(2.048f)
+                .then(modifier)
+        )
     }
 }
-
