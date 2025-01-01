@@ -1,2 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="install_view_installing">- Instalowanie %1$s</string>
+    <string name="service_is_not_available">! Usługa nie jest dostępna</string>
+    <string name="cannot_install_blacklisted_modules_settings_security_blacklist_alerts">! Nie można zainstalować modułów z czarnej listy. Ustawienia → Bezpieczeństwo → Alerty czarnej listy</string>
+    <string name="installation_aborted_due_to_an_error">! Instalacja została przerwana z powodu błędu</string>
+    <string name="install_view_module_info">- Informacje o module: %1$s</string>
+    <string name="module_is_disabled_or_removed_unable_to_execute_action">! Moduł jest wyłączony lub usunięty. Nie można wykonać akcji.</string>
+    <string name="install_view_path">- Ścieżka: %1$s</string>
+    <string name="copying_failed">! Kopiowanie nie powiodło się</string>
+    <string name="unable_to_gather_module_info">! Nie można zebrać informacji o module</string>
+    <string name="module_not_found">! Nie znaleziono modułu.</string>
+    <string name="this_module_don_t_have_an_action">! Ten moduł nie ma akcji.</string>
+    <string name="execution_failed_try_to_use_shell_for_the_action_execution_settings_module_use_shell_for_module_action">- Wykonanie nie powiodło się. Spróbuj użyć powłoki do wykonania akcji, Ustawienia → Moduły i instalator → Użyj powłoki dla akcji modułu.</string>
+    <string name="unable_to_gather_module_info_of_file">! Nie można zebrać informacji o module pliku: %1$s</string>
+    <string name="copying_zip_to_temp_directory">- Kopiowanie pliku zip do katalogu tymczasowego</string>
+</resources>
