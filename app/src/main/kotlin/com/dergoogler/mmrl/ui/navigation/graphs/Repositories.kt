@@ -82,6 +82,14 @@ fun NavGraphBuilder.repositoryScreen(
             navArgument("moduleId") { type = NavType.StringType },
             navArgument("repoUrl") { type = NavType.StringType },
         ),
+        deepLinks = listOf(
+            navDeepLink {
+                uriPattern = "https://mmrl.dergoogler.com/module/{repoUrl}/{moduleId}"
+            },
+            navDeepLink {
+                uriPattern = "http://mmrl.dergoogler.com/module/{repoUrl}/{moduleId}"
+            }
+        ),
         enterTransition = { scaleIn() + fadeIn() },
         exitTransition = { fadeOut() }
     ) {
@@ -137,13 +145,14 @@ fun NavGraphBuilder.repositoryScreen(
             navArgument("repoUrl") { type = NavType.StringType },
             navArgument("value") { type = NavType.StringType }
         ),
-        deepLinks = listOf(navDeepLink { uriPattern = "mmrl://search/{repoUrl}/{type}/{value}" },
+        deepLinks = listOf(
             navDeepLink {
                 uriPattern = "https://mmrl.dergoogler.com/search/{repoUrl}/{type}/{value}"
             },
             navDeepLink {
                 uriPattern = "http://mmrl.dergoogler.com/search/{repoUrl}/{type}/{value}"
-            }),
+            }
+        ),
         enterTransition = { scaleIn() + fadeIn() },
         exitTransition = { fadeOut() }
     ) {

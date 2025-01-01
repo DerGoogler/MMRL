@@ -62,9 +62,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="mmrl" />
-                <data android:host="module" />
-
                 <data android:scheme="http" />
                 <data android:host="mmrl.dergoogler.com" />
                 <data android:pathPrefix="/module" />
@@ -80,9 +77,6 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="mmrl" />
-                <data android:host="search" />
 
                 <data android:scheme="http" />
                 <data android:host="mmrl.dergoogler.com" />

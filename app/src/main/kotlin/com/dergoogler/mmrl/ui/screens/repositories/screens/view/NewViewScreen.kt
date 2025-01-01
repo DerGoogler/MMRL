@@ -117,6 +117,7 @@ import dev.dergoogler.mmrl.compat.ext.isNotNullOrBlank
 import dev.dergoogler.mmrl.compat.ext.nullable
 import dev.dergoogler.mmrl.compat.ext.shareText
 import dev.dergoogler.mmrl.compat.ext.takeTrue
+import dev.dergoogler.mmrl.compat.ext.toEncodedUrl
 import dev.dergoogler.mmrl.compat.ext.toFormattedDateSafely
 import dev.dergoogler.mmrl.compat.ext.toFormattedFileSize
 import kotlinx.coroutines.launch
@@ -290,7 +291,7 @@ fun NewViewScreen(
                             },
                             onClick = {
                                 menuExpanded = false
-                                context.shareText("https://mmrl.dergoogler.com/module/${module.id}")
+                                context.shareText("https://mmrl.dergoogler.com/module/${repoUrl.toEncodedUrl()}/${module.id}?utm_medium=share&utm_source=${context.packageName}")
                             }
                         )
 
