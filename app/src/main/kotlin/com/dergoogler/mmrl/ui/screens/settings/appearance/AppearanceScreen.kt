@@ -4,22 +4,20 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.ui.component.SettingsScaffold
 import com.dergoogler.mmrl.ui.component.listItem.ListEditTextItem
 import com.dergoogler.mmrl.ui.component.listItem.ListRadioCheckItem
 import com.dergoogler.mmrl.ui.component.listItem.ListSwitchItem
 import com.dergoogler.mmrl.ui.navigation.MainScreen
+import com.dergoogler.mmrl.ui.providable.LocalSettings
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.screens.settings.appearance.items.AppThemeItem
-import com.dergoogler.mmrl.viewmodel.SettingsViewModel
 import dev.dergoogler.mmrl.compat.ext.toFormattedDateSafely
 
 @Composable
-fun AppearanceScreen(
-    viewModel: SettingsViewModel = hiltViewModel(),
-) {
+fun AppearanceScreen() {
+    val viewModel = LocalSettings.current
     val context = LocalContext.current
     val userPreferences = LocalUserPreferences.current
 

@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.datastore.developerMode
 import com.dergoogler.mmrl.ui.component.Alert
@@ -15,15 +14,14 @@ import com.dergoogler.mmrl.ui.component.SettingsScaffold
 import com.dergoogler.mmrl.ui.component.listItem.ListEditTextItem
 import com.dergoogler.mmrl.ui.component.listItem.ListHeader
 import com.dergoogler.mmrl.ui.component.listItem.ListSwitchItem
+import com.dergoogler.mmrl.ui.providable.LocalSettings
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
-import com.dergoogler.mmrl.viewmodel.SettingsViewModel
 import dev.dergoogler.mmrl.compat.ext.isLocalWifiUrl
 import dev.dergoogler.mmrl.compat.ext.takeTrue
 
 @Composable
-fun DeveloperScreen(
-    viewModel: SettingsViewModel = hiltViewModel(),
-) {
+fun DeveloperScreen() {
+    val viewModel = LocalSettings.current
     val userPreferences = LocalUserPreferences.current
 
     SettingsScaffold(

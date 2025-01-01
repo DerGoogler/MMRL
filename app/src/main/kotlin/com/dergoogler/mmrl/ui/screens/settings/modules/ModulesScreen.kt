@@ -2,7 +2,6 @@ package com.dergoogler.mmrl.ui.screens.settings.modules
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.datastore.UserPreferencesCompat.Companion.isRoot
 import com.dergoogler.mmrl.ui.component.APatchLabel
@@ -10,13 +9,12 @@ import com.dergoogler.mmrl.ui.component.KernelSuLabel
 import com.dergoogler.mmrl.ui.component.SettingsScaffold
 import com.dergoogler.mmrl.ui.component.listItem.ListHeader
 import com.dergoogler.mmrl.ui.component.listItem.ListSwitchItem
+import com.dergoogler.mmrl.ui.providable.LocalSettings
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
-import com.dergoogler.mmrl.viewmodel.SettingsViewModel
 
 @Composable
-fun ModulesScreen(
-    viewModel: SettingsViewModel = hiltViewModel(),
-) {
+fun ModulesScreen() {
+    val viewModel = LocalSettings.current
     val userPreferences = LocalUserPreferences.current
 
     SettingsScaffold(

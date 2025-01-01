@@ -9,6 +9,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -30,8 +31,10 @@ import com.dergoogler.mmrl.ui.activity.terminal.action.ActionActivity
 import com.dergoogler.mmrl.ui.activity.terminal.install.InstallActivity
 import com.dergoogler.mmrl.ui.activity.webui.WebUIActivity
 import com.dergoogler.mmrl.ui.providable.LocalNavController
+import com.dergoogler.mmrl.ui.providable.LocalSettings
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.theme.AppTheme
+import com.dergoogler.mmrl.viewmodel.SettingsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import dev.dergoogler.mmrl.compat.BuildCompat
 import dev.dergoogler.mmrl.compat.core.BrickException
@@ -58,6 +61,8 @@ open class MMRLComponentActivity : ComponentActivity() {
      * The window flags to apply to the activity window. These flags will be cleared once the activity is destroyed.
      */
     open val windowFlags: Int = 0
+
+    internal val settingsViewModel by viewModels<SettingsViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -205,6 +210,7 @@ fun MMRLComponentActivity.setBaseContent(
         val toolbarColor = MaterialTheme.colorScheme.surface
 
         CompositionLocalProvider(
+            LocalSettings provides settingsViewModel,
             LocalUserPreferences provides preferences,
             dev.dergoogler.mmrl.compat.core.LocalUriHandler provides MMRLUriHandlerImpl(
                 context,
