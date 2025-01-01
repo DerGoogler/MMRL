@@ -135,9 +135,9 @@ fun RepositoryItem(
                 )
             }
 
-//            if (repo.cover == null) {
-//                ModuleCountLabelItem(repo)
-//            }
+            if (repo.cover == null) {
+                ModuleCountLabelItem(repo)
+            }
         }
 
         repo.description.nullable {
