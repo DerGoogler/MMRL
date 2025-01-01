@@ -306,7 +306,7 @@
     <string name="settings_root_version">Wersja: %s</string>
     <string name="invalid_ip">To nie jest prawidłowy lokalny adres!</string>
     <string name="settings_webui_remote_url">Zdalny adres WebUI</string>
-    <string name="settings_developer">Programista</string>
+    <string name="settings_developer">Opcje programisty</string>
     <string name="settings_webui_remote_url_desc">Aby ułatwić debugowanie, podaj lokalny adres, dla przykładu http://localhost. Zobacz powyższy alert, aby zobaczyć więcej.</string>
     <string name="settings_enable_webui_remote_url">Włącz zdalny adres WebUI</string>
     <string name="settings_developer_desc">Narzędzia debugowania dla programistów</string>
@@ -328,4 +328,5 @@
     <string name="settings_blacklist_alerts_desc">Wyświetlaj alerty dotyczące modułów lokalnych i dostępnych online oraz dodatkowo blokuj instalację modułów znajdujących się na czarnej liście</string>
     <string name="settings_blacklist_alerts">Alerty czarnej listy</string>
     <string name="blacklisted">Na czarnej liście</string>
+    <string name="page_repositorys">Repozytoria</string>
 </resources>
