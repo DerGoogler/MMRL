@@ -3,6 +3,7 @@ package com.dergoogler.mmrl.viewmodel
 import android.app.Application
 import androidx.lifecycle.viewModelScope
 import com.dergoogler.mmrl.Compat
+import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.app.Event
 import com.dergoogler.mmrl.model.local.LocalModule
 import com.dergoogler.mmrl.repository.LocalRepository
@@ -43,25 +44,25 @@ class ActionViewModel @Inject constructor(
 
             if (!Compat.init(userPreferences.workingMode)) {
                 event = Event.FAILED
-                log("! Service is not available.")
+                log(R.string.service_is_not_available)
                 return@launch
             }
 
             if (module == null) {
                 event = Event.FAILED
-                log("! Module not found.")
+                log(R.string.module_not_found)
                 return@launch
             }
 
             if (!module.features.action) {
                 event = Event.FAILED
-                log("! This module don't have an action.")
+                log(R.string.this_module_don_t_have_an_action)
                 return@launch
             }
 
             if (module.state == State.DISABLE || module.state == State.REMOVE) {
                 event = Event.FAILED
-                log("! Module is disabled or removed. Unable to execute action.")
+                log(R.string.module_is_disabled_or_removed_unable_to_execute_action)
                 return@launch
             }
 
@@ -97,7 +98,7 @@ class ActionViewModel @Inject constructor(
                 }
 
                 override fun onFailure() {
-                    log("- Execution failed. Try to use Shell for the Action execution, Settings > Module > Use Shell for Module Action.")
+                    log(R.string.execution_failed_try_to_use_shell_for_the_action_execution_settings_module_use_shell_for_module_action)
                     actionResult.complete(false)
                 }
             }

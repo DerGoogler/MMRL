@@ -4,6 +4,7 @@ import android.app.Application
 import android.net.Uri
 import androidx.lifecycle.viewModelScope
 import com.dergoogler.mmrl.Compat
+import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.app.Event
 import com.dergoogler.mmrl.compat.MediaStoreCompat.copyToDir
 import com.dergoogler.mmrl.compat.MediaStoreCompat.getPathForUri
@@ -52,18 +53,16 @@ class InstallViewModel @Inject constructor(
 
         if (!Compat.init(userPreferences.workingMode)) {
             event = Event.FAILED
-            log("! Service is not available")
+            log(R.string.service_is_not_available)
             return@launch
         }
-
-        val devLog = devLog(userPreferences.developerMode)
 
         val bulkModules = uris.mapNotNull { uri ->
             val path = context.getPathForUri(uri)
             val info = Compat.moduleManager.getModuleInfo(path)
 
             if (info == null) {
-                devLog("! Unable to gather module info of file: $path")
+                devLog(R.string.unable_to_gather_module_info_of_file, path)
                 return@mapNotNull null
             }
 
@@ -72,7 +71,7 @@ class InstallViewModel @Inject constructor(
             if (isBlacklisted) {
                 event = Event.FAILED
                 allSucceeded = false
-                log("! Cannot install blacklisted modules.")
+                log(R.string.cannot_install_blacklisted_modules_settings_security_blacklist_alerts)
                 return@launch
             }
 
@@ -87,10 +86,10 @@ class InstallViewModel @Inject constructor(
                 console.clear()
             }
 
-            val result = loadAndInstallModule(uri, bulkModules, devLog)
+            val result = loadAndInstallModule(uri, bulkModules)
             if (!result) {
                 allSucceeded = false
-                log("! Installation aborted due to an error")
+                log(context.getString(R.string.installation_aborted_due_to_an_error))
                 break
             }
         }
@@ -105,22 +104,21 @@ class InstallViewModel @Inject constructor(
     private suspend fun loadAndInstallModule(
         uri: Uri,
         bulkModules: List<BulkModule>,
-        devLog: (String) -> Unit,
     ): Boolean =
         withContext(Dispatchers.IO) {
             val path = context.getPathForUri(uri)
 
-            devLog("- Path: $path")
+            devLog(R.string.install_view_path, path)
 
             Compat.moduleManager.getModuleInfo(path)?.let {
-                devLog("- Module info: $it")
+                devLog(R.string.install_view_module_info, it)
                 return@withContext install(path, bulkModules)
             }
 
-            log("- Copying zip to temp directory")
+            log(R.string.copying_zip_to_temp_directory)
             val tmpFile = context.copyToDir(uri, context.tmpDir) ?: run {
                 event = Event.FAILED
-                log("! Copying failed")
+                log(context.getString(R.string.copying_failed))
                 return@withContext false
             }
 
@@ -129,7 +127,7 @@ class InstallViewModel @Inject constructor(
 
             if (io == null) {
                 event = Event.FAILED
-                log("! Copying failed")
+                log(R.string.copying_failed)
                 return@withContext false
             }
 
@@ -143,14 +141,12 @@ class InstallViewModel @Inject constructor(
 
             if (moduleInfo == null) {
                 event = Event.FAILED
-                log("! Unable to gather module info")
+                log(R.string.unable_to_gather_module_info)
                 return@withContext false
             }
 
-            devLog("- Module info: $moduleInfo")
+            devLog(R.string.install_view_module_info)
             return@withContext install(tmpFile.path, bulkModules)
-
-
         }
 
     private suspend fun install(zipPath: String, bulkModules: List<BulkModule>): Boolean =
@@ -187,7 +183,7 @@ class InstallViewModel @Inject constructor(
                 }
             }
 
-            log("- Installing ${zipFile.name}")
+            log(R.string.install_view_installing, zipFile.name)
 
             val installer = Compat.moduleManager.install(zipPath, bulkModules, callback)
             shell = installer

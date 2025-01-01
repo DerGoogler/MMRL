@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="service_is_not_available">! Service is not available</string>
+    <string name="unable_to_gather_module_info_of_file">! Unable to gather module info of file: %1$s</string>
+    <string name="cannot_install_blacklisted_modules_settings_security_blacklist_alerts">! Cannot install blacklisted modules. Settings → Security → Blacklist Alerts</string>
+    <string name="installation_aborted_due_to_an_error">! Installation aborted due to an error</string>
+    <string name="install_view_path">- Path: %1$s</string>
+    <string name="copying_zip_to_temp_directory">- Copying zip to temp directory</string>
+    <string name="install_view_module_info">- Module info: %1$s</string>
+    <string name="copying_failed">! Copying failed</string>
+    <string name="unable_to_gather_module_info">! Unable to gather module info</string>
+    <string name="install_view_installing">- Installing %1$s</string>
+    <string name="module_not_found">! Module not found.</string>
+    <string name="this_module_don_t_have_an_action">! This module don\'t have an action.</string>
+    <string name="module_is_disabled_or_removed_unable_to_execute_action">! Module is disabled or removed. Unable to execute action.</string>
+    <string name="execution_failed_try_to_use_shell_for_the_action_execution_settings_module_use_shell_for_module_action">- Execution failed. Try to use Shell for the Action execution, Settings → Module → Use Shell for Module Action.</string>
+</resources>

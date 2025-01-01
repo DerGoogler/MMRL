@@ -351,7 +351,7 @@
     <string name="settings_use_shell_webui_assets">Use Shell to Load WebUI Assets</string>
     <string name="settings_use_shell_webui_assets_desc">Enabling this feature allows the path handler to use the shell instead of reading asset bytes directly, eliminating the 2 GB file size limit. Note that the direct byte-reading method is faster.</string>
     <string name="blacklisted">Blacklisted</string>
-    <string name="blacklisted_desc"><![CDATA[This module has been blacklisted by MMRL. Installation is disabled to ensure your security. If you still want to install this module, you can disable blacklist alerts in the settings by navigating to **Settings > Security > Blacklist Alerts**.\n@more(Learn more)]]></string>
+    <string name="blacklisted_desc">This module has been blacklisted by MMRL. Installation is disabled to ensure your security. If you still want to install this module, you can disable blacklist alerts in the settings by navigating to **Settings → Security → Blacklist Alerts**.\n@more(Learn more)</string>
     <string name="settings_blacklist_alerts">Blacklist Alerts</string>
     <string name="settings_blacklist_alerts_desc">Display an alert for local and explore modules, and additionally block the installation of any blacklisted modules</string>
     <string name="page_repositorys">Repositories</string>

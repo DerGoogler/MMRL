@@ -4,7 +4,10 @@ import android.app.Application
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.IntentFilter
+import android.content.res.Configuration
+import android.content.res.Resources
 import android.net.Uri
+import androidx.annotation.StringRes
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -22,9 +25,13 @@ import dev.dergoogler.mmrl.compat.stub.IShell
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import timber.log.Timber
+import java.util.Locale
 import javax.inject.Inject
+
 
 open class TerminalViewModel @Inject constructor(
     application: Application,
@@ -88,20 +95,39 @@ open class TerminalViewModel @Inject constructor(
         }
     }
 
-    internal fun log(message: String) {
+
+    private val localizedEnglishResources
+        get(): Resources {
+            var conf: Configuration = context.resources.configuration
+            conf = Configuration(conf)
+            conf.setLocale(Locale.ENGLISH)
+            val localizedContext = context.createConfigurationContext(conf)
+            return localizedContext.resources
+        }
+
+    private val devMode = runBlocking { userPreferencesRepository.data.first().developerMode }
+    internal fun devLog(@StringRes message: Int, vararg format: Any?) {
+        Timber.d(localizedEnglishResources.getString(message, *format))
+        if (devMode) log(message, *format)
+    }
+
+    internal fun log(@StringRes message: Int, vararg format: Any?) {
+        val serializedFormat: Array<out String> = format.map { it.toString() }.toTypedArray()
+        log(
+            message = context.getString(message, *serializedFormat),
+            log = localizedEnglishResources.getString(message, *serializedFormat)
+        )
+    }
+
+    internal fun log(
+        message: String,
+        log: String = message,
+    ) {
         if (message.startsWith(CLEAR_CMD)) {
             console.clear()
         } else {
             console.add(message)
-            logs.add(message)
-
-        }
-    }
-
-    internal fun devLog(dev: Boolean): (String) -> Unit {
-        return { message: String ->
-            Timber.d(message)
-            if (dev) console.add(message)
+            logs.add(log)
         }
     }
 }
