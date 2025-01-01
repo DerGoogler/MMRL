@@ -11,6 +11,12 @@ Every repository that uses the [GR Repo Format](https://github.com/Googlers-Repo
 >
 > To use this feature you need to create a file named `common/repo.json` in your module root folder
 
+Supported file formats:
+- `.json`
+- `.yaml` (recommended when you target specific root solutions)
+
+---
+
 ### support
 
 The URL to your project's support page, forum, or issue tracker where users can get help or report problems.
