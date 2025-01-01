@@ -17,6 +17,9 @@ Supported file formats:
 
 ---
 
+> [!NOTE]
+> To ensure that edited or newly added properties are visible in the repository, you need to increase your module's version code.
+
 ### support
 
 The URL to your project's support page, forum, or issue tracker where users can get help or report problems.
