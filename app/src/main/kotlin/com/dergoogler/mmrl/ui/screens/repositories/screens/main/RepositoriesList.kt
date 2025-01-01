@@ -23,9 +23,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.model.state.RepoState
+import com.dergoogler.mmrl.ui.navigation.graphs.RepositoriesScreen
 import com.dergoogler.mmrl.ui.providable.LocalNavController
 import com.dergoogler.mmrl.ui.utils.navigateSingleTopTo
-import com.dergoogler.mmrl.viewmodel.RepositoryViewModel
 
 @Composable
 fun RepositoriesList(
@@ -50,7 +50,11 @@ fun RepositoriesList(
                 repo = repo,
                 onClick = {
                     navController.navigateSingleTopTo(
-                        RepositoryViewModel.putRepo(repo)
+                        route = RepositoriesScreen.RepositoryView.route,
+                        args = mapOf(
+                            "repoName" to repo.name,
+                            "repoUrl" to repo.url
+                        )
                     )
                 },
                 onUpdate = getUpdate,

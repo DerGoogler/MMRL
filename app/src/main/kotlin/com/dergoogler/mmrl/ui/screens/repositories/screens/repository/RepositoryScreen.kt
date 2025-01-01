@@ -19,7 +19,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.datastore.repository.RepositoryMenuCompat
@@ -28,13 +27,14 @@ import com.dergoogler.mmrl.ui.component.PageIndicator
 import com.dergoogler.mmrl.ui.component.SearchTopBar
 import com.dergoogler.mmrl.ui.component.TopAppBarTitle
 import com.dergoogler.mmrl.ui.providable.LocalNavController
-import com.dergoogler.mmrl.ui.providable.LocalRepoArguments
+import com.dergoogler.mmrl.ui.providable.LocalPanicArguments
 import com.dergoogler.mmrl.ui.utils.none
+import com.dergoogler.mmrl.ui.utils.panicString
 import com.dergoogler.mmrl.viewmodel.RepositoryViewModel
 
 @Composable
 fun RepositoryScreen(
-    viewModel: RepositoryViewModel = hiltViewModel(),
+    viewModel: RepositoryViewModel,
 ) {
     val list by viewModel.online.collectAsStateWithLifecycle()
     val query by viewModel.query.collectAsStateWithLifecycle()
@@ -97,7 +97,7 @@ private fun TopBar(
     setMenu: (RepositoryMenuCompat) -> Unit,
     scrollBehavior: TopAppBarScrollBehavior,
 ) {
-    val repo = LocalRepoArguments.current
+    val arguments = LocalPanicArguments.current
 
     var currentQuery by remember { mutableStateOf(query) }
     DisposableEffect(isSearch) {
@@ -114,9 +114,11 @@ private fun TopBar(
         onClose = {
             onCloseSearch()
             currentQuery = ""
-        }, title = { TopAppBarTitle(
-            text = repo.name
-        ) },
+        }, title = {
+            TopAppBarTitle(
+                text = arguments.panicString("repoName")
+            )
+        },
         scrollBehavior = scrollBehavior,
         actions = {
             if (!isSearch) {

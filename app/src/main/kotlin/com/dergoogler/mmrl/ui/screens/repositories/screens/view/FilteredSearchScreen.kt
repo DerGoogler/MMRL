@@ -20,7 +20,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.ui.component.HtmlText
@@ -28,10 +27,11 @@ import com.dergoogler.mmrl.ui.component.Loading
 import com.dergoogler.mmrl.ui.component.PageIndicator
 import com.dergoogler.mmrl.ui.component.TopAppBar
 import com.dergoogler.mmrl.ui.providable.LocalNavController
-import com.dergoogler.mmrl.ui.providable.LocalRepoArguments
+import com.dergoogler.mmrl.ui.providable.LocalPanicArguments
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.screens.repositories.screens.repository.ModulesList
 import com.dergoogler.mmrl.ui.utils.none
+import com.dergoogler.mmrl.ui.utils.panicString
 import com.dergoogler.mmrl.viewmodel.RepositoryViewModel
 import dev.dergoogler.mmrl.compat.ext.shareText
 import dev.dergoogler.mmrl.compat.ext.takeTrue
@@ -40,9 +40,7 @@ import dev.dergoogler.mmrl.compat.ext.toEncodedUrl
 
 @Composable
 fun FilteredSearchScreen(
-    type: String,
-    value: String,
-    viewModel: RepositoryViewModel = hiltViewModel(),
+    viewModel: RepositoryViewModel,
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val list by viewModel.online.collectAsStateWithLifecycle()
@@ -51,11 +49,15 @@ fun FilteredSearchScreen(
     val context = LocalContext.current
 
     val navController = LocalNavController.current
-    val repoArgs = LocalRepoArguments.current
+    val arguments = LocalPanicArguments.current
+
+    val type = arguments.panicString("type")
+    val value = arguments.panicString("value")
+    val repoUrl = arguments.panicString("repoUrl")
 
     LaunchedEffect(list, value) {
         if (value.isNotBlank() && type.isNotBlank()) {
-            viewModel.search("${type}:${value.toDecodedUrl(true)}")
+            viewModel.search("${type}:${value}")
         }
     }
 
@@ -78,7 +80,7 @@ fun FilteredSearchScreen(
                     if (value.isNotBlank() && type.isNotBlank()) {
                         IconButton(
                             onClick = {
-                                context.shareText("https://mmrl.dergoogler.com/search/${repoArgs.url.toEncodedUrl()}/$type/${value}?utm_medium=share&utm_source=${context.packageName}")
+                                context.shareText("https://mmrl.dergoogler.com/search/${repoUrl.toEncodedUrl()}/$type/${value.toEncodedUrl()}?utm_medium=share&utm_source=${context.packageName}")
                             }
                         ) {
                             Icon(
@@ -121,7 +123,7 @@ fun FilteredSearchScreen(
 
                     userPrefs.developerMode.takeTrue {
                         Text(
-                            text = "$type:$value",
+                            text = "$type:${value.toEncodedUrl()}",
                             style = MaterialTheme.typography.bodySmall.copy(color = MaterialTheme.colorScheme.outline),
                         )
                     }

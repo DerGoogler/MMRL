@@ -85,6 +85,15 @@ fun Any?.isNotNull(): Boolean {
     return this != null
 }
 
+@OptIn(ExperimentalContracts::class)
+fun Any?.isNull(): Boolean {
+    contract {
+        returns(true) implies (this@isNull == null)
+    }
+
+    return this == null
+}
+
 @Composable
 inline fun <T> T.composeApply(block: @Composable T.() -> Unit): T {
     block()

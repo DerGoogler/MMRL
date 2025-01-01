@@ -38,7 +38,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.model.local.BulkModule
@@ -59,7 +58,7 @@ import timber.log.Timber
 
 @Composable
 fun RepositoriesScreen(
-    viewModel: RepositoriesViewModel = hiltViewModel(),
+    viewModel: RepositoriesViewModel,
     bulkInstallViewModel: BulkInstallViewModel,
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()

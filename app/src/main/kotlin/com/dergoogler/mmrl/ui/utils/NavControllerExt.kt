@@ -1,19 +1,76 @@
 package com.dergoogler.mmrl.ui.utils
 
+import android.os.BaseBundle
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavOptionsBuilder
+import dev.dergoogler.mmrl.compat.core.BrickException
+import dev.dergoogler.mmrl.compat.ext.toDecodedUrl
+import dev.dergoogler.mmrl.compat.ext.toEncodedUrl
+
+/**
+ * Retrieves the arguments associated with the current navigation back stack entry.
+ * If the arguments are null, throws a [BrickException] with a descriptive error message.
+ *
+ * @throws BrickException if the arguments are null.
+ * @return The arguments of the current navigation back stack entry.
+ */
+val NavBackStackEntry.panicArguments get() = arguments ?: throw BrickException("Arguments are null")
+
+/**
+ * Retrieves the string associated with the given key from the Bundle and decodes it as a URL.
+ * If the key is found, the string is decoded; otherwise, it returns null.
+ *
+ * @param key The key used to retrieve the value from the Bundle.
+ * @param force If true, will force the URL decoding even if the value is null.
+ * @return The decoded string associated with the given key, or null if the key does not exist.
+ */
+fun BaseBundle.loadString(key: String, force: Boolean = false): String? {
+    return this.getString(key)?.toDecodedUrl(force)
+}
+
+/**
+ * Retrieves the string associated with the given key from the Bundle and decodes it as a URL.
+ * If the key is not found or the value is null, throws a [BrickException] with a descriptive error message.
+ *
+ * @param key The key used to retrieve the value from the Bundle.
+ * @param force If true, will force the URL decoding even if the value is null.
+ * @throws BrickException if the key is not found or if the value is null.
+ * @return The decoded string associated with the given key.
+ */
+fun BaseBundle.panicString(key: String, force: Boolean = false): String {
+    return this.loadString(key, force) ?: throw BrickException("Key '$key' is null")
+}
 
 fun NavController.navigateSingleTopTo(
     route: String,
     launchSingleTop: Boolean = true,
-    builder: NavOptionsBuilder.() -> Unit = {}
+    builder: NavOptionsBuilder.() -> Unit = {},
 ) = navigate(
     route = route
 ) {
     this.launchSingleTop = launchSingleTop
     restoreState = true
     builder()
+}
+
+fun NavController.navigateSingleTopTo(
+    route: String,
+    args: Map<String, String> = emptyMap(),
+    launchSingleTop: Boolean = true,
+    builder: NavOptionsBuilder.() -> Unit = {},
+) {
+    var modifiedRoute = route
+    args.forEach { (key, value) ->
+        modifiedRoute = modifiedRoute.replace("{$key}", value.toEncodedUrl())
+    }
+
+    navigate(modifiedRoute) {
+        this.launchSingleTop = launchSingleTop
+        restoreState = true
+        builder()
+    }
 }
 
 fun NavController.navigatePopUpTo(

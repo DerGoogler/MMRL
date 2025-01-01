@@ -16,15 +16,16 @@ import com.dergoogler.mmrl.datastore.repository.RepoListMode
 import com.dergoogler.mmrl.model.online.OnlineModule
 import com.dergoogler.mmrl.model.state.OnlineState
 import com.dergoogler.mmrl.ui.component.scrollbar.VerticalFastScrollbar
-import com.dergoogler.mmrl.ui.providable.LocalRepoArguments
+import com.dergoogler.mmrl.ui.navigation.graphs.RepositoriesScreen
+import com.dergoogler.mmrl.ui.providable.LocalPanicArguments
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.utils.navigateSingleTopTo
-import com.dergoogler.mmrl.viewmodel.ModuleViewModel
+import com.dergoogler.mmrl.ui.utils.panicString
 
 @Composable
 fun ModulesList(
-    before: @Composable() (() -> Unit)? = null,
-    after: @Composable() (() -> Unit)? = null,
+    before: @Composable (() -> Unit)? = null,
+    after: @Composable (() -> Unit)? = null,
     list: List<Pair<OnlineState, OnlineModule>>,
     state: LazyListState,
     navController: NavController,
@@ -46,7 +47,7 @@ fun Detailed(
     state: LazyListState,
     navController: NavController,
 ) {
-    val repo = LocalRepoArguments.current
+    val arguments = LocalPanicArguments.current
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -72,7 +73,11 @@ fun Detailed(
                     state = state,
                     onClick = {
                         navController.navigateSingleTopTo(
-                            ModuleViewModel.putModule(module, repo.url)
+                            route = RepositoriesScreen.View.route,
+                            args = mapOf(
+                                "moduleId" to module.id,
+                                "repoUrl" to arguments.panicString("repoUrl")
+                            )
                         )
                     }
                 )
@@ -100,7 +105,7 @@ fun Compact(
     state: LazyListState,
     navController: NavController,
 ) {
-    val repo = LocalRepoArguments.current
+    val arguments = LocalPanicArguments.current
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -125,7 +130,11 @@ fun Compact(
                     state = state,
                     onClick = {
                         navController.navigateSingleTopTo(
-                            ModuleViewModel.putModule(module, repo.url)
+                            route = RepositoriesScreen.View.route,
+                            args = mapOf(
+                                "moduleId" to module.id,
+                                "repoUrl" to arguments.panicString("repoUrl")
+                            )
                         )
                     }
                 )

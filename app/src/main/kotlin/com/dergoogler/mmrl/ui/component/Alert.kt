@@ -2,6 +2,7 @@ package com.dergoogler.mmrl.ui.component
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -24,7 +25,7 @@ fun Alert(
     onDescTagClick: (String) -> Unit = {},
 ) = Card(
     modifier = {
-        surface = surface.then(modifier)
+        surface = modifier.fillMaxWidth()
     },
     style = CardDefaults.cardStyle.copy(
         containerColor = backgroundColor,

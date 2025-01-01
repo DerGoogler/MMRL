@@ -67,7 +67,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
@@ -96,8 +95,8 @@ import com.dergoogler.mmrl.ui.component.listItem.ListCollapseItem
 import com.dergoogler.mmrl.ui.component.listItem.ListItem
 import com.dergoogler.mmrl.ui.component.listItem.ListItemTextStyle
 import com.dergoogler.mmrl.ui.navigation.graphs.RepositoriesScreen
-import com.dergoogler.mmrl.ui.providable.LocalModuleArguments
 import com.dergoogler.mmrl.ui.providable.LocalNavController
+import com.dergoogler.mmrl.ui.providable.LocalPanicArguments
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.screens.repositories.screens.view.items.InstallConfirmDialog
 import com.dergoogler.mmrl.ui.screens.repositories.screens.view.items.LicenseItem
@@ -106,9 +105,9 @@ import com.dergoogler.mmrl.ui.screens.repositories.screens.view.items.ViewTrackB
 import com.dergoogler.mmrl.ui.screens.settings.blacklist.items.BlacklistBottomSheet
 import com.dergoogler.mmrl.ui.utils.navigateSingleTopTo
 import com.dergoogler.mmrl.ui.utils.none
+import com.dergoogler.mmrl.ui.utils.panicString
 import com.dergoogler.mmrl.viewmodel.BulkInstallViewModel
 import com.dergoogler.mmrl.viewmodel.ModuleViewModel
-import com.dergoogler.mmrl.viewmodel.ModulesViewModel
 import com.dergoogler.mmrl.viewmodel.RepositoryViewModel
 import dev.dergoogler.mmrl.compat.activity.MMRLComponentActivity
 import dev.dergoogler.mmrl.compat.ext.fadingEdge
@@ -126,9 +125,8 @@ import timber.log.Timber
 
 @Composable
 fun NewViewScreen(
-    viewModel: ModuleViewModel = hiltViewModel(),
-    repositoryViewModel: RepositoryViewModel = hiltViewModel(),
-    modulesViewModel: ModulesViewModel = hiltViewModel(),
+    viewModel: ModuleViewModel,
+    repositoryViewModel: RepositoryViewModel,
     bulkInstallViewModel: BulkInstallViewModel,
 ) {
     val userPreferences = LocalUserPreferences.current
@@ -145,7 +143,8 @@ fun NewViewScreen(
     val context = LocalContext.current
     val density = LocalDensity.current
     val browser = LocalUriHandler.current
-    val moduleArgs = LocalModuleArguments.current
+    val arguments = LocalPanicArguments.current
+    val repoUrl = arguments.panicString("repoUrl")
 
     val listItemContentPaddingValues = PaddingValues(vertical = 16.dp, horizontal = 16.dp)
 
@@ -475,10 +474,11 @@ fun NewViewScreen(
                         modifier = Modifier.clickable(
                             onClick = {
                                 navController.navigateSingleTopTo(
-                                    RepositoryViewModel.putSearch(
-                                        type = "author",
-                                        value = module.author,
-                                        repoUrl = moduleArgs.url
+                                    route = RepositoriesScreen.RepoSearch.route,
+                                    args = mapOf(
+                                        "type" to "author",
+                                        "value" to module.author,
+                                        "repoUrl" to repoUrl
                                     )
                                 )
                             }
@@ -687,10 +687,10 @@ fun NewViewScreen(
                     title = stringResource(R.string.view_module_about_this_module),
                     onClick = {
                         navController.navigateSingleTopTo(
-                            ModuleViewModel.putModule(
-                                module = module,
-                                repoUrl = moduleArgs.url,
-                                route = RepositoriesScreen.Description.route
+                            route = RepositoriesScreen.Description.route,
+                            args = mapOf(
+                                "moduleId" to module.id,
+                                "repoUrl" to repoUrl
                             )
                         )
                     }
@@ -724,10 +724,11 @@ fun NewViewScreen(
                         AssistChip(
                             onClick = {
                                 navController.navigateSingleTopTo(
-                                    RepositoryViewModel.putSearch(
-                                        type = "category",
-                                        value = it[category],
-                                        repoUrl = moduleArgs.url
+                                    route = RepositoriesScreen.RepoSearch.route,
+                                    args = mapOf(
+                                        "type" to "category",
+                                        "value" to it[category],
+                                        "repoUrl" to repoUrl
                                     )
                                 )
                             },

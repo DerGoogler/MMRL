@@ -2,13 +2,13 @@ package com.dergoogler.mmrl.viewmodel
 
 import android.app.Application
 import android.content.Context
+import android.os.Bundle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import com.dergoogler.mmrl.Compat
@@ -25,27 +25,26 @@ import com.dergoogler.mmrl.repository.LocalRepository
 import com.dergoogler.mmrl.repository.ModulesRepository
 import com.dergoogler.mmrl.repository.UserPreferencesRepository
 import com.dergoogler.mmrl.service.DownloadService
-import com.dergoogler.mmrl.ui.navigation.graphs.RepositoriesScreen
+import com.dergoogler.mmrl.ui.utils.panicString
 import com.dergoogler.mmrl.utils.Utils
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.dergoogler.mmrl.compat.ext.toEncodedUrl
 import dev.dergoogler.mmrl.compat.stub.IModuleOpsCallback
 import dev.dergoogler.mmrl.compat.viewmodel.MMRLViewModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import java.io.File
-import java.net.URLDecoder
-import javax.inject.Inject
 
-@HiltViewModel
-class ModuleViewModel @Inject constructor(
+@HiltViewModel(assistedFactory = ModuleViewModel.Factory::class)
+class ModuleViewModel @AssistedInject constructor(
+    @Assisted arguments: Bundle,
     localRepository: LocalRepository,
     modulesRepository: ModulesRepository,
     userPreferencesRepository: UserPreferencesRepository,
     application: Application,
-    savedStateHandle: SavedStateHandle,
 ) : MMRLViewModel(
     localRepository = localRepository,
     modulesRepository = modulesRepository,
@@ -67,18 +66,14 @@ class ModuleViewModel @Inject constructor(
     val platform: Platform
         get() = Compat.platform
 
-    private val module = getModule(savedStateHandle)
-    private val moduleId = module.first
-    val repoUrl = module.second
+    private val moduleId = arguments.panicString("moduleId")
+    val repoUrl = arguments.panicString("repoUrl")
 
     var online: OnlineModule by mutableStateOf(OnlineModule.example())
         private set
     val lastVersionItem by derivedStateOf {
         versions.firstOrNull()?.second
     }
-
-    val blacklisted get() = runBlocking { getBlacklistById(moduleId) }
-    val isBlacklisted get() = blacklisted != null
 
     val isEmptyAbout
         get() = online.homepage.orEmpty().isBlank()
@@ -259,28 +254,14 @@ class ModuleViewModel @Inject constructor(
         )
     }
 
-    companion object {
-        fun putModule(
-            module: OnlineModule,
-            repoUrl: String,
-            route: String = RepositoriesScreen.View.route,
-        ) =
-            route.replace(
-                "{moduleId}", module.id
-            ).replace(
-                "{repoUrl}", repoUrl.toEncodedUrl()
-            )
-
-        fun getModule(savedStateHandle: SavedStateHandle): Pair<String, String> {
-            val id: String = checkNotNull(savedStateHandle["moduleId"])
-            val url: String = checkNotNull(savedStateHandle["repoUrl"])
-            return URLDecoder.decode(id, "utf-8") to URLDecoder.decode(url, "utf-8")
-        }
-    }
-
     data class ModuleOps(
         val isOpsRunning: Boolean,
         val toggle: (Boolean) -> Unit,
         val change: () -> Unit,
     )
+
+    @AssistedFactory
+    interface Factory {
+        fun create(arguments: Bundle): ModuleViewModel
+    }
 }

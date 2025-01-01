@@ -4,6 +4,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
@@ -11,17 +12,17 @@ import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import androidx.navigation.navigation
 import com.dergoogler.mmrl.ui.navigation.MainScreen
-import com.dergoogler.mmrl.ui.providable.LocalModuleArguments
-import com.dergoogler.mmrl.ui.providable.LocalRepoArguments
-import com.dergoogler.mmrl.ui.providable.ModuleArguments
-import com.dergoogler.mmrl.ui.providable.RepoArguments
+import com.dergoogler.mmrl.ui.providable.LocalPanicArguments
 import com.dergoogler.mmrl.ui.screens.repositories.screens.main.RepositoriesScreen
 import com.dergoogler.mmrl.ui.screens.repositories.screens.repository.RepositoryScreen
 import com.dergoogler.mmrl.ui.screens.repositories.screens.view.FilteredSearchScreen
 import com.dergoogler.mmrl.ui.screens.repositories.screens.view.NewViewScreen
 import com.dergoogler.mmrl.ui.screens.repositories.screens.view.ViewDescriptionScreen
+import com.dergoogler.mmrl.ui.utils.panicArguments
 import com.dergoogler.mmrl.viewmodel.BulkInstallViewModel
-import dev.dergoogler.mmrl.compat.ext.toEncodedUrl
+import com.dergoogler.mmrl.viewmodel.ModuleViewModel
+import com.dergoogler.mmrl.viewmodel.RepositoriesViewModel
+import com.dergoogler.mmrl.viewmodel.RepositoryViewModel
 
 enum class RepositoriesScreen(val route: String) {
     Home("Repository"),
@@ -42,7 +43,10 @@ fun NavGraphBuilder.repositoryScreen(
         enterTransition = { fadeIn() },
         exitTransition = { fadeOut() }
     ) {
+        val viewModel = hiltViewModel<RepositoriesViewModel>()
+
         RepositoriesScreen(
+            viewModel = viewModel,
             bulkInstallViewModel = bulkInstallViewModel
         )
     }
@@ -56,18 +60,19 @@ fun NavGraphBuilder.repositoryScreen(
         enterTransition = { fadeIn() },
         exitTransition = { fadeOut() }
     ) {
-        val repoUrl = it.arguments?.getString("repoUrl")
-        val repoName = it.arguments?.getString("repoName")
+        val arguments = it.panicArguments
 
-        if (repoUrl == null || repoName == null) throw NullPointerException("repoUrl or repoName is null")
+        val repositoryViewModel =
+            hiltViewModel<RepositoryViewModel, RepositoryViewModel.Factory> { factory ->
+                factory.create(arguments)
+            }
 
         CompositionLocalProvider(
-            LocalRepoArguments provides RepoArguments(
-                repoUrl.toEncodedUrl(),
-                repoName.toEncodedUrl()
-            )
+            LocalPanicArguments provides arguments
         ) {
-            RepositoryScreen()
+            RepositoryScreen(
+                viewModel = repositoryViewModel
+            )
         }
     }
 
@@ -80,18 +85,22 @@ fun NavGraphBuilder.repositoryScreen(
         enterTransition = { scaleIn() + fadeIn() },
         exitTransition = { fadeOut() }
     ) {
-        val moduleId = it.arguments?.getString("moduleId")
-        val repoUrl = it.arguments?.getString("repoUrl")
+        val arguments = it.panicArguments
 
-        if (repoUrl == null || moduleId == null) throw NullPointerException("repoUrl or repoName is null")
+        val moduleViewModel = hiltViewModel<ModuleViewModel, ModuleViewModel.Factory> { factory ->
+            factory.create(arguments)
+        }
+        val repositoryViewModel =
+            hiltViewModel<RepositoryViewModel, RepositoryViewModel.Factory> { factory ->
+                factory.create(arguments)
+            }
 
         CompositionLocalProvider(
-            LocalModuleArguments provides ModuleArguments(
-                moduleId.toEncodedUrl(),
-                repoUrl.toEncodedUrl(),
-            )
+            LocalPanicArguments provides arguments,
         ) {
             NewViewScreen(
+                viewModel = moduleViewModel,
+                repositoryViewModel = repositoryViewModel,
                 bulkInstallViewModel = bulkInstallViewModel
             )
         }
@@ -106,18 +115,18 @@ fun NavGraphBuilder.repositoryScreen(
         enterTransition = { scaleIn() + fadeIn() },
         exitTransition = { fadeOut() }
     ) {
-        val moduleId = it.arguments?.getString("moduleId")
-        val repoUrl = it.arguments?.getString("repoUrl")
+        val arguments = it.panicArguments
 
-        if (repoUrl == null || moduleId == null) throw NullPointerException("repoUrl or repoName is null")
+        val moduleViewModel = hiltViewModel<ModuleViewModel, ModuleViewModel.Factory> { factory ->
+            factory.create(arguments)
+        }
 
         CompositionLocalProvider(
-            LocalModuleArguments provides ModuleArguments(
-                moduleId.toEncodedUrl(),
-                repoUrl.toEncodedUrl(),
-            )
+            LocalPanicArguments provides arguments
         ) {
-            ViewDescriptionScreen()
+            ViewDescriptionScreen(
+                viewModel = moduleViewModel
+            )
         }
     }
 
@@ -138,23 +147,18 @@ fun NavGraphBuilder.repositoryScreen(
         enterTransition = { scaleIn() + fadeIn() },
         exitTransition = { fadeOut() }
     ) {
-        val repoUrl = it.arguments?.getString("repoUrl")
-        val type = it.arguments?.getString("type")
-        val value = it.arguments?.getString("value")
+        val arguments = it.panicArguments
 
-        if (repoUrl == null || type == null || value == null) throw NullPointerException(
-            "repoUrl, repoName, type or value is null"
-        )
+        val repositoryViewModel =
+            hiltViewModel<RepositoryViewModel, RepositoryViewModel.Factory> { factory ->
+                factory.create(arguments)
+            }
 
         CompositionLocalProvider(
-            LocalRepoArguments provides RepoArguments(
-                repoUrl.toEncodedUrl(),
-                "null",
-            )
+            LocalPanicArguments provides arguments
         ) {
             FilteredSearchScreen(
-                type = type.toEncodedUrl(),
-                value = value.toEncodedUrl(),
+                viewModel = repositoryViewModel
             )
         }
     }
