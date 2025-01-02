@@ -106,16 +106,26 @@ open class TerminalViewModel @Inject constructor(
         }
 
     private val devMode = runBlocking { userPreferencesRepository.data.first().developerMode }
+
     internal fun devLog(@StringRes message: Int, vararg format: Any?) {
-        Timber.d(localizedEnglishResources.getString(message, *format))
         if (devMode) log(message, *format)
     }
 
+    internal fun devLog(@StringRes message: Int) {
+        if (devMode) log(message)
+    }
+
     internal fun log(@StringRes message: Int, vararg format: Any?) {
-        val serializedFormat: Array<out String> = format.map { it.toString() }.toTypedArray()
         log(
-            message = context.getString(message, *serializedFormat),
-            log = localizedEnglishResources.getString(message, *serializedFormat)
+            message = context.getString(message, *format),
+            log = localizedEnglishResources.getString(message, *format)
+        )
+    }
+
+    internal fun log(@StringRes message: Int) {
+        log(
+            message = context.getString(message),
+            log = localizedEnglishResources.getString(message)
         )
     }
 

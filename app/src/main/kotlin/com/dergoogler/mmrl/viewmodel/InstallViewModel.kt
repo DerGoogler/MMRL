@@ -111,7 +111,7 @@ class InstallViewModel @Inject constructor(
             devLog(R.string.install_view_path, path)
 
             Compat.moduleManager.getModuleInfo(path)?.let {
-                devLog(R.string.install_view_module_info, it)
+                devLog(R.string.install_view_module_info, it.toString())
                 return@withContext install(path, bulkModules)
             }
 
