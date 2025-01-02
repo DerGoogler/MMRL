@@ -347,7 +347,12 @@
     <string name="settings_use_shell_webui_assets_desc">启用此功能允许通过Shell读取存储，关闭后由系统文件管理器最大能读取2G的文件。注意，通过文件管理器读取文件比Shell要快。</string>
     <string name="learn_more">了解更多</string>
     <string name="settings_use_generic_action">使用通用动作</string>
-    <string name="settings_use_generic_action_desc">大部分Root权限提供方不支持CLI命令动作，你可以通过通用脚本来实现。</string>
-    <string name="all_the_sponsors_of_the_project_click_on_learn_more_to_get_included">此项目的所有捐赠者。点击\"了解更多\"加入他们。</string>
+    <string name="settings_use_generic_action_desc">大部分Root权限提供方不支持以脚本形式执行CLI命令动作，你可以通过通用脚本来解决兼容性问题。</string>
+    <string name="all_the_sponsors_of_the_project_click_on_learn_more_to_get_included">此项目的所有捐赠者。点击\"了解更多\"获取加入他们的方式。</string>
     <string name="sponsors">捐赠者</string>
+    <string name="page_repositorys">存储库</string>
+    <string name="blacklisted">已拉黑</string>
+    <string name="settings_blacklist_alerts">黑名单警告</string>
+    <string name="settings_blacklist_alerts_desc">为出现在黑名单列表内的模块在本地和线上标记警告，阻止安装</string>
+    <string name="blacklisted_desc">此模块已被MMRL拉黑，为确保设备安全，安装无法进行。若仍要安装，请在设置中停用黑名单警告。\n@more(了解更多)</string>
 </resources>
