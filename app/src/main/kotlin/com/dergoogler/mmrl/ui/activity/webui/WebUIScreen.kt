@@ -91,22 +91,17 @@ fun WebUIScreen(
 
     if (topInset != null && bottomInset != null) {
         val webViewAssetLoader = remember(topInset, bottomInset) {
-            WebViewAssetLoader.Builder().apply {
-                setDomain("mui.kernelsu.org")
-
-                // Disable SuFilePathHandler when using WebUI remote url
-                userPrefs.developerMode({ useWebUiDevUrl }) {
-                    addPathHandler(
-                        "/",
-                        SuFilePathHandler(
-                            directory = webRoot,
-                            useShell = userPrefs.useShellToLoadWebUIAssets,
-                            shell = rootShell,
-                        )
+            WebViewAssetLoader.Builder()
+                .setDomain("mui.kernelsu.org")
+                .addPathHandler(
+                    "/",
+                    SuFilePathHandler(
+                        directory = webRoot,
+                        useShell = userPrefs.useShellToLoadWebUIAssets,
+                        shell = rootShell,
                     )
-                }
-
-                addPathHandler(
+                )
+                .addPathHandler(
                     "/mmrl/",
                     MMRLWebUIHandler(
                         topInset = topInset!!,
@@ -117,7 +112,7 @@ fun WebUIScreen(
                         cardColors = cardColors
                     )
                 )
-            }.build()
+                .build()
         }
 
         AndroidView(
@@ -224,6 +219,7 @@ fun WebUIScreen(
                         addJavascriptInterface(
                             FileInterface(
                                 context = context,
+                                webView = this
                             ),
                             "$${viewModel.sanitizeModIdWithFile(modId)}File"
                         )

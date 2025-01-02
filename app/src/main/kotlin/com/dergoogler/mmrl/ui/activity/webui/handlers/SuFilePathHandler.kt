@@ -110,7 +110,7 @@ class SuFilePathHandler(
     @Throws(IOException::class)
     fun openFile(file: File): InputStream {
         if (fileManager != null && !useShell) {
-            val fileBytes = fileManager!!.readByte(file.absolutePath)
+            val fileBytes = fileManager!!.readBytes(file.absolutePath)
             val bytes = ByteArrayInputStream(fileBytes)
             return handleSvgzStream(file.path, bytes)
         } else {

@@ -4,9 +4,11 @@ import android.os.ParcelFileDescriptor;
 
 interface IFileManager {
     boolean deleteOnExit(String path);
-    void write(String path, String data);
-    String read(String path);
-    byte[] readByte(String path);
+    void writeText(String path, String data);
+    void writeBytes(String path, in byte[] data);
+    String readText(String path);
+    List readLines(String path);
+    byte[] readBytes(String path);
     String readAsBase64(String path);
     List<String> list(String path);
     long stat(String path);

@@ -4,18 +4,13 @@ import android.util.Base64
 import android.util.Base64OutputStream
 import dev.dergoogler.mmrl.compat.stub.IFileManager
 import timber.log.Timber
-import java.io.BufferedReader
 import java.io.ByteArrayOutputStream
 import java.io.Closeable
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileNotFoundException
-import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStream
-import java.io.InputStreamReader
-import java.io.OutputStream
-import java.nio.file.Files
 import kotlin.math.log
 import kotlin.math.pow
 
@@ -29,43 +24,14 @@ internal class FileManagerImpl : IFileManager.Stub() {
         }
     }
 
-    override fun write(path: String, data: String): Unit = with(File(path)) {
-        try {
-            val outputStream: OutputStream = FileOutputStream(this)
-            outputStream.write(data.toByteArray())
-            outputStream.flush()
-        } catch (e: IOException) {
-            Timber.e("FileManagerImpl>write: $e")
-        }
-    }
+    override fun writeBytes(path: String, data: ByteArray): Unit = File(path).writeBytes(data)
+    override fun writeText(path: String, data: String): Unit =
+        File(path).writeText(data, Charsets.UTF_8)
 
-    override fun read(path: String): String? = with(File(path)) {
-        if (!exists()) return null
+    override fun readText(path: String): String = File(path).readText(Charsets.UTF_8)
+    override fun readBytes(path: String): ByteArray = File(path).readBytes()
 
-        try {
-            BufferedReader(InputStreamReader(FileInputStream(this))).use { br ->
-                val sb = StringBuilder()
-                var line: String?
-                while ((br.readLine().also { line = it }) != null) {
-                    sb.append(line)
-                    sb.append('\n')
-                }
-                return sb.toString()
-            }
-        } catch (e: IOException) {
-            Timber.e("FileManagerImpl>read: $e")
-            return null
-        }
-    }
-
-    override fun readByte(path: String): ByteArray? = with(File(path)) {
-        try {
-            return Files.readAllBytes(toPath())
-        } catch (e: IOException) {
-            Timber.e("FileManagerImpl>readByte: $e")
-            return null
-        }
-    }
+    override fun readLines(path: String): List<String> = File(path).readLines()
 
     override fun readAsBase64(path: String): String? = with(File(path)) {
         if (!exists()) return null
