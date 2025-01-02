@@ -63,10 +63,12 @@ fun WebUIScreen(
     val cardColors = CardDefaults.cardColors()
     val isDarkMode = userPrefs.isDarkMode()
 
-    val rootShell = Compat.createRootShell(
-        globalMnt = true,
-        devMode = userPrefs.developerMode
-    )
+    val rootShell = remember(modId) {
+        Compat.createRootShell(
+            globalMnt = true,
+            devMode = userPrefs.developerMode
+        )
+    }
 
     WebView.setWebContentsDebuggingEnabled(userPrefs.developerMode)
 
@@ -89,17 +91,22 @@ fun WebUIScreen(
 
     if (topInset != null && bottomInset != null) {
         val webViewAssetLoader = remember(topInset, bottomInset) {
-            WebViewAssetLoader.Builder()
-                .setDomain("mui.kernelsu.org")
-                .addPathHandler(
-                    "/",
-                    SuFilePathHandler(
-                        directory = webRoot,
-                        useShell = userPrefs.useShellToLoadWebUIAssets,
-                        shell = rootShell,
+            WebViewAssetLoader.Builder().apply {
+                setDomain("mui.kernelsu.org")
+
+                // Disable SuFilePathHandler when using WebUI remote url
+                userPrefs.developerMode({ useWebUiDevUrl }) {
+                    addPathHandler(
+                        "/",
+                        SuFilePathHandler(
+                            directory = webRoot,
+                            useShell = userPrefs.useShellToLoadWebUIAssets,
+                            shell = rootShell,
+                        )
                     )
-                )
-                .addPathHandler(
+                }
+
+                addPathHandler(
                     "/mmrl/",
                     MMRLWebUIHandler(
                         topInset = topInset!!,
@@ -110,8 +117,9 @@ fun WebUIScreen(
                         cardColors = cardColors
                     )
                 )
-                .build()
+            }.build()
         }
+
         AndroidView(
             factory = {
                 WebView(context).apply {
