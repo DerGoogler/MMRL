@@ -1,2 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="installation_aborted_due_to_an_error">! Yükleme işlemi bir hatadan dolayı iptal edildi</string>
+    <string name="service_is_not_available">! Hizmet mevcut değil</string>
+    <string name="copying_zip_to_temp_directory">‐ Zip dosyası geçici dizine kopyalanıyor</string>
+    <string name="install_view_installing">- Yükleniyor %1$s</string>
+    <string name="unable_to_gather_module_info">! Modül bilgisi elde edilemiyor</string>
+    <string name="module_not_found">! Modül bulunamadı.</string>
+    <string name="copying_failed">! Kopyalama işlemi başarısız</string>
+    <string name="unable_to_gather_module_info_of_file">! Dosyanın modül bilgisi toplanamıyor: %1$s</string>
+    <string name="install_view_path">- Yol: %1$s</string>
+    <string name="install_view_module_info">- Modül bilgisi: %1$s</string>
+    <string name="this_module_don_t_have_an_action">! Bu modülün bir eylemi yok.</string>
+    <string name="cannot_install_blacklisted_modules_settings_security_blacklist_alerts">! Karalistelenmiş modülleri yükleyemezsin. Ayarlar → Güvenlik → Karaliste Uyarıları</string>
+</resources>
