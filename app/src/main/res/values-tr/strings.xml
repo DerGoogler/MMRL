@@ -100,4 +100,11 @@
     <string name="setup_root_desc">Magisk veya KernelSU tarafından sağlanan Root izni gerektirir</string>
     <string name="setup_shizuku_desc">Sui veya Shizuku tarafından sağlanan Root izni gerektirir</string>
     <string name="setup_non_root_desc">Root izni gerekli değil, sadece modül indirme işlevi aktif</string>
+    <string name="working_mode_magisk_title">Magisk</string>
+    <string name="working_mode_kernelsu_title">KernelSU</string>
+    <string name="working_mode_kernelsu_next_title">KernelSU Sıradaki</string>
+    <string name="working_mode_apatch_title">APatch</string>
+    <string name="working_mode_kernelsu_next_desc">Magic Mount desteği, kullanıcı alanı uygulamaları üzerinde gelişmiş kontrol ve özelleştirilebilir kök ayrıcalıklarına sahip gelişmiş çekirdek tabanlı kök çözümü.</string>
+    <string name="working_mode_kernelsu_desc">OverlayFS kullanarak kullanıcı alanı uygulamaları üzerinde gelişmiş kontrol, özelleştirilebilir kök ayrıcalıkları ve sistemsiz modül desteği sunan çekirdek tabanlı bir kök çözümüdür.</string>
+    <string name="working_mode_apatch_desc">Android çekirdeği ve sistemini yamalanıyor. Magisk ve çekirdek fonksiyon enjeksiyonuna benzer modüller için destek sağlayan yeni bir çekirdek tabanlı kök çözümü (inline-hook ve syscall-table-hook gerektirir). KernelSU tarafından türetildi ve modifiyelendi.</string>
 </resources>
