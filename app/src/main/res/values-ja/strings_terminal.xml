@@ -1,2 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="install_view_path">- パス: %1$s</string>
+    <string name="install_view_installing">- インストール中: %1$s</string>
+    <string name="install_view_module_info">- モジュール情報: %1$s</string>
+    <string name="module_not_found">! モジュールがありません。</string>
+</resources>
