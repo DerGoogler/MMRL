@@ -354,4 +354,5 @@
     <string name="settings_use_generic_action_desc">ほとんどの root プロバイダーはアクション CLI コマンドをサポートしていません。代わりに汎用スクリプトを使用できます。</string>
     <string name="all_the_sponsors_of_the_project_click_on_learn_more_to_get_included">プロジェクトのすべてのスポンサーです。参加するには「詳しく見る」をタップしてください。</string>
     <string name="blacklisted_desc"><![CDATA[このモジュールは、MMRL によってブラックリストに登録されています。安全性を確保するためにインストールは無効化されています。それを無視してでもインストールするには **設定 > セキュリティ > ブラックリストアラート** からアラートを無効化できます。\n@more(詳細)]]></string>
+    <string name="page_repositorys">リポジトリ</string>
 </resources>
