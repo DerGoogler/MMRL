@@ -17,8 +17,8 @@ import kotlin.reflect.full.memberProperties
 
 
 class MMRLWebUIHandler(
-    private val topInset: Int,
-    private val bottomInset: Int,
+    private val topInset: Int?,
+    private val bottomInset: Int?,
     private val colorScheme: ColorScheme,
     private val typography: Typography,
     private val filledTonalButtonColors: ButtonColors,

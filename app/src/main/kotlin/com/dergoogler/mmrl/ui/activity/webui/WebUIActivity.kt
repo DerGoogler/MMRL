@@ -9,9 +9,12 @@ import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.dergoogler.mmrl.R
+import com.dergoogler.mmrl.viewmodel.WebUIViewModel
 import dev.dergoogler.mmrl.compat.activity.MMRLComponentActivity
 import dev.dergoogler.mmrl.compat.activity.setBaseContent
+import dev.dergoogler.mmrl.compat.ext.isNotNullOrBlank
 import timber.log.Timber
 
 class WebUIActivity : MMRLComponentActivity() {
@@ -22,9 +25,14 @@ class WebUIActivity : MMRLComponentActivity() {
 
         val modId = intent.getStringExtra("MOD_ID")
 
-        if (modId != null) {
+        if (modId.isNotNullOrBlank()) {
             setBaseContent {
-              WebUIScreen(modId)
+                val viewModel =
+                    hiltViewModel<WebUIViewModel, WebUIViewModel.Factory> { factory ->
+                        factory.create(modId)
+                    }
+
+                WebUIScreen(viewModel)
             }
         } else {
             setBaseContent {

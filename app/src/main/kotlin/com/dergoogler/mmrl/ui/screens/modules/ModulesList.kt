@@ -125,6 +125,7 @@ fun ModuleItem(
     }
 
     ModuleItem(
+        isProviderAlive = isProviderAlive,
         isBlacklisted = Blacklist.isBlacklisted(getBlacklist(module.id)),
         module = module,
         progress = progress,

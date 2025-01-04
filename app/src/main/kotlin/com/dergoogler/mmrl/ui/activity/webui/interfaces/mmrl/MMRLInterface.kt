@@ -8,6 +8,7 @@ import android.webkit.WebView
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.dergoogler.mmrl.BuildConfig
+import com.dergoogler.mmrl.viewmodel.WebUIViewModel
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.JsonClass
 import com.squareup.moshi.Moshi
@@ -21,18 +22,10 @@ internal data class Manager(
 )
 
 class MMRLInterface(
-    private val topInset: Int,
-    private val bottomInset: Int,
     val context: Context,
     private val isDark: Boolean,
     webview: WebView,
-    private val managerName: String,
-    private val managerVersionCode: Int,
-    private val managerVersionName: String,
-    private val allowedFsApi: Boolean,
-    private val allowedKsuApi: Boolean,
-    private val mmrlVersion: String,
-    private val mmrlVersionCode: Int,
+    private val viewModel: WebUIViewModel,
 ) {
     private val activity = context as Activity
     private var windowInsetsController: WindowInsetsControllerCompat =
@@ -54,9 +47,9 @@ class MMRLInterface(
     val manager: String
         get() = managerAdapter.toJson(
             Manager(
-                name = managerName,
-                versionName = managerVersionName,
-                versionCode = managerVersionCode
+                name = viewModel.platform.current,
+                versionName = viewModel.versionName,
+                versionCode = viewModel.versionCode
             )
         )
 
@@ -65,26 +58,26 @@ class MMRLInterface(
         get() = managerAdapter.toJson(
             Manager(
                 name = BuildConfig.APPLICATION_ID,
-                versionName = mmrlVersion,
-                versionCode = mmrlVersionCode
+                versionName = BuildConfig.VERSION_NAME,
+                versionCode = BuildConfig.VERSION_CODE
             )
         )
 
     @get:JavascriptInterface
     val hasAccessToFileSystem: Boolean
-        get() = allowedFsApi
+        get() = viewModel.allowedFsApi
 
     @get:JavascriptInterface
     val hasAccessToAdvancedKernelSuAPI: Boolean
-        get() = allowedKsuApi
+        get() = viewModel.allowedKsuApi
 
     @get:JavascriptInterface
-    val windowTopInset: Int
-        get() = topInset
+    val windowTopInset: Int?
+        get() = viewModel.topInset
 
     @get:JavascriptInterface
-    val windowBottomInset: Int
-        get() = bottomInset
+    val windowBottomInset: Int?
+        get() = viewModel.bottomInset
 
     @get:JavascriptInterface
     val isLightNavigationBars: Boolean

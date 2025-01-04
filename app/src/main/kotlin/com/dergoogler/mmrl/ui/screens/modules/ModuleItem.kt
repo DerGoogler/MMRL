@@ -50,17 +50,18 @@ fun ModuleItem(
     indeterminate: Boolean = false,
     alpha: Float = 1f,
     decoration: TextDecoration = TextDecoration.None,
-    switch: @Composable() (() -> Unit?)? = null,
-    indicator: @Composable() (BoxScope.() -> Unit?)? = null,
-    startTrailingButton: @Composable() (RowScope.() -> Unit)? = null,
-    trailingButton: @Composable() (RowScope.() -> Unit),
+    switch: @Composable (() -> Unit?)? = null,
+    indicator: @Composable (BoxScope.() -> Unit?)? = null,
+    startTrailingButton: @Composable (RowScope.() -> Unit)? = null,
+    trailingButton: @Composable (RowScope.() -> Unit),
     isBlacklisted: Boolean = false,
+    isProviderAlive: Boolean,
 ) {
     val userPreferences = LocalUserPreferences.current
     val menu = userPreferences.modulesMenu
     val context = LocalContext.current
 
-    val canWenUIAccessed = module.features.webui && module.state != State.REMOVE
+    val canWenUIAccessed = isProviderAlive && module.features.webui && module.state != State.REMOVE
     val clicker = if (canWenUIAccessed) {
         {
             MMRLComponentActivity.startWebUIActivity(

@@ -32,4 +32,8 @@ class Platform(private val realPlatform: String) {
             block()
         }
     }
+
+    companion object {
+        val EMPTY = Platform("")
+    }
 }
