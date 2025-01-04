@@ -26,4 +26,6 @@
     <string name="unaskedremoval_desc">Moduł usuwa aplikacje, pliki lub inne moduły bez zgody użytkownika.</string>
     <string name="llm_desc">Moduł może być napisany częściowo lub w całości przez LLM</string>
     <string name="llm_name">Duży model językowy</string>
+    <string name="closedsource_name">Zamknięte źródło</string>
+    <string name="closedsource_desc">Ten moduł nie ma otwartego źródła oraz jego kod nie jest publicznie dostępny w celu przeglądu, modyfikacji lub redystrybucji</string>
 </resources>
