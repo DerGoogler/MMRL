@@ -1,4 +1,6 @@
 import com.android.build.gradle.internal.api.ApkVariantOutputImpl
+import java.text.SimpleDateFormat
+import java.util.Date
 
 plugins {
     alias(libs.plugins.self.application)
@@ -108,6 +110,17 @@ android {
             renderscriptOptimLevel = 0
             isMinifyEnabled = false
             multiDexEnabled = true
+        }
+
+        create("debugMin") {
+            initWith(buildTypes.getByName("debug"))
+            versionNameSuffix = "-debugMin"
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
 
         all {
@@ -221,4 +234,27 @@ dependencies {
     implementation(libs.square.logging.interceptor)
     implementation(libs.square.moshi)
     ksp(libs.square.moshi.kotlin)
+}
+
+tasks.register("generateBuildInfo") {
+    doLast {
+        val versionCode = android.defaultConfig.versionCode
+        val versionName = android.defaultConfig.versionName
+        val buildDate = SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(Date())
+
+        val buildInfo = """
+            versionCode: $versionCode
+            versionName: $versionName
+            buildDate: $buildDate
+        """.trimIndent()
+
+        val outputFile = File(buildDir, "build_info.yaml")
+        outputFile.writeText(buildInfo)
+
+        println("Build information saved to: ${outputFile.absolutePath}")
+    }
+}
+
+tasks.named("build") {
+    finalizedBy("generateBuildInfo")
 }

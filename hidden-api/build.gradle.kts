@@ -20,6 +20,9 @@ android {
         create("alpha") {
             initWith(buildTypes.getByName("release"))
         }
+        create("debugMin") {
+            initWith(buildTypes.getByName("debug"))
+        }
     }
 }
 
