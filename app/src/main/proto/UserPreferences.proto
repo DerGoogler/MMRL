@@ -3,6 +3,7 @@ syntax = "proto3";
 import "WorkingMode.proto";
 import "DarkMode.proto";
 import "repository/RepositoryMenu.proto";
+import "repositories/RepositoriesMenu.proto";
 import "modules/ModulesMenu.proto";
 
 option java_package = "com.dergoogler.mmrl.datastore";
@@ -41,4 +42,5 @@ message UserPreferences {
   bool allowCancelAction = 30;
   bool useShellToLoadWebUIAssets = 31;
   bool blacklistAlerts = 32;
+  RepositoriesMenu repositoriesMenu = 33;
 }

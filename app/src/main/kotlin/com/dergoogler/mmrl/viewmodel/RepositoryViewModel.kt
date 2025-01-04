@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.dergoogler.mmrl.Compat
+import com.dergoogler.mmrl.datastore.repository.Option
 import com.dergoogler.mmrl.datastore.repository.RepositoryMenuCompat
 import com.dergoogler.mmrl.model.online.OnlineModule
 import com.dergoogler.mmrl.model.state.OnlineState
@@ -97,9 +98,9 @@ class RepositoryViewModel @AssistedInject constructor(
                     local = localRepository.getLocalByIdOrNull(it.id),
                     hasUpdatableTag = localRepository.hasUpdatableTag(it.id)
                 ) to it
-            }/*.sortedWith(
-//                comparator(menu.option, menu.descending)
-            )*/.let { v ->
+            }.sortedWith(
+                comparatorFuck(menu.option, menu.descending)
+            ).let { v ->
                 val a = if (menu.pinInstalled) {
                     v.sortedByDescending { it.first.installed }
                 } else {
@@ -163,23 +164,23 @@ class RepositoryViewModel @AssistedInject constructor(
         }.launchIn(viewModelScope)
     }
 
-//    private fun comparator(
-//        option: Option,
-//        descending: Boolean,
-//    ): Comparator<Pair<OnlineState, OnlineModule>> = if (descending) {
-//        when (option) {
-//            Option.NAME -> compareByDescending { it.second.name.lowercase() }
-//            Option.UPDATED_TIME -> compareBy { it.first.lastUpdated }
-//            else -> compareByDescending { null }
-//        }
-//
-//    } else {
-//        when (option) {
-//            Option.NAME -> compareBy { it.second.name.lowercase() }
-//            Option.UPDATED_TIME -> compareByDescending { it.first.lastUpdated }
-//            else -> compareByDescending { null }
-//        }
-//    }
+    private fun comparatorFuck(
+        option: Option,
+        descending: Boolean,
+    ): Comparator<Pair<OnlineState, OnlineModule>> = if (descending) {
+        when (option) {
+            Option.NAME -> compareByDescending { it.second.name.lowercase() }
+            Option.UPDATED_TIME -> compareBy { it.first.lastUpdated }
+            else -> compareByDescending { null }
+        }
+
+    } else {
+        when (option) {
+            Option.NAME -> compareBy { it.second.name.lowercase() }
+            Option.UPDATED_TIME -> compareByDescending { it.first.lastUpdated }
+            else -> compareByDescending { null }
+        }
+    }
 
     fun search(key: String) {
         keyFlow.value = key

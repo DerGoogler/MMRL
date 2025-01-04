@@ -1,4 +1,6 @@
 import com.android.build.gradle.internal.api.ApkVariantOutputImpl
+import org.gradle.internal.extensions.stdlib.capitalized
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.text.SimpleDateFormat
 import java.util.Date
 
@@ -154,6 +156,18 @@ android {
         outputs.configureEach {
             (this as? ApkVariantOutputImpl)?.outputFileName =
                 "MMRL-${versionName}-${versionCode}-${name}.apk"
+        }
+    }
+}
+
+// fix error.NonExistentClass?
+androidComponents {
+    onVariants(selector().all()) { variant ->
+        afterEvaluate {
+            val capName = variant.name.capitalized()
+            tasks.getByName<KotlinCompile>("ksp${capName}Kotlin") {
+                setSource(tasks.getByName("generate${capName}Proto").outputs)
+            }
         }
     }
 }
