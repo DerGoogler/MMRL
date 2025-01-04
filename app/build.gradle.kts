@@ -158,7 +158,6 @@ android {
     }
 }
 
-// fix error.NonExistentClass?
 androidComponents {
     onVariants(selector().all()) { variant ->
         afterEvaluate {
@@ -170,15 +169,31 @@ androidComponents {
             val versionCode = android.defaultConfig.versionCode
             val versionName = android.defaultConfig.versionName
 
-            val buildInfo = """
+            val buildInfoYaml = """
             versionCode: $versionCode
             versionName: $versionName
+            variant: ${variant.name}
         """.trimIndent()
 
-            val outputFile = File(buildDir, "build_info.yaml")
-            outputFile.writeText(buildInfo)
+            val projectDir = layout.projectDirectory.asFile
+            val buildDir = projectDir.resolve(variant.name)
+            val baselineProfiles = buildDir.resolve("baselineProfiles")
+            val outputMeta = buildDir.resolve("output-metadata.json")
 
-            println("Build information saved to: ${outputFile.absolutePath}")
+            if (outputMeta.exists()) {
+                outputMeta.delete()
+            }
+
+            if (baselineProfiles.exists()) {
+                baselineProfiles.deleteRecursively()
+            }
+
+            if (buildDir.exists()) {
+                val buildInfo = buildDir.resolve("metadata.yaml")
+                buildInfo.writeText(buildInfoYaml)
+
+                println("Build information saved to: ${buildInfo.absolutePath}")
+            }
         }
     }
 }
