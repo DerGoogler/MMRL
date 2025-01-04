@@ -43,6 +43,7 @@ private fun getAntifeatureDetails(id: String?): Pair<Int, Int>? {
         "obfuscation" to (R.string.obfuscation_name to R.string.obfuscation_desc),
         "unaskedremoval" to (R.string.unaskedremoval_name to R.string.unaskedremoval_desc),
         "llm" to (R.string.llm_name to R.string.llm_desc),
+        "closedsource" to (R.string.closedsource_name to R.string.closedsource_desc),
     )
 
     return id?.lowercase()?.let { antifeatureMap[it] }

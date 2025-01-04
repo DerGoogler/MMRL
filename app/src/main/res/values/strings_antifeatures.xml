@@ -38,4 +38,7 @@
 
     <string name="llm_name">Large Language Model</string>
     <string name="llm_desc">The module maybe written partially or fully by an LLM</string>
+
+    <string name="closedsource_name">Closed Source</string>
+    <string name="closedsource_desc">The module is not open source, and its codebase is not accessible to the public for review, modification, or redistribution</string>
 </resources>
