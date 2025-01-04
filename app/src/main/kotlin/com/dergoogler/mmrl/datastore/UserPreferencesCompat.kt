@@ -4,6 +4,7 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import com.dergoogler.mmrl.app.Const
 import com.dergoogler.mmrl.datastore.modules.ModulesMenuCompat
+import com.dergoogler.mmrl.datastore.repositories.RepositoriesMenuCompat
 import com.dergoogler.mmrl.datastore.repository.RepositoryMenuCompat
 import com.dergoogler.mmrl.ui.navigation.MainScreen
 import com.dergoogler.mmrl.ui.theme.Colors
@@ -45,6 +46,7 @@ data class UserPreferencesCompat(
     val allowedFsModules: List<String>,
     val allowedKsuModules: List<String>,
     val repositoryMenu: RepositoryMenuCompat,
+    val repositoriesMenu: RepositoriesMenuCompat,
     val modulesMenu: ModulesMenuCompat,
 ) {
     constructor(original: UserPreferences) : this(
@@ -82,6 +84,10 @@ data class UserPreferencesCompat(
         repositoryMenu = when {
             original.hasRepositoryMenu() -> RepositoryMenuCompat(original.repositoryMenu)
             else -> RepositoryMenuCompat.default()
+        },
+        repositoriesMenu = when {
+            original.hasRepositoriesMenu() -> RepositoriesMenuCompat(original.repositoriesMenu)
+            else -> RepositoriesMenuCompat.default()
         },
         modulesMenu = when {
             original.hasModulesMenu() -> ModulesMenuCompat(original.modulesMenu)
@@ -127,6 +133,7 @@ data class UserPreferencesCompat(
             .setAllowedFsModules(allowedFsModules.joinToString(","))
             .setAllowedKsuModules(allowedKsuModules.joinToString(","))
             .setRepositoryMenu(repositoryMenu.toProto())
+            .setRepositoriesMenu(repositoriesMenu.toProto())
             .setModulesMenu(modulesMenu.toProto())
             .build()
 
@@ -162,6 +169,7 @@ data class UserPreferencesCompat(
             blacklistAlerts = true,
             allowedFsModules = emptyList(),
             allowedKsuModules = emptyList(),
+            repositoriesMenu = RepositoriesMenuCompat.default(),
             repositoryMenu = RepositoryMenuCompat.default(),
             modulesMenu = ModulesMenuCompat.default()
         )

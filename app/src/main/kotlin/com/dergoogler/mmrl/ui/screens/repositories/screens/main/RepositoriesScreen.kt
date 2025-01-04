@@ -40,6 +40,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dergoogler.mmrl.R
+import com.dergoogler.mmrl.datastore.repositories.RepositoriesMenuCompat
 import com.dergoogler.mmrl.model.local.BulkModule
 import com.dergoogler.mmrl.ui.animate.slideInTopToBottom
 import com.dergoogler.mmrl.ui.animate.slideOutBottomToTop
@@ -55,6 +56,7 @@ import com.dergoogler.mmrl.viewmodel.BulkInstallViewModel
 import com.dergoogler.mmrl.viewmodel.RepositoriesViewModel
 import dev.dergoogler.mmrl.compat.activity.MMRLComponentActivity
 import timber.log.Timber
+import kotlin.reflect.KFunction1
 
 @Composable
 fun RepositoriesScreen(
@@ -129,6 +131,7 @@ fun RepositoriesScreen(
         topBar = {
             TopBar(
                 onUpdate = viewModel::getRepoAll,
+                setMenu = viewModel::setRepositoriesMenu,
                 scrollBehavior = scrollBehavior,
                 onAdd = { add = true }
             )
@@ -247,6 +250,7 @@ private fun TopBar(
     onUpdate: () -> Unit,
     onAdd: () -> Unit,
     scrollBehavior: TopAppBarScrollBehavior,
+    setMenu: KFunction1<RepositoriesMenuCompat, Unit>,
 ) = TopAppBar(
     title = {
         TopAppBarIcon()
@@ -270,6 +274,9 @@ private fun TopBar(
             )
         }
 
+        RepositoriesMenu(
+            setMenu = setMenu
+        )
     }
 )
 

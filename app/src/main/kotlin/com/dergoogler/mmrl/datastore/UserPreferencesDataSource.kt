@@ -2,6 +2,7 @@ package com.dergoogler.mmrl.datastore
 
 import androidx.datastore.core.DataStore
 import com.dergoogler.mmrl.datastore.modules.ModulesMenuCompat
+import com.dergoogler.mmrl.datastore.repositories.RepositoriesMenuCompat
 import com.dergoogler.mmrl.datastore.repository.RepositoryMenuCompat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -258,6 +259,15 @@ class UserPreferencesDataSource @Inject constructor(
         userPreferences.updateData {
             it.copy(
                 repositoryMenu = value
+            )
+        }
+    }
+
+
+    suspend fun setRepositoriesMenu(value: RepositoriesMenuCompat) = withContext(Dispatchers.IO) {
+        userPreferences.updateData {
+            it.copy(
+                repositoriesMenu = value
             )
         }
     }

@@ -34,7 +34,9 @@ data class RepositoryMenuCompat(
         .setShowIcon(showIcon)
         .setShowLicense(showLicense)
         .setShowUpdatedTime(showUpdatedTime)
-        .setShowCover(showCover).setShowVerified(showVerified).setShowAntiFeatures(showAntiFeatures)
+        .setShowCover(showCover)
+        .setShowVerified(showVerified)
+        .setShowAntiFeatures(showAntiFeatures)
         .setRepoListMode(repoListMode)
         .build()
 

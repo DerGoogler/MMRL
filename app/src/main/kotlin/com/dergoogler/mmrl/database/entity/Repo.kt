@@ -4,6 +4,7 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.dergoogler.mmrl.model.online.ModulesJson
+import com.dergoogler.mmrl.model.state.RepoState
 
 @Entity(tableName = "repos")
 data class Repo(
@@ -16,7 +17,7 @@ data class Repo(
     val description: String? = null,
     val donate: String? = null,
     val support: String? = null,
-    @Embedded val metadata: RepoMetadata = RepoMetadata.default()
+    @Embedded val metadata: RepoMetadata = RepoMetadata.default(),
 ) {
     val isCompatible get() = metadata.version == ModulesJson.CURRENT_VERSION
 
@@ -48,6 +49,7 @@ data class Repo(
 
     companion object {
         fun String.toRepo() = Repo(url = this)
+        fun example() = RepoState.example().toRepo()
     }
 }
 
@@ -55,7 +57,7 @@ data class Repo(
 data class RepoMetadata(
     val version: Int,
     val timestamp: Float,
-    val size: Int
+    val size: Int,
 ) {
     companion object {
         fun default() = RepoMetadata(

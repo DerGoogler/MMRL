@@ -18,7 +18,7 @@ data class RepoState(
     val website: String? = null,
     val donate: String? = null,
     val support: String? = null,
-    val size: Int
+    val size: Int,
 ) {
     constructor(repo: Repo) : this(
         url = repo.url,
@@ -52,4 +52,22 @@ data class RepoState(
             size = size
         )
     )
+
+    companion object {
+        fun example() = RepoState(
+            url = "",
+            name = "Fortnite Mods Repository",
+            enable = true,
+            cover = "https://raw.githubusercontent.com/DerGoogler/cdn/refs/heads/master/images/Fortnite-Cover.webp",
+            description = "This repository contains all the mods for Fortnite. Wall hack, ESP and free V-Bucks!",
+            donate = "",
+            support = "",
+            submission = "",
+            website = "",
+            size = 69,
+            version = 0,
+            timestamp = 0f,
+            compatible = true
+        )
+    }
 }

@@ -49,21 +49,28 @@ import dev.dergoogler.mmrl.compat.core.LocalUriHandler
 import dev.dergoogler.mmrl.compat.ext.fadingEdge
 import dev.dergoogler.mmrl.compat.ext.nullable
 import dev.dergoogler.mmrl.compat.ext.shareText
+import dev.dergoogler.mmrl.compat.ext.takeTrue
 import dev.dergoogler.mmrl.compat.ext.toFormattedDateSafely
 
 @Composable
 fun RepositoryItem(
     repo: RepoState,
+    isDemoMode: Boolean = false,
     onClick: () -> Unit,
     update: () -> Unit,
     delete: () -> Unit,
 ) {
     val userPreferences = LocalUserPreferences.current
+    val menu = userPreferences.repositoriesMenu
     val context = LocalContext.current
     val (alpha, textDecoration) = when {
         !repo.compatible -> 0.5f to TextDecoration.LineThrough
         else -> 1f to TextDecoration.None
     }
+
+    val isEnabled = repo.compatible && !isDemoMode
+
+    val repoCover = repo.cover.nullable(menu.showCover) { it }
 
     Card(
         modifier = {
@@ -72,7 +79,7 @@ fun RepositoryItem(
         enabled = repo.compatible,
         onClick = onClick
     ) {
-        repo.cover.nullable {
+        repoCover.nullable(menu.showCover) {
             if (it.isNotEmpty()) {
                 Box(
                     contentAlignment = Alignment.Center
@@ -91,15 +98,17 @@ fun RepositoryItem(
                         url = it,
                     )
 
-                    Box(
-                        modifier = Modifier
-                            .absolutePadding(
-                                top = 16.dp,
-                                right = 16.dp
-                            )
-                            .align(Alignment.TopEnd),
-                    ) {
-                        ModuleCountLabelItem(repo)
+                    menu.showModulesCount.takeTrue {
+                        Box(
+                            modifier = Modifier
+                                .absolutePadding(
+                                    top = 16.dp,
+                                    right = 16.dp
+                                )
+                                .align(Alignment.TopEnd),
+                        ) {
+                            ModuleCountLabelItem(repo)
+                        }
                     }
                 }
             }
@@ -124,18 +133,20 @@ fun RepositoryItem(
                     textDecoration = textDecoration
                 )
 
-                Text(
-                    text = stringResource(
-                        id = R.string.module_update_at,
-                        repo.timestamp.toFormattedDateSafely(userPreferences.datePattern)
-                    ),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.outline,
-                    textDecoration = textDecoration
-                )
+                menu.showUpdatedTime.takeTrue {
+                    Text(
+                        text = stringResource(
+                            id = R.string.module_update_at,
+                            repo.timestamp.toFormattedDateSafely(userPreferences.datePattern)
+                        ),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.outline,
+                        textDecoration = textDecoration
+                    )
+                }
             }
 
-            if (repo.cover == null) {
+            if (repoCover == null && menu.showModulesCount) {
                 ModuleCountLabelItem(repo)
             }
         }
@@ -175,6 +186,7 @@ fun RepositoryItem(
 
             ButtonItem(
                 icon = R.drawable.share,
+                enabled = isEnabled,
                 onClick = { context.shareText(repo.url) }
             )
 
@@ -183,13 +195,15 @@ fun RepositoryItem(
             ButtonItem(
                 icon = R.drawable.at,
                 label = R.string.repo_options,
-                onClick = { open = true }
+                onClick = { open = true },
+                enabled = isEnabled
             )
 
             ButtonItem(
                 icon = R.drawable.cloud_download,
                 label = R.string.repo_options_update,
-                onClick = update
+                onClick = update,
+                enabled = isEnabled
             )
         }
     }
@@ -298,8 +312,10 @@ private fun ButtonItem(
     @DrawableRes icon: Int,
     @StringRes label: Int? = null,
     onClick: () -> Unit,
+    enabled: Boolean = true,
 ) = FilledTonalButton(
     onClick = onClick,
+    enabled = enabled,
     contentPadding = PaddingValues(horizontal = 12.dp)
 ) {
     Icon(

@@ -99,7 +99,7 @@ class RepositoryViewModel @AssistedInject constructor(
                     hasUpdatableTag = localRepository.hasUpdatableTag(it.id)
                 ) to it
             }.sortedWith(
-                comparatorFuck(menu.option, menu.descending)
+                comparator(menu.option, menu.descending)
             ).let { v ->
                 val a = if (menu.pinInstalled) {
                     v.sortedByDescending { it.first.installed }
@@ -164,7 +164,7 @@ class RepositoryViewModel @AssistedInject constructor(
         }.launchIn(viewModelScope)
     }
 
-    private fun comparatorFuck(
+    private fun comparator(
         option: Option,
         descending: Boolean,
     ): Comparator<Pair<OnlineState, OnlineModule>> = if (descending) {

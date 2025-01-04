@@ -1,40 +1,47 @@
 package com.dergoogler.mmrl.viewmodel
 
+import android.app.Application
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dergoogler.mmrl.database.entity.Repo.Companion.toRepo
+import com.dergoogler.mmrl.datastore.repositories.RepositoriesMenuCompat
+import com.dergoogler.mmrl.datastore.repository.Option
 import com.dergoogler.mmrl.model.state.RepoState
 import com.dergoogler.mmrl.repository.LocalRepository
 import com.dergoogler.mmrl.repository.ModulesRepository
+import com.dergoogler.mmrl.repository.UserPreferencesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.dergoogler.mmrl.compat.viewmodel.MMRLViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class RepositoriesViewModel @Inject constructor(
-    private val localRepository: LocalRepository,
-    private val modulesRepository: ModulesRepository,
-    savedStateHandle: SavedStateHandle,
-) : ViewModel() {
+    localRepository: LocalRepository,
+    modulesRepository: ModulesRepository,
+    userPreferencesRepository: UserPreferencesRepository,
+    application: Application,
+) : MMRLViewModel(
+    application = application,
+    localRepository = localRepository,
+    modulesRepository = modulesRepository,
+    userPreferencesRepository = userPreferencesRepository
+) {
     private val reposFlow = MutableStateFlow(listOf<RepoState>())
     val repos get() = reposFlow.asStateFlow()
 
 
-//    val sharedRepoUrl = getRepoUrl(savedStateHandle)
-
-//    companion object {
-//        fun getRepoUrl(savedStateHandle: SavedStateHandle): String =
-//            checkNotNull(savedStateHandle["repoUrl"])
-//    }
+    private val repositoriesMenu
+        get() = userPreferencesRepository.data
+            .map { it.repositoriesMenu }
 
     var isLoading by mutableStateOf(true)
         private set
@@ -53,14 +60,44 @@ class RepositoriesViewModel @Inject constructor(
     }
 
     private fun dataObserver() {
-        localRepository.getRepoAllAsFlow()
-            .onEach { list ->
-                reposFlow.value = list.map { RepoState(it) }
-                    .sortedBy { it.name }
 
-                isLoading = false
+        combine(
+            localRepository.getRepoAllAsFlow(),
+            repositoriesMenu
+        ) { list, menu ->
+            reposFlow.value = list.map {
+                RepoState(it)
+            }.sortedWith(
+                comparator(menu.option, menu.descending)
+            )
 
-            }.launchIn(viewModelScope)
+            isLoading = false
+
+        }.launchIn(viewModelScope)
+    }
+
+    private fun comparator(
+        option: Option,
+        descending: Boolean,
+    ): Comparator<RepoState> = if (descending) {
+        when (option) {
+            Option.NAME -> compareByDescending { it.name.lowercase() }
+            Option.UPDATED_TIME -> compareBy { it.timestamp }
+            else -> compareByDescending { null }
+        }
+
+    } else {
+        when (option) {
+            Option.NAME -> compareBy { it.name.lowercase() }
+            Option.UPDATED_TIME -> compareByDescending { it.timestamp }
+            else -> compareByDescending { null }
+        }
+    }
+
+    fun setRepositoriesMenu(value: RepositoriesMenuCompat) {
+        viewModelScope.launch {
+            userPreferencesRepository.setRepositoriesMenu(value)
+        }
     }
 
     fun insert(
@@ -91,7 +128,7 @@ class RepositoriesViewModel @Inject constructor(
 
     fun getUpdate(
         repo: RepoState,
-        onFailure: (Throwable) -> Unit
+        onFailure: (Throwable) -> Unit,
     ) = viewModelScope.launch {
         refreshing {
             modulesRepository.getRepo(repo.toRepo())

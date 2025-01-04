@@ -355,4 +355,5 @@
     <string name="settings_blacklist_alerts">Blacklist Alerts</string>
     <string name="settings_blacklist_alerts_desc">Display an alert for local and explore modules, and additionally block the installation of any blacklisted modules</string>
     <string name="page_repositorys">Repositories</string>
+    <string name="menu_show_modules_count">Show Modules Count</string>
 </resources>

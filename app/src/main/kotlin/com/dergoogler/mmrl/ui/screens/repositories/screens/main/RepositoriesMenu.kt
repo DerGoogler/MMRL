@@ -1,4 +1,4 @@
-package com.dergoogler.mmrl.ui.screens.repositories.screens.repository
+package com.dergoogler.mmrl.ui.screens.repositories.screens.main
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,9 +21,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.dergoogler.mmrl.R
+import com.dergoogler.mmrl.datastore.repositories.RepositoriesMenuCompat
 import com.dergoogler.mmrl.datastore.repository.Option
-import com.dergoogler.mmrl.datastore.repository.RepoListMode
-import com.dergoogler.mmrl.datastore.repository.RepositoryMenuCompat
 import com.dergoogler.mmrl.ui.component.BottomSheet
 import com.dergoogler.mmrl.ui.component.MenuChip
 import com.dergoogler.mmrl.ui.component.Segment
@@ -32,8 +31,8 @@ import com.dergoogler.mmrl.ui.component.SegmentedButtonsDefaults
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 
 @Composable
-fun RepositoryMenu(
-    setMenu: (RepositoryMenuCompat) -> Unit
+fun RepositoriesMenu(
+    setMenu: (RepositoriesMenuCompat) -> Unit,
 ) {
     val userPreferences = LocalUserPreferences.current
     var open by rememberSaveable { mutableStateOf(false) }
@@ -49,7 +48,7 @@ fun RepositoryMenu(
         if (open) {
             MenuBottomSheet(
                 onClose = { open = false },
-                menu = userPreferences.repositoryMenu,
+                menu = userPreferences.repositoriesMenu,
                 setMenu = setMenu
             )
         }
@@ -59,17 +58,12 @@ fun RepositoryMenu(
 @Composable
 private fun MenuBottomSheet(
     onClose: () -> Unit,
-    menu: RepositoryMenuCompat,
-    setMenu: (RepositoryMenuCompat) -> Unit
+    menu: RepositoriesMenuCompat,
+    setMenu: (RepositoriesMenuCompat) -> Unit,
 ) = BottomSheet(onDismissRequest = onClose) {
     val options = listOf(
         Option.NAME to R.string.menu_sort_option_name,
         Option.UPDATED_TIME to R.string.menu_sort_option_updated
-    )
-
-    val optionsRepoListMode = listOf(
-        RepoListMode.DETAILED to R.string.menu_sort_repolistmode_detailed,
-        RepoListMode.COMPACT to R.string.menu_sort_repolistmode_compact
     )
 
     Text(
@@ -107,26 +101,6 @@ private fun MenuBottomSheet(
             }
         }
 
-        SegmentedButtons(
-            border = SegmentedButtonsDefaults.border(
-                color = MaterialTheme.colorScheme.secondary
-            )
-        ) {
-            optionsRepoListMode.forEach { (repoListMode, label) ->
-                Segment(
-                    selected = repoListMode == menu.repoListMode,
-                    onClick = { setMenu(menu.copy(repoListMode = repoListMode)) },
-                    colors = SegmentedButtonsDefaults.buttonColor(
-                        selectedContainerColor = MaterialTheme.colorScheme.secondary,
-                        selectedContentColor = MaterialTheme.colorScheme.onSecondary
-                    ),
-                    icon = null
-                ) {
-                    Text(text = stringResource(id = label))
-                }
-            }
-        }
-
         FlowRow(
             modifier = Modifier
                 .fillMaxWidth(1f)
@@ -140,44 +114,17 @@ private fun MenuBottomSheet(
                 label = { Text(text = stringResource(id = R.string.menu_descending)) }
             )
 
-            MenuChip(
-                selected = menu.pinInstalled,
-                onClick = { setMenu(menu.copy(pinInstalled = !menu.pinInstalled)) },
-                label = { Text(text = stringResource(id = R.string.menu_pin_installed)) }
-            )
 
             MenuChip(
-                selected = menu.pinUpdatable,
-                onClick = { setMenu(menu.copy(pinUpdatable = !menu.pinUpdatable)) },
-                label = { Text(text = stringResource(id = R.string.menu_pin_updatable)) }
-            )
-
-            MenuChip(
-                selected = menu.showIcon,
-                onClick = { setMenu(menu.copy(showIcon = !menu.showIcon)) },
-                label = { Text(text = stringResource(id = R.string.menu_show_icon)) }
+                selected = menu.showModulesCount,
+                onClick = { setMenu(menu.copy(showModulesCount = !menu.showModulesCount)) },
+                label = { Text(text = stringResource(id = R.string.menu_show_modules_count)) }
             )
 
             MenuChip(
                 selected = menu.showCover,
                 onClick = { setMenu(menu.copy(showCover = !menu.showCover)) },
                 label = { Text(text = stringResource(id = R.string.menu_show_cover)) }
-            )
-
-            MenuChip(selected = menu.showVerified,
-                onClick = { setMenu(menu.copy(showVerified = !menu.showVerified)) },
-                label = { Text(text = stringResource(id = R.string.menu_show_verified)) })
-
-            MenuChip(
-                selected = menu.showLicense,
-                onClick = { setMenu(menu.copy(showLicense = !menu.showLicense)) },
-                label = { Text(text = stringResource(id = R.string.menu_show_license)) }
-            )
-
-            MenuChip(
-                selected = menu.showAntiFeatures,
-                onClick = { setMenu(menu.copy(showAntiFeatures = !menu.showAntiFeatures)) },
-                label = { Text(text = stringResource(id = R.string.menu_show_antifeatures)) }
             )
 
             MenuChip(

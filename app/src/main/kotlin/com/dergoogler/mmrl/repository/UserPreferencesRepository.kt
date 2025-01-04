@@ -4,6 +4,7 @@ import com.dergoogler.mmrl.datastore.DarkMode
 import com.dergoogler.mmrl.datastore.UserPreferencesDataSource
 import com.dergoogler.mmrl.datastore.WorkingMode
 import com.dergoogler.mmrl.datastore.modules.ModulesMenuCompat
+import com.dergoogler.mmrl.datastore.repositories.RepositoriesMenuCompat
 import com.dergoogler.mmrl.datastore.repository.RepositoryMenuCompat
 import java.io.File
 import javax.inject.Inject
@@ -99,6 +100,9 @@ class UserPreferencesRepository @Inject constructor(
 
     suspend fun setRepositoryMenu(value: RepositoryMenuCompat) =
         userPreferencesDataSource.setRepositoryMenu(value)
+
+    suspend fun setRepositoriesMenu(value: RepositoriesMenuCompat) =
+        userPreferencesDataSource.setRepositoriesMenu(value)
 
     suspend fun setModulesMenu(value: ModulesMenuCompat) =
         userPreferencesDataSource.setModulesMenu(value)
