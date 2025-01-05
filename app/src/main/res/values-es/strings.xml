@@ -14,7 +14,7 @@
     <string name="settings_app_theme">Temas de la App</string>
     <string name="settings_app">App</string>
     <string name="settings_download_path">Ruta de descarga</string>
-    <string name="settings_repo">Repositorio</string>
+    <string name="settings_repo">Repos</string>
     <string name="settings_repo_desc">Gestionar los repositorios de módulos Magisk</string>
     <string name="module_download">Descargar</string>
     <string name="setup_root_title">Root</string>
@@ -26,7 +26,7 @@
     <string name="license_osi_approved">Aprobado por OSI</string>
     <string name="license_fsf_libre">FSF Libre</string>
     <string name="page_modules">Módulos</string>
-    <string name="page_settings">Configuración</string>
+    <string name="page_settings">Ajustes</string>
     <string name="settings_root_access">Acceso Root: %s</string>
     <string name="settings_root_provider">Proveedor: %s</string>
     <string name="settings_root_granted">Concedido</string>
@@ -61,7 +61,7 @@
     <string name="view_module_view_track">Ver origen</string>
     <string name="view_module_type">Tipo: %s</string>
     <string name="view_module_added">Añadido: %s</string>
-    <string name="settings_about">Acerca de…</string>
+    <string name="settings_about">Acerca de</string>
     <string name="about_desc2">Hecho con ❤️ por %s</string>
     <string name="menu_descending">Descendente</string>
     <string name="menu_pin_enabled">Encabezar activados</string>
@@ -76,7 +76,7 @@
     <string name="module_new">Nuevo</string>
     <string name="menu_pin_installed">Encabezar instalados</string>
     <string name="menu_pin_updatable">Encabezar actualizables</string>
-    <string name="view_module_page_about">Acerca de…</string>
+    <string name="view_module_page_about">Acerca de</string>
     <string name="view_module_description">Descripción</string>
     <string name="view_module_cloud">Nube</string>
     <string name="view_module_version">Versión</string>
@@ -138,7 +138,7 @@
     <string name="menu_show_antifeatures">Mostrar anticaracterísticas</string>
     <string name="open">Abrir</string>
     <string name="help">Ayuda</string>
-    <string name="module_config">Config</string>
+    <string name="module_config">Configuración</string>
     <string name="we_hit_a_brick_crash">¡Chocamos contra un ladrillo!</string>
     <string name="report_to_issues">Informar sobre problemas</string>
     <string name="stack_trace_truncated">%s\n… %d más</string>
@@ -152,7 +152,7 @@
     <string name="repo_update_service_failed_desc">No hay actualizaciones para los repositorios</string>
     <string name="selinux_status">Estado de SELinux</string>
     <string name="selinux_status_disabled">Desactivado</string>
-    <string name="selinux_status_permissive">Permissive</string>
+    <string name="selinux_status_permissive">Permisivo</string>
     <string name="selinux_status_unknown">Desconocido</string>
     <string name="reboot_userspace">Reinició suave</string>
     <string name="reboot_recovery">Reiniciar en modo recovery</string>
@@ -203,7 +203,7 @@
     <string name="settings_text_wrap">Ajuste de texto</string>
     <string name="settings_changelog">Registro de cambios</string>
     <string name="settings_changelo_desc">Todos los cambios actuales dentro de MMRL</string>
-    <string name="settings_open_notification_settings">Abrir configuración de notificaciones</string>
+    <string name="settings_open_notification_settings">Abrir ajustes de notificaciones</string>
     <string name="settings_blacklist">Lista negra</string>
     <string name="settings_blacklist_desc">Módulos enumerados que pueden ser de código cerrado o peligrosos</string>
     <string name="settings_date_pattern">Patrón de fecha</string>
@@ -229,10 +229,10 @@
     <string name="settings_modules_installer">Instalador</string>
     <string name="work_updates_for_repositories">Actualizaciones para repositorios</string>
     <string name="work_module_updates">Actualizaciones del módulo</string>
-    <string name="selinux_status_enforcing">Enforcing</string>
+    <string name="selinux_status_enforcing">Obediente</string>
     <string name="reboot">Reiniciar</string>
     <string name="generic_disclaimer_title">¡Tú eres responsable!</string>
-    <string name="events_christmas">← Arbolito. :D</string>
+    <string name="events_christmas">← Arbol.</string>
     <string name="unsafe_url_redirecting">URL no segura: %1$s. Redireccionando…</string>
     <string name="install_screen_reboot_title">Reiniciar?</string>
     <string name="install_screen_reboot_text">¿Estás seguro de que deseas reiniciar tu dispositivo?</string>
@@ -261,7 +261,7 @@
     <string name="view_module_features_sepolicy_sub">Agrega políticas de seguridad personalizadas (reglas SEPolicy).</string>
     <string name="view_module_features_zygisk_sub">Permite que los módulos interactúen con Zygisk, lo que posibilita modificaciones e interacciones a nivel del sistema.</string>
     <string name="view_module_features_apks_sub">Incluyendo APK adicionales dentro del módulo.</string>
-    <string name="view_module_features_webui_sub">Interfaz web para gestionar módulos</string>
+    <string name="view_module_features_webui_sub">Interfaz web para gestionar módulos. El usuario debe confirmar el uso de varias APIs de JavaScript.</string>
     <string name="view_module_features_post_mount">Post montaje</string>
     <string name="view_module_features_post_fs_data_sub">Ejecuta el código poco después del arranque (sistema parcialmente arrancado).</string>
     <string name="view_module_features_resetprop_sub">Establece las propiedades del sistema cargadas por resetprop de Magisk.</string>
