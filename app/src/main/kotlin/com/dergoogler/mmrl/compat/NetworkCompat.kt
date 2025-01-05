@@ -9,6 +9,7 @@ import androidx.compose.runtime.setValue
 import com.dergoogler.mmrl.BuildConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.decodeFromStream
 import okhttp3.Cache
@@ -114,6 +115,7 @@ object NetworkCompat {
             }
         )
 
+    @OptIn(ExperimentalSerializationApi::class)
     suspend inline fun <reified T> requestJson(url: String) =
         request(
             url = url,
