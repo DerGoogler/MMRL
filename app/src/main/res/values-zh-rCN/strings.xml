@@ -79,10 +79,10 @@
     <string name="view_module_features_post_mount">Post Mount</string>
     <string name="view_module_features_boot_completed">启动后</string>
     <string name="view_module_features_service_sub">在系统启动完成后执行脚本。</string>
-    <string name="view_module_features_post_fs_data_sub">在系统较早期启动阶段执行脚本</string>
-    <string name="view_module_features_resetprop_sub">设置由Magisk resetprop加载的系统属性</string>
+    <string name="view_module_features_post_fs_data_sub">在系统启动的较早期阶段执行脚本</string>
+    <string name="view_module_features_resetprop_sub">设置由 Magisk resetprop 加载的系统属性</string>
     <string name="view_module_features_sepolicy_sub">添加自定义SEPolicy属性。</string>
-    <string name="view_module_features_zygisk_sub">模块使用了Zygisk,用于实现系统级的交互和修改</string>
+    <string name="view_module_features_zygisk_sub">模块使用了 Zygisk，用于实现系统级的交互和修改</string>
     <string name="view_module_features_apks_sub">在模块内包含额外的APK。</string>
     <string name="view_module_features_webui_sub">带有WebUI模块管理界面 (用户需要确认 JavaScript API 的使用)。</string>
     <string name="view_module_features_postmount_sub">在OverlayFS挂载后执行脚本(仅限KernelSU和APatch)&gt;</string>
@@ -355,4 +355,5 @@
     <string name="settings_blacklist_alerts">黑名单警告</string>
     <string name="settings_blacklist_alerts_desc">为出现在黑名单列表内的模块在本地和线上标记警告，阻止安装</string>
     <string name="blacklisted_desc">此模块已被 MMRL 拉黑，为确保设备安全，安装无法进行。若仍要安装，请在设置中停用黑名单警告。\n@more(了解更多)</string>
+    <string name="menu_show_modules_count">显示模块数量</string>
 </resources>
