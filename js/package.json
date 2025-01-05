@@ -1,0 +1,23 @@
+{
+  "name": "mmrl",
+  "version": "0.0.5",
+  "description": "A library to make your life easier when working with MMRL's WebUI",
+  "source": "src/index.ts",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "parcel build",
+    "upload": "npm run build && npm publish"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "GPL-3.0-only",
+  "devDependencies": {
+    "@parcel/packager-ts": "^2.13.3",
+    "@parcel/transformer-typescript-tsc": "^2.13.3",
+    "@parcel/transformer-typescript-types": "^2.13.3",
+    "parcel": "^2.13.3",
+    "typescript": "^5.7.2"
+  }
+}
