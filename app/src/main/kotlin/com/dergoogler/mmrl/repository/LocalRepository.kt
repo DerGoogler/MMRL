@@ -51,6 +51,10 @@ class LocalRepository @Inject constructor(
         blacklistDao.insert(BlacklistEntity(value))
     }
 
+    suspend fun deleteBlacklistById(id: String) = withContext(Dispatchers.IO) {
+        blacklistDao.deleteById(id)
+    }
+
     suspend fun getBlacklistById(id: String) = withContext(Dispatchers.IO) {
         blacklistDao.getBlacklistEntry(id)?.toBlacklist()
     }

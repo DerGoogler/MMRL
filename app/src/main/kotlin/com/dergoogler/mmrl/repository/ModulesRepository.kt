@@ -57,6 +57,7 @@ class ModulesRepository @Inject constructor(
             return@runRequest api.blacklist.execute()
         }.onSuccess { blacklist ->
             blacklist.map {
+                localRepository.deleteBlacklistById(it.id)
                 localRepository.insertBlacklist(it)
             }
         }.onFailure {

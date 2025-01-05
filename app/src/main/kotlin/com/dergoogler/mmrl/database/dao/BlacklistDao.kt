@@ -25,6 +25,9 @@ interface BlacklistDao {
     @Query("SELECT * FROM blacklist")
     fun getAllBlacklistEntriesAsFlow(): Flow<List<BlacklistEntity>>
 
+    @Query("DELETE FROM blacklist WHERE blId = :id")
+    suspend fun deleteById(id: String)
+
     @Update
     suspend fun updateBlacklistEntry(entry: BlacklistEntity)
 }
