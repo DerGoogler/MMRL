@@ -13,7 +13,6 @@ import androidx.core.net.toUri
 import androidx.webkit.WebViewAssetLoader
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.datastore.UserPreferencesCompat
-import com.dergoogler.mmrl.datastore.developerMode
 import com.dergoogler.mmrl.viewmodel.WebUIViewModel
 import dev.dergoogler.mmrl.compat.core.MMRLUriHandlerImpl
 
@@ -70,10 +69,6 @@ class MMRLWebClient(
         view: WebView,
         request: WebResourceRequest,
     ): WebResourceResponse? {
-        val default = webViewAssetLoader.shouldInterceptRequest(request.url)
-
-        return userPrefs.developerMode({ useWebUiDevUrl }, default) {
-            super.shouldInterceptRequest(view, request)
-        }
+        return webViewAssetLoader.shouldInterceptRequest(request.url)
     }
 }
