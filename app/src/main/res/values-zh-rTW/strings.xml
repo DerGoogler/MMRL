@@ -355,4 +355,5 @@
     <string name="settings_blacklist_alerts">模組封鎖</string>
     <string name="settings_blacklist_alerts_desc">為羅列於封鎖列表的本機、線上模組標記警示，防止安裝</string>
     <string name="page_repositorys">庫存</string>
+    <string name="menu_show_modules_count">顯示模組計數</string>
 </resources>
