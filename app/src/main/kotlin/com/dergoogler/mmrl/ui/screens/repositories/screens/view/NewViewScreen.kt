@@ -114,6 +114,7 @@ import dev.dergoogler.mmrl.compat.ext.fadingEdge
 import dev.dergoogler.mmrl.compat.ext.ifNotEmpty
 import dev.dergoogler.mmrl.compat.ext.ifNotNullOrBlank
 import dev.dergoogler.mmrl.compat.ext.isNotNullOrBlank
+import dev.dergoogler.mmrl.compat.ext.isNullOrFalse
 import dev.dergoogler.mmrl.compat.ext.nullable
 import dev.dergoogler.mmrl.compat.ext.shareText
 import dev.dergoogler.mmrl.compat.ext.takeTrue
@@ -1170,7 +1171,7 @@ private fun FeatureListItem(
     rootSolutions: List<@Composable RowScope.() -> Unit>? = null,
     itemTextStyle: ListItemTextStyle,
 ) {
-    if (feature == null) return
+    if (feature.isNullOrFalse()) return
 
     ListItem(
         contentPaddingValues = PaddingValues(vertical = 8.dp, horizontal = 16.dp),

@@ -1,5 +1,6 @@
 package com.dergoogler.mmrl.ui.component
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.WindowInsets
@@ -16,6 +17,7 @@ import androidx.compose.material3.SheetState
 import androidx.compose.material3.contentColorFor
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
@@ -64,6 +66,9 @@ fun BottomSheet(
             .fillMaxWidth()
             .wrapContentHeight(unbounded = true)
             .heightIn(max = maxHeight)
+            .animateContentSize(
+                alignment = Alignment.BottomStart
+            )
     ) {
         content()
         enabledNavigationSpacer.takeTrue {

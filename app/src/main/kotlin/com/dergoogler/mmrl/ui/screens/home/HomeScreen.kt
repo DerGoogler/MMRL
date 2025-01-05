@@ -187,8 +187,7 @@ fun HomeScreen(
                     ) {
                         Surface(
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(bottom = 16.dp),
+                                .fillMaxWidth(),
                             color = MaterialTheme.colorScheme.outlineVariant,
                             shape = RoundedCornerShape(15.dp),
                         ) {
