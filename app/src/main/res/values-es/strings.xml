@@ -284,4 +284,8 @@
     <string name="verified">Verificado</string>
     <string name="settings_repo_update_interval_suffix">" hora/s"</string>
     <string name="settings_check_modules_update_interval_suffix">" hora/s"</string>
+    <string name="working_mode_magisk_title">Magisk</string>
+    <string name="working_mode_kernelsu_title">KernelSU</string>
+    <string name="working_mode_kernelsu_next_title">KernelSU Next</string>
+    <string name="working_mode_apatch_title">APatch</string>
 </resources>
