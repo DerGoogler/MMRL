@@ -1,6 +1,6 @@
 {
   "name": "mmrl",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A library to make your life easier when working with MMRL's WebUI",
   "source": "src/index.ts",
   "main": "dist/index.cjs.js",
