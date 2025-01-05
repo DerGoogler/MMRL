@@ -1,2 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="service_is_not_available">! 服务不可用</string>
+    <string name="installation_aborted_due_to_an_error">! 安装因为发生错误而终止</string>
+    <string name="cannot_install_blacklisted_modules_settings_security_blacklist_alerts">! 无法安装被列入黑名单的模块。设置 → 安全 → 黑名单警告</string>
+    <string name="unable_to_gather_module_info_of_file">! 无法获取这个模块的信息: %1$s</string>
+</resources>
