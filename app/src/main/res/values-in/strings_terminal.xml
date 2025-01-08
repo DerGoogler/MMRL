@@ -1,2 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="service_is_not_available">! Layanan tidak tersedia</string>
+    <string name="unable_to_gather_module_info_of_file">! Tidak dapat mengumpulkan info modul file: %1$s</string>
+    <string name="installation_aborted_due_to_an_error">! Instalasi dibatalkan karena kesalahan</string>
+    <string name="install_view_path">- Jalur: %1$s</string>
+    <string name="copying_zip_to_temp_directory">- Menyalin zip ke direktori temp</string>
+    <string name="install_view_module_info">- Info modul: %1$s</string>
+    <string name="copying_failed">! Penyalinan gagal</string>
+    <string name="unable_to_gather_module_info">! Tidak dapat mengumpulkan info modul</string>
+    <string name="install_view_installing">- Menginstal %1$s</string>
+    <string name="module_not_found">! Modul tidak ditemukan.</string>
+    <string name="this_module_don_t_have_an_action">! Modul ini tidak memiliki tindakan.</string>
+    <string name="execution_failed_try_to_use_shell_for_the_action_execution_settings_module_use_shell_for_module_action">- Eksekusi gagal. Coba gunakan Shell untuk eksekusi Action, Pengaturan → Modul → Gunakan Shell untuk Aksi Modul.</string>
+    <string name="module_is_disabled_or_removed_unable_to_execute_action">! Modul dinonaktifkan atau dihapus. Tidak dapat menjalankan tindakan.</string>
+    <string name="cannot_install_blacklisted_modules_settings_security_blacklist_alerts">! Tidak dapat memasang modul yang masuk dalam daftar hitam. Pengaturan → Keamanan → Peringatan Daftar Hitam</string>
+</resources>
