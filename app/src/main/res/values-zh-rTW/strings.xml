@@ -12,14 +12,14 @@
     <string name="install_flashing">正在閃刷</string>
     <string name="install_done">已完成</string>
     <string name="install_failure">無法完成</string>
-    <string name="install_logs_saved">已儲存運作日誌</string>
+    <string name="install_logs_saved">已儲存記錄檔</string>
     <string name="install_logs_save_failed">無法儲存：%s</string>
     <string name="install_screen_reboot_title">立即重新開機？</string>
-    <string name="install_screen_reboot_text">你是否要立即讓裝置重新開機？</string>
-    <string name="install_screen_reboot_confirm">確認</string>
+    <string name="install_screen_reboot_text">你確定要立即重新開機裝置？</string>
+    <string name="install_screen_reboot_confirm">確定</string>
     <string name="install_screen_reboot_dismiss">稍後</string>
     <!-- 授權條款 -->
-    <string name="license_title">參閱授權條款</string>
+    <string name="license_title">查看授權條款</string>
     <string name="license_osi_approved">開放原始碼授權</string>
     <string name="license_fsf_libre">自由軟體授權</string>
     <!-- 頁面按鈕 -->
