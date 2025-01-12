@@ -94,7 +94,7 @@
     <string name="view_module_mod_infos_disclaimer">留有 * 標記的資訊，其內容在各模組倉庫之間稍有不同。欲知詳情，請點選上方的@track(中繼資料檢視)。</string>
     <string name="view_module_section_count">%1$s+</string>
     <string name="view_module_donate">小額捐款</string>
-    <string name="view_module_donate_desc">以一杯咖啡 ☕ 的錢，表達你對模組開發人員的大力支持！</string>
+    <string name="view_module_donate_desc">一杯咖啡 ☕ 的錢，表達對模組開發人員的大力支持！</string>
     <string name="view_module_module_id">模組代號</string>
     <string name="view_module_required_os">所需作業系統版本</string>
     <string name="view_module_required_os_value">Android %1$s 以上</string>
@@ -340,7 +340,7 @@
     <string name="action_screen_cancel_title">取消腳本執行？</string>
     <string name="action_screen_cancel_text">你是否要取消腳本執行程序？</string>
     <string name="install_screen_cancel_text">你是否要取消安裝程序？</string>
-    <string name="home_storage_usage">儲存體用量</string>
+    <string name="home_storage_usage">儲存空間</string>
     <string name="menu_pin_action">釘選具有腳本的模組</string>
     <string name="menu_pin_webui">釘選具有 WebUI 介面的模組</string>
     <string name="settings_use_generic_action">採用通用型腳本</string>
