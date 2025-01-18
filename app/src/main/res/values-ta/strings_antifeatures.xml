@@ -1,2 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="upstreamnonfree_desc">மேலோடை மூலக் குறியீடு முற்றிலும் இலவசம் அல்ல.</string>
+    <string name="obfuscation_name">தெளிவின்மை</string>
+    <string name="obfuscation_desc">தொகுதி மூலக் குறியீடு தெளிவுபடுத்தப்படலாம், இதனால் புரிந்துகொள்வது, தணிக்கை செய்வது அல்லது மாற்றுவது கடினம்.</string>
+    <string name="unaskedremoval_name">கேட்கப்படாத அகற்றுதல்</string>
+    <string name="unaskedremoval_desc">பயனர் அனுமதியின்றி பயன்பாடுகள், கோப்புகள் அல்லது பிற தொகுதிகளை தொகுதி நீக்குகிறது.</string>
+    <string name="llm_name">பெரிய மொழி மாதிரி</string>
+    <string name="llm_desc">தொகுதி ஒரு எல்.எல்.எம் மூலம் ஓரளவு அல்லது முழுமையாக எழுதப்பட்டிருக்கலாம்</string>
+    <string name="closedsource_name">மூடிய மூல</string>
+    <string name="closedsource_desc">தொகுதி திறந்த மூலமல்ல, அதன் கோட்பேச் பொதுமக்களுக்கு மறுஆய்வு, மாற்றியமைத்தல் அல்லது மறுபகிர்வு செய்ய அணுக முடியாது</string>
+    <string name="ads_name">விளம்பரம்</string>
+    <string name="ads_desc">தொகுதியில் விளம்பரங்கள் உள்ளன.</string>
+    <string name="knownvuln_name">அறியப்பட்ட பாதிப்பு</string>
+    <string name="knownvuln_desc">இந்த தொகுதிக்கு அறியப்பட்ட பாதுகாப்பு பாதிப்பு உள்ளது.</string>
+    <string name="nsfw_name">NSFW</string>
+    <string name="nsfw_desc">இந்த தொகுதிக்கு எல்லா இடங்களிலும் விளம்பரப்படுத்தவோ அல்லது தெரியவோ கூடாது.</string>
+    <string name="nosourcesince_name">பின்னர் எந்த ஆதாரமும் இல்லை</string>
+    <string name="nosourcesince_desc">மூலக் குறியீடு இனி கிடைக்காது, புதுப்பிப்புகள் எதுவும் சாத்தியமில்லை.</string>
+    <string name="nonfreeadd_name">ஃப்ரீ அல்லாத துணை நிரல்கள்</string>
+    <string name="nonfreeadd_desc">இந்த தொகுதி இலவச அல்லாத துணை நிரல்களை ஊக்குவிக்கிறது.</string>
+    <string name="nonfreeassets_name">இல்லாத சொத்துக்கள்</string>
+    <string name="nonfreeassets_desc">இந்த தொகுதிக்கு இலவசமற்ற சொத்துக்கள் உள்ளன.</string>
+    <string name="nonfreedep_name">இலவச சார்பு சார்பு</string>
+    <string name="nonfreedep_desc">இந்த தொகுதி மற்ற இலவச அல்லாத தொகுதிகளைப் பொறுத்தது.</string>
+    <string name="nonfreenet_name">இல்லாத பிணையம் சேவைகள்</string>
+    <string name="nonfreenet_desc">இந்த தொகுதி மாறாத அல்லது இல்லாத பிணையம் சேவையை முழுமையாக ஊக்குவிக்கிறது அல்லது சார்ந்துள்ளது.</string>
+    <string name="tracking_name">கண்காணிப்பு</string>
+    <string name="tracking_desc">இந்த தொகுதி உங்கள் செயல்பாட்டைக் கண்காணித்து புகாரளிக்கிறது.</string>
+    <string name="upstreamnonfree_name">மேலோடை இல்லாதது</string>
+</resources>
