@@ -1,2 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="service_is_not_available">! பணி கிடைக்கவில்லை</string>
+    <string name="unable_to_gather_module_info_of_file">! கோப்பின் தொகுதி தகவலை சேகரிக்க முடியவில்லை: %1$s</string>
+    <string name="cannot_install_blacklisted_modules_settings_security_blacklist_alerts">! தடுப்புப்பட்டியல் தொகுதிகளை நிறுவ முடியாது. அமைப்புகள் → பாதுகாப்பு → பிளாக்லிச்ட் விழிப்பூட்டல்கள்</string>
+    <string name="installation_aborted_due_to_an_error">! பிழை காரணமாக நிறுவல் கைவிடப்பட்டது</string>
+    <string name="install_view_path">- பாதை: %1$s</string>
+    <string name="copying_zip_to_temp_directory">- தற்காலிக கோப்பகத்திற்கு சிப்பை நகலெடுக்கிறது</string>
+    <string name="install_view_module_info">- தொகுதி தகவல்: %1$s</string>
+    <string name="copying_failed">! நகலெடுப்பது தோல்வியுற்றது</string>
+    <string name="unable_to_gather_module_info">! தொகுதி தகவலை சேகரிக்க முடியவில்லை</string>
+    <string name="install_view_installing">- %1$s ஐ நிறுவுதல்</string>
+    <string name="module_not_found">! தொகுதி கிடைக்கவில்லை.</string>
+    <string name="this_module_don_t_have_an_action">! இந்த தொகுதிக்கு ஒரு செயல் இல்லை.</string>
+    <string name="module_is_disabled_or_removed_unable_to_execute_action">! தொகுதி முடக்கப்பட்டுள்ளது அல்லது அகற்றப்பட்டது. செயலை செயல்படுத்த முடியவில்லை.</string>
+    <string name="execution_failed_try_to_use_shell_for_the_action_execution_settings_module_use_shell_for_module_action">- சாவுஒறுப்பு தோல்வியடைந்தது. செயல் செயலாக்கத்திற்கு செல் பயன்படுத்த முயற்சிக்கவும், அமைப்புகள் → தொகுதி மோட் தொகுதி செயலுக்கு செல்லைப் பயன்படுத்தவும்.</string>
+</resources>
