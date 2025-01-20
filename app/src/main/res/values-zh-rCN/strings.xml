@@ -279,7 +279,7 @@
     <string name="events_halloween">BOO! … AHH</string>
     <string name="events_christmas">← 这里有棵树。</string>
     <string name="events_new_years_eve">新年快乐！</string>
-    <string name="open_source">开源</string>
+    <string name="open_source">项目地址</string>
     <string name="maintained_by">维护者</string>
     <string name="kernel">内核版本</string>
     <string name="manager_version">管理器版本</string>
@@ -338,8 +338,8 @@
     <string name="settings_webui_remote_url_desc">启动一个 localhost 页面以便于调试。参见上方的注意事项了解更多信息。</string>
     <string name="install_screen_cancel_title">取消安装？</string>
     <string name="install_screen_cancel_text">你确定要取消安装吗？</string>
-    <string name="action_screen_cancel_title">取消动作？</string>
-    <string name="action_screen_cancel_text">你确定要取消当前动作吗？</string>
+    <string name="action_screen_cancel_title">取消action执行？</string>
+    <string name="action_screen_cancel_text">你确定要取消当前action执行？</string>
     <string name="home_storage_usage">存储使用</string>
     <string name="menu_pin_action">固定操作</string>
     <string name="menu_pin_webui">固定 WebUI</string>
