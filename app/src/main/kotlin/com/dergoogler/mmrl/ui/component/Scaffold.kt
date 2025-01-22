@@ -29,6 +29,23 @@ fun SettingsScaffold(
     floatingActionButton: @Composable () -> Unit = {},
     absolute: @Composable (BoxScope.() -> Unit) = {},
     relative: @Composable (ColumnScope.() -> Unit),
+) = SettingsScaffold(
+    title = stringResource(id = title),
+    modifier = modifier,
+    actions = actions,
+    floatingActionButton = floatingActionButton,
+    absolute = absolute,
+    relative = relative
+)
+
+@Composable
+fun SettingsScaffold(
+    modifier: ScaffoldModifier = ScaffoldDefaults.settingsScaffoldScrollModifier,
+    title: String,
+    actions: @Composable (RowScope.() -> Unit) = {},
+    floatingActionButton: @Composable () -> Unit = {},
+    absolute: @Composable (BoxScope.() -> Unit) = {},
+    relative: @Composable (ColumnScope.() -> Unit),
 ) {
     val navController = LocalNavController.current
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
@@ -37,7 +54,7 @@ fun SettingsScaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             NavigateUpTopBar(
-                title = stringResource(id = title),
+                title = title,
                 scrollBehavior = scrollBehavior,
                 navController = navController,
                 actions = actions
