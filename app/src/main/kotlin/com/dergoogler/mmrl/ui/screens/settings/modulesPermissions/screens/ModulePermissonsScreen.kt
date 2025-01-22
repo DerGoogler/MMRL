@@ -28,7 +28,7 @@ fun ModulePermissionsScreen(mViewModel: ModulePermissionsViewModel) {
             modifier = ScaffoldDefaults.settingsScaffoldModifier,
             title = module.name
         ) {
-            ListHeader(title = stringResource(id = R.string.view_module_features_webui))
+            ListHeader(title = R.string.view_module_features_webui)
 
             ListSwitchItem(
                 enabled = module.features.webui,
@@ -59,7 +59,6 @@ fun ModulePermissionsScreen(mViewModel: ModulePermissionsViewModel) {
                     }
                 }
             )
-
         }
 
     } else {
