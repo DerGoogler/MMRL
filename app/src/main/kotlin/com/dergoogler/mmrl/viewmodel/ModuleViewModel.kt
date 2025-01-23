@@ -168,6 +168,10 @@ class ModuleViewModel @AssistedInject constructor(
             val listener = object : DownloadService.IDownloadListener {
                 override fun getProgress(value: Float) {}
                 override fun onSuccess() {
+                    if (downloadPath.exists() && downloadPath.mkdirs()) {
+                        Timber.d("Created directory: $downloadPath")
+                    }
+                    
                     onSuccess(downloadPath.resolve(filename))
                 }
 
