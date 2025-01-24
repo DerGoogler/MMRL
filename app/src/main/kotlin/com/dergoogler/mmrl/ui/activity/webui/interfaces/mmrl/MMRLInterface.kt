@@ -27,7 +27,7 @@ class MMRLInterface(
     webview: WebView,
     private val viewModel: WebUIViewModel,
     private val allowedFsApi: Boolean,
-    private val allowedKsuApi: Boolean,
+    private val allowedKsuApi: Boolean
 ) {
     private val activity = context as Activity
     private var windowInsetsController: WindowInsetsControllerCompat =

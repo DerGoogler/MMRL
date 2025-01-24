@@ -1,4 +1,4 @@
-export type Scope = `$${string}`;
+export type Scope = `$${string}` | string;
 export type ObjectScope = Scope | object;
 export type MimeType = `${string}/${string}`;
 

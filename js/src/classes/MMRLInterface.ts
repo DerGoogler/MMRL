@@ -1,4 +1,5 @@
 import type { Manager, MimeType, ObjectScope } from "../types";
+import { AccessorScope } from "../util/AccessorScope";
 import { MMRLObjectAccessor } from "./MMRLObjectAccessor";
 
 /**
@@ -19,6 +20,10 @@ export interface MMRLInterfaceImpl {
   getSdk(): number;
   shareText(text: string): void;
   shareText(text: string, type: MimeType): void;
+  getRecomposeCount(): number;
+  recompose(): number;
+  requestAdvancedKernelSUAPI(): void;
+  requestFileSystemAPI(): void;
 }
 
 /**
@@ -37,7 +42,8 @@ export class MMRLInterface extends MMRLObjectAccessor<MMRLInterfaceImpl> {
    * const mmrl = MMRLInterfaceFactory("net-switch");
    */
   public constructor(scope: ObjectScope) {
-    super(scope);
+    const parsedScope = AccessorScope.parseScope(scope);
+    super(parsedScope);
   }
 
   /**
@@ -50,7 +56,10 @@ export class MMRLInterface extends MMRLObjectAccessor<MMRLInterfaceImpl> {
       return;
     }
 
-    const stylesheets = ["/mmrl/insets.css", "/mmrl/colors.css"];
+    const stylesheets = [
+      "https://mui.kernelsu.org/mmrl/insets.css",
+      "https://mui.kernelsu.org/mmrl/colors.css",
+    ];
 
     stylesheets.forEach((href) => {
       const link = document.createElement("link");
@@ -247,6 +256,28 @@ export class MMRLInterface extends MMRLObjectAccessor<MMRLInterfaceImpl> {
       }
 
       this.interface.shareText(text, type);
+    }
+  }
+
+  /**
+   * Requests access to the advanced kernel SU API.
+   *
+   * This method checks if the current instance is an MMRL instance. If it is,
+   * it proceeds to request the advanced kernel SU API through the interface.
+   */
+  public requestAdvancedKernelSUAPI() {
+    if (this.isMMRL) {
+      this.interface.requestAdvancedKernelSUAPI();
+    }
+  }
+
+  /**
+   * Requests access to the file system API if the current instance is an MMRL.
+   * If access to the file system is granted, it triggers the recompose method.
+   */
+  public requestFileSystemAPI() {
+    if (this.isMMRL) {
+      this.interface.requestFileSystemAPI();
     }
   }
 }

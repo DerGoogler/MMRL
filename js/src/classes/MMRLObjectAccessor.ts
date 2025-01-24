@@ -1,4 +1,4 @@
-import { ObjectScope } from "../types";
+import { AccessorScope } from "../util/AccessorScope";
 
 /**
  * The `MMRLObjectAccessor` class provides a base class for accessing MMRL objects.
@@ -20,30 +20,17 @@ export class MMRLObjectAccessor<I = any> {
    */
   public static static: MMRLObjectAccessor<any>;
 
-  /**
-   * Parses the given scope and returns the corresponding object.
-   *
-   * @param {ObjectScope} scope - The scope to parse.
-   * @returns {object} The parsed scope object.
-   * @private
-   */
-  private _parseScope(scope: ObjectScope): object {
-    if (typeof scope === "string") {
-      return window[`$${scope.replace(/[-.]/g, "_")}`];
-    }
-
-    return scope;
-  }
 
   /**
    * Creates an instance of `MMRLObjectAccessor`.
    *
-   * @param {ObjectScope} scope - The scope to initialize the internal interface with.
+   * @param {AccessorScope.ObjectScope} scope - The scope to initialize the internal interface with.
    */
-  public constructor(scope: ObjectScope) {
-    this._parseScope = this._parseScope.bind(this);
-    this._internal_interface = this._parseScope(scope) as I;
+  public constructor(
+    scope: AccessorScope.ObjectScope
+  ) {
     MMRLObjectAccessor.static = this;
+    this._internal_interface = scope as I;
   }
 
   /**

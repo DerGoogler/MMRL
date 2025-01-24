@@ -11,7 +11,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -64,138 +63,136 @@ fun WebUIScreen(
 
     DisposableEffect(Unit) {
         onDispose {
-            viewModel.destroyJavascriptInterfaces(webView)
             webView.destroy()
         }
     }
 
-    if (viewModel.topInset != null && viewModel.bottomInset != null) {
-        val allowedFsApi = viewModel.modId in userPrefs.allowedFsModules
-        val allowedKsuApi = viewModel.modId in userPrefs.allowedKsuModules
 
-        key(viewModel.recomposeCount) {
+    val allowedFsApi = viewModel.modId in userPrefs.allowedFsModules
+    val allowedKsuApi = viewModel.modId in userPrefs.allowedKsuModules
 
-            val webViewAssetLoader = remember(viewModel.topInset, viewModel.bottomInset) {
-                WebViewAssetLoader.Builder()
-                    .setDomain("mui.kernelsu.org")
-                    .addPathHandler(
-                        "/",
-                        SuFilePathHandler(
-                            directory = viewModel.webRoot,
-                            useShell = userPrefs.useShellToLoadWebUIAssets,
-                            shell = viewModel.rootShell,
-                        )
-                    )
-                    .addPathHandler(
-                        "/mmrl/",
-                        MMRLWebUIHandler(
-                            topInset = viewModel.topInset,
-                            bottomInset = viewModel.bottomInset,
-                            colorScheme = colorScheme,
-                            typography = typography,
-                            filledTonalButtonColors = filledTonalButtonColors,
-                            cardColors = cardColors
-                        )
-                    )
-                    .build()
+    if (!allowedKsuApi && viewModel.dialogRequestAdvancedKernelSUAPI) {
+        ConfirmDialog(
+            title = "Allow Advanced Kernel SU API?",
+            description = "Allow this module to access the Advanced Kernel SU API? If you don't feel secure with this module, don't allow it!",
+            onClose = {
+                viewModel.dialogRequestAdvancedKernelSUAPI = false
+            },
+            onConfirm = {
+                viewModel.dialogRequestAdvancedKernelSUAPI = false
+                val newModules = userPrefs.allowedKsuModules + viewModel.modId
+                settingsViewModel.setAllowedKsuModules(newModules)
             }
+        )
+    }
 
-            AndroidView(
-                factory = {
-                    webView.apply {
-                        layoutParams = ViewGroup.LayoutParams(
-                            ViewGroup.LayoutParams.MATCH_PARENT,
-                            ViewGroup.LayoutParams.MATCH_PARENT
-                        )
+    if (!allowedFsApi && viewModel.dialogRequestFileSystemAPI) {
+        ConfirmDialog(
+            title = "Allow FileSystem API?",
+            description = "Allow this module to access the FileSystem API? If you don't feel secure with this module, don't allow it!",
+            onClose = {
+                viewModel.dialogRequestFileSystemAPI = false
+            },
+            onConfirm = {
+                viewModel.dialogRequestFileSystemAPI = false
+                val newModules = userPrefs.allowedFsModules + viewModel.modId
+                settingsViewModel.setAllowedFsModules(newModules)
+            }
+        )
+    }
 
-                        ViewCompat.setOnApplyWindowInsetsListener(this) { _, _ ->
-                            WindowInsetsCompat.CONSUMED
+    if (viewModel.topInset != null && viewModel.bottomInset != null) {
+        val webViewAssetLoader = remember(viewModel.topInset, viewModel.bottomInset) {
+            WebViewAssetLoader.Builder()
+                .setDomain("mui.kernelsu.org")
+                .addPathHandler(
+                    "/",
+                    SuFilePathHandler(
+                        directory = viewModel.webRoot,
+                        useShell = userPrefs.useShellToLoadWebUIAssets,
+                        shell = viewModel.rootShell,
+                    )
+                )
+                .addPathHandler(
+                    "/mmrl/",
+                    MMRLWebUIHandler(
+                        topInset = viewModel.topInset,
+                        bottomInset = viewModel.bottomInset,
+                        colorScheme = colorScheme,
+                        typography = typography,
+                        filledTonalButtonColors = filledTonalButtonColors,
+                        cardColors = cardColors
+                    )
+                )
+                .build()
+        }
+
+        AndroidView(
+            factory = {
+                webView.apply {
+
+
+                    layoutParams = ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT
+                    )
+
+                    ViewCompat.setOnApplyWindowInsetsListener(this) { _, _ ->
+                        WindowInsetsCompat.CONSUMED
+                    }
+
+                    webViewClient = MMRLWebClient(
+                        context = context,
+                        browser = browser,
+                        webViewAssetLoader = webViewAssetLoader,
+                        userPrefs = userPrefs,
+                        viewModel = viewModel,
+                    )
+                }
+            },
+            update = {
+                it.apply {
+                    settings.apply {
+                        javaScriptEnabled = true
+                        domStorageEnabled = true
+                        allowFileAccess = false
+                        userPrefs.developerMode({ useWebUiDevUrl }) {
+                            mixedContentMode =
+                                android.webkit.WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
                         }
+                        userAgentString = "DON'T TRACK ME DOWN MOTHERFUCKER!"
+                    }
 
-                        webViewClient = MMRLWebClient(
-                            context = context,
-                            browser = browser,
-                            webViewAssetLoader = webViewAssetLoader,
-                            userPrefs = userPrefs,
+                    addJavascriptInterface(
+                        MMRLInterface(
                             viewModel = viewModel,
-                        )
+                            context = context,
+                            isDark = isDarkMode,
+                            webview = this,
+                            allowedFsApi = allowedFsApi,
+                            allowedKsuApi = allowedKsuApi
+                        ), "$${viewModel.sanitizedModId}"
+                    )
 
-                        settings.apply {
-                            javaScriptEnabled = true
-                            domStorageEnabled = true
-                            allowFileAccess = false
-                            userPrefs.developerMode({ useWebUiDevUrl }) {
-                                mixedContentMode =
-                                    android.webkit.WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
-                            }
-                            userAgentString = "DON'T TRACK ME DOWN MOTHERFUCKER!"
-                        }
+                    addJavascriptInterface(
+                        if (allowedKsuApi) {
+                            AdvancedKernelSUAPI(context, this, viewModel.moduleDir, userPrefs)
+                        } else {
+                            BaseKernelSUAPI(context, this, viewModel.moduleDir)
+                        }, "ksu"
+                    )
 
-                        loadUrl(viewModel.domainUrl)
-                    }
-                },
-                update = {
-                    it.apply {
+                    if (allowedFsApi) {
                         addJavascriptInterface(
-                            if (allowedKsuApi) {
-                                AdvancedKernelSUAPI(context, this, viewModel.moduleDir, userPrefs)
-                            } else {
-                                BaseKernelSUAPI(context, this, viewModel.moduleDir)
-                            }, "ksu"
+                            FileInterface(this, context),
+                            viewModel.sanitizedModIdWithFile
                         )
-
-                        addJavascriptInterface(
-                            MMRLInterface(
-                                viewModel = viewModel,
-                                context = context,
-                                isDark = isDarkMode,
-                                allowedFsApi = allowedFsApi,
-                                allowedKsuApi = allowedKsuApi,
-                                webview = this
-                            ), "$${viewModel.sanitizedModId}"
-                        )
-
-                        if (allowedFsApi) {
-                            addJavascriptInterface(
-                                FileInterface(this, context),
-                                viewModel.sanitizedModIdWithFile
-                            )
-                        }
                     }
-                }
-            )
-        }
 
-        if (!allowedKsuApi && viewModel.dialogRequestAdvancedKernelSUAPI) {
-            ConfirmDialog(
-                title = "Allow Advanced Kernel SU API?",
-                description = "Allow this module to access the Advanced Kernel SU API? If you don't feel secure with this module, don't allow it!",
-                onClose = {
-                    viewModel.dialogRequestAdvancedKernelSUAPI = false
-                },
-                onConfirm = {
-                    viewModel.dialogRequestAdvancedKernelSUAPI = false
-                    val newModules = userPrefs.allowedKsuModules + viewModel.modId
-                    settingsViewModel.setAllowedKsuModules(newModules)
+                    loadUrl(viewModel.domainUrl)
                 }
-            )
-        }
-
-        if (!allowedFsApi && viewModel.dialogRequestFileSystemAPI) {
-            ConfirmDialog(
-                title = "Allow FileSystem API?",
-                description = "Allow this module to access the FileSystem API? If you don't feel secure with this module, don't allow it!",
-                onClose = {
-                    viewModel.dialogRequestFileSystemAPI = false
-                },
-                onConfirm = {
-                    viewModel.dialogRequestFileSystemAPI = false
-                    val newModules = userPrefs.allowedFsModules + viewModel.modId
-                    settingsViewModel.setAllowedFsModules(newModules)
-                }
-            )
-        }
-
+            }
+        )
     } else {
         Loading()
     }

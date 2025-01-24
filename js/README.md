@@ -11,6 +11,7 @@ This is a JavaScript library designed to provide an interface for interacting wi
     - [Types](#types)
     - [MMRLObjectAccessor](#mmrlobjectaccessor)
     - [MMRLInterface](#mmrlinterface)
+    - [FileSystem](#filesystem)
 
 ## Installation
 
@@ -45,7 +46,7 @@ The `MMRLObjectAccessor` class provides a base class for accessing MMRL objects.
 Example usage:
 
 ```typescript
-import { MMRLObjectAccessor } from "./classes/MMRLObjectAccessor";
+import { MMRLObjectAccessor } from "mmrl";
 
 const accessor = new MMRLObjectAccessor("net-switch");
 console.log(accessor.interface);
@@ -58,9 +59,25 @@ The `MMRLInterface` class extends `MMRLObjectAccessor` to provide additional fun
 Example usage:
 
 ```typescript
-import { MMRLInterfaceFactory } from "./classes/MMRLInterface";
+import { MMRLInterfaceFactory } from "mmrl";
 
 const mmrl = MMRLInterfaceFactory("net-switch");
 mmrl.injectStyleSheets();
 console.log(mmrl.manager);
+```
+
+### FileSystem
+
+The `FileSystem` class provides methods for interacting with the file system within the MMRL environment. It includes methods for reading, writing, and deleting files.
+
+Example usage:
+
+```typescript
+import { FileSystem } from "mmrl";
+
+const fs = new FileSystem();
+fs.write("example.txt", "Hello, MMRL!");
+const content = fs.read("example.txt");
+console.log(content);
+fs.delete("example.txt");
 ```

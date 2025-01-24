@@ -1,7 +1,6 @@
 package com.dergoogler.mmrl.viewmodel
 
 import android.app.Application
-import android.webkit.WebView
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -40,6 +39,8 @@ class WebUIViewModel @AssistedInject constructor(
     modulesRepository,
     userPreferencesRepository
 ) {
+    private val userPrefs = runBlocking { userPreferencesRepository.data.first() }
+
     val isProviderAlive get() = Compat.isAlive
 
     val versionName: String
@@ -62,10 +63,8 @@ class WebUIViewModel @AssistedInject constructor(
 
     val sanitizedModId: String
         get() {
-            return modId.replace(Regex("[^a-zA-Z0-9._-]"), "_")
+            return modId.replace(Regex("[^a-zA-Z0-9._]"), "_")
         }
-
-    private val userPrefs = runBlocking { userPreferencesRepository.data.first() }
 
     val sanitizedModIdWithFile
         get(): String {
@@ -114,12 +113,6 @@ class WebUIViewModel @AssistedInject constructor(
     fun initInsets(density: Density, insets: WindowInsets) {
         topInset = (insets.getTop(density) / density.density).toInt()
         bottomInset = (insets.getBottom(density) / density.density).toInt()
-    }
-
-    fun destroyJavascriptInterfaces(webView: WebView) {
-        webView.removeJavascriptInterface("ksu")
-        webView.removeJavascriptInterface("$$sanitizedModId")
-        webView.removeJavascriptInterface(sanitizedModIdWithFile)
     }
 
     @AssistedFactory
