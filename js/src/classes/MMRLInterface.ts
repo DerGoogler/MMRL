@@ -266,9 +266,23 @@ export class MMRLInterface extends MMRLObjectAccessor<MMRLInterfaceImpl> {
    * it proceeds to request the advanced kernel SU API through the interface.
    */
   public requestAdvancedKernelSUAPI() {
-    if (this.isMMRL) {
-      this.interface.requestAdvancedKernelSUAPI();
+    if (!this.isMMRL) return;
+
+    if (!this.mmrl) {
+      console.error(
+        "BrickExeption: MMRL is not defined. Function not executed."
+      );
+      return;
     }
+
+    if (this.mmrl.versionCode < 33045) {
+      console.error(
+        "BrickExeption: MMRL version is too old. Function not executed."
+      );
+      return;
+    }
+
+    this.interface.requestAdvancedKernelSUAPI();
   }
 
   /**
@@ -276,9 +290,23 @@ export class MMRLInterface extends MMRLObjectAccessor<MMRLInterfaceImpl> {
    * If access to the file system is granted, it triggers the recompose method.
    */
   public requestFileSystemAPI() {
-    if (this.isMMRL) {
-      this.interface.requestFileSystemAPI();
+    if (!this.isMMRL) return;
+
+    if (!this.mmrl) {
+      console.error(
+        "BrickExeption: MMRL is not defined. Function not executed."
+      );
+      return;
     }
+
+    if (this.mmrl.versionCode < 33045) {
+      console.error(
+        "BrickExeption: MMRL version is too old. Function not executed."
+      );
+      return;
+    }
+
+    this.interface.requestFileSystemAPI();
   }
 }
 

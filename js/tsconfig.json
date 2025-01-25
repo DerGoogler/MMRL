@@ -6,6 +6,7 @@
     "declarationDir": "./dist",
     "outDir": "./dist",
     "strict": true,
+    "experimentalDecorators": true,
     "moduleResolution": "node",
     "lib": ["DOM", "ESNext"]
   },

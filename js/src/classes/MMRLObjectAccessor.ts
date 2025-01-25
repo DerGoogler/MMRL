@@ -1,4 +1,4 @@
-import { AccessorScope } from "../util/AccessorScope";
+import { ObjectScope } from "../types";
 
 /**
  * The `MMRLObjectAccessor` class provides a base class for accessing MMRL objects.
@@ -20,15 +20,12 @@ export class MMRLObjectAccessor<I = any> {
    */
   public static static: MMRLObjectAccessor<any>;
 
-
   /**
    * Creates an instance of `MMRLObjectAccessor`.
    *
-   * @param {AccessorScope.ObjectScope} scope - The scope to initialize the internal interface with.
+   * @param {ObjectScope} scope - The scope to initialize the internal interface with.
    */
-  public constructor(
-    scope: AccessorScope.ObjectScope
-  ) {
+  public constructor(scope: ObjectScope) {
     MMRLObjectAccessor.static = this;
     this._internal_interface = scope as I;
   }
@@ -112,5 +109,21 @@ export class MMRLObjectAccessor<I = any> {
       console.error("Parsing error on", { value });
       return null;
     }
+  }
+
+  protected NativeMethod(
+    target: any,
+    propertyName: string,
+    descriptor: PropertyDescriptor
+  ): void {
+    const originalMethod = descriptor.value;
+
+    const isMMRL = this.isMMRL;
+
+    descriptor.value = function (...args: any[]) {
+      if (!isMMRL) return;
+
+      return originalMethod.apply(this, args);
+    };
   }
 }
