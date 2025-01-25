@@ -5,9 +5,11 @@ import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.Typography
+import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.dp
 import androidx.webkit.WebViewAssetLoader.PathHandler
 import timber.log.Timber
 import java.io.ByteArrayInputStream
@@ -66,6 +68,7 @@ class MMRLWebUIHandler(
             append("    --background: ${colorScheme.background.toCssValue()};\n")
             append("    --onBackground: ${colorScheme.onBackground.toCssValue()};\n")
             append("    --surface: ${colorScheme.surface.toCssValue()};\n")
+            append("    --tonalSurface: ${colorScheme.surfaceColorAtElevation(1.dp).toCssValue()};\n")
             append("    --onSurface: ${colorScheme.onSurface.toCssValue()};\n")
             append("    --surfaceVariant: ${colorScheme.surfaceVariant.toCssValue()};\n")
             append("    --onSurfaceVariant: ${colorScheme.onSurfaceVariant.toCssValue()};\n")
