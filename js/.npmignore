@@ -1,5 +1,6 @@
 # Dependency directories
 node_modules/
+.parcel-cache/
 
 src/
 test/

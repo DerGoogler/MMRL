@@ -1,4 +1,5 @@
 import { ObjectScope } from "../types";
+import { Const } from "../util/Const";
 
 /**
  * The `MMRLObjectAccessor` class provides a base class for accessing MMRL objects.
@@ -8,17 +9,20 @@ import { ObjectScope } from "../types";
  */
 export class MMRLObjectAccessor<I = any> {
   /**
-   * The internal interface instance.
-   * @private
-   */
-  private _internal_interface: I;
-
-  /**
    * A static reference to the current instance of `MMRLObjectAccessor`.
    * @public
    * @static
    */
   public static static: MMRLObjectAccessor<any>;
+
+  /**
+   * Gets the internal interface instance.
+   *
+   * @returns {I} The internal interface instance.
+   * @protected
+   * @readonly
+   */
+  protected readonly interface: I
 
   /**
    * Creates an instance of `MMRLObjectAccessor`.
@@ -27,7 +31,7 @@ export class MMRLObjectAccessor<I = any> {
    */
   public constructor(scope: ObjectScope) {
     MMRLObjectAccessor.static = this;
-    this._internal_interface = scope as I;
+    this.interface = scope as I;
   }
 
   /**
@@ -38,7 +42,7 @@ export class MMRLObjectAccessor<I = any> {
    * @static
    */
   private static get userAgentName(): string {
-    return "DON'T TRACK ME DOWN MOTHERFUCKER!";
+    return Const.mmrlUserAgent;
   }
 
   /**
@@ -78,16 +82,6 @@ export class MMRLObjectAccessor<I = any> {
    *
    * @returns {I} The internal interface instance.
    * @protected
-   */
-  protected get interface(): I {
-    return this._internal_interface;
-  }
-
-  /**
-   * Gets the internal interface instance.
-   *
-   * @returns {I} The internal interface instance.
-   * @protected
    * @static
    */
   protected static get interface() {
@@ -109,21 +103,5 @@ export class MMRLObjectAccessor<I = any> {
       console.error("Parsing error on", { value });
       return null;
     }
-  }
-
-  protected NativeMethod(
-    target: any,
-    propertyName: string,
-    descriptor: PropertyDescriptor
-  ): void {
-    const originalMethod = descriptor.value;
-
-    const isMMRL = this.isMMRL;
-
-    descriptor.value = function (...args: any[]) {
-      if (!isMMRL) return;
-
-      return originalMethod.apply(this, args);
-    };
   }
 }

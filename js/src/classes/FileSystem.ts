@@ -1,3 +1,4 @@
+import { NativeMethod } from "../decorators/NativeMethod";
 import { ObjectScope } from "../types";
 import { AccessorScope } from "../util/AccessorScope";
 import { MMRLObjectAccessor } from "./MMRLObjectAccessor";
@@ -47,12 +48,9 @@ export class FileSystem extends MMRLObjectAccessor<FileSystemImpl> {
    * @example
    * console.log(fileSystem.read("/path/to/file"));
    */
+  @NativeMethod({ default: null })
   public read(path: string, bytes: boolean = false): string | null {
-    if (this.isMMRL) {
-      return this.interface.read(path, bytes);
-    }
-
-    return null;
+    return this.interface.read(path, bytes);
   }
 
   /**
@@ -169,8 +167,6 @@ export class FileSystem extends MMRLObjectAccessor<FileSystemImpl> {
  * @example
  * const fileSystem = FileSystemFactory("net-switch");
  */
-export function FileSystemFactory(
-  scope: ObjectScope
-): FileSystem {
+export function FileSystemFactory(scope: ObjectScope): FileSystem {
   return new FileSystem(scope);
 }

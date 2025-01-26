@@ -27,6 +27,7 @@ import com.dergoogler.mmrl.ui.activity.webui.interfaces.ksu.AdvancedKernelSUAPI
 import com.dergoogler.mmrl.ui.activity.webui.interfaces.ksu.BaseKernelSUAPI
 import com.dergoogler.mmrl.ui.activity.webui.interfaces.mmrl.FileInterface
 import com.dergoogler.mmrl.ui.activity.webui.interfaces.mmrl.MMRLInterface
+import com.dergoogler.mmrl.ui.activity.webui.interfaces.mmrl.VersionInterface
 import com.dergoogler.mmrl.ui.component.ConfirmDialog
 import com.dergoogler.mmrl.ui.component.Loading
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
@@ -130,8 +131,6 @@ fun WebUIScreen(
         AndroidView(
             factory = {
                 webView.apply {
-
-
                     layoutParams = ViewGroup.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT
@@ -147,6 +146,14 @@ fun WebUIScreen(
                         webViewAssetLoader = webViewAssetLoader,
                         userPrefs = userPrefs,
                         viewModel = viewModel,
+                    )
+
+                    addJavascriptInterface(
+                        VersionInterface(
+                            context = context,
+                            webView = this,
+                            viewModel = viewModel,
+                        ), "mmrl"
                     )
                 }
             },

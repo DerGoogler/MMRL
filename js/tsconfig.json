@@ -6,6 +6,10 @@
     "declarationDir": "./dist",
     "outDir": "./dist",
     "strict": true,
+    "allowJs": true,
+    "isolatedModules": true,
+    "useDefineForClassFields": true, 
+    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "lib": ["DOM", "ESNext"]
