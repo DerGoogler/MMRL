@@ -2,6 +2,7 @@ package dev.dergoogler.mmrl.compat.impl
 
 //import java.util.zip.ZipFile
 import android.os.Build
+import com.dergoogler.mmrl.BuildConfig
 import com.dergoogler.mmrl.Compat
 import com.topjohnwu.superuser.CallbackList
 import com.topjohnwu.superuser.Shell
@@ -204,6 +205,8 @@ internal abstract class BaseModuleManagerImpl(
     ): IShell {
         val cmds = listOf(
             "export MMRL=true",
+            "export MMRL_VER=${BuildConfig.VERSION_NAME}",
+            "export MMRL_VER_CODE=${BuildConfig.VERSION_CODE}",
             "export BULK_MODULES=\"${bulkModules.joinToString(" ") { it.id }}\"",
             cmd
         )
@@ -217,6 +220,8 @@ internal abstract class BaseModuleManagerImpl(
         val cmds = listOf(
             "export PATH=/data/adb/ap/bin:/data/adb/ksu/bin:/data/adb/magisk:\$PATH",
             "export MMRL=true",
+            "export MMRL_VER=${BuildConfig.VERSION_NAME}",
+            "export MMRL_VER_CODE=${BuildConfig.VERSION_CODE}",
             "export BOOTMODE=true",
             "export ARCH=${Build.SUPPORTED_ABIS[0]}",
             "export API=${Build.VERSION.SDK_INT}",
