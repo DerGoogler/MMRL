@@ -8,6 +8,14 @@ export interface Manager {
   versionCode: number;
 }
 
+export interface ToastImpl {
+  setText(text: string): void;
+  setDuration(duration: number): void;
+  setGravity(gravity: number, xOffset: number, yOffset: number): void;
+  show(): void;
+  cancel(): void;
+}
+
 export {};
 
 declare global {
@@ -29,6 +37,7 @@ declare global {
   interface MMRL {
     getBuildConfig(): BuildConfigDetails;
     getRootConfig(): RootConfigDetails;
+    toastBuilder(): ToastImpl;
   }
 
   interface Window {

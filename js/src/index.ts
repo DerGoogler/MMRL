@@ -6,3 +6,7 @@ export { AccessorScope } from "./util/AccessorScope";
 export { MMRLObjectAccessor } from "./classes/MMRLObjectAccessor";
 export { MMRLInterface, MMRLInterfaceFactory } from "./classes/MMRLInterface";
 export { FileSystem, FileSystemFactory } from "./classes/FileSystem";
+export { Toast } from "./classes/Toast";
+export { NativeMethod } from "./decorators/NativeMethod";
+export { NativeProperty } from "./decorators/NativeProperty";
+export { mmrl } from "./classes/VersionInterface";

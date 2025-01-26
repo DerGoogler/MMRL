@@ -72,11 +72,16 @@ class VersionInterface(
         }
 
         @JavascriptInterface
+        fun setGravity(gravity: Int, xOffset: Int, yOffset: Int) {
+            toast.setGravity(gravity, xOffset, yOffset)
+        }
+
+        @JavascriptInterface
         fun setDuration(duration: Int) {
             toast.duration = duration
         }
     }
-    
+
     @JavascriptInterface
     fun toastBuilder(): ToastBuilderInterface {
         return ToastBuilderInterface()

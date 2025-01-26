@@ -12,6 +12,8 @@ This is a JavaScript library designed to provide an interface for interacting wi
     - [MMRLObjectAccessor](#mmrlobjectaccessor)
     - [MMRLInterface](#mmrlinterface)
     - [FileSystem](#filesystem)
+    - [VersionInterface](#versioninterface)
+    - [Toast](#toast)
 
 ## Installation
 
@@ -80,4 +82,30 @@ fs.write("example.txt", "Hello, MMRL!");
 const content = fs.read("example.txt");
 console.log(content);
 fs.delete("example.txt");
+```
+
+### VersionInterface
+
+The `VersionInterface` class provides access to version information about the MMRL environment. It includes properties for application and root configuration details.
+
+Example usage:
+
+```typescript
+import { mmrl } from "mmrl";
+
+console.log(mmrl.app.versionName);
+console.log(mmrl.root.platform);
+```
+
+### Toast
+
+The `Toast` class provides methods for creating and displaying native toast notifications within the MMRL environment. It includes methods for setting text, duration, gravity, and showing or canceling the toast.
+
+Example usage:
+
+```typescript
+import { Toast } from "mmrl";
+
+const toast = Toast.makeText("Hello, MMRL!", Toast.LENGTH_LONG);
+toast.show();
 ```
