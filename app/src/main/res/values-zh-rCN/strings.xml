@@ -357,5 +357,5 @@
     <string name="blacklisted_desc">此模块已被 MMRL 拉黑，为确保设备安全，安装无法进行。若仍要安装，请在设置中停用黑名单警告。\n@more(了解更多)</string>
     <string name="menu_show_modules_count">显示模块数量</string>
     <string name="settings_modules_permissions"><![CDATA[模块 & 权限]]></string>
-    <string name="settings_modules_permissions_desc">允许JavaScript API和更多有关本地模块内容</string>
+    <string name="settings_modules_permissions_desc">允许 JavaScript API 和更多本地模块相关内容</string>
 </resources>
