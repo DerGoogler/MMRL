@@ -106,7 +106,7 @@
     <string name="menu_sort_repolistmode_compact">Susun Rapat</string>
     <string name="view_module_dependencies_not_found">Dependensi yang Diperlukan Tidak Ditemukan</string>
     <string name="generic_disclaimer_desc">**MMRL** tidak bertanggung jawab atas kerusakan apa pun pada perangkat Anda, termasuk namun tidak terbatas pada kerusakan perangkat, kerusakan kartu SD, perang termonuklir, atau Anda kehilangan pekerjaan karena aplikasi alarm tidak berfungsi. Sebelum melanjutkan, harap teliti secara menyeluruh fitur dan risiko penggunaan modul ini. *Anda memilih untuk melakukan modifikasi ini dengan risiko Anda sendiri*.</string>
-    <string name="settings_open_notification_settings">Buka Pengaturan Notifikasi</string>
+    <string name="settings_open_notification_settings">Buka Setelan Notifikasi</string>
     <string name="settings_reboot_protection">Proteksi Reboot</string>
     <string name="settings_homepage_desc">Pilih halaman awal aplikasi</string>
     <string name="open">Buka</string>
@@ -324,4 +324,12 @@
     <string name="working_mode_apatch_desc">Menambal kernel dan sistem Android. Solusi root berbasis kernel baru dengan dukungan untuk modul yang mirip dengan Magisk dan injeksi fungsi kernel (memerlukan inline-hook dan syscall-table-hook). Berasal dan dimodifikasi dari KernelSU.</string>
     <string name="action_screen_cancel_title">Batalkan action?</string>
     <string name="home_root_provider_version_name">Nama Versi Penyedia Root</string>
+    <string name="menu_show_modules_count">Tampilkan Jumlah Modul</string>
+    <string name="settings_blacklist_alerts">Peringatan Daftar Hitam</string>
+    <string name="blacklisted">Didaftarhitamkan</string>
+    <string name="settings_blacklist_alerts_desc">Menampilkan peringatan untuk modul lokal dan modul dari jelajah, dan juga memblokir pemasangan modul yang masuk daftar hitam</string>
+    <string name="page_repositorys">Repositori</string>
+    <string name="blacklisted_desc">Modul ini telah didaftarhitam oleh MMRL. Instalasi dinonaktifkan untuk memastikan keamanan. Jika masih ingin menginstal modul ini, dapat menonaktifkan peringatan daftar hitam di setelan dengan menavigasi ke **Setelan → Keamanan → Peringatan Daftar Hitam**.\n@more(Pelajari lebih lanjut)</string>
+    <string name="settings_modules_permissions"><![CDATA[Module & Perizinan]]></string>
+    <string name="settings_modules_permissions_desc">Izinkan API JavaScript dan lainnya tentang modul lokal</string>
 </resources>

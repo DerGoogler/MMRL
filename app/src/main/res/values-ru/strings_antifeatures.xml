@@ -2,37 +2,30 @@
 <resources>
     <string name="ads_name">Реклама</string>
     <string name="ads_desc">Модуль содержит рекламу.</string>
-
     <string name="knownvuln_name">Известная уязвимость</string>
     <string name="knownvuln_desc">Этот модуль содержит известную уязвимость безопасности.</string>
-
     <string name="nsfw_name">NSFW</string>
     <string name="nsfw_desc">Этот модуль содержит контент, который не должен быть публично показан или доступен везде.</string>
-
     <string name="nosourcesince_name">Исходный код более недоступен</string>
     <string name="nosourcesince_desc">Исходный код больше недоступен, обновления невозможны.</string>
-
     <string name="nonfreeadd_name">Несвободные дополнения</string>
     <string name="nonfreeadd_desc">Этот модуль продвигает несвободные дополнения.</string>
-
     <string name="nonfreeassets_name">Несвободные ресурсы</string>
     <string name="nonfreeassets_desc">Этот модуль содержит несвободные ресурсы.</string>
-
     <string name="nonfreedep_name">Несвободные зависимости</string>
     <string name="nonfreedep_desc">Этот модуль зависит от других несвободных модулей.</string>
-
     <string name="nonfreenet_name">Несвободные сетевые службы</string>
     <string name="nonfreenet_desc">Этот модуль продвигает или полностью зависит от неизменяемой или несвободной сетевой службы.</string>
-
     <string name="tracking_name">Отслеживание</string>
     <string name="tracking_desc">Этот модуль отслеживает и сообщает о вашей активности.</string>
-
     <string name="upstreamnonfree_name">Несвободный исходный код</string>
     <string name="upstreamnonfree_desc">Исходный код проекта не является полностью свободным.</string>
-
     <string name="obfuscation_name">Обфускация</string>
     <string name="obfuscation_desc">Исходный код модуля может быть обфусцирован, что затрудняет его понимание, аудит или изменение.</string>
-
     <string name="unaskedremoval_name">Удаление без запроса</string>
     <string name="unaskedremoval_desc">Модуль удаляет приложения, файлы или другие модули без согласия пользователя.</string>
+    <string name="llm_name">Большая языковая модель</string>
+    <string name="llm_desc">Модуль может быть написан частично или полностью с помощью нейросети</string>
+    <string name="closedsource_name">Закрытый исходный код</string>
+    <string name="closedsource_desc">Модуль не имеет открытого исходного кода, и его кодовая база недоступна для просмотра, изменения или распространения</string>
 </resources>

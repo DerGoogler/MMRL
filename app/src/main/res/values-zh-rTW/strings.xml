@@ -12,19 +12,19 @@
     <string name="install_flashing">正在閃刷</string>
     <string name="install_done">已完成</string>
     <string name="install_failure">無法完成</string>
-    <string name="install_logs_saved">已儲存運作日誌</string>
+    <string name="install_logs_saved">已儲存記錄檔</string>
     <string name="install_logs_save_failed">無法儲存：%s</string>
     <string name="install_screen_reboot_title">立即重新開機？</string>
-    <string name="install_screen_reboot_text">你是否要立即讓裝置重新開機？</string>
-    <string name="install_screen_reboot_confirm">確認</string>
+    <string name="install_screen_reboot_text">你確定要立即重新開機裝置？</string>
+    <string name="install_screen_reboot_confirm">確定</string>
     <string name="install_screen_reboot_dismiss">稍後</string>
     <!-- 授權條款 -->
-    <string name="license_title">參閱授權條款</string>
+    <string name="license_title">查看授權條款</string>
     <string name="license_osi_approved">開放原始碼授權</string>
     <string name="license_fsf_libre">自由軟體授權</string>
     <!-- 頁面按鈕 -->
     <string name="page_home">首頁</string>
-    <string name="page_repository">庫存</string>
+    <string name="page_repository">模組倉庫</string>
     <string name="page_modules">模組</string>
     <string name="page_settings">設定</string>
     <!-- 庫存介面 -->
@@ -94,7 +94,7 @@
     <string name="view_module_mod_infos_disclaimer">留有 * 標記的資訊，其內容在各模組倉庫之間稍有不同。欲知詳情，請點選上方的@track(中繼資料檢視)。</string>
     <string name="view_module_section_count">%1$s+</string>
     <string name="view_module_donate">小額捐款</string>
-    <string name="view_module_donate_desc">以一杯咖啡 ☕ 的錢，表達你對模組開發人員的大力支持！</string>
+    <string name="view_module_donate_desc">一杯咖啡 ☕ 的錢，表達對模組開發人員的大力支持！</string>
     <string name="view_module_module_id">模組代號</string>
     <string name="view_module_required_os">所需作業系統版本</string>
     <string name="view_module_required_os_value">Android %1$s 以上</string>
@@ -120,7 +120,7 @@
     <string name="settings_repo_desc">管理 Magisk 模組倉庫</string>
     <string name="settings_about">本體資訊</string>
     <string name="settings_resources">線上資源</string>
-    <string name="settings_resources_desc">包含說明手冊、模組倉庫支援列表等等，應有盡有</string>
+    <string name="settings_resources_desc">包含說明手冊、模組倉庫支援清單等等，應有盡有</string>
     <string name="settings_security">安全措施</string>
     <string name="settings_security_desc">有關本應用程式配備的安全措施</string>
     <string name="settings_appearance">介面外觀</string>
@@ -150,7 +150,7 @@
     <string name="settings_doh_desc">可供繞過部分國家的網域名稱系統中毒</string>
     <string name="settings_reboot_protection">重新開機意向確認</string>
     <string name="settings_reboot_protection_desc">啟用時會在重新開機前向你確認意向</string>
-    <string name="settings_blacklist">封鎖列表</string>
+    <string name="settings_blacklist">封鎖清單</string>
     <string name="settings_blacklist_desc">羅列封閉了原始碼以及尚有濫用風險的模組</string>
     <string name="settings_date_pattern">日期樣式</string>
     <string name="settings_date_pattern_desc">套上自己習慣書寫的日期格式</string>
@@ -255,7 +255,7 @@
     <string name="reboot">重新開機</string>
     <string name="reboot_userspace">軟重新開機</string>
     <string name="reboot_recovery">重新開機至復原模式（Recovery）</string>
-    <string name="reboot_bootloader">重新開機至開機模式（Bootloader）</string>
+    <string name="reboot_bootloader">重新開機至開機載入器（Bootloader）</string>
     <string name="reboot_download">重新開機至傳輸模式（Download）</string>
     <string name="reboot_edl">重新開機至救援型傳輸模式（EDL）</string>
     <string name="home_support_title">協助發展</string>
@@ -287,7 +287,7 @@
     <string name="bulk_install_module_already_added">本模組已經新增進來了</string>
     <string name="bulk_install_module_added">已新增模組</string>
     <string name="bulk_module_install">成批型模組安裝</string>
-    <string name="unsafe_url_redirecting">截獲不安全超連結：%1$s。正在進行重新導向⋯⋯</string>
+    <string name="unsafe_url_redirecting">截獲不安全網址：%1$s。正在進行重新導向⋯⋯</string>
     <string name="view_module_install_confirm_title">是否安裝模組？</string>
     <string name="view_module_install_confirm_desc_deps"><![CDATA[你是否要安裝<font color=\"%1$s\">「%2$s」</font>？本模組另需使用的相依部分：]]></string>
     <string name="view_module_low_root_version">­授權版本過舊！</string>
@@ -308,7 +308,7 @@
     <string name="action_activity">執行</string>
     <string name="action_executing">正在執行……</string>
     <string name="settings_shell_module_action_desc">推薦在授權平臺不支援 action.sh 檔案的情況下啟用</string>
-    <string name="bulk_add_as_bulk">新增至模組安裝列表</string>
+    <string name="bulk_add_as_bulk">新增至模組安裝佇列</string>
     <string name="settings_modules_installer">安裝程序</string>
     <string name="generic_disclaimer_desc">若因自身裝置變故而蒙受損失（不限於無法開機、SD 記憶卡故障、引發熱核子戰爭，或是鬧鐘應用程式秀逗而讓你被炒魷魚），**《MMRL》**概不負責。執行之前，請確認好本功能之於模組的作用與風險。*在你同意進行模組修改過後，其風險責任應由你承擔*。</string>
     <string name="settings_security_allow_advanced_kernelsu_api">KernelSU 進階資料存取權</string>
@@ -329,10 +329,10 @@
     <string name="home_root_provider_version_name">授權資訊</string>
     <string name="home_root_provider_se_linux_context">SELinux 資訊</string>
     <string name="settings_root_version">授權版本：%s</string>
-    <string name="settings_developer">開發人員</string>
+    <string name="settings_developer">開發工具</string>
     <string name="settings_webui_remote_url_desc">為簡化偵錯流程，開放存取 http://localhost 等指定的本機網域。欲知詳情，請見上方注意事項。</string>
     <string name="settings_developer_desc">可供開發人員調用的偵錯工具</string>
-    <string name="settings_webui_remote_url">遠端連線超連結</string>
+    <string name="settings_webui_remote_url">遠端連線網址</string>
     <string name="invalid_ip">此串不為有效的本機網域！</string>
     <string name="settings_enable_webui_remote_url">啟用 WebUI 介面遠端連線</string>
     <string name="settings_webui_remote_url_alert_desc">WebUI 介面得以指定的網路位址，為所有模組忽略與安全通訊層（SSL）的連線問題，以及收回對 /data/adb/modules/{代號}/webroot 的存取權。謹記：以個人名義簽署的本機網站伺服器才需要開啟此功能。謹慎偵錯，風險自負。</string>
@@ -340,7 +340,7 @@
     <string name="action_screen_cancel_title">取消腳本執行？</string>
     <string name="action_screen_cancel_text">你是否要取消腳本執行程序？</string>
     <string name="install_screen_cancel_text">你是否要取消安裝程序？</string>
-    <string name="home_storage_usage">儲存體用量</string>
+    <string name="home_storage_usage">儲存空間</string>
     <string name="menu_pin_action">釘選具有腳本的模組</string>
     <string name="menu_pin_webui">釘選具有 WebUI 介面的模組</string>
     <string name="settings_use_generic_action">採用通用型腳本</string>
@@ -353,6 +353,7 @@
     <string name="blacklisted">已受封鎖</string>
     <string name="blacklisted_desc">此模組已受《MMRL》封鎖。為保護你的安全，安裝程序無法進行。若仍執意安裝此模組，請停用**設定 → 安全措施 → 模組封鎖**選項。\n@more(深入了解)</string>
     <string name="settings_blacklist_alerts">模組封鎖</string>
-    <string name="settings_blacklist_alerts_desc">為羅列於封鎖列表的本機、線上模組標記警示，防止安裝</string>
+    <string name="settings_blacklist_alerts_desc">為羅列於封鎖清單的本機、線上模組標記警示，防止安裝</string>
     <string name="page_repositorys">庫存</string>
+    <string name="menu_show_modules_count">顯示模組計數</string>
 </resources>

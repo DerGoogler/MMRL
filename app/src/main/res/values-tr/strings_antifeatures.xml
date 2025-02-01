@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="knownvuln_name">Bilinen Güvenlik Açığı</string>
+    <string name="nsfw_name">NSFW</string>
+    <string name="nosourcesince_name">Şu zamandır kaynak yok:</string>
+    <string name="nosourcesince_desc">Kaynak kodu artık mevcut değil, güncellemeler mümkün değil.</string>
+    <string name="nsfw_desc">Bu modül herkese uygun olmayan ve her yerde gösterilirmemesi gereken içerikler içeriyor.</string>
+    <string name="nonfreeadd_name">Ücretsiz olmayan modüller</string>
+    <string name="nonfreeassets_name">Ücretsiz Olmayan Varlıklar</string>
+    <string name="knownvuln_desc">Bu modül bilinen bir güvenlik açığı içeriyor.</string>
+    <string name="nonfreeassets_desc">Bu modül ücretsiz olmayan varlıkları içerir.</string>
+    <string name="ads_name">Reklam</string>
+    <string name="ads_desc">Bu modül reklamlar içeriyor.</string>
+    <string name="nonfreeadd_desc">Bu modül ücretsiz olmayan eklentiler içeriyor.</string>
+    <string name="nonfreedep_name">Ücretsiz Olmayan Bağımlılıklar</string>
+</resources>

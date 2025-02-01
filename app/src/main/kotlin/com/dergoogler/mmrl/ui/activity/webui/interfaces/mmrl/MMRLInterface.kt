@@ -26,6 +26,8 @@ class MMRLInterface(
     private val isDark: Boolean,
     webview: WebView,
     private val viewModel: WebUIViewModel,
+    private val allowedFsApi: Boolean,
+    private val allowedKsuApi: Boolean
 ) {
     private val activity = context as Activity
     private var windowInsetsController: WindowInsetsControllerCompat =
@@ -65,11 +67,11 @@ class MMRLInterface(
 
     @get:JavascriptInterface
     val hasAccessToFileSystem: Boolean
-        get() = viewModel.allowedFsApi
+        get() = allowedFsApi
 
     @get:JavascriptInterface
     val hasAccessToAdvancedKernelSuAPI: Boolean
-        get() = viewModel.allowedKsuApi
+        get() = allowedKsuApi
 
     @get:JavascriptInterface
     val windowTopInset: Int?
@@ -112,5 +114,21 @@ class MMRLInterface(
     @JavascriptInterface
     fun shareText(text: String, type: String) {
         context.shareText(text, type)
+    }
+
+    @get:JavascriptInterface
+    val recomposeCount get() = viewModel.recomposeCount
+
+    @JavascriptInterface
+    fun recompose() = viewModel.recomposeCount++
+
+    @JavascriptInterface
+    fun requestAdvancedKernelSUAPI() {
+        viewModel.dialogRequestAdvancedKernelSUAPI = true
+    }
+
+    @JavascriptInterface
+    fun requestFileSystemAPI() {
+        viewModel.dialogRequestFileSystemAPI = true
     }
 }

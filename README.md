@@ -1,9 +1,9 @@
 # MMRL
 
 
-![GitHub Release](https://img.shields.io/github/v/release/DerGoogler/MMRL?label=Latest%20Release)
+![GitHub Release](https://img.shields.io/github/v/release/MMRLApp/MMRL?label=Latest%20Release)
 ![Google Play Release](https://img.shields.io/endpoint?url=https%3A%2F%2Fplay.cuzi.workers.dev%2Fplay%3Fi%3Dcom.dergoogler.mmrl%26l%3DInstalls%26m%3D%24shortinstalls&label=Google%20Play&color=red)
-![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/DerGoogler/MMRL/total?label=GitHub%20Downloads)
+![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/MMRLApp/MMRL/total?label=GitHub%20Downloads)
 
 MMRL is an Android app that helps manage your own modules repository.
 
@@ -45,7 +45,7 @@ Get involved with MMRL by translating it into your language!
 
 ## Modules Repository
 
-- [Googlers-Repo/magisk-modules-repo-util](https://github.com/Googlers-Repo/magisk-modules-repo-util): A command line interface for building modules repository
+- [MMRLApp/MMRL-Util](https://github.com/MMRLApp/MMRL-Util): A command line interface for building modules repository
 
 ## Credits
 

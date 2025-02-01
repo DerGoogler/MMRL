@@ -28,6 +28,7 @@ import com.dergoogler.mmrl.ui.component.WorkingModeBottomSheet
 import com.dergoogler.mmrl.ui.component.listItem.ListButtonItem
 import com.dergoogler.mmrl.ui.navigation.graphs.SettingsScreen
 import com.dergoogler.mmrl.ui.providable.LocalNavController
+import com.dergoogler.mmrl.ui.providable.LocalSettings
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.utils.navigateSingleTopTo
 import com.dergoogler.mmrl.ui.utils.none
@@ -36,6 +37,7 @@ import dev.dergoogler.mmrl.compat.ext.takeTrue
 @Composable
 fun SettingsScreen() {
     val userPreferences = LocalUserPreferences.current
+    val viewModel = LocalSettings.current
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
     val navController = LocalNavController.current
@@ -93,10 +95,21 @@ fun SettingsScreen() {
 
             ListButtonItem(
                 icon = R.drawable.stack_middle,
+                enabled = viewModel.isProviderAlive,
                 title = stringResource(id = R.string.settings_modules),
                 desc = stringResource(id = R.string.settings_modules_desc),
                 onClick = {
                     navController.navigateSingleTopTo(SettingsScreen.Modules.route)
+                }
+            )
+
+            ListButtonItem(
+                icon = R.drawable.hexagons,
+                enabled = viewModel.isProviderAlive,
+                title = stringResource(id = R.string.settings_modules_permissions),
+                desc = stringResource(id = R.string.settings_modules_permissions_desc),
+                onClick = {
+                    navController.navigateSingleTopTo(SettingsScreen.ModulesPermissions.route)
                 }
             )
 

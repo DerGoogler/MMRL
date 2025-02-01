@@ -41,6 +41,7 @@ import com.dergoogler.mmrl.model.local.LocalModule
 import com.dergoogler.mmrl.model.online.VersionItem
 import com.dergoogler.mmrl.ui.component.Loading
 import com.dergoogler.mmrl.ui.component.PageIndicator
+import com.dergoogler.mmrl.ui.component.PullToRefreshBox
 import com.dergoogler.mmrl.ui.component.SearchTopBar
 import com.dergoogler.mmrl.ui.component.TopAppBarIcon
 import com.dergoogler.mmrl.ui.utils.isScrollingUp
@@ -50,7 +51,7 @@ import dev.dergoogler.mmrl.compat.activity.MMRLComponentActivity
 
 @Composable
 fun ModulesScreen(
-    viewModel: ModulesViewModel = hiltViewModel()
+    viewModel: ModulesViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
 
@@ -127,18 +128,25 @@ fun ModulesScreen(
                 )
             }
 
-            ModulesList(
-                list = list,
-                state = listState,
-                isProviderAlive = viewModel.isProviderAlive,
-                platform = viewModel.platform,
-                getModuleOps = viewModel::createModuleOps,
-                getBlacklist = viewModel::getBlacklist,
-                getVersionItem = { viewModel.getVersionItem(it) },
-                getProgress = { viewModel.getProgress(it) },
-                onDownload = download,
-                moduleCompatibility = viewModel.moduleCompatibility
-            )
+            val state by viewModel.screenState.collectAsStateWithLifecycle()
+
+            PullToRefreshBox(
+                isRefreshing = state.isRefreshing,
+                onRefresh = viewModel::onPullToRefreshTrigger
+            ) {
+                ModulesList(
+                    list = list,
+                    state = listState,
+                    isProviderAlive = viewModel.isProviderAlive,
+                    platform = viewModel.platform,
+                    getModuleOps = viewModel::createModuleOps,
+                    getBlacklist = viewModel::getBlacklist,
+                    getVersionItem = { viewModel.getVersionItem(it) },
+                    getProgress = { viewModel.getProgress(it) },
+                    onDownload = download,
+                    moduleCompatibility = viewModel.moduleCompatibility
+                )
+            }
         }
     }
 }
@@ -194,14 +202,15 @@ private fun TopBar(
 private fun FloatingButton() {
     val context = LocalContext.current
     val interactionSource = remember { MutableInteractionSource() }
-    val launcher = rememberLauncherForActivityResult(ActivityResultContracts.GetMultipleContents()) { uri ->
-        if (uri.isEmpty()) return@rememberLauncherForActivityResult
+    val launcher =
+        rememberLauncherForActivityResult(ActivityResultContracts.GetMultipleContents()) { uri ->
+            if (uri.isEmpty()) return@rememberLauncherForActivityResult
 
-        MMRLComponentActivity.startInstallActivity(
-            context = context,
-            uri = uri
-        )
-    }
+            MMRLComponentActivity.startInstallActivity(
+                context = context,
+                uri = uri
+            )
+        }
 
     LaunchedEffect(interactionSource) {
         interactionSource.interactions.collect { interaction ->

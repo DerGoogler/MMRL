@@ -29,18 +29,28 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.dergoogler.mmrl.compat.content.ModuleCompatibility
 import dev.dergoogler.mmrl.compat.stub.IModuleOpsCallback
 import dev.dergoogler.mmrl.compat.viewmodel.MMRLViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import java.io.File
 import javax.inject.Inject
+
+data class ModulesScreenState(
+    val items: List<LocalModule> = listOf(),
+    val isRefreshing: Boolean = false,
+)
 
 @HiltViewModel
 class ModulesViewModel @Inject constructor(
@@ -117,6 +127,29 @@ class ModulesViewModel @Inject constructor(
                 if (it) getLocalAll()
 
             }.launchIn(viewModelScope)
+    }
+
+    private val _isRefreshing = MutableStateFlow(false)
+
+    val screenState: StateFlow<ModulesScreenState> = localRepository.getLocalAllAsFlow()
+        .combine(_isRefreshing) { items, isRefreshing ->
+            ModulesScreenState(items = items, isRefreshing = isRefreshing)
+        }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = ModulesScreenState()
+        )
+
+    fun onPullToRefreshTrigger() {
+        _isRefreshing.update { true }
+        viewModelScope.launch {
+            providerObserver()
+            dataObserver()
+            keyObserver()
+            delay(1000L)
+            _isRefreshing.update { false }
+        }
     }
 
     private fun dataObserver() {

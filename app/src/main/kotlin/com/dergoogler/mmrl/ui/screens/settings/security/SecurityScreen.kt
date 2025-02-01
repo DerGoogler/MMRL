@@ -4,14 +4,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.ui.component.SettingsScaffold
-import com.dergoogler.mmrl.ui.component.listItem.ListButtonItem
-import com.dergoogler.mmrl.ui.component.listItem.ListHeader
 import com.dergoogler.mmrl.ui.component.listItem.ListSwitchItem
-import com.dergoogler.mmrl.ui.navigation.graphs.SettingsScreen
 import com.dergoogler.mmrl.ui.providable.LocalNavController
 import com.dergoogler.mmrl.ui.providable.LocalSettings
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
-import com.dergoogler.mmrl.ui.utils.navigateSingleTopTo
 
 @Composable
 fun SecurityScreen() {
@@ -43,15 +39,5 @@ fun SecurityScreen() {
             checked = userPreferences.hideFingerprintInHome,
             onChange = viewModel::setHideFingerprintInHome
         )
-
-        ListHeader(
-            title = stringResource(id = R.string.view_module_features_webui)
-        )
-
-        ListButtonItem(
-            title = stringResource(id = R.string.settings_allow_javascript_api),
-            onClick = {
-                navController.navigateSingleTopTo(SettingsScreen.SecurityWebUIAllowedApis.route)
-            })
     }
 }

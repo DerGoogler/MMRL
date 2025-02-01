@@ -26,4 +26,6 @@
     <string name="upstreamnonfree_name">Upstream Berbayar</string>
     <string name="obfuscation_desc">Kode sumber modul mungkin dikaburkan, sehingga sulit untuk dipahami, diaudit, atau dimodifikasi.</string>
     <string name="obfuscation_name">Obfuscation</string>
+    <string name="closedsource_name">Sumber Tertutup</string>
+    <string name="closedsource_desc">Modul ini bukan sumber terbuka, dan basis kodenya tidak dapat diakses oleh publik untuk ditinjau, dimodifikasi, atau didistribusikan ulang</string>
 </resources>
