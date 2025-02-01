@@ -331,4 +331,6 @@
     <string name="page_repositorys">Repozytoria</string>
     <string name="blacklisted_desc">Ten moduł został umieszczony na czarnej liście MMRL. Instalacja jest wyłączona, aby zapewnić bezpieczeństwo. Jeśli nadal chcesz zainstalować ten moduł, możesz wyłączyć alerty czarnej listy w ustawieniach, przechodząc do **Ustawienia → Bezpieczeństwo → Alerty czarnej listy**.\n@more(Dowiedz się więcej)</string>
     <string name="menu_show_modules_count">Pokaż liczbę modułów</string>
+    <string name="settings_modules_permissions">Moduły i uprawnienia</string>
+    <string name="settings_modules_permissions_desc">Zezwalaj na API JavaScript i wiele więcej o modułach lokalnych</string>
 </resources>
