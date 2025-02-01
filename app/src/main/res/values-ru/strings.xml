@@ -131,7 +131,7 @@
     <string name="settings_reboot_protection">Защита от перезагрузки</string>
     <string name="settings_reboot_protection_desc">Если включено, вам нужно будет подтверждать каждую перезагрузку</string>
     <string name="settings_blacklist">Черный список</string>
-    <string name="settings_blacklist_desc">Список модулей, которые могут быть закрытыми или опасными</string>
+    <string name="settings_blacklist_desc">Список модулей, которые могут иметь закрытый код или считаться опасными</string>
     <string name="settings_date_pattern">Формат даты</string>
     <string name="settings_date_pattern_desc">Используйте свой собственный формат даты</string>
     <string name="settings_recommended_repos">Рекомендуемые репозитории</string>
@@ -314,4 +314,7 @@
     <string name="bulk_install_module_already_added">Модуль уже добавлен</string>
     <string name="bulk_install_module_added">Модуль добавлен</string>
     <string name="page_repositorys">Репозитории</string>
+    <string name="blacklisted_desc">Этот модуль был занесен в черный список MMRL. Установка отключена для обеспечения вашей безопасности. Если вы все еще хотите установить этот модуль, вы можете отключить оповещения о черном списке в настройках, перейдя в **Настройки → Безопасность → Предупреждения о черном списке**.\n@more(Узнать подробнее)</string>
+    <string name="blacklisted">В черном списке</string>
+    <string name="settings_blacklist_alerts">Предупреждения о черном списке</string>
 </resources>

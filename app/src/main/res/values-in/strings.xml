@@ -23,7 +23,7 @@
     <string name="view_module_local">Lokal</string>
     <string name="view_module_version">Versi</string>
     <string name="view_module_provided">Disediakan oleh %s</string>
-    <string name="modules_empty">Modul Tidak ditemukan</string>
+    <string name="modules_empty">Modul tidak ditemukan</string>
     <string name="module_version_author">%1$s oleh %2$s</string>
     <string name="module_restore">Pulihkan</string>
     <string name="module_install">Pasang</string>
