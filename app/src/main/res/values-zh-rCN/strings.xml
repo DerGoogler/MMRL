@@ -84,7 +84,7 @@
     <string name="view_module_features_sepolicy_sub">添加自定义SEPolicy属性。</string>
     <string name="view_module_features_zygisk_sub">模块使用了 Zygisk，用于实现系统级的交互和修改</string>
     <string name="view_module_features_apks_sub">在模块内包含额外的APK。</string>
-    <string name="view_module_features_webui_sub">带有WebUI模块管理界面 (用户需要确认 JavaScript API 的使用)。</string>
+    <string name="view_module_features_webui_sub">带有WebUI模块管理界面 (用户需要在设置中手动设置允许 JavaScript API )。</string>
     <string name="view_module_features_postmount_sub">在OverlayFS挂载后执行脚本(仅限KernelSU和APatch)&gt;</string>
     <string name="view_module_features_bootcompleted_sub">启动后执行脚本(KernelSU和APatch)&gt;</string>
     <string name="view_module_module_support">Module Support</string>
@@ -154,7 +154,7 @@
     <string name="settings_doh">安全 DNS（DoH）</string>
     <string name="settings_doh_desc">解决某些地区的DNS污染问题</string>
     <string name="settings_reboot_protection">重启保护</string>
-    <string name="settings_reboot_protection_desc">打开后在每次重启前需要手动确认</string>
+    <string name="settings_reboot_protection_desc">启用后在每次重启前需要手动确认</string>
     <string name="settings_blacklist">黑名单模块</string>
     <string name="settings_blacklist_desc">显示闭源的或者不安全的模块</string>
     <string name="settings_date_pattern">日期设置</string>
