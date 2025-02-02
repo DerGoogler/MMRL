@@ -37,7 +37,7 @@ jobs:
             fetch-depth: 0
 
       - name: Set up signing key
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/master'
         run: |
             if [ ! -z "${{ secrets.KEY_STORE }}" ]; then
                 echo keyStorePassword='${{ secrets.KEY_STORE_PASSWORD }}' >> signing.properties
@@ -63,7 +63,7 @@ jobs:
         run: chmod 755 ./gradlew && ./gradlew assemble${{ inputs.buildType }}
 
       - name: Get release name
-        if: success() && github.ref == 'refs/heads/main'
+        if: success() && github.ref == 'refs/heads/master'
         id: release-name
         run: |
             name=`ls app/build/outputs/apk/${{ env.BUILD_TYPE_CASED }}/*.apk | awk -F '(/|.apk)' '{print $6}'` && echo "name=${name}" >> $GITHUB_OUTPUT
@@ -103,14 +103,14 @@ jobs:
             BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
 
       - name: Upload built apk
-        if: success() && github.ref == 'refs/heads/main'
+        if: success() && github.ref == 'refs/heads/master'
         uses: actions/upload-artifact@v4
         with:
             name: ${{ steps.release-name.outputs.name }}
             path: app/build/outputs/apk/${{ env.BUILD_TYPE_CASED }}/*.apk
 
       - name: Upload mappings
-        if: success() && github.ref == 'refs/heads/main'
+        if: success() && github.ref == 'refs/heads/master'
         uses: actions/upload-artifact@v4
         with:
             name: mappings
