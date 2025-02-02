@@ -34,6 +34,12 @@ jobs:
         run: |
             name=`ls app/build/outputs/apk/debugMin/*.apk | awk -F '(/|.apk)' '{print $6}'` && echo "name=${name}" >> $GITHUB_OUTPUT
       
+      - name: Find APK
+        id: find_apk
+        run: |
+            APK_PATH=$(find app/build/outputs/apk/debugMin -name "*.apk" | head -n 1)
+            echo "APK_PATH=$APK_PATH" >> $GITHUB_ENV
+    
       - name: Get commit info and build timestamp
         id: meta
         run: |
@@ -46,8 +52,8 @@ jobs:
         uses: xz-dev/TelegramFileUploader@v1.1.1
         with:
             to-who: '@MMRLCI'
-            message: "Build from commit ${{ env.COMMIT_HASH }} on ${{ env.BUILD_DATE}}. Note: This build may use a different signing key."
-            files: app/build/outputs/apk/debugMin/*.apk
+            message: '"Build from commit ${{ env.COMMIT_HASH }} on ${{ env.BUILD_DATE}}. Note: This build may use a different signing key."'
+            files: ${{ env.APK_PATH }}
         env:
             API_ID: ${{ secrets.API_ID }}
             API_HASH: ${{ secrets.API_HASH }}
