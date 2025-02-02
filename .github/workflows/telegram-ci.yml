@@ -43,7 +43,7 @@ jobs:
             echo "BUILD_DATE=$BUILD_DATE" >> $GITHUB_ENV
 
       - name: Upload files to Telegram
-        uses: xz-dev/TelegramFileUploader@v1
+        uses: xz-dev/TelegramFileUploader@v1.1.1
         with:
             to-who: '@MMRLCI'
             message: "Build from commit ${{ env.COMMIT_HASH }} on ${{ env.BUILD_DATE}}. Note: This build may use a different signing key."
