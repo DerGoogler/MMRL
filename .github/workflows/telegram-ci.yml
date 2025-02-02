@@ -33,7 +33,7 @@ jobs:
       - name: Find APK
         id: find_apk
         run: |
-          APK_PATH=$(find app/debugMin -name "*.apk" | head -n 1)
+          APK_PATH=$(find ./app/build/outputs/apk/debugMin -name "*.apk" | head -n 1)
           echo "APK_PATH=$APK_PATH" >> $GITHUB_ENV
 
       - name: Get commit info and build timestamp
