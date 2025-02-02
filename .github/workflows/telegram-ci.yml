@@ -11,15 +11,15 @@ on:
               description: "Build Type"
               type: choice
               required: true
-              default: 'debugMin'
+              default: 'DebugMin'
               options:
-               - 'release'
-               - 'playstore'
-               - 'releaseCandidate'
-               - 'beta'
-               - 'alpha'
-               - 'debug'
-               - 'debugMin'
+               - 'Release'
+               - 'Playstore'
+               - 'ReleaseCandidate'
+               - 'Beta'
+               - 'Alpha'
+               - 'Debug'
+               - 'DebugMin'
 
 jobs:
   build:
@@ -55,18 +55,18 @@ jobs:
             gradle-home-cache-cleanup: true
 
       - name: Build with Gradle
-        run: chmod 755 ./gradlew && ./gradlew assembleDebugMin
+        run: chmod 755 ./gradlew && ./gradlew assemble${{ inputs.buildType }}
 
       - name: Get release name
         if: success() && github.ref == 'refs/heads/main'
         id: release-name
         run: |
-            name=`ls app/build/outputs/apk/debugMin/*.apk | awk -F '(/|.apk)' '{print $6}'` && echo "name=${name}" >> $GITHUB_OUTPUT
+            name=`ls app/build/outputs/apk/${{ inputs.buildType }}/*.apk | awk -F '(/|.apk)' '{print $6}'` && echo "name=${name}" >> $GITHUB_OUTPUT
       
       - name: Find APK
         id: find_apk
         run: |
-            APK_PATH=$(find app/build/outputs/apk/debugMin -name "*.apk" | head -n 1)
+            APK_PATH=$(find app/build/outputs/apk/${{ inputs.buildType }} -name "*.apk" | head -n 1)
             echo "APK_PATH=$APK_PATH" >> $GITHUB_ENV
     
       - name: Get commit info and build timestamp
@@ -91,6 +91,7 @@ jobs:
 
                 ```${{ inputs.message }}```
 
+                Type: ${{ inputs.buildType }}
                 [${{ env.COMMIT_HASH }}](${{ github.event.head_commit.url }})
                 [Workflow run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
             files: ${{ env.APK_PATH }}
@@ -104,11 +105,11 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
             name: ${{ steps.release-name.outputs.name }}
-            path: app/build/outputs/apk/debugMin/*.apk
+            path: app/build/outputs/apk/${{ inputs.buildType }}/*.apk
 
       - name: Upload mappings
         if: success() && github.ref == 'refs/heads/main'
         uses: actions/upload-artifact@v4
         with:
             name: mappings
-            path: app/build/outputs/mapping/debugMin
+            path: app/build/outputs/mapping/${{ inputs.buildType }}
