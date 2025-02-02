@@ -48,10 +48,10 @@ jobs:
             to-who: '@MMRLCI'
             message: "Build from commit ${{ env.COMMIT_HASH }} on ${{ env.BUILD_DATE}}. Note: This build may use a different signing key."
             files: app/build/outputs/apk/debugMin/*.apk
-            env:
-                API_ID: ${{ secrets.API_ID }}
-                API_HASH: ${{ secrets.API_HASH }}
-                BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        env:
+            API_ID: ${{ secrets.API_ID }}
+            API_HASH: ${{ secrets.API_HASH }}
+            BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
 
       - name: Upload built apk
         if: success() && github.ref == 'refs/heads/main'
