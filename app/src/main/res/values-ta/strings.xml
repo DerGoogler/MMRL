@@ -153,7 +153,6 @@
     <string name="view_module_install_confirm_confirm_deps">நிறுவவும் (deps)</string>
     <string name="view_module_install_confirm_confirm">நிறுவவும்</string>
     <string name="view_module_install_confirm_desc">&lt;!</string>
-    <string name="view_module_install_confirm_desc_deps">&lt;! [சி.டி.ஏ.டி.ஏ [நீங்கள் &lt;font color = \\ \"%1$s \\\"&gt;%2$s &lt;/font&gt; ஐ நிறுவ விரும்புகிறீர்களா? இந்த தொகுதிக்கும் தேவைப்படுகிறது:]]&gt;</string>
     <string name="view_module_low_root_version">ரூட் பதிப்பு குறைவாக!</string>
     <string name="view_module_low_root_version_desc">உங்களிடம் மிகவும் பழைய ரூட் வழங்குநர் பதிப்பு இருப்பது போல் தெரிகிறது. உங்கள் ரூட் வழங்குநருக்கு ஏதேனும் புதுப்பிப்புகள் இருக்கிறதா என்று சரிபார்க்கவும்.</string>
     <string name="view_module_required_root_version">தேவையான ரூட் பதிப்பு</string>

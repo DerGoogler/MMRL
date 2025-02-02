@@ -39,7 +39,7 @@ import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.app.Const
 import com.dergoogler.mmrl.model.online.Sponsor
 import com.dergoogler.mmrl.network.runRequest
-import com.dergoogler.mmrl.stub.IRepoManager
+import com.dergoogler.mmrl.stub.IMMRLApiManager
 import com.dergoogler.mmrl.ui.component.Logo
 import com.dergoogler.mmrl.ui.component.MarkdownText
 import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
@@ -69,7 +69,7 @@ fun AboutScreen() {
     LaunchedEffect(Unit) {
         runRequest {
             withContext(Dispatchers.IO) {
-                return@withContext IRepoManager.gmr.sponsors.execute()
+                return@withContext IMMRLApiManager.build().sponsors.execute()
             }
         }.onSuccess { list ->
             sponsors = list
