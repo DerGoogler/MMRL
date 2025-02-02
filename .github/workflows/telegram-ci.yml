@@ -26,6 +26,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Parse input
+        run: |
+            BUILD_TYPE_CASED=$(echo "${{ inputs.buildType }}" | sed 's/^\(.\)/\L\1/')
+            echo "BUILD_TYPE_CASED=$BUILD_TYPE_CASED" >> $GITHUB_ENV
+
       - name: Checkout
         uses: actions/checkout@v4
         with:
@@ -61,21 +66,19 @@ jobs:
         if: success() && github.ref == 'refs/heads/main'
         id: release-name
         run: |
-            name=`ls app/build/outputs/apk/${{ inputs.buildType }}/*.apk | awk -F '(/|.apk)' '{print $6}'` && echo "name=${name}" >> $GITHUB_OUTPUT
+            name=`ls app/build/outputs/apk/${{ env.BUILD_TYPE_CASED }}/*.apk | awk -F '(/|.apk)' '{print $6}'` && echo "name=${name}" >> $GITHUB_OUTPUT
       
       - name: Find APK
         id: find_apk
         run: |
-            APK_PATH=$(find app/build/outputs/apk/${{ inputs.buildType }} -name "*.apk" | head -n 1)
+            APK_PATH=$(find app/build/outputs/apk/${{ env.BUILD_TYPE_CASED }} -name "*.apk" | head -n 1)
             echo "APK_PATH=$APK_PATH" >> $GITHUB_ENV
     
       - name: Get commit info and build timestamp
         id: meta
         run: |
-            COMMIT_HASH=$(git rev-parse --short HEAD)
             BUILD_DATE=$(date +"%Y-%m-%d %H:%M:%S")
             VERSION=$(git rev-list --count HEAD)
-            echo "COMMIT_HASH=$COMMIT_HASH" >> $GITHUB_ENV
             echo "VERSION=$VERSION" >> $GITHUB_ENV
             echo "BUILD_DATE=$BUILD_DATE" >> $GITHUB_ENV
 
@@ -87,12 +90,11 @@ jobs:
                 **CI Manager (TEST BUILD)**
                 #ci_${{ env.VERSION }}
 
-                Build on ${{ env.BUILD_DATE}}.
+                Build on ${{ env.BUILD_DATE }}.
 
                 ```${{ inputs.message }}```
 
-                Type: ${{ inputs.buildType }}
-                [${{ env.COMMIT_HASH }}](${{ github.event.head_commit.url }})
+                Type: ${{ env.BUILD_TYPE_CASED }}
                 [Workflow run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
             files: ${{ env.APK_PATH }}
         env:
@@ -105,11 +107,11 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
             name: ${{ steps.release-name.outputs.name }}
-            path: app/build/outputs/apk/${{ inputs.buildType }}/*.apk
+            path: app/build/outputs/apk/${{ env.BUILD_TYPE_CASED }}/*.apk
 
       - name: Upload mappings
         if: success() && github.ref == 'refs/heads/main'
         uses: actions/upload-artifact@v4
         with:
             name: mappings
-            path: app/build/outputs/mapping/${{ inputs.buildType }}
+            path: app/build/outputs/mapping/${{ env.BUILD_TYPE_CASED }}
