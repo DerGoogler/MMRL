@@ -1,0 +1,52 @@
+name: Android CI Build and Send to Telegram
+
+on:
+  workflow_dispatch:
+
+env:
+  TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+  TELEGRAM_CHAT_ID: "@MMRLCI"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Grant execute permissions to Gradle
+        run: chmod +x gradlew
+
+      - name: Build APK
+        run: ./gradlew assembleRelease
+
+      - name: Find APK
+        id: find_apk
+        run: |
+          APK_PATH=$(find app/build/outputs/apk/release -name "*.apk" | head -n 1)
+          echo "APK_PATH=$APK_PATH" >> $GITHUB_ENV
+
+      - name: Get commit info and build timestamp
+        id: meta
+        run: |
+          COMMIT_HASH=$(git rev-parse --short HEAD)
+          BUILD_DATE=$(date +"%Y-%m-%d %H:%M:%S")
+          echo "COMMIT_HASH=$COMMIT_HASH" >> $GITHUB_ENV
+          echo "BUILD_DATE=$BUILD_DATE" >> $GITHUB_ENV
+
+      - name: Send to Telegram
+        run: |
+          curl -F chat_id=$TELEGRAM_CHAT_ID \
+               -F document=@$APK_PATH \
+               -F caption="Build from commit $COMMIT_HASH on $BUILD_DATE. Note: This build may use a different signing key." \
+               "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendDocument"
