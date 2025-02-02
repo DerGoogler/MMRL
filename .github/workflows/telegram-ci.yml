@@ -33,7 +33,7 @@ jobs:
       - name: Find APK
         id: find_apk
         run: |
-          APK_PATH=$(find ./app/build/outputs/apk/debugMin -name "*.apk" | head -n 1)
+          APK_PATH=$(find ./app/build/outputs/apk/debugMin -name "*.apk")
           echo $APK_PATH
           echo "APK_PATH=$APK_PATH" >> $GITHUB_ENV
 
