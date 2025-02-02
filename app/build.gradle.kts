@@ -77,26 +77,39 @@ android {
             versionNameSuffix = "-release"
             renderscriptOptimLevel = 3
             multiDexEnabled = true
+            signingConfig = releaseSigning
         }
 
         create("playstore") {
             initWith(buildTypes.getByName("release"))
             versionNameSuffix = "-playstore"
+            signingConfig = signingConfigs.create("playstore") {
+                initWith(releaseSigning)
+            }
         }
 
         create("releaseCandidate") {
             initWith(buildTypes.getByName("release"))
             versionNameSuffix = "-rc"
+            signingConfig = signingConfigs.create("releaseCandidate") {
+                initWith(releaseSigning)
+            }
         }
 
         create("beta") {
             initWith(buildTypes.getByName("release"))
             versionNameSuffix = "-beta"
+            signingConfig = signingConfigs.create("beta") {
+                initWith(releaseSigning)
+            }
         }
 
         create("alpha") {
             initWith(buildTypes.getByName("release"))
             versionNameSuffix = "-alpha"
+            signingConfig = signingConfigs.create("alpha") {
+                initWith(releaseSigning)
+            }
         }
 
         debug {
@@ -111,6 +124,7 @@ android {
             renderscriptOptimLevel = 0
             isMinifyEnabled = false
             multiDexEnabled = true
+            signingConfig = signingConfigs.getByName("debug")
         }
 
         create("debugMin") {
@@ -122,6 +136,9 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.create("debugMin") {
+                initWith(releaseSigning)
+            }
         }
 
         all {

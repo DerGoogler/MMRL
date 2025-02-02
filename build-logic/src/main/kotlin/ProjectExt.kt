@@ -1,8 +1,6 @@
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.extra
 import java.io.File
-import java.io.FileInputStream
-import java.io.InputStreamReader
 import java.util.Properties
 
 val Project.commitId: String get() = exec("git rev-parse --short HEAD")
@@ -12,29 +10,24 @@ fun Project.exec(command: String): String = providers.exec {
     commandLine(command.split(" "))
 }.standardOutput.asText.get().trim()
 
-val Project.releaseKeyStore: File get() = File(project.properties["keyStore"] as String)
-val Project.releaseKeyStorePassword: String get() = project.properties["keyStorePassword"] as String
-val Project.releaseKeyAlias: String get() = project.properties["keyAlias"] as String
-val Project.releaseKeyPassword: String get() = project.properties["keyPassword"] as String
+val Project.releaseKeyStore: File get() = File(extra["keyStore"] as String)
+val Project.releaseKeyStorePassword: String get() = extra["keyStorePassword"] as String
+val Project.releaseKeyAlias: String get() = extra["keyAlias"] as String
+val Project.releaseKeyPassword: String get() = extra["keyPassword"] as String
 val Project.hasReleaseKeyStore: Boolean get() {
-    gradleSigningProperties(rootDir).apply {
-        stringPropertyNames().forEach {
-            project.extra[it] = getProperty(it)
-        }
+    signingProperties(rootDir).forEach { key, value ->
+        extra[key as String] = value
     }
 
-    return project.hasProperty("keyStore")
+    return extra.has("keyStore")
 }
 
-private fun gradleSigningProperties(rootDir: File): Properties {
+private fun signingProperties(rootDir: File): Properties {
     val properties = Properties()
     val signingProperties = rootDir.resolve("signing.properties")
-
-    if (signingProperties.isFile && signingProperties.exists()) {
-        InputStreamReader(FileInputStream(signingProperties), Charsets.UTF_8).use { reader ->
-            properties.load(reader)
-        }
+    if (signingProperties.isFile) {
+        signingProperties.inputStream().use(properties::load)
     }
-    
+
     return properties
 }
