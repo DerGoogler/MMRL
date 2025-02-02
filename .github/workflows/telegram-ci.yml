@@ -26,7 +26,7 @@ jobs:
             gradle-home-cache-cleanup: true
 
       - name: Build with Gradle
-        run: ./gradlew assembleDebugMin
+        run: chmod 755 ./gradlew && ./gradlew assembleDebugMin
 
       - name: Get release name
         if: success() && github.ref == 'refs/heads/main'
