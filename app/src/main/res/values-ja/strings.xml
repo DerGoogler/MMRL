@@ -356,6 +356,6 @@
     <string name="blacklisted_desc">このモジュールは、MMRL によってブラックリストに登録されています。セキュリティを確保するためにインストールは無効化されています。それでもインストールする場合は、 **設定 → セキュリティ → ブラックリストアラート**でブラックリストアラートを停止することができます。\n@詳細を表示</string>
     <string name="page_repositorys">リポジトリ</string>
     <string name="menu_show_modules_count">モジュールの数を表示</string>
-    <string name="settings_modules_permissions"><![CDATA[モジュールと権限]]></string>
+    <string name="settings_modules_permissions">モジュールと権限</string>
     <string name="settings_modules_permissions_desc">JavaScript API の許可とローカルモジュールについて詳細を表示します</string>
 </resources>
