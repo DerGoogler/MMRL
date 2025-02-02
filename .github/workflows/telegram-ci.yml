@@ -2,6 +2,24 @@ name: Telegram CI
 
 on:
     workflow_dispatch:
+        inputs:
+            message:
+              required: false
+              default: 'No message.'
+              description: 'Message'
+            buildType:
+              description: "Build Type"
+              type: choice
+              required: true
+              default: 'debugMin'
+              options:
+               - 'release'
+               - 'playstore'
+               - 'releaseCandidate'
+               - 'beta'
+               - 'alpha'
+               - 'debug'
+               - 'debugMin'
 
 jobs:
   build:
@@ -12,6 +30,17 @@ jobs:
         uses: actions/checkout@v4
         with:
             fetch-depth: 0
+
+      - name: Set up signing key
+        if: github.ref == 'refs/heads/main'
+        run: |
+            if [ ! -z "${{ secrets.KEY_STORE }}" ]; then
+                echo keyStorePassword='${{ secrets.KEY_STORE_PASSWORD }}' >> signing.properties
+                echo keyAlias='${{ secrets.KEY_ALIAS }}' >> signing.properties
+                echo keyPassword='${{ secrets.KEY_PASSWORD }}' >> signing.properties
+                echo keyStore='${{ github.workspace }}/key.jks' >> signing.properties
+                echo ${{ secrets.KEY_STORE }} | base64 --decode > ${{ github.workspace }}/key.jks
+            fi
 
       - name: Set up JDK
         uses: actions/setup-java@v4
@@ -45,14 +74,26 @@ jobs:
         run: |
             COMMIT_HASH=$(git rev-parse --short HEAD)
             BUILD_DATE=$(date +"%Y-%m-%d %H:%M:%S")
+            VERSION=$(git rev-list --count HEAD)
             echo "COMMIT_HASH=$COMMIT_HASH" >> $GITHUB_ENV
+            echo "VERSION=$VERSION" >> $GITHUB_ENV
             echo "BUILD_DATE=$BUILD_DATE" >> $GITHUB_ENV
 
       - name: Upload files to Telegram
         uses: xz-dev/TelegramFileUploader@v1.1.1
         with:
             to-who: '@MMRLCI'
-            message: '"Build from commit ${{ env.COMMIT_HASH }} on ${{ env.BUILD_DATE}}. Note: This build may use a different signing key."'
+            message: |-
+                **CI Manager (TEST BUILD)**
+                #ci_${{ env.VERSION }}
+
+                Build from commit <a href>${{ env.COMMIT_HASH }} on ${{ env.BUILD_DATE}}.
+
+                ```
+                ${{ inputs.message }}
+                ```
+
+                [Workflow run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
             files: ${{ env.APK_PATH }}
         env:
             API_ID: ${{ secrets.API_ID }}
