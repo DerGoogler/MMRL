@@ -10,4 +10,7 @@
     <string name="unable_to_gather_module_info">! Невозможно собрать информацию о модуле</string>
     <string name="install_view_installing">- Установка %1$s</string>
     <string name="cannot_install_blacklisted_modules_settings_security_blacklist_alerts">! Нельзя установить модули из черного списка. Настройки → Безопасность → Предупреждения о черном списке</string>
+    <string name="this_module_don_t_have_an_action">! Этот модуль не имеет действия.</string>
+    <string name="execution_failed_try_to_use_shell_for_the_action_execution_settings_module_use_shell_for_module_action">- Выполнение не удалось. Попробуйте использовать Shell для выполнения действия, Настройки → Модуль → Использовать Shell для действий модуля.</string>
+    <string name="module_is_disabled_or_removed_unable_to_execute_action">! Модуль отключен или удален. Невозможно выполнить действие.</string>
 </resources>
