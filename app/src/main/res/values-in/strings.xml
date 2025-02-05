@@ -330,6 +330,6 @@
     <string name="settings_blacklist_alerts_desc">Menampilkan peringatan untuk modul lokal dan modul dari jelajah, dan juga memblokir pemasangan modul yang masuk daftar hitam</string>
     <string name="page_repositorys">Repositori</string>
     <string name="blacklisted_desc">Modul ini telah didaftarhitam oleh MMRL. Instalasi dinonaktifkan untuk memastikan keamanan. Jika masih ingin menginstal modul ini, dapat menonaktifkan peringatan daftar hitam di setelan dengan menavigasi ke **Setelan → Keamanan → Peringatan Daftar Hitam**.\n@more(Pelajari lebih lanjut)</string>
-    <string name="settings_modules_permissions"><![CDATA[Module & Perizinan]]></string>
+    <string name="settings_modules_permissions">Module &amp; Perizinan</string>
     <string name="settings_modules_permissions_desc">Izinkan API JavaScript dan lainnya tentang modul lokal</string>
 </resources>
