@@ -18,6 +18,7 @@ import com.dergoogler.mmrl.ui.screens.repositories.screens.repository.Repository
 import com.dergoogler.mmrl.ui.screens.repositories.screens.view.FilteredSearchScreen
 import com.dergoogler.mmrl.ui.screens.repositories.screens.view.NewViewScreen
 import com.dergoogler.mmrl.ui.screens.repositories.screens.view.ViewDescriptionScreen
+import com.dergoogler.mmrl.ui.screens.settings.recommendedRepos.RecommendedRepoScreen
 import com.dergoogler.mmrl.ui.utils.panicArguments
 import com.dergoogler.mmrl.viewmodel.BulkInstallViewModel
 import com.dergoogler.mmrl.viewmodel.ModuleViewModel
@@ -29,7 +30,8 @@ enum class RepositoriesScreen(val route: String) {
     View("View/{moduleId}/{repoUrl}"),
     RepositoryView("RepositoryView/{repoUrl}/{repoName}"),
     Description("Description/{moduleId}/{repoUrl}"),
-    RepoSearch("RepoSearch/{repoUrl}/{type}/{value}")
+    RepoSearch("RepoSearch/{repoUrl}/{type}/{value}"),
+    RecommendedRepos("RecommendedRepos")
 }
 
 fun NavGraphBuilder.repositoryScreen(
@@ -171,4 +173,13 @@ fun NavGraphBuilder.repositoryScreen(
             )
         }
     }
+
+    composable(
+        route = RepositoriesScreen.RecommendedRepos.route,
+        enterTransition = { scaleIn() + fadeIn() },
+        exitTransition = { fadeOut() }
+    ) {
+        RecommendedRepoScreen()
+    }
+
 }

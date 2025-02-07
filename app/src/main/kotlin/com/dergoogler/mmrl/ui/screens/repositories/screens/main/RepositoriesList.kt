@@ -25,6 +25,7 @@ import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.model.state.RepoState
 import com.dergoogler.mmrl.ui.navigation.graphs.RepositoriesScreen
 import com.dergoogler.mmrl.ui.providable.LocalNavController
+import com.dergoogler.mmrl.ui.screens.repositories.screens.items.ExploreReposCard
 import com.dergoogler.mmrl.ui.utils.navigateSingleTopTo
 
 @Composable
@@ -42,6 +43,10 @@ fun RepositoriesList(
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
+        item {
+            ExploreReposCard()
+        }
+
         items(
             items = list,
             key = { it.url }

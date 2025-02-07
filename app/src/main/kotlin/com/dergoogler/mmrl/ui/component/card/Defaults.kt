@@ -3,7 +3,9 @@ package com.dergoogler.mmrl.ui.component.card
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsHoveredAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -17,12 +19,14 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.dergoogler.mmrl.ui.component.card.CardDefaults.cardStyle
 import dev.dergoogler.mmrl.compat.ext.ModifierScope
 import dev.dergoogler.mmrl.compat.ext.ModifierScopeImpl
 import dev.dergoogler.mmrl.compat.ext.ModifierScopeUnit
@@ -43,7 +47,24 @@ internal fun BaseCard(
     absolute: @Composable (BoxScope.() -> Unit)? = null,
     relative: @Composable (ColumnScope.() -> Unit),
 ) {
+    val isHovered by interactionSource.collectIsHoveredAsState()
     val modifierParameters = remember { ModifierScopeImpl(modifierScope) }.composeApply(modifier)
+
+    val surfaceModifier = when {
+        onClick.isNotNull() or onLongClick.isNotNull() -> modifierParameters.surface
+            .hoverable(interactionSource = interactionSource)
+        else -> modifierParameters.surface
+    }
+
+    val hoveredSurfaceModifier = if (isHovered) {
+        Modifier.border(
+            width = 1.5.dp,
+            color = MaterialTheme.colorScheme.primary,
+            shape = cardStyle.shape
+        )
+    } else {
+        Modifier
+    }
 
     val boxModifier = when {
         onClick.isNotNull() -> {
@@ -72,8 +93,9 @@ internal fun BaseCard(
     }
 
     Surface(
-        modifier = modifierParameters.surface
-            .applyAlpha(enabled),
+        modifier = surfaceModifier
+            .applyAlpha(enabled)
+            .then(hoveredSurfaceModifier),
         shape = style.shape,
         color = style.containerColor,
         contentColor = style.contentColor,

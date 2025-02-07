@@ -68,7 +68,7 @@ internal fun RootItem(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
-            modifier = Modifier.size(30.dp),
+            modifier = Modifier.size(45.dp),
             painter = painterResource(
                 id = if (isAlive) {
                     when {

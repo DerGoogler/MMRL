@@ -64,7 +64,7 @@ internal fun NonRootItem(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
-            modifier = Modifier.size(30.dp),
+            modifier = Modifier.size(45.dp),
             painter = painterResource(id = R.drawable.info_circle_filled),
             contentDescription = null,
             tint = MaterialTheme.colorScheme.primary
