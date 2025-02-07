@@ -11,7 +11,6 @@ import com.dergoogler.mmrl.repository.ModulesRepository
 import com.dergoogler.mmrl.repository.UserPreferencesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.dergoogler.mmrl.compat.viewmodel.MMRLViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -208,6 +207,12 @@ class SettingsViewModel @Inject constructor(
     fun setBlacklistAlerts(value: Boolean) {
         viewModelScope.launch {
             userPreferencesRepository.setBlacklistAlerts(value)
+        }
+    }
+
+    fun setInjectEruda(value: List<String>) {
+        viewModelScope.launch {
+            userPreferencesRepository.setInjectEruda(value)
         }
     }
 

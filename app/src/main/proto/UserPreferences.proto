@@ -43,4 +43,5 @@ message UserPreferences {
   bool useShellToLoadWebUIAssets = 31;
   bool blacklistAlerts = 32;
   RepositoriesMenu repositoriesMenu = 33;
+  string injectEruda = 34;
 }

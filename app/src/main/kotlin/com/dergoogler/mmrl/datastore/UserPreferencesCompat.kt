@@ -43,6 +43,7 @@ data class UserPreferencesCompat(
     val allowCancelAction: Boolean,
     val useShellToLoadWebUIAssets: Boolean,
     val blacklistAlerts: Boolean,
+    val injectEruda: List<String>,
     val allowedFsModules: List<String>,
     val allowedKsuModules: List<String>,
     val repositoryMenu: RepositoryMenuCompat,
@@ -79,6 +80,7 @@ data class UserPreferencesCompat(
         allowCancelAction = original.allowCancelAction,
         useShellToLoadWebUIAssets = original.useShellToLoadWebUIAssets,
         blacklistAlerts = original.blacklistAlerts,
+        injectEruda = original.injectEruda.split(","),
         allowedFsModules = original.allowedFsModules.split(","),
         allowedKsuModules = original.allowedKsuModules.split(","),
         repositoryMenu = when {
@@ -126,6 +128,7 @@ data class UserPreferencesCompat(
             .setUseShellForModuleAction(useShellForModuleAction)
             .setWebuiAllowRestrictedPaths(webuiAllowRestrictedPaths)
             .setBlacklistAlerts(blacklistAlerts)
+            .setInjectEruda(injectEruda.joinToString(","))
             .setClearInstallTerminal(clearInstallTerminal)
             .setAllowCancelInstall(allowCancelInstall)
             .setAllowCancelAction(allowCancelAction)
@@ -167,6 +170,7 @@ data class UserPreferencesCompat(
             useShellForModuleAction = true,
             webuiAllowRestrictedPaths = false,
             blacklistAlerts = true,
+            injectEruda = emptyList(),
             allowedFsModules = emptyList(),
             allowedKsuModules = emptyList(),
             repositoriesMenu = RepositoriesMenuCompat.default(),

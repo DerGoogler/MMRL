@@ -358,4 +358,7 @@
     <string name="menu_show_modules_count">Show Modules Count</string>
     <string name="settings_modules_permissions">Modules &amp; Permissions</string>
     <string name="settings_modules_permissions_desc">Allow JavaScript APIs and much more about local modules</string>
+    <string name="debugging">Debugging</string>
+    <string name="settings_security_inject_eruda">Inject Eruda</string>
+    <string name="settings_security_inject_eruda_desc">Insets require the import of the MMRLs insets feature.</string>
 </resources>

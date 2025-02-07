@@ -92,6 +92,9 @@ class UserPreferencesRepository @Inject constructor(
     suspend fun setBlacklistAlerts(value: Boolean) =
         userPreferencesDataSource.setBlacklistAlerts(value)
 
+    suspend fun setInjectEruda(value: List<String>) =
+        userPreferencesDataSource.setInjectEruda(value)
+
     suspend fun setAllowedFsModules(value: List<String>) =
         userPreferencesDataSource.setAllowedFsModules(value)
 

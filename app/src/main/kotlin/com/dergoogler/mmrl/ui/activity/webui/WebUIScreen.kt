@@ -115,6 +115,10 @@ fun WebUIScreen(
                     )
                 )
                 .addPathHandler(
+                    "/mmrl/assets/",
+                    WebViewAssetLoader.AssetsPathHandler(context)
+                )
+                .addPathHandler(
                     "/mmrl/",
                     MMRLWebUIHandler(
                         topInset = viewModel.topInset,

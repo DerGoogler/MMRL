@@ -238,6 +238,14 @@ class UserPreferencesDataSource @Inject constructor(
         }
     }
 
+    suspend fun setInjectEruda(value: List<String>) = withContext(Dispatchers.IO) {
+        userPreferences.updateData {
+            it.copy(
+                injectEruda = value
+            )
+        }
+    }
+
     suspend fun setAllowedFsModules(value: List<String>) = withContext(Dispatchers.IO) {
         userPreferences.updateData {
             it.copy(

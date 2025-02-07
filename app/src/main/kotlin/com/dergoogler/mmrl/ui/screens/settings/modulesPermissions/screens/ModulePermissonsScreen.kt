@@ -11,14 +11,17 @@ import com.dergoogler.mmrl.ui.component.listItem.ListSwitchItem
 import com.dergoogler.mmrl.ui.providable.LocalSettings
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.viewmodel.ModulePermissionsViewModel
+import dev.dergoogler.mmrl.compat.core.LocalUriHandler
 import dev.dergoogler.mmrl.compat.ext.isNotNull
 
 @Composable
 fun ModulePermissionsScreen(mViewModel: ModulePermissionsViewModel) {
     val userPreferences = LocalUserPreferences.current
 
+    val browser = LocalUriHandler.current
     val viewModel = LocalSettings.current
     val allowedFsModules = userPreferences.allowedFsModules
+    val injectEruda = userPreferences.injectEruda
     val allowedKsuModules = userPreferences.allowedKsuModules
 
     val module = mViewModel.local
@@ -28,6 +31,29 @@ fun ModulePermissionsScreen(mViewModel: ModulePermissionsViewModel) {
             modifier = ScaffoldDefaults.settingsScaffoldModifier,
             title = module.name
         ) {
+            ListHeader(title = R.string.debugging)
+
+            ListSwitchItem(
+                enabled = module.features.webui,
+                title = stringResource(R.string.settings_security_inject_eruda),
+                desc= stringResource(id = R.string.settings_security_inject_eruda_desc),
+                base = {
+                  learnMore  ={
+                      browser.openUri("https://mmrl.dev/guide/webui/#javascript-api")
+                  }
+                },
+                checked = module.id in injectEruda,
+                onChange = { checked ->
+                    if (checked) {
+                        val newModules = injectEruda + module.id
+                        viewModel.setInjectEruda(newModules)
+                    } else {
+                        val newModules = injectEruda.filter { it != module.id }
+                        viewModel.setInjectEruda(newModules)
+                    }
+                }
+            )
+
             ListHeader(title = R.string.view_module_features_webui)
 
             ListSwitchItem(

@@ -52,6 +52,30 @@ class MMRLWebClient(
         }
     }
 
+    override fun onPageFinished(view: WebView, url: String?) {
+        val allowInjectEruda = viewModel.modId in userPrefs.injectEruda
+
+        if (allowInjectEruda) {
+            view.loadUrl(
+                """
+            javascript:(() => {
+                const head = document.getElementsByTagName("head")[0];
+                const script = document.createElement("script");
+                script.type = "module";
+                script.innerText = `import eruda from "https://mui.kernelsu.org/mmrl/assets/eruda.mjs"; 
+                    eruda.init();
+                    const sheet = new CSSStyleSheet();
+                    sheet.replaceSync('.eruda-dev-tools { padding-bottom: var(--window-inset-bottom) }');
+                    window.eruda.shadowRoot.adoptedStyleSheets.push(sheet)
+                `;
+                head.insertBefore(script, head.firstChild);
+            })()
+      """
+            )
+        }
+        super.onPageFinished(view, url)
+    }
+
     @SuppressLint("WebViewClientOnReceivedSslError")
     override fun onReceivedSslError(
         view: WebView?,
