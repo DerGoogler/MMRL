@@ -88,3 +88,19 @@ fun String.toEncodedUrl(): String = if (isUrlEncoded(this)) {
 } else {
     URLEncoder.encode(this, "UTF-8")
 }
+
+val String.repoId
+    get(): String {
+        val uri = URI(this)
+        val cleanedText = (uri.host + uri.path).replace(Regex("[.:/\\-_]"), "")
+
+        val length = cleanedText.length
+        val middleStart = (length - 3) / 2
+        val middleEnd = middleStart + 3
+
+        val firstThree = cleanedText.take(3)
+        val middleThree = cleanedText.substring(middleStart, middleEnd)
+        val lastThree = cleanedText.takeLast(3)
+
+        return firstThree + middleThree + lastThree
+    }
