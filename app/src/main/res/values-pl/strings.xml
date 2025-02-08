@@ -333,4 +333,7 @@
     <string name="menu_show_modules_count">Pokaż liczbę modułów</string>
     <string name="settings_modules_permissions">Moduły i uprawnienia</string>
     <string name="settings_modules_permissions_desc">Zezwalaj na API JavaScript i wiele więcej o modułach lokalnych</string>
+    <string name="debugging">Debugowanie</string>
+    <string name="settings_security_inject_eruda">Wstrzyknij Erudę</string>
+    <string name="settings_security_inject_eruda_desc">Wstrzyknięcia wymagają zaimportowania funkcji wstawek MMRL.</string>
 </resources>
