@@ -358,4 +358,7 @@
     <string name="menu_show_modules_count">显示模块数量</string>
     <string name="settings_modules_permissions">模块 &amp; 权限</string>
     <string name="settings_modules_permissions_desc">允许 JavaScript API 和更多本地模块相关内容</string>
+    <string name="debugging">调试</string>
+    <string name="settings_security_inject_eruda">注入Eruda</string>
+    <string name="settings_security_inject_eruda_desc">注入部分需要MMRL的注入功能来导入。</string>
 </resources>
