@@ -30,6 +30,7 @@ jobs:
         run: |
             BUILD_TYPE_CASED=$(echo "${{ inputs.buildType }}" | sed 's/^\(.\)/\L\1/')
             echo "BUILD_TYPE_CASED=$BUILD_TYPE_CASED" >> $GITHUB_ENV
+            printf "%b" "MESSAGE=${{ inputs.message }}" >> %GITHUB_ENV
 
       - name: Checkout
         uses: actions/checkout@v4
@@ -54,7 +55,7 @@ jobs:
             java-version: 21
 
       - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v3
+        uses: gradle/actions/setup-gradle@v4
         with:
             validate-wrappers: true
             gradle-home-cache-cleanup: true
@@ -87,12 +88,12 @@ jobs:
         with:
             to-who: '@MMRLCI'
             message: |-
-                **CI Manager (TEST BUILD)**
+                **CI Manager**
                 #ci_${{ env.VERSION }}
 
                 Build on ${{ env.BUILD_DATE }}.
 
-                ```${{ inputs.message }}```
+                ```${{ env.MESSAGE }}```
 
                 Type: ${{ env.BUILD_TYPE_CASED }}
                 [Workflow run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
