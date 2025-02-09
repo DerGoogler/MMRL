@@ -8,8 +8,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -31,6 +34,7 @@ import com.dergoogler.mmrl.ui.navigation.graphs.modulesScreen
 import com.dergoogler.mmrl.ui.navigation.graphs.repositoryScreen
 import com.dergoogler.mmrl.ui.navigation.graphs.settingsScreen
 import com.dergoogler.mmrl.ui.providable.LocalNavController
+import com.dergoogler.mmrl.ui.providable.LocalSnackbarHost
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.utils.navigatePopUpTo
 import com.dergoogler.mmrl.viewmodel.BulkInstallViewModel
@@ -42,6 +46,7 @@ fun MainScreen() {
     val bulkInstallViewModel: BulkInstallViewModel = hiltViewModel()
 
     val navController = LocalNavController.current
+    val snackbarHostState = remember { SnackbarHostState() }
 
     Scaffold(
         bottomBar = {
@@ -49,24 +54,29 @@ fun MainScreen() {
                 navController = navController,
                 isRoot = userPreferences.workingMode.isRoot
             )
-        }
+        },
+        snackbarHost = { SnackbarHost(snackbarHostState) }
     ) {
-        NavHost(
-            modifier = Modifier.padding(bottom = it.calculateBottomPadding()),
-            navController = navController,
-            startDestination = when (userPreferences.homepage) {
-                context.getString(MainScreen.Home.label) -> MainScreen.Home.route
-                context.getString(MainScreen.Repository.label) -> MainScreen.Repository.route
-                context.getString(MainScreen.Modules.label) -> MainScreen.Modules.route
-                else -> MainScreen.Home.route
-            }
+        CompositionLocalProvider(
+            LocalSnackbarHost provides snackbarHostState
         ) {
-            homeScreen()
-            repositoryScreen(
-                bulkInstallViewModel = bulkInstallViewModel
-            )
-            modulesScreen()
-            settingsScreen()
+            NavHost(
+                modifier = Modifier.padding(bottom = it.calculateBottomPadding()),
+                navController = navController,
+                startDestination = when (userPreferences.homepage) {
+                    context.getString(MainScreen.Home.label) -> MainScreen.Home.route
+                    context.getString(MainScreen.Repository.label) -> MainScreen.Repository.route
+                    context.getString(MainScreen.Modules.label) -> MainScreen.Modules.route
+                    else -> MainScreen.Home.route
+                }
+            ) {
+                homeScreen()
+                repositoryScreen(
+                    bulkInstallViewModel = bulkInstallViewModel
+                )
+                modulesScreen()
+                settingsScreen()
+            }
         }
     }
 }

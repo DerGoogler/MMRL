@@ -1,10 +1,11 @@
 package com.dergoogler.mmrl.ui.utils
 
-import android.os.BaseBundle
+import android.os.Bundle
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavOptionsBuilder
+import com.dergoogler.mmrl.app.moshi
 import dev.dergoogler.mmrl.compat.core.BrickException
 import dev.dergoogler.mmrl.compat.ext.toDecodedUrl
 import dev.dergoogler.mmrl.compat.ext.toEncodedUrl
@@ -26,7 +27,7 @@ val NavBackStackEntry.panicArguments get() = arguments ?: throw BrickException("
  * @param force If true, will force the URL decoding even if the value is null.
  * @return The decoded string associated with the given key, or null if the key does not exist.
  */
-fun BaseBundle.loadString(key: String, force: Boolean = false): String? {
+fun Bundle.loadString(key: String, force: Boolean = false): String? {
     return this.getString(key)?.toDecodedUrl(force)
 }
 
@@ -39,8 +40,14 @@ fun BaseBundle.loadString(key: String, force: Boolean = false): String? {
  * @throws BrickException if the key is not found or if the value is null.
  * @return The decoded string associated with the given key.
  */
-fun BaseBundle.panicString(key: String, force: Boolean = false): String {
+fun Bundle.panicString(key: String, force: Boolean = false): String {
     return this.loadString(key, force) ?: throw BrickException("Key '$key' is null")
+}
+
+inline fun <reified T> Bundle.panicMoshiParcelable(key: String): T {
+    val json = panicString(key)
+    val jsonAdapter = moshi.adapter(T::class.java)
+    return jsonAdapter.fromJson(json) ?: throw BrickException("Unable to parse json")
 }
 
 fun NavController.navigateSingleTopTo(

@@ -361,4 +361,8 @@
     <string name="debugging">Debugging</string>
     <string name="settings_security_inject_eruda">Inject Eruda</string>
     <string name="settings_security_inject_eruda_desc">Insets require the import of the MMRLs insets feature.</string>
+    <string name="explore_repositories">Explore Repositories</string>
+    <string name="about_this_repository">About This Repository</string>
+    <string name="submit_module">Submit Module</string>
+    <string name="team">Team</string>
 </resources>

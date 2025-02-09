@@ -333,7 +333,7 @@ private fun ButtonItem(
 }
 
 @Composable
-fun ModuleCountLabelItem(repo: RepoState) {
+private fun ModuleCountLabelItem(repo: RepoState) {
     if (repo.compatible) {
         LabelItem(
             text = stringResource(id = R.string.repo_modules, repo.size),

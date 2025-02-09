@@ -1,8 +1,8 @@
 package com.dergoogler.mmrl.ui.providable
 
-import android.os.BaseBundle
+import android.os.Bundle
 import androidx.compose.runtime.staticCompositionLocalOf
 
-val LocalPanicArguments = staticCompositionLocalOf<BaseBundle> {
+val LocalPanicArguments = staticCompositionLocalOf<Bundle> {
     error("CompositionLocal NavBackStackEntry.panicArguments not present")
 }

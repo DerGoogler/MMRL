@@ -2,6 +2,7 @@ package com.dergoogler.mmrl.model.online
 
 import com.squareup.moshi.JsonClass
 
+@Deprecated("Use ExploreRepository instead")
 @JsonClass(generateAdapter = true)
 data class RecommendedRepo(
     val name: String,

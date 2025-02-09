@@ -123,15 +123,6 @@ fun SettingsScreen() {
             )
 
             ListButtonItem(
-                icon = R.drawable.git_pull_request_draft,
-                title = stringResource(id = R.string.settings_recommended_repos),
-                desc = stringResource(id = R.string.settings_recommended_repos_desc),
-                onClick = {
-                    navController.navigateSingleTopTo(SettingsScreen.RecommendedRepos.route)
-                }
-            )
-
-            ListButtonItem(
                 icon = R.drawable.file_3d,
                 title = stringResource(id = R.string.settings_resources),
                 desc = stringResource(id = R.string.settings_resources_desc),

@@ -2,7 +2,7 @@ package com.dergoogler.mmrl.stub
 
 import com.dergoogler.mmrl.model.online.Blacklist
 import com.dergoogler.mmrl.model.online.Changelog
-import com.dergoogler.mmrl.model.online.RecommendedRepo
+import com.dergoogler.mmrl.model.online.ExploreRepository
 import com.dergoogler.mmrl.model.online.Sponsor
 import com.dergoogler.mmrl.network.NetworkUtils
 import retrofit2.Call
@@ -17,7 +17,7 @@ interface IMMRLApiManager {
     val blacklist: Call<List<Blacklist>>
 
     @get:GET("api/repositories.json")
-    val repositories: Call<List<RecommendedRepo>>
+    val repositories: Call<List<ExploreRepository>>
 
     @get:GET("api/sponsors.json")
     val sponsors: Call<List<Sponsor>>

@@ -1,4 +1,4 @@
-package com.dergoogler.mmrl.ui.screens.repositories.screens.items
+package com.dergoogler.mmrl.ui.screens.repositories.screens.main.items
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,7 +28,7 @@ fun ExploreReposCard() {
     Card(
         onClick = {
             navController.navigateSingleTopTo(
-                RepositoriesScreen.RecommendedRepos.route,
+                RepositoriesScreen.ExploreRepositories.route,
             )
         },
         modifier = {

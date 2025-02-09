@@ -13,12 +13,13 @@ import androidx.navigation.navDeepLink
 import androidx.navigation.navigation
 import com.dergoogler.mmrl.ui.navigation.MainScreen
 import com.dergoogler.mmrl.ui.providable.LocalPanicArguments
+import com.dergoogler.mmrl.ui.screens.repositories.screens.exploreRepositories.ExploreRepositoriesScreen
+import com.dergoogler.mmrl.ui.screens.repositories.screens.exploreRepositories.ExploreRepositoryScreen
 import com.dergoogler.mmrl.ui.screens.repositories.screens.main.RepositoriesScreen
 import com.dergoogler.mmrl.ui.screens.repositories.screens.repository.RepositoryScreen
 import com.dergoogler.mmrl.ui.screens.repositories.screens.view.FilteredSearchScreen
 import com.dergoogler.mmrl.ui.screens.repositories.screens.view.NewViewScreen
 import com.dergoogler.mmrl.ui.screens.repositories.screens.view.ViewDescriptionScreen
-import com.dergoogler.mmrl.ui.screens.settings.recommendedRepos.RecommendedRepoScreen
 import com.dergoogler.mmrl.ui.utils.panicArguments
 import com.dergoogler.mmrl.viewmodel.BulkInstallViewModel
 import com.dergoogler.mmrl.viewmodel.ModuleViewModel
@@ -31,7 +32,8 @@ enum class RepositoriesScreen(val route: String) {
     RepositoryView("RepositoryView/{repoUrl}/{repoName}"),
     Description("Description/{moduleId}/{repoUrl}"),
     RepoSearch("RepoSearch/{repoUrl}/{type}/{value}"),
-    RecommendedRepos("RecommendedRepos")
+    ExploreRepositories("ExploreRepositories"),
+    ExploreRepository("ExploreRepository/{repo}")
 }
 
 fun NavGraphBuilder.repositoryScreen(
@@ -175,11 +177,27 @@ fun NavGraphBuilder.repositoryScreen(
     }
 
     composable(
-        route = RepositoriesScreen.RecommendedRepos.route,
+        route = RepositoriesScreen.ExploreRepositories.route,
         enterTransition = { scaleIn() + fadeIn() },
         exitTransition = { fadeOut() }
     ) {
-        RecommendedRepoScreen()
+        ExploreRepositoriesScreen()
+    }
+    composable(
+        route = RepositoriesScreen.ExploreRepository.route,
+        arguments = listOf(
+            navArgument("repo") { type = NavType.StringType },
+        ),
+        enterTransition = { scaleIn() + fadeIn() },
+        exitTransition = { fadeOut() }
+    ) {
+        val arguments = it.panicArguments
+
+        CompositionLocalProvider(
+            LocalPanicArguments provides arguments
+        ) {
+            ExploreRepositoryScreen()
+        }
     }
 
 }
