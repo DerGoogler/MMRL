@@ -30,7 +30,7 @@ jobs:
         run: |
             BUILD_TYPE_CASED=$(echo "${{ inputs.buildType }}" | sed 's/^\(.\)/\L\1/')
             echo "BUILD_TYPE_CASED=$BUILD_TYPE_CASED" >> $GITHUB_ENV
-            printf "%b" "MESSAGE=${{ inputs.message }}" >> %GITHUB_ENV
+            printf "%b" "MESSAGE=\"${{ inputs.message }}\"" >> %GITHUB_ENV
 
       - name: Checkout
         uses: actions/checkout@v4
