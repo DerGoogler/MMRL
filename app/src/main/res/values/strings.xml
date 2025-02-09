@@ -365,4 +365,10 @@
     <string name="about_this_repository">About This Repository</string>
     <string name="submit_module">Submit Module</string>
     <string name="team">Team</string>
+    <string name="in_total">%1$s in total</string>
+    <string name="contributions">%1$d contributions</string>
+    <string name="thank_you">Thank You</string>
+    <string name="total_community_contributions">%1$s total community contributions</string>
+    <string name="have_been_total_sponsored">%1$s have been total sponsored</string>
+    <string name="contributors">Contributors</string>
 </resources>

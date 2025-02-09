@@ -262,12 +262,13 @@ fun ExploreRepositoryScreen(
                 )
             }
 
-            HorizontalDividerWithText(
-                text = stringResource(R.string.team),
-                thickness = 0.9.dp
-            )
 
             if (repo.members.isNotNullOrEmpty()) {
+                HorizontalDividerWithText(
+                    text = stringResource(R.string.team),
+                    thickness = 0.9.dp
+                )
+
                 NonLazyGrid(
                     columns = 2,
                     itemCount = repo.members.size,

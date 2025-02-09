@@ -1,4 +1,4 @@
-package com.dergoogler.mmrl.ui.screens.home.about
+package com.dergoogler.mmrl.ui.screens.home.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,7 +20,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -33,7 +32,6 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import com.dergoogler.mmrl.BuildConfig
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.app.Const
@@ -61,27 +59,13 @@ val listItemContentPaddingValues = PaddingValues(vertical = 16.dp, horizontal = 
 fun AboutScreen() {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val browser = LocalUriHandler.current
-
     val navController = LocalNavController.current
-
-    var sponsors by remember { mutableStateOf<List<Sponsor>?>(null) }
-
-    LaunchedEffect(Unit) {
-        runRequest {
-            withContext(Dispatchers.IO) {
-                return@withContext IMMRLApiManager.build().sponsors.execute()
-            }
-        }.onSuccess { list ->
-            sponsors = list
-        }.onFailure {
-            Timber.e(it, "unable to get sponsors")
-        }
-    }
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-            TopBar(
+            NavigateUpTopBar(
+                title = stringResource(id = R.string.settings_about),
                 scrollBehavior = scrollBehavior,
                 navController = navController
             )
@@ -172,10 +156,6 @@ fun AboutScreen() {
             val style = MaterialTheme.typography.bodyMedium.copy(
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            val itemTextStyle = ListItemDefaults.itemStyle.copy(
-                titleTextStyle = style,
-                descTextStyle = style
-            )
 
             OutlinedCard {
 
@@ -200,49 +180,6 @@ fun AboutScreen() {
                     }
                 )
             }
-
-            sponsors.nullable { sponsors ->
-                OutlinedCard(
-                    modifier = {
-                        column = Modifier
-                    }
-                ) {
-                    ListCollapseItem(
-                        itemTextStyle = itemTextStyle,
-                        contentPaddingValues = listItemContentPaddingValues,
-                        title = stringResource(R.string.sponsors),
-                        desc = stringResource(R.string.all_the_sponsors_of_the_project_click_on_learn_more_to_get_included),
-                        base = {
-                            learnMore = {
-                                browser.openUri(Const.SPONSORS_URL)
-                            }
-                        },
-                        iconToRight = true
-                    ) {
-                        sponsors.forEach {
-                            ListButtonItem(
-                                itemTextStyle = itemTextStyle,
-                                contentPaddingValues = listItemContentPaddingValues,
-                                title = it.login,
-                                desc = it.amount.toDollars(),
-                                onClick = {
-                                    browser.openUri(it.url)
-                                }
-                            )
-                        }
-                    }
-                }
-            }
         }
     }
 }
-
-@Composable
-private fun TopBar(
-    scrollBehavior: TopAppBarScrollBehavior,
-    navController: NavController,
-) = NavigateUpTopBar(
-    title = stringResource(id = R.string.settings_about),
-    scrollBehavior = scrollBehavior,
-    navController = navController
-)

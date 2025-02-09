@@ -102,14 +102,20 @@ fun HomeScreen(
     )
 
     Scaffold(
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection), topBar = {
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
             TopBar(
                 isProviderAlive = viewModel.isProviderAlive,
                 onInfoClick = {
                     navController.navigateSingleTopTo(HomeScreen.About.route)
-                }, onRebootClick = {
+                },
+                onHeartClick = {
+                    navController.navigateSingleTopTo(HomeScreen.ThankYou.route)
+                },
+                onRebootClick = {
                     openRebootSheet = true
-                }, scrollBehavior = scrollBehavior
+                },
+                scrollBehavior = scrollBehavior
             )
         }, contentWindowInsets = WindowInsets.none
     ) { innerPadding ->
@@ -359,6 +365,7 @@ private fun TopBar(
     isProviderAlive: Boolean,
     onRebootClick: () -> Unit = {},
     onInfoClick: () -> Unit = {},
+    onHeartClick: () -> Unit = {},
     scrollBehavior: TopAppBarScrollBehavior,
 ) = TopAppBar(
     title = {
@@ -369,14 +376,23 @@ private fun TopBar(
         if (isProviderAlive) {
             IconButton(onClick = onRebootClick) {
                 Icon(
-                    painter = painterResource(id = R.drawable.refresh), contentDescription = null
+                    painter = painterResource(id = R.drawable.refresh),
+                    contentDescription = null
                 )
             }
         }
 
+        IconButton(onClick = onHeartClick) {
+            Icon(
+                painter = painterResource(id = R.drawable.heart),
+                contentDescription = null
+            )
+        }
+
         IconButton(onClick = onInfoClick) {
             Icon(
-                painter = painterResource(id = R.drawable.info_circle), contentDescription = null
+                painter = painterResource(id = R.drawable.info_circle),
+                contentDescription = null
             )
         }
     })
