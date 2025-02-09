@@ -30,7 +30,6 @@ jobs:
         run: |
             BUILD_TYPE_CASED=$(echo "${{ inputs.buildType }}" | sed 's/^\(.\)/\L\1/')
             echo "BUILD_TYPE_CASED=$BUILD_TYPE_CASED" >> $GITHUB_ENV
-            printf "%b" "MESSAGE=\"${{ inputs.message }}\"" >> %GITHUB_ENV
 
       - name: Checkout
         uses: actions/checkout@v4
@@ -93,7 +92,7 @@ jobs:
 
                 Build on ${{ env.BUILD_DATE }}.
 
-                ```${{ env.MESSAGE }}```
+                ```${{ inputs.message }}```
 
                 Type: ${{ env.BUILD_TYPE_CASED }}
                 [Workflow run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
