@@ -65,7 +65,7 @@ class MMRLWebClient(
                 script.innerText = `import eruda from "https://mui.kernelsu.org/mmrl/assets/eruda.mjs"; 
                     eruda.init();
                     const sheet = new CSSStyleSheet();
-                    sheet.replaceSync('.eruda-dev-tools { padding-bottom: var(--window-inset-bottom) }');
+                    sheet.replaceSync('.eruda-dev-tools { padding-bottom: ${viewModel.bottomInset}px }');
                     window.eruda.shadowRoot.adoptedStyleSheets.push(sheet)
                 `;
                 head.insertBefore(script, head.firstChild);
