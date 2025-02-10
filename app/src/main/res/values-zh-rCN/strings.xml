@@ -361,4 +361,12 @@
     <string name="debugging">调试</string>
     <string name="settings_security_inject_eruda">注入Eruda</string>
     <string name="settings_security_inject_eruda_desc">注入部分需要MMRL的注入功能来导入。</string>
+    <string name="team">团队</string>
+    <string name="contributions">%1$d 贡献</string>
+    <string name="thank_you">非常感谢</string>
+    <string name="about_this_repository">关于本仓库</string>
+    <string name="total_community_contributions">共 %1$s 次社区贡献</string>
+    <string name="explore_repositories">发现仓库</string>
+    <string name="in_total">共 %1$s</string>
+    <string name="submit_module">提交模块</string>
 </resources>
