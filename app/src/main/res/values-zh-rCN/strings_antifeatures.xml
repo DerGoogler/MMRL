@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="ads_name">广告</string>
+    <string name="ads_name">广告/null</string>
     <string name="ads_desc">此模块包含广告。</string>
     <string name="knownvuln_name">存在安全漏洞</string>
     <string name="nsfw_name">NSFW</string>
