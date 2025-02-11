@@ -19,6 +19,10 @@ data class Contributor(
             SocialLink(
                 icon = "github",
                 link = url,
+            ),
+            SocialLink(
+                icon = "commit",
+                link = "https://github.com/MMRLApp/MMRL/commits?author=$login",
             )
         )
     )

@@ -60,11 +60,13 @@ fun MemberCard(member: ExploreRepositoryMember) {
             ) {
                 Text(
                     text = member.name.toDecodedUrl(),
+                    maxLines = 1,
                     style = MaterialTheme.typography.titleMedium
                 )
                 member.title.nullable {
                     Text(
                         text = it.toDecodedUrl(),
+                        maxLines = 1,
                         style = MaterialTheme.typography.titleSmall.copy(color = MaterialTheme.colorScheme.outline)
                     )
                 }
@@ -88,6 +90,7 @@ fun MemberCard(member: ExploreRepositoryMember) {
                                     id = when (it.icon.lowercase()) {
                                         "github" -> R.drawable.brand_github
                                         "gitlab" -> R.drawable.brand_gitlab
+                                        "commit" -> R.drawable.git_commit
                                         else -> R.drawable.transparent
                                     }
                                 ),
@@ -101,10 +104,9 @@ fun MemberCard(member: ExploreRepositoryMember) {
                                         },
                                         indication = ripple()
                                     ),
-                                contentDescription = "GitHub"
+                                contentDescription = it.icon.lowercase()
                             )
                         }
-
                     }
                 }
             }
