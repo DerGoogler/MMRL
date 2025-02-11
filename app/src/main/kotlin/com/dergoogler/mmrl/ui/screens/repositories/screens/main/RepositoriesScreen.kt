@@ -46,6 +46,7 @@ import com.dergoogler.mmrl.ui.animate.slideInTopToBottom
 import com.dergoogler.mmrl.ui.animate.slideOutBottomToTop
 import com.dergoogler.mmrl.ui.component.Loading
 import com.dergoogler.mmrl.ui.component.PageIndicator
+import com.dergoogler.mmrl.ui.component.PullToRefreshBox
 import com.dergoogler.mmrl.ui.component.TextFieldDialog
 import com.dergoogler.mmrl.ui.component.TopAppBar
 import com.dergoogler.mmrl.ui.component.TopAppBarIcon
@@ -66,6 +67,9 @@ fun RepositoriesScreen(
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val list by viewModel.repos.collectAsStateWithLifecycle()
     val bulkModules by bulkInstallViewModel.bulkModules.collectAsStateWithLifecycle()
+
+    val state by viewModel.screenState.collectAsStateWithLifecycle()
+    val progress by viewModel.progress.collectAsStateWithLifecycle()
 
     val listSate = rememberLazyListState()
     val showFab by listSate.isScrollingUp()
@@ -172,15 +176,20 @@ fun RepositoriesScreen(
                 )
             }
 
-            RepositoriesList(
-                list = list,
-                state = listSate,
-                delete = viewModel::delete,
-                getUpdate = viewModel::getUpdate
-            )
+            PullToRefreshBox(
+                isRefreshing = state.isRefreshing,
+                onRefresh = viewModel::getRepoAll
+            ) {
+                RepositoriesList(
+                    list = list,
+                    state = listSate,
+                    delete = viewModel::delete,
+                    getUpdate = viewModel::getUpdate
+                )
+            }
 
             AnimatedVisibility(
-                visible = viewModel.progress,
+                visible = progress,
                 enter = slideInTopToBottom(),
                 exit = slideOutBottomToTop()
             ) {

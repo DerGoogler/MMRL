@@ -57,6 +57,8 @@ fun ModulesScreen(
 
     val list by viewModel.local.collectAsStateWithLifecycle()
     val query by viewModel.query.collectAsStateWithLifecycle()
+    val state by viewModel.screenState.collectAsStateWithLifecycle()
+    val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
 
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val listState = rememberLazyListState()
@@ -117,22 +119,20 @@ fun ModulesScreen(
         Box(
             modifier = Modifier.padding(innerPadding)
         ) {
-            if (viewModel.isLoading) {
+            if (isLoading) {
                 Loading()
             }
 
-            if (list.isEmpty() && !viewModel.isLoading) {
+            if (list.isEmpty() && !isLoading) {
                 PageIndicator(
                     icon = R.drawable.keyframes,
                     text = if (viewModel.isSearch) R.string.search_empty else R.string.modules_empty,
                 )
             }
 
-            val state by viewModel.screenState.collectAsStateWithLifecycle()
-
             PullToRefreshBox(
                 isRefreshing = state.isRefreshing,
-                onRefresh = viewModel::onPullToRefreshTrigger
+                onRefresh = viewModel::getLocalAll
             ) {
                 ModulesList(
                     list = list,

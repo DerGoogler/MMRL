@@ -29,7 +29,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.dergoogler.mmrl.compat.content.ModuleCompatibility
 import dev.dergoogler.mmrl.compat.stub.IModuleOpsCallback
 import dev.dergoogler.mmrl.compat.viewmodel.MMRLViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -94,8 +93,14 @@ class ModulesViewModel @Inject constructor(
     private val localFlow = MutableStateFlow(listOf<LocalModule>())
     val local get() = localFlow.asStateFlow()
 
-    var isLoading by mutableStateOf(true)
-        private set
+    private var isLoadingFlow = MutableStateFlow(false)
+    val isLoading get() = isLoadingFlow.asStateFlow()
+
+    private inline fun <T> T.refreshing(callback: T.() -> Unit) {
+        isLoadingFlow.update { true }
+        callback()
+        isLoadingFlow.update { false }
+    }
 
     private val versionItemCache = mutableStateMapOf<String, VersionItem?>()
 
@@ -129,10 +134,8 @@ class ModulesViewModel @Inject constructor(
             }.launchIn(viewModelScope)
     }
 
-    private val _isRefreshing = MutableStateFlow(false)
-
     val screenState: StateFlow<ModulesScreenState> = localRepository.getLocalAllAsFlow()
-        .combine(_isRefreshing) { items, isRefreshing ->
+        .combine(isLoadingFlow) { items, isRefreshing ->
             ModulesScreenState(items = items, isRefreshing = isRefreshing)
         }
         .stateIn(
@@ -140,17 +143,6 @@ class ModulesViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(5000),
             initialValue = ModulesScreenState()
         )
-
-    fun onPullToRefreshTrigger() {
-        _isRefreshing.update { true }
-        viewModelScope.launch {
-            providerObserver()
-            dataObserver()
-            keyObserver()
-            delay(1000L)
-            _isRefreshing.update { false }
-        }
-    }
 
     private fun dataObserver() {
         combine(
@@ -181,7 +173,7 @@ class ModulesViewModel @Inject constructor(
                 }
             }
 
-            isLoading = false
+            isLoadingFlow.update { false }
 
         }.launchIn(viewModelScope)
     }
@@ -208,7 +200,7 @@ class ModulesViewModel @Inject constructor(
                             it.name.equals(newKey, ignoreCase = true)
 
                         key.startsWith("author:", ignoreCase = true) ->
-                            it.author.equals(newKey, ignoreCase = true) ?: false
+                            it.author.equals(newKey, ignoreCase = true)
 
                         else ->
                             it.name.contains(key, ignoreCase = true) ||
@@ -253,8 +245,8 @@ class ModulesViewModel @Inject constructor(
         keyFlow.value = ""
     }
 
-    private fun getLocalAll() {
-        viewModelScope.launch {
+    fun getLocalAll() = viewModelScope.launch {
+        refreshing {
             modulesRepository.getLocalAll()
         }
     }

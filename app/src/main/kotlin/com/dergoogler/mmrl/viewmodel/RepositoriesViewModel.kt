@@ -15,13 +15,22 @@ import com.dergoogler.mmrl.repository.UserPreferencesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.dergoogler.mmrl.compat.viewmodel.MMRLViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
+
+data class RepositoriesScreenState(
+    val items: List<RepoState> = listOf(),
+    val isRefreshing: Boolean = false,
+)
 
 @HiltViewModel
 class RepositoriesViewModel @Inject constructor(
@@ -45,13 +54,13 @@ class RepositoriesViewModel @Inject constructor(
 
     var isLoading by mutableStateOf(true)
         private set
-    var progress by mutableStateOf(false)
-        private set
+    private var progressFlow = MutableStateFlow(false)
+    val progress get() = progressFlow.asStateFlow()
 
     private inline fun <T> T.refreshing(callback: T.() -> Unit) {
-        progress = true
+        progressFlow.update { true }
         callback()
-        progress = false
+        progressFlow.update { false }
     }
 
     init {
@@ -99,6 +108,16 @@ class RepositoriesViewModel @Inject constructor(
             userPreferencesRepository.setRepositoriesMenu(value)
         }
     }
+
+    val screenState: StateFlow<ModulesScreenState> = localRepository.getLocalAllAsFlow()
+        .combine(progress) { items, isRefreshing ->
+            ModulesScreenState(items = items, isRefreshing = isRefreshing)
+        }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = ModulesScreenState()
+        )
 
     fun insert(
         url: String,
