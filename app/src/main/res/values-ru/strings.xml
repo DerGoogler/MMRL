@@ -143,11 +143,11 @@
     <string name="settings_auto_update_repos">Автоматическое обновление репозиториев</string>
     <string name="settings_auto_update_repos_desc">Автоматически обновлять репозитории в фоновом режиме</string>
     <string name="settings_repo_update_interval">Интервал обновления репозиториев</string>
-    <string name="settings_repo_update_interval_suffix">\u0020ч.</string>
+    <string name="settings_repo_update_interval_suffix">" час/с"</string>
     <string name="settings_repo_update_interval_desc">Выберите интервал времени для обновления репозиториев</string>
     <string name="settings_check_modules_update">Проверять наличие обновлений модулей</string>
     <string name="settings_check_modules_update_desc">Включает проверку обновлений для установленных модулей</string>
-    <string name="settings_check_modules_update_interval_suffix">\u0020ч.</string>
+    <string name="settings_check_modules_update_interval_suffix">" час/с"</string>
     <string name="settings_check_modules_update_interval">Интервал проверки обновлений модулей</string>
     <string name="settings_check_modules_update_interval_desc">Выберите интервал времени для проверки установленных модулей</string>
     <!-- App Theme -->
@@ -317,4 +317,15 @@
     <string name="blacklisted_desc">Этот модуль был занесен в черный список MMRL. Установка отключена для обеспечения вашей безопасности. Если вы все еще хотите установить этот модуль, вы можете отключить оповещения о черном списке в настройках, перейдя в **Настройки → Безопасность → Предупреждения о черном списке**.\n@more(Узнать подробнее)</string>
     <string name="blacklisted">В черном списке</string>
     <string name="settings_blacklist_alerts">Предупреждения о черном списке</string>
+    <string name="view_module_features_action">Действие</string>
+    <string name="view_module_section_count">%1$s+</string>
+    <string name="settings_modules_permissions">Модули и Разрешения</string>
+    <string name="settings_modules_permissions_desc">Разрешить JavaScript API и многое другое для локальных модулей</string>
+    <string name="working_mode_kernelsu_desc">Рут-решение на основе ядра, предлагающее расширенный контроль над пользовательскими приложениями, настраиваемые права суперпользователя и поддержку системных модулей с использованием OverlayFS.</string>
+    <string name="working_mode_apatch_desc">Патчинг ядра и системы Android. Новое рут-решение на основе ядра с поддержкой модулей (как в Magisk) и внедрением функций в ядро (требуется inline-hook и syscall-table-hook). Основано и модифицировано из KernelSU.</string>
+    <string name="working_mode_kernelsu_next_desc">Продвинутое рут-решение на основе ядра с поддержкой Magic Mount, расширенным контролем над пользовательскими приложениями и настраиваемыми правами суперпользователя.</string>
+    <string name="working_mode_magisk_desc">Набор инструментов для настройки Android, предоставляющий root-доступ, поддержку модулей, модификацию загрузочного образа и выполнение кода на уровне процессов с помощью Zygisk.</string>
+    <string name="view_module_mod_infos_disclaimer">Информация, отмеченная ****, может отличаться из-за нескольких добавленных репозиториев. Вы можете просмотреть актуальную информацию, нажав на @track(Просмотр трека) выше.</string>
+    <string name="settings_shell_module_state_change_desc">Использует shell вместо создания файлов в директории модуля. После включения вы не сможете использовать кнопку восстановления из-за ограничений.</string>
+    <string name="settings_shell_module_state_change">Использовать Shell для состояний</string>
 </resources>
