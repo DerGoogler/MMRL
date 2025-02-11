@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="ads_name">広告</string>
+    <string name="ads_name">広告/null</string>
     <string name="ads_desc">このモジュールには広告が含まれています。</string>
     <string name="knownvuln_name">既知の脆弱性</string>
     <string name="knownvuln_desc">このモジュールには既知のセキュリティ脆弱性が含まれています。</string>
