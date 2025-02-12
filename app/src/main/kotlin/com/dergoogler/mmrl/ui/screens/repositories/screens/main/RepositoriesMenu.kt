@@ -3,9 +3,7 @@ package com.dergoogler.mmrl.ui.screens.repositories.screens.main
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Icon
@@ -25,7 +23,6 @@ import androidx.compose.ui.unit.dp
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.datastore.repositories.RepositoriesMenuCompat
 import com.dergoogler.mmrl.datastore.repository.Option
-import com.dergoogler.mmrl.model.state.RepoState
 import com.dergoogler.mmrl.ui.component.BottomSheet
 import com.dergoogler.mmrl.ui.component.MenuChip
 import com.dergoogler.mmrl.ui.component.Segment
@@ -79,16 +76,6 @@ private fun MenuBottomSheet(
         modifier = Modifier.padding(all = 18.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        RepositoryItem(
-            repo = RepoState.example(),
-            onClick = { /*TODO*/ },
-            update = { /*TODO*/ },
-            delete = { /*TODO*/ },
-            isDemoMode = true
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
         Text(
             text = stringResource(id = R.string.menu_sort_mode),
             style = MaterialTheme.typography.titleSmall
