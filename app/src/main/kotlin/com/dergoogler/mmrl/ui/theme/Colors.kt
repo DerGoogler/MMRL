@@ -8,11 +8,12 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
-import dev.dergoogler.mmrl.compat.BuildCompat
 import com.dergoogler.mmrl.ui.theme.color.AlmondBlossomDarkScheme
 import com.dergoogler.mmrl.ui.theme.color.AlmondBlossomLightScheme
 import com.dergoogler.mmrl.ui.theme.color.JeufosseDarkScheme
 import com.dergoogler.mmrl.ui.theme.color.JeufosseLightScheme
+import com.dergoogler.mmrl.ui.theme.color.MMRLBaseDarkScheme
+import com.dergoogler.mmrl.ui.theme.color.MMRLBaseLightScheme
 import com.dergoogler.mmrl.ui.theme.color.PlainAuversDarkScheme
 import com.dergoogler.mmrl.ui.theme.color.PlainAuversLightScheme
 import com.dergoogler.mmrl.ui.theme.color.PoppyFieldDarkScheme
@@ -23,6 +24,7 @@ import com.dergoogler.mmrl.ui.theme.color.SoleilLevantDarkScheme
 import com.dergoogler.mmrl.ui.theme.color.SoleilLevantLightScheme
 import com.dergoogler.mmrl.ui.theme.color.WildRosesDarkScheme
 import com.dergoogler.mmrl.ui.theme.color.WildRosesLightScheme
+import dev.dergoogler.mmrl.compat.BuildCompat
 
 sealed class Colors(
     val id: Int,
@@ -75,6 +77,11 @@ sealed class Colors(
         lightColorScheme = WildRosesLightScheme,
         darkColorScheme = WildRosesDarkScheme
     )
+    data object MMRLBase: Colors(
+        id = 7,
+        lightColorScheme = MMRLBaseLightScheme,
+        darkColorScheme = MMRLBaseDarkScheme
+    )
 
     companion object {
         private val mColors get() = listOf(
@@ -84,7 +91,8 @@ sealed class Colors(
             PoppyField,
             AlmondBlossom,
             PlainAuvers,
-            WildRoses
+            WildRoses,
+            MMRLBase
         )
 
         fun getColorIds(): List<Int> {
