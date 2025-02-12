@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="ads_name">Advertising/null</string>
+    <string name="ads_name">Advertising</string>
     <string name="ads_desc">The module contains advertisements.</string>
     <string name="knownvuln_name">Known Vulnerability</string>
     <string name="knownvuln_desc">This module contains a known security vulnerability.</string>
