@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="install_view_installing">- Instalowanie %1$s</string>
-    <string name="service_is_not_available">! Usługa nie jest dostępna \n</string>
+    <string name="service_is_not_available">! Usługa nie jest dostępna</string>
     <string name="cannot_install_blacklisted_modules_settings_security_blacklist_alerts">! Nie można zainstalować modułów z czarnej listy. Ustawienia → Bezpieczeństwo → Alerty czarnej listy</string>
     <string name="installation_aborted_due_to_an_error">! Instalacja została przerwana z powodu błędu</string>
     <string name="install_view_module_info">- Informacje o module: %1$s</string>
