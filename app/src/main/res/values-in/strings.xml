@@ -335,4 +335,13 @@
     <string name="debugging">Debugging</string>
     <string name="settings_security_inject_eruda">Sisipkan Eruda</string>
     <string name="settings_security_inject_eruda_desc">Sisipan memerlukan impor fitur insets MMRL.</string>
+    <string name="explore_repositories">Jelajahi Repositori</string>
+    <string name="about_this_repository">Tentang Repositori Ini</string>
+    <string name="submit_module">Kirim Modul</string>
+    <string name="team">Tim</string>
+    <string name="in_total">total %1$s</string>
+    <string name="contributions">%1$d kontribusi</string>
+    <string name="thank_you">Terima Kasih</string>
+    <string name="total_community_contributions">%1$s total kontribusi komunitas</string>
+    <string name="contributors">Kontributor</string>
 </resources>
