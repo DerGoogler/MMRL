@@ -358,4 +358,17 @@
     <string name="menu_show_modules_count">モジュールの数を表示</string>
     <string name="settings_modules_permissions">モジュールと権限</string>
     <string name="settings_modules_permissions_desc">JavaScript API の許可とローカルモジュールについて詳細を表示します</string>
+    <string name="debugging">デバッグ</string>
+    <string name="settings_security_inject_eruda">Eruda をインジェクト</string>
+    <string name="settings_security_inject_eruda_desc">インセットには MMRL インセット機能のインポートが必要です。</string>
+    <string name="explore_repositories">リポジトリを探す</string>
+    <string name="about_this_repository">このリポジトリについて</string>
+    <string name="submit_module">モジュールを送信</string>
+    <string name="team">チーム</string>
+    <string name="in_total">合計 %1$s</string>
+    <string name="thank_you">感謝します</string>
+    <string name="contributions">%1$d 名の貢献</string>
+    <string name="have_been_total_sponsored">合計 %1$s 名にスポンサーされました</string>
+    <string name="total_community_contributions">合計 %1$s 名のコミュニティの貢献</string>
+    <string name="contributors">貢献者</string>
 </resources>
