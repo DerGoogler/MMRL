@@ -19,5 +19,14 @@ interface IFileManager {
     boolean exists(String path);
     boolean isDirectory(String path);
     boolean isFile(String path);
+    boolean mkdir(String path);
+    boolean mkdirs(String path);
+    boolean createNewFile(String path);
+    boolean renameTo(String target, String dest);
+    boolean copyTo(String target, String dest, boolean overwrite);
+    boolean canExecute(String path);
+    boolean canWrite(String path);
+    boolean canRead(String path);
+    boolean isHidden(String path);
     boolean isAccessRestricted(String path, boolean disable);
 }

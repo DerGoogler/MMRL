@@ -121,6 +121,46 @@ internal class FileManagerImpl : IFileManager.Stub() {
         return this.isFile();
     }
 
+    override fun mkdir(path: String): Boolean = with(File(path)) {
+        return this.mkdirs();
+    }
+
+    override fun mkdirs(path: String): Boolean = with(File(path)) {
+        return this.mkdirs();
+    }
+
+    override fun createNewFile(path: String): Boolean = with(File(path)) {
+        return this.createNewFile();
+    }
+
+    override fun renameTo(target: String, dest: String): Boolean = with(File(target)) {
+        return this.renameTo(File(dest));
+    }
+
+    override fun copyTo(
+        target: String,
+        dest: String,
+        overwrite: Boolean,
+    ): Boolean = with(File(target)) {
+        return this.copyRecursively(File(dest), overwrite)
+    }
+
+    override fun canExecute(path: String): Boolean = with(File(path)) {
+        return this.canExecute();
+    }
+
+    override fun canWrite(path: String): Boolean = with(File(path)) {
+        return this.canWrite();
+    }
+
+    override fun canRead(path: String): Boolean = with(File(path)) {
+        return this.canRead();
+    }
+
+    override fun isHidden(path: String): Boolean = with(File(path)) {
+        return this.isHidden();
+    }
+
     override fun isAccessRestricted(path: String, disable: Boolean): Boolean = with(File(path)) {
         if (disable) return false
 

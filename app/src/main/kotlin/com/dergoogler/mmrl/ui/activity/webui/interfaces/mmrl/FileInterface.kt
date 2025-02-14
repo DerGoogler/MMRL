@@ -101,4 +101,71 @@ class FileInterface(
         runJavaScriptCatching("Error while checking for existence of '$path'", false) {
             return@runJavaScriptCatching exists(path)
         }
+
+    @JavascriptInterface
+    fun isDirectory(path: String): Boolean =
+        runJavaScriptCatching("Error while checking if '$path' is a directory", false) {
+            return@runJavaScriptCatching isDirectory(path)
+        }
+
+    @JavascriptInterface
+    fun isFile(path: String): Boolean =
+        runJavaScriptCatching("Error while checking if '$path' is a file", false) {
+            return@runJavaScriptCatching isFile(path)
+        }
+
+    @JavascriptInterface
+    fun mkdir(path: String): Boolean =
+        runJavaScriptCatching("Error while creating directory '$path'", false) {
+            return@runJavaScriptCatching mkdir(path)
+        }
+
+    @JavascriptInterface
+    fun mkdirs(path: String): Boolean =
+        runJavaScriptCatching("Error while creating directories '$path'", false) {
+            return@runJavaScriptCatching mkdirs(path)
+        }
+
+    @JavascriptInterface
+    fun createNewFile(path: String): Boolean =
+        runJavaScriptCatching("Error while creating file '$path'", false) {
+            return@runJavaScriptCatching createNewFile(path)
+        }
+
+    @JavascriptInterface
+    fun renameTo(target: String, dest: String): Boolean =
+        runJavaScriptCatching("Error while renaming '$target' to '$dest'", false) {
+            return@runJavaScriptCatching renameTo(target, dest)
+        }
+
+    @JavascriptInterface
+    fun copyTo(target: String, dest: String, overwrite: Boolean): Boolean =
+        runJavaScriptCatching("Error while copying '$target' to '$dest'", false) {
+            return@runJavaScriptCatching copyTo(target, dest, overwrite)
+        }
+
+    @JavascriptInterface
+    fun canExecute(path: String): Boolean =
+        runJavaScriptCatching("Error while checking if '$path' can be executed", false) {
+            return@runJavaScriptCatching canExecute(path)
+        }
+
+    @JavascriptInterface
+    fun canWrite(path: String): Boolean =
+        runJavaScriptCatching("Error while checking if '$path' can be written to", false) {
+            return@runJavaScriptCatching canWrite(path)
+        }
+
+    @JavascriptInterface
+    fun canRead(path: String): Boolean =
+        runJavaScriptCatching("Error while checking if '$path' can be read", false) {
+            return@runJavaScriptCatching canRead(path)
+        }
+
+    @JavascriptInterface
+    fun isHidden(path: String): Boolean =
+        runJavaScriptCatching("Error while checking if '$path' is hidden", false) {
+            return@runJavaScriptCatching isHidden(path)
+        }
+
 }
