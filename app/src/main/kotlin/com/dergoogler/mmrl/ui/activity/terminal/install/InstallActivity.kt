@@ -4,7 +4,12 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.activity.viewModels
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.lifecycleScope
+import com.dergoogler.mmrl.R
+import com.dergoogler.mmrl.ui.component.ConfirmDialog
 import com.dergoogler.mmrl.viewmodel.InstallViewModel
 import dev.dergoogler.mmrl.compat.BuildCompat
 import dev.dergoogler.mmrl.compat.activity.MMRLComponentActivity
@@ -17,6 +22,8 @@ class InstallActivity : MMRLComponentActivity() {
     private val viewModel: InstallViewModel by viewModels()
 
     override val windowFlags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+
+    private var confirmDialog by mutableStateOf(true)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Timber.d("InstallActivity onCreate")
@@ -36,13 +43,27 @@ class InstallActivity : MMRLComponentActivity() {
 
         if (uris.isNullOrEmpty()) {
             finish()
-        } else {
-            Timber.d("InstallActivity onCreate: $uris")
-            initModule(uris.toList())
+            return
         }
 
         setBaseContent {
-            InstallScreen()
+            if (confirmDialog) ConfirmDialog(
+                title = R.string.install_screen_confirm_title,
+                description = R.string.install_screen_confirm_text,
+                onClose = {
+                    confirmDialog = false
+                    // just in [case]
+                    viewModel.shell?.close()
+                    finish()
+                },
+                onConfirm = {
+                    confirmDialog = false
+                    Timber.d("InstallActivity onCreate: $uris")
+                    initModule(uris.toList())
+                }
+            )
+
+            InstallScreen(viewModel)
         }
     }
 

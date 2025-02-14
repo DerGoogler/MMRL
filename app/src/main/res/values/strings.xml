@@ -371,4 +371,6 @@
     <string name="total_community_contributions">%1$s total community contributions</string>
     <string name="have_been_total_sponsored">%1$s have been total sponsored</string>
     <string name="contributors">Contributors</string>
+    <string name="install_screen_confirm_title">Confirm Install?</string>
+    <string name="install_screen_confirm_text">Are you sure that you want to install this module?</string>
 </resources>

@@ -39,7 +39,6 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.app.Event
 import com.dergoogler.mmrl.app.Event.Companion.isFinished
@@ -58,7 +57,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun InstallScreen(
-    viewModel: InstallViewModel = hiltViewModel(),
+    viewModel: InstallViewModel
 ) {
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
