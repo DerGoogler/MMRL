@@ -6,6 +6,7 @@ import android.webkit.WebView
 import android.widget.Toast
 import com.dergoogler.mmrl.BuildConfig
 import com.dergoogler.mmrl.viewmodel.WebUIViewModel
+import dev.dergoogler.mmrl.compat.ext.managerVersion
 
 class VersionInterface(
     private val context: Context,
@@ -20,10 +21,10 @@ class VersionInterface(
         val buildType = BuildConfig.BUILD_TYPE
 
         @get:JavascriptInterface
-        val versionCode = BuildConfig.VERSION_CODE
+        val versionCode = context.managerVersion.second
 
         @get:JavascriptInterface
-        val versionName = BuildConfig.VERSION_NAME
+        val versionName = context.managerVersion.first
 
         @get:JavascriptInterface
         val isDevVersion: Boolean = BuildConfig.IS_DEV_VERSION
