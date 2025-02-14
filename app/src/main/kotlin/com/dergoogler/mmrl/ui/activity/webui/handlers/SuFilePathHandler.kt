@@ -24,10 +24,9 @@ class SuFilePathHandler(
 ) : PathHandler {
     private var mDirectory: File
 
-    private val fileManager: IFileManager?
-        get() = Compat.get(null) {
-            fileManager
-        }
+    private val fileManager: IFileManager? = Compat.get(null) {
+        fileManager
+    }
 
     init {
         try {
@@ -62,25 +61,21 @@ class SuFilePathHandler(
     override fun handle(path: String): WebResourceResponse? {
         if (path.startsWith("mmrl/") || path.startsWith("favicon.ico")) return null
 
-        try {
-            val file = getCanonicalFileIfChild(mDirectory, path)
-            if (file != null) {
-                val `is` = openFile(file)
-                val mimeType = guessMimeType(path)
-                return WebResourceResponse(mimeType, null, `is`)
-            } else {
+        return try {
+            val file = getCanonicalFileIfChild(mDirectory, path) ?: run {
                 Timber.tag(TAG).e(
                     "The requested file: %s is outside the mounted directory: %s",
-                    path,
-                    mDirectory
+                    path, mDirectory
                 )
+                return null
             }
+
+            WebResourceResponse(guessMimeType(path), null, openFile(file))
         } catch (e: IOException) {
             Timber.tag(TAG).e(e, "Error opening the requested path: %s", path)
+            null
         }
-        return WebResourceResponse(null, null, null)
     }
-
 
     @Throws(IOException::class)
     fun getCanonicalDirPath(file: File): String {
@@ -107,18 +102,25 @@ class SuFilePathHandler(
         return if (path.endsWith(".svgz")) GZIPInputStream(stream) else stream
     }
 
-    @Throws(IOException::class)
-    fun openFile(file: File): InputStream {
-        if (fileManager != null && !useShell) {
-            val fileBytes = fileManager!!.readBytes(file.absolutePath)
-            val bytes = ByteArrayInputStream(fileBytes)
-            return handleSvgzStream(file.path, bytes)
-        } else {
-            val suFile = SuFile(file.absolutePath)
-            suFile.shell = shell
-            val fis = SuFileInputStream.open(suFile)
-            return handleSvgzStream(file.path, fis)
+    private fun loadWithShell(file: File): InputStream {
+        val suFile = SuFile(file.absolutePath).apply { shell = this.shell }
+        val `is` = SuFileInputStream.open(suFile)
+        return handleSvgzStream(file.path, `is`)
+    }
+
+    private fun openFile(file: File): InputStream? {
+        if (fileManager == null || useShell) {
+            return loadWithShell(file)
         }
+
+        if (!fileManager.exists(file.path)) {
+            Timber.tag(TAG).e("File not found: %s", file.absolutePath)
+            return null
+        }
+
+        val byteFile = fileManager.readBytes(file.absolutePath)
+        val `is` = ByteArrayInputStream(byteFile)
+        return handleSvgzStream(file.path, `is`)
     }
 
     private fun guessMimeType(filePath: String): String {
