@@ -346,4 +346,6 @@
     <string name="total_community_contributions">%1$s łącznego wkładu społeczności</string>
     <string name="have_been_total_sponsored">%1$s zostały w całości zasponsorowane</string>
     <string name="contributors">Współtwórcy</string>
+    <string name="install_screen_confirm_title">Potwierdzasz instalację?</string>
+    <string name="install_screen_confirm_text">Czy na pewno chcesz zainstalować ten moduł?</string>
 </resources>
