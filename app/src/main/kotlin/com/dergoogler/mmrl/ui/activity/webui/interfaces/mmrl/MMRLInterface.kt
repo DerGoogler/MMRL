@@ -24,10 +24,10 @@ internal data class Manager(
 class MMRLInterface(
     val context: Context,
     private val isDark: Boolean,
-    webview: WebView,
+    private val webview: WebView,
     private val viewModel: WebUIViewModel,
     private val allowedFsApi: Boolean,
-    private val allowedKsuApi: Boolean
+    private val allowedKsuApi: Boolean,
 ) {
     private val activity = context as Activity
     private var windowInsetsController: WindowInsetsControllerCompat =
@@ -122,13 +122,37 @@ class MMRLInterface(
     @JavascriptInterface
     fun recompose() = viewModel.recomposeCount++
 
+    private fun logError(message: String) {
+        (context as Activity).runOnUiThread {
+            webview.loadUrl("javascript:(console.error('$message'))")
+        }
+    }
+
     @JavascriptInterface
     fun requestAdvancedKernelSUAPI() {
+        if (viewModel.hasRequestedAdvancedKernelSUAPI) {
+            logError("WebUI has already requested to access the Advanced KernelSU API and it was rejected")
+            return
+        }
+        if (allowedFsApi) {
+            logError("WebUI was already allowed to access the FileSystem API")
+            return
+        }
+
         viewModel.dialogRequestAdvancedKernelSUAPI = true
     }
 
     @JavascriptInterface
     fun requestFileSystemAPI() {
+        if (viewModel.hasRequestFileSystemAPI) {
+            logError("WebUI has already requested to access the FileSystem API and it was rejected")
+            return
+        }
+        if (allowedFsApi) {
+            logError("WebUI was already allowed to access the FileSystem API")
+            return
+        }
+
         viewModel.dialogRequestFileSystemAPI = true
     }
 }

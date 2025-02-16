@@ -72,11 +72,12 @@ fun WebUIScreen(
     val allowedFsApi = viewModel.modId in userPrefs.allowedFsModules
     val allowedKsuApi = viewModel.modId in userPrefs.allowedKsuModules
 
-    if (!allowedKsuApi && viewModel.dialogRequestAdvancedKernelSUAPI) {
+    if (!allowedKsuApi && !viewModel.hasRequestedAdvancedKernelSUAPI && viewModel.dialogRequestAdvancedKernelSUAPI) {
         ConfirmDialog(
             title = "Allow Advanced Kernel SU API?",
             description = "Allow this module to access the Advanced Kernel SU API? If you don't feel secure with this module, don't allow it!",
             onClose = {
+                viewModel.hasRequestedAdvancedKernelSUAPI = true
                 viewModel.dialogRequestAdvancedKernelSUAPI = false
             },
             onConfirm = {
@@ -87,11 +88,12 @@ fun WebUIScreen(
         )
     }
 
-    if (!allowedFsApi && viewModel.dialogRequestFileSystemAPI) {
+    if (!allowedFsApi && !viewModel.hasRequestFileSystemAPI && viewModel.dialogRequestFileSystemAPI) {
         ConfirmDialog(
             title = "Allow FileSystem API?",
             description = "Allow this module to access the FileSystem API? If you don't feel secure with this module, don't allow it!",
             onClose = {
+                viewModel.hasRequestFileSystemAPI = true
                 viewModel.dialogRequestFileSystemAPI = false
             },
             onConfirm = {

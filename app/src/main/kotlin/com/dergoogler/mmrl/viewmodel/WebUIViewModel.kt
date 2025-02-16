@@ -104,6 +104,8 @@ class WebUIViewModel @AssistedInject constructor(
         }
 
     var recomposeCount by mutableIntStateOf(0)
+    var hasRequestedAdvancedKernelSUAPI by mutableStateOf(false)
+    var hasRequestFileSystemAPI by mutableStateOf(false)
 
     var topInset by mutableStateOf<Int?>(null)
         private set
