@@ -360,7 +360,7 @@
     <string name="settings_modules_permissions_desc">允许 JavaScript API 和更多本地模块相关内容</string>
     <string name="debugging">调试</string>
     <string name="settings_security_inject_eruda">注入Eruda</string>
-    <string name="settings_security_inject_eruda_desc">注入部分需要MMRL的注入功能来导入。</string>
+    <string name="settings_security_inject_eruda_desc">注入需要导入MMRL的注入功能。</string>
     <string name="team">团队</string>
     <string name="contributions">%1$d 贡献</string>
     <string name="thank_you">非常感谢</string>
@@ -371,4 +371,6 @@
     <string name="submit_module">提交模块</string>
     <string name="have_been_total_sponsored">%1$s 已赞助</string>
     <string name="contributors">贡献者</string>
+    <string name="install_screen_confirm_title">确认安装？</string>
+    <string name="install_screen_confirm_text">你确定要安装这个模块吗？</string>
 </resources>
