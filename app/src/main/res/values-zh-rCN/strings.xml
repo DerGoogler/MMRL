@@ -89,7 +89,7 @@
     <string name="view_module_features_bootcompleted_sub">启动后执行脚本(KernelSU和APatch)&gt;</string>
     <string name="view_module_module_support">Module Support</string>
     <string name="view_module_provided_by">提供者</string>
-    <string name="view_module_added_on">额外的</string>
+    <string name="view_module_added_on">附加信息</string>
     <string name="view_module_about_this_module">关于此模块</string>
     <string name="view_module_mod_infos_disclaimer">标有 **** 的信息可能会因添加了多个仓库而有所不同。您可以点击上面的 @track查看实际信息。</string>
     <string name="view_module_section_count">%1$s+</string>
