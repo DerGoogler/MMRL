@@ -44,10 +44,12 @@ import com.dergoogler.mmrl.ui.component.PageIndicator
 import com.dergoogler.mmrl.ui.component.PullToRefreshBox
 import com.dergoogler.mmrl.ui.component.SearchTopBar
 import com.dergoogler.mmrl.ui.component.TopAppBarIcon
+import com.dergoogler.mmrl.ui.providable.LocalWindowWidthSizeClass
 import com.dergoogler.mmrl.ui.utils.isScrollingUp
 import com.dergoogler.mmrl.ui.utils.none
 import com.dergoogler.mmrl.viewmodel.ModulesViewModel
 import dev.dergoogler.mmrl.compat.activity.MMRLComponentActivity
+import dev.dergoogler.mmrl.compat.ext.systemBarsPaddingEnd
 
 @Composable
 fun ModulesScreen(
@@ -161,6 +163,8 @@ private fun TopBar(
     setMenu: (ModulesMenuCompat) -> Unit,
     scrollBehavior: TopAppBarScrollBehavior,
 ) {
+    val windowSize = LocalWindowWidthSizeClass.current
+
     var currentQuery by remember { mutableStateOf(query) }
     DisposableEffect(isSearch) {
         onDispose { currentQuery = "" }
@@ -177,7 +181,11 @@ private fun TopBar(
             onCloseSearch()
             currentQuery = ""
         },
-        title = { TopAppBarIcon() },
+        title = {
+            if (windowSize.isRailShown) return@SearchTopBar
+
+            TopAppBarIcon()
+        },
         scrollBehavior = scrollBehavior,
         actions = {
             if (!isSearch) {
@@ -221,6 +229,7 @@ private fun FloatingButton() {
     }
 
     FloatingActionButton(
+        modifier = Modifier.systemBarsPaddingEnd(),
         interactionSource = interactionSource,
         onClick = {},
         contentColor = MaterialTheme.colorScheme.onPrimary,
