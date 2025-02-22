@@ -56,6 +56,7 @@ import com.dergoogler.mmrl.ui.utils.none
 import com.dergoogler.mmrl.viewmodel.BulkInstallViewModel
 import com.dergoogler.mmrl.viewmodel.RepositoriesViewModel
 import dev.dergoogler.mmrl.compat.activity.MMRLComponentActivity
+import dev.dergoogler.mmrl.compat.ext.systemBarsPaddingEnd
 import timber.log.Timber
 import kotlin.reflect.KFunction1
 
@@ -154,6 +155,7 @@ fun RepositoriesScreen(
                 )
             ) {
                 FloatingButton(
+
                     onClick = {
                         bulkInstallBottomSheet = true
                     }
@@ -294,6 +296,7 @@ private fun TopBar(
 private fun FloatingButton(
     onClick: () -> Unit,
 ) = FloatingActionButton(
+    modifier = Modifier.systemBarsPaddingEnd(),
     onClick = onClick,
     contentColor = MaterialTheme.colorScheme.onPrimary,
     containerColor = MaterialTheme.colorScheme.primary

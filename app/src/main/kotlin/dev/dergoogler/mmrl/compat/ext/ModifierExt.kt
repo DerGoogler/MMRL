@@ -1,8 +1,14 @@
 package dev.dergoogler.mmrl.compat.ext
 
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.BlendMode
@@ -10,6 +16,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.CompositingStrategy
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.layout
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
@@ -95,6 +102,14 @@ fun Modifier.fillSizeOfParent(
     }
 }
 
+fun Modifier.systemBarsPaddingEnd() = composed {
+    val layoutDirection = LocalLayoutDirection.current
+    return@composed padding(
+        end = WindowInsets.systemBars
+            .asPaddingValues()
+            .calculateEndPadding(layoutDirection),
+    )
+}
 
 fun Modifier.fadingEdge(
     brush: Brush,

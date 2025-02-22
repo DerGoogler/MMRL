@@ -24,6 +24,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.dergoogler.mmrl.ui.component.card.CardDefaults.cardStyle
@@ -34,6 +35,7 @@ import dev.dergoogler.mmrl.compat.ext.applyAlpha
 import dev.dergoogler.mmrl.compat.ext.composeApply
 import dev.dergoogler.mmrl.compat.ext.isNotNull
 import dev.dergoogler.mmrl.compat.ext.nullable
+import dev.dergoogler.mmrl.compat.ext.systemBarsPaddingEnd
 
 @Composable
 internal fun BaseCard(
@@ -49,10 +51,12 @@ internal fun BaseCard(
 ) {
     val isHovered by interactionSource.collectIsHoveredAsState()
     val modifierParameters = remember { ModifierScopeImpl(modifierScope) }.composeApply(modifier)
+    val layoutDirection = LocalLayoutDirection.current
 
     val surfaceModifier = when {
         onClick.isNotNull() or onLongClick.isNotNull() -> modifierParameters.surface
             .hoverable(interactionSource = interactionSource)
+
         else -> modifierParameters.surface
     }
 
@@ -95,6 +99,7 @@ internal fun BaseCard(
     Surface(
         modifier = surfaceModifier
             .applyAlpha(enabled)
+            .systemBarsPaddingEnd()
             .then(hoveredSurfaceModifier),
         shape = style.shape,
         color = style.containerColor,

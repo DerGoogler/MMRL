@@ -60,6 +60,7 @@ import dev.dergoogler.mmrl.compat.ext.fadingEdge
 import dev.dergoogler.mmrl.compat.ext.fillWidthOfParent
 import dev.dergoogler.mmrl.compat.ext.isNotNullOrEmpty
 import dev.dergoogler.mmrl.compat.ext.nullable
+import dev.dergoogler.mmrl.compat.ext.systemBarsPaddingEnd
 import dev.dergoogler.mmrl.compat.ext.toDecodedUrl
 import kotlinx.coroutines.launch
 
@@ -158,125 +159,129 @@ fun ExploreRepositoryScreen(
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    Row(
-                        modifier = Modifier.padding(horizontal = 16.dp),
-                        verticalAlignment = Alignment.Top
+                    Column(
+                        modifier = Modifier
+                            .systemBarsPaddingEnd()
                     ) {
-                        Column(
-                            modifier = Modifier.weight(1f)
+
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        Row(
+                            modifier = Modifier.padding(horizontal = 16.dp),
+                            verticalAlignment = Alignment.Top
                         ) {
+                            Column(
+                                modifier = Modifier.weight(1f)
+                            ) {
 
-                            Text(
-                                text = repo.name.toDecodedUrl(),
-                                style = MaterialTheme.typography.titleLarge,
-                                maxLines = 2,
-                                overflow = TextOverflow.Ellipsis
-                            )
+                                Text(
+                                    text = repo.name.toDecodedUrl(),
+                                    style = MaterialTheme.typography.titleLarge,
+                                    maxLines = 2,
+                                    overflow = TextOverflow.Ellipsis
+                                )
 
-                            Spacer(modifier = Modifier.height(4.dp))
+                                Spacer(modifier = Modifier.height(4.dp))
 
-                            Text(
-                                modifier = Modifier.clickable(
-                                    onClick = {
-                                        browser.openUri(repo.url)
-                                    }
-                                ),
-                                text = repo.url,
-                                style = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.surfaceTint),
-                                maxLines = 2,
-                                overflow = TextOverflow.Ellipsis
-                            )
+                                Text(
+                                    modifier = Modifier.clickable(
+                                        onClick = {
+                                            browser.openUri(repo.url)
+                                        }
+                                    ),
+                                    text = repo.url,
+                                    style = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.surfaceTint),
+                                    maxLines = 2,
+                                    overflow = TextOverflow.Ellipsis
+                                )
+                            }
                         }
-                    }
 
-                    Spacer(modifier = Modifier.height(16.dp))
+                        Spacer(modifier = Modifier.height(16.dp))
 
-                    Row(
-                        modifier = Modifier.padding(horizontal = 16.dp),
-                        verticalAlignment = Alignment.Top,
-                        horizontalArrangement = Arrangement.spacedBy(16.dp)
-                    ) {
-                        repo.submission.nullable {
-                            OutlinedButton(
+                        Row(
+                            modifier = Modifier.padding(horizontal = 16.dp),
+                            verticalAlignment = Alignment.Top,
+                            horizontalArrangement = Arrangement.spacedBy(16.dp)
+                        ) {
+                            repo.submission.nullable {
+                                OutlinedButton(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .weight(1f),
+                                    onClick = {
+                                        browser.openUri(it)
+                                    }
+                                ) {
+                                    Text(
+                                        text = stringResource(
+                                            id = R.string.submit_module
+                                        ),
+                                        maxLines = 1
+                                    )
+                                }
+                            }
+
+                            Button(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .weight(1f),
-                                onClick = {
-                                    browser.openUri(it)
-                                }
+                                onClick = onAdd
                             ) {
                                 Text(
-                                    text = stringResource(
-                                        id = R.string.submit_module
-                                    ),
+                                    text = stringResource(id = R.string.repo_add_dialog_add),
                                     maxLines = 1
                                 )
                             }
                         }
 
-                        Button(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .weight(1f),
-                            onClick = onAdd
-                        ) {
+                        HorizontalDivider(
+                            modifier = Modifier.padding(vertical = 16.dp),
+                            thickness = 0.9.dp
+                        )
+
+
+                        repo.description.nullable {
+                            ListItem(
+                                contentPaddingValues = listItemContentPaddingValues,
+                                title = stringResource(R.string.about_this_repository),
+                            )
+
                             Text(
-                                text = stringResource(id = R.string.repo_add_dialog_add),
-                                maxLines = 1
+                                modifier = Modifier.padding(horizontal = 16.dp),
+                                text = it.toDecodedUrl(force = true),
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.outline
                             )
                         }
-                    }
 
-                    HorizontalDivider(
-                        modifier = Modifier.padding(vertical = 16.dp),
-                        thickness = 0.9.dp
-                    )
+                        Spacer(modifier = Modifier.height(8.dp))
 
+                        repo.modulesCount.nullable {
+                            ListItem(
+                                icon = R.drawable.keyframes,
+                                title = pluralStringResource(
+                                    id = R.plurals.module_count_explore_repo,
+                                    count = it,
+                                    it
+                                ),
+                            )
+                        }
 
-                    repo.description.nullable {
-                        ListItem(
-                            contentPaddingValues = listItemContentPaddingValues,
-                            title = stringResource(R.string.about_this_repository),
-                        )
-
-                        Text(
-                            modifier = Modifier.padding(horizontal = 16.dp),
-                            text = it.toDecodedUrl(force = true),
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.outline
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    repo.modulesCount.nullable {
-                        ListItem(
-                            icon = R.drawable.keyframes,
-                            title = pluralStringResource(
-                                id = R.plurals.module_count_explore_repo,
-                                count = it,
-                                it
-                            ),
-                        )
-                    }
-
-                    repo.donate.nullable {
-                        ListButtonItem(
-                            icon = R.drawable.currency_dollar,
-                            title = stringResource(id = R.string.view_module_donate),
-                            onClick = {
-                                browser.openUri(it)
-                            }
-                        )
+                        repo.donate.nullable {
+                            ListButtonItem(
+                                icon = R.drawable.currency_dollar,
+                                title = stringResource(id = R.string.view_module_donate),
+                                onClick = {
+                                    browser.openUri(it)
+                                }
+                            )
+                        }
                     }
                 }
             }
 
-
             if (repo.members.isNotNullOrEmpty()) {
-
                 item(span = { GridItemSpan(2) }) {
                     HorizontalDividerWithText(
                         text = stringResource(R.string.team),

@@ -20,6 +20,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import com.dergoogler.mmrl.ui.providable.LocalNavController
 import com.dergoogler.mmrl.ui.utils.none
+import dev.dergoogler.mmrl.compat.ext.systemBarsPaddingEnd
 
 @Composable
 fun SettingsScaffold(
@@ -69,7 +70,7 @@ fun SettingsScaffold(
                 .then(modifier.box)
         ) {
             Column(
-                modifier = modifier.column,
+                modifier = modifier.column.systemBarsPaddingEnd(),
             ) {
                 relative()
             }

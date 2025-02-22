@@ -7,11 +7,14 @@ import android.os.Build
 import android.os.Bundle
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.Crossfade
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.dergoogler.mmrl.Compat
@@ -37,10 +40,11 @@ class MainActivity : MMRLComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override val requirePermissions = listOf(Manifest.permission.POST_NOTIFICATIONS)
 
+    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
-
 
         splashScreen.setKeepOnScreenCondition { isLoading }
 
@@ -57,6 +61,8 @@ class MainActivity : MMRLComponentActivity() {
         )
 
         setBaseContent {
+            val windowSizeClass = calculateWindowSizeClass(this)
+
             val userPreferences by userPreferencesRepository.data
                 .collectAsStateWithLifecycle(initialValue = null)
 
@@ -98,7 +104,7 @@ class MainActivity : MMRLComponentActivity() {
                         setMode = ::setWorkingMode
                     )
                 } else {
-                    MainScreen()
+                    MainScreen(windowSizeClass)
                 }
             }
         }
