@@ -61,6 +61,41 @@ fun Modifier.ignoreParentPadding(
     }
 }
 
+fun Modifier.fillWidthOfParent(parentPadding: Dp) = this.layout { measurable, constraints ->
+    val placeable =
+        measurable.measure(constraints.copy(maxWidth = constraints.maxWidth + 2 * parentPadding.roundToPx()))
+    layout(placeable.width, placeable.height) {
+        placeable.place(0, 0)
+    }
+}
+
+fun Modifier.fillSizeOfParent(
+    all: Dp = Dp.Unspecified,
+    horizontalPadding: Dp = 0.dp,
+    verticalPadding: Dp = 0.dp,
+) = this.layout { measurable, constraints ->
+    val resolvedHorizontal = if (all != Dp.Unspecified) all else horizontalPadding
+    val resolvedVertical = if (all != Dp.Unspecified) all else verticalPadding
+
+    val extraWidth = 2 * resolvedHorizontal.roundToPx()
+    val extraHeight = 2 * resolvedVertical.roundToPx()
+
+    val overriddenWidth = (constraints.maxWidth + extraWidth).coerceAtLeast(0)
+    val overriddenHeight = (constraints.maxHeight + extraHeight).coerceAtLeast(0)
+
+    val placeable = measurable.measure(
+        constraints.copy(
+            maxWidth = overriddenWidth,
+            maxHeight = overriddenHeight
+        )
+    )
+
+    layout(placeable.width, placeable.height) {
+        placeable.place(-extraWidth / 2, -extraHeight / 2)
+    }
+}
+
+
 fun Modifier.fadingEdge(
     brush: Brush,
     height: Float? = null,

@@ -2,6 +2,7 @@ package com.dergoogler.mmrl.ui.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DividerDefaults
@@ -24,13 +25,14 @@ fun HorizontalDividerWithText(
     textStyle: TextStyle = MaterialTheme.typography.titleMedium.copy(
         color = MaterialTheme.colorScheme.outline
     ),
+    paddingValues: PaddingValues = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
     thickness: Dp = DividerDefaults.Thickness,
     color: Color = DividerDefaults.color,
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center,
-        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+        modifier = Modifier.padding(paddingValues),
     ) {
         HorizontalDivider(
             color = color,

@@ -10,8 +10,10 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
@@ -42,7 +44,6 @@ import com.dergoogler.mmrl.model.online.ExploreRepository
 import com.dergoogler.mmrl.ui.component.Cover
 import com.dergoogler.mmrl.ui.component.HorizontalDividerWithText
 import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
-import com.dergoogler.mmrl.ui.component.NonLazyGrid
 import com.dergoogler.mmrl.ui.component.listItem.ListButtonItem
 import com.dergoogler.mmrl.ui.component.listItem.ListItem
 import com.dergoogler.mmrl.ui.providable.LocalNavController
@@ -56,6 +57,7 @@ import com.dergoogler.mmrl.ui.utils.panicMoshiParcelable
 import com.dergoogler.mmrl.viewmodel.RepositoriesViewModel
 import dev.dergoogler.mmrl.compat.core.LocalUriHandler
 import dev.dergoogler.mmrl.compat.ext.fadingEdge
+import dev.dergoogler.mmrl.compat.ext.fillWidthOfParent
 import dev.dergoogler.mmrl.compat.ext.isNotNullOrEmpty
 import dev.dergoogler.mmrl.compat.ext.nullable
 import dev.dergoogler.mmrl.compat.ext.toDecodedUrl
@@ -119,162 +121,174 @@ fun ExploreRepositoryScreen(
         },
         contentWindowInsets = WindowInsets.none
     ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .let {
-                    if (repositoriesMenu.showCover && repo.hasCover) {
-                        Modifier
-                    } else {
-                        it.padding(innerPadding)
-                    }
-                }
-                .verticalScroll(rememberScrollState())
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2),
+            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            repo.cover.nullable(repositoriesMenu.showCover) {
-                if (it.isNotEmpty()) {
-                    Cover(
-                        modifier = Modifier.fadingEdge(
-                            Brush.verticalGradient(
-                                colors = listOf(
-                                    Color.Transparent,
-                                    Color.Black
-                                ),
-                                startY = Float.POSITIVE_INFINITY,
-                                endY = 0f
-                            )
-                        ),
-                        url = it,
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Row(
-                modifier = Modifier.padding(horizontal = 16.dp),
-                verticalAlignment = Alignment.Top
-            ) {
+            item(span = { GridItemSpan(2) }) {
                 Column(
-                    modifier = Modifier.weight(1f)
-                ) {
-
-                    Text(
-                        text = repo.name.toDecodedUrl(),
-                        style = MaterialTheme.typography.titleLarge,
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis
-                    )
-
-                    Spacer(modifier = Modifier.height(4.dp))
-
-                    Text(
-                        modifier = Modifier.clickable(
-                            onClick = {
-                                browser.openUri(repo.url)
+                    modifier = Modifier
+                        .let {
+                            if (repositoriesMenu.showCover && repo.hasCover) {
+                                Modifier
+                            } else {
+                                it.padding(innerPadding)
                             }
-                        ),
-                        text = repo.url,
-                        style = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.surfaceTint),
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Row(
-                modifier = Modifier.padding(horizontal = 16.dp),
-                verticalAlignment = Alignment.Top,
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                repo.submission.nullable {
-                    OutlinedButton(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(1f),
-                        onClick = {
-                            browser.openUri(it)
                         }
+                        .fillMaxWidth()
+                        .fillWidthOfParent(16.dp)
+                ) {
+                    repo.cover.nullable(repositoriesMenu.showCover) {
+                        if (it.isNotEmpty()) {
+                            Cover(
+                                modifier = Modifier.fadingEdge(
+                                    Brush.verticalGradient(
+                                        colors = listOf(
+                                            Color.Transparent,
+                                            Color.Black
+                                        ),
+                                        startY = Float.POSITIVE_INFINITY,
+                                        endY = 0f
+                                    )
+                                ),
+                                url = it,
+                            )
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    Row(
+                        modifier = Modifier.padding(horizontal = 16.dp),
+                        verticalAlignment = Alignment.Top
                     ) {
+                        Column(
+                            modifier = Modifier.weight(1f)
+                        ) {
+
+                            Text(
+                                text = repo.name.toDecodedUrl(),
+                                style = MaterialTheme.typography.titleLarge,
+                                maxLines = 2,
+                                overflow = TextOverflow.Ellipsis
+                            )
+
+                            Spacer(modifier = Modifier.height(4.dp))
+
+                            Text(
+                                modifier = Modifier.clickable(
+                                    onClick = {
+                                        browser.openUri(repo.url)
+                                    }
+                                ),
+                                text = repo.url,
+                                style = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.surfaceTint),
+                                maxLines = 2,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    Row(
+                        modifier = Modifier.padding(horizontal = 16.dp),
+                        verticalAlignment = Alignment.Top,
+                        horizontalArrangement = Arrangement.spacedBy(16.dp)
+                    ) {
+                        repo.submission.nullable {
+                            OutlinedButton(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .weight(1f),
+                                onClick = {
+                                    browser.openUri(it)
+                                }
+                            ) {
+                                Text(
+                                    text = stringResource(
+                                        id = R.string.submit_module
+                                    ),
+                                    maxLines = 1
+                                )
+                            }
+                        }
+
+                        Button(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(1f),
+                            onClick = onAdd
+                        ) {
+                            Text(
+                                text = stringResource(id = R.string.repo_add_dialog_add),
+                                maxLines = 1
+                            )
+                        }
+                    }
+
+                    HorizontalDivider(
+                        modifier = Modifier.padding(vertical = 16.dp),
+                        thickness = 0.9.dp
+                    )
+
+
+                    repo.description.nullable {
+                        ListItem(
+                            contentPaddingValues = listItemContentPaddingValues,
+                            title = stringResource(R.string.about_this_repository),
+                        )
+
                         Text(
-                            text = stringResource(
-                                id = R.string.submit_module
+                            modifier = Modifier.padding(horizontal = 16.dp),
+                            text = it.toDecodedUrl(force = true),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.outline
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    repo.modulesCount.nullable {
+                        ListItem(
+                            icon = R.drawable.keyframes,
+                            title = pluralStringResource(
+                                id = R.plurals.module_count_explore_repo,
+                                count = it,
+                                it
                             ),
-                            maxLines = 1
+                        )
+                    }
+
+                    repo.donate.nullable {
+                        ListButtonItem(
+                            icon = R.drawable.currency_dollar,
+                            title = stringResource(id = R.string.view_module_donate),
+                            onClick = {
+                                browser.openUri(it)
+                            }
                         )
                     }
                 }
-
-                Button(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f),
-                    onClick = onAdd
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.repo_add_dialog_add),
-                        maxLines = 1
-                    )
-                }
-            }
-
-            HorizontalDivider(
-                modifier = Modifier.padding(vertical = 16.dp),
-                thickness = 0.9.dp
-            )
-
-
-            repo.description.nullable {
-                ListItem(
-                    contentPaddingValues = listItemContentPaddingValues,
-                    title = stringResource(R.string.about_this_repository),
-                )
-
-                Text(
-                    modifier = Modifier.padding(horizontal = 16.dp),
-                    text = it.toDecodedUrl(force = true),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.outline
-                )
-            }
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            repo.modulesCount.nullable {
-                ListItem(
-                    icon = R.drawable.keyframes,
-                    title = pluralStringResource(
-                        id = R.plurals.module_count_explore_repo,
-                        count = it,
-                        it
-                    ),
-                )
-            }
-
-            repo.donate.nullable {
-                ListButtonItem(
-                    icon = R.drawable.currency_dollar,
-                    title = stringResource(id = R.string.view_module_donate),
-                    onClick = {
-                        browser.openUri(it)
-                    }
-                )
             }
 
 
             if (repo.members.isNotNullOrEmpty()) {
-                HorizontalDividerWithText(
-                    text = stringResource(R.string.team),
-                    thickness = 0.9.dp
-                )
 
-                NonLazyGrid(
-                    columns = 2,
-                    itemCount = repo.members.size,
-                    itemPaddingValues = PaddingValues(16.dp)
+                item(span = { GridItemSpan(2) }) {
+                    HorizontalDividerWithText(
+                        text = stringResource(R.string.team),
+                        thickness = 0.9.dp
+                    )
+                }
+
+                items(
+                    items = repo.members,
+                    key = { it.name }
                 ) {
-                    MemberCard(member = repo.members[it])
+                    MemberCard(member = it)
                 }
             }
         }
