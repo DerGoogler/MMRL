@@ -28,6 +28,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
+import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.derivedStateOf
@@ -154,11 +155,11 @@ fun LogScreen() {
                 reverseLayout = true
             ) {
                 items(console) { value ->
-                    Column(
-                        modifier = Modifier.padding(horizontal = 1.dp)
-                    ) {
+                    Column{
                         LogItem(value)
-                        HorizontalDivider()
+                        HorizontalDivider(
+                            color = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp)
+                        )
                     }
                 }
             }
