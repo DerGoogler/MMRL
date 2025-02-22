@@ -14,4 +14,5 @@
     <string name="execution_failed_try_to_use_shell_for_the_action_execution_settings_module_use_shell_for_module_action">- Wykonanie nie powiodło się. Spróbuj użyć powłoki do wykonania akcji, Ustawienia → Moduły i instalator → Użyj powłoki dla akcji modułu.</string>
     <string name="unable_to_gather_module_info_of_file">! Nie można zebrać informacji o module pliku: %1$s</string>
     <string name="copying_zip_to_temp_directory">- Kopiowanie pliku zip do katalogu tymczasowego</string>
+    <string name="unable_to_find_path_for_uri">! Nie można znaleźć ścieżki dla uri: %1$s</string>
 </resources>
