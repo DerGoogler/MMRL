@@ -15,11 +15,11 @@
     <string name="install_logs_saved">已儲存記錄檔</string>
     <string name="install_logs_save_failed">無法儲存：%s</string>
     <string name="install_screen_reboot_title">立即重新開機？</string>
-    <string name="install_screen_reboot_text">你確定要立即重新開機裝置？</string>
+    <string name="install_screen_reboot_text">你是否要立即重新開機裝置？</string>
     <string name="install_screen_reboot_confirm">確定</string>
     <string name="install_screen_reboot_dismiss">稍後</string>
     <!-- 授權條款 -->
-    <string name="license_title">查看授權條款</string>
+    <string name="license_title">授權條款檢視</string>
     <string name="license_osi_approved">開放原始碼授權</string>
     <string name="license_fsf_libre">自由軟體授權</string>
     <!-- 頁面按鈕 -->
@@ -38,8 +38,8 @@
     <string name="menu_show_license">顯示授權條款</string>
     <string name="menu_show_cover">顯示封面</string>
     <string name="menu_show_verified">顯示驗證徽章</string>
-    <string name="menu_sort_repolistmode_detailed">細緻化排版</string>
-    <string name="menu_sort_repolistmode_compact">緊縮化排版</string>
+    <string name="menu_sort_repolistmode_detailed">細緻型排版</string>
+    <string name="menu_sort_repolistmode_compact">緊縮型排版</string>
     <!-- 模組檢視介面 -->
     <string name="view_module_page_overview">概觀</string>
     <string name="view_module_page_versions">版本</string>
@@ -356,6 +356,21 @@
     <string name="settings_blacklist_alerts_desc">為羅列於封鎖清單的本機、線上模組標記警示，防止安裝</string>
     <string name="page_repositorys">庫存</string>
     <string name="menu_show_modules_count">顯示模組計數</string>
-    <string name="settings_modules_permissions"><![CDATA[模組 & 權限]]></string>
-    <string name="settings_modules_permissions_desc">准許 JavaScript API 與更多本機模組有關內容</string>
+    <string name="settings_modules_permissions">模組權限</string>
+    <string name="settings_modules_permissions_desc">准許本機模組存取 JavaScript API 等相關內容</string>
+    <string name="settings_security_inject_eruda">Eruda 注入</string>
+    <string name="debugging">偵錯選項</string>
+    <string name="settings_security_inject_eruda_desc">插圖樣式需經《MMRL》匯入才能運作。</string>
+    <string name="explore_repositories">探索模組倉庫</string>
+    <string name="team">團隊成員</string>
+    <string name="about_this_repository">關於模組倉庫</string>
+    <string name="submit_module">模組交件</string>
+    <string name="thank_you">銘謝清單</string>
+    <string name="contributors">協力人員</string>
+    <string name="contributions">%1$d 次貢獻</string>
+    <string name="total_community_contributions">累計社群貢獻已達 %1$s 次</string>
+    <string name="have_been_total_sponsored">總贊助額度已達 %1$s</string>
+    <string name="in_total">總共 %1$s</string>
+    <string name="install_screen_confirm_title">確定要安裝嗎？</string>
+    <string name="install_screen_confirm_text">你是否要安裝模組？</string>
 </resources>
