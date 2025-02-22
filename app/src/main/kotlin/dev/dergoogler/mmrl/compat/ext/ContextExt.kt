@@ -1,12 +1,17 @@
 package dev.dergoogler.mmrl.compat.ext
 
 import android.content.Context
+import android.net.Uri
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.core.app.ShareCompat
+import androidx.core.content.FileProvider
 import androidx.core.content.pm.PackageInfoCompat
+import com.dergoogler.mmrl.BuildConfig
 import com.dergoogler.mmrl.R
 import com.topjohnwu.superuser.Shell
+import kotlinx.datetime.LocalDateTime
+import java.io.File
 
 val Context.tmpDir
     get() = cacheDir.resolve("tmp")
@@ -19,6 +24,20 @@ fun Context.shareText(text: String, type: String = "text/plain") {
         .setType(type)
         .setText(text)
         .startChooser()
+}
+
+fun Context.shareFile(file: File, type: String = "text/plain") {
+    ShareCompat.IntentBuilder(this)
+        .setType(type)
+        .addStream(getUriForFile(file))
+        .startChooser()
+}
+
+fun Context.getUriForFile(file: File): Uri {
+    return FileProvider.getUriForFile(
+        this,
+        "${BuildConfig.APPLICATION_ID}.provider", file
+    )
 }
 
 val Context.managerVersion
@@ -58,3 +77,27 @@ val Context.seLinuxStatus
             stringResource(R.string.selinux_status_unknown)
         }
     }
+
+val Context.logDir get() = cacheDir.resolve("log")
+
+fun Context.deleteLog(name: String) {
+    logDir.listFiles().orEmpty()
+        .forEach {
+            if (it.name.startsWith(name) && it.extension == "log") {
+                it.delete()
+            }
+        }
+}
+
+fun Context.createLog(name: String) = logDir
+    .resolve("${name}_${LocalDateTime.now()}.log")
+    .apply {
+        parentFile?.apply { if (!exists()) mkdirs() }
+        createNewFile()
+    }
+
+fun Context.getLogPath(name: String) = logDir
+    .listFiles().orEmpty()
+    .find {
+        it.name.startsWith(name) && it.extension == "log"
+    } ?: createLog(name)

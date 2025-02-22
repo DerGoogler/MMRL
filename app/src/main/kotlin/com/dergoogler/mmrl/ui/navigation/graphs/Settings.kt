@@ -13,6 +13,7 @@ import com.dergoogler.mmrl.ui.screens.settings.appearance.AppearanceScreen
 import com.dergoogler.mmrl.ui.screens.settings.blacklist.BlacklistScreen
 import com.dergoogler.mmrl.ui.screens.settings.changelogs.ChangelogScreen
 import com.dergoogler.mmrl.ui.screens.settings.developer.DeveloperScreen
+import com.dergoogler.mmrl.ui.screens.settings.logviewer.LogScreen
 import com.dergoogler.mmrl.ui.screens.settings.modules.ModulesScreen
 import com.dergoogler.mmrl.ui.screens.settings.modulesPermissions.ModulesPermissionsScreen
 import com.dergoogler.mmrl.ui.screens.settings.modulesPermissions.screens.ModulePermissionsScreen
@@ -34,6 +35,7 @@ enum class SettingsScreen(val route: String) {
     Blacklist("Blacklist"),
     Changelog("Changelog"),
     Developer("Developer"),
+    LogViewer("LogViewer")
 }
 
 fun NavGraphBuilder.settingsScreen() = navigation(
@@ -141,5 +143,13 @@ fun NavGraphBuilder.settingsScreen() = navigation(
 
 
         ModulePermissionsScreen(viewModel)
+    }
+
+    composable(
+        route = SettingsScreen.LogViewer.route,
+        enterTransition = { scaleIn() + fadeIn() },
+        exitTransition = { fadeOut() }
+    ) {
+        LogScreen()
     }
 }

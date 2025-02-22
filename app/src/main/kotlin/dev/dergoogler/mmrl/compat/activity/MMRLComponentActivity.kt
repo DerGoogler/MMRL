@@ -19,6 +19,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.rememberNavController
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.compat.PermissionCompat
@@ -30,6 +31,8 @@ import com.dergoogler.mmrl.ui.activity.CrashHandlerActivity
 import com.dergoogler.mmrl.ui.activity.terminal.action.ActionActivity
 import com.dergoogler.mmrl.ui.activity.terminal.install.InstallActivity
 import com.dergoogler.mmrl.ui.activity.webui.WebUIActivity
+import com.dergoogler.mmrl.ui.providable.LocalLifecycle
+import com.dergoogler.mmrl.ui.providable.LocalLifecycleScope
 import com.dergoogler.mmrl.ui.providable.LocalNavController
 import com.dergoogler.mmrl.ui.providable.LocalSettings
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
@@ -216,6 +219,8 @@ fun MMRLComponentActivity.setBaseContent(
                 context,
                 toolbarColor
             ),
+            LocalLifecycleScope provides lifecycleScope,
+            LocalLifecycle provides lifecycle,
             LocalUriHandler provides MMRLUriHandlerImpl(context, toolbarColor),
             LocalNavController provides navController
         ) {

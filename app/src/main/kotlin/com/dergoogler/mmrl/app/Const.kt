@@ -9,6 +9,7 @@ object Const {
     )
 
     const val PRIVACY_POLICY_URL = "https://mmrl.dev/legal/privacy"
+    const val TERMS_OF_SERVICE_URL = "https://mmrl.dev/legal/terms"
     const val GOOGLE_PLAY_DOWNLOAD = "https://play.google.com/store/apps/details?id=com.dergoogler.mmrl"
     const val GITHUB_DOWNLOAD = "https://github.com/MMRLApp/MMRL/releases"
     const val SANMER_GITHUB_URL = "https://github.com/SanmerDev"

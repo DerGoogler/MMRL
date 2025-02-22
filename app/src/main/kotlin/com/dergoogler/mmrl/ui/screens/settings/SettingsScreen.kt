@@ -18,7 +18,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
-import com.dergoogler.mmrl.BuildConfig
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.app.Const
 import com.dergoogler.mmrl.datastore.WorkingMode
@@ -32,7 +31,6 @@ import com.dergoogler.mmrl.ui.providable.LocalSettings
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.ui.utils.navigateSingleTopTo
 import com.dergoogler.mmrl.ui.utils.none
-import dev.dergoogler.mmrl.compat.ext.takeTrue
 
 @Composable
 fun SettingsScreen() {
@@ -179,6 +177,14 @@ fun SettingsScreen() {
             )
 
             ListButtonItem(
+                icon = R.drawable.logs,
+                title = stringResource(id = R.string.settings_log_viewer),
+                onClick = {
+                    navController.navigateSingleTopTo(SettingsScreen.LogViewer.route)
+                }
+            )
+
+            ListButtonItem(
                 icon = R.drawable.bug,
                 title = stringResource(id = R.string.settings_developer),
                 desc = stringResource(id = R.string.settings_developer_desc),
@@ -187,15 +193,21 @@ fun SettingsScreen() {
                 }
             )
 
-            BuildConfig.IS_GOOGLE_PLAY_BUILD.takeTrue {
-                ListButtonItem(
-                    icon = R.drawable.spy,
-                    title = stringResource(id = R.string.settings_privacy_policy),
-                    onClick = {
-                        browser.openUri(Const.PRIVACY_POLICY_URL)
-                    }
-                )
-            }
+            ListButtonItem(
+                icon = R.drawable.spy,
+                title = stringResource(id = R.string.settings_privacy_policy),
+                onClick = {
+                    browser.openUri(Const.PRIVACY_POLICY_URL)
+                }
+            )
+
+            ListButtonItem(
+                icon = R.drawable.files,
+                title = stringResource(id = R.string.settings_terms_of_service),
+                onClick = {
+                    browser.openUri(Const.TERMS_OF_SERVICE_URL)
+                }
+            )
         }
     }
 }

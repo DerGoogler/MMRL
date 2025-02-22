@@ -373,4 +373,6 @@
     <string name="contributors">Contributors</string>
     <string name="install_screen_confirm_title">Confirm Install?</string>
     <string name="install_screen_confirm_text">Are you sure that you want to install this module?</string>
+    <string name="settings_log_viewer">Log Viewer</string>
+    <string name="settings_terms_of_service">Terms of Service</string>
 </resources>
