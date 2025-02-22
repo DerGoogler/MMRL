@@ -12,6 +12,7 @@ import com.dergoogler.mmrl.viewmodel.WebUIViewModel
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.JsonClass
 import com.squareup.moshi.Moshi
+import dev.dergoogler.mmrl.compat.core.MMRLWebUIInterface
 import dev.dergoogler.mmrl.compat.ext.shareText
 
 @JsonClass(generateAdapter = true)
@@ -22,18 +23,18 @@ internal data class Manager(
 )
 
 class MMRLInterface(
-    val context: Context,
+    context: Context,
     private val isDark: Boolean,
-    private val webview: WebView,
+    webView: WebView,
     private val viewModel: WebUIViewModel,
     private val allowedFsApi: Boolean,
     private val allowedKsuApi: Boolean,
-) {
+): MMRLWebUIInterface(webView, context) {
     private val activity = context as Activity
     private var windowInsetsController: WindowInsetsControllerCompat =
         WindowCompat.getInsetsController(
             activity.window,
-            webview
+            webView
         )
 
     init {
@@ -122,20 +123,14 @@ class MMRLInterface(
     @JavascriptInterface
     fun recompose() = viewModel.recomposeCount++
 
-    private fun logError(message: String) {
-        (context as Activity).runOnUiThread {
-            webview.loadUrl("javascript:(console.error('$message'))")
-        }
-    }
-
     @JavascriptInterface
     fun requestAdvancedKernelSUAPI() {
         if (viewModel.hasRequestedAdvancedKernelSUAPI) {
-            logError("WebUI has already requested to access the Advanced KernelSU API and it was rejected")
+            console.error("WebUI has already requested to access the Advanced KernelSU API and it was rejected")
             return
         }
         if (allowedFsApi) {
-            logError("WebUI was already allowed to access the FileSystem API")
+            console.error("WebUI was already allowed to access the FileSystem API")
             return
         }
 
@@ -145,11 +140,11 @@ class MMRLInterface(
     @JavascriptInterface
     fun requestFileSystemAPI() {
         if (viewModel.hasRequestFileSystemAPI) {
-            logError("WebUI has already requested to access the FileSystem API and it was rejected")
+            console.error("WebUI has already requested to access the FileSystem API and it was rejected")
             return
         }
         if (allowedFsApi) {
-            logError("WebUI was already allowed to access the FileSystem API")
+            console.error("WebUI was already allowed to access the FileSystem API")
             return
         }
 

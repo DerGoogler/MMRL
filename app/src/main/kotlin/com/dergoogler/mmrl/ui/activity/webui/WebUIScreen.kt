@@ -181,7 +181,7 @@ fun WebUIScreen(
                             viewModel = viewModel,
                             context = context,
                             isDark = isDarkMode,
-                            webview = this,
+                            webView = this,
                             allowedFsApi = allowedFsApi,
                             allowedKsuApi = allowedKsuApi
                         ), "$${viewModel.sanitizedModId}"
