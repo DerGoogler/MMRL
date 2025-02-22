@@ -108,6 +108,11 @@ class InstallViewModel @Inject constructor(
         withContext(Dispatchers.IO) {
             val path = context.getPathForUri(uri)
 
+            if (path == null) {
+                log(R.string.unable_to_find_path_for_uri, uri)
+                return@withContext false
+            }
+
             devLog(R.string.install_view_path, path)
 
             Compat.moduleManager.getModuleInfo(path)?.let {

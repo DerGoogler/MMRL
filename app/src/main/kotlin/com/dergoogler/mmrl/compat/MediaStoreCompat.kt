@@ -65,33 +65,34 @@ object MediaStoreCompat {
         else -> createDownloadUri(path)
     }
 
-    fun Context.getPathForUri(uri: Uri): String {
-        if (uri.scheme == "file") {
-            return uri.toFile().path
+    fun Context.getPathForUri(uri: Uri): String? {
+        val safeUri = findFileForUri(uri) ?: return null
+
+        if (safeUri.scheme == "file") {
+            return safeUri.toFile().path
         }
 
-        require(uri.scheme == "content") { "Uri lacks 'content' scheme: $uri" }
+        require(safeUri.scheme == "content") { "Uri lacks 'content' scheme: $uri" }
 
-        val real = if (DocumentsContract.isTreeUri(uri)) {
-            DocumentFile.fromTreeUri(this, uri)?.uri ?: uri
+        val real = if (DocumentsContract.isTreeUri(safeUri)) {
+            DocumentFile.fromTreeUri(this, safeUri)?.uri ?: safeUri
         } else {
-            uri
+            safeUri
         }
 
         return contentResolver.openFileDescriptor(real, "r")?.use {
             Os.readlink("/proc/self/fd/${it.fd}")
-        } ?: uri.toString()
+        } ?: safeUri.toString()
     }
 
-    fun Context.getFileForUri(uri: Uri) = File(getPathForUri(uri))
+    // fun Context.getFileForUri(uri: Uri) = File(getPathForUri(uri))
 
-
-    private fun Context.safeOpenInputStream(uri: Uri): InputStream? {
+    private fun Context.findFileForUri(uri: Uri): Uri? {
         val resolver = this.contentResolver
 
         return resolver.query(uri, null, null, null, null).use { cursor ->
             if (cursor != null && cursor.moveToFirst()) {
-                return@use resolver.openInputStream(uri)
+                return@use uri
             } else {
                 Timber.e("Unable to find file for uri: $uri")
                 return@use null
@@ -102,9 +103,11 @@ object MediaStoreCompat {
     fun Context.copyToDir(uri: Uri, dir: File): File? {
         val tmp = dir.resolve(getDisplayNameForUri(uri))
 
-        val inputStream = safeOpenInputStream(uri)
+        val safeUri = findFileForUri(uri) ?: return null
 
-        return inputStream.nullable<InputStream, File> {
+        val `is` = contentResolver.openInputStream(safeUri)
+
+        return `is`.nullable<InputStream, File> {
             it.buffered().use { input ->
                 tmp.outputStream().use { output ->
                     input.copyTo(output)
