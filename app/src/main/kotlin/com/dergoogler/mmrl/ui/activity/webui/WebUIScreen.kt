@@ -16,10 +16,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.webkit.WebViewAssetLoader
+import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.datastore.developerMode
 import com.dergoogler.mmrl.ui.activity.webui.handlers.MMRLWebClient
 import com.dergoogler.mmrl.ui.activity.webui.handlers.MMRLWebUIHandler
@@ -59,12 +61,12 @@ fun WebUIScreen(
     WebView.setWebContentsDebuggingEnabled(userPrefs.developerMode)
 
     val insets = WindowInsets.systemBars
-    LaunchedEffect(Unit) {
+    LaunchedEffect(density, layoutDirection, insets) {
         viewModel.initInsets(density, layoutDirection, insets)
         Timber.d("Insets calculated: top = ${viewModel.topInset}, bottom = ${viewModel.bottomInset}, left = ${viewModel.leftInset}, right = ${viewModel.rightInset}")
     }
 
-    DisposableEffect(Unit) {
+    DisposableEffect(webView) {
         onDispose {
             webView.destroy()
         }
@@ -76,8 +78,8 @@ fun WebUIScreen(
 
     if (!allowedKsuApi && !viewModel.hasRequestedAdvancedKernelSUAPI && viewModel.dialogRequestAdvancedKernelSUAPI) {
         ConfirmDialog(
-            title = "Allow Advanced Kernel SU API?",
-            description = "Allow this module to access the Advanced Kernel SU API? If you don't feel secure with this module, don't allow it!",
+            title = stringResource(R.string.allow_advanced_kernelsu_api),
+            description = stringResource(R.string.allow_advanced_kernelsu_api_desc),
             onClose = {
                 viewModel.hasRequestedAdvancedKernelSUAPI = true
                 viewModel.dialogRequestAdvancedKernelSUAPI = false
@@ -92,8 +94,8 @@ fun WebUIScreen(
 
     if (!allowedFsApi && !viewModel.hasRequestFileSystemAPI && viewModel.dialogRequestFileSystemAPI) {
         ConfirmDialog(
-            title = "Allow FileSystem API?",
-            description = "Allow this module to access the FileSystem API? If you don't feel secure with this module, don't allow it!",
+            title = stringResource(R.string.allow_filesystem_api),
+            description = stringResource(R.string.allow_filesystem_api_desc),
             onClose = {
                 viewModel.hasRequestFileSystemAPI = true
                 viewModel.dialogRequestFileSystemAPI = false

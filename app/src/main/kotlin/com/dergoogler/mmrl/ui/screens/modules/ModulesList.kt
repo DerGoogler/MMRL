@@ -27,7 +27,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
-import com.dergoogler.mmrl.Platform
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.model.local.LocalModule
 import com.dergoogler.mmrl.model.local.State
@@ -38,21 +37,14 @@ import com.dergoogler.mmrl.ui.component.scrollbar.VerticalFastScrollbar
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.viewmodel.ModulesViewModel
 import dev.dergoogler.mmrl.compat.activity.MMRLComponentActivity
-import dev.dergoogler.mmrl.compat.content.ModuleCompatibility
 import dev.dergoogler.mmrl.compat.ext.takeTrue
 
 @Composable
 fun ModulesList(
     list: List<LocalModule>,
     state: LazyListState,
-    isProviderAlive: Boolean,
-    platform: Platform,
-    getModuleOps: (Boolean, LocalModule) -> ModulesViewModel.ModuleOps,
-    getVersionItem: @Composable (LocalModule) -> VersionItem?,
-    getProgress: @Composable (VersionItem?) -> Float,
     onDownload: (LocalModule, VersionItem, Boolean) -> Unit,
-    moduleCompatibility: ModuleCompatibility,
-    getBlacklist: (String?) -> Blacklist?,
+    viewModel: ModulesViewModel,
 ) = Box(
     modifier = Modifier.fillMaxSize()
 ) {
@@ -68,14 +60,8 @@ fun ModulesList(
         ) { module ->
             ModuleItem(
                 module = module,
-                isProviderAlive = isProviderAlive,
-                platform = platform,
-                getModuleOps = getModuleOps,
-                getVersionItem = getVersionItem,
-                getBlacklist = getBlacklist,
-                getProgress = getProgress,
+                viewModel = viewModel,
                 onDownload = onDownload,
-                moduleCompatibility = moduleCompatibility
             )
         }
     }
@@ -89,28 +75,29 @@ fun ModulesList(
 @Composable
 fun ModuleItem(
     module: LocalModule,
-    isProviderAlive: Boolean,
-    platform: Platform,
-    getModuleOps: (Boolean, LocalModule) -> ModulesViewModel.ModuleOps,
-    getVersionItem: @Composable (LocalModule) -> VersionItem?,
-    getBlacklist: (String?) -> Blacklist?,
-    getProgress: @Composable (VersionItem?) -> Float,
     onDownload: (LocalModule, VersionItem, Boolean) -> Unit,
-    moduleCompatibility: ModuleCompatibility,
+    viewModel: ModulesViewModel,
 ) {
     val userPreferences = LocalUserPreferences.current
 
     val ops by remember(userPreferences.useShellForModuleStateChange, module.state) {
-        derivedStateOf { getModuleOps(userPreferences.useShellForModuleStateChange, module) }
+        derivedStateOf {
+            viewModel.createModuleOps(
+                userPreferences.useShellForModuleStateChange,
+                module
+            )
+        }
     }
 
-    val blacklist = getBlacklist(module.id)
+    val blacklist = viewModel.getBlacklist(module.id)
     val isBlacklisted = Blacklist.isBlacklisted(blacklist)
 
     val context = LocalContext.current
 
-    val item = getVersionItem(module)
-    val progress = getProgress(item)
+    val item = viewModel.getVersionItem(module)
+    val progress = viewModel.getProgress(item)
+
+    val isProviderAlive = viewModel.isProviderAlive
 
     var open by remember { mutableStateOf(false) }
     if (open && item != null) {
@@ -126,7 +113,7 @@ fun ModuleItem(
 
     ModuleItem(
         isProviderAlive = isProviderAlive,
-        isBlacklisted = Blacklist.isBlacklisted(getBlacklist(module.id)),
+        isBlacklisted = Blacklist.isBlacklisted(blacklist),
         module = module,
         progress = progress,
         indeterminate = ops.isOpsRunning,
@@ -139,7 +126,7 @@ fun ModuleItem(
             else -> TextDecoration.None
         },
         switch = {
-            val enabled = with(platform) {
+            val enabled = with(viewModel.platform) {
                 when {
                     isKernelSuNext || isKernelSU || isAPatch -> isProviderAlive && module.state != State.UPDATE
                     else -> isProviderAlive
@@ -184,7 +171,7 @@ fun ModuleItem(
 
             RemoveOrRestore(
                 module = module,
-                enabled = isProviderAlive && (!(moduleCompatibility.canRestoreModules && userPreferences.useShellForModuleStateChange) || module.state != State.REMOVE),
+                enabled = isProviderAlive && (!(viewModel.moduleCompatibility.canRestoreModules && userPreferences.useShellForModuleStateChange) || module.state != State.REMOVE),
                 onClick = ops.change
             )
 
