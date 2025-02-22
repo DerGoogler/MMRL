@@ -13,8 +13,12 @@ import androidx.annotation.RequiresApi
 import androidx.core.net.toFile
 import androidx.core.net.toUri
 import androidx.documentfile.provider.DocumentFile
+import dev.dergoogler.mmrl.compat.ext.nullable
+import timber.log.Timber
 import java.io.File
 import java.io.IOException
+import java.io.InputStream
+
 
 object MediaStoreCompat {
     private fun Context.getDisplayNameForUri(uri: Uri): String {
@@ -81,20 +85,33 @@ object MediaStoreCompat {
 
     fun Context.getFileForUri(uri: Uri) = File(getPathForUri(uri))
 
+
+    private fun Context.safeOpenInputStream(uri: Uri): InputStream? {
+        val resolver = this.contentResolver
+
+        return resolver.query(uri, null, null, null, null).use { cursor ->
+            if (cursor != null && cursor.moveToFirst()) {
+                return@use resolver.openInputStream(uri)
+            } else {
+                Timber.e("Unable to find file for uri: $uri")
+                return@use null
+            }
+        }
+    }
+
     fun Context.copyToDir(uri: Uri, dir: File): File? {
         val tmp = dir.resolve(getDisplayNameForUri(uri))
-        val inputStream = contentResolver.openInputStream(uri)
 
-        if (inputStream != null) {
-            inputStream.buffered().use { input ->
+        val inputStream = safeOpenInputStream(uri)
+
+        return inputStream.nullable<InputStream, File> {
+            it.buffered().use { input ->
                 tmp.outputStream().use { output ->
                     input.copyTo(output)
                 }
             }
-            inputStream.close()
+            it.close()
             return tmp
-        } else {
-            return null
         }
     }
 
