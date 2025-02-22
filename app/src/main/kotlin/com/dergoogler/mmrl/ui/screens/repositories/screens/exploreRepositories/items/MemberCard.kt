@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
@@ -31,13 +32,40 @@ import dev.dergoogler.mmrl.compat.ext.nullable
 import dev.dergoogler.mmrl.compat.ext.toDecodedUrl
 
 @Composable
-fun MemberCard(member: ExploreRepositoryMember) {
+fun MemberCard(
+    member: ExploreRepositoryMember,
+    index: Int? = null,
+) {
     val browser = LocalUriHandler.current
     val interactionSource = remember { MutableInteractionSource() }
 
     Card(
         modifier = {
             column = Modifier.padding(horizontal = 32.dp, vertical = 48.dp)
+        },
+        absolute = {
+            index.nullable {
+                if (it < 3) {
+                    Surface(
+                        shape = RoundedCornerShape(
+                            topEnd = 20.dp,
+                            bottomStart = 15.dp,
+                            bottomEnd = 0.dp
+                        ),
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier
+                            .align(Alignment.TopEnd)
+                    ) {
+                        Text(
+                            text = "#${it + 1}",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onPrimary,
+                            modifier = Modifier
+                                .padding(horizontal = 16.dp, vertical = 8.dp)
+                        )
+                    }
+                }
+            }
         }
     ) {
         Column(
@@ -111,6 +139,5 @@ fun MemberCard(member: ExploreRepositoryMember) {
                 }
             }
         }
-
     }
 }

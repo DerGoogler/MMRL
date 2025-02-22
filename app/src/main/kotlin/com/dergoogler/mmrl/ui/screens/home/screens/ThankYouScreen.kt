@@ -4,10 +4,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -24,7 +25,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.ui.component.HorizontalDividerWithText
 import com.dergoogler.mmrl.ui.component.NavigateUpTopBar
-import com.dergoogler.mmrl.ui.component.NonLazyGrid
 import com.dergoogler.mmrl.ui.providable.LocalNavController
 import com.dergoogler.mmrl.ui.screens.repositories.screens.exploreRepositories.items.MemberCard
 import com.dergoogler.mmrl.ui.utils.none
@@ -53,73 +53,84 @@ fun ThankYouScreen(
         },
         contentWindowInsets = WindowInsets.none
     ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .padding(innerPadding)
-                .fillMaxWidth()
-                .verticalScroll(rememberScrollState()),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+        LazyVerticalGrid(
+            modifier = Modifier.padding(innerPadding),
+            columns = GridCells.Fixed(2),
+            contentPadding = PaddingValues(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-
             if (sponsors.isNotNullOrEmpty()) {
-                HorizontalDividerWithText(
-                    text = stringResource(
-                        R.string.sponsors
-                    ),
-                    thickness = 0.9.dp
-                )
+                item(span = { GridItemSpan(2) }) {
+                    Column(
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        HorizontalDividerWithText(
+                            text = stringResource(
+                                R.string.sponsors
+                            ),
+                            thickness = 0.9.dp
+                        )
 
-                Text(
-                    text = stringResource(
-                        R.string.have_been_total_sponsored,
-                        vm.totalSponsorAmount.toDollars()
-                    ),
-                    style = MaterialTheme.typography.titleSmall.copy(
-                        color = MaterialTheme.colorScheme.outline
+                        Text(
+                            text = stringResource(
+                                R.string.have_been_total_sponsored,
+                                vm.totalSponsorAmount.toDollars()
+                            ),
+                            style = MaterialTheme.typography.titleSmall.copy(
+                                color = MaterialTheme.colorScheme.outline
+                            )
+                        )
+                    }
+                }
+
+                itemsIndexed(
+                    items = sponsors,
+                    key = { _, it -> it.name }
+                ) { index, it ->
+                    MemberCard(
+                        member = it,
+                        index = index
                     )
-                )
-
-                NonLazyGrid(
-                    columns = 2,
-                    itemCount = sponsors.size,
-                    itemPaddingValues = PaddingValues(16.dp)
-                ) {
-                    MemberCard(member = sponsors[it])
                 }
             }
 
             if (contributors.isNotNullOrEmpty()) {
-                HorizontalDividerWithText(
-                    text = stringResource(
-                        R.string.contributors
-                    ),
-                    thickness = 0.9.dp
-                )
+                item(span = { GridItemSpan(2) }) {
+                    Column(
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        HorizontalDividerWithText(
+                            text = stringResource(
+                                R.string.contributors
+                            ),
+                            thickness = 0.9.dp
+                        )
 
-                Text(
-                    text = stringResource(
-                        R.string.total_community_contributions,
-                        vm.totalContributionsCount
-                    ),
-                    style = MaterialTheme.typography.titleSmall.copy(
-                        color = MaterialTheme.colorScheme.outline
+                        Text(
+                            text = stringResource(
+                                R.string.total_community_contributions,
+                                vm.totalContributionsCount
+                            ),
+                            style = MaterialTheme.typography.titleSmall.copy(
+                                color = MaterialTheme.colorScheme.outline
+                            )
+                        )
+                    }
+                }
+
+                itemsIndexed(
+                    items = contributors,
+                    key = { _, it -> it.name }
+                ) { index, it ->
+                    MemberCard(
+                        member = it,
+                        index = index
                     )
-                )
-
-                NonLazyGrid(
-                    columns = 2,
-                    itemCount = contributors.size,
-                    itemPaddingValues = PaddingValues(16.dp)
-                ) {
-                    MemberCard(member = contributors[it])
                 }
             }
-
         }
-
-
     }
-
-
 }
