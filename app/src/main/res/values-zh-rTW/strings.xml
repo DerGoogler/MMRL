@@ -357,7 +357,7 @@
     <string name="page_repositorys">庫存</string>
     <string name="menu_show_modules_count">顯示模組計數</string>
     <string name="settings_modules_permissions">模組權限</string>
-    <string name="settings_modules_permissions_desc">准許本機模組存取 JavaScript API 等相關內容</string>
+    <string name="settings_modules_permissions_desc">准許 JavaScript 程式存取本機模組資訊</string>
     <string name="settings_security_inject_eruda">Eruda 注入</string>
     <string name="debugging">偵錯選項</string>
     <string name="settings_security_inject_eruda_desc">插圖樣式需經《MMRL》匯入才能運作。</string>

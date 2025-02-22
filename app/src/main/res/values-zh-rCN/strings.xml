@@ -340,7 +340,7 @@
     <string name="install_screen_cancel_text">你确定要取消安装吗？</string>
     <string name="action_screen_cancel_title">取消action执行？</string>
     <string name="action_screen_cancel_text">你确定要取消当前action执行？</string>
-    <string name="home_storage_usage">存储使用</string>
+    <string name="home_storage_usage">占用空间</string>
     <string name="menu_pin_action">固定操作</string>
     <string name="menu_pin_webui">固定 WebUI</string>
     <string name="settings_use_shell_webui_assets">通过 Shell 加载 WebUI 资源</string>
