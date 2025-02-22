@@ -303,14 +303,14 @@
     <string name="action_executing">执行中.…</string>
     <string name="bulk_add_as_bulk">批量添加</string>
     <string name="action_activity">Action</string>
-    <string name="action_failure">Action 执行失败！</string>
+    <string name="action_failure">Action 执行失败</string>
     <string name="generic_disclaimer_title">你有责任！</string>
     <string name="view_module_low_root_version_desc">看起来你的 Root 方案版本过旧。检查是否有更新版本的 Root 方案。</string>
     <string name="view_module_features_action_sub">允许用户通过点击按钮来执行脚本</string>
     <string name="view_module_unsupported_arch">不支持的处理器架构</string>
     <string name="view_module_unsupported_device_desc">您的设备似乎不受此模块支持或已被排除</string>
     <string name="view_module_low_root_version">Root 方案版本太低！</string>
-    <string name="generic_disclaimer_desc">**MMRL** 对执行这些选项所造成的您的设备任何损坏不承担责任，包括但不限于设备变砖、设备硬件损坏，或因为应用故障导致的部分系统功能损坏。在继续操作之前，请彻底研究使用此模块的功能和风险。*您选择进行这些操作的风险由您自行承担*</string>
+    <string name="generic_disclaimer_desc">**MMRL** 对执行这些选项所造成的您的设备任何损坏不承担责任，包括但不限于设备变砖、设备硬件损坏，或因为应用故障导致的部分系统功能损坏。在继续操作之前，请彻底研究使用此模块的功能和风险。*您选择进行这些操作的风险由您自行承担*。</string>
     <string name="settings_security_allow_advanced_kernelsu_api">允许高级 KernelSU API</string>
     <string name="settings_security_allow_filesystem_api">允许文件系统 API</string>
     <string name="settings_allow_javascript_api">允许 JavaScript API</string>
