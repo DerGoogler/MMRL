@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.LayoutDirection
 import com.dergoogler.mmrl.Compat
 import com.dergoogler.mmrl.Platform
 import com.dergoogler.mmrl.app.Const
@@ -111,10 +112,16 @@ class WebUIViewModel @AssistedInject constructor(
         private set
     var bottomInset by mutableStateOf<Int?>(null)
         private set
+    var leftInset by mutableStateOf<Int?>(null)
+        private set
+    var rightInset by mutableStateOf<Int?>(null)
+        private set
 
-    fun initInsets(density: Density, insets: WindowInsets) {
+    fun initInsets(density: Density, layoutDirection: LayoutDirection, insets: WindowInsets) {
         topInset = (insets.getTop(density) / density.density).toInt()
         bottomInset = (insets.getBottom(density) / density.density).toInt()
+        leftInset = (insets.getLeft(density, layoutDirection) / density.density).toInt()
+        rightInset = (insets.getRight(density, layoutDirection) / density.density).toInt()
     }
 
     @AssistedFactory

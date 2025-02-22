@@ -14,6 +14,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.view.ViewCompat
@@ -52,14 +53,15 @@ fun WebUIScreen(
     val filledTonalButtonColors = ButtonDefaults.filledTonalButtonColors()
     val cardColors = CardDefaults.cardColors()
     val isDarkMode = userPrefs.isDarkMode()
+    val layoutDirection = LocalLayoutDirection.current
 
     val webView = WebView(context)
     WebView.setWebContentsDebuggingEnabled(userPrefs.developerMode)
 
     val insets = WindowInsets.systemBars
     LaunchedEffect(Unit) {
-        viewModel.initInsets(density, insets)
-        Timber.d("Insets calculated: top = ${viewModel.topInset}, bottom = ${viewModel.bottomInset}")
+        viewModel.initInsets(density, layoutDirection, insets)
+        Timber.d("Insets calculated: top = ${viewModel.topInset}, bottom = ${viewModel.bottomInset}, left = ${viewModel.leftInset}, right = ${viewModel.rightInset}")
     }
 
     DisposableEffect(Unit) {
@@ -123,8 +125,7 @@ fun WebUIScreen(
                 .addPathHandler(
                     "/mmrl/",
                     MMRLWebUIHandler(
-                        topInset = viewModel.topInset,
-                        bottomInset = viewModel.bottomInset,
+                        viewModel = viewModel,
                         colorScheme = colorScheme,
                         typography = typography,
                         filledTonalButtonColors = filledTonalButtonColors,

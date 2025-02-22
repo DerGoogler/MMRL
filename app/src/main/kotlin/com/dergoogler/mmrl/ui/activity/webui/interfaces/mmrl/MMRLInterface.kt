@@ -83,6 +83,14 @@ class MMRLInterface(
         get() = viewModel.bottomInset
 
     @get:JavascriptInterface
+    val windowLeftInset: Int?
+        get() = viewModel.leftInset
+
+    @get:JavascriptInterface
+    val windowRightInset: Int?
+        get() = viewModel.rightInset
+
+    @get:JavascriptInterface
     val isLightNavigationBars: Boolean
         get() = windowInsetsController.isAppearanceLightNavigationBars
 

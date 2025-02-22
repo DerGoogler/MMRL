@@ -11,6 +11,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.webkit.WebViewAssetLoader.PathHandler
+import com.dergoogler.mmrl.viewmodel.WebUIViewModel
 import timber.log.Timber
 import java.io.ByteArrayInputStream
 import java.io.InputStream
@@ -19,8 +20,7 @@ import kotlin.reflect.full.memberProperties
 
 
 class MMRLWebUIHandler(
-    private val topInset: Int?,
-    private val bottomInset: Int?,
+    private val viewModel: WebUIViewModel,
     private val colorScheme: ColorScheme,
     private val typography: Typography,
     private val filledTonalButtonColors: ButtonColors,
@@ -40,8 +40,13 @@ class MMRLWebUIHandler(
     private fun windowInsetsStyle(): WebResourceResponse {
         val content = """
             :root {
-                --window-inset-top: ${topInset}px;
-                --window-inset-bottom: ${bottomInset}px;
+                --window-inset-top: ${viewModel.topInset}px;
+                --window-inset-bottom: ${viewModel.bottomInset}px;
+                --window-inset-left: ${viewModel.leftInset}px;
+                --window-inset-right: ${viewModel.rightInset}px;
+                --window-inset-horizontal: calc(var(--window-inset-left) + var(--window-inset-right));
+                --window-inset-vertical: calc(var(--window-inset-top) + var(--window-inset-bottom));
+                --window-inset-all: calc(var(--window-inset-horizontal) + var(--window-inset-vertical));
             }
         """.trimIndent()
 
