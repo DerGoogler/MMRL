@@ -371,4 +371,6 @@
     <string name="have_been_total_sponsored">合計 %1$s 名にスポンサーされました</string>
     <string name="total_community_contributions">合計 %1$s 名のコミュニティの貢献</string>
     <string name="contributors">貢献者</string>
+    <string name="install_screen_confirm_title">インストールしますか？</string>
+    <string name="install_screen_confirm_text">このモジュールをインストールしますか？</string>
 </resources>

@@ -345,4 +345,6 @@
     <string name="total_community_contributions">%1$s total kontribusi komunitas</string>
     <string name="contributors">Kontributor</string>
     <string name="have_been_total_sponsored">Total %1$s telah di sponsorkan</string>
+    <string name="install_screen_confirm_text">Kamu yakin ingin memasang modul ini?</string>
+    <string name="install_screen_confirm_title">Pasang Modul?</string>
 </resources>
