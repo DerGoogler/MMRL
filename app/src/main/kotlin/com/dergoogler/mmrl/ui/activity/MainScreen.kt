@@ -4,14 +4,11 @@ import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.add
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.calculateStartPadding
-import androidx.compose.foundation.layout.displayCutout
 import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -41,7 +38,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -109,11 +105,7 @@ fun MainScreen(windowSizeClass: WindowSizeClass) {
                 NavHost(
                     modifier = Modifier.let {
                         if (isLargeScreen || isLandscape) {
-                            return@let it.padding(
-                                start = paddingValues.calculateStartPadding(
-                                    layoutDirection
-                                )
-                            )
+                            return@let Modifier
                         }
 
                         return@let it.padding(bottom = paddingValues.calculateBottomPadding())
@@ -207,7 +199,7 @@ private fun RailNav(
                 start = WindowInsets.bars
                     .asPaddingValues()
                     .calculateStartPadding(layoutDirection),
-                top = WindowInsets.bars
+                top = WindowInsets.systemBars
                     .asPaddingValues()
                     .calculateTopPadding(),
             ),
