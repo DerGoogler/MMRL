@@ -348,4 +348,6 @@
     <string name="contributors">Współtwórcy</string>
     <string name="install_screen_confirm_title">Potwierdzasz instalację?</string>
     <string name="install_screen_confirm_text">Czy na pewno chcesz zainstalować ten moduł?</string>
+    <string name="settings_terms_of_service">Warunki korzystania z aplikacji</string>
+    <string name="settings_log_viewer">Przeglądarka logów</string>
 </resources>
