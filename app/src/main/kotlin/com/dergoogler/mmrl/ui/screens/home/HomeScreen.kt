@@ -56,6 +56,7 @@ import com.dergoogler.mmrl.ui.component.listItem.ListProgressBarItem
 import com.dergoogler.mmrl.ui.navigation.graphs.HomeScreen
 import com.dergoogler.mmrl.ui.providable.LocalNavController
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
+import com.dergoogler.mmrl.ui.providable.LocalWindowWidthSizeClass
 import com.dergoogler.mmrl.ui.screens.home.items.NonRootItem
 import com.dergoogler.mmrl.ui.screens.home.items.RebootBottomSheet
 import com.dergoogler.mmrl.ui.screens.home.items.RootItem
@@ -367,32 +368,39 @@ private fun TopBar(
     onInfoClick: () -> Unit = {},
     onHeartClick: () -> Unit = {},
     scrollBehavior: TopAppBarScrollBehavior,
-) = TopAppBar(
-    title = {
-        TopAppBarIcon()
-    },
-    scrollBehavior = scrollBehavior,
-    actions = {
-        if (isProviderAlive) {
-            IconButton(onClick = onRebootClick) {
+) {
+    val windowSize = LocalWindowWidthSizeClass.current
+
+    TopAppBar(
+        title = {
+            if (windowSize.isRailShown) return@TopAppBar
+
+            TopAppBarIcon()
+        },
+        scrollBehavior = scrollBehavior,
+        actions = {
+            if (isProviderAlive) {
+                IconButton(onClick = onRebootClick) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.refresh),
+                        contentDescription = null
+                    )
+                }
+            }
+
+            IconButton(onClick = onHeartClick) {
                 Icon(
-                    painter = painterResource(id = R.drawable.refresh),
+                    painter = painterResource(id = R.drawable.heart),
+                    contentDescription = null
+                )
+            }
+
+            IconButton(onClick = onInfoClick) {
+                Icon(
+                    painter = painterResource(id = R.drawable.info_circle),
                     contentDescription = null
                 )
             }
         }
-
-        IconButton(onClick = onHeartClick) {
-            Icon(
-                painter = painterResource(id = R.drawable.heart),
-                contentDescription = null
-            )
-        }
-
-        IconButton(onClick = onInfoClick) {
-            Icon(
-                painter = painterResource(id = R.drawable.info_circle),
-                contentDescription = null
-            )
-        }
-    })
+    )
+}

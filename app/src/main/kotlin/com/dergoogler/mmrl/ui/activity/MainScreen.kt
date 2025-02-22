@@ -1,6 +1,5 @@
 package com.dergoogler.mmrl.ui.activity
 
-import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
@@ -8,7 +7,6 @@ import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -22,7 +20,6 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.derivedStateOf
@@ -42,6 +39,7 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.dergoogler.mmrl.datastore.UserPreferencesCompat.Companion.isRoot
+import com.dergoogler.mmrl.ui.component.TopAppBarIcon
 import com.dergoogler.mmrl.ui.navigation.MainScreen
 import com.dergoogler.mmrl.ui.navigation.graphs.homeScreen
 import com.dergoogler.mmrl.ui.navigation.graphs.modulesScreen
@@ -50,7 +48,10 @@ import com.dergoogler.mmrl.ui.navigation.graphs.settingsScreen
 import com.dergoogler.mmrl.ui.providable.LocalNavController
 import com.dergoogler.mmrl.ui.providable.LocalSnackbarHost
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
+import com.dergoogler.mmrl.ui.providable.LocalWindowWidthSizeClass
+import com.dergoogler.mmrl.ui.providable.WindowWidthSize
 import com.dergoogler.mmrl.ui.utils.bars
+import com.dergoogler.mmrl.ui.utils.barsWithSystem
 import com.dergoogler.mmrl.ui.utils.navigatePopUpTo
 import com.dergoogler.mmrl.ui.utils.none
 import com.dergoogler.mmrl.viewmodel.BulkInstallViewModel
@@ -65,12 +66,8 @@ fun MainScreen(windowSizeClass: WindowSizeClass) {
     val snackbarHostState = remember { SnackbarHostState() }
     val configuration = LocalConfiguration.current
 
-    val isLargeScreen = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Expanded
-    val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+    val windowSize = WindowWidthSize(configuration, windowSizeClass)
     val isRoot = userPreferences.workingMode.isRoot
-    val isRailShown = isLargeScreen || isLandscape
-
-    val layoutDirection = LocalLayoutDirection.current
 
     val mainScreens by remember(isRoot) {
         derivedStateOf {
@@ -89,7 +86,7 @@ fun MainScreen(windowSizeClass: WindowSizeClass) {
 
     Scaffold(
         bottomBar = {
-            if (isRailShown) return@Scaffold
+            if (windowSize.isRailShown) return@Scaffold
 
             BottomNav(mainScreens)
         },
@@ -97,14 +94,15 @@ fun MainScreen(windowSizeClass: WindowSizeClass) {
         contentWindowInsets = WindowInsets.none
     ) { paddingValues ->
         CompositionLocalProvider(
-            LocalSnackbarHost provides snackbarHostState
+            LocalSnackbarHost provides snackbarHostState,
+            LocalWindowWidthSizeClass provides windowSize
         ) {
             Row {
-                if (isRailShown) RailNav(mainScreens)
+                if (windowSize.isRailShown) RailNav(mainScreens)
 
                 NavHost(
                     modifier = Modifier.let {
-                        if (isLargeScreen || isLandscape) {
+                        if (windowSize.isRailShown) {
                             return@let Modifier
                         }
 
@@ -192,6 +190,9 @@ private fun RailNav(
     val layoutDirection = LocalLayoutDirection.current
 
     NavigationRail(
+        header = {
+            TopAppBarIcon()
+        },
         containerColor = Color.Transparent,
         modifier = Modifier
             .background(NavigationRailDefaults.ContainerColor)
@@ -199,7 +200,7 @@ private fun RailNav(
                 start = WindowInsets.bars
                     .asPaddingValues()
                     .calculateStartPadding(layoutDirection),
-                top = WindowInsets.systemBars
+                top = WindowInsets.barsWithSystem
                     .asPaddingValues()
                     .calculateTopPadding(),
             ),

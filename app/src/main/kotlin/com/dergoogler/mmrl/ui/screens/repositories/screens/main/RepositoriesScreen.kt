@@ -50,6 +50,7 @@ import com.dergoogler.mmrl.ui.component.PullToRefreshBox
 import com.dergoogler.mmrl.ui.component.TextFieldDialog
 import com.dergoogler.mmrl.ui.component.TopAppBar
 import com.dergoogler.mmrl.ui.component.TopAppBarIcon
+import com.dergoogler.mmrl.ui.providable.LocalWindowWidthSizeClass
 import com.dergoogler.mmrl.ui.screens.repositories.items.BulkBottomSheet
 import com.dergoogler.mmrl.ui.utils.isScrollingUp
 import com.dergoogler.mmrl.ui.utils.none
@@ -262,35 +263,40 @@ private fun TopBar(
     onAdd: () -> Unit,
     scrollBehavior: TopAppBarScrollBehavior,
     setMenu: KFunction1<RepositoriesMenuCompat, Unit>,
-) = TopAppBar(
-    title = {
-        TopAppBarIcon()
-    },
-    scrollBehavior = scrollBehavior,
-    actions = {
-        IconButton(
-            onClick = onUpdate
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.refresh),
-                contentDescription = null
+) {
+    val windowSize = LocalWindowWidthSizeClass.current
+
+    TopAppBar(
+        title = {
+            if (windowSize.isRailShown) return@TopAppBar
+
+            TopAppBarIcon()
+        },
+        scrollBehavior = scrollBehavior,
+        actions = {
+            IconButton(
+                onClick = onUpdate
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.refresh),
+                    contentDescription = null
+                )
+            }
+            IconButton(
+                onClick = onAdd
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.pencil_plus),
+                    contentDescription = null
+                )
+            }
+
+            RepositoriesMenu(
+                setMenu = setMenu
             )
         }
-        IconButton(
-            onClick = onAdd
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.pencil_plus),
-                contentDescription = null
-            )
-        }
-
-        RepositoriesMenu(
-            setMenu = setMenu
-        )
-    }
-)
-
+    )
+}
 
 @Composable
 private fun FloatingButton(
