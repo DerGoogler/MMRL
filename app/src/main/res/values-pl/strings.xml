@@ -288,7 +288,7 @@
     <string name="view_module_features_action_sub">Umożliwia wykonanie skryptu poprzez kliknięcie przycisku</string>
     <string name="settings_allow_javascript_api">Zezwól na API JavaScript</string>
     <string name="settings_security_allow_advanced_kernelsu_api">Zezwól na zaawansowane API KernelSU</string>
-    <string name="settings_security_allow_filesystem_api">Zezwól na API FileSystem</string>
+    <string name="settings_security_allow_filesystem_api">Zezwalaj na API systemu plików</string>
     <string name="menu_export_modules_as_text">Eksportuj moduły jako tekst</string>
     <string name="home_enabled_disabled_modules_ratio">Współczynnik włączeń / wyłączeń</string>
     <string name="copy_logs">Kopiuj logi</string>
@@ -350,4 +350,10 @@
     <string name="install_screen_confirm_text">Czy na pewno chcesz zainstalować ten moduł?</string>
     <string name="settings_terms_of_service">Warunki korzystania z aplikacji</string>
     <string name="settings_log_viewer">Przeglądarka logów</string>
+    <string name="explore_more_repositories">Odkryj więcej repozytoriów</string>
+    <string name="get_the_most_out_of_mmrl">Wykorzystaj w pełni MMRL!</string>
+    <string name="allow_advanced_kernelsu_api">Zezwolić na zaawansowane API KernelSU?</string>
+    <string name="allow_filesystem_api">Zezwolić na API systemu plików?</string>
+    <string name="allow_filesystem_api_desc">Zezwolić temu modułowi na dostęp do API systemu plików? Jeśli nie czujesz się bezpiecznie z tym modułem, nie pozwalaj na to!</string>
+    <string name="allow_advanced_kernelsu_api_desc">Zezwolić temu modułowi na dostęp do zaawansowanego API KernelSU? Jeśli nie czujesz się bezpiecznie z tym modułem, nie pozwalaj na to!</string>
 </resources>
