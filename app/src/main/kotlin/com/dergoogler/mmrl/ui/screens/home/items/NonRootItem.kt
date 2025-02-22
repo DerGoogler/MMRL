@@ -27,10 +27,12 @@ import dev.dergoogler.mmrl.compat.ext.takeTrue
 
 @Composable
 internal fun NonRootItem(
+    modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
     developerMode: Boolean = false,
 ) = Card(
     modifier = {
+        surface = modifier
         column = Modifier.padding(20.dp)
     },
     style = CardDefaults.cardStyle.copy(

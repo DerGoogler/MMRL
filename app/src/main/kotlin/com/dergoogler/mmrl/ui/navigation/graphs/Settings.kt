@@ -10,6 +10,7 @@ import androidx.navigation.navigation
 import com.dergoogler.mmrl.ui.navigation.MainScreen
 import com.dergoogler.mmrl.ui.screens.settings.SettingsScreen
 import com.dergoogler.mmrl.ui.screens.settings.appearance.AppearanceScreen
+import com.dergoogler.mmrl.ui.screens.settings.appearance.screens.AppThemeScreen
 import com.dergoogler.mmrl.ui.screens.settings.blacklist.BlacklistScreen
 import com.dergoogler.mmrl.ui.screens.settings.changelogs.ChangelogScreen
 import com.dergoogler.mmrl.ui.screens.settings.developer.DeveloperScreen
@@ -35,7 +36,8 @@ enum class SettingsScreen(val route: String) {
     Blacklist("Blacklist"),
     Changelog("Changelog"),
     Developer("Developer"),
-    LogViewer("LogViewer")
+    LogViewer("LogViewer"),
+    AppTheme("AppTheme")
 }
 
 fun NavGraphBuilder.settingsScreen() = navigation(
@@ -151,5 +153,13 @@ fun NavGraphBuilder.settingsScreen() = navigation(
         exitTransition = { fadeOut() }
     ) {
         LogScreen()
+    }
+
+    composable(
+        route = SettingsScreen.AppTheme.route,
+        enterTransition = { scaleIn() + fadeIn() },
+        exitTransition = { fadeOut() }
+    ) {
+        AppThemeScreen()
     }
 }

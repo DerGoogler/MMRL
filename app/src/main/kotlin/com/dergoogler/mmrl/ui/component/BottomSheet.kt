@@ -42,6 +42,7 @@ fun BottomSheet(
     windowInsets: WindowInsets = WindowInsets(0),
     properties: ModalBottomSheetProperties = ModalBottomSheetDefaults.properties(),
     enabledNavigationSpacer: Boolean = true,
+    columnHorizontalAlignment: Alignment. Horizontal = Alignment.Start,
     content: @Composable ColumnScope.() -> Unit,
 ) = ModalBottomSheet(
     onDismissRequest,
@@ -68,7 +69,8 @@ fun BottomSheet(
             .heightIn(max = maxHeight)
             .animateContentSize(
                 alignment = Alignment.BottomStart
-            )
+            ),
+        horizontalAlignment = columnHorizontalAlignment
     ) {
         content()
         enabledNavigationSpacer.takeTrue {
