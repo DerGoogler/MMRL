@@ -41,7 +41,6 @@ internal class FileManagerImpl : IFileManager.Stub() {
         destPath: String,
         overwrite: Boolean,
     ): Boolean
-
     private external fun nativeSetOwner(path: String, owner: Int, group: Int): Boolean
     private external fun nativeSetPermissions(path: String, mode: Int): Boolean
     private external fun nativeCanExecute(path: String): Boolean
