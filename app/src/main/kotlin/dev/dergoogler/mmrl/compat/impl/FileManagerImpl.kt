@@ -14,7 +14,13 @@ import java.io.InputStream
 import kotlin.math.log
 import kotlin.math.pow
 
+
 internal class FileManagerImpl : IFileManager.Stub() {
+
+    init {
+        System.loadLibrary("file-manager")
+    }
+
     override fun deleteOnExit(path: String) = with(File(path)) {
         when {
             !exists() -> false
@@ -176,6 +182,30 @@ internal class FileManagerImpl : IFileManager.Stub() {
             true
         }
     }
+
+
+    override fun setReadonly(path: String): Boolean = with(File(path)) {
+        setReadOnly()
+    }
+
+    override fun setWritable(path: String, writable: Boolean): Boolean = with(File(path)) {
+        setWritable(writable)
+    }
+
+    override fun setReadable(path: String, readable: Boolean, ownerOnly: Boolean): Boolean =
+        with(File(path)) {
+            setReadable(readable, ownerOnly)
+        }
+
+    private external fun changeFileOwner(path: String, owner: Int, group: Int): Boolean
+
+    private external fun changeFilePermissions(path: String, mode: Int): Boolean
+
+    override fun setPermissions(path: String, mode: Int): Boolean =
+        changeFilePermissions(path, mode)
+
+    override fun setOwner(path: String, owner: Int, group: Int): Boolean =
+        changeFileOwner(path, owner, group)
 }
 
 object FileManagerUtil {
@@ -192,3 +222,29 @@ enum class SizeRepresentation(val base: Int) {
     Binary(1024),
     Decimal(1000)
 }
+
+object FilePermissions {
+    const val READ = 0b100 // 4 in decimal
+    const val WRITE = 0b010 // 2 in decimal
+    const val EXECUTE = 0b001 // 1 in decimal
+
+    const val OWNER_READ = 0b100000000 // 0o400 (256)
+    const val OWNER_WRITE = 0b010000000 // 0o200 (128)
+    const val OWNER_EXECUTE = 0b001000000 // 0o100 (64)
+
+    const val GROUP_READ = 0b000100000 // 0o040 (32)
+    const val GROUP_WRITE = 0b000010000 // 0o020 (16)
+    const val GROUP_EXECUTE = 0b000001000 // 0o010 (8)
+
+    const val OTHERS_READ = 0b000000100 // 0o004 (4)
+    const val OTHERS_WRITE = 0b000000010 // 0o002 (2)
+    const val OTHERS_EXECUTE = 0b000000001 // 0o001 (1)
+
+    const val PERMISSION_777 = 0b111111111 // 0o777 (511) - rwxrwxrwx
+    const val PERMISSION_755 = 0b111101101 // 0o755 (493) - rwxr-xr-x
+    const val PERMISSION_700 = 0b111000000 // 0o700 (448) - rwx------
+    const val PERMISSION_644 = 0b110100100 // 0o644 (420) - rw-r--r--
+    const val PERMISSION_600 = 0b110000000 // 0o600 (384) - rw-------
+    const val PERMISSION_444 = 0b100100100 // 0o444 (292) - r--r--r--
+}
+

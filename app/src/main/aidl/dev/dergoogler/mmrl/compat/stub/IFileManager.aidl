@@ -29,4 +29,9 @@ interface IFileManager {
     boolean canRead(String path);
     boolean isHidden(String path);
     boolean isAccessRestricted(String path, boolean disable);
+    boolean setReadable(String path, boolean readable, boolean ownerOnly);
+    boolean setWritable(String path, boolean writable);
+    boolean setReadonly(String path);
+    boolean setPermissions(String path, int mode);
+    boolean setOwner(String path, int owner, int group);
 }

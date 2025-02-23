@@ -72,7 +72,6 @@ fun WebUIScreen(
         }
     }
 
-
     val allowedFsApi = viewModel.modId in userPrefs.allowedFsModules
     val allowedKsuApi = viewModel.modId in userPrefs.allowedKsuModules
 
@@ -148,6 +147,8 @@ fun WebUIScreen(
                     ViewCompat.setOnApplyWindowInsetsListener(this) { _, _ ->
                         WindowInsetsCompat.CONSUMED
                     }
+
+                    viewModel.loadDexPlugins(context, this)
 
                     webViewClient = MMRLWebClient(
                         context = context,
