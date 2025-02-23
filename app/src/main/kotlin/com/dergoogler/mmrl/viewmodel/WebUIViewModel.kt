@@ -3,7 +3,6 @@ package com.dergoogler.mmrl.viewmodel
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
-import android.os.Process.myUid
 import android.webkit.WebView
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.runtime.getValue
@@ -25,15 +24,15 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dalvik.system.DexClassLoader
+import dalvik.system.InMemoryDexClassLoader
 import dev.dergoogler.mmrl.compat.ext.isLocalWifiUrl
-import dev.dergoogler.mmrl.compat.impl.FilePermissions
 import dev.dergoogler.mmrl.compat.stub.IFileManager
 import dev.dergoogler.mmrl.compat.viewmodel.MMRLViewModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import java.io.File
+import java.nio.ByteBuffer
 
 @HiltViewModel(assistedFactory = WebUIViewModel.Factory::class)
 class WebUIViewModel @AssistedInject constructor(
@@ -62,7 +61,7 @@ class WebUIViewModel @AssistedInject constructor(
             with(moduleManager) { versionCode }
         }
 
-    val fileManager: IFileManager? = Compat.get(null) {
+    val fs: IFileManager? = Compat.get(null) {
         fileManager
     }
 
@@ -137,20 +136,21 @@ class WebUIViewModel @AssistedInject constructor(
     }
 
     @SuppressLint("JavascriptInterface")
-    fun loadDexPlugins(context: Context, webView: WebView) {
-        if (fileManager == null) {
+    fun loadDexPluginsFromMemory(context: Context, webView: WebView) {
+        if (fs == null) {
             Timber.e("IFileManager is null! Plugins not loaded.")
             return
         }
 
         val pluginsListFile = "/data/adb/modules/$modId/webroot/plugins.json"
+        val pluginDir = "/data/adb/modules/$modId/webroot/plugins"
 
-        if (!fileManager.exists(pluginsListFile)) {
-            Timber.w("plugins.json does not exist! Plugins not loaded.")
+        if (!fs.exists(pluginsListFile)) {
+            if (userPrefs.developerMode) Timber.w("plugins.json does not exist! Plugins not loaded.")
             return
         }
 
-        val pluginsListJson = fileManager.readText(pluginsListFile)
+        val pluginsListJson = fs.readText(pluginsListFile)
 
         val jsonAdapter = moshi.adapter<List<String>>(List::class.java)
         val pluginsList: List<String>? = jsonAdapter.fromJson(pluginsListJson)
@@ -160,78 +160,69 @@ class WebUIViewModel @AssistedInject constructor(
             return
         }
 
-        val pluginDir = File(context.filesDir, "plugins")
-        val pluginsDirExists = pluginDir.exists()
-        Timber.d("pluginDir: $pluginDir -> exists: $pluginsDirExists")
-        if (!pluginsDirExists) {
-            pluginDir.mkdirs()
-            Timber.d("Created plugins directory: $pluginDir")
+        if (!fs.exists(pluginDir)) {
+            if (userPrefs.developerMode) Timber.i("$modId has no plugins.")
+            return
         }
 
-        pluginDir.listFiles { file ->
-            file.extension == "dex" || file.extension == "jar" || file.extension == "apk"
-        }?.forEach { dexFile ->
+        fs.list(pluginDir)
+            .filter { it.endsWith(".dex") || it.endsWith(".jar") || it.endsWith(".apk") }
+            .forEach { dexFileName ->
+                val dexPath = "$pluginDir/$dexFileName"
 
-            val uid = myUid()
-            fileManager.setOwner(dexFile.path, uid, uid)
-            fileManager.setPermissions(dexFile.path, FilePermissions.PERMISSION_444)
+                try {
+                    val dexFileBytes = fs.readBytes(dexPath)
+                    val dexFileBuffer = ByteBuffer.wrap(dexFileBytes);
 
-            val optimizedDir = File(context.codeCacheDir, "dex_opt")
-            val loader = DexClassLoader(
-                dexFile.absolutePath,
-                optimizedDir.absolutePath,
-                null,
-                context.classLoader
-            )
+                    val loader = InMemoryDexClassLoader(dexFileBuffer, context.classLoader)
 
-            try {
-                pluginsList.forEach { className ->
-                    try {
-                        val clazz = loader.loadClass(className)
+                    pluginsList.forEach { className ->
+                        try {
+                            val clazz = loader.loadClass(className)
 
-                        val interfaceName = clazz.getPluginField<String>("interfaceName")
-                        val instance = clazz.getPluginMethod<Any>(
-                            name = "instance",
-                            parameterTypes = listOf(Context::class.java, WebView::class.java),
-                            args = listOf(context, webView)
-                        )
+                            val interfaceName = clazz.getPluginField<String>("interfaceName")
+                            val instance = clazz.getPluginMethod<Any>(
+                                name = "instance",
+                                parameterTypes = listOf(Context::class.java, WebView::class.java),
+                                args = listOf(context, webView)
+                            )
 
-                        if (interfaceName == null) {
-                            Timber.e("Class $className does not have an interfaceName field")
-                            return
+                            if (interfaceName == null) {
+                                Timber.e("Class $className does not have an interfaceName field")
+                                return
+                            }
+
+                            if (instance == null) {
+                                Timber.e("Class $className does not have an instance method")
+                                return
+                            }
+
+                            clazz.setPluginField("isProviderAlive", isProviderAlive)
+                            clazz.setPluginField("rootShell", rootShell)
+                            clazz.setPluginField("rootVersionName", versionName)
+                            clazz.setPluginField("rootVersionCode", versionCode)
+                            clazz.setPluginField("fileManager", fs)
+                            clazz.setPluginField("rootPlatform", platform)
+
+                            Timber.d("Added plugin $interfaceName from dex file $dexPath")
+
+                            webView.addJavascriptInterface(
+                                instance,
+                                interfaceName
+                            )
+                        } catch (e: ClassNotFoundException) {
+                            Timber.e("Class $className not found in dex file $dexPath")
+                        } catch (e: Exception) {
+                            Timber.e(
+                                "Error instantiating class $className from dex file $dexPath",
+                                e
+                            )
                         }
-
-                        if (instance == null) {
-                            Timber.e("Class $className does not have an instance method")
-                            return
-                        }
-
-                        clazz.setPluginField("isProviderAlive", isProviderAlive)
-                        clazz.setPluginField("rootShell", rootShell)
-                        clazz.setPluginField("rootVersionName", versionName)
-                        clazz.setPluginField("rootVersionCode", versionCode)
-                        clazz.setPluginField("fileManager", fileManager)
-                        clazz.setPluginField("rootPlatform", platform)
-
-                        Timber.d("Added plugin $interfaceName from dex file ${dexFile.name}")
-
-                        webView.addJavascriptInterface(
-                            instance,
-                            interfaceName
-                        )
-                    } catch (e: ClassNotFoundException) {
-                        Timber.e("Class $className not found in dex file ${dexFile.name}")
-                    } catch (e: Exception) {
-                        Timber.e(
-                            "Error instantiating class $className from dex file ${dexFile.name}",
-                            e
-                        )
                     }
+                } catch (e: Exception) {
+                    Timber.e("Error loading plugin from dex file: $dexPath", e)
                 }
-            } catch (e: Exception) {
-                Timber.e("Error loading plugin from dex file: ${dexFile.name}", e)
             }
-        }
     }
 
     private fun Class<*>.setPluginField(name: String, value: Any) {
@@ -262,7 +253,6 @@ class WebUIViewModel @AssistedInject constructor(
         } catch (e: Exception) {
             null
         }
-
 
     private inline fun <reified T> Class<*>.getPluginField(name: String): T? = try {
         getDeclaredField(name).apply { isAccessible = true }.get(null) as? T

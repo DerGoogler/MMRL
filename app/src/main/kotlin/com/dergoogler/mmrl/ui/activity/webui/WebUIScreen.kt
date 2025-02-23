@@ -148,7 +148,7 @@ fun WebUIScreen(
                         WindowInsetsCompat.CONSUMED
                     }
 
-                    viewModel.loadDexPlugins(context, this)
+                    viewModel.loadDexPluginsFromMemory(context, this)
 
                     webViewClient = MMRLWebClient(
                         context = context,
