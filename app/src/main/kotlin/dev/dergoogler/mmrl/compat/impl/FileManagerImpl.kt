@@ -42,6 +42,8 @@ internal class FileManagerImpl : IFileManager.Stub() {
         overwrite: Boolean,
     ): Boolean
 
+    private external fun nativeSetOwner(path: String, owner: Int, group: Int): Boolean
+    private external fun nativeSetPermissions(path: String, mode: Int): Boolean
     private external fun nativeCanExecute(path: String): Boolean
     private external fun nativeCanWrite(path: String): Boolean
     private external fun nativeCanRead(path: String): Boolean
@@ -60,15 +62,12 @@ internal class FileManagerImpl : IFileManager.Stub() {
     override fun writeBytes(path: String, data: ByteArray): Boolean {
         return nativeWriteBytes(path, data)
     }
-
     override fun writeText(path: String, data: String): Boolean =
         nativeWriteBytes(path, data.toByteArray())
-
     override fun readText(path: String): String {
         val buffer = nativeReadByteBuffer(path)
         return StandardCharsets.UTF_8.decode(buffer).toString();
     }
-
     override fun readBytes(path: String): ByteArray? {
         val buffer: ByteBuffer = nativeReadByteBuffer(path) ?: return null
         return ByteArray(buffer.remaining()).apply { buffer.get(this) }
@@ -113,47 +112,27 @@ internal class FileManagerImpl : IFileManager.Stub() {
     override fun size(path: String): Long = nativeSize(path)
     override fun sizeRecursive(path: String): Long = nativeSizeRecursive(path)
     override fun stat(path: String): Long = nativeStat(path)
-
-
     override fun delete(path: String): Boolean = nativeDelete(path)
-
     override fun exists(path: String): Boolean = nativeExists(path)
-
     override fun isDirectory(path: String): Boolean = nativeIsDirectory(path)
-
     override fun isFile(path: String): Boolean = nativeIsFile(path)
-
     override fun mkdir(path: String): Boolean = nativeMkdir(path)
-
     override fun mkdirs(path: String): Boolean = nativeMkdirs(path)
-
     override fun createNewFile(path: String): Boolean = nativeCreateNewFile(path)
-
     override fun renameTo(target: String, dest: String): Boolean = nativeRenameTo(target, dest)
-
     override fun copyTo(
         target: String,
         dest: String,
         overwrite: Boolean,
     ): Boolean = nativeCopyTo(target, dest, overwrite)
-
-    override fun canExecute(path: String): Boolean =nativeCanExecute(path)
-
+    override fun canExecute(path: String): Boolean = nativeCanExecute(path)
     override fun canWrite(path: String): Boolean = nativeCanWrite(path)
-
     override fun canRead(path: String): Boolean = nativeCanRead(path)
-
     override fun isHidden(path: String): Boolean = nativeIsHidden(path)
-
-    private external fun changeFileOwner(path: String, owner: Int, group: Int): Boolean
-
-    private external fun changeFilePermissions(path: String, mode: Int): Boolean
-
     override fun setPermissions(path: String, mode: Int): Boolean =
-        changeFilePermissions(path, mode)
-
+        nativeSetPermissions(path, mode)
     override fun setOwner(path: String, owner: Int, group: Int): Boolean =
-        changeFileOwner(path, owner, group)
+        nativeSetOwner(path, owner, group)
 }
 
 object FileManagerUtil {

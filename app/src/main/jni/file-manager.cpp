@@ -17,7 +17,7 @@
 
 extern "C"
 JNIEXPORT jboolean JNICALL
-Java_dev_dergoogler_mmrl_compat_impl_FileManagerImpl_changeFileOwner(JNIEnv *env, jobject MMRL_UNUSED(thiz),
+Java_dev_dergoogler_mmrl_compat_impl_FileManagerImpl_nativeSetOwner(JNIEnv *env, jobject MMRL_UNUSED(thiz),
                                                                      jstring path, jint owner,
                                                                      jint group) {
     const char *cpath = env->GetStringUTFChars(path, nullptr);
@@ -28,7 +28,7 @@ Java_dev_dergoogler_mmrl_compat_impl_FileManagerImpl_changeFileOwner(JNIEnv *env
 
 extern "C"
 JNIEXPORT jboolean JNICALL
-Java_dev_dergoogler_mmrl_compat_impl_FileManagerImpl_changeFilePermissions(JNIEnv *env,
+Java_dev_dergoogler_mmrl_compat_impl_FileManagerImpl_nativeSetPermissions(JNIEnv *env,
                                                                            jobject MMRL_UNUSED(thiz),
                                                                            jstring path,
                                                                            jint mode) {
