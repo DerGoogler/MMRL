@@ -14,4 +14,5 @@
     <string name="copying_failed">! 复制失败</string>
     <string name="this_module_don_t_have_an_action">! 这个模块没有 action 脚本。</string>
     <string name="copying_zip_to_temp_directory">- 复制压缩文件到临时目录</string>
+    <string name="unable_to_find_path_for_uri">! 无法找到 URI 的路径：%1$s</string>
 </resources>

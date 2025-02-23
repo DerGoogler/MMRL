@@ -14,4 +14,5 @@
     <string name="service_is_not_available">! 程序服務尚未啟動</string>
     <string name="unable_to_gather_module_info_of_file">! 無法自檔案取得模組資訊：%1$s</string>
     <string name="cannot_install_blacklisted_modules_settings_security_blacklist_alerts">! 無法安裝已受封鎖的模組。設定 → 安全措施 → 模組封鎖</string>
+    <string name="unable_to_find_path_for_uri">! 查無統一資源識別碼（URI）路徑：%1$s</string>
 </resources>
