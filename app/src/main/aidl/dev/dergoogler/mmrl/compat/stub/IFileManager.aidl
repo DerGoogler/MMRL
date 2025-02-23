@@ -4,17 +4,15 @@ import android.os.ParcelFileDescriptor;
 
 interface IFileManager {
     boolean deleteOnExit(String path);
-    void writeText(String path, String data);
-    void writeBytes(String path, in byte[] data);
+    boolean writeText(String path, String data);
+    boolean writeBytes(String path, in byte[] data);
     String readText(String path);
-    List readLines(String path);
     byte[] readBytes(String path);
     String readAsBase64(String path);
     List<String> list(String path);
     long stat(String path);
     long size(String path);
     long sizeRecursive(String path);
-    long totalStat(String path);
     boolean delete(String path);
     boolean exists(String path);
     boolean isDirectory(String path);
@@ -28,10 +26,6 @@ interface IFileManager {
     boolean canWrite(String path);
     boolean canRead(String path);
     boolean isHidden(String path);
-    boolean isAccessRestricted(String path, boolean disable);
-    boolean setReadable(String path, boolean readable, boolean ownerOnly);
-    boolean setWritable(String path, boolean writable);
-    boolean setReadonly(String path);
     boolean setPermissions(String path, int mode);
     boolean setOwner(String path, int owner, int group);
 }

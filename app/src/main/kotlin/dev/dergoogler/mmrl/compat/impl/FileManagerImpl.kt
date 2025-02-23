@@ -11,6 +11,8 @@ import java.io.FileInputStream
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.io.InputStream
+import java.nio.ByteBuffer
+import java.nio.charset.StandardCharsets
 import kotlin.math.log
 import kotlin.math.pow
 
@@ -21,6 +23,31 @@ internal class FileManagerImpl : IFileManager.Stub() {
         System.loadLibrary("file-manager")
     }
 
+    private external fun nativeList(path: String): List<String>?
+    private external fun nativeStat(path: String): Long
+    private external fun nativeSize(path: String): Long
+    private external fun nativeSizeRecursive(path: String): Long
+    private external fun nativeExists(path: String): Boolean
+    private external fun nativeIsDirectory(path: String): Boolean
+    private external fun nativeIsFile(path: String): Boolean
+    private external fun nativeMkdir(path: String): Boolean
+    private external fun nativeMkdirs(path: String): Boolean
+    private external fun nativeDelete(path: String): Boolean
+    private external fun nativeWriteBytes(path: String, data: ByteArray): Boolean
+    private external fun nativeReadByteBuffer(path: String): ByteBuffer?
+    private external fun nativeRenameTo(srcPath: String, destPath: String): Boolean
+    private external fun nativeCopyTo(
+        srcPath: String,
+        destPath: String,
+        overwrite: Boolean,
+    ): Boolean
+
+    private external fun nativeCanExecute(path: String): Boolean
+    private external fun nativeCanWrite(path: String): Boolean
+    private external fun nativeCanRead(path: String): Boolean
+    private external fun nativeIsHidden(path: String): Boolean
+    private external fun nativeCreateNewFile(path: String): Boolean
+
     override fun deleteOnExit(path: String) = with(File(path)) {
         when {
             !exists() -> false
@@ -30,14 +57,22 @@ internal class FileManagerImpl : IFileManager.Stub() {
         }
     }
 
-    override fun writeBytes(path: String, data: ByteArray): Unit = File(path).writeBytes(data)
-    override fun writeText(path: String, data: String): Unit =
-        File(path).writeText(data, Charsets.UTF_8)
+    override fun writeBytes(path: String, data: ByteArray): Boolean {
+        return nativeWriteBytes(path, data)
+    }
 
-    override fun readText(path: String): String = File(path).readText(Charsets.UTF_8)
-    override fun readBytes(path: String): ByteArray = File(path).readBytes()
+    override fun writeText(path: String, data: String): Boolean =
+        nativeWriteBytes(path, data.toByteArray())
 
-    override fun readLines(path: String): List<String> = File(path).readLines()
+    override fun readText(path: String): String {
+        val buffer = nativeReadByteBuffer(path)
+        return StandardCharsets.UTF_8.decode(buffer).toString();
+    }
+
+    override fun readBytes(path: String): ByteArray? {
+        val buffer: ByteBuffer = nativeReadByteBuffer(path) ?: return null
+        return ByteArray(buffer.remaining()).apply { buffer.get(this) }
+    }
 
     override fun readAsBase64(path: String): String? = with(File(path)) {
         if (!exists()) return null
@@ -74,128 +109,41 @@ internal class FileManagerImpl : IFileManager.Stub() {
         }
     }
 
-    override fun list(path: String): List<String>? = with(File(path)) {
-        val files: Array<out String>? = list()
+    override fun list(path: String): List<String>? = nativeList(path)
+    override fun size(path: String): Long = nativeSize(path)
+    override fun sizeRecursive(path: String): Long = nativeSizeRecursive(path)
+    override fun stat(path: String): Long = nativeStat(path)
 
-        if (files == null || files.isEmpty()) return null
 
-        return files.toList()
-    }
+    override fun delete(path: String): Boolean = nativeDelete(path)
 
-    override fun size(path: String): Long = with(File(path)) {
-        return this.length();
-    }
+    override fun exists(path: String): Boolean = nativeExists(path)
 
-    override fun sizeRecursive(path: String): Long {
-        val items = list(path) ?: return 0
-        return items.sumOf { item ->
-            val fullPath = "$path/$item"
-            if (isDirectory(fullPath)) {
-                sizeRecursive(fullPath)
-            } else {
-                size(fullPath)
-            }
-        }
-    }
+    override fun isDirectory(path: String): Boolean = nativeIsDirectory(path)
 
-    override fun stat(path: String): Long = with(File(path)) {
-        return this.lastModified();
-    }
+    override fun isFile(path: String): Boolean = nativeIsFile(path)
 
-    override fun totalStat(path: String): Long = with(File(path)) {
-        return this.totalSpace
-    }
+    override fun mkdir(path: String): Boolean = nativeMkdir(path)
 
-    override fun delete(path: String): Boolean = with(File(path)) {
-        when {
-            !exists() -> false
-            isFile -> delete()
-            isDirectory -> deleteRecursively()
-            else -> false
-        }
-    }
+    override fun mkdirs(path: String): Boolean = nativeMkdirs(path)
 
-    override fun exists(path: String): Boolean = with(File(path)) {
-        return this.exists();
-    }
+    override fun createNewFile(path: String): Boolean = nativeCreateNewFile(path)
 
-    override fun isDirectory(path: String): Boolean = with(File(path)) {
-        return this.isDirectory();
-    }
-
-    override fun isFile(path: String): Boolean = with(File(path)) {
-        return this.isFile();
-    }
-
-    override fun mkdir(path: String): Boolean = with(File(path)) {
-        return this.mkdirs();
-    }
-
-    override fun mkdirs(path: String): Boolean = with(File(path)) {
-        return this.mkdirs();
-    }
-
-    override fun createNewFile(path: String): Boolean = with(File(path)) {
-        return this.createNewFile();
-    }
-
-    override fun renameTo(target: String, dest: String): Boolean = with(File(target)) {
-        return this.renameTo(File(dest));
-    }
+    override fun renameTo(target: String, dest: String): Boolean = nativeRenameTo(target, dest)
 
     override fun copyTo(
         target: String,
         dest: String,
         overwrite: Boolean,
-    ): Boolean = with(File(target)) {
-        return this.copyRecursively(File(dest), overwrite)
-    }
+    ): Boolean = nativeCopyTo(target, dest, overwrite)
 
-    override fun canExecute(path: String): Boolean = with(File(path)) {
-        return this.canExecute();
-    }
+    override fun canExecute(path: String): Boolean =nativeCanExecute(path)
 
-    override fun canWrite(path: String): Boolean = with(File(path)) {
-        return this.canWrite();
-    }
+    override fun canWrite(path: String): Boolean = nativeCanWrite(path)
 
-    override fun canRead(path: String): Boolean = with(File(path)) {
-        return this.canRead();
-    }
+    override fun canRead(path: String): Boolean = nativeCanRead(path)
 
-    override fun isHidden(path: String): Boolean = with(File(path)) {
-        return this.isHidden();
-    }
-
-    override fun isAccessRestricted(path: String, disable: Boolean): Boolean = with(File(path)) {
-        if (disable) return false
-
-        val restrictedRegex = Regex(
-            """(/data/(system|data)/(.+)/?|(/storage/emulated/0|/sdcard)/Android/(data|media|obb)(.+)?)/?""",
-            RegexOption.IGNORE_CASE
-        )
-
-        return try {
-            val canonicalPath = this.canonicalPath
-            restrictedRegex.matches(canonicalPath)
-        } catch (e: Exception) {
-            true
-        }
-    }
-
-
-    override fun setReadonly(path: String): Boolean = with(File(path)) {
-        setReadOnly()
-    }
-
-    override fun setWritable(path: String, writable: Boolean): Boolean = with(File(path)) {
-        setWritable(writable)
-    }
-
-    override fun setReadable(path: String, readable: Boolean, ownerOnly: Boolean): Boolean =
-        with(File(path)) {
-            setReadable(readable, ownerOnly)
-        }
+    override fun isHidden(path: String): Boolean = nativeIsHidden(path)
 
     private external fun changeFileOwner(path: String, owner: Int, group: Int): Boolean
 

@@ -13,7 +13,7 @@ class FileInterface(
     context: Context,
 ) : MMRLWebUIInterface(webView, context) {
     private val file = Compat.fileManager
-    
+
     @JavascriptInterface
     fun read(path: String): String? = read(path, false)
 
@@ -66,12 +66,10 @@ class FileInterface(
     fun stat(path: String): Long = this.stat(path, false)
 
     @JavascriptInterface
-    fun stat(path: String, total: Boolean): Long =
-        runTryJsWith(file, "Error while getting stat of '$path'. TOTAL: $total", 0L) {
-            if (total) return@runTryJsWith totalStat(path)
-
-            return@runTryJsWith stat(path)
-        }
+    fun stat(path: String, total: Boolean): Long {
+        console.error("fs.stat is NOT IMPLEMENTED!")
+        return -1
+    }
 
     @JavascriptInterface
     fun delete(path: String): Boolean =
