@@ -41,8 +41,7 @@ squareRetrofit = "2.11.0"
 squareOkhttp = "4.12.0"
 squareMoshi = "1.15.1"
 runtimeAndroid = "1.7.6"
-mmrlx = "1.0.152"
-webuiXPortable = "c92f5f6c3c"
+mmrlx = "1.0.223"
 workRuntimeKtx = "2.10.0"
 lifecycleProcess = "2.8.7"
 apacheCommons = "1.28.0"
@@ -139,6 +138,8 @@ markwon-core = "io.noties.markwon:core:4.6.2"
 hiddenApiBypass = "org.lsposed.hiddenapibypass:hiddenapibypass:6.1"
 mmrlx-terminal = { module = "dev.mmrlx:terminal", version.ref = "mmrlx" }
 mmrlx-webui-core = { module = "dev.mmrlx:webui.core", version.ref = "mmrlx" }
+mmrlx-nio = { module = "dev.mmrlx:nio", version.ref = "mmrlx" }
+mmrlx-utilities = { module = "dev.mmrlx:utilities", version.ref = "mmrlx" }
 timber = "com.jakewharton.timber:timber:5.0.1"
 
 # Dependencies of the included build-logic
@@ -155,8 +156,6 @@ material = { group = "com.google.android.material", name = "material", version.r
 androidx-material3-android = { group = "androidx.compose.material3", name = "material3-android", version.ref = "material3Android" }
 runtime-android = { group = "androidx.compose.runtime", name = "runtime-android", version.ref = "runtimeAndroidVersion" }
 androidx-swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swiperefreshlayout" }
-webuix-hwui = { module = "com.github.MMRLApp.WebUI-X-Portable:hwui", version.ref = "webuiXPortable" }
-webuix-helper = { module = "com.github.MMRLApp.WebUI-X-Portable:helper", version.ref = "webuiXPortable" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }

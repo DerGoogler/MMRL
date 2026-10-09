@@ -197,9 +197,6 @@ dependencies {
     implementation(projects.compat)
     implementation(projects.datastore)
 
-    implementation(libs.webuix.hwui)
-    implementation(libs.webuix.helper)
-
     implementation(libs.kotlin.stdlib)
 
     implementation(libs.hiddenApiBypass)
@@ -272,6 +269,8 @@ dependencies {
     ksp(libs.square.moshi.kotlin)
 
     implementation(libs.mmrlx.terminal)
+    implementation(libs.mmrlx.nio)
+    implementation(libs.mmrlx.utilities)
     implementation(libs.mmrlx.webui.core)
 
     implementation("dev.chrisbanes.haze:haze:1.6.10")
