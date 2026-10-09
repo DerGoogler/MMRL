@@ -30,8 +30,6 @@ on:
         options:
         - production
         - beta
-        - alpha
-        - qa
 
 jobs:
   # Build step for both official & spoofed flavors
