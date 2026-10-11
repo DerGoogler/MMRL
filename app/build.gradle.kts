@@ -174,10 +174,14 @@ android {
 
 androidComponents {
     onVariants { variant ->
+        val distributionFlavor = variant.productFlavors
+            .firstOrNull { it.first == "distribution" }
+            ?.second
+
         variant.outputs.filterIsInstance<VariantOutputImpl>().forEach { output ->
             output.outputFileName.set(
                 output.versionName.map { vName ->
-                    "MMRL-${vName}-${variant.buildType ?: variant.name}.apk"
+                    "MMRL-$vName-$distributionFlavor.apk"
                 }
             )
         }
