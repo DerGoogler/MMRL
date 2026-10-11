@@ -1,6 +1,7 @@
 package com.dergoogler.mmrl.ui.screens.repository
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -49,6 +50,7 @@ import androidx.core.net.toUri
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.database.entity.Repo
+import com.dergoogler.mmrl.datastore.model.RepoListMode
 import com.dergoogler.mmrl.datastore.model.RepositoryMenu
 import com.dergoogler.mmrl.ext.fadingEdge
 import com.dergoogler.mmrl.ext.isNotNullOrBlank
@@ -67,6 +69,7 @@ import com.dergoogler.mmrl.ui.component.text.BBCodeText
 import com.dergoogler.mmrl.ui.component.toolbar.BlurSearchToolbar
 import com.dergoogler.mmrl.ui.component.toolbar.ToolbarTitle
 import com.dergoogler.mmrl.ui.component.toolbar.rememberBlurToolbarState
+import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.viewmodel.RepositoryViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
@@ -77,6 +80,7 @@ import dev.dergoogler.mmrl.compat.core.LocalUriHandler
 fun RepositoryScreen(
     repo: Repo,
 ) = LocalScreenProvider {
+    val userPreferences = LocalUserPreferences.current
     val browser = LocalUriHandler.current
     val density = LocalDensity.current
 
@@ -92,6 +96,9 @@ fun RepositoryScreen(
 
     var coverHeight by remember { mutableIntStateOf(0) }
     var cardHeight by remember { mutableIntStateOf(0) }
+
+    val menu = userPreferences.repositoryMenu
+    val pad = remember(menu) { if (menu.repoListMode == RepoListMode.Compact) 0.dp else 16.dp }
 
     BackHandler(enabled = viewModel.isSearch, onBack = viewModel::closeSearch)
 
@@ -120,15 +127,19 @@ fun RepositoryScreen(
             return@Scaffold
         }
 
-        this@Scaffold.TypedModulesList(
+        this@Scaffold.ModulesList(
             innerPadding = innerPadding,
             repo = repo,
             list = modules,
             state = viewModel.listState,
         ) {
-            if (!isSearch) {
-                item {
-                    Box {
+            item {
+                AnimatedVisibility(isSearch) {
+                    Spacer(Modifier.height(innerPadding.calculateTopPadding() + pad))
+                }
+
+                AnimatedVisibility(!isSearch) {
+                    Box(Modifier.animateEnterExit()) {
                         Cover(
                             modifier =
                                 Modifier

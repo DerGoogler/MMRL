@@ -1,5 +1,6 @@
 package com.dergoogler.mmrl.ui.screens.repository
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -33,7 +34,7 @@ import com.ramcosta.composedestinations.generated.destinations.NewViewScreenDest
 import dev.chrisbanes.haze.hazeSource
 
 @Composable
-fun ScaffoldScope.TypedModulesList(
+fun ScaffoldScope.ModulesList(
     innerPadding: PaddingValues,
     repo: Repo,
     list: List<Pair<OnlineState, OnlineModule>>,
@@ -52,11 +53,12 @@ fun ScaffoldScope.TypedModulesList(
     Box(
         modifier = Modifier.fillMaxSize(),
     ) {
-        this@TypedModulesList.ResponsiveContent {
+        this@ModulesList.ResponsiveContent {
             LazyColumn(
                 state = state,
                 modifier = Modifier
                     .fillMaxSize()
+                    .animateContentSize()
                     .hazeSource(LocalHazeState.current),
                 contentPadding =
                     PaddingValues(
