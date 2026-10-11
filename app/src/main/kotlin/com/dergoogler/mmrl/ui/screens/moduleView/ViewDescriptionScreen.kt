@@ -1,6 +1,7 @@
 package com.dergoogler.mmrl.ui.screens.moduleView
 
 import android.annotation.SuppressLint
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
@@ -80,16 +81,17 @@ fun ViewDescriptionScreen(readmeUrl: String) =
                             htmlResponse(connection.getInputStream())
                         }
 
-                        internalRoute("/internal/insets.css") {
+                        internalRoute("insets.css") {
                             insets.css.asStyleResponse()
                         }
 
-                        internalRoute("/internal/colors.css") {
+                        internalRoute("colors.css") {
                             webColors.allCssColors.asStyleResponse()
                         }
 
-                        internalRoute("/internal/assets/*asset") {
-                            val filePath = request.params["asset"] ?: return@internalRoute notFoundResponse
+                        internalRoute("assets/*asset") {
+                            val filePath =
+                                request.params["asset"] ?: return@internalRoute notFoundResponse
 
                             try {
                                 val inputStream = kontext.assets.open(filePath)
@@ -107,6 +109,16 @@ fun ViewDescriptionScreen(readmeUrl: String) =
             onDispose {
                 wstate.destroy()
             }
+        }
+
+        // We have to override otherwise the WebUI will close the entire app
+        BackHandler {
+            if (wstate.canGoBack()) {
+                wstate.goBack()
+                return@BackHandler
+            }
+
+            navigator.popBackStack()
         }
 
         Scaffold(
