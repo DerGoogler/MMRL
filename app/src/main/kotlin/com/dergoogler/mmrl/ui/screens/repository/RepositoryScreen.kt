@@ -98,7 +98,7 @@ fun RepositoryScreen(
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-            TopBar(
+            TopBar0(
                 repo = repo,
                 isSearch = isSearch,
                 query = query,
@@ -126,125 +126,127 @@ fun RepositoryScreen(
             list = modules,
             state = viewModel.listState,
         ) {
-            item {
-                Box {
-                    Cover(
-                        modifier =
-                            Modifier
-                                .fadingEdge(
-                                    brush =
-                                        Brush.verticalGradient(
-                                            colors = listOf(
-                                                Color.Transparent,
-                                                Color.Black
-                                            ),
-                                            startY = Float.POSITIVE_INFINITY,
-                                            endY = 0f,
-                                        ),
-                                )
-                                .onGloballyPositioned { coordinates ->
-                                    coverHeight = coordinates.size.height
-                                },
-                        url = repo.cover ?: "ERROR ME",
-                        errorIcon = R.drawable.box,
-                    )
-
-                    Box(
-                        modifier =
-                            Modifier
-                                .offset(y = 164.4.dp)
-                                .align(Alignment.TopCenter)
-                                .fillMaxWidth(0.85f)
-                                .onGloballyPositioned { coordinates ->
-                                    cardHeight = coordinates.size.height
-                                },
-                    ) {
-                        Card(
+            if (!isSearch) {
+                item {
+                    Box {
+                        Cover(
                             modifier =
                                 Modifier
-                                    .align(Alignment.BottomCenter)
-                                    .background(
+                                    .fadingEdge(
                                         brush =
-                                            Brush.linearGradient(
-                                                colors =
-                                                    listOf(
-                                                        MaterialTheme.colorScheme.surfaceColorAtElevation(
-                                                            1.dp,
-                                                        ),
-                                                        MaterialTheme.colorScheme.background,
-                                                    ),
-                                                start = Offset(0f, 0f),
-                                                end =
-                                                    Offset(
-                                                        Float.POSITIVE_INFINITY,
-                                                        Float.POSITIVE_INFINITY,
-                                                    ),
+                                            Brush.verticalGradient(
+                                                colors = listOf(
+                                                    Color.Transparent,
+                                                    Color.Black
+                                                ),
+                                                startY = Float.POSITIVE_INFINITY,
+                                                endY = 0f,
                                             ),
-                                        RoundedCornerShape(20.dp),
                                     )
-                                    .border(
-                                        Dp.Hairline,
-                                        MaterialTheme.colorScheme.outlineVariant,
-                                        RoundedCornerShape(20.dp),
-                                    ),
+                                    .onGloballyPositioned { coordinates ->
+                                        coverHeight = coordinates.size.height
+                                    },
+                            url = repo.cover ?: "ERROR ME",
+                            errorIcon = R.drawable.box,
+                        )
+
+                        Box(
+                            modifier =
+                                Modifier
+                                    .offset(y = 164.4.dp)
+                                    .align(Alignment.TopCenter)
+                                    .fillMaxWidth(0.85f)
+                                    .onGloballyPositioned { coordinates ->
+                                        cardHeight = coordinates.size.height
+                                    },
                         ) {
-                            Column(
+                            Card(
                                 modifier =
                                     Modifier
-                                        .relative()
-                                        .padding(16.dp),
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                verticalArrangement = Arrangement.spacedBy(16.dp),
+                                        .align(Alignment.BottomCenter)
+                                        .background(
+                                            brush =
+                                                Brush.linearGradient(
+                                                    colors =
+                                                        listOf(
+                                                            MaterialTheme.colorScheme.surfaceColorAtElevation(
+                                                                1.dp,
+                                                            ),
+                                                            MaterialTheme.colorScheme.background,
+                                                        ),
+                                                    start = Offset(0f, 0f),
+                                                    end =
+                                                        Offset(
+                                                            Float.POSITIVE_INFINITY,
+                                                            Float.POSITIVE_INFINITY,
+                                                        ),
+                                                ),
+                                            RoundedCornerShape(20.dp),
+                                        )
+                                        .border(
+                                            Dp.Hairline,
+                                            MaterialTheme.colorScheme.outlineVariant,
+                                            RoundedCornerShape(20.dp),
+                                        ),
                             ) {
-                                Text(
-                                    text = repo.name,
-                                    maxLines = 2,
-                                    overflow = TextOverflow.Ellipsis,
-                                    textAlign = TextAlign.Center,
-                                    style = MaterialTheme.typography.headlineMedium,
-                                    fontWeight = FontWeight.Bold,
-                                    color = MaterialTheme.colorScheme.onBackground,
-                                )
+                                Column(
+                                    modifier =
+                                        Modifier
+                                            .relative()
+                                            .padding(16.dp),
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                                ) {
+                                    Text(
+                                        text = repo.name,
+                                        maxLines = 2,
+                                        overflow = TextOverflow.Ellipsis,
+                                        textAlign = TextAlign.Center,
+                                        style = MaterialTheme.typography.headlineMedium,
+                                        fontWeight = FontWeight.Bold,
+                                        color = MaterialTheme.colorScheme.onBackground,
+                                    )
 
-                                BBCodeText(
-                                    text =
-                                        (
-                                                repo.description
-                                                    ?: stringResource(R.string.view_module_no_description)
-                                                ).stripLinks(
-                                                "<URL>",
-                                            ),
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    textAlign = TextAlign.Center,
-                                    color = MaterialTheme.colorScheme.outlineVariant,
-                                    lineHeight = 20.sp,
-                                )
+                                    BBCodeText(
+                                        text =
+                                            (
+                                                    repo.description
+                                                        ?: stringResource(R.string.view_module_no_description)
+                                                    ).stripLinks(
+                                                    "<URL>",
+                                                ),
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        textAlign = TextAlign.Center,
+                                        color = MaterialTheme.colorScheme.outlineVariant,
+                                        lineHeight = 20.sp,
+                                    )
 
-                                FlowRow {
-                                    repo.nullply {
-                                        if (submission.isNotNullOrBlank()) {
-                                            LabelItem(
-                                                style =
-                                                    LabelItemDefaults.style.copy(
-                                                        containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
-                                                        contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                                                    ),
-                                                modifier =
-                                                    Modifier.onClick {
-                                                        browser.openUri(submission)
-                                                    },
-                                                icon = getDomainIcon(submission),
-                                                text = stringResource(R.string.repo_options_submission),
-                                            )
+                                    FlowRow {
+                                        repo.nullply {
+                                            if (submission.isNotNullOrBlank()) {
+                                                LabelItem(
+                                                    style =
+                                                        LabelItemDefaults.style.copy(
+                                                            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+                                                            contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                                                        ),
+                                                    modifier =
+                                                        Modifier.onClick {
+                                                            browser.openUri(submission)
+                                                        },
+                                                    icon = getDomainIcon(submission),
+                                                    text = stringResource(R.string.repo_options_submission),
+                                                )
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
-                    }
 
-                    with(density) {
-                        Spacer(modifier = Modifier.height((((coverHeight / 1.05f) + cardHeight)).toDp()))
+                        with(density) {
+                            Spacer(modifier = Modifier.height((((coverHeight / 1.05f) + cardHeight)).toDp()))
+                        }
                     }
                 }
             }
@@ -253,7 +255,7 @@ fun RepositoryScreen(
 }
 
 @Composable
-private fun TopBar(
+private fun TopBar0(
     repo: Repo,
     isSearch: Boolean,
     query: String,
