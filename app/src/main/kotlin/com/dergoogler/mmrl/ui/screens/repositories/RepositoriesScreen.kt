@@ -1,5 +1,6 @@
 package com.dergoogler.mmrl.ui.screens.repositories
 
+import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.scaleIn
@@ -87,7 +88,7 @@ fun RepositoriesScreen() =
         val progress by viewModel.progress.collectAsStateWithLifecycle()
 
         val pullToRefreshState = rememberPullToRefreshState()
-        
+
         // Use rememberSaveable to persist scroll position across navigation
         val listState = rememberSaveableLazyListState(key = "repositories_list")
 
@@ -166,24 +167,26 @@ fun RepositoriesScreen() =
             },
             contentWindowInsets = WindowInsets.none,
             floatingActionButton = {
-                AnimatedVisibility(
-                    visible = showFab,
-                    enter =
-                        scaleIn(
-                            animationSpec = tween(100),
-                            initialScale = 0.8f,
-                        ),
-                    exit =
-                        scaleOut(
-                            animationSpec = tween(100),
-                            targetScale = 0.8f,
-                        ),
-                ) {
-                    FloatingButton(
-                        onClick = {
-                            bulkInstallBottomSheet = true
-                        },
-                    )
+                if (viewModel.platform.isValid) {
+                    AnimatedVisibility(
+                        visible = showFab,
+                        enter =
+                            scaleIn(
+                                animationSpec = tween(100),
+                                initialScale = 0.8f,
+                            ),
+                        exit =
+                            scaleOut(
+                                animationSpec = tween(100),
+                                targetScale = 0.8f,
+                            ),
+                    ) {
+                        FloatingButton(
+                            onClick = {
+                                bulkInstallBottomSheet = true
+                            },
+                        )
+                    }
                 }
             },
         ) { innerPadding ->
