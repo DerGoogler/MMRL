@@ -33,6 +33,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.datastore.model.WorkingMode.Companion.isNonRoot
@@ -67,6 +68,7 @@ import com.ramcosta.composedestinations.generated.destinations.AboutScreenDestin
 import com.ramcosta.composedestinations.generated.destinations.ThankYouScreenDestination
 import dev.mmrlx.compose.layout.outlinedCard
 import dev.mmrlx.compose.ui.LinearProgressIndicator
+import dev.mmrlx.compose.ui.LocalTextStyle
 import dev.mmrlx.compose.ui.Text
 import dev.mmrlx.compose.ui.icon.Icon
 import dev.mmrlx.compose.ui.icon.IconButton
@@ -212,6 +214,19 @@ fun HomeScreen() {
                         .fillMaxWidth()
                 ) {
                     val uname = Os.uname()
+                    
+                    scope.Item {
+                        Title {
+                            Text(
+                                "DEV BUILD! EXPECT ERRORS AND BROKEN UI/UX",
+                                style = LocalTextStyle.current.copy(
+                                    fontFamily = FontFamily.Monospace,
+                                    color = Color.Red
+                                )
+                            )
+                        }
+                    }
+
                     scope.Item {
                         Icon(painter = painterResource(R.drawable.cookie_man))
                         Title(R.string.kernel)
