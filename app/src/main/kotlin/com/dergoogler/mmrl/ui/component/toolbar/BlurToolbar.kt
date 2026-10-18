@@ -5,10 +5,7 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.State
@@ -17,14 +14,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
-import com.dergoogler.mmrl.ui.providable.LocalHazeState
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.utils.BlurUtil
-import dev.chrisbanes.haze.hazeEffect
 import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
-import dev.chrisbanes.haze.materials.HazeMaterials
+import dev.mmrlx.compose.ui.theme.MMRLXTheme
+import dev.mmrlx.compose.ui.theme.Oklch
+import dev.mmrlx.compose.ui.toolbar.ToolbarDefaults
+import dev.mmrlx.compose.ui.toolbar.ToolbarScrollBehavior
 
 private const val VISIBILITY_THRESHOLD = 0.01f
 
@@ -38,7 +35,7 @@ class BlurToolbarState internal constructor(
     private val animatedAlpha: State<Float>,
     private val targetAlphaState: State<Float>,
     private val blurEnabled: State<Boolean>,
-    private val scrollBehavior: TopAppBarScrollBehavior?,
+    private val scrollBehavior: ToolbarScrollBehavior?,
 ) {
     /** Current (animated) alpha, 0f..1f. */
     val alpha: Float get() = animatedAlpha.value
@@ -72,7 +69,7 @@ class BlurToolbarState internal constructor(
 
 @Composable
 fun rememberBlurToolbarState(
-    scrollBehavior: TopAppBarScrollBehavior? = null,
+    scrollBehavior: ToolbarScrollBehavior? = null,
     fade: Boolean = false,
     fadeDistance: Float = 200f,
 ): BlurToolbarState {
@@ -121,25 +118,25 @@ fun BlurToolbar(
     fadeBackgroundIfNoBlur: Boolean = false,
     fadeDistance: Float = 200f,
     fade: Boolean = false,
-    scrollBehavior: TopAppBarScrollBehavior? = null,
+    scrollBehavior: ToolbarScrollBehavior? = null,
     state: BlurToolbarState = rememberBlurToolbarState(
         scrollBehavior = scrollBehavior,
         fade = fade,
         fadeDistance = fadeDistance,
     ),
 ) {
-    val borderColor = MaterialTheme.colorScheme.outline
-    val backgroundColor = MaterialTheme.colorScheme.background
-    val topAppBarColors = TopAppBarDefaults.topAppBarColors()
+    val borderColor = MMRLXTheme.border.okLchColor
+    val backgroundColor = MMRLXTheme.oklchColors.background
+    val topAppBarColors = ToolbarDefaults.colors()
 
     val colors = if (state.isBlurEnabled) {
         topAppBarColors.copy(
-            scrolledContainerColor = Color.Transparent,
-            containerColor = Color.Transparent,
+            scrolledContainerColor = Oklch(0.0,0.0, 0.0,0.0),
+            containerColor = Oklch(0.0,0.0, 0.0,0.0),
         )
     } else {
         val container = if (fadeBackgroundIfNoBlur) {
-            backgroundColor.copy(alpha = state.alpha)
+            backgroundColor.copy(opacity = state.alpha.toDouble())
         } else {
             backgroundColor
         }
@@ -149,19 +146,7 @@ fun BlurToolbar(
         )
     }
 
-    val blur = if (state.isBlurActive) {
-        Modifier.hazeEffect(
-            state = LocalHazeState.current,
-            style = HazeMaterials.ultraThin(),
-        ) {
-            this.backgroundColor = backgroundColor
-            this.alpha = state.alpha
-        }
-    } else {
-        Modifier
-    }
-
-    TopAppBar(
+    dev.mmrlx.compose.ui.toolbar.Toolbar(
         title = { title(state.alpha) },
         modifier = Modifier
             .drawBehind {
@@ -171,20 +156,18 @@ fun BlurToolbar(
                     val borderSize = Dp.Hairline
                     val y = size.height - borderSize.value
                     drawLine(
-                        color = borderColor.copy(alpha = alpha),
+                        color = borderColor.copy(opacity = alpha.toDouble()).toColor(),
                         start = Offset(0f, y),
                         end = Offset(size.width, y),
                         strokeWidth = borderSize.value,
                     )
                 }
             }
-            .then(blur)
             .then(modifier),
         navigationIcon = navigationIcon,
         actions = actions,
         colors = colors,
         scrollBehavior = scrollBehavior,
         windowInsets = windowInsets,
-        expandedHeight = expandedHeight,
     )
 }

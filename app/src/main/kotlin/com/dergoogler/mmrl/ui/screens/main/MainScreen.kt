@@ -7,14 +7,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.imePadding
-import androidx.compose.material3.Badge
-import androidx.compose.material3.BadgedBox
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -22,15 +15,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavBackStackEntry
 import com.dergoogler.mmrl.ext.none
-import com.dergoogler.mmrl.ui.component.scaffold.ResponsiveScaffold
-import com.dergoogler.mmrl.ui.component.toolbar.BlurBottomToolbar
-import com.dergoogler.mmrl.ui.navigation.MainDestination
-import com.dergoogler.mmrl.ui.navigation.isAccessible
 import com.dergoogler.mmrl.ui.providable.LocalBulkInstall
 import com.dergoogler.mmrl.ui.providable.LocalDestinationsNavigator
 import com.dergoogler.mmrl.ui.providable.LocalHazeState
@@ -46,9 +33,9 @@ import com.ramcosta.composedestinations.animations.NavHostAnimatedDestinationSty
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.NavGraphs
-import com.ramcosta.composedestinations.utils.isRouteOnBackStackAsState
 import dev.chrisbanes.haze.hazeSource
 import dev.chrisbanes.haze.rememberHazeState
+import dev.mmrlx.compose.ui.scaffold.Scaffold
 
 @Destination<RootGraph>
 @Composable
@@ -146,17 +133,11 @@ fun MainScreen() {
             return@CompositionLocalProvider
         }*/
 
-        ResponsiveScaffold(
-            bottomBar = {
-                BottomNav(updates)
-            },
-            railBar = {
-//                RailNav(updates)
-            },
+        Scaffold(
             contentWindowInsets = WindowInsets.none,
-        ) { paddingValues ->
+        ) {
             CompositionLocalProvider(
-                LocalMainScreenInnerPaddings provides paddingValues,
+                LocalMainScreenInnerPaddings provides contentPadding,
             ) {
                 CurrentNavHost(
                     modifier = Modifier.hazeSource(hazeState),
@@ -183,137 +164,3 @@ private fun CurrentNavHost(modifier: Modifier = Modifier) {
     )
 }
 
-@Composable
-private fun BottomNav(updates: Int) {
-    val prefs = LocalUserPreferences.current
-    val navigator = LocalDestinationsNavigator.current
-    val navController = LocalNavController.current
-
-    BlurBottomToolbar(
-        modifier =
-            Modifier
-                .imePadding(),
-    ) {
-        for (screen in MainDestination.entries) {
-            if (!screen.isAccessible) continue
-
-            val isSelected by navController.isRouteOnBackStackAsState(screen.direction)
-
-            NavigationBarItem(
-                icon = {
-                    BaseNavIcon(screen, isSelected, updates)
-                },
-                label = {
-                    Text(
-                        text = stringResource(id = screen.label),
-                        style = MaterialTheme.typography.labelLarge,
-                    )
-                },
-                alwaysShowLabel = !prefs.hideBottomBarLabels,
-                selected = isSelected,
-                onClick = {
-                    if (isSelected) {
-                        navigator.popBackStack(screen.direction, false)
-                    }
-                    navigator.navigate(screen.direction) {
-                        popUpTo(NavGraphs.root) {
-                            saveState = true
-                        }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
-                },
-            )
-        }
-    }
-}
-/*
-@Composable
-private fun RailNav(updates: Int) {
-    val prefs = LocalUserPreferences.current
-    val navigator = LocalDestinationsNavigator.current
-    val navController = LocalNavController.current
-
-    NavigationRail(
-        header = {
-            TopAppBarEventIcon()
-        },
-    ) {
-        MainDestination.entries.forEach { screen ->
-            val isSelected by navController.isRouteOnBackStackAsState(screen.direction)
-
-            if (!screen.isAccessible) return@forEach
-
-            NavigationRailItem(
-                icon = {
-                    BaseNavIcon(screen, isSelected, updates)
-                },
-                label = {
-                    Text(
-                        text = stringResource(id = screen.label),
-                        style = MaterialTheme.typography.labelLarge,
-                    )
-                },
-                alwaysShowLabel = !prefs.hideBottomBarLabels,
-                selected = isSelected,
-                onClick = {
-                    if (isSelected) {
-                        navigator.popBackStack(screen.direction, false)
-                    }
-                    navigator.navigate(screen.direction) {
-                        popUpTo(NavGraphs.root) {
-                            saveState = true
-                        }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
-                },
-            )
-        }
-    }
-}*/
-
-@Composable
-private fun BaseNavIcon(
-    screen: MainDestination,
-    selected: Boolean,
-    updates: Int,
-) {
-    if (screen == MainDestination.Modules && updates > 0) {
-        BadgedBox(
-            badge = {
-                Badge {
-                    Text(text = updates.toString())
-                }
-            },
-        ) {
-            Icon(
-                painter =
-                    painterResource(
-                        id =
-                            if (selected) {
-                                screen.iconFilled
-                            } else {
-                                screen.icon
-                            },
-                    ),
-                contentDescription = null,
-            )
-        }
-
-        return
-    }
-
-    Icon(
-        painter =
-            painterResource(
-                id =
-                    if (selected) {
-                        screen.iconFilled
-                    } else {
-                        screen.icon
-                    },
-            ),
-        contentDescription = null,
-    )
-}

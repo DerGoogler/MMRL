@@ -10,8 +10,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Modifier
@@ -35,6 +33,8 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import dev.chrisbanes.haze.hazeSource
+import dev.mmrlx.compose.ui.toolbar.ToolbarDefaults
+import dev.mmrlx.compose.ui.toolbar.ToolbarScrollBehavior
 import dev.mmrlx.compose.webui.WebUIView
 import dev.mmrlx.compose.webui.insets
 import dev.mmrlx.compose.webui.rememberWebUIState
@@ -51,7 +51,7 @@ import java.net.URL
 fun ViewDescriptionScreen(readmeUrl: String) =
     LocalScreenProvider {
         val navigator = LocalDestinationsNavigator.current
-        val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+        val scrollBehavior = ToolbarDefaults.pinnedScrollBehavior()
         val userPrefs = LocalUserPreferences.current
         val scheme = MaterialTheme.colorScheme
 
@@ -155,7 +155,7 @@ fun ViewDescriptionScreen(readmeUrl: String) =
 @Composable
 private fun TopBar(
     navigator: DestinationsNavigator,
-    scrollBehavior: TopAppBarScrollBehavior,
+    scrollBehavior: ToolbarScrollBehavior,
 ) = BlurToolbar(
     navigationIcon = {
         IconButton(onClick = { navigator.popBackStack() }) {

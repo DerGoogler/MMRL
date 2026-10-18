@@ -29,6 +29,7 @@ import com.dergoogler.mmrl.ui.providable.LocalHazeState
 import com.dergoogler.mmrl.ui.providable.LocalMainScreenInnerPaddings
 import com.dergoogler.mmrl.ui.providable.LocalNavController
 import dev.chrisbanes.haze.hazeSource
+import dev.mmrlx.compose.ui.toolbar.ToolbarDefaults
 
 @Composable
 fun SettingsScaffold(
@@ -60,7 +61,7 @@ fun SettingsScaffold(
     relative: @Composable (ListScope.() -> Unit),
 ) = LocalScreenProvider {
     val navController = LocalNavController.current
-    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+    val scrollBehavior = ToolbarDefaults.pinnedScrollBehavior()
 
     ResponsiveScaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),

@@ -18,8 +18,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults.Indicator
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
@@ -52,6 +50,7 @@ import com.dergoogler.mmrl.model.local.BulkModule
 import com.dergoogler.mmrl.ui.activity.terminal.install.InstallActivity
 import com.dergoogler.mmrl.ui.animate.slideInTopToBottom
 import com.dergoogler.mmrl.ui.animate.slideOutBottomToTop
+import com.dergoogler.mmrl.ui.component.BottomBar
 import com.dergoogler.mmrl.ui.component.Loading
 import com.dergoogler.mmrl.ui.component.LocalScreenProvider
 import com.dergoogler.mmrl.ui.component.PageIndicator
@@ -68,6 +67,8 @@ import com.dergoogler.mmrl.viewmodel.RepositoriesViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.destinations.SearchScreenDestination
+import dev.mmrlx.compose.ui.toolbar.ToolbarDefaults
+import dev.mmrlx.compose.ui.toolbar.ToolbarScrollBehavior
 import timber.log.Timber
 import kotlin.reflect.KFunction1
 
@@ -78,7 +79,7 @@ fun RepositoriesScreen() =
         val viewModel = hiltViewModel<RepositoriesViewModel>()
 
         val userPrefs = LocalUserPreferences.current
-        val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+        val scrollBehavior = ToolbarDefaults.pinnedScrollBehavior()
         val list by viewModel.repos.collectAsStateWithLifecycle()
         val bulkInstallViewModel = LocalBulkInstall.current
         val bulkModules by bulkInstallViewModel.bulkModules.collectAsStateWithLifecycle()
@@ -163,6 +164,9 @@ fun RepositoriesScreen() =
                     onAdd = { add = true },
                     scrollBehavior = scrollBehavior,
                 )
+            },
+            bottomBar = {
+                BottomBar()
             },
             contentWindowInsets = WindowInsets.none,
             floatingActionButton = {
@@ -305,7 +309,7 @@ private fun AddDialog(
 private fun TopBar(
     onAdd: () -> Unit,
     setMenu: KFunction1<RepositoriesMenu, Unit>,
-    scrollBehavior: TopAppBarScrollBehavior,
+    scrollBehavior: ToolbarScrollBehavior,
 ) {
     val width = currentScreenWidth()
     val navigator = LocalDestinationsNavigator.current

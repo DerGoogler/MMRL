@@ -29,7 +29,7 @@ import com.dergoogler.mmrl.ui.providable.LocalDestinationsNavigator
 import com.dergoogler.mmrl.ui.providable.LocalOnlineModule
 import com.dergoogler.mmrl.ui.providable.LocalRepo
 import com.dergoogler.mmrl.ui.screens.moduleView.listItemContentPaddingValues
-import com.ramcosta.composedestinations.generated.destinations.ViewDescriptionScreenDestination
+import com.ramcosta.composedestinations.generated.destinations.DescriptionScreenDestination
 
 @Composable
 internal fun AboutModule() {
@@ -45,7 +45,7 @@ internal fun AboutModule() {
         if (!module.readme.isNullOrBlank()) {
             ButtonItem(
                 onClick = {
-                    navigator.navigate(ViewDescriptionScreenDestination(module.readme))
+                    navigator.navigate(DescriptionScreenDestination(module.readme))
                 },
             ) {
                 Icon(

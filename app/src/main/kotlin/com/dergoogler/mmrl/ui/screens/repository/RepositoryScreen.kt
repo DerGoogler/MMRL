@@ -19,8 +19,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -58,6 +56,7 @@ import com.dergoogler.mmrl.ext.none
 import com.dergoogler.mmrl.ext.nullply
 import com.dergoogler.mmrl.ext.onClick
 import com.dergoogler.mmrl.ext.stripLinks
+import com.dergoogler.mmrl.ui.component.BottomBar
 import com.dergoogler.mmrl.ui.component.Cover
 import com.dergoogler.mmrl.ui.component.LabelItem
 import com.dergoogler.mmrl.ui.component.LabelItemDefaults
@@ -74,6 +73,8 @@ import com.dergoogler.mmrl.viewmodel.RepositoryViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import dev.dergoogler.mmrl.compat.core.LocalUriHandler
+import dev.mmrlx.compose.ui.toolbar.ToolbarDefaults
+import dev.mmrlx.compose.ui.toolbar.ToolbarScrollBehavior
 
 @Destination<RootGraph>
 @Composable
@@ -92,7 +93,7 @@ fun RepositoryScreen(
     val closeSearch = viewModel::closeSearch
     val search = viewModel::search
     val isSearch by viewModel::isSearch
-    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+    val scrollBehavior = ToolbarDefaults.pinnedScrollBehavior()
 
     var coverHeight by remember { mutableIntStateOf(0) }
     var cardHeight by remember { mutableIntStateOf(0) }
@@ -115,6 +116,9 @@ fun RepositoryScreen(
                 scrollBehavior = scrollBehavior,
                 setMenu = viewModel::setRepositoryMenu,
             )
+        },
+        bottomBar = {
+            BottomBar()
         },
         contentWindowInsets = WindowInsets.none,
     ) { innerPadding ->
@@ -273,7 +277,7 @@ private fun TopBar0(
     onQueryChange: (String) -> Unit,
     onOpenSearch: () -> Unit,
     onCloseSearch: () -> Unit,
-    scrollBehavior: TopAppBarScrollBehavior,
+    scrollBehavior: ToolbarScrollBehavior,
     setMenu: (RepositoryMenu) -> Unit,
 ) {
     val state = rememberBlurToolbarState(scrollBehavior, fade = true)
