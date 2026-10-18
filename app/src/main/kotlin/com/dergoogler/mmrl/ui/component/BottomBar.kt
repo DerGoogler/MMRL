@@ -42,12 +42,13 @@ fun BottomBar(updates: Int = 0) {
                     BaseNavIcon(screen, isSelected, updates)
                 },
                 label = {
-                    Text(
-                        text = stringResource(id = screen.label),
-                        style = MMRLXTheme.typography.labelLarge,
-                    )
+                    if (!prefs.hideBottomBarLabels) {
+                        Text(
+                            text = stringResource(id = screen.label),
+                            style = MMRLXTheme.typography.labelLarge,
+                        )
+                    }
                 },
-                alwaysShowLabel = !prefs.hideBottomBarLabels,
                 selected = isSelected,
                 onClick = {
                     if (isSelected) {

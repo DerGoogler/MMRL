@@ -57,9 +57,9 @@ import com.dergoogler.mmrl.ui.remember.rememberLocalAnalytics
 import com.dergoogler.mmrl.ui.remember.seLinuxContext
 import com.dergoogler.mmrl.ui.remember.superUserCount
 import com.dergoogler.mmrl.ui.remember.versionName
-import com.dergoogler.mmrl.ui.screens.home.items.NonRootItem
-import com.dergoogler.mmrl.ui.screens.home.items.RebootBottomSheet
-import com.dergoogler.mmrl.ui.screens.home.items.RootItem
+import com.dergoogler.mmrl.ui.screens.home.components.NonRootItem
+import com.dergoogler.mmrl.ui.screens.home.components.RebootBottomSheet
+import com.dergoogler.mmrl.ui.screens.home.components.RootItem
 import com.dergoogler.mmrl.ui.screens.settings.changelogs.items.ChangelogBottomSheet
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph

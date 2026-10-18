@@ -37,7 +37,6 @@ import dev.chrisbanes.haze.hazeSource
 import dev.chrisbanes.haze.rememberHazeState
 import dev.mmrlx.compose.ui.scaffold.Scaffold
 
-@Destination<RootGraph>
 @Composable
 fun MainScreen() {
 //    val width = currentScreenWidth()
@@ -60,79 +59,6 @@ fun MainScreen() {
         LocalSnackbarHost provides snackbarHostState,
         LocalBulkInstall provides bulkInstallViewModel,
     ) {
-        /*if (width.isLarge) {
-            Scaffold(
-                contentWindowInsets = WindowInsets.none,
-            ) { paddingValues ->
-                val navController = LocalNavController.current
-
-                PermanentNavigationDrawer(
-                    drawerContent = {
-                        PermanentDrawerSheet(
-                            modifier =
-                                Modifier
-                                    .width(240.dp),
-                        ) {
-                            TopAppBar(
-                                title = {
-                                    TopAppBarEventIcon()
-                                },
-                            )
-
-                            LazyColumn(
-                                contentPadding = PaddingValues(8.dp),
-                                verticalArrangement = Arrangement.spacedBy(8.dp),
-                            ) {
-                                items(
-                                    items = MainDestination.entries,
-                                    key = { it.name },
-                                ) { screen ->
-                                    val isSelected by navController.isRouteOnBackStackAsState(screen.direction)
-
-                                    if (!screen.isAccessible) return@items
-
-                                    NavigationDrawerItem(
-                                        icon = {
-                                            BaseNavIcon(screen, isSelected, updates)
-                                        },
-                                        label = {
-                                            Text(
-                                                text = stringResource(id = screen.label),
-                                                style = MaterialTheme.typography.labelLarge,
-                                            )
-                                        },
-                                        selected = isSelected,
-                                        onClick = {
-                                            if (isSelected) {
-                                                navigator.popBackStack(screen.direction, false)
-                                            }
-                                            navigator.navigate(screen.direction) {
-                                                popUpTo(NavGraphs.root) {
-                                                    saveState = true
-                                                }
-                                                launchSingleTop = true
-                                                restoreState = true
-                                            }
-                                        },
-                                    )
-                                }
-                            }
-                        }
-                    },
-                ) {
-                    CompositionLocalProvider(
-                        LocalMainScreenInnerPaddings provides paddingValues,
-                    ) {
-                        CurrentNavHost(
-                            Modifier.padding(paddingValues),
-                        )
-                    }
-                }
-            }
-
-            return@CompositionLocalProvider
-        }*/
-
         Scaffold(
             contentWindowInsets = WindowInsets.none,
         ) {

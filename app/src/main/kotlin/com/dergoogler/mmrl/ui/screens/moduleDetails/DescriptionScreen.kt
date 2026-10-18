@@ -16,7 +16,6 @@ import com.dergoogler.mmrl.BuildConfig
 import com.dergoogler.mmrl.R
 import com.dergoogler.mmrl.ext.none
 import com.dergoogler.mmrl.model.WebColors
-import com.dergoogler.mmrl.ui.component.BottomBar
 import com.dergoogler.mmrl.ui.providable.LocalDestinationsNavigator
 import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.utils.MimeUtil
@@ -130,9 +129,6 @@ fun DescriptionScreen(readmeUrl: String) {
                 scrollBehavior = scrollBehavior,
                 navigator = navigator,
             )
-        },
-        bottomBar = {
-            BottomBar()
         },
         contentWindowInsets = WindowInsets.none,
     ) {

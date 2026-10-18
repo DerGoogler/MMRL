@@ -1,4 +1,4 @@
-package com.dergoogler.mmrl.ui.screens.home.items
+package com.dergoogler.mmrl.ui.screens.home.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

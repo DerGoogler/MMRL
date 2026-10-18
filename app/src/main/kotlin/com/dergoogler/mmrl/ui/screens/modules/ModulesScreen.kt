@@ -43,6 +43,7 @@ import com.dergoogler.mmrl.ext.systemBarsPaddingEnd
 import com.dergoogler.mmrl.model.local.LocalModule
 import com.dergoogler.mmrl.model.online.VersionItem
 import com.dergoogler.mmrl.ui.activity.terminal.install.InstallActivity
+import com.dergoogler.mmrl.ui.component.BottomBar
 import com.dergoogler.mmrl.ui.component.Loading
 import com.dergoogler.mmrl.ui.component.LocalScreenProvider
 import com.dergoogler.mmrl.ui.component.PageIndicator
@@ -108,6 +109,9 @@ fun ModulesScreen(viewModel: ModulesViewModel = hiltViewModel()) =
                     setMenu = viewModel::setModulesMenu,
                     scrollBehavior = scrollBehavior,
                 )
+            },
+            bottomBar = {
+                BottomBar()
             },
             floatingActionButton = {
                 AnimatedVisibility(
