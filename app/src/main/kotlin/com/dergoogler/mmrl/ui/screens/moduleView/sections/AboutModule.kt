@@ -29,9 +29,7 @@ import com.dergoogler.mmrl.ui.providable.LocalDestinationsNavigator
 import com.dergoogler.mmrl.ui.providable.LocalOnlineModule
 import com.dergoogler.mmrl.ui.providable.LocalRepo
 import com.dergoogler.mmrl.ui.screens.moduleView.listItemContentPaddingValues
-import com.dergoogler.mmrl.ui.screens.repository.modules.ModulesFilter
-import com.ramcosta.composedestinations.generated.destinations.TypedModulesScreenDestination
-import com.ramcosta.composedestinations.generated.destinations.ViewDescriptionScreenDestination
+import com.ramcosta.composedestinations.generated.destinations.DescriptionScreenDestination
 
 @Composable
 internal fun AboutModule() {
@@ -47,7 +45,7 @@ internal fun AboutModule() {
         if (!module.readme.isNullOrBlank()) {
             ButtonItem(
                 onClick = {
-                    navigator.navigate(ViewDescriptionScreenDestination(module.readme))
+                    navigator.navigate(DescriptionScreenDestination(module.readme))
                 },
             ) {
                 Icon(
@@ -93,14 +91,14 @@ internal fun AboutModule() {
             items(it.size) { category ->
                 AssistChip(
                     onClick = {
-                        navigator.navigate(
-                            TypedModulesScreenDestination(
-                                type = ModulesFilter.CATEGORY,
-                                title = it[category],
-                                query = it[category],
-                                repo = repo,
-                            ),
-                        )
+//                        navigator.navigate(
+//                            TypedModulesScreenDestination(
+//                                type = ModulesFilter.CATEGORY,
+//                                title = it[category],
+//                                query = it[category],
+//                                repo = repo,
+//                            ),
+//                        )
                     },
                     label = { Text(it[category]) },
                 )

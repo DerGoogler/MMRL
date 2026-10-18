@@ -15,8 +15,6 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults.Indicator
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
@@ -45,6 +43,7 @@ import com.dergoogler.mmrl.ext.systemBarsPaddingEnd
 import com.dergoogler.mmrl.model.local.LocalModule
 import com.dergoogler.mmrl.model.online.VersionItem
 import com.dergoogler.mmrl.ui.activity.terminal.install.InstallActivity
+import com.dergoogler.mmrl.ui.component.BottomBar
 import com.dergoogler.mmrl.ui.component.Loading
 import com.dergoogler.mmrl.ui.component.LocalScreenProvider
 import com.dergoogler.mmrl.ui.component.PageIndicator
@@ -56,6 +55,8 @@ import com.dergoogler.mmrl.ui.providable.LocalUserPreferences
 import com.dergoogler.mmrl.viewmodel.ModulesViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
+import dev.mmrlx.compose.ui.toolbar.ToolbarDefaults
+import dev.mmrlx.compose.ui.toolbar.ToolbarScrollBehavior
 
 @Destination<RootGraph>
 @Composable
@@ -69,7 +70,7 @@ fun ModulesScreen(viewModel: ModulesViewModel = hiltViewModel()) =
         val state by viewModel.screenState.collectAsStateWithLifecycle()
         val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
 
-        val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+        val scrollBehavior = ToolbarDefaults.pinnedScrollBehavior()
 
         val pullToRefreshState = rememberPullToRefreshState()
 
@@ -108,6 +109,9 @@ fun ModulesScreen(viewModel: ModulesViewModel = hiltViewModel()) =
                     setMenu = viewModel::setModulesMenu,
                     scrollBehavior = scrollBehavior,
                 )
+            },
+            bottomBar = {
+                BottomBar()
             },
             floatingActionButton = {
                 AnimatedVisibility(
@@ -178,7 +182,7 @@ private fun TopBar(
     onOpenSearch: () -> Unit,
     onCloseSearch: () -> Unit,
     setMenu: (ModulesMenu) -> Unit,
-    scrollBehavior: TopAppBarScrollBehavior,
+    scrollBehavior: ToolbarScrollBehavior,
 ) {
     val width = currentScreenWidth()
 
@@ -188,11 +192,8 @@ private fun TopBar(
     }
 
     BlurSearchToolbar(
-        scrollBehavior = scrollBehavior,
         isSearch = isSearch,
         query = currentQuery,
-        fade = true,
-        fadeDistance = 50f,
         onQueryChange = {
             onQueryChange(it)
             currentQuery = it
@@ -222,6 +223,9 @@ private fun TopBar(
                 setMenu = setMenu,
             )
         },
+        scrollBehavior = scrollBehavior,
+        fadeDistance = 50f,
+        fade = true,
     )
 }
 

@@ -12,8 +12,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -28,6 +26,8 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.dergoogler.mmrl.ui.R
+import dev.mmrlx.compose.ui.toolbar.ToolbarDefaults
+import dev.mmrlx.compose.ui.toolbar.ToolbarScrollBehavior
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -41,12 +41,18 @@ fun BlurSearchToolbar(
     title: @Composable () -> Unit,
     navigationIcon: @Composable () -> Unit = {},
     actions: @Composable RowScope.() -> Unit = {},
-    windowInsets: WindowInsets = TopAppBarDefaults.windowInsets,
-    scrollBehavior: TopAppBarScrollBehavior? = null,
+    windowInsets: WindowInsets = ToolbarDefaults.windowInsets,
+    scrollBehavior: ToolbarScrollBehavior? = null,
     fadeBackgroundIfNoBlur: Boolean = false,
     fadeDistance: Float = 200f,
     fade: Boolean = false,
+    state: BlurToolbarState = rememberBlurToolbarState(
+        scrollBehavior = scrollBehavior,
+        fade = fade,
+        fadeDistance = fadeDistance,
+    ),
 ) = BlurToolbar(
+    state = state,
     modifier = modifier,
     actions = actions,
     windowInsets = windowInsets,
